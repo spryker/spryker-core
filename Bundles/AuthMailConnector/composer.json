@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
-    "spryker/mail": "^4.3.0"
+    "spryker/mail": "^4.0.0"
   },
   "require-dev": {
     "spryker/auth": "*",
@@ -14,8 +14,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/auth": "If you want to use Auth plugins.",
-    "spryker/cms-block": "If you want to use the ability to edit emails from the backoffice, minimum required version: 3.1.0."
+    "spryker/auth": "If you want to use Auth plugins."
   },
   "autoload": {
     "psr-4": {

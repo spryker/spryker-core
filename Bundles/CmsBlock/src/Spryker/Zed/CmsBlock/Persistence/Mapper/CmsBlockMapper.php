@@ -30,19 +30,6 @@ class CmsBlockMapper implements CmsBlockMapperInterface
     }
 
     /**
-     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $spyCmsBlockTemplate
-     * @param \Generated\Shared\Transfer\CmsBlockTemplateTransfer $cmsBlockTemplateTransfer
-     *
-     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
-     */
-    public function mapCmsBlockTemplateEntityToTransfer(
-        SpyCmsBlockTemplate $spyCmsBlockTemplate,
-        CmsBlockTemplateTransfer $cmsBlockTemplateTransfer
-    ): CmsBlockTemplateTransfer {
-        return $cmsBlockTemplateTransfer->fromArray($spyCmsBlockTemplate->toArray(), true);
-    }
-
-    /**
      * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer
@@ -84,7 +71,7 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer
      */
-    public function mapCmsBlockGlossaryKeyMappingsEntityToCmsBlockGlossaryPlaceholderTransfer(
+    protected function mapCmsBlockGlossaryKeyMappingsEntityToCmsBlockGlossaryPlaceholderTransfer(
         SpyCmsBlockGlossaryKeyMapping $cmsBlockGlossaryKeyMappingsEntity,
         CmsBlockGlossaryPlaceholderTransfer $cmsBlockGlossaryPlaceholderTransfer
     ): CmsBlockGlossaryPlaceholderTransfer {
@@ -114,12 +101,25 @@ class CmsBlockMapper implements CmsBlockMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTranslationTransfer
      */
-    public function mapGlossaryTranslationEntityToCmsBlockGlossaryPlaceholderTranslationTransfer(
+    protected function mapGlossaryTranslationEntityToCmsBlockGlossaryPlaceholderTranslationTransfer(
         SpyGlossaryTranslation $glossaryTranslationEntity,
         CmsBlockGlossaryPlaceholderTranslationTransfer $cmsBlockGlossaryPlaceholderTranslationTransfer
     ): CmsBlockGlossaryPlaceholderTranslationTransfer {
         $cmsBlockGlossaryPlaceholderTranslationTransfer->fromArray($glossaryTranslationEntity->toArray(), true);
 
         return $cmsBlockGlossaryPlaceholderTranslationTransfer->setTranslation($glossaryTranslationEntity->getValue());
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockTemplate $spyCmsBlockTemplate
+     * @param \Generated\Shared\Transfer\CmsBlockTemplateTransfer $cmsBlockTemplateTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTemplateTransfer
+     */
+    protected function mapCmsBlockTemplateEntityToTransfer(
+        SpyCmsBlockTemplate $spyCmsBlockTemplate,
+        CmsBlockTemplateTransfer $cmsBlockTemplateTransfer
+    ): CmsBlockTemplateTransfer {
+        return $cmsBlockTemplateTransfer->fromArray($spyCmsBlockTemplate->toArray(), true);
     }
 }

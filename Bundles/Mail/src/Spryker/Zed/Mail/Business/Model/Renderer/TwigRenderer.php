@@ -16,6 +16,16 @@ use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
 
 class TwigRenderer implements RendererInterface
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const LAYOUT_TEMPLATE_TEXT = 'Mail/Mail/layout/mail_layout.text.twig';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const LAYOUT_TEMPLATE_HTML = 'Mail/Mail/layout/mail_layout.html.twig';
+
     protected const TWIG_CONTEXT_KEY_MAIL = 'mail';
 
     /**

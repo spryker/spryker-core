@@ -1,6 +1,7 @@
-{{ renderCmsBlockAsTwig(
-    'newsletter-subscribed--html',
-    store.name,
-    locale.localeName,
-    {mail: mail}
-) }}
+<div style="text-align: center;">
+    {{ 'mail.newsletter.subscribed.text' | trans }}
+</div>
+<br />
+<div style="text-align: center;">
+    {{ 'mail.newsletter.subscribed.footer.text' | trans }}
+</div>

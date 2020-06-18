@@ -1,6 +1,1 @@
-{{ renderCmsBlockAsTwig(
-    'company-status--text',
-    store.name,
-    locale.localeName,
-    {mail: mail}
-) }}
+{{ 'mail.company.status.text' | trans }}{{ ('mail.company.status.' ~ mail.company.status) | trans }}

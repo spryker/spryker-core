@@ -60,6 +60,10 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
     }
 
     /**
+     * @module Glossary
+     * @module Locale
+     * @module Store
+     *
      * @param string $cmsBlockName
      * @param string $storeName
      * @param string $localeName

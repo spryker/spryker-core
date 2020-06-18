@@ -10,7 +10,7 @@
     "spryker/glossary": "^3.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
-    "spryker/mail": "^4.3.0",
+    "spryker/mail": "^4.0.0",
     "spryker/product": "^6.8.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/store": "^1.5.0",
@@ -27,7 +27,6 @@
   },
   "suggest": {
     "spryker/availability": "If you want use handler for availability_notification Event",
-    "spryker/cms-block": "If you want to use the ability to edit emails from the backoffice, minimum required version: 3.1.0.",
     "spryker/event": "If you want to use availability_notification Event"
   },
   "autoload": {
