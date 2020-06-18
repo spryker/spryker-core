@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Persistence;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerRepositoryInterface
@@ -45,4 +46,13 @@ interface CustomerRepositoryInterface
      * @return array
      */
     public function getAllSalutations(): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer;
 }
