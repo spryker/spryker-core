@@ -16,6 +16,8 @@ use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapper;
 use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapperInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilder;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface;
+use Spryker\Glue\CmsPagesRestApi\Processor\UrlResolver\CmsPageUrlResolver;
+use Spryker\Glue\CmsPagesRestApi\Processor\UrlResolver\CmsPageUrlResolverInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class CmsPagesRestApiFactory extends AbstractFactory
@@ -74,5 +76,16 @@ class CmsPagesRestApiFactory extends AbstractFactory
     public function getStoreClient(): CmsPagesRestApiToStoreClientInterface
     {
         return $this->getProvidedDependency(CmsPagesRestApiDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Glue\CmsPagesRestApi\Processor\UrlResolver\CmsPageUrlResolverInterface
+     */
+    public function createCmsPageUrlResolver(): CmsPageUrlResolverInterface
+    {
+        return new CmsPageUrlResolver(
+            $this->getCmsStorageClient(),
+            $this->getStoreClient()
+        );
     }
 }
