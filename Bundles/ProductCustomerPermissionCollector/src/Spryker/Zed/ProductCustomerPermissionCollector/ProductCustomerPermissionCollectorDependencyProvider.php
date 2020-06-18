@@ -48,9 +48,9 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
      */
     protected function addCollectorFacade(Container $container): Container
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductCustomerPermissionCollectorToCollectorFacadeBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
      */
     protected function addDataReaderService(Container $container): Container
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductCustomerPermissionCollectorToStoreFacadeBridge(Store::getInstance());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +90,9 @@ class ProductCustomerPermissionCollectorDependencyProvider extends AbstractBundl
      */
     protected function addTouchQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }

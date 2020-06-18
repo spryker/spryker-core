@@ -41,9 +41,9 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT] = function (Container $container) {
+        $container->set(static::SHOPPING_LIST_STORAGE_CUSTOMER_CLIENT, function (Container $container) {
             return new ShoppingListStorageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_STORAGE_STORAGE_CLIENT] = function (Container $container) {
+        $container->set(static::SHOPPING_LIST_STORAGE_STORAGE_CLIENT, function (Container $container) {
             return new ShoppingListStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -69,11 +69,11 @@ class ShoppingListStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE] = function (Container $container) {
+        $container->set(static::SHOPPING_LIST_STORAGE_SYNCHRONIZATION_SERVICE, function (Container $container) {
             return new ShoppingListStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
             );
-        };
+        });
 
         return $container;
     }

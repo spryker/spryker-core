@@ -44,11 +44,11 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
      */
     protected function addContentBannerFacade(Container $container): Container
     {
-        $container[static::FACADE_CONTENT_BANNER] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT_BANNER, function (Container $container) {
             return new ContentBannerDataImportToContentBannerBridge(
                 $container->getLocator()->contentBanner()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
      */
     protected function addContentFacade(Container $container): Container
     {
-        $container[static::FACADE_CONTENT] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new ContentBannerDataImportToContentBridge($container->getLocator()->content()->facade());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class ContentBannerDataImportDependencyProvider extends DataImportDependencyProv
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentBannerDataImportToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

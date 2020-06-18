@@ -43,9 +43,9 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideNavigationFacade(Container $container)
     {
-        $container[self::FACADE_NAVIGATION] = function (Container $container) {
+        $container->set(static::FACADE_NAVIGATION, function (Container $container) {
             return new NavigationGuiToNavigationBridge($container->getLocator()->navigation()->facade());
-        };
+        });
     }
 
     /**
@@ -55,9 +55,9 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideLocaleFacade(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new NavigationGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -67,8 +67,8 @@ class NavigationGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideUrlFacade(Container $container)
     {
-        $container[self::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new NavigationGuiToUrlBridge($container->getLocator()->url()->facade());
-        };
+        });
     }
 }
