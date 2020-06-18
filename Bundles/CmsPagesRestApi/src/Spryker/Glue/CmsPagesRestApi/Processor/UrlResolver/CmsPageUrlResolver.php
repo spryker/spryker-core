@@ -57,12 +57,13 @@ class CmsPageUrlResolver implements CmsPageUrlResolverInterface
             $this->cmsStoreClient->getCurrentStore()->getName()
         );
 
-        if (!isset($cmsPageStorageTransfers[0])) {
+        $cmsPageStorageTransfer = reset($cmsPageStorageTransfers);
+        if (!$cmsPageStorageTransfer) {
             return null;
         }
 
         return (new RestUrlResolverAttributesTransfer())
-            ->setEntityId($cmsPageStorageTransfers[0]->getUuid())
+            ->setEntityId($cmsPageStorageTransfer->getUuid())
             ->setEntityType(CmsPagesRestApiConfig::RESOURCE_CMS_PAGES);
     }
 
