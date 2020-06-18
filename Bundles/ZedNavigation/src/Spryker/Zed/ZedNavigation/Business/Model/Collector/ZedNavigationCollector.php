@@ -95,13 +95,36 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     protected function getSecondLevelNavigationData(array $navigationDefinitionData): array
     {
         $navigationData = [];
-        foreach ($navigationDefinitionData as $navigation) {
+        foreach ($navigationDefinitionData as $key => $navigation) {
             if (!isset($navigation[MenuFormatter::PAGES])) {
                 continue;
             }
+
+            if ($this->needAddFirstLevelNavigationWithNonVisiblePages($navigation)) {
+                $navigationData = array_merge($navigationData, [$key => $navigation]);
+
+                continue;
+            }
+
             $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
         }
 
         return $navigationData;
+    }
+
+    /**
+     * @param array $navigation
+     *
+     * @return bool
+     */
+    protected function needAddFirstLevelNavigationWithNonVisiblePages(array $navigation): bool
+    {
+        foreach ($navigation[MenuFormatter::PAGES] as $childNavigation) {
+            if (!isset($childNavigation[MenuFormatter::VISIBLE]) || $childNavigation[MenuFormatter::VISIBLE] !== '0') {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
