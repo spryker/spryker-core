@@ -52,7 +52,7 @@ class MonitoringFactory extends AbstractFactory
      *
      * @return \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
      */
-    public function getService(): MonitoringToUtilNetworkServiceInterface
+    public function getSystem(): MonitoringToUtilNetworkServiceInterface
     {
         return $this->getProvidedDependency(MonitoringDependencyProvider::SERVICE_NETWORK);
     }
