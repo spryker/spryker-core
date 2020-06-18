@@ -31,6 +31,6 @@ class ProductAttributeGuiAttributeListCest
     public function breadcrumbIsVisible(ProductAttributeGuiCommunicationTester $i): void
     {
         $i->amOnPage(ProductAttributeGuiAttributeListPage::URL);
-        $i->seeBreadcrumbNavigation('Products / Attributes');
+        $i->seeBreadcrumbNavigation('Catalog / Attributes');
     }
 }
