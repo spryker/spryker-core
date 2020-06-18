@@ -47,9 +47,9 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductsRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ProductsRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class ProductsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConcreteProductsResourceExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CONCRETE_PRODUCTS_RESOURCE_EXPANDER, function () {
             return $this->getConcreteProductsResourceExpanderPlugins();
-        };
+        });
 
         return $container;
     }

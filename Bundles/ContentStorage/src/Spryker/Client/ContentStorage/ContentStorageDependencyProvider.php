@@ -39,11 +39,11 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addClientStorage(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ContentStorageToStorageClientBridge(
                 $container->getLocator()->storage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -55,11 +55,11 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addServiceSynchronization(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ContentStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
             );
-        };
+        });
 
         return $container;
     }

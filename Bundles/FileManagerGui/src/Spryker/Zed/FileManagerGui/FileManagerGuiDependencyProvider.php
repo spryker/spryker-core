@@ -47,11 +47,11 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileManagerFacade(Container $container)
     {
-        $container[static::FACADE_FILE_MANAGER] = function (Container $container) {
+        $container->set(static::FACADE_FILE_MANAGER, function (Container $container) {
             return new FileManagerGuiToFileManagerFacadeBridge(
                 $container->getLocator()->fileManager()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -63,11 +63,11 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new FileManagerGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_FILE] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_FILE, $container->factory(function () {
             return SpyFileQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -107,9 +107,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileInfoQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_FILE_INFO] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_FILE_INFO, $container->factory(function () {
             return SpyFileInfoQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -121,9 +121,9 @@ class FileManagerGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMimeTypeQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_MIME_TYPE] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_MIME_TYPE, $container->factory(function () {
             return SpyMimeTypeQuery::create();
-        };
+        }));
 
         return $container;
     }

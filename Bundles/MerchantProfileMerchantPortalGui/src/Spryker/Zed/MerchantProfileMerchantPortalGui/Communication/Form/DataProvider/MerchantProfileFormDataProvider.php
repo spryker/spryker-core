@@ -77,6 +77,7 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
         }
 
         $merchantTransfer = $this->addMerchantProfileData($merchantTransfer);
+        $merchantTransfer = $this->addInitialUrlCollection($merchantTransfer);
 
         return $merchantTransfer;
     }
@@ -86,12 +87,10 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    public function addMerchantProfileData(MerchantTransfer $merchantTransfer): MerchantTransfer
+    protected function addMerchantProfileData(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
         $merchantProfileTransfer = $merchantTransfer->getMerchantProfile() ?? new MerchantProfileTransfer();
-
         $merchantProfileTransfer = $this->addLocalizedGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer = $this->addInitialUrlCollection($merchantProfileTransfer);
 
         $merchantTransfer->setMerchantProfile($merchantProfileTransfer);
 
@@ -99,13 +98,13 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileTransfer $merchantProfileTransfer
+     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProfileTransfer
+     * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function addInitialUrlCollection(MerchantProfileTransfer $merchantProfileTransfer): MerchantProfileTransfer
+    protected function addInitialUrlCollection(MerchantTransfer $merchantTransfer): MerchantTransfer
     {
-        $merchantProfileUrlCollection = $merchantProfileTransfer->getUrlCollection();
+        $merchantProfileUrlCollection = $merchantTransfer->getUrlCollection();
         $urlCollection = new ArrayObject();
         $availableLocaleTransfers = $this->localeFacade->getLocaleCollection();
 
@@ -114,9 +113,9 @@ class MerchantProfileFormDataProvider implements MerchantProfileFormDataProvider
                 $this->addUrlPrefixToUrlTransfer($merchantProfileUrlCollection, $localeTransfer)
             );
         }
-        $merchantProfileTransfer->setUrlCollection($urlCollection);
+        $merchantTransfer->setUrlCollection($urlCollection);
 
-        return $merchantProfileTransfer;
+        return $merchantTransfer;
     }
 
     /**

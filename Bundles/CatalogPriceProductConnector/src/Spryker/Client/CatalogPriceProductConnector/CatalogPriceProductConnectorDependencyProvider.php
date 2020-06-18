@@ -43,9 +43,9 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      */
     protected function addPriceProductClient(Container $container)
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new CatalogPriceProductConnectorToPriceProductClientBridge($container->getLocator()->priceProduct()->client());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      */
     protected function addPriceClient(Container $container)
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new CatalogPriceProductConnectorToPriceClientBridge($container->getLocator()->price()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      */
     protected function addCurrencyClient(Container $container)
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new CatalogPriceProductConnectorToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class CatalogPriceProductConnectorDependencyProvider extends AbstractDependencyP
      */
     protected function addPriceProductStorageClient($container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new CatalogPriceProductConnectorToPriceProductStorageClientBridge($container->getLocator()->priceProductStorage()->client());
-        };
+        });
 
         return $container;
     }

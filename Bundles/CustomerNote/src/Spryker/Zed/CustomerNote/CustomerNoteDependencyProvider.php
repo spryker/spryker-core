@@ -35,9 +35,9 @@ class CustomerNoteDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container): Container
     {
-        $container[static::FACADE_USER] = function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new CustomerNoteToUserFacadeBridge($container->getLocator()->user()->facade());
-        };
+        });
 
         return $container;
     }
