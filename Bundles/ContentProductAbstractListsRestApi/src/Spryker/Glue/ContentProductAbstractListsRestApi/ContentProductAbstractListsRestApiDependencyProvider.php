@@ -31,6 +31,8 @@ class ContentProductAbstractListsRestApiDependencyProvider extends AbstractBundl
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addContentProductClient($container);
         $container = $this->addProductsRestApiResource($container);
         $container = $this->addCmsStorageClient($container);

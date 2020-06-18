@@ -104,10 +104,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $contentBannerKeys = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (
-                isset($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
-                && !empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])
-            ) {
+            if (!empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])) {
                 $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME]);
                 $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
             }

@@ -20,12 +20,6 @@ interface ContentBannerToContentStorageClientInterface
     public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer;
 
     /**
-     * Specification:
-     * - Retrieves content by keys through a storage client dependency.
-     * - Returns the context needed to generate a content type.
-     *
-     * @api
-     *
      * @phpstan-param array<string, string> $contentKeys
      *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>

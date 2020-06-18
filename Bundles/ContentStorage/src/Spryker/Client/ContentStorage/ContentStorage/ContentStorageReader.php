@@ -95,7 +95,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
             }
 
             $contentsStorageData = $this->utilEncodingService->decodeJson($contentStorageDatum, true);
-            if (!is_array($contentsStorageData)) {
+            if (!$contentsStorageData) {
                 continue;
             }
             $contentKey = $this->getContentKey($contentStorageKey);

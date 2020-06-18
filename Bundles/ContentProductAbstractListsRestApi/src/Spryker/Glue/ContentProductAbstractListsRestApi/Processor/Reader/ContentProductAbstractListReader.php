@@ -108,10 +108,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $contentProductAbstractListKeys = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (
-                isset($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])
-                && !empty($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])
-            ) {
+            if (!empty($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])) {
                 $contentProductAbstractListKeys = array_merge($contentProductAbstractListKeys, $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME]);
                 $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME];
             }
