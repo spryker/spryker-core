@@ -1,8 +1,8 @@
 "Edit Global threshold","Globalen Grenzwert bearbeiten"
 "Edit Threshold Settings","Schwellwerteinstellungen bearbeiten"
 "Global threshold","Allgemeiner Grenzwert"
-"Hard Threshold","Harter Grenzwert"
-"Hard Maximum Threshold","Harter maximaler Schwellenwert"
+"Minimum Hard Threshold","Harter minimaler Schwellenwert"
+"Maximum Hard Threshold","Harter maximaler Schwellenwert"
 "Minimum Order Value settings saved.","Einstellungen für Mindestbestellwert gespeichert."
 Save,Speichern
 "Soft Threshold","Weicher Grenzwert"
