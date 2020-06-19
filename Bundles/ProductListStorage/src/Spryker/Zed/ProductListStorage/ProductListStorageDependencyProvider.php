@@ -75,11 +75,11 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductListStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class ProductListStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ProductListStorageToProductListFacadeBridge($container->getLocator()->productList()->facade());
-        };
+        });
 
         return $container;
     }

@@ -7,10 +7,28 @@
 
 namespace Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 interface MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
+     */
+    public function getProductOffersBySkus(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return string|null
+     */
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
+
     /**
      * @param string $productOfferReference
      *

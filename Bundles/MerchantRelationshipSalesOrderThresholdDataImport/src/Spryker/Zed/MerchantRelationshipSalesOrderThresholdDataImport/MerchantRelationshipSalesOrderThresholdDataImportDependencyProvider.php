@@ -48,11 +48,11 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
      */
     protected function addMerchantRelationshipSalesOrderThresholdFacade(Container $container)
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipSalesOrderThresholdFacadeBridge(
                 $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -64,11 +64,11 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
      */
     protected function addMerchantRelationshipFacade(Container $container)
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToMerchantRelationshipFacadeBridge(
                 $container->getLocator()->merchantRelationship()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -80,11 +80,11 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -96,11 +96,11 @@ class MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider extend
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdDataImportToCurrencyFacadeBridge(
                 $container->getLocator()->currency()->facade()
             );
-        };
+        });
 
         return $container;
     }

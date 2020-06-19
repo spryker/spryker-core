@@ -41,9 +41,9 @@ class PriceProductDataImportDependencyProvider extends DataImportDependencyProvi
      */
     protected function addPriceProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductDataImportToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class PriceProductDataImportDependencyProvider extends DataImportDependencyProvi
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductDataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

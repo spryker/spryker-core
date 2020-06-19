@@ -25,9 +25,9 @@ class ProductImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductImageToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

@@ -40,9 +40,9 @@ class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addContentBannerFacade(Container $container): Container
     {
-        $container[static::FACADE_CONTENT_BANNER] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT_BANNER, function (Container $container) {
             return new ContentBannerGuiToContentBannerFacadeBridge($container->getLocator()->contentBanner()->facade());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ContentBannerGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilEncoding(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentBannerGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
