@@ -19,6 +19,7 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
         <property name="locale" type="Locale"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
@@ -97,6 +98,7 @@
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
@@ -146,6 +148,10 @@
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
         <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
 </transfers>
