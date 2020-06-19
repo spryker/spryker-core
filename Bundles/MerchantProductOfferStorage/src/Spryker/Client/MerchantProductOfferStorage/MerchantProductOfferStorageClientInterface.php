@@ -15,8 +15,11 @@ interface MerchantProductOfferStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves content according provided criteria through a storage client dependency.
-     * - Returns the product offer collection.
+     * - Retrieves product offer from storage by product concrete SKUs provided in the `ProductOfferStorageCriteriaTransfer`.
+     * - Optionally filters the collection by merchant reference.
+     * - Expands `ProductOfferStorageTransfer`s with relevant `MerchantStorageTransfer`.
+     * - Filters out `ProductOfferStorageTransfer` if relevant merchant is not found.
+     * - Finds and marks the default product's offer in `ProductOfferStorageTransfer.isDefault`.
      *
      * @api
      *
@@ -24,15 +27,16 @@ interface MerchantProductOfferStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(
+    public function getProductOffersBySkus(
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): ProductOfferStorageCollectionTransfer;
 
     /**
      * Specification:
-     * - Retrieves product offer references according provided criteria.
+     * - Retrieves product offers by product concrete SKUs.
+     * - Optionally filters the collection by merchant reference.
      * - Returns null if product offer references does not exist.
-     * - Validates checked product offer reference attribute.
+     * - Returns `ProductOfferStorageCriteriaTransfer.productOfferReference` of it is found in the retrieved collection.
      * - Resolves default product offer reference by plugin.
      * - Returns the product offer reference.
      *
@@ -56,4 +60,16 @@ interface MerchantProductOfferStorageClientInterface
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
      */
     public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+
+    /**
+     * Specification:
+     * - Finds product offers within Storage by references.
+     *
+     * @api
+     *
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    public function getProductOfferStorageByReferences(array $productOfferReferences): array;
 }

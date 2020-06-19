@@ -110,4 +110,16 @@ class SalesToOmsBridge implements SalesToOmsInterface
     {
         return $this->omsFacade->isOrderFlaggedExcludeFromCustomer($idOrder);
     }
+
+    /**
+     * @param string $eventId
+     * @param array $orderItemIds
+     * @param array $data
+     *
+     * @return array|null
+     */
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = [])
+    {
+        return $this->omsFacade->triggerEventForOrderItems($eventId, $orderItemIds, $data);
+    }
 }
