@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -190,6 +191,15 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
      */
     public function queryLockedItemsByExpirationDate(DateTime $expirationDate);
+
+    /**
+     * @api
+     *
+     * @param array $identifiers
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifiers(array $identifiers): SpyOmsStateMachineLockQuery;
 
     /**
      * @api

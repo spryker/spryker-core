@@ -11,6 +11,7 @@ use DateTime;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationChangeVersionTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -426,6 +427,22 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
             ->filterByIdentifier($identifier);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $identifiers
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifiers(array $identifiers): SpyOmsStateMachineLockQuery
+    {
+        return $this->getFactory()
+            ->createOmsStateMachineLockQuery()
+            ->filterByIdentifier_In($identifiers);
     }
 
     /**
