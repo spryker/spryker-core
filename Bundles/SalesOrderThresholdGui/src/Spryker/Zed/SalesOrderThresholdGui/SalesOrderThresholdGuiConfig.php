@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesOrderThresholdGui;
 
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalHardMaximumThresholdDataProvider;
+use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalHardThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\GlobalSoftThresholdDataProvider;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalHardMaximumThresholdFormMapper;
 use Spryker\Zed\SalesOrderThresholdGui\Communication\Form\Mapper\ThresholdGroup\GlobalHardThresholdFormMapper;
@@ -80,7 +81,7 @@ class SalesOrderThresholdGuiConfig extends AbstractBundleConfig
     protected const STRATEGY_TYPE_TO_DATA_PROVIDER_MAP = [];
 
     protected const STRATEGY_GROUP_TO_DATA_PROVIDER_MAP = [
-        self::GROUP_HARD => GlobalHardMaximumThresholdDataProvider::class,
+        self::GROUP_HARD => GlobalHardThresholdDataProvider::class,
         self::GROUP_HARD_MAX => GlobalHardMaximumThresholdDataProvider::class,
         self::GROUP_SOFT => GlobalSoftThresholdDataProvider::class,
     ];
