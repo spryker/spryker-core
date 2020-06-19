@@ -370,7 +370,7 @@ class Finder implements FinderInterface
     public function getItemStateDisplayName(ItemTransfer $itemTransfer): ?string
     {
         $processName = $itemTransfer->requireProcess()->getProcess();
-        $process = $builder->createProcess($processName);
+        $process = $this->builder->createProcess($processName);
         $stateName = $itemTransfer->requireState()->getState()->getName();
 
         $allStates = $process->getAllStates();
