@@ -76,9 +76,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductCategoryFilterGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
     }
 
     /**
@@ -88,9 +88,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductCategoryFilterFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_CATEGORY_FILTER, function (Container $container) {
             return new ProductCategoryFilterGuiToProductCategoryFilterFacadeBridge($container->getLocator()->productCategoryFilter()->facade());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCategoryQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductCategoryFilterGuiToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -116,9 +116,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductCategoryQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductCategoryFilterGuiToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -130,9 +130,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductCategoryFilterGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -142,9 +142,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCategoryFacade(Container $container)
     {
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductCategoryFilterGuiToCategoryFacadeBridge($container->getLocator()->category()->facade());
-        };
+        });
     }
 
     /**
@@ -154,9 +154,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductSearchFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SEARCH, function (Container $container) {
             return new ProductCategoryFilterGuiToProductSearchFacadeBridge($container->getLocator()->productSearch()->facade());
-        };
+        });
     }
 
     /**
@@ -166,9 +166,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductCategoryFilterGuiToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
     }
 
     /**
@@ -178,9 +178,9 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCatalogClient(Container $container)
     {
-        $container[static::CLIENT_CATALOG] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG, function (Container $container) {
             return new ProductCategoryFilterGuiToCatalogClientBridge($container->getLocator()->catalog()->client());
-        };
+        });
     }
 
     /**
@@ -190,8 +190,8 @@ class ProductCategoryFilterGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductCategoryFilterClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_CATEGORY_FILTER, function (Container $container) {
             return new ProductCategoryFilterGuiToProductCategoryFilterClientBridge($container->getLocator()->productCategoryFilter()->client());
-        };
+        });
     }
 }

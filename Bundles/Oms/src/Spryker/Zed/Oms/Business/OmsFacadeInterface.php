@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -602,11 +604,31 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacadeInterface::updateReservation()` instead.
+     *
      * @param string $sku
      *
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
+
+    /**
+     * Specification:
+     *  - Updates reservation quantity for different entities from a given ReservationRequest.
+     *  - Calculates total current reservation for given ReservationRequestTransfer by executing the OmsReservationAggregationPluginInterface plugin stack and adding their sum amount.
+     *  - Uses original reservation aggregation if no plugin returns an aggregation of reservations.
+     *  - Uses `OmsReservationWriterStrategyPluginInterface` stack to save reservation entity.
+     *  - Checks if reservation for ReservationRequest already exists, if so it updates it with new values, otherwise creates a new reservation entity.
+     *  - Does the same writing procedure for stores with shared persistence based on configuration.
+     *  - Runs a stack of ReservationPostSaveTerminationAwareStrategyPluginInterface plugins after saving reservation which terminates the execution of remaining plugins if one plugin returns isTerminated to be true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * Specification:
@@ -659,6 +681,20 @@ interface OmsFacadeInterface
      * @return string[][]
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Returns reserved quantity for provided ReservationRequest.
+     * - Runs a stack of `OmsReservationReaderStrategyPluginInterface` plugins to get reservation quantity.
+     * - Gets original reservation quantity if no one plugin is applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer;
 
     /**
      * Specification:

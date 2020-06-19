@@ -109,9 +109,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addPropelProductRelationProductAbstractQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT] = function (): SpyProductRelationProductAbstractQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT, $container->factory(function (): SpyProductRelationProductAbstractQuery {
             return SpyProductRelationProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -123,9 +123,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductRelationStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -137,9 +137,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductRelationQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_RELATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationStorageToProductRelationQueryContainerBridge($container->getLocator()->productRelation()->queryContainer());
-        };
+        });
 
         return $container;
     }

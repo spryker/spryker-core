@@ -136,5 +136,17 @@
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
 </transfers>
 

@@ -42,9 +42,9 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addResourceShareClient(Container $container): Container
     {
-        $container[static::CLIENT_RESOURCE_SHARE] = function (Container $container) {
+        $container->set(static::CLIENT_RESOURCE_SHARE, function (Container $container) {
             return new PersistentCartShareToResourceShareClientBridge($container->getLocator()->resourceShare()->client());
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new PersistentCartShareToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class PersistentCartShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartShareOptionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CART_SHARE_OPTION] = function () {
+        $container->set(static::PLUGINS_CART_SHARE_OPTION, function () {
             return $this->getCartShareOptionPlugins();
-        };
+        });
 
         return $container;
     }
