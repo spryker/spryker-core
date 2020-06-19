@@ -5,45 +5,55 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Monitoring\Communication\Plugin;
+namespace Spryker\Yves\Monitoring\EventHandler;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Console\ConsoleEvents;
+use Spryker\Service\Monitoring\MonitoringServiceInterface;
+use Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface;
 use Symfony\Component\Console\Event\ConsoleTerminateEvent;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin} instead.
- *
- * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
- * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
- * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
- */
-class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberInterface
+class EventHandler implements EventHandlerInterface
 {
-    public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+    protected const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
+
+    protected const PARAMETER_HOST = 'host';
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Service\Monitoring\MonitoringServiceInterface
+     */
+    protected $monitoringService;
+
+    /**
+     * @var \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface
+     */
+    protected $utilNetworkService;
+
+    /**
+     * @param \Spryker\Service\Monitoring\MonitoringServiceInterface $monitoringService
+     * @param \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
+     */
+    public function __construct(
+        MonitoringServiceInterface $monitoringService,
+        MonitoringToUtilNetworkServiceInterface $utilNetworkService
+    ) {
+        $this->monitoringService = $monitoringService;
+        $this->utilNetworkService = $utilNetworkService;
+    }
+
+    /**
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
      *
      * @return void
      */
-    public function onConsoleTerminate(ConsoleTerminateEvent $event): void
+    public function handleConsoleTerminateEvent(ConsoleTerminateEvent $event): void
     {
-        $transactionName = $this->getTransactionName($event);
-        $hostName = $this->getFactory()->getUtilNetworkService()->getHostName();
-        $monitoring = $this->getFactory()->getMonitoringService();
-
-        $monitoring->markAsConsoleCommand();
-        $monitoring->setTransactionName($transactionName);
-        $monitoring->addCustomParameter('host', $hostName);
+        $this->monitoringService->markAsConsoleCommand();
+        $this->monitoringService->setTransactionName($this->getTransactionName($event));
+        $this->monitoringService->addCustomParameter(static::PARAMETER_HOST, $this->utilNetworkService->getHostName());
 
         $this->addArgumentsAsCustomParameter($event);
         $this->addOptionsAsCustomParameter($event);
+
+        $event->setExitCode(0);
     }
 
     /**
@@ -54,20 +64,6 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     protected function getTransactionName(ConsoleTerminateEvent $event): string
     {
         return static::TRANSACTION_NAME_PREFIX . $event->getCommand()->getName();
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return array
-     */
-    public static function getSubscribedEvents(): array
-    {
-        return [
-            ConsoleEvents::TERMINATE => ['onConsoleTerminate'],
-        ];
     }
 
     /**
@@ -97,13 +93,11 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
      */
     protected function addCustomParameter(array $customParameter): void
     {
-        $monitoring = $this->getFactory()->getMonitoringService();
-
         foreach ($customParameter as $key => $value) {
             if (is_array($value)) {
                 $value = implode(',', $value);
             }
-            $monitoring->addCustomParameter($key, $value);
+            $this->monitoringService->addCustomParameter($key, $value);
         }
     }
 }
