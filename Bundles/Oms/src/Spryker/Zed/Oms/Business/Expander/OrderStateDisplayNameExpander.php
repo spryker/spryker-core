@@ -24,6 +24,7 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface $stateDisplayNameExpander
+     * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
         StateDisplayNameExpanderInterface $stateDisplayNameExpander,
