@@ -12,6 +12,7 @@
                 <bundle>cms</bundle>
                 <controller>redirect</controller>
                 <action>index</action>
+                <icon>fa-link</icon>
             </redirects>
         </pages>
     </cms>

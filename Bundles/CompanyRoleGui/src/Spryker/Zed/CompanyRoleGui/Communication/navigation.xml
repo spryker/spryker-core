@@ -3,6 +3,7 @@
     <company-gui>
         <label>Company Account</label>
         <title>Company Account</title>
+        <icon>fa-files-o</icon>
         <pages>
             <company-role-gui>
                 <label>Company Roles</label>

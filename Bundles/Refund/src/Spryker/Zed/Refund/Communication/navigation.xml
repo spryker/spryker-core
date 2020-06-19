@@ -11,6 +11,7 @@
                 <bundle>refund</bundle>
                 <controller>table</controller>
                 <action>index</action>
+                <icon>fa-user-secret</icon>
             </table>
         </pages>
     </sales>

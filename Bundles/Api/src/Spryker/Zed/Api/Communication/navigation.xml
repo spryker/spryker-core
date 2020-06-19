@@ -9,6 +9,7 @@
                 <controller>index</controller>
                 <action>index</action>
                 <uri>/api</uri>
+                <icon>fa-object-group</icon>
             </api>
         </pages>
     </maintenance>

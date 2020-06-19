@@ -8,6 +8,7 @@
                 <bundle>queue</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <icon>fa-cogs</icon>
                 <visible>1</visible>
             </queue>
         </pages>
