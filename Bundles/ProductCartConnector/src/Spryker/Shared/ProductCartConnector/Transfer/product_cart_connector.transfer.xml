@@ -31,6 +31,7 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -57,4 +58,14 @@
         <property name="fkResourceProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="ProductCriteria">
+        <property name="idStore" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

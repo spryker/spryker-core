@@ -47,9 +47,9 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CmsBlockCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addUtilDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class CmsBlockCollectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCollectorDataExpanderPlugins(Container $container)
     {
-        $container[static::COLLECTOR_DATA_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::COLLECTOR_DATA_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getCollectorDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }

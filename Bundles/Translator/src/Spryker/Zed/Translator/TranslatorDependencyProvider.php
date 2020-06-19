@@ -67,9 +67,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApplication(Container $container): Container
     {
-        $container[static::APPLICATION] = function () {
+        $container->set(static::APPLICATION, function () {
             return (new Pimple())->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -81,9 +81,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new TranslatorToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

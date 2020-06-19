@@ -21,9 +21,9 @@ class GlossaryDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::KV_STORAGE] = function (Container $container) {
+        $container->set(static::KV_STORAGE, function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
+        });
 
         return $container;
     }

@@ -38,9 +38,9 @@ class ShoppingListProductOptionConnectorDependencyProvider extends AbstractBundl
      */
     protected function addProductOptionFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OPTION, function (Container $container) {
             return new ShoppingListProductOptionConnectorToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
-        };
+        });
 
         return $container;
     }

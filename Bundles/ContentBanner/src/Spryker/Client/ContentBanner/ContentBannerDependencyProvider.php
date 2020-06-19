@@ -39,11 +39,11 @@ class ContentBannerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addClientStorage(Container $container): Container
     {
-        $container[static::CLIENT_CONTENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CONTENT_STORAGE, function (Container $container) {
             return new ContentBannerToContentStorageClientBridge(
                 $container->getLocator()->contentStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

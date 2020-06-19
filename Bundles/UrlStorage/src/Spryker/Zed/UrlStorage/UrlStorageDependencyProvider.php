@@ -73,9 +73,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitizeService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new UrlStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new UrlStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_URL] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_URL, function (Container $container) {
             return new UrlStorageToUrlQueryContainerBridge($container->getLocator()->url()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -115,9 +115,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_URL] = function () {
+        $container->set(static::PROPEL_QUERY_URL, $container->factory(function () {
             return SpyUrlQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -129,9 +129,9 @@ class UrlStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new UrlStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

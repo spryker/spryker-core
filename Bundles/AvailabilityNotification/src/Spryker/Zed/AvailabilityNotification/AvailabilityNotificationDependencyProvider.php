@@ -68,11 +68,11 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new AvailabilityNotificationToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addUtilValidateService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_VALIDATE, function (Container $container) {
             return new AvailabilityNotificationToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new AvailabilityNotificationToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new AvailabilityNotificationToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new AvailabilityNotificationToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -140,9 +140,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new AvailabilityNotificationToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         return $container;
     }
@@ -154,9 +154,9 @@ class AvailabilityNotificationDependencyProvider extends AbstractBundleDependenc
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new AvailabilityNotificationToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }

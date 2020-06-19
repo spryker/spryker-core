@@ -28,8 +28,4 @@ use Codeception\Actor;
 class PropelBusinessTester extends Actor
 {
     use _generated\PropelBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

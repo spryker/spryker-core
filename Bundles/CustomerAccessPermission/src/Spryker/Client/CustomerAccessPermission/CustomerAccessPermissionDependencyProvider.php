@@ -41,9 +41,9 @@ class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvi
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CustomerAccessPermissionPermissionToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class CustomerAccessPermissionDependencyProvider extends AbstractDependencyProvi
      */
     protected function addCustomerAccessStorageClient($container): Container
     {
-        $container[static::CLIENT_CUSTOMER_ACCESS_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER_ACCESS_STORAGE, function (Container $container) {
             return new CustomerAccessPermissionPermissionToCustomerAccessStorageClientBridge($container->getLocator()->customerAccessStorage()->client());
-        };
+        });
 
         return $container;
     }
