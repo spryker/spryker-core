@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
+
 class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
 {
     /**
@@ -15,11 +18,19 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     protected $stateDisplayNameExpander;
 
     /**
+     * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
+     */
+    protected $omsRepository;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface $stateDisplayNameExpander
      */
-    public function __construct(StateDisplayNameExpanderInterface $stateDisplayNameExpander)
-    {
+    public function __construct(
+        StateDisplayNameExpanderInterface $stateDisplayNameExpander,
+        OmsRepositoryInterface $omsRepository
+    ) {
         $this->stateDisplayNameExpander = $stateDisplayNameExpander;
+        $this->omsRepository = $omsRepository;
     }
 
     /**
@@ -29,7 +40,7 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
      */
     public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array
     {
-        $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
+        $itemTransfers = $this->getOrderItems($orderTransfers);
         if (!$itemTransfers) {
             return $orderTransfers;
         }
@@ -59,22 +70,6 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function extractItemTransfersFromOrderTransfers(array $orderTransfers): array
-    {
-        $itemTransfers = [];
-
-        foreach ($orderTransfers as $orderTransfer) {
-            $itemTransfers[] = $orderTransfer->getItems()->getArrayCopy();
-        }
-
-        return array_merge([], ...$itemTransfers);
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return string[][]
@@ -96,5 +91,57 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
         }
 
         return $itemStateDisplayNames;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(array $orderTransfers): array
+    {
+        $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
+        if ($itemTransfers) {
+            return $itemTransfers;
+        }
+
+        $salesOrderReferences = $this->extractSalesOrderReferences($orderTransfers);
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())
+            ->setOrderReferences($salesOrderReferences);
+
+        return $this->omsRepository
+            ->getOrderItems($orderItemFilterTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return int[]
+     */
+    protected function extractSalesOrderReferences(array $orderTransfers): array
+    {
+        $salesOrderIds = [];
+
+        foreach ($orderTransfers as $orderTransfer) {
+            $salesOrderIds[] = $orderTransfer->getOrderReference();
+        }
+
+        return $salesOrderIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function extractItemTransfersFromOrderTransfers(array $orderTransfers): array
+    {
+        $itemTransfers = [];
+
+        foreach ($orderTransfers as $orderTransfer) {
+            $itemTransfers[] = $orderTransfer->getItems()->getArrayCopy();
+        }
+
+        return array_merge([], ...$itemTransfers);
     }
 }

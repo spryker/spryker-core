@@ -388,7 +388,10 @@ class OmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderStateDisplayNameExpander(): OrderStateDisplayNameInterface
     {
-        return new OrderStateDisplayNameExpander($this->createStateDisplayNameExpander());
+        return new OrderStateDisplayNameExpander(
+            $this->createStateDisplayNameExpander(),
+            $this->getRepository()
+        );
     }
 
     /**

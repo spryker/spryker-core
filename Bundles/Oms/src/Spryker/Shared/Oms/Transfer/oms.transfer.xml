@@ -136,6 +136,7 @@
 
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
     </transfer>
 
     <transfer name="ReservationRequest">
