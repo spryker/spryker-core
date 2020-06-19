@@ -116,7 +116,7 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return int[]
+     * @return string[]
      */
     protected function extractSalesOrderReferences(array $orderTransfers): array
     {
