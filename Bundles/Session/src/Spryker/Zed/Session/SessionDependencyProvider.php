@@ -58,9 +58,9 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::SESSION_CLIENT] = function () use ($container) {
+        $container->set(static::SESSION_CLIENT, function () use ($container) {
             return $container->getLocator()->session()->client();
-        };
+        });
 
         return $container;
     }
@@ -72,13 +72,13 @@ class SessionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMonitoringService(Container $container)
     {
-        $container[static::MONITORING_SERVICE] = function () use ($container) {
+        $container->set(static::MONITORING_SERVICE, function () use ($container) {
             $sessionToMonitoringServiceBridge = new SessionToMonitoringServiceBridge(
                 $container->getLocator()->monitoring()->service()
             );
 
             return $sessionToMonitoringServiceBridge;
-        };
+        });
 
         return $container;
     }

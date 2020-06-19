@@ -81,9 +81,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -109,9 +109,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -137,11 +137,11 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipSalesOrderThresholdFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipSalesOrderThresholdFacadeBridge(
                 $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -153,11 +153,11 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToMerchantRelationshipFacadeBridge(
                 $container->getLocator()->merchantRelationship()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -169,11 +169,11 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new MerchantRelationshipSalesOrderThresholdGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -185,9 +185,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_MERCHANT_RELATIONSHIP] = function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_RELATIONSHIP, $container->factory(function () {
             return SpyMerchantRelationshipQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -199,9 +199,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addMerchantRelationshipSalesOrderThresholdPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD] = function () {
+        $container->set(static::PROPEL_QUERY_MERCHANT_RELATIONSHIP_SALES_ORDER_THRESHOLD, $container->factory(function () {
             return SpyMerchantRelationshipSalesOrderThresholdQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -213,9 +213,9 @@ class MerchantRelationshipSalesOrderThresholdGuiDependencyProvider extends Abstr
      */
     protected function addSalesOrderThresholdFormExpanderPlugins(Container $container): Container
     {
-        $container[static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getSalesOrderThresholdFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }

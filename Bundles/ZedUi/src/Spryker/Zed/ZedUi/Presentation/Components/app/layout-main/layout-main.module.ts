@@ -7,7 +7,7 @@ import { LogoModule } from '@spryker/logo';
 import { NavigationModule } from '@spryker/navigation';
 
 import { LayoutMainComponent } from './layout-main.component';
-import { IconDashboardModule, IconProfileModule } from '../../icons';
+import { IconDashboardModule, IconProfileModule, IconOffersModule } from '../../icons';
 
 @NgModule({
     imports: [
@@ -18,7 +18,8 @@ import { IconDashboardModule, IconProfileModule } from '../../icons';
         LogoModule,
         NavigationModule,
         IconDashboardModule,
-	    IconProfileModule
+	    IconProfileModule,
+        IconOffersModule,
     ],
     declarations: [LayoutMainComponent],
     exports: [LayoutMainComponent],

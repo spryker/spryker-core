@@ -82,9 +82,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new AvailabilityToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -96,9 +96,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueryContainerProductBundle(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_BUNDLE, function (Container $container) {
             return new AvailabilityGuiToProductBundleQueryContainerBridge($container->getLocator()->productBundle()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -110,9 +110,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueryContainerAvailability(Container $container)
     {
-        $container[static::QUERY_CONTAINER_AVAILABILITY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_AVAILABILITY, function (Container $container) {
             return new AvailabilityGuiToAvailabilityQueryContainerBridge($container->getLocator()->availability()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -124,9 +124,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFacadeStock(Container $container)
     {
-        $container[static::FACADE_STOCK] = function (Container $container) {
+        $container->set(static::FACADE_STOCK, function (Container $container) {
             return new AvailabilityGuiToStockBridge($container->getLocator()->stock()->facade());
-        };
+        });
 
         return $container;
     }
@@ -138,9 +138,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFacadeLocale(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new AvailabilityGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -152,9 +152,9 @@ class AvailabilityGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new AvailabilityGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }

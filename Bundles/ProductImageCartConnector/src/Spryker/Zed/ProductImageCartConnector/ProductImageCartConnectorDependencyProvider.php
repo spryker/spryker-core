@@ -25,9 +25,9 @@ class ProductImageCartConnectorDependencyProvider extends AbstractBundleDependen
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductImageCartConnectorToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
 
         return $container;
     }

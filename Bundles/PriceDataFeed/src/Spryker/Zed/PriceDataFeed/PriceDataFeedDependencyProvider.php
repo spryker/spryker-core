@@ -45,13 +45,13 @@ class PriceDataFeedDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::PRICE_PRODUCT_QUERY_CONTAINER] = function (Container $container) {
+        $container->set(static::PRICE_PRODUCT_QUERY_CONTAINER, function (Container $container) {
             $priceQueryContainer = $container->getLocator()
                 ->priceProduct()
                 ->queryContainer();
 
             return new PriceDataFeedToPriceBridge($priceQueryContainer);
-        };
+        });
 
         return $container;
     }

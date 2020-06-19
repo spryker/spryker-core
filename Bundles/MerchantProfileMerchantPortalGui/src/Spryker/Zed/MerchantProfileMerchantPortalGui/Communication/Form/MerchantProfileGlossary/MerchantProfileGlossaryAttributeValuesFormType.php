@@ -38,8 +38,8 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
     protected const PLACEHOLDER_BANNER_URL_GLOSSARY = 'Provide a banner URL';
     protected const PLACEHOLDER_DELIVERY_TIME_GLOSSARY = 'Provide Average Delivery Time';
     protected const PLACEHOLDER_TERMS_CONDITIONS_GLOSSARY = 'Provide Terms & Conditions';
-    protected const PLACEHOLDERL_CANCELLATION_POLICY_GLOSSARY = 'Provide Return Policy';
-    protected const PLACEHOLDERL_IMPRINT_GLOSSARY = 'Provide Imprint';
+    protected const PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY = 'Provide Return Policy';
+    protected const PLACEHOLDER_IMPRINT_GLOSSARY = 'Provide Imprint';
     protected const PLACEHOLDER_DATA_PRIVACY_GLOSSARY = 'Provide Data Privacy';
 
     /**
@@ -144,7 +144,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
-                'placeholder' => static::PLACEHOLDERL_CANCELLATION_POLICY_GLOSSARY,
+                'placeholder' => static::PLACEHOLDER_CANCELLATION_POLICY_GLOSSARY,
             ],
         ]);
 
@@ -163,7 +163,7 @@ class MerchantProfileGlossaryAttributeValuesFormType extends AbstractType
             'required' => false,
             'attr' => [
                 'class' => 'html-editor',
-                'placeholder' => static::PLACEHOLDERL_IMPRINT_GLOSSARY,
+                'placeholder' => static::PLACEHOLDER_IMPRINT_GLOSSARY,
             ],
         ]);
 
