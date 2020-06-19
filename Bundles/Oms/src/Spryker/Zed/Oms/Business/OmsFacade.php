@@ -741,4 +741,36 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
             ->createStateMachineReader()
             ->getOrderItemManualEvents($orderItemFilterTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createStateDisplayNameExpander()
+            ->expandOrderItemsWithStateDisplayName($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderListExpander()
+            ->expandOrdersWithItemStateDisplayNames($orderTransfers);
+    }
 }

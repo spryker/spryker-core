@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
@@ -92,4 +93,11 @@ interface FinderInterface
      * @return bool
      */
     public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string|null
+     */
+    public function getItemStateDisplayName(ItemTransfer $itemTransfer): ?string;
 }

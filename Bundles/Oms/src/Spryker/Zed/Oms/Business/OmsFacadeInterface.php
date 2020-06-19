@@ -659,4 +659,34 @@ interface OmsFacadeInterface
      * @return string[][]
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands an order items state with displayName property.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands orders with a list of unique display state names from order items.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array;
 }

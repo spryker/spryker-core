@@ -34,18 +34,26 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected $customerOrderOverviewHydrator;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     */
+    protected $orderListExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[] $orderListExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
-        SalesToOmsInterface $omsFacade
+        SalesToOmsInterface $omsFacade,
+        array $orderListExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->customerOrderOverviewHydrator = $customerOrderOverviewHydrator;
+        $this->orderListExpanderPlugins = $orderListExpanderPlugins;
     }
 
     /**
@@ -82,6 +90,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         }
 
         $orderListTransfer->setOrders($orders);
+        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
 
         return $orderListTransfer;
     }
@@ -149,5 +158,19 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         $collection = $paginationModel->getResults();
 
         return $collection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function executeOrderListExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        foreach ($this->orderListExpanderPlugins as $orderListExpanderPlugin) {
+            $orderListTransfer = $orderListExpanderPlugin->expand($orderListTransfer);
+        }
+
+        return $orderListTransfer;
     }
 }

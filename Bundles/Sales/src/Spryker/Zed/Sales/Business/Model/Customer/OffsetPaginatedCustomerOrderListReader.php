@@ -32,18 +32,26 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     */
+    protected $orderListExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[] $orderListExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
         OrderHydratorInterface $orderHydrator,
-        SalesToOmsInterface $omsFacade
+        SalesToOmsInterface $omsFacade,
+        array $orderListExpanderPlugins = []
     ) {
         $this->salesRepository = $salesRepository;
         $this->orderHydrator = $orderHydrator;
         $this->omsFacade = $omsFacade;
+        $this->orderListExpanderPlugins = $orderListExpanderPlugins;
     }
 
     /**
@@ -60,7 +68,10 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
             return $orderListTransfer;
         }
 
-        return $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
+        $orderListTransfer = $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
+        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
+
+        return $orderListTransfer;
     }
 
     /**
@@ -81,5 +92,19 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
         }
 
         return $orderListTransfer->setOrders($orderTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function executeOrderListExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        foreach ($this->orderListExpanderPlugins as $orderListExpanderPlugin) {
+            $orderListTransfer = $orderListExpanderPlugin->expand($orderListTransfer);
+        }
+
+        return $orderListTransfer;
     }
 }
