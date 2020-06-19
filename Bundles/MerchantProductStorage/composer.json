@@ -6,9 +6,10 @@
     "php": ">=7.2",
     "spryker/event-behavior": "*",
     "spryker/kernel": "^3.30.0",
-    "spryker/merchant-product": "*",
-    "spryker/merchant-product-offer-storage": "*",
-    "spryker/propel-orm": "*",
+    "spryker/merchant-product": "^0.1.0",
+    "spryker/propel-orm": "^1.10.0",
+    "spryker/storage": "^3.15.0",
+    "spryker/synchronization": "^1.11.0*",
     "spryker/synchronization-behavior": "*",
     "spryker/synchronization-extension": "*"
   },

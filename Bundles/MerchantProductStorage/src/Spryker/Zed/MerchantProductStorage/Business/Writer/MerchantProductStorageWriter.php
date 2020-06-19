@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductStorage\Business\Writer;
 
-use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface;
 use Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageRepositoryInterface;
@@ -51,10 +50,7 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      */
     public function writeCollectionByIdProductAbstractEvents(array $eventTransfers): void
     {
-        $idProductAbstracts = $this->eventBehaviorFacade->getEventTransfersAdditionalValues(
-            $eventTransfers,
-            SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT
-        );
+        $idProductAbstracts = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
         if (!$idProductAbstracts) {
             return;

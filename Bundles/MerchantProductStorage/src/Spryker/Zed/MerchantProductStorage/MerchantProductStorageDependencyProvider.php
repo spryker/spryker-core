@@ -10,7 +10,7 @@ namespace Spryker\Zed\MerchantProductStorage;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
@@ -52,7 +52,7 @@ class MerchantProductStorageDependencyProvider extends AbstractBundleDependencyP
     protected function addEventBehaviorFacade(Container $container): Container
     {
         $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
-            return new MerchantProductOfferStorageToEventBehaviorFacadeBridge(
+            return new MerchantProductStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
         });

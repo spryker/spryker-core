@@ -26,6 +26,8 @@ class MerchantProductStorageClient extends AbstractClient implements MerchantPro
      */
     public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
     {
-        return new MerchantProductStorageTransfer();
+        return $this->getFactory()
+            ->createMerchantProductStorageReader()
+            ->findOne($idProductAbstract);
     }
 }

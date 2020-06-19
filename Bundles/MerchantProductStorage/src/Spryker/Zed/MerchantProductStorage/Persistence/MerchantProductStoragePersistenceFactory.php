@@ -39,7 +39,7 @@ class MerchantProductStoragePersistenceFactory extends AbstractPersistenceFactor
     /**
      * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
      */
-    public function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
+    public function getMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {
         return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::PROPEL_QUERY_MERCHANT_PRODUCT);
     }

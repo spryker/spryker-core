@@ -38,7 +38,7 @@ class MerchantProductStorageSubscriber extends AbstractPlugin implements EventSu
         );
         $eventCollection->addListenerQueued(
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_UNPUBLISH,
-            new MerchantProductStoragePublishListener()
+            new MerchantProductStorageUnpublishListener()
         );
         $eventCollection->addListenerQueued(
             MerchantProductEvents::ENTITY_SPY_MERCHANT_PRODUCT_ABSTRACT_UPDATE,

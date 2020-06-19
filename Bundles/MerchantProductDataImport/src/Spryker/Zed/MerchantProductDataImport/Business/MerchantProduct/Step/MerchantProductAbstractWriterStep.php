@@ -12,6 +12,7 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\MerchantProductDataSetInterface;
 
 class MerchantProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -37,6 +38,8 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
 
         $merchantProductAbstractEntity->fromArray($dataSet->getArrayCopy());
         $merchantProductAbstractEntity->save();
+
+        $this->addPublishEvents(MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH, $merchantProductAbstractEntity->getFkProductAbstract());
     }
 
     /**

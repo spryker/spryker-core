@@ -26,7 +26,7 @@ class MerchantProductStorageRepository extends AbstractRepository implements Mer
     public function getMerchantProductsByIdProductAbstracts(array $idProductAbstracts): MerchantProductCollectionTransfer
     {
         $merchantProductEntities = $this->getFactory()
-            ->createMerchantProductAbstractPropelQuery()
+            ->getMerchantProductAbstractPropelQuery()
             ->joinWithMerchant()
             ->joinWithProductAbstract()
             ->filterByFkProductAbstract_In($idProductAbstracts)
