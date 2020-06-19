@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProductSearch\Persistence;
 
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
+use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -39,7 +39,7 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
             ->filterByFkMerchant_In($merchantIds);
 
         return $merchantProductAbstractPropelQuery
-            ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
+            ->select([SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
     }
@@ -67,7 +67,7 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
         $merchantData = $merchantProductAbstractPropelQuery
             ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME])
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
-            ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
+            ->withColumn(SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
             ->withColumn(SpyStoreTableMap::COL_NAME, static::KEY_STORE_NAME)
             ->orderBy(static::KEY_ABSTRACT_PRODUCT_ID)
             ->find()

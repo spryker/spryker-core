@@ -33,6 +33,19 @@ class MerchantProductSearchDependencyProvider extends AbstractBundleDependencyPr
 
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductPageSearchFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+
         $container = $this->addMerchantProductAbstractPropelQuery($container);
 
         return $container;

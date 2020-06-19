@@ -33,10 +33,18 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
      */
     public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
     {
-        $merchantNames = array_merge(
-            $productAbstractPageSearchTransfer->getMerchantNames(),
-            $productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames()
-        );
-        $productAbstractPageSearchTransfer->setMerchantNames(array_unique($merchantNames));
+        $merchantNames = $productAbstractPageSearchTransfer->getMerchantNames();
+
+        foreach ($productData[ProductPageSearchConfig::PRODUCT_ABSTRACT_PAGE_LOAD_DATA]->getMerchantNames() as $store => $names) {
+            if (array_key_exists($store, $merchantNames)) {
+                $merchantNames[$store] = array_unique(array_merge($merchantNames[$store], $names));
+
+                continue;
+            }
+
+            $merchantNames[$store] = $names;
+        }
+
+        $productAbstractPageSearchTransfer->setMerchantNames($merchantNames);
     }
 }
