@@ -16,4 +16,5 @@ class OmsConfig
     public const STATE_TYPE_FLAG_EXCLUDE_FROM_INVOICE = 'exclude from invoice';
     public const STATE_TYPE_FLAG_READY_FOR_INVOICE = 'ready for invoice';
     public const STATE_TYPE_FLAG_WAITING_FOR_EXPORT = 'waiting for export';
+    public const STATE_TYPE_FLAG_CANCELLABLE = 'cancellable';
 }
