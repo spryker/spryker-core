@@ -63,6 +63,8 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
 
         if (!$this->hasPages($rootNavigationElement)) {
             $rootNavigationElement[MenuFormatter::PAGES] = $navigationInMergedNavigationData[MenuFormatter::PAGES];
+
+            return $rootNavigationElement;
         }
 
         $rootNavigationElement[MenuFormatter::PAGES] = $this->mergeNavigationElementsRecursively(
@@ -130,10 +132,28 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
             }
 
             $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
-            $navigationData = array_merge($navigationData, [$navigationName => $navigation]);
+            if ($this->toAddFirstLevelNavigation($navigation)) {
+                $navigationData = array_merge($navigationData, [$navigationName => $navigation]);
+            }
         }
 
         return $navigationData;
+    }
+
+    /**
+     * @param array $navigation
+     *
+     * @return bool
+     */
+    protected function toAddFirstLevelNavigation(array $navigation): bool
+    {
+        foreach ($navigation[MenuFormatter::PAGES] as $childNavigation) {
+            if (isset($childNavigation[MenuFormatter::VISIBLE]) && $childNavigation[MenuFormatter::VISIBLE] === '0') {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
