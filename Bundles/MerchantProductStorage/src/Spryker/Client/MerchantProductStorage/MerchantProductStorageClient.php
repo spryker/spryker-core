@@ -15,8 +15,19 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class MerchantProductStorageClient extends AbstractClient implements MerchantProductStorageClientInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer
+     */
     public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
     {
-        return new MerchantProductStorageTransfer();
+        return $this->getFactory()
+            ->createMerchantProductStorageReader()
+            ->findOne($idProductAbstract);
     }
 }
