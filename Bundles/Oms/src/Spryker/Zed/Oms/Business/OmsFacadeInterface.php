@@ -701,7 +701,7 @@ interface OmsFacadeInterface
      * - Reads order items from persistence.
      * - Gets the current state machine process for each order item.
      * - Reads state display name from XML definition.
-     * - Expands an order items state with displayName property.
+     * - Expands an order items state with displayName property if it exists in the XML definition.
      *
      * @api
      *
@@ -716,7 +716,7 @@ interface OmsFacadeInterface
      * - Reads order items from persistence.
      * - Gets the current state machine process for each order item.
      * - Reads state display name from XML definition.
-     * - Expands orders with a list of unique display state names from order items.
+     * - Expands orders with items only, with a list of unique display item state names.
      *
      * @api
      *
