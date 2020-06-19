@@ -98,16 +98,16 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getOrderItems(array $orderTransfers): array
+    protected function getOrderItems(array $orderTransfers): array
     {
         $itemTransfers = $this->extractItemTransfersFromOrderTransfers($orderTransfers);
         if ($itemTransfers) {
             return $itemTransfers;
         }
 
-        $salesOrderReferences = $this->extractSalesOrderReferences($orderTransfers);
+        $orderReferences = $this->extractOrderReferences($orderTransfers);
         $orderItemFilterTransfer = (new OrderItemFilterTransfer())
-            ->setOrderReferences($salesOrderReferences);
+            ->setOrderReferences($orderReferences);
 
         return $this->omsRepository
             ->getOrderItems($orderItemFilterTransfer);
@@ -118,15 +118,15 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
      *
      * @return string[]
      */
-    protected function extractSalesOrderReferences(array $orderTransfers): array
+    protected function extractOrderReferences(array $orderTransfers): array
     {
-        $salesOrderIds = [];
+        $orderReferences = [];
 
         foreach ($orderTransfers as $orderTransfer) {
-            $salesOrderIds[] = $orderTransfer->getOrderReference();
+            $orderReferences[] = $orderTransfer->getOrderReference();
         }
 
-        return $salesOrderIds;
+        return $orderReferences;
     }
 
     /**
