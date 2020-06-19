@@ -9,7 +9,6 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 
 use ErrorException;
 use Exception;
-use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface;
 use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
@@ -74,57 +73,11 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
         }
 
         $navigationDefinition->merge($rootDefinition);
-
         $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve($this->zedNavigationConfig->getMergeStrategy());
-        if (!$navigationMergeStrategy) {
-            return $navigationDefinition->toArray();
-        }
 
         return $navigationMergeStrategy->mergeNavigation(
             $navigationDefinition->toArray(),
-            $rootDefinition->toArray(),
-            $this->getSecondLevelNavigationData($navigationDefinition->toArray())
+            $rootDefinition->toArray()
         );
-    }
-
-    /**
-     * @param array $navigationDefinitionData
-     *
-     * @return array
-     */
-    protected function getSecondLevelNavigationData(array $navigationDefinitionData): array
-    {
-        $navigationData = [];
-        foreach ($navigationDefinitionData as $key => $navigation) {
-            if (!isset($navigation[MenuFormatter::PAGES])) {
-                continue;
-            }
-
-            if ($this->needAddFirstLevelNavigationWithNonVisiblePages($navigation)) {
-                $navigationData = array_merge($navigationData, [$key => $navigation]);
-
-                continue;
-            }
-
-            $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
-        }
-
-        return $navigationData;
-    }
-
-    /**
-     * @param array $navigation
-     *
-     * @return bool
-     */
-    protected function needAddFirstLevelNavigationWithNonVisiblePages(array $navigation): bool
-    {
-        foreach ($navigation[MenuFormatter::PAGES] as $childNavigation) {
-            if (!isset($childNavigation[MenuFormatter::VISIBLE]) || $childNavigation[MenuFormatter::VISIBLE] !== '0') {
-                return false;
-            }
-        }
-
-        return true;
     }
 }

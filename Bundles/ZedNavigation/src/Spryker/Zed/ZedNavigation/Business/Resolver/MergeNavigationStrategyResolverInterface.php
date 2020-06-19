@@ -14,7 +14,7 @@ interface MergeNavigationStrategyResolverInterface
     /**
      * @param string $mergeStrategy
      *
-     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface|null
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
      */
-    public function resolve(string $mergeStrategy): ?NavigationMergeStrategyInterface;
+    public function resolve(string $mergeStrategy): NavigationMergeStrategyInterface;
 }

@@ -25,24 +25,24 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     /**
      * @param array $navigationDefinitionData
      * @param array $rootDefinitionData
-     * @param array $secondLevelNavigationData
      *
      * @return array
      */
-    public function mergeNavigation(array $navigationDefinitionData, array $rootDefinitionData, array $secondLevelNavigationData): array
+    public function mergeNavigation(array $navigationDefinitionData, array $rootDefinitionData): array
     {
+        $mergedNavigationData = $this->getMergedNavigationData($navigationDefinitionData);
         foreach ($rootDefinitionData as &$rootNavigation) {
-            if (!isset($rootNavigation[MenuFormatter::PAGES])) {
+            if (!$this->hasPages($rootNavigation)) {
                 continue;
             }
 
             foreach ($rootNavigation[MenuFormatter::PAGES] as $navigationName => &$rootNavigationElement) {
-                $navigationInSecondLevelNavigationData = $this->getNavigationInSecondLevelNavigationData(
-                    $secondLevelNavigationData,
+                $navigationInMergedNavigationData = $this->getNavigationInMergedNavigationData(
+                    $mergedNavigationData,
                     $navigationName
                 );
 
-                $rootNavigationElement = $this->mergeNavigationElementPages($navigationInSecondLevelNavigationData, $rootNavigationElement);
+                $rootNavigationElement = $this->mergeNavigationElementPages($navigationInMergedNavigationData, $rootNavigationElement);
             }
         }
 
@@ -50,41 +50,43 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigationInSecondLevelNavigationData
+     * @param array $navigationInMergedNavigationData
      * @param array $rootNavigationElement
      *
      * @return array
      */
-    protected function mergeNavigationElementPages(array $navigationInSecondLevelNavigationData, array $rootNavigationElement): array
+    protected function mergeNavigationElementPages(array $navigationInMergedNavigationData, array $rootNavigationElement): array
     {
-        if (isset($navigationInSecondLevelNavigationData[MenuFormatter::PAGES])) {
-            if (!isset($rootNavigationElement[MenuFormatter::PAGES])) {
-                $rootNavigationElement[MenuFormatter::PAGES] = $navigationInSecondLevelNavigationData[MenuFormatter::PAGES];
-            }
-
-            $rootNavigationElement[MenuFormatter::PAGES] = $this->mergeNavigationElementsRecursively(
-                $navigationInSecondLevelNavigationData[MenuFormatter::PAGES],
-                $rootNavigationElement[MenuFormatter::PAGES]
-            );
+        if (!$this->hasPages($navigationInMergedNavigationData)) {
+            return $rootNavigationElement;
         }
+
+        if (!$this->hasPages($rootNavigationElement)) {
+            $rootNavigationElement[MenuFormatter::PAGES] = $navigationInMergedNavigationData[MenuFormatter::PAGES];
+        }
+
+        $rootNavigationElement[MenuFormatter::PAGES] = $this->mergeNavigationElementsRecursively(
+            $navigationInMergedNavigationData[MenuFormatter::PAGES],
+            $rootNavigationElement[MenuFormatter::PAGES]
+        );
 
         return $rootNavigationElement;
     }
 
     /**
-     * @param array $navigationInSecondLevelNavigationData
+     * @param array $navigationInMergedNavigationData
      * @param array $rootNavigationElement
      *
      * @return array
      */
     protected function mergeNavigationElementsRecursively(
-        array $navigationInSecondLevelNavigationData,
+        array $navigationInMergedNavigationData,
         array $rootNavigationElement
     ): array {
-        $mergedNavigationData = $navigationInSecondLevelNavigationData;
-        foreach ($rootNavigationElement as $key => &$value) {
-            if (is_array($value) && isset($mergedNavigationData[$key]) && is_array($mergedNavigationData[$key])) {
-                $mergedNavigationData[$key] = $this->mergeNavigationElementsRecursively($mergedNavigationData[$key], $value);
+        $mergedNavigationData = $navigationInMergedNavigationData;
+        foreach ($rootNavigationElement as $navigationName => &$navigation) {
+            if (is_array($navigation) && isset($mergedNavigationData[$navigationName]) && is_array($mergedNavigationData[$navigationName])) {
+                $mergedNavigationData[$navigationName] = $this->mergeNavigationElementsRecursively($mergedNavigationData[$navigationName], $navigation);
             }
         }
 
@@ -92,25 +94,55 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $secondLevelNavigationData
+     * @param array $mergedNavigationData
      * @param string $navigationName
      *
      * @return array
      */
-    protected function getNavigationInSecondLevelNavigationData(array $secondLevelNavigationData, string $navigationName): array
+    protected function getNavigationInMergedNavigationData(array $mergedNavigationData, string $navigationName): array
     {
-        $iterator = new RecursiveArrayIterator($secondLevelNavigationData);
-        $recursive = new RecursiveIteratorIterator(
+        $iterator = new RecursiveArrayIterator($mergedNavigationData);
+        $navigationRecursiveIterator = new RecursiveIteratorIterator(
             $iterator,
             RecursiveIteratorIterator::SELF_FIRST
         );
 
-        foreach ($recursive as $key => $value) {
+        foreach ($navigationRecursiveIterator as $key => $navigation) {
             if ($key === $navigationName) {
-                return $value;
+                return $navigation;
             }
         }
 
         return [];
+    }
+
+    /**
+     * @param array $navigationDefinitionData
+     *
+     * @return array
+     */
+    protected function getMergedNavigationData(array $navigationDefinitionData): array
+    {
+        $navigationData = [];
+        foreach ($navigationDefinitionData as $navigationName => &$navigation) {
+            if (!$this->hasPages($navigation)) {
+                continue;
+            }
+
+            $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
+            $navigationData = array_merge($navigationData, [$navigationName => $navigation]);
+        }
+
+        return $navigationData;
+    }
+
+    /**
+     * @param array $navigationData
+     *
+     * @return bool
+     */
+    protected function hasPages(array $navigationData): bool
+    {
+        return isset($navigationData[MenuFormatter::PAGES]);
     }
 }

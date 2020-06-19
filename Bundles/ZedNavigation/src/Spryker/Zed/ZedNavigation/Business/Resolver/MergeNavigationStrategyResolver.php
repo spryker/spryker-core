@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ZedNavigation\Business\Resolver;
 
+use Spryker\Zed\ZedNavigation\Business\Exception\MergeStrategyNotFoundException;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 
@@ -35,9 +36,11 @@ class MergeNavigationStrategyResolver implements MergeNavigationStrategyResolver
     /**
      * @param string $mergeStrategy
      *
-     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface|null
+     * @throws \Spryker\Zed\ZedNavigation\Business\Exception\MergeStrategyNotFoundException
+     *
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
      */
-    public function resolve(string $mergeStrategy): ?NavigationMergeStrategyInterface
+    public function resolve(string $mergeStrategy): NavigationMergeStrategyInterface
     {
         foreach ($this->navigationMergeStrategies as $navigationMergeStrategy) {
             if ($navigationMergeStrategy->getMergeStrategy() === $this->zedNavigationConfig->getMergeStrategy()) {
@@ -45,6 +48,9 @@ class MergeNavigationStrategyResolver implements MergeNavigationStrategyResolver
             }
         }
 
-        return null;
+        throw new MergeStrategyNotFoundException(sprintf(
+            'Merge strategy with name "%s" not found',
+            $mergeStrategy
+        ));
     }
 }

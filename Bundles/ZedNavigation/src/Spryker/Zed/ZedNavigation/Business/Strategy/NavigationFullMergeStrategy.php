@@ -22,11 +22,10 @@ class NavigationFullMergeStrategy implements NavigationMergeStrategyInterface
     /**
      * @param array $navigationDefinitionData
      * @param array $rootDefinitionData
-     * @param array $secondLevelNavigationData
      *
      * @return array
      */
-    public function mergeNavigation(array $navigationDefinitionData, array $rootDefinitionData, array $secondLevelNavigationData): array
+    public function mergeNavigation(array $navigationDefinitionData, array $rootDefinitionData): array
     {
         return $navigationDefinitionData;
     }
