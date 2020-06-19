@@ -14,7 +14,16 @@ class ZedNavigationConfig extends AbstractBundleConfig
 {
     public const MAX_LEVEL_COUNT = 5;
 
+    /**
+     * Specification:
+     *  - Strategy by which root navigation elements are being merged with core navigation elements.
+     */
     public const FULL_MERGE_STRATEGY = 'fullMergeStrategy';
+
+    /**
+     * Specification:
+     *  - Strategy by which root navigation elements are being merged with core navigation elements excluding first and second level.
+     */
     public const BREADCRUMB_MERGE_STRATEGY = 'breadcrumbMergeStrategy';
 
     /**
@@ -103,6 +112,9 @@ class ZedNavigationConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     *  - Defines by which strategy merging of navigation elements should be.
+     *
      * @api
      *
      * @return string
