@@ -115,6 +115,16 @@ interface CartClientInterface
 
     /**
      * Specification:
+     *  - Returns the calculated combined quantity of items in cart.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getItemsQuantity(): int;
+
+    /**
+     * Specification:
      *  - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface.
      *  - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      *  - Remove items from cart using quote storage strategy.
