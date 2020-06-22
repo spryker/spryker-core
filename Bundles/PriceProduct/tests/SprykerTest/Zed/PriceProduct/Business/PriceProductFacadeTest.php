@@ -21,10 +21,12 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use ReflectionClass;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
@@ -888,6 +890,7 @@ class PriceProductFacadeTest extends Unit
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
@@ -923,6 +926,7 @@ class PriceProductFacadeTest extends Unit
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
@@ -948,6 +952,7 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -985,6 +990,7 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1028,6 +1034,7 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1072,6 +1079,7 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
+        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1142,6 +1150,17 @@ class PriceProductFacadeTest extends Unit
 
         //Assert
         $this->assertSame(0, $productConcreteTransfer->getPrices()->count());
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearProductPriceTransferCache(): void
+    {
+        $reflectionClass = new ReflectionClass(Reader::class);
+        $reflectionProperty = $reflectionClass->getProperty('resolvedPriceProductTransferCollection');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
     }
 
     /**
