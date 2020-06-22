@@ -41,7 +41,7 @@ class BulkTouch implements BulkTouchInterface
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
     {
         if (!$this->touchConfig->isTouchEnabled()) {
-            return count($itemIds);
+            return 0;
         }
 
         $affectedRows = 0;
