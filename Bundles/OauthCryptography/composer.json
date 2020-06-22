@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker/config": "*",
     "spryker/kernel": "^3.33.0",
-    "spryker/oauth-extention": "^1.0.0"
+    "spryker/oauth-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
