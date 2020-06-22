@@ -168,6 +168,13 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             $salesOrderItemQuery->filterByIdSalesOrderItem_In($orderItemFilterTransfer->getSalesOrderItemIds());
         }
 
+        if($orderItemFilterTransfer->getOrderReferences()){
+            $salesOrderItemQuery
+                ->useOrderQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByOrderReference_In($orderItemFilterTransfer->getOrderReferences())
+                ->endUse();
+        }
+
         return $salesOrderItemQuery;
     }
 
