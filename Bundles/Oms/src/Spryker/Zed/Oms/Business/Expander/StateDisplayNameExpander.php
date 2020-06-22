@@ -53,7 +53,7 @@ class StateDisplayNameExpander implements StateDisplayNameExpanderInterface
                 continue;
             }
 
-            $displayName = $this->finder->getItemStateDisplayName($mappedItemTransfer);
+            $displayName = $this->finder->findItemStateDisplayName($mappedItemTransfer);
             if (!$displayName) {
                 continue;
             }

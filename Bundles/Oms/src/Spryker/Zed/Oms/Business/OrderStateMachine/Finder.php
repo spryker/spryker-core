@@ -363,11 +363,9 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @throws \Spryker\Zed\Oms\Business\Exception\StateNotFoundException
-     *
      * @return string|null
      */
-    public function getItemStateDisplayName(ItemTransfer $itemTransfer): ?string
+    public function findItemStateDisplayName(ItemTransfer $itemTransfer): ?string
     {
         $processName = $itemTransfer->requireProcess()->getProcess();
         $process = $this->builder->createProcess($processName);
@@ -375,12 +373,7 @@ class Finder implements FinderInterface
 
         $allStates = $process->getAllStates();
         if (!isset($allStates[$stateName])) {
-            throw new StateNotFoundException(sprintf(
-                sprintf(
-                    'State with name "%s" not found in any StateMachine processes.',
-                    $stateName
-                )
-            ));
+            return null;
         }
 
         $state = $allStates[$stateName];

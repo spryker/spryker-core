@@ -99,5 +99,5 @@ interface FinderInterface
      *
      * @return string|null
      */
-    public function getItemStateDisplayName(ItemTransfer $itemTransfer): ?string;
+    public function findItemStateDisplayName(ItemTransfer $itemTransfer): ?string;
 }

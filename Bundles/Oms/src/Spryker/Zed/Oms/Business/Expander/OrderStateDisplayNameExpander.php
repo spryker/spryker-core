@@ -7,11 +7,14 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
 {
+    protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
+
     /**
      * @var \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface
      */
@@ -78,16 +81,17 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     protected function getItemStateDisplayNamesGroupedByIdSalesOrder(array $itemTransfers): array
     {
         $itemStateDisplayNames = [];
-
         foreach ($itemTransfers as $itemTransfer) {
             $idSalesOrder = $itemTransfer->getFkSalesOrder();
-            $itemStateTransfer = $itemTransfer->getState();
-
-            if (!$idSalesOrder || !$itemStateTransfer || !$itemStateTransfer->getDisplayName()) {
+            if (!$idSalesOrder) {
                 continue;
             }
 
-            $displayName = $itemStateTransfer->getDisplayName();
+            $displayName = $this->findDisplayName($itemTransfer);
+            if (!$displayName) {
+                continue;
+            }
+
             $itemStateDisplayNames[$idSalesOrder][$displayName] = $displayName;
         }
 
@@ -144,5 +148,29 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
         }
 
         return array_merge([], ...$itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return string|null
+     */
+    protected function findDisplayName(ItemTransfer $itemTransfer): ?string
+    {
+        $stateTransfer = $itemTransfer->getState();
+        if (!$stateTransfer) {
+            return null;
+        }
+
+        if ($stateTransfer->getDisplayName()) {
+            return $stateTransfer->getDisplayName();
+        }
+
+        $stateName = trim($stateTransfer->getName());
+        $stateName = mb_strtolower($stateName);
+        $stateName = str_replace(' ', '-', $stateName);
+        $stateName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $stateName;
+
+        return $stateName;
     }
 }
