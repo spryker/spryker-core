@@ -14,9 +14,13 @@ use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
+use Exception;
 
 class TriggerLocker implements LockerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -112,6 +116,8 @@ class TriggerLocker implements LockerInterface
      * @param array $identifiers
      * @param string|null $details
      *
+     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
+     *
      * @return bool
      */
     protected function acquireBatch(array $identifiers, string $details = null): bool
@@ -128,7 +134,20 @@ class TriggerLocker implements LockerInterface
             $this->persist($stateMachineLockEntity);
         }
 
-        return $this->commit();
+        try {
+            $isCommitSuccess = $this->commit();
+        } catch (Exception $exception) {
+            throw new LockException(
+                sprintf(
+                    'State machine trigger is locked. Propel exception: %s',
+                    $exception->getMessage()
+                ),
+                $exception->getCode(),
+                $exception
+            );
+        }
+
+        return $isCommitSuccess;
     }
 
     /**
