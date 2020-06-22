@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentStorage\Dependency\Service;
 
-interface ContentStorageToUtilEncodingInterface
+interface ContentStorageToUtilEncodingServiceInterface
 {
     /**
      * @param string $jsonValue

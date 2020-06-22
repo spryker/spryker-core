@@ -33,7 +33,7 @@ class ContentStorageClient extends AbstractClient implements ContentStorageClien
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
      *
      * @api
      *

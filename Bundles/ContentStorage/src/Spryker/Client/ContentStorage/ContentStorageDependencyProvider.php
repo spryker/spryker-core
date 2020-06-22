@@ -9,7 +9,7 @@ namespace Spryker\Client\ContentStorage;
 
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientBridge;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceBridge;
-use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingBridge;
+use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 
@@ -30,7 +30,7 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->addClientStorage($container);
         $container = $this->addServiceSynchronization($container);
-        $container = $this->addUtilEncoding($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -72,10 +72,10 @@ class ContentStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addUtilEncoding(Container $container): Container
+    protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ContentStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
+            return new ContentStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
         });
 
         return $container;

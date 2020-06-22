@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ContentTypeContextTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
-use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface;
+use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceInterface;
 use Spryker\Shared\ContentStorage\ContentStorageConfig;
 
 class ContentStorageReader implements ContentStorageReaderInterface
@@ -27,19 +27,19 @@ class ContentStorageReader implements ContentStorageReaderInterface
     protected $synchronizationService;
 
     /**
-     * @var \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface
+     * @var \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
      * @param \Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface $synchronizationService
-     * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingInterface $utilEncodingService
+     * @param \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ContentStorageToStorageClientInterface $storageClient,
         ContentStorageToSynchronizationServiceInterface $synchronizationService,
-        ContentStorageToUtilEncodingInterface $utilEncodingService
+        ContentStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
@@ -61,11 +61,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
             return null;
         }
 
-        return (new ContentTypeContextTransfer())
-            ->setIdContent($content[ContentStorageConfig::ID_CONTENT])
-            ->setKey($contentKey)
-            ->setTerm($content[ContentStorageConfig::TERM_KEY])
-            ->setParameters($content[ContentStorageConfig::CONTENT_KEY]);
+        return $this->setContentTypeContextData($content, $contentKey);
     }
 
     /**
@@ -80,33 +76,31 @@ class ContentStorageReader implements ContentStorageReaderInterface
      */
     public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array
     {
-        $contentsStorageData = $this->storageClient->getMulti(
+        $contentStorageData = $this->storageClient->getMulti(
             $this->generateKeys($contentKeys, $localeName)
         );
 
-        if (!$contentsStorageData) {
+        if (!$contentStorageData) {
             return [];
         }
 
-        $contentsStorageTransfers = [];
-        foreach ($contentsStorageData as $contentStorageKey => $contentStorageDatum) {
+        $contentStorageTransfers = [];
+        foreach ($contentStorageData as $contentStorageKey => $contentStorageDatum) {
             if (!$contentStorageDatum) {
                 continue;
             }
 
-            $contentsStorageData = $this->utilEncodingService->decodeJson($contentStorageDatum, true);
-            if (!$contentsStorageData) {
+            $decodedContentsStorageData = $this->utilEncodingService->decodeJson($contentStorageDatum, true);
+            if (!$decodedContentsStorageData) {
                 continue;
             }
+
             $contentKey = $this->getContentKey($contentStorageKey);
-            $contentsStorageTransfers[$contentKey] = (new ContentTypeContextTransfer())
-                ->setIdContent($contentsStorageData[ContentStorageConfig::ID_CONTENT])
-                ->setKey($contentKey)
-                ->setTerm($contentsStorageData[ContentStorageConfig::TERM_KEY])
-                ->setParameters($contentsStorageData[ContentStorageConfig::CONTENT_KEY]);
+
+            $contentStorageTransfers[$contentKey] = $this->setContentTypeContextData($decodedContentsStorageData, $contentKey);
         }
 
-        return $contentsStorageTransfers;
+        return $contentStorageTransfers;
     }
 
     /**
@@ -152,5 +146,22 @@ class ContentStorageReader implements ContentStorageReaderInterface
         $storageKeyArray = explode(':', $contentStorageKey);
 
         return end($storageKeyArray);
+    }
+
+    /**
+     * @phpstan-param array<string, mixed> $content
+     *
+     * @param array $content
+     * @param string $contentKey
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer
+     */
+    protected function setContentTypeContextData(array $content, string $contentKey): ContentTypeContextTransfer
+    {
+        return (new ContentTypeContextTransfer())
+            ->setIdContent($content[ContentStorageConfig::ID_CONTENT])
+            ->setKey($contentKey)
+            ->setTerm($content[ContentStorageConfig::TERM_KEY])
+            ->setParameters($content[ContentStorageConfig::CONTENT_KEY]);
     }
 }

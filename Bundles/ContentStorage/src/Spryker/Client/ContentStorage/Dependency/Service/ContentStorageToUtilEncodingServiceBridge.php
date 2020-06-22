@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ContentStorage\Dependency\Service;
 
-class ContentStorageToUtilEncodingBridge implements ContentStorageToUtilEncodingInterface
+class ContentStorageToUtilEncodingServiceBridge implements ContentStorageToUtilEncodingServiceInterface
 {
     /**
      * @var \Spryker\Service\UtilEncoding\UtilEncodingServiceInterface
