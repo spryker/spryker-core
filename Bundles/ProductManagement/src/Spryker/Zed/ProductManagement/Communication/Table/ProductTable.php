@@ -87,6 +87,7 @@ class ProductTable extends AbstractProductTable
             static::COL_PRODUCT_TYPE,
             static::COL_STORE_RELATION,
             static::COL_ACTIONS,
+            static::COL_IS_BUNDLE,
         ]);
 
         $config->setSearchable([
@@ -265,10 +266,10 @@ class ProductTable extends AbstractProductTable
     {
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
             if ($spyProductEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return 'Yes';
+                return $this->generateLabel('Yes', null);
             }
         }
 
-        return 'No';
+        return $this->generateLabel('No', null);
     }
 }

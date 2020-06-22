@@ -63,3 +63,26 @@ Reference,Reference
 "Order Overview","Order Overview"
 "Total taxes","Total taxes"
 Reclamations,Reclamations
+Claim,Claim
+"payment pending","Payment Pending"
+exported,Exported
+shipped,Shipped
+delivered,Delivered
+refunded,Refunded
+closed,Closed
+pay,Pay
+ship,Ship
+stock-update,"Stock Update"
+close,Close
+refund,Refund
+"Cancelled amount","Cancelled amount"
+"Unique Product Quantity","Unique Product Quantity"
+"Comment successfully added","Comment successfully added."
+"Address Details","Address Details"
+"Middle name","Middle name"
+"Po box","Po box"
+"Zip code","Zip code"
+Address1,"Address 1"
+Address2,"Address 2"
+"Cell phone","Cell Phone"
+"Edit Address for Order: %idSalesOrder%","Edit Address for Order: %idSalesOrder%"

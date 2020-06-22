@@ -55,3 +55,20 @@ of,von
 "Shipping Method",Versandart
 Shipments,Liefermethoden
 "Available in the following store(s)","Verfügbar in den folgenden regionen"
+"Create Shipment","Sendung Erstellen"
+"Edit Shipment","Sendung Bearbeiten"
+"New Shipment for Order: %idSalesOrder%","Neue Sendung für Bestellung: %idSalesOrder%"
+"Address 1","Adresse 1"
+"Address 2","Adresse 2"
+"ZIP code",Postleitzahl
+Cellphone,Mobiltelefon
+"Shipment method",Versandmethode
+"Requested delivery date",Wunschlieferdatum
+"Order items inside this shipment","Artikel in dieser Sendung"
+"Current shipment","Aktuelle Sendung"
+"Please fill out this field.","Füllen Sie bitte dieses Feld aus."
+"Please select an item in the list.","Wählen Sie bitte ein Element aus der Liste aus."
+-select-,-auswählen-
+"Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
+"Edit Shipment for Order: N%idSalesOrder%","Sendung für Bestellung N%idSalesOrder% bearbeiten"
+"Shipment has been successfully edited.","Sendung wurde erfolgreich bearbeitet."

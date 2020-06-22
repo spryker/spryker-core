@@ -16,7 +16,7 @@
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_content %}
             <p>
-                <strong>{{ 'Category key:' | trans }}</strong> {{ category.categoryKey }}
+                <strong>{{ 'Category Key:' | trans }}</strong> {{ category.categoryKey }}
             </p>
 
             <p>
@@ -32,9 +32,10 @@
             </p>
 
             <br>
+
             {% for renderedRelationData in renderedRelations %}
                 {% if renderedRelationData.items %}
-                    <h3>{{ renderedRelationData.name }}</h3>
+                    <h3>{{ renderedRelationData.name | trans }}</h3>
                 {% endif %}
 
                 {% set url = '' %}

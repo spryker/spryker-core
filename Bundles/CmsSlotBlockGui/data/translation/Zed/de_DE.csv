@@ -7,8 +7,8 @@ Delete,Löschen
 ID,ID
 Inactive,Inaktiv
 "List of Blocks for ""%SLOT_NAME%"" Slot","Liste der Blöcke für ""%SLOT_NAME%"" Slot"
-"Move Down",Runter
-"Move Up",Hoch
+"Move Down","Nach unten"
+"Move Up","Nach oben"
 Name,Name
 Save,Speichern
 "Select or type a block name to assign","Zum Zuweisen, Blocknamen auswählen oder eingeben"

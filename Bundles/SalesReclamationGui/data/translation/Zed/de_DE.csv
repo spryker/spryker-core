@@ -1,1 +1,6 @@
 Reclamations,Reklamationen
+"Create Reclamation","Reklamation erstellen"
+"Reclamation id:%s for order %s successfully created","Reklamation id:%s erfolgreich für Bestellung %s erstellt."
+Open,Offen
+Closed,Geschlossen
+"Reclamation with id %id% closed","Reklamation %id% geschlossen."
