@@ -169,6 +169,26 @@ class MailBuilder implements MailBuilderInterface
     }
 
     /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function addRecipientBcc(string $email, ?string $name = null)
+    {
+        $mailRecipientTransfer = (new MailRecipientTransfer())
+            ->setEmail($email);
+
+        if ($name != null) {
+            $mailRecipientTransfer->setName($name);
+        }
+
+        $this->getMailTransfer()->addRecipientBcc($mailRecipientTransfer);
+
+        return $this;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
     public function build()

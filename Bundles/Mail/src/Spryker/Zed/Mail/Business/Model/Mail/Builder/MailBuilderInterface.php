@@ -62,6 +62,14 @@ interface MailBuilderInterface
     public function addRecipient($email, $name);
 
     /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function addRecipientBcc(string $email, ?string $name = null);
+
+    /**
      * @return \Generated\Shared\Transfer\MailTransfer
      */
     public function build();
