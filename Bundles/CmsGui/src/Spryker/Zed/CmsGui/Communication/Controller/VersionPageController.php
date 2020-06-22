@@ -36,6 +36,14 @@ class VersionPageController extends AbstractController
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
+        $form = $this->getFactory()->createPublishVersionPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponseExternal($request->headers->get('referer'));
+        }
+
         try {
             $this->getFactory()
                 ->getCmsFacade()

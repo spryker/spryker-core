@@ -15,6 +15,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
+use Spryker\Zed\ProductSetGui\Communication\Form\ActivateProductSetForm;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeactivateProductSetForm;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -181,7 +183,7 @@ class ProductSetTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateActivateButton(SpyProductSet $productSetEntity)
+    protected function generateActivateButton1(SpyProductSet $productSetEntity)
     {
         return $this->generateViewButton(
             Url::generate('/product-set-gui/edit/activate', [
@@ -196,13 +198,33 @@ class ProductSetTable extends AbstractTable
      *
      * @return string
      */
+    protected function generateActivateButton(SpyProductSet $productSetEntity)
+    {
+        return $this->generateFormButton(
+            Url::generate('/product-set-gui/edit/activate', [
+                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
+            ]),
+            'Activate',
+            ActivateProductSetForm::class
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
+     *
+     * @return string
+     */
     protected function generateDeactivateButton(SpyProductSet $productSetEntity)
     {
-        return $this->generateRemoveButton(
+        return $this->generateFormButton(
             Url::generate('/product-set-gui/edit/deactivate', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Deactivate'
+            'Deactivate',
+            DeactivateProductSetForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-danger safe-submit',
+            ]
         );
     }
 }

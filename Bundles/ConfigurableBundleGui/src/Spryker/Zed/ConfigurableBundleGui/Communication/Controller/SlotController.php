@@ -300,13 +300,21 @@ class SlotController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
+        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
+            ]) . static::SLOTS_TAB_ANCHOR;
+
+        $form = $this->getFactory()->createDeleteConfigurableBundleSlotForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $configurableBundleTemplateSlotResponseTransfer = $this->getFactory()
             ->getConfigurableBundleFacade()
             ->deleteConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
-
-        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-            static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
-        ]) . static::SLOTS_TAB_ANCHOR;
 
         if ($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_DELETED);

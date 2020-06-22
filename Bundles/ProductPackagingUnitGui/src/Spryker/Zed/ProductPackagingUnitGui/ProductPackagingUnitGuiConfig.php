@@ -16,5 +16,5 @@ class ProductPackagingUnitGuiConfig extends AbstractBundleConfig
 
     public const URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST = '/product-packaging-unit-gui/';
     public const URL_PRODUCT_PACKAGING_UNIT_TYPE_EDIT = '/product-packaging-unit-gui/edit/';
-    public const URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE = '/product-packaging-unit-gui/delete/';
+    public const URL_PRODUCT_PACKAGING_UNIT_TYPE_DELETE = '/product-packaging-unit-gui/delete';
 }

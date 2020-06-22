@@ -8,8 +8,12 @@
 namespace Spryker\Zed\CompanyGui\Communication;
 
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
+use Spryker\Zed\CompanyGui\Communication\Form\ActivateCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\ApproveCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\CompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Form\DataProvider\CompanyFormDataProvider;
+use Spryker\Zed\CompanyGui\Communication\Form\DeactivateCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\DenyCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Table\CompanyTable;
 use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutor;
 use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface;
@@ -63,6 +67,38 @@ class CompanyGuiCommunicationFactory extends AbstractCommunicationFactory
         return new CompanyFormDataProvider(
             $this->getCompanyFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createActivateCompanyForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ActivateCompanyForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeativateCompanyForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeactivateCompanyForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createApproveCompanyForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ApproveCompanyForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDenyCompanyForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DenyCompanyForm::class);
     }
 
     /**

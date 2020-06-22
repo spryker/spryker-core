@@ -32,6 +32,14 @@ class DeleteMerchantRelationshipController extends AbstractController
         $idMerchantRelationship = $this->castId($request->get(MerchantRelationshipTableConstants::REQUEST_ID_MERCHANT_RELATIONSHIP));
         $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL, MerchantRelationshipTableConstants::URL_MERCHANT_RELATIONSHIP_LIST);
 
+        $form = $this->getFactory()->createDeleteMerchantRelationshipForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $merchantRelationshipTransfer = (new MerchantRelationshipTransfer())
             ->setIdMerchantRelationship($idMerchantRelationship);
         $this->getFactory()

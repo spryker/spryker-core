@@ -12,6 +12,7 @@ use Orm\Zed\ProductSearch\Persistence\Map\SpyProductSearchAttributeTableMap;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
+use Spryker\Zed\ProductSearch\Communication\Form\DeleteFilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class FilterPreferencesTable extends AbstractTable
@@ -156,7 +157,9 @@ class FilterPreferencesTable extends AbstractTable
                     SearchPreferencesController::PARAM_ID,
                     $idProductSearchAttribute
                 ),
-                'Delete'
+                'Delete',
+                [],
+                DeleteFilterPreferencesForm::class
             ),
         ];
 

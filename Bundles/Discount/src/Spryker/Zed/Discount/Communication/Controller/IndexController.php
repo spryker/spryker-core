@@ -247,8 +247,20 @@ class IndexController extends AbstractController
     public function toggleDiscountVisibilityAction(Request $request)
     {
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
-        $visibility = $request->query->get(self::URL_PARAM_VISIBILITY);
+
+        $form = $this->getFactory()->createDiscountVisibilityForm()->handleRequest($request);
         $redirectUrl = $request->query->get(self::URL_PARAM_REDIRECT_URL);
+        if (!$redirectUrl) {
+            $redirectUrl = $this->createEditRedirectUrl($idDiscount);
+        }
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $visibility = $request->query->get(self::URL_PARAM_VISIBILITY);
 
         $isActive = mb_convert_case($visibility, MB_CASE_LOWER, 'UTF-8') == 'activate' ? true : false;
 
@@ -261,10 +273,6 @@ class IndexController extends AbstractController
                 'Discount successfully %s.',
                 $isActive ? 'activated' : 'deactivated'
             ));
-        }
-
-        if (!$redirectUrl) {
-            $redirectUrl = $this->createEditRedirectUrl($idDiscount);
         }
 
         return new RedirectResponse($redirectUrl);

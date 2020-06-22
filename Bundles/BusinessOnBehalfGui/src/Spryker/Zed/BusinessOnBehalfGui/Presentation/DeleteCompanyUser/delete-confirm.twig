@@ -21,10 +21,14 @@
             <p>{{ 'The Company User and all related data will be deleted permanently.' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
-                <a href="{{ url(
-                    '/business-on-behalf-gui/delete-company-user/delete',
-                    {'id-company-user': companyUser.idCompanyUser}
-                )}}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans }}</a>
+                {{ form_start(deleteForm, {
+                    'action': url(
+                        '/business-on-behalf-gui/delete-company-user/delete',
+                        {'id-company-user': companyUser.idCompanyUser}
+                    )
+                }) }}
+                <input type="submit" value="{{ 'Delete company user' | trans}}" class="btn btn-danger safe-submit">
+                {{ form_end(deleteForm) }}
             </div>
         {% endblock %}
 

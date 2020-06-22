@@ -25,6 +25,14 @@ class DeleteController extends AbstractProductPackagingUnitGuiController
     public function indexAction(Request $request): RedirectResponse
     {
         $idProductPackagingUnitType = $this->castId($request->query->get(ProductPackagingUnitGuiConfig::REQUEST_PARAM_ID_PRODUCT_PACKAGING_UNIT_TYPE));
+
+        $form = $this->getFactory()->createDeleteProductPackagingUnitForm()->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse($this->getErorrRedirectUrl($idProductPackagingUnitType, $request));
+        }
+
         $productPackagingUnitTypeTransfer = $this->findProductPackagingUnitTypeById($idProductPackagingUnitType);
 
         if ($this->deleteProductPackagingUnitType($productPackagingUnitTypeTransfer)) {
