@@ -9,8 +9,12 @@ namespace Spryker\Client\ProductBundle\Plugin\Cart;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
+use Spryker\Client\Kernel\AbstractPlugin;
 
-class ItemCountQuantityPlugin implements ItemCountPluginInterface
+/**
+ * @method \Spryker\Client\ProductBundle\ProductBundleFactory getFactory()
+ */
+class ItemCountQuantityPlugin extends AbstractPlugin implements ItemCountPluginInterface
 {
     /**
      * Specification:
@@ -24,19 +28,8 @@ class ItemCountQuantityPlugin implements ItemCountPluginInterface
      */
     public function getItemCount(QuoteTransfer $quoteTransfer)
     {
-        $quantity = 0;
-        foreach ($quoteTransfer->getBundleItems() as $bundleItemTransfer) {
-            $quantity += $bundleItemTransfer->getQuantity();
-        }
-
-        foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            if ($itemTransfer->getRelatedBundleItemIdentifier()) {
-                continue;
-            }
-
-            $quantity += $itemTransfer->getQuantity();
-        }
-
-        return $quantity;
+        return $this->getFactory()
+            ->createItemQuantityCounter()
+            ->getItemCount($quoteTransfer);
     }
 }
