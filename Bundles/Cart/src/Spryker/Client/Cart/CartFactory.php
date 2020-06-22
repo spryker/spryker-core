@@ -11,8 +11,6 @@ use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Operation\CartOperation;
 use Spryker\Client\Cart\Operation\CartOperationInterface;
-use Spryker\Client\Cart\Operation\ItemQuantityCounter;
-use Spryker\Client\Cart\Operation\ItemQuantityCounterInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxy;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProxyInterface;
@@ -32,14 +30,6 @@ class CartFactory extends AbstractFactory
             $this->createCartChangeRequestExpander(),
             $this->getQuoteItemFinderPlugin()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\Cart\Operation\ItemQuantityCounterInterface
-     */
-    public function createItemQuantityCounter(): ItemQuantityCounterInterface
-    {
-        return new ItemQuantityCounter();
     }
 
     /**

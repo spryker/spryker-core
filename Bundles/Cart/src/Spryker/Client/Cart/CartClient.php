@@ -60,20 +60,6 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getItemsQuantity(): int
-    {
-        return $this->getFactory()
-            ->createItemQuantityCounter()
-            ->getItemsQuantity($this->getQuote());
-    }
-
-    /**
      * @return \Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface
      */
     protected function getItemCounter()
