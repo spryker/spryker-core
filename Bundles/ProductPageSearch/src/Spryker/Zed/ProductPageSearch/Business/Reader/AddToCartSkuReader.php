@@ -53,7 +53,7 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
         $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);
         $productConcreteTransfers = $this->executeProductAbstractAddToCartPlugins($productConcreteTransfers);
 
-        return $this->mapProductConcreteTransfersToProductAbstractAttToCartSkus($productConcreteTransfers);
+        return $this->mapProductConcreteTransfersToProductAbstractSkus($productConcreteTransfers);
     }
 
     /**
@@ -75,7 +75,7 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
      *
      * @return string[]
      */
-    protected function mapProductConcreteTransfersToProductAbstractAttToCartSkus(array $productConcreteTransfers): array
+    protected function mapProductConcreteTransfersToProductAbstractSkus(array $productConcreteTransfers): array
     {
         $productAbstractAddToCartSkus = [];
 
