@@ -24,7 +24,7 @@
     <transfer name="MailRecipient">
         <property name="email" type="string"/>
         <property name="name" type="string"/>
-        <property name="type" type="string" deprecated="Will be removed without replacement" />
+        <property name="type" type="string" deprecated="Will be removed without replacement"/>
     </transfer>
 
     <transfer name="MailSender">
