@@ -7,13 +7,17 @@ Created,Erstellt
 "Created to","Erstellt bis"
 "Create Offer","Angebot erstellen"
 Denied,Verweigert
+"Expiring in %expiringOffersLimit% days","Expiring in %expiringOffersLimit% days"
 "Has stock","Has stock"
 Image,Bild
 Inactive,Inaktiv
+"Low on Stock","Low on Stock"
+"Manage Offers","Manage Offers"
 "Merchant SKU",Händler-SKU
 Name,Name
 Offers,Angeboten
 Offline,Offline
+"On Marketplace","On Marketplace"
 Online,Online
 "Out of stock",Ausverkauft
 Pending,Ausstehend
@@ -27,8 +31,11 @@ Stores,Stores
 Updated,Aktualisiert
 "Updated from","Aktualisiert von"
 "Updated to","Aktualisiert bis"
+Valid,Gültig
 "Valid From","Gültig Von"
+"Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Gültig Bis"
 Visibility,Sichtbarkeit
 "With Offers","Mit Angeboten"
+"With Stock","With Stock"
 "Without Offers","Ohne Angeboten"

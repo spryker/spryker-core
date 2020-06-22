@@ -196,4 +196,9 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="DashboardActionButton">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>

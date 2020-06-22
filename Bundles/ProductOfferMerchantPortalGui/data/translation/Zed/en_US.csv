@@ -7,13 +7,17 @@ Created,Created
 "Created to","Created to"
 "Create Offer","Create Offer"
 Denied,Denied
+"Expiring in %expiringOffersLimit% days","Expiring in %expiringOffersLimit% days"
 "Has stock","Has stock"
 Image,Image
 Inactive,Inactive
+"Low on Stock","Low on Stock"
+"Manage Offers","Manage Offers"
 "Merchant SKU","Merchant SKU"
 Name,Name
 Offers,Offers
 Offline,Offline
+"On Marketplace","On Marketplace"
 Online,Online
 "Out of stock","Out of stock"
 Pending,Pending
@@ -27,8 +31,11 @@ Stores,Stores
 Updated,Updated
 "Updated from","Updated from"
 "Updated to","Updated to"
+Valid,Valid
 "Valid From","Valid From"
+"Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Valid To"
 Visibility,Visibility
 "With Offers","With Offers"
+"With Stock","With Stock"
 "Without Offers","Without Offers"

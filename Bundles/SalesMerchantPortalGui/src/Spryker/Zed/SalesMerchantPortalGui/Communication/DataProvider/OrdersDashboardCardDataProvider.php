@@ -85,10 +85,9 @@ class OrdersDashboardCardDataProvider implements OrdersDashboardCardDataProvider
     {
         $ordersDashboardCardCountData = $this->getOrdersDashboardCardCountData();
         $ordersDashboardCardCountData['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();
-        $ordersStoresCountData = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
+        $ordersDashboardCardCountData['ordersStoresCountData'] = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
         );
-        dd($ordersStoresCountData);
 
         return $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_content.twig',

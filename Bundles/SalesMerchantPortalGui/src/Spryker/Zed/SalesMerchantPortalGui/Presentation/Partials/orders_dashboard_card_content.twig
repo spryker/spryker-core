@@ -1,5 +1,17 @@
 <div>
     <div>
+        {{ 'Per Store' | trans }}
+    </div>
+    <div>
+        {% for countOrdersPetStore in ordersStoresCountData %}
+            <div>
+                {{ countOrdersPetStore.ordersCountTotal }} {{ countOrdersPetStore.store }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+<div>
+    <div>
         {{ 'New' | trans }}
     </div>
     <div>
