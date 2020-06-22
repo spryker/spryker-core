@@ -40,17 +40,19 @@ interface ContentProductAbstractListRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
-     * @phpstan-param array<string, array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>> $mappedContentProductAbstractListTypeTransfers
+     * @phpstan-param array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer> $contentProductAbstractListTypeTransfers
      *
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
-     * @param array[] $mappedContentProductAbstractListTypeTransfers
+     * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[] $contentProductAbstractListTypeTransfers
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function createContentProductAbstractListsRestResources(
-        array $mappedContentProductAbstractListTypeTransfers,
-        RestRequestInterface $restRequest
+        array $contentProductAbstractListTypeTransfers,
+        RestRequestInterface $restRequest,
+        string $storeName
     ): array;
 }

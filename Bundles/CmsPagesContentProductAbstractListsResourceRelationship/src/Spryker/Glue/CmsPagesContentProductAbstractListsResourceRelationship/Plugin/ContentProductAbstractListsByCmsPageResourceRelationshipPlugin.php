@@ -5,21 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentBannersRestApi\Plugin;
+namespace Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Plugin;
 
-use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
+use Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\CmsPagesContentProductAbstractListsResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @method \Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiFactory getFactory()
+ * @method \Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\CmsPagesContentProductAbstractListsResourceRelationshipFactory getFactory()
  */
-class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ContentProductAbstractListsByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds `content-banners` resource as a relationship by cms-page reference.
+     * - Adds content-banners resource as a relationship by cms-page reference.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin i
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createContentBannersByCmsPageReferenceResourceRelationshipExpander()
+            ->createContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -44,6 +44,6 @@ class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin i
      */
     public function getRelationshipResourceType(): string
     {
-        return ContentBannersRestApiConfig::RESOURCE_CONTENT_BANNERS;
+        return CmsPagesContentProductAbstractListsResourceRelationshipConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS;
     }
 }

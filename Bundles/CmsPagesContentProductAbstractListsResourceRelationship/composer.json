@@ -1,16 +1,16 @@
 {
-  "name": "spryker/content-product-abstract-lists-rest-api",
+  "name": "spryker/cms-pages-content-product-abstract-lists-resource-relationship",
   "type": "library",
-  "description": "ContentProductAbstractListsRestApi module",
+  "description": "CmsPagesContentProductAbstractListsResourceRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/content-product": "^1.0.0",
-    "spryker/glue-application": "^1.15.0",
-    "spryker/glue-application-extension": "^1.2.0",
-    "spryker/kernel": "^3.32.0",
-    "spryker/products-rest-api": "^2.4.0",
-    "spryker/symfony": "^3.2.0"
+    "spryker/content-product-abstract-lists-rest-api": "^1.2.0",
+    "spryker/cms-storage": "^2.3.0",
+    "spryker/glue-application": "^1.8.0",
+    "spryker/glue-application-extension": "^1.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/store": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

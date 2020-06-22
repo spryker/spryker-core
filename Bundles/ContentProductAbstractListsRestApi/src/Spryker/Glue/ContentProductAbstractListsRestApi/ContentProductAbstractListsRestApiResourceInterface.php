@@ -5,20 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
+namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ContentProductAbstractListReaderInterface
+interface ContentProductAbstractListsRestApiResourceInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getContentProductAbstractListById(RestRequestInterface $restRequest): RestResponseInterface;
-
     /**
      * @phpstan-param array<string, string> $contentProductAbstractListKeys
      *
@@ -30,5 +22,5 @@ interface ContentProductAbstractListReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, RestRequestInterface $restRequest, string $storeName): array;
+    public function getContentProductAbstractListsByKeys(array $contentProductAbstractListKeys, RestRequestInterface $restRequest, string $storeName): array;
 }

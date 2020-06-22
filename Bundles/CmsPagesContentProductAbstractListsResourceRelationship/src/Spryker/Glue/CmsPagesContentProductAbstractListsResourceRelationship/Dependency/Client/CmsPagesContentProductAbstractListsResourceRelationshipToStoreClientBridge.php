@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client;
+namespace Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Dependency\Client;
 
-class ContentProductAbstractListsRestApiToStoreClientBridge implements ContentProductAbstractListsRestApiToStoreClientInterface
+class CmsPagesContentProductAbstractListsResourceRelationshipToStoreClientBridge implements CmsPagesContentProductAbstractListsResourceRelationshipToStoreClientInterface
 {
     /**
      * @var \Spryker\Client\Store\StoreClientInterface

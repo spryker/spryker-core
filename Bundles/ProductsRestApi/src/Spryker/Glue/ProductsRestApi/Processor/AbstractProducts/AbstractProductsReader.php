@@ -24,6 +24,7 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
+    protected const PRODUCT_ABSTRACT_MAPPING_TYPE_ID = 'id';
     protected const KEY_SKU = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
@@ -175,6 +176,29 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
         }
 
         return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $restRequest);
+    }
+
+    /**
+     * @param int[] $ids
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $ids, RestRequestInterface $restRequest, string $storeName): array
+    {
+        $abstractProductCollection = $this->productStorageClient
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+                $ids,
+                $restRequest->getMetadata()->getLocale(),
+                $storeName
+            );
+
+        if (!$abstractProductCollection) {
+            return [];
+        }
+
+        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $restRequest);
     }
 
     /**

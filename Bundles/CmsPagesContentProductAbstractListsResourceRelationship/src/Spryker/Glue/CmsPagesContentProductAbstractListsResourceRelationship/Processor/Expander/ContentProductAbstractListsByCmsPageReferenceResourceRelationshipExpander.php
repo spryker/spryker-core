@@ -5,20 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander;
+namespace Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Processor\Expander;
 
-use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListReaderInterface;
+use Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Processor\Reader\ContentProductAbstractListReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander implements ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListReaderInterface
+     * @var \Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Processor\Reader\ContentProductAbstractListReaderInterface
      */
     protected $contentProductAbstractListReader;
 
     /**
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListReaderInterface $contentProductAbstractListReader
+     * @param \Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Processor\Reader\ContentProductAbstractListReaderInterface $contentProductAbstractListReader
      */
     public function __construct(ContentProductAbstractListReaderInterface $contentProductAbstractListReader)
     {
@@ -44,8 +44,8 @@ class ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander 
                 continue;
             }
 
-            foreach ($contentProductAbstractListsResources[$cmsPageReference] as $contentProductAbstractListsResources) {
-                $resource->addRelationship($contentProductAbstractListsResources);
+            foreach ($contentProductAbstractListsResources[$cmsPageReference] as $contentProductAbstractListsResource) {
+                $resource->addRelationship($contentProductAbstractListsResource);
             }
         }
     }

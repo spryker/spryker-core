@@ -19,4 +19,13 @@ interface ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
      */
     public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface;
+
+    /**
+     * @param int[] $ids
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $ids, RestRequestInterface $restRequest, string $storeName): array;
 }

@@ -11,11 +11,6 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ContentBannersRestApiConfig extends AbstractBundleConfig
 {
-    /**
-     * @uses \Spryker\Shared\ContentBannerContentBannerConfig::TWIG_FUNCTION_NAME
-     */
-    public const TWIG_FUNCTION_NAME = 'content_banner';
-
     public const RESOURCE_CONTENT_BANNERS = 'content-banners';
     public const CONTROLLER_CONTENT_BANNERS = 'content-banners-resource';
 

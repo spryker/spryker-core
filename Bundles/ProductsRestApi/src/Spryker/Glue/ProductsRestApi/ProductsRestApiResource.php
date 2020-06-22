@@ -101,4 +101,24 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
             ->createConcreteProductsReader()
             ->findProductConcreteById($idProductConcrete, $restRequest);
     }
+
+    /**
+     * Specification:
+     * - Retrieves multiple abstract product resource by ids.
+     * - Returned collection of rest resources is indexed by product abstract id.
+     *
+     * @api
+     *
+     * @param int[] $ids
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $ids, RestRequestInterface $restRequest, string $storeName): array
+    {
+        return $this->getFactory()
+            ->createAbstractProductsReader()
+            ->getProductAbstractsByIds($ids, $restRequest, $storeName);
+    }
 }

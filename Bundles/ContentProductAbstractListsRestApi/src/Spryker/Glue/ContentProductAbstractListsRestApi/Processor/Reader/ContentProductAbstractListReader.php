@@ -8,9 +8,7 @@
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
 
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -29,31 +27,15 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $contentProductAbstractListRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface
-     */
-    protected $cmsStorageClient;
-
-    /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
-        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder,
-        ContentProductAbstractListsRestApiToCmsStorageClientInterface $cmsStorageClient,
-        ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
+        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
     ) {
         $this->contentProductClient = $contentProductClient;
         $this->contentProductAbstractListRestResponseBuilder = $contentProductAbstractListRestResponseBuilder;
-        $this->cmsStorageClient = $cmsStorageClient;
-        $this->storeClient = $storeClient;
     }
 
     /**
@@ -89,31 +71,18 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     }
 
     /**
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @phpstan-param array<string, string> $contentProductAbstractListKeys
      *
-     * @param string[] $cmsPageReferences
+     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     *
+     * @param string[] $contentProductAbstractListKeys
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
+    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, RestRequestInterface $restRequest, string $storeName): array
     {
-        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
-            $cmsPageReferences,
-            $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
-        );
-
-        $groupedContentProductAbstractListKeys = [];
-        $contentProductAbstractListKeys = [];
-        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
-            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME])) {
-                $contentProductAbstractListKeys = array_merge($contentProductAbstractListKeys, $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME]);
-                $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentProductAbstractListsRestApiConfig::TWIG_FUNCTION_NAME];
-            }
-        }
-
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
             $restRequest->getMetadata()->getLocale()
@@ -123,14 +92,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             return [];
         }
 
-        $mappedProductAbstractListTypeTransfers = [];
-        foreach ($groupedContentProductAbstractListKeys as $cmsPageUuid => $contentProductAbstractListKeys) {
-            foreach ($contentProductAbstractListKeys as $contentProductAbstractListKey => $contentProductAbstractListValue) {
-                $mappedProductAbstractListTypeTransfers[$cmsPageUuid][$contentProductAbstractListKey] = $contentProductAbstractListTypeTransfers[$contentProductAbstractListValue];
-            }
-        }
-
         return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResources($mappedProductAbstractListTypeTransfers, $restRequest);
+            ->createContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers, $restRequest, $storeName);
     }
 }

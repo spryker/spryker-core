@@ -7,10 +7,10 @@
 
 namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Reader;
 
+use Spryker\Glue\CmsPagesContentBannersResourceRelationship\CmsPagesContentBannersResourceRelationshipConfig;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\Client\CmsPagesContentBannersResourceRelationshipToCmsStorageClientInterface;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\Client\CmsPagesContentBannersResourceRelationshipToStoreClientInterface;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\RestApiResource\CmsPagesContentBannersResourceRelationshipToContentBannersRestApiResourceInterface;
-use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ContentBannerReader implements ContentBannerReaderInterface
@@ -65,9 +65,9 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $contentBannerKeys = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])) {
-                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME]);
-                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
+            if (!empty($contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
+                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME]);
+                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME];
             }
         }
 

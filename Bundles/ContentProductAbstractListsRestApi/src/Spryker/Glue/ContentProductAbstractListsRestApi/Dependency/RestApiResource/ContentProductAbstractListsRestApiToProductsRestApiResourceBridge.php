@@ -35,4 +35,16 @@ class ContentProductAbstractListsRestApiToProductsRestApiResourceBridge implemen
     {
         return $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
     }
+
+    /**
+     * @param int[] $ids
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $ids, RestRequestInterface $restRequest, string $storeName): array
+    {
+        return $this->productsRestApiResource->getProductAbstractsByIds($ids, $restRequest, $storeName);
+    }
 }

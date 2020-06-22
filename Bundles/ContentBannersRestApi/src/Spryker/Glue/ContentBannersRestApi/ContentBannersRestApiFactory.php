@@ -8,8 +8,6 @@
 namespace Spryker\Glue\ContentBannersRestApi;
 
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpander;
-use Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReader;
 use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReaderInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilder;
@@ -35,16 +33,6 @@ class ContentBannersRestApiFactory extends AbstractFactory
     public function createContentBannerRestResponseBuilder(): ContentBannerRestResponseBuilderInterface
     {
         return new ContentBannerRestResponseBuilder($this->getResourceBuilder());
-    }
-
-    /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface
-     */
-    public function createContentBannersByCmsPageReferenceResourceRelationshipExpander(): ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface
-    {
-        return new ContentBannersByCmsPageReferenceResourceRelationshipExpander(
-            $this->createContentBannerReader()
-        );
     }
 
     /**
