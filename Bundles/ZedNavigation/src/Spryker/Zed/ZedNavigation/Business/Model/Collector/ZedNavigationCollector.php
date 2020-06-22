@@ -63,6 +63,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             $rootDefinition = new Config([]);
         }
 
+        $coreNavigationDefinition = new Config([]);
         foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
@@ -70,14 +71,15 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             /** @var \Zend\Config\Config $configFromFile */
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);
+            $coreNavigationDefinition->merge($configFromFile);
         }
 
-        $navigationDefinition->merge($rootDefinition);
         $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve($this->zedNavigationConfig->getMergeStrategy());
 
         return $navigationMergeStrategy->mergeNavigation(
-            $navigationDefinition->toArray(),
-            $rootDefinition->toArray()
+            $navigationDefinition,
+            $rootDefinition,
+            $coreNavigationDefinition->toArray()
         );
     }
 }

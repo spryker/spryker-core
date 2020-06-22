@@ -11,6 +11,7 @@ use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
 use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
+use Zend\Config\Config;
 
 class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInterface
 {
@@ -23,14 +24,15 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigationDefinitionData
-     * @param array $rootDefinitionData
+     * @param \Zend\Config\Config $navigationDefinition
+     * @param \Zend\Config\Config $rootDefinition
+     * @param array $coreNavigationDefinitionData
      *
      * @return array
      */
-    public function mergeNavigation(array $navigationDefinitionData, array $rootDefinitionData): array
+    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, array $coreNavigationDefinitionData): array
     {
-        $mergedNavigationData = $this->getMergedNavigationData($navigationDefinitionData);
+        $rootDefinitionData = $rootDefinition->toArray();
         foreach ($rootDefinitionData as &$rootNavigation) {
             if (!$this->hasPages($rootNavigation)) {
                 continue;
@@ -38,7 +40,8 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
 
             foreach ($rootNavigation[MenuFormatter::PAGES] as $navigationName => &$rootNavigationElement) {
                 $navigationInMergedNavigationData = $this->getNavigationInMergedNavigationData(
-                    $mergedNavigationData,
+                    $coreNavigationDefinitionData,
+                    $rootNavigationElement,
                     $navigationName
                 );
 
@@ -97,11 +100,12 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
 
     /**
      * @param array $mergedNavigationData
+     * @param array $rootNavigationElement
      * @param string $navigationName
      *
      * @return array
      */
-    protected function getNavigationInMergedNavigationData(array $mergedNavigationData, string $navigationName): array
+    protected function getNavigationInMergedNavigationData(array $mergedNavigationData, array $rootNavigationElement, string $navigationName): array
     {
         $iterator = new RecursiveArrayIterator($mergedNavigationData);
         $navigationRecursiveIterator = new RecursiveIteratorIterator(
@@ -110,50 +114,16 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
         );
 
         foreach ($navigationRecursiveIterator as $key => $navigation) {
-            if ($key === $navigationName) {
+            if (
+                $key === $navigationName
+                && $this->hasBundle($navigation)
+                && $navigation[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE]
+            ) {
                 return $navigation;
             }
         }
 
         return [];
-    }
-
-    /**
-     * @param array $navigationDefinitionData
-     *
-     * @return array
-     */
-    protected function getMergedNavigationData(array $navigationDefinitionData): array
-    {
-        $navigationData = [];
-        foreach ($navigationDefinitionData as $navigationName => &$navigation) {
-            if (!$this->hasPages($navigation)) {
-                continue;
-            }
-
-            $navigationData = array_merge_recursive($navigationData, $navigation[MenuFormatter::PAGES]);
-            if ($this->toAddFirstLevelNavigation($navigation)) {
-                $navigationData = array_merge($navigationData, [$navigationName => $navigation]);
-            }
-        }
-
-        return $navigationData;
-    }
-
-    /**
-     * @param array $navigation
-     *
-     * @return bool
-     */
-    protected function toAddFirstLevelNavigation(array $navigation): bool
-    {
-        foreach ($navigation[MenuFormatter::PAGES] as $childNavigation) {
-            if (isset($childNavigation[MenuFormatter::VISIBLE]) && $childNavigation[MenuFormatter::VISIBLE] === '0') {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
@@ -164,5 +134,15 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     protected function hasPages(array $navigationData): bool
     {
         return isset($navigationData[MenuFormatter::PAGES]);
+    }
+
+    /**
+     * @param array $navigationData
+     *
+     * @return bool
+     */
+    protected function hasBundle(array $navigationData): bool
+    {
+        return isset($navigationData[MenuFormatter::BUNDLE]);
     }
 }
