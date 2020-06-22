@@ -20,3 +20,5 @@ Status,Status
 "Store relation",Store-Beziehung
 View,Aussicht
 "View Payment Method: %s","Zahlungsmittel anzeigen: %s"
+"Payment method has been successfully updated","Zahlart wurde erfolgreich aktualisiert"
+"Payment Management","Zahlarten Management"

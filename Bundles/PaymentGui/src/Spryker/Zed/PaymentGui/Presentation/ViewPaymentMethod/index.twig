@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'View Payment Method: %s' | format(paymentMethod.name) | trans %}
+{% set widget_title = 'View Payment Method: %s'  | trans | format(paymentMethod.name) %}
 
 {% block head_title -%}
     {{ widget_title }}
@@ -25,7 +25,7 @@
                         <dd>{{ paymentMethod.name }}</dd>
                         <dt>{{ 'Payment Provider' | trans }}</dt>
                         <dd>{{ paymentMethod.paymentProvider.name }}</dd>
-                        <dt>{{ 'Is the payment method active?' | trans }}</dt>
+                        <dt>{{ 'Is the Payment Method active?' | trans }}</dt>
                         <dd><input type="checkbox" disabled {% if paymentMethod.isActive %}checked="checked"{% endif %}</dd>
                     </dl>
                 </div>

@@ -39,7 +39,7 @@ Save,Save
 "Shipment method not found","Shipment method not found"
 "Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
 Status,Status
-"Store relation","Store relation"
+"Store Relation","Store Relation"
 "Tax set","Tax set"
 "This name is already in use.","This name is already in use."
 "This shipment method key is already in use.","This shipment method key is already in use."
@@ -55,3 +55,6 @@ of,von
 "Shipping Method","Shipping Method"
 Shipments,Shipments
 "Available in the following store(s)","Available in the following store(s)"
+"Is active","Is active"
+"Add Carrier Company","Add Carrier Company"
+"Create new Carrier company","Create new Carrier company"

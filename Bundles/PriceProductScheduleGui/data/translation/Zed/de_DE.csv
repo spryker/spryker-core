@@ -58,7 +58,9 @@ Status,Status
 View,Aussicht
 "Yes, delete this price","Ja, diesen Preis löschen"
 "Yes, delete those prices","Ja, diese Preise löschen"
-"You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Ist dies, was Sie wollen?"
+"No, I want to keep those prices","Nein, ich will diese Preise behalten"
+"Delete Import","Import löschen"
+"You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Wollen Sie das wirklich?"
 "You will find below the list errors and successfully processed rows inside your import file.","Sie finden unter der Liste Fehler und erfolgreich verarbeitete Zeilen in Ihrer Importdatei."
 "Your file does not contain any errors.","Ihre Datei enthält keine Fehler."
 "Your prices are now available to your custoers based on their start and end date.","Ihre Preise sind nun entsprechend deren Start- und Enddaten für Ihre Kunden verfügbar."

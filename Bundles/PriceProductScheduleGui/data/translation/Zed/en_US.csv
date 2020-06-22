@@ -58,6 +58,8 @@ Status,Status
 View,View
 "Yes, delete this price","Yes, delete this price"
 "Yes, delete those prices","Yes, delete those prices"
+"No, I want to keep those prices","No, I want to keep those prices"
+"Delete Import","Delete Import"
 "You will delete %d prices for %d products. Is this what you want?","You will delete %d prices for %d products. Is this what you want?"
 "You will find below the list errors and successfully processed rows inside your import file.","You will find below the list errors and successfully processed rows inside your import file."
 "Your file does not contain any errors.","Your file does not contain any errors."

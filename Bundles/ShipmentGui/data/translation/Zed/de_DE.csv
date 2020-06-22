@@ -39,7 +39,7 @@ Save,Speichern
 "Shipment method not found","Versandart wurde nicht gefunden"
 "Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
 Status,Status
-"Store relation",Store-Beziehung
+"Store Relation",Store-Beziehung
 "Tax set",Steuer-Set
 "This name is already in use.","Dieser Name wird schon benutzt."
 "This shipment method key is already in use.","Diese Versandart ID wird schon verwendet."
@@ -55,3 +55,6 @@ of,von
 "Shipping Method",Versandart
 Shipments,Liefermethoden
 "Available in the following store(s)","Verfügbar in den folgenden regionen"
+"Is active","Ist aktiv"
+"Add Carrier Company","Versandanbieter hinzufügen"
+"Create new Carrier company","Versandanbieter erstellen"

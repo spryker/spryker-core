@@ -9,8 +9,10 @@
 "Company unit address update failed.","Aktualisierung der Adresse der Geschäftseinheit fehlgeschlagen."
 "Create Company Unit Address","Adresse der Geschäftseinheit erstellen"
 "Edit Company Unit Address:","Adresse der Geschäftseinheit bearbeiten:"
+"Edit Company Unit Address","Adresse der Geschäftseinheit bearbeiten:"
 "List of Company Unit Addresses","Liste der Adressen der Geschäftseinheiten"
 Number,number
 "Overview of Company Unit Addresses","Übersicht der Adressen der Geschäftseinheiten"
 Save,Speichern
 Street,Straße
+"Company Unit Addresses","Adressen der Geschäftseinheiten"

@@ -23,7 +23,7 @@ class MimeTypeSettingsTable extends AbstractTable
 
     protected const TITLE_MIME_TYPE = 'MIME Type';
     protected const TITLE_COMMENT = 'Comment';
-    protected const TITLE_IS_ALLOWED = 'Is Allowed';
+    protected const TITLE_IS_ALLOWED = 'Is allowed';
     protected const TITLE_ACTIONS = 'Actions';
 
     protected const REQUEST_ID_MIME_TYPE = 'id-mime-type';
