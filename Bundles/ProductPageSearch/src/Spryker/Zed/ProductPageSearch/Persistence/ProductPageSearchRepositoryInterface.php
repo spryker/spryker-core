@@ -63,7 +63,7 @@ interface ProductPageSearchRepositoryInterface
      *
      * @return string[]
      */
-    public function getProductAbstractAddToCartSkus(array $productAbstractIds): array;
+    public function getProductAbstractSkusByProductAbstractIds(array $productAbstractIds): array;
 
     /**
      * @param int[] $productAbstractIds

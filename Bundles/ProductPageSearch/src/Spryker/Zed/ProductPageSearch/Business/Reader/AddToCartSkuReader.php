@@ -47,7 +47,7 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
         }
 
         if (!$this->productAbstractAddToCartPlugins) {
-            return $this->productPageSearchRepository->getProductAbstractAddToCartSkus($productAbstractIds);
+            return $this->productPageSearchRepository->getProductAbstractSkusByProductAbstractIds($productAbstractIds);
         }
 
         $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);

@@ -82,7 +82,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return string[]
      */
-    public function getProductAbstractAddToCartSkus(array $productAbstractIds): array
+    public function getProductAbstractSkusByProductAbstractIds(array $productAbstractIds): array
     {
         if (!$productAbstractIds) {
             return [];
