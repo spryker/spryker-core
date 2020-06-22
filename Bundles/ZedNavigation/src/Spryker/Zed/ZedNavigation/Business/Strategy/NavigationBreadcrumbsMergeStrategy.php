@@ -98,7 +98,7 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
                 continue;
             }
 
-            if ($this->isModuleCorrect($navigation, $rootNavigationElement)) {
+            if ($this->isModule($navigation, $rootNavigationElement)) {
                 return $navigation;
             }
         }
@@ -122,7 +122,7 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
      *
      * @return bool
      */
-    protected function isModuleCorrect(array $navigation, array $rootNavigationElement): bool
+    protected function isModule(array $navigation, array $rootNavigationElement): bool
     {
         return isset($navigation[MenuFormatter::BUNDLE])
             && $navigation[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE];
