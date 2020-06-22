@@ -10,8 +10,6 @@ namespace Spryker\Client\Oauth;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientBridge;
-use Spryker\Client\OauthCryptography\Communication\Plugin\Oauth\BearerTokenAuthorizationValidatorPlugin;
-use Spryker\Client\OauthCryptography\Communication\Plugin\Oauth\FileSystemKeyLoaderPlugin;
 
 /**
  * @method \Spryker\Client\Oauth\OauthConfig getConfig()
@@ -69,10 +67,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     protected function getKeyLoaderPlugins(): array
     {
-        return [
-            // Todo: wire on project instead
-            new FileSystemKeyLoaderPlugin(),
-        ];
+        return [];
     }
 
     /**
@@ -94,9 +89,6 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     protected function getAuthorizationValidatorPlugins(): array
     {
-        return [
-            // Todo: wire on project instead
-            new BearerTokenAuthorizationValidatorPlugin(),
-        ];
+        return [];
     }
 }

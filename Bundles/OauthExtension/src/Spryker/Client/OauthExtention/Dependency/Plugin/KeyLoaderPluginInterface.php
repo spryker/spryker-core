@@ -7,9 +7,17 @@
 
 namespace Spryker\Client\OauthExtention\Dependency\Plugin;
 
+/**
+ * Plugin implementations will be used to load cryptographic keys.
+ */
 interface KeyLoaderPluginInterface
 {
     /**
+     * Specification:
+     * - Loads public keys.
+     *
+     * @api
+     *
      * @return \League\OAuth2\Server\CryptKey[]
      */
     public function loadKeys(): array;

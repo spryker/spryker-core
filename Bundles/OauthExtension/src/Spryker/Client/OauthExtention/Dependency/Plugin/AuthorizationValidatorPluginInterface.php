@@ -7,19 +7,34 @@
 
 namespace Spryker\Client\OauthExtention\Dependency\Plugin;
 
-use \League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface as LeagueAuthorizationValidatorInterface;
+use League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface as LeagueAuthorizationValidatorInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 
+/**
+ * Authorization validator plugin for validating bearer token authorization.
+ *
+ * Plugin interface assumes multiple encryption keys.
+ */
 interface AuthorizationValidatorPluginInterface extends LeagueAuthorizationValidatorInterface
 {
     /**
-     * @param \League\OAuth2\Server\CryptKey[] $keys
+     * Specification:
+     * - Sets array of public keys to the validator.
+     *
+     * @api
+     *
+     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
      *
      * @return void
      */
-    public function setPublicKeys(array $keys): void;
+    public function setPublicKeys(array $publicKeys): void;
 
     /**
+     * Specification:
+     * - Sets the access token repository instance to the validator.
+     *
+     * @api
+     *
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $repository
      *
      * @return void

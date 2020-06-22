@@ -8,19 +8,22 @@
 namespace Spryker\Client\OauthCryptography;
 
 use Spryker\Client\Kernel\AbstractBundleConfig;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Oauth\OauthConstants;
 
+/**
+ * @method \Spryker\Shared\OauthCryptography\OauthCryptographyConfig getSharedConfig()
+ */
 class OauthCryptographyConfig extends AbstractBundleConfig
 {
     /**
+     * Specification:
+     * - Returns path to public key location.
+     *
+     * @api
+     *
      * @return string
      */
     public function getPublicKeyPath(): string
     {
-        // Todo: move OauthConstants::PUBLIC_KEY_PATH to OauthCryptography.
-        // Todo: place this path to shared config, proxy here.
-        // @see \Spryker\Zed\Oauth\OauthConfig::getPublicKeyPath()
-        return Config::getInstance()->get(OauthConstants::PUBLIC_KEY_PATH);
+        return $this->getSharedConfig()->getPublicKeyPath();
     }
 }

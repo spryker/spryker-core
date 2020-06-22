@@ -7,27 +7,26 @@
 
 namespace Spryker\Client\OauthCryptography\Communication\Plugin\Oauth;
 
-use League\OAuth2\Server\CryptKey;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface;
 
 /**
- * @method \Spryker\Client\OauthCryptography\OauthCryptographyFactory getFactory()
+ * @method \Spryker\Client\OauthCryptography\OauthCryptographyClientInterface getClient()
+ * @method \Spryker\Client\OauthCryptography\OauthCryptographyConfig getConfig()
  */
 class FileSystemKeyLoaderPlugin extends AbstractPlugin implements KeyLoaderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Loads the default configured public ssh key.
+     * - Creates `CryptKey` instance in case the configured key is not one.
+     *
+     * @api
+     *
      * @return \League\OAuth2\Server\CryptKey[]
      */
     public function loadKeys(): array
     {
-        // Todo: move behind the public API.
-        $publicKey = $this->getFactory()->getConfig()->getPublicKeyPath();
-
-        if (!$publicKey instanceof CryptKey) {
-            $publicKey = new CryptKey($publicKey);
-        }
-
-        return [$publicKey];
+        return $this->getClient()->loadPublicKeys();
     }
 }
