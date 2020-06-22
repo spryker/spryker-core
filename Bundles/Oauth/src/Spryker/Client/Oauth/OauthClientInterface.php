@@ -45,6 +45,15 @@ interface OauthClientInterface
     ): OauthAccessTokenValidationResponseTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
      * Specification:
      * - Revokes refresh token by identifier and customer reference.
      * - Makes Zed request.

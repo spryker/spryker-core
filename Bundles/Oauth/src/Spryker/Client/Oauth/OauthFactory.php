@@ -12,7 +12,11 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientInterface;
 use Spryker\Client\Oauth\ResourceServer\AccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface;
+use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoader;
+use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface;
+use Spryker\Client\Oauth\ResourceServer\OauthAccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\Repository\AccessTokenRepository;
+use Spryker\Client\Oauth\ResourceServer\ResourceServer;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilder;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilderInterface;
 use Spryker\Client\Oauth\Zed\OauthStub;
@@ -32,6 +36,8 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated
+     *
      * @return \Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
@@ -40,11 +46,31 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface
+     */
+    public function createOauthAccessTokenValidator(): AccessTokenValidatorInterface
+    {
+        return new OauthAccessTokenValidator($this->createResourceServer());
+    }
+
+    /**
      * @return \Spryker\Client\Oauth\ResourceServer\ResourceServerBuilderInterface
      */
     public function createResourceServerBuilder(): ResourceServerBuilderInterface
     {
         return new ResourceServerBuilder($this->getConfig(), $this->createAccessTokenRepository());
+    }
+
+    /**
+     * @return \Spryker\Client\Oauth\ResourceServer\ResourceServer
+     */
+    public function createResourceServer(): ResourceServer
+    {
+        return new ResourceServer(
+            $this->createKeyLoader()->loadKeys(),
+            $this->createAccessTokenRepository(),
+            $this->getAuthorizationValidatorPlugins()
+        );
     }
 
     /**
@@ -61,5 +87,29 @@ class OauthFactory extends AbstractFactory
     public function getZedRequestClient(): OauthToZedRequestClientInterface
     {
         return $this->getProvidedDependency(OauthDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface
+     */
+    protected function createKeyLoader(): KeyLoaderInterface
+    {
+        return new KeyLoader($this->getKeyLoaderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface[]
+     */
+    public function getKeyLoaderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_KEY_LOADER);
+    }
+
+    /**
+     * @return \Spryker\Client\OauthExtention\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     */
+    protected function getAuthorizationValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_AUTHORIZATION_VALIDATOR);
     }
 }
