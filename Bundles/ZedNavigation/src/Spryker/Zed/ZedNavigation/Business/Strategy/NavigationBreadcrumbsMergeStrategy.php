@@ -114,16 +114,42 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
         );
 
         foreach ($navigationRecursiveIterator as $key => $navigation) {
-            if (
-                $key === $navigationName
-                && $this->hasBundle($navigation)
-                && $navigation[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE]
-            ) {
+            if ($navigationName !== $key) {
+                continue;
+            }
+
+            if ($key === $navigationName && $this->isBundleCorrect($navigation, $rootNavigationElement)) {
                 return $navigation;
             }
         }
 
         return [];
+    }
+
+    /**
+     * @param array $navigation
+     * @param array $rootNavigationElement
+     *
+     * @return bool
+     */
+    protected function isBundleCorrect(array $navigation, array $rootNavigationElement): bool
+    {
+        if (
+            (isset($navigation[MenuFormatter::BUNDLE]) && isset($rootNavigationElement[MenuFormatter::BUNDLE]))
+            && $navigation[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE]
+        ) {
+            return true;
+        }
+
+        if (!isset($navigation[MenuFormatter::PAGES])) {
+            return false;
+        }
+
+        foreach ($navigation[MenuFormatter::PAGES] as $childNavigation) {
+            return $this->isBundleCorrect($childNavigation, $rootNavigationElement);
+        }
+
+        return false;
     }
 
     /**
@@ -134,15 +160,5 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     protected function hasPages(array $navigationData): bool
     {
         return isset($navigationData[MenuFormatter::PAGES]);
-    }
-
-    /**
-     * @param array $navigationData
-     *
-     * @return bool
-     */
-    protected function hasBundle(array $navigationData): bool
-    {
-        return isset($navigationData[MenuFormatter::BUNDLE]);
     }
 }
