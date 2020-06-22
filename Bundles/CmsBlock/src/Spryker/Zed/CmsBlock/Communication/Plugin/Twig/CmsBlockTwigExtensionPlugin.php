@@ -13,10 +13,8 @@ use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
  * @method \Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface getRepository()
  * @method \Spryker\Zed\CmsBlock\Communication\CmsBlockCommunicationFactory getFactory()
  */
-class CmsBlockAsTwigPlugin extends AbstractTwigExtensionPlugin
+class CmsBlockTwigExtensionPlugin extends AbstractTwigExtensionPlugin
 {
-    protected const FUNCTION_NAME = 'renderCmsBlockAsTwig';
-
     /**
      * {@inheritDoc}
      *

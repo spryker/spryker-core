@@ -13,11 +13,8 @@ use Generated\Shared\Transfer\MailTemplateTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Mail\Business\Model\Renderer\TwigRenderer;
-use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
-use Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
-use Spryker\Zed\Mail\MailDependencyProvider;
 use Twig\Environment;
 
 /**
@@ -38,21 +35,12 @@ class TwigRendererTest extends Unit
     public const INDEX_OF_TEMPLATE_HTML = 1;
 
     /**
-     * @var \SprykerTest\Zed\Mail\MailBusinessTester
-     */
-    protected $tester;
-
-    /**
      * @return void
      */
     public function testHydrateMailCallsTwigsRenderMethodWithTextTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
-        $twigRenderer = new TwigRenderer(
-            $this->getTwigEnvironmentMock(),
-            $this->getMailToStoreFacadeMock(),
-            $this->getMailToLocaleFacadeMock()
-        );
+        $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
         $twigRenderer->render($mailTransfer);
 
         $mailTemplateTextTransfer = $mailTransfer->getTemplates()[static::INDEX_OF_TEMPLATE_TEXT];
@@ -65,11 +53,7 @@ class TwigRendererTest extends Unit
     public function testHydrateMailCallsTwigsRenderMethodWithHtmlTemplate(): void
     {
         $mailTransfer = $this->getMailTransfer();
-        $twigRenderer = new TwigRenderer(
-            $this->getTwigEnvironmentMock(),
-            $this->getMailToStoreFacadeMock(),
-            $this->getMailToLocaleFacadeMock()
-        );
+        $twigRenderer = new TwigRenderer($this->getTwigEnvironmentMock());
         $twigRenderer->render($mailTransfer);
 
         $mailTemplateHtmlTransfer = $mailTransfer->getTemplates()[static::INDEX_OF_TEMPLATE_HTML];
@@ -86,38 +70,18 @@ class TwigRendererTest extends Unit
         $twigEnvironmentMock
             ->expects($this->at(1))
             ->method('render')
+            ->with(TwigRenderer::LAYOUT_TEMPLATE_TEXT)
             ->willReturn('TextTemplate');
 
         $twigEnvironmentMock
             ->expects($this->at(2))
             ->method('render')
+            ->with(TwigRenderer::LAYOUT_TEMPLATE_HTML)
             ->willReturn('HtmlTemplate');
 
         $rendererBridge = new MailToRendererBridge($twigEnvironmentMock);
 
         return $rendererBridge;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface
-     */
-    protected function getMailToStoreFacadeMock(): MailToStoreFacadeInterface
-    {
-        $mailToStoreFacadeMock = $this->getMockBuilder(MailToStoreFacadeInterface::class)->getMock();
-        $this->tester->setDependency(MailDependencyProvider::FACADE_STORE, $mailToStoreFacadeMock);
-
-        return $mailToStoreFacadeMock;
-    }
-
-    /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
-     */
-    protected function getMailToLocaleFacadeMock(): MailToLocaleFacadeInterface
-    {
-        $mailToLocaleFacadeMock = $this->getMockBuilder(MailToLocaleFacadeInterface::class)->getMock();
-        $this->tester->setDependency(MailDependencyProvider::FACADE_LOCALE, $mailToLocaleFacadeMock);
-
-        return $mailToLocaleFacadeMock;
     }
 
     /**

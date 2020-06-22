@@ -14,8 +14,6 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Mail\Business\Model\Mail\MailTypeCollection;
 use Spryker\Zed\Mail\Business\Model\Provider\MailProviderCollection;
 use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryBridge;
-use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeBridge;
-use Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeBridge;
 use Spryker\Zed\Mail\Dependency\Mailer\MailToMailerBridge;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererBridge;
 use Swift_Mailer;
@@ -30,8 +28,6 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const MAIL_PROVIDER_COLLECTION = 'mail provider collection';
     public const MAIL_TYPE_COLLECTION = 'mail collection';
     public const FACADE_GLOSSARY = 'glossary facade';
-    public const FACADE_STORE = 'FACADE_STORE';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const RENDERER = 'twig';
     public const MAILER = 'mailer';
 
@@ -45,8 +41,6 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMailProviderCollection($container);
         $container = $this->addMailCollection($container);
         $container = $this->addGlossaryFacade($container);
-        $container = $this->addStoreFacade($container);
-        $container = $this->addLocaleFacade($container);
         $container = $this->addRenderer($container);
         $container = $this->addMailer($container);
 
@@ -113,34 +107,6 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
 
             return $mailToGlossaryBridge;
         };
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addStoreFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_STORE, function (Container $container) {
-            return new MailToStoreFacadeBridge($container->getLocator()->store()->facade());
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new MailToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        });
 
         return $container;
     }

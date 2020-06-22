@@ -10,23 +10,12 @@ namespace Spryker\Zed\Mail\Business\Model\Renderer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface;
-use Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface;
 use Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface;
 
 class TwigRenderer implements RendererInterface
 {
-    /**
-     * @deprecated Will be removed without replacement.
-     */
     public const LAYOUT_TEMPLATE_TEXT = 'Mail/Mail/layout/mail_layout.text.twig';
-
-    /**
-     * @deprecated Will be removed without replacement.
-     */
     public const LAYOUT_TEMPLATE_HTML = 'Mail/Mail/layout/mail_layout.html.twig';
-
-    protected const TWIG_CONTEXT_KEY_MAIL = 'mail';
 
     /**
      * @var \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface
@@ -34,28 +23,11 @@ class TwigRenderer implements RendererInterface
     protected $renderer;
 
     /**
-     * @var \Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface
-     */
-    protected $storeFacade;
-
-    /**
-     * @var \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface
-     */
-    protected $localeFacade;
-
-    /**
      * @param \Spryker\Zed\Mail\Dependency\Renderer\MailToRendererInterface $renderer
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToStoreFacadeInterface $storeFacade
-     * @param \Spryker\Zed\Mail\Dependency\Facade\MailToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(
-        MailToRendererInterface $renderer,
-        MailToStoreFacadeInterface $storeFacade,
-        MailToLocaleFacadeInterface $localeFacade
-    ) {
+    public function __construct(MailToRendererInterface $renderer)
+    {
         $this->renderer = $renderer;
-        $this->storeFacade = $storeFacade;
-        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -107,10 +79,7 @@ class TwigRenderer implements RendererInterface
     {
         foreach ($mailTransfer->requireTemplates()->getTemplates() as $templateTransfer) {
             if (!$templateTransfer->getIsHtml()) {
-                $twigContext = $this->getTwigContext();
-                $twigContext[static::TWIG_CONTEXT_KEY_MAIL] = $mailTransfer;
-
-                $renderedContent = $this->renderer->render($templateTransfer->getName(), $twigContext);
+                $renderedContent = $this->renderer->render(static::LAYOUT_TEMPLATE_TEXT, ['mail' => $mailTransfer]);
                 $templateTransfer->setContent($renderedContent);
             }
         }
@@ -125,23 +94,9 @@ class TwigRenderer implements RendererInterface
     {
         foreach ($mailTransfer->requireTemplates()->getTemplates() as $templateTransfer) {
             if ($templateTransfer->getIsHtml()) {
-                $twigContext = $this->getTwigContext();
-                $twigContext[static::TWIG_CONTEXT_KEY_MAIL] = $mailTransfer;
-
-                $renderedContent = $this->renderer->render($templateTransfer->getName(), $twigContext);
+                $renderedContent = $this->renderer->render(self::LAYOUT_TEMPLATE_HTML, ['mail' => $mailTransfer]);
                 $templateTransfer->setContent($renderedContent);
             }
         }
-    }
-
-    /**
-     * @return mixed[]
-     */
-    protected function getTwigContext(): array
-    {
-        return [
-            'store' => $this->storeFacade->getCurrentStore(),
-            'locale' => $this->localeFacade->getCurrentLocale(),
-        ];
     }
 }

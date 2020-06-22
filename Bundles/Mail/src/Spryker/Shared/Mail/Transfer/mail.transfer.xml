@@ -56,9 +56,5 @@
         <property name="localeName" type="string"/>
     </transfer>
 
-    <transfer name="Store">
-        <property name="name" type="string"/>
-    </transfer>
-
 </transfers>
 
