@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductSearch\Dependency\Facade;
 interface MerchantProductSearchToEventBehaviorFacadeInterface
 {
     /**
+     * @phpstan-return array<int>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
@@ -17,6 +19,8 @@ interface MerchantProductSearchToEventBehaviorFacadeInterface
     public function getEventTransferIds(array $eventTransfers);
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *

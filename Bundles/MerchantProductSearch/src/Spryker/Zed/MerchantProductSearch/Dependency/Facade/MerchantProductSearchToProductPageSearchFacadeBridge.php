@@ -23,6 +23,8 @@ class MerchantProductSearchToProductPageSearchFacadeBridge implements MerchantPr
     }
 
     /**
+     * @phpstan-param array<string> $pageDataExpanderPluginNames
+     *
      * @param int[] $productAbstractIds
      * @param array $pageDataExpanderPluginNames
      *

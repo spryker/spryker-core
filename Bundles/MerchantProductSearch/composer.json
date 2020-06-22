@@ -12,10 +12,15 @@
     "spryker/product-page-search": "^3.2.0",
     "spryker/product-page-search-extension": "^1.2.0",
     "spryker/publisher-extension": "^1.0.0",
+    "spryker/search-extension": "^1.0.0",
     "spryker/store": "^1.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/search": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use Search plugins."
   },
   "autoload": {
     "psr-4": {
