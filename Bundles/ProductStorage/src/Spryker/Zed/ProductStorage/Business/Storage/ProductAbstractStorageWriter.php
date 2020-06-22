@@ -59,24 +59,32 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
+     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     */
+    protected $productAbstractStorageExpanderPlugins = [];
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[] $productAbstractStorageExpanderPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         AttributeMapInterface $attributeMap,
         ProductStorageQueryContainerInterface $queryContainer,
         ProductStorageToStoreFacadeInterface $storeFacade,
-        $isSendingToQueue
+        $isSendingToQueue,
+        array $productAbstractStorageExpanderPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->productAbstractStorageExpanderPlugins = $productAbstractStorageExpanderPlugins;
     }
 
     /**
@@ -300,6 +308,10 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             new ProductAbstractStorageTransfer(),
             $attributeMapBulk
         );
+
+        foreach ($this->productAbstractStorageExpanderPlugins as $productAbstractStorageExpanderPlugin) {
+            $productAbstractStorageTransfer = $productAbstractStorageExpanderPlugin->expand($productAbstractStorageTransfer);
+        }
 
         $spyProductStorageEntity
             ->setFkProductAbstract($productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT])

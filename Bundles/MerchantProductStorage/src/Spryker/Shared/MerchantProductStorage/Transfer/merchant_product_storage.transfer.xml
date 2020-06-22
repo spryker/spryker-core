@@ -28,9 +28,22 @@
     </transfer>
 
     <transfer name="MerchantProductFilterCriteria" >
-        <property name="IdProductAbstractMerchantStorages" type="int[]"/>
+        <property name="IdProductAbstractMerchantStorages" type="int[]" singular="IdProductAbstractMerchantStorages"/>
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>
 
+    <transfer name="SynchronizationData">
+        <property name="reference" type="string"/>
+        <property name="data" type="string"/>
+        <property name="key" type="string"/>
+    </transfer>
+
+    <transfer name="ProductAbstractStorage">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="ProductView">
+        <property name="merchantReference" type="string"/>
+    </transfer>
 </transfers>
