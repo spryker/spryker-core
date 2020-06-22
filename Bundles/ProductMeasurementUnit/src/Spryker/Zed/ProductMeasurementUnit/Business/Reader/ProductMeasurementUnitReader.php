@@ -53,7 +53,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
      * @param int[] $productMeasurementSalesUnitCounts
      * @param int[] $productMeasurementBaseUnitCounts
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     protected function getEligibleProductConcreteTransfers(
         array $productConcreteTransfers,
