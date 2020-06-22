@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
@@ -166,6 +167,18 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
             return $stateTransfer->getDisplayName();
         }
 
+        $stateName = $this->getStateName($stateTransfer);
+
+        return $stateName;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $stateTransfer
+     *
+     * @return string
+     */
+    protected function getStateName(ItemStateTransfer $stateTransfer): string
+    {
         $stateName = trim($stateTransfer->getName());
         $stateName = mb_strtolower($stateName);
         $stateName = str_replace(' ', '-', $stateName);
