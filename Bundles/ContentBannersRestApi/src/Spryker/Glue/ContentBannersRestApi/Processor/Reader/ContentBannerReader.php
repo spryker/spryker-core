@@ -8,10 +8,7 @@
 namespace Spryker\Glue\ContentBannersRestApi\Processor\Reader;
 
 use Spryker\Client\ContentBanner\Exception\MissingBannerTermException;
-use Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiConfig;
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToStoreClientInterface;
 use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -29,31 +26,15 @@ class ContentBannerReader implements ContentBannerReaderInterface
     protected $contentBannerRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface
-     */
-    protected $cmsStorageClient;
-
-    /**
-     * @var \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
      * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface $contentBannerClient
      * @param \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface $contentBannerRestResponseBuilder
-     * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientInterface $cmsStorageClient
-     * @param \Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ContentBannersRestApiToContentBannerClientInterface $contentBannerClient,
-        ContentBannerRestResponseBuilderInterface $contentBannerRestResponseBuilder,
-        ContentBannersRestApiToCmsStorageClientInterface $cmsStorageClient,
-        ContentBannersRestApiToStoreClientInterface $storeClient
+        ContentBannerRestResponseBuilderInterface $contentBannerRestResponseBuilder
     ) {
         $this->contentBannerClient = $contentBannerClient;
         $this->contentBannerRestResponseBuilder = $contentBannerRestResponseBuilder;
-        $this->cmsStorageClient = $cmsStorageClient;
-        $this->storeClient = $storeClient;
     }
 
     /**
@@ -85,31 +66,17 @@ class ContentBannerReader implements ContentBannerReaderInterface
     }
 
     /**
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @phpstan-param array<string, string> $contentBannerKeys
      *
-     * @param string[] $cmsPageReferences
+     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
+     *
+     * @param string[] $contentBannerKeys
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentBannersResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
+    public function getContentBannersResources(array $contentBannerKeys, RestRequestInterface $restRequest): array
     {
-        $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
-            $cmsPageReferences,
-            $restRequest->getMetadata()->getLocale(),
-            $this->storeClient->getCurrentStore()->getName()
-        );
-
-        $groupedContentBannerKeys = [];
-        $contentBannerKeys = [];
-        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
-            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME])) {
-                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME]);
-                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[ContentBannersRestApiConfig::TWIG_FUNCTION_NAME];
-            }
-        }
-
         $contentBannerTypeTransfers = $this->contentBannerClient->executeBannerTypeByKeys(
             $contentBannerKeys,
             $restRequest->getMetadata()->getLocale()
@@ -119,14 +86,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
             return [];
         }
 
-        $mappedContentBannerTypeTransfers = [];
-        foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
-            foreach ($contentBannerKeys as $contentBannerKey => $contentBannerValue) {
-                $mappedContentBannerTypeTransfers[$cmsPageUuid][$contentBannerKey] = $contentBannerTypeTransfers[$contentBannerValue];
-            }
-        }
-
         return $this->contentBannerRestResponseBuilder
-            ->createContentBannersRestResources($mappedContentBannerTypeTransfers);
+            ->createContentBannersRestResources($contentBannerTypeTransfers);
     }
 }

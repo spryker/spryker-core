@@ -7,9 +7,7 @@
 
 namespace Spryker\Glue\ContentBannersRestApi;
 
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToCmsStorageClientBridge;
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientBridge;
-use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToStoreClientBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
@@ -19,8 +17,6 @@ use Spryker\Glue\Kernel\Container;
 class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CONTENT_BANNER = 'CLIENT_CONTENT_BANNER';
-    public const CLIENT_CMS_STORAGE = 'CLIENT_CMS_STORAGE';
-    public const CLIENT_STORE = 'CLIENT_STORE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -32,8 +28,6 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container = parent::provideDependencies($container);
 
         $container = $this->addContentBannerClient($container);
-        $container = $this->addCmsStorageClient($container);
-        $container = $this->addStoreClient($container);
 
         return $container;
     }
@@ -48,38 +42,6 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::CLIENT_CONTENT_BANNER, function (Container $container) {
             return new ContentBannersRestApiToContentBannerClientBridge(
                 $container->getLocator()->contentBanner()->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addCmsStorageClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_CMS_STORAGE, function (Container $container) {
-            return new ContentBannersRestApiToCmsStorageClientBridge(
-                $container->getLocator()->cmsStorage()->client()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Glue\Kernel\Container $container
-     *
-     * @return \Spryker\Glue\Kernel\Container
-     */
-    protected function addStoreClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_STORE, function (Container $container) {
-            return new ContentBannersRestApiToStoreClientBridge(
-                $container->getLocator()->store()->client()
             );
         });
 

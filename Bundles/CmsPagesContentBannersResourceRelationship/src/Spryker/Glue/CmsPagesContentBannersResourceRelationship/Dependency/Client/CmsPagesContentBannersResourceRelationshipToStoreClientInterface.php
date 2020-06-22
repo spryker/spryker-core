@@ -5,9 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentBannersRestApi\Dependency\Client;
+namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\Client;
 
-interface ContentBannersRestApiToStoreClientInterface
+interface CmsPagesContentBannersResourceRelationshipToStoreClientInterface
 {
     /**
      * @return \Generated\Shared\Transfer\StoreTransfer

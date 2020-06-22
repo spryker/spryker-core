@@ -94,24 +94,22 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     }
 
     /**
-     * @phpstan-param array<string, array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>> $mappedContentBannerTypeTransfers
+     * @phpstan-param array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer> $contentBannerTypeTransfers
      *
-     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
-     * @param array[] $mappedContentBannerTypeTransfers
+     * @param \Generated\Shared\Transfer\ContentBannerTypeTransfer[] $contentBannerTypeTransfers
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function createContentBannersRestResources(array $mappedContentBannerTypeTransfers): array
+    public function createContentBannersRestResources(array $contentBannerTypeTransfers): array
     {
         $contentBannersRestResources = [];
-        foreach ($mappedContentBannerTypeTransfers as $cmsPageUuid => $contentBannerTypeTransfers) {
-            foreach ($contentBannerTypeTransfers as $contentBannerKey => $contentBannerTypeTransfer) {
-                $contentBannersRestResources[$cmsPageUuid][$contentBannerKey] = $this->createContentBannersRestResource(
-                    $contentBannerTypeTransfer,
-                    $contentBannerKey
-                );
-            }
+        foreach ($contentBannerTypeTransfers as $contentBannerKey => $contentBannerTypeTransfer) {
+            $contentBannersRestResources[$contentBannerKey] = $this->createContentBannersRestResource(
+                $contentBannerTypeTransfer,
+                $contentBannerKey
+            );
         }
 
         return $contentBannersRestResources;

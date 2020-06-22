@@ -5,20 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentBannersRestApi\Processor\Reader;
+namespace Spryker\Glue\ContentBannersRestApi;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
+use Spryker\Glue\Kernel\AbstractRestResource;
 
-interface ContentBannerReaderInterface
+/**
+ * @method \Spryker\Glue\ContentBannersRestApi\ContentBannersRestApiFactory getFactory()
+ */
+class ContentBannersRestApiResource extends AbstractRestResource implements ContentBannersRestApiResourceInterface
 {
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getContentBannerById(RestRequestInterface $restRequest): RestResponseInterface;
-
     /**
      * @phpstan-param array<string, string> $contentBannerKeys
      *
@@ -29,5 +25,10 @@ interface ContentBannerReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentBannersResources(array $contentBannerKeys, RestRequestInterface $restRequest): array;
+    public function getContentBannersByKeys(array $contentBannerKeys, RestRequestInterface $restRequest): array
+    {
+        return $this->getFactory()
+            ->createContentBannerReader()
+            ->getContentBannersResources($contentBannerKeys, $restRequest);
+    }
 }
