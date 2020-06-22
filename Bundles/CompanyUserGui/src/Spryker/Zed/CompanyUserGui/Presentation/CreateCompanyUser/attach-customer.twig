@@ -1,8 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set customerName = form.vars.data.customer.firstName ~ ' ' ~ form.vars.data.customer.lastName %}
-{% set section_title = 'Attach customer to company' %}
-{% set widget_title = 'Attach "' ~ customerName ~ '"' %}
+{% set section_title = 'Attach customer to company' | trans %}
+{% set widget_title = 'Attach "%customer%"' | trans({'%customer%': customerName}) %}
 
 {% block head_title widget_title %}
 {% block section_title section_title %}

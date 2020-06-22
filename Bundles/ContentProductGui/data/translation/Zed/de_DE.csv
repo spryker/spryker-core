@@ -10,8 +10,8 @@ Delete,Löschen
 ID,ID
 Image,Bild
 Inactive,"Nicht aktiv"
-"Move Down",Runter
-"Move Up",Hoch
+"Move Down","Nach unten"
+"Move Up","Nach oben"
 Name,Name
 Selected,Ausgewählt
 SKU,SKU

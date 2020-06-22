@@ -46,3 +46,8 @@ ZipCode,ZipCode
 "Billing Address","Billing Address"
 "Shipping Address","Shipping Address"
 Customers,Customers
+"Attach to company","Attach to company"
+"Add a customer","Add a customer"
+"Comment successfully added","Comment successfully added."
+"Address (2nd line)","Address (2nd line)"
+"Address (3rd line)","Address (3rd line)"

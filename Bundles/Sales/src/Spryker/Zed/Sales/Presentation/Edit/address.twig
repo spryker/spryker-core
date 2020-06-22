@@ -1,7 +1,7 @@
 {% extends '@Sales/Layout/layout.twig' %}
 
 {% set widget_title = 'Address details' %}
-{% block section_title 'Edit Address for Order: ' ~ idSalesOrder %}
+{% block section_title 'Edit Address for Order: %idSalesOrder%' | trans({'%idSalesOrder%': idSalesOrder}) %}
 
 {% block action %}
     {{ viewActionButton('/sales/detail/?id-sales-order=' ~ idSalesOrder, 'View Order' | trans) }}

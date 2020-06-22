@@ -46,3 +46,8 @@ ZipCode,Postleitzahl
 "Billing Address",Rechnungsadresse
 "Shipping Address",Lieferanschrift
 Customers,Kunden
+"Attach to company","Einem Unternehmen zuordnen"
+"Add a customer","Kunde hinzufügen"
+"Comment successfully added","Kommentar erfolgreich hinzugefügt."
+"Address (2nd line)","Adresse (zweite Zeile)"
+"Address (3rd line)","Adresse (dritte Zeile)"

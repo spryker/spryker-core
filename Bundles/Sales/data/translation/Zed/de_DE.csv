@@ -63,3 +63,26 @@ Reference,Referenz
 "Order Overview",Bestellübersicht
 "Total taxes","Gesamtsumme Steuern"
 Reclamations,Reklamationen
+Claim,Anspruch
+"payment pending","Ausstehende Zahlung"
+exported,Exportiert
+shipped,Versandt
+delivered,Geliefert
+refunded,Rückerstattet
+closed,Abgeschlossen
+pay,Bezahlen
+ship,Versenden
+stock-update,Bestandsaktualisierung
+close,Schließen
+refund,Rückerstatten
+"Cancelled amount","Stornierter Betrag"
+"Unique Product Quantity","Anzahl der Produkte"
+"Comment successfully added","Kommentar erfolgreich hinzugefügt."
+"Address Details",Adressdetails
+"Middle name","Zweiter Vorname"
+"Po box",Postfach
+"Zip code","Postleitzahl"
+Address1,"Adresse 1"
+Address2,"Adresse 2"
+"Cell phone",Mobiltelefon
+"Edit Address for Order: %idSalesOrder%","Adresse für Bestellung %idSalesOrder% bearbeiten"

@@ -118,7 +118,9 @@ class AvailabilityAbstractTable extends AbstractTable
         $config->addRawColumn(static::TABLE_COL_ACTION);
         $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
         $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
+        $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
         $config->addRawColumn(SpyProductAbstractTableMap::COL_SKU);
+        $config->addRawColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -154,8 +156,8 @@ class AvailabilityAbstractTable extends AbstractTable
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
                 AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
-                static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
-                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
+                static::IS_BUNDLE_PRODUCT => $this->generateLabel($haveBundledProducts ? 'Yes' : 'No', null),
+                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', null),
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
             ];
         }
