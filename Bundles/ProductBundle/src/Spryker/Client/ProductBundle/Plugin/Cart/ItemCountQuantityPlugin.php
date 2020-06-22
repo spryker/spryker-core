@@ -13,6 +13,11 @@ use Spryker\Client\Cart\Dependency\Plugin\ItemCountPluginInterface;
 class ItemCountQuantityPlugin implements ItemCountPluginInterface
 {
     /**
+     * Specification:
+     *  - Returns combined quantity of all items in cart.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return int
