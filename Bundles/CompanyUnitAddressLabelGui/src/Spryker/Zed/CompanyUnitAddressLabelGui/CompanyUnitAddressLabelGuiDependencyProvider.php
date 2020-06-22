@@ -25,11 +25,11 @@ class CompanyUnitAddressLabelGuiDependencyProvider extends AbstractBundleDepende
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_COMPANY_UNIT_ADDRESS_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_UNIT_ADDRESS_LABEL, function (Container $container) {
             return new CompanyUnitAddressLabelGuiToCompanyUnitAddressLabelFacadeBridge(
                 $container->getLocator()->companyUnitAddressLabel()->facade()
             );
-        };
+        });
 
         return $container;
     }

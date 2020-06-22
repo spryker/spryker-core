@@ -95,51 +95,51 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new ProductPageSearchToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
-        $container[static::CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR] = function (Container $container) {
+        $container->set(static::CLIENT_CATALOG_PRICE_PRODUCT_CONNECTOR, function (Container $container) {
             return new ProductPageSearchToCatalogPriceProductConnectorClientBridge($container->getLocator()->catalogPriceProductConnector()->client());
-        };
+        });
 
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductPageSearchToCategoryBridge($container->getLocator()->category()->facade());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductPageSearchToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
-        $container[static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER] = function () {
+        $container->set(static::PLUGIN_PRODUCT_PAGE_MAP_EXPANDER, function () {
             return $this->getMapExpanderPlugins();
-        };
+        });
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_PAGE_MAP_EXPANDER, function () {
             return $this->getProductConcretePageMapExpanderPlugins();
-        };
+        });
 
         $container = $this->addProductConcreteMapExpanderPlugins($container);
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER, function () {
             return $this->getProductConcretePageDataExpanderPlugins();
-        };
+        });
 
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductPageSearchToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
@@ -158,29 +158,29 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductPageSearchToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
-        $container[static::FACADE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_SEARCH, function (Container $container) {
             return new ProductPageSearchToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER, function () {
             return $this->getDataExpanderPlugins();
-        };
+        });
 
-        $container[static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_PAGE_DATA_EXPANDER, function () {
             return $this->getProductConcretePageDataExpanderPlugins();
-        };
+        });
 
-        $container[static::PLUGIN_PRODUCT_PAGE_DATA_LOADER] = function () {
+        $container->set(static::PLUGIN_PRODUCT_PAGE_DATA_LOADER, function () {
             return $this->getDataLoaderPlugins();
-        };
+        });
 
         $container = $this->addStoreFacade($container);
         $container = $this->addProductImageFacade($container);
@@ -199,25 +199,25 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductPageSearchToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRICE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRICE, function (Container $container) {
             return new ProductPageToPriceProductQueryContainerBridge($container->getLocator()->priceProduct()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductPageSearchToProductImageQueryContainerBridge($container->getLocator()->productImage()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductPageSearchToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
         $container = $this->addCategoryNodePropelQuery($container);
         $container = $this->addProductPropelQuery($container);
@@ -262,11 +262,11 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addPriceProductService(Container $container): Container
     {
-        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container): ProductPageSearchToPriceProductServiceInterface {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container): ProductPageSearchToPriceProductServiceInterface {
             return new ProductPageSearchToPriceProductServiceBridge(
                 $container->getLocator()->priceProduct()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -278,9 +278,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addPriceFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE] = function (Container $container): ProductPageSearchToPriceFacadeInterface {
+        $container->set(static::FACADE_PRICE, function (Container $container): ProductPageSearchToPriceFacadeInterface {
             return new ProductPageSearchToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }
@@ -306,9 +306,9 @@ class ProductPageSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container): ProductPageSearchToStoreFacadeInterface {
+        $container->set(static::FACADE_STORE, function (Container $container): ProductPageSearchToStoreFacadeInterface {
             return new ProductPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

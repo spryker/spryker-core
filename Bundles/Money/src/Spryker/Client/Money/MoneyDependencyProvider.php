@@ -43,9 +43,9 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return $this->getStore();
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyPlugin(Container $container)
     {
-        $container[static::PLUGIN_CURRENCY] = function () {
+        $container->set(static::PLUGIN_CURRENCY, function () {
             return new CurrencyPlugin();
-        };
+        });
 
         return $container;
     }
@@ -79,11 +79,11 @@ class MoneyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMoneyParser(Container $container)
     {
-        $container[static::MONEY_PARSER] = function () {
+        $container->set(static::MONEY_PARSER, function () {
             $moneyToParserBridge = new MoneyToParserBridge($this->getIntlMoneyParser());
 
             return $moneyToParserBridge;
-        };
+        });
 
         return $container;
     }

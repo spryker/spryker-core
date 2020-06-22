@@ -44,9 +44,9 @@ class StockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStockPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_STOCK, function () {
+        $container->set(static::PROPEL_QUERY_STOCK, $container->factory(function () {
             return SpyStockQuery::create();
-        });
+        }));
 
         return $container;
     }

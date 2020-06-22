@@ -45,9 +45,9 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductDiscontinuedToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -59,9 +59,9 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPostProductDiscontinuePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_PRODUCT_DISCONTINUE] = function () {
+        $container->set(static::PLUGINS_POST_PRODUCT_DISCONTINUE, function () {
             return $this->getPostProductDiscontinuePlugins();
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPostDeleteProductDiscontinuedPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED] = function () {
+        $container->set(static::PLUGINS_POST_DELETE_PRODUCT_DISCONTINUED, function () {
             return $this->getPostDeleteProductDiscontinuedPlugins();
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ProductDiscontinuedDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductDiscontinuedPreDeleteCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK] = function () {
+        $container->set(static::PLUGINS_PRODUCT_DISCONTINUED_PRE_DELETE_CHECK, function () {
             return $this->getProductDiscontinuedPreDeleteCheckPlugins();
-        };
+        });
 
         return $container;
     }

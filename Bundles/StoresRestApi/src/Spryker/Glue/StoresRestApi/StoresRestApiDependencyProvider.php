@@ -43,9 +43,9 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCountryClient(Container $container): Container
     {
-        $container[static::CLIENT_COUNTRY] = function (Container $container) {
+        $container->set(static::CLIENT_COUNTRY, function (Container $container) {
             return new StoresRestApiToCountryClientBridge($container->getLocator()->country()->client());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new StoresRestApiToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class StoresRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new StoresRestApiToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }

@@ -30,9 +30,9 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCustomerQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new CustomerUserConnectorGuiToCustomerQueryContainerBridge($container->getLocator()->customer()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -44,9 +44,9 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addUserQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_USER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_USER, function (Container $container) {
             return new CustomerUserConnectorGuiToUserQueryContainerBridge($container->getLocator()->user()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class CustomerUserConnectorGuiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCustomerUserConnectorFacade(Container $container)
     {
-        $container[static::FACADE_CUSTOMER_USER_CONNECTOR] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER_USER_CONNECTOR, function (Container $container) {
             return new CustomerUserConnectorGuiToCustomerUserConnectorBridge($container->getLocator()->customerUserConnector()->facade());
-        };
+        });
 
         return $container;
     }

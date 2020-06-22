@@ -35,9 +35,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSynchronizationSearchKeyPlugins(Container $container)
     {
-        $container[self::SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS] = function (Container $container) {
+        $container->set(static::SYNCHRONIZATION_SEARCH_KEY_GENERATOR_PLUGINS, function (Container $container) {
             return $this->getSearchKeyGeneratorPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -49,9 +49,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSynchronizationStorageKeyPlugins(Container $container)
     {
-        $container[self::SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS] = function (Container $container) {
+        $container->set(static::SYNCHRONIZATION_STORAGE_KEY_GENERATOR_PLUGINS, function (Container $container) {
             return $this->getStorageKeyGeneratorPlugins($container);
-        };
+        });
 
         return $container;
     }

@@ -198,9 +198,9 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentMethodQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, function () {
+        $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, $container->factory(function () {
             return SpyShipmentMethodQuery::create();
-        });
+        }));
 
         return $container;
     }

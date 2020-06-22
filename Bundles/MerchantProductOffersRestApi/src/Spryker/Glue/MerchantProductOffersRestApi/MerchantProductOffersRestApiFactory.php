@@ -13,9 +13,44 @@ use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartIt
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapper;
 use Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Mapper\CartItemsAttributesMapperInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpander;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReader;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReaderInterface;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilder;
+use Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface;
 
 class MerchantProductOffersRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Reader\ProductOfferReaderInterface
+     */
+    public function createProductOfferReader(): ProductOfferReaderInterface
+    {
+        return new ProductOfferReader(
+            $this->createProductOfferRestResponseBuilder(),
+            $this->getMerchantProductOfferStorageClient()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\Expander\ProductOfferExpanderInterface
+     */
+    public function createProductOfferExpander(): ProductOfferExpanderInterface
+    {
+        return new ProductOfferExpander($this->createProductOfferReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\RestResponseBuilder\ProductOfferRestResponseBuilderInterface
+     */
+    public function createProductOfferRestResponseBuilder(): ProductOfferRestResponseBuilderInterface
+    {
+        return new ProductOfferRestResponseBuilder(
+            $this->getResourceBuilder()
+        );
+    }
+
     /**
      * @return \Spryker\Glue\MerchantProductOffersRestApi\Processor\CartItem\Expander\CartItemExpanderInterface
      */
