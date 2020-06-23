@@ -125,12 +125,12 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
 
         foreach ($restCatalogSearchSuggestionsAttributes->getCategoryCollection() as $category) {
             $this->assertArrayHasKey('name', $category->toArray());
-            $this->assertArrayNotHasKey('id_category', $category->toArray());
+            $this->assertArrayHasKey('url', $category->toArray());
         }
 
         foreach ($restCatalogSearchSuggestionsAttributes->getCmsPageCollection() as $cmsPage) {
             $this->assertArrayHasKey('name', $cmsPage->toArray());
-            $this->assertArrayNotHasKey('id_cms_page', $cmsPage->toArray());
+            $this->assertArrayHasKey('url', $cmsPage->toArray());
         }
     }
 
