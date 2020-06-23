@@ -153,11 +153,11 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     public function createMergeNavigationStrategyResolver(): MergeNavigationStrategyResolverInterface
     {
         return new MergeNavigationStrategyResolver(
+            $this->getConfig(),
             [
                 $this->createNavigationFullMergeStrategy(),
                 $this->createNavigationBreadcrumbsMergeStrategy(),
-            ],
-            $this->getConfig()
+            ]
         );
     }
 

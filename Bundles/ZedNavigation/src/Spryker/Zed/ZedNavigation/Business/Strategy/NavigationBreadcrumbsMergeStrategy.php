@@ -26,20 +26,21 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     /**
      * @param \Zend\Config\Config $navigationDefinition
      * @param \Zend\Config\Config $rootDefinition
-     * @param array $coreNavigationDefinitionData
+     * @param \Zend\Config\Config $coreNavigationDefinition
      *
      * @return array
      */
-    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, array $coreNavigationDefinitionData): array
+    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, Config $coreNavigationDefinition): array
     {
         $rootDefinitionData = $rootDefinition->toArray();
+        $coreNavigationDefinitionData = $coreNavigationDefinition->toArray();
         foreach ($rootDefinitionData as &$rootNavigation) {
             if (!$this->hasPages($rootNavigation)) {
                 continue;
             }
 
             foreach ($rootNavigation[MenuFormatter::PAGES] as $navigationName => &$rootNavigationElement) {
-                $navigationInMergedNavigationData = $this->getNavigationInMergedNavigationData(
+                $navigationInMergedNavigationData = $this->getNavigationInNavigationData(
                     $coreNavigationDefinitionData,
                     $rootNavigationElement,
                     $navigationName
@@ -79,27 +80,27 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $mergedNavigationData
+     * @param array $navigationData
      * @param array $rootNavigationElement
      * @param string $navigationName
      *
      * @return array
      */
-    protected function getNavigationInMergedNavigationData(array $mergedNavigationData, array $rootNavigationElement, string $navigationName): array
+    protected function getNavigationInNavigationData(array $navigationData, array $rootNavigationElement, string $navigationName): array
     {
-        $iterator = new RecursiveArrayIterator($mergedNavigationData);
+        $iterator = new RecursiveArrayIterator($navigationData);
         $navigationRecursiveIterator = new RecursiveIteratorIterator(
             $iterator,
             RecursiveIteratorIterator::SELF_FIRST
         );
 
-        foreach ($navigationRecursiveIterator as $key => $navigation) {
+        foreach ($navigationRecursiveIterator as $key => $navigationElement) {
             if ($key !== $navigationName) {
                 continue;
             }
 
-            if ($this->isSameModule($navigation, $rootNavigationElement)) {
-                return $navigation;
+            if ($this->isSameModule($navigationElement, $rootNavigationElement)) {
+                return $navigationElement;
             }
         }
 
@@ -117,14 +118,14 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigation
+     * @param array $navigationElement
      * @param array $rootNavigationElement
      *
      * @return bool
      */
-    protected function isSameModule(array $navigation, array $rootNavigationElement): bool
+    protected function isSameModule(array $navigationElement, array $rootNavigationElement): bool
     {
-        return isset($navigation[MenuFormatter::BUNDLE])
-            && $navigation[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE];
+        return isset($navigationElement[MenuFormatter::BUNDLE])
+            && $navigationElement[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE];
     }
 }

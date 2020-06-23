@@ -19,9 +19,9 @@ interface NavigationMergeStrategyInterface
     /**
      * @param \Zend\Config\Config $navigationDefinition
      * @param \Zend\Config\Config $rootDefinition
-     * @param array $coreNavigationDefinitionData
+     * @param \Zend\Config\Config $coreNavigationDefinition
      *
      * @return array
      */
-    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, array $coreNavigationDefinitionData): array;
+    public function mergeNavigation(Config $navigationDefinition, Config $rootDefinition, Config $coreNavigationDefinition): array;
 }

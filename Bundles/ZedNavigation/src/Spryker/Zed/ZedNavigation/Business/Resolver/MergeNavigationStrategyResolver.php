@@ -14,23 +14,23 @@ use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 class MergeNavigationStrategyResolver implements MergeNavigationStrategyResolverInterface
 {
     /**
-     * @var \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface[]
-     */
-    protected $navigationMergeStrategies;
-
-    /**
      * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
      */
     protected $zedNavigationConfig;
 
     /**
-     * @param \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface[] $navigationMergeStrategies
-     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
+     * @var \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface[]
      */
-    public function __construct(array $navigationMergeStrategies, ZedNavigationConfig $zedNavigationConfig)
+    protected $navigationMergeStrategies;
+
+    /**
+     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
+     * @param \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface[] $navigationMergeStrategies
+     */
+    public function __construct(ZedNavigationConfig $zedNavigationConfig, array $navigationMergeStrategies)
     {
-        $this->navigationMergeStrategies = $navigationMergeStrategies;
         $this->zedNavigationConfig = $zedNavigationConfig;
+        $this->navigationMergeStrategies = $navigationMergeStrategies;
     }
 
     /**
