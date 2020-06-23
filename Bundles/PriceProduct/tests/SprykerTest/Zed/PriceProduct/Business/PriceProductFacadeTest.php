@@ -890,7 +890,6 @@ class PriceProductFacadeTest extends Unit
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
@@ -926,7 +925,6 @@ class PriceProductFacadeTest extends Unit
                 ->setSku($priceProductTransfer->getSkuProduct())
                 ->setPriceMode(static::PRICE_MODE_GROSS);
         }
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductPrices = $this->getPriceProductFacade()->getValidPrices($priceProductFilterTransfers);
@@ -952,7 +950,6 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -990,7 +987,6 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1034,7 +1030,6 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1079,7 +1074,6 @@ class PriceProductFacadeTest extends Unit
             ->setCurrencyIsoCode(static::EUR_ISO_CODE)
             ->setSku($productConcreteTransfer->getSku())
             ->setPriceMode(static::PRICE_MODE_GROSS);
-        $this->clearProductPriceTransferCache();
 
         //Act
         $resultPriceProductTransfers = $this->getPriceProductFacade()->getValidPrices([$priceProductFilterTransfer]);
@@ -1150,6 +1144,15 @@ class PriceProductFacadeTest extends Unit
 
         //Assert
         $this->assertSame(0, $productConcreteTransfer->getPrices()->count());
+    }
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        parent::_before();
+        $this->clearProductPriceTransferCache();
     }
 
     /**
