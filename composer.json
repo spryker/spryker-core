@@ -26,6 +26,11 @@
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  },
   "replace": {
     "spryker/acl": "*",
     "spryker/acl-extension": "*",
@@ -47,6 +52,7 @@
     "spryker/availability-data-feed": "*",
     "spryker/availability-extension": "*",
     "spryker/availability-gui": "*",
+    "spryker/availability-gui-extension": "*",
     "spryker/availability-notification": "*",
     "spryker/availability-offer-connector": "*",
     "spryker/availability-storage": "*",
@@ -332,6 +338,7 @@
     "spryker/merchant-opening-hours-storage": "*",
     "spryker/merchant-product": "*",
     "spryker/merchant-product-data-import": "*",
+    "spryker/merchant-product-gui": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/merchant-product-offer-data-import": "*",
     "spryker/merchant-product-offer-search": "*",
