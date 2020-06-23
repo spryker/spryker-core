@@ -180,7 +180,6 @@
 
     <transfer name="ProductOfferStock">
         <property name="quantity" type="decimal"/>
-        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferValidity">
