@@ -34,9 +34,9 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractDepende
      */
     private function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new PriceProductMerchantRelationshipToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }

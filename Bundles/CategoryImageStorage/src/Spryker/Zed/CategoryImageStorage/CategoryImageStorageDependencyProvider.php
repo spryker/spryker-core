@@ -55,11 +55,11 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CategoryImageStorageToEventBehaviorBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCategoryImageSetQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET] = function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET, $container->factory(function () {
             return SpyCategoryImageSetQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -85,9 +85,9 @@ class CategoryImageStorageDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCategoryImageSetToCategoryImageQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE] = function () {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE, $container->factory(function () {
             return SpyCategoryImageSetToCategoryImageQuery::create();
-        };
+        }));
 
         return $container;
     }

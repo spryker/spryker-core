@@ -44,9 +44,9 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductLabelFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductLabelCollectorToProductLabelBridge($container->getLocator()->productLabel()->facade());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductLabelCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductLabelCollectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }

@@ -85,9 +85,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductListSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductPageSearchFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_PAGE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
             return new ProductListSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LIST] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LIST, function (Container $container) {
             return new ProductListSearchToProductListFacadeBridge($container->getLocator()->productList()->facade());
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_QUERY] = function () {
+        $container->set(static::PROPEL_PRODUCT_QUERY, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -155,9 +155,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductCategoryPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_CATEGORY_QUERY] = function () {
+        $container->set(static::PROPEL_PRODUCT_CATEGORY_QUERY, $container->factory(function () {
             return SpyProductCategoryQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -169,9 +169,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductListCategoryPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_LIST_CATEGORY_QUERY] = function () {
+        $container->set(static::PROPEL_PRODUCT_LIST_CATEGORY_QUERY, $container->factory(function () {
             return SpyProductListCategoryQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -183,9 +183,9 @@ class ProductListSearchDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductListProductConcretePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_PRODUCT_LIST_PRODUCT_CONCRETE_QUERY] = function () {
+        $container->set(static::PROPEL_PRODUCT_LIST_PRODUCT_CONCRETE_QUERY, $container->factory(function () {
             return SpyProductListProductConcreteQuery::create();
-        };
+        }));
 
         return $container;
     }

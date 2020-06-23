@@ -34,9 +34,13 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_GRAPH = 'PLUGIN_GRAPH';
     public const PLUGINS_RESERVATION = 'PLUGIN_RESERVATION';
     public const PLUGINS_RESERVATION_AGGREGATION = 'PLUGINS_RESERVATION_AGGREGATION';
+    public const PLUGINS_OMS_RESERVATION_AGGREGATION = 'PLUGINS_OMS_RESERVATION_AGGREGATION';
     public const PLUGINS_RESERVATION_EXPORT = 'PLUGINS_RESERVATION_EXPORT';
     public const PLUGINS_OMS_ORDER_MAIL_EXPANDER = 'PLUGINS_OMS_ORDER_MAIL_EXPANDER';
     public const PLUGINS_OMS_MANUAL_EVENT_GROUPER = 'PLUGINS_OMS_MANUAL_EVENT_GROUPER';
+    public const PLUGINS_OMS_RESERVATION_READER_STRATEGY = 'PLUGINS_OMS_RESERVATION_READER_STRATEGY';
+    public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
+    public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
     public const PLUGINS_TIMEOUT_PROCESSOR = 'PLUGINS_TIMEOUT_PROCESSOR';
 
     public const FACADE_MAIL = 'FACADE_MAIL';
@@ -66,10 +70,14 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addGraphPlugin($container);
         $container = $this->addReservationHandlerPlugins($container);
         $container = $this->addReservationAggregationStrategyPlugins($container);
+        $container = $this->addOmsReservationReaderStrategyPlugins($container);
+        $container = $this->addOmsReservationAggregationPlugins($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addReservationExportPlugins($container);
         $container = $this->addOmsOrderMailExpanderPlugins($container);
         $container = $this->addOmsManualEventGrouperPlugins($container);
+        $container = $this->addOmsReservationWriterStrategyPlugins($container);
+        $container = $this->addReservationPostSaveTerminationAwareStrategyPlugins($container);
         $container = $this->addTimeoutProcessorPlugins($container);
 
         return $container;
@@ -138,6 +146,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()` instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface[]
@@ -148,9 +158,19 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use \Spryker\Zed\Oms\OmsDependencyProvider::getOmsReservationAggregationStrategyPlugins().
+     *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
     protected function getReservationAggregationStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface[]
+     */
+    protected function getOmsReservationAggregationPlugins(): array
     {
         return [];
     }
@@ -348,6 +368,20 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationAggregationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_AGGREGATION, function () {
+            return $this->getOmsReservationAggregationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
      */
     protected function getOmsOrderMailExpanderPlugins(Container $container)
@@ -391,6 +425,72 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationReaderStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_READER_STRATEGY, function (Container $container) {
+            return $this->getOmsReservationReaderStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationReaderStrategyPluginInterface[]
+     */
+    protected function getOmsReservationReaderStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOmsReservationWriterStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OMS_RESERVATION_WRITER_STRATEGY, function () {
+            return $this->getOmsReservationWriterStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationWriterStrategyPluginInterface[]
+     */
+    protected function getOmsReservationWriterStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addReservationPostSaveTerminationAwareStrategyPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY, function () {
+            return $this->getReservationPostSaveTerminationAwareStrategyPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
+     */
+    protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
+    {
+        return [];
     }
 
     /**

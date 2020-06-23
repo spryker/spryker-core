@@ -38,9 +38,9 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigChartFunctionPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_TWIG_CHART_GUI_FUNCTIONS] = function () {
+        $container->set(static::PLUGIN_TWIG_CHART_GUI_FUNCTIONS, function () {
             return $this->getTwigChartFunctionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class ChartGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addChartPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CHART] = function () {
+        $container->set(static::PLUGIN_CHART, function () {
             return $this->getChartPlugins();
-        };
+        });
 
         return $container;
     }

@@ -42,9 +42,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductPackagingUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
      */
     protected function addProductMeasurementUnitStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_MEASUREMENT_UNIT_STORAGE, function (Container $container) {
             return new ProductPackagingUnitStorageToProductMeasurementUnitStorageClientBridge(
                 $container->getLocator()->productMeasurementUnitStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractDependencyPr
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductPackagingUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
