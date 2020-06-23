@@ -10,6 +10,8 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use DateTime;
 use ErrorException;
+use Generated\Shared\Transfer\OmsEventTransfer;
+use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
@@ -241,7 +243,12 @@ class Timeout implements TimeoutInterface
         EventInterface $event,
         SpySalesOrderItem $spySalesOrderItem
     ): DateTime {
-        $timeoutProcessorTimeoutRequestTransfer = (new TimeoutProcessorTimeoutRequestTransfer());
+        $spySalesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())->fromArray($spySalesOrderItem->toArray());
+        $omsEventTransfer = (new OmsEventTransfer())->setTimeout($event->getTimeout());
+        $timeoutProcessorTimeoutRequestTransfer = (new TimeoutProcessorTimeoutRequestTransfer())
+            ->setSalesOrderItemEntity($spySalesOrderItemEntityTransfer)
+            ->setOmsEvent($omsEventTransfer)
+            ->setTimestamp($currentTime->getTimestamp());
 
         $timeoutProcessor = $this->timeoutProcessorCollection->get($event->getTimeoutProcessor());
         $timeoutProcessorTimeoutResponseTransfer = $timeoutProcessor->calculateTimeout($timeoutProcessorTimeoutRequestTransfer);

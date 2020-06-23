@@ -139,9 +139,9 @@
     </transfer>
 
     <transfer name="TimeoutProcessorTimeoutRequest">
-        <property name="orderItem" type="SpySalesOrderItem"/>
+        <property name="salesOrderItemEntity" type="SpySalesOrderItemEntity"/>
         <property name="timestamp" type="int"/>
-        <property name="omsEvent" type="OmsEventTransfer"/>
+        <property name="omsEvent" type="OmsEvent"/>
     </transfer>
 
     <transfer name="TimeoutProcessorTimeoutResponse">
