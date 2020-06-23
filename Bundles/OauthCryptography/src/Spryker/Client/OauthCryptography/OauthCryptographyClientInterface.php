@@ -25,7 +25,7 @@ interface OauthCryptographyClientInterface
 
     /**
      * Specification:
-     * - Checks if "authorization" header  is present.
+     * - Checks if `authorization` header is present.
      * - Parses the JWT token.
      * - Verifies the token against each public key.
      * - Checks access token repository for the verified token to have been revoked.

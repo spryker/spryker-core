@@ -5,13 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/config": "*",
+    "spryker/config": "^3.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/oauth-extension": "^1.0.0"
+    "spryker/oauth-extension": "^1.4.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {

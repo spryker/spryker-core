@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\OauthExtention\Dependency\Plugin;
+namespace Spryker\Client\OauthExtension\Dependency\Plugin;
 
 /**
  * Plugin implementations will be used to load cryptographic keys.

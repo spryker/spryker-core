@@ -8,7 +8,7 @@
 namespace Spryker\Client\OauthCryptography\Communication\Plugin\Oauth;
 
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface;
+use Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface;
 
 /**
  * @method \Spryker\Client\OauthCryptography\OauthCryptographyClientInterface getClient()

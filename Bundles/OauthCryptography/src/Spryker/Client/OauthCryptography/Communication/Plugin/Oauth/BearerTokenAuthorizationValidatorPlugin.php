@@ -10,7 +10,7 @@ namespace Spryker\Client\OauthCryptography\Communication\Plugin\Oauth;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Client\Kernel\AbstractPlugin;
-use Spryker\Client\OauthExtention\Dependency\Plugin\AuthorizationValidatorPluginInterface;
+use Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface;
 
 /**
  * @method \Spryker\Client\OauthCryptography\OauthCryptographyClientInterface getClient()
@@ -58,7 +58,7 @@ class BearerTokenAuthorizationValidatorPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Checks if "authorization" header  is present.
+     * - Checks if `authorization` header is present.
      * - Parses the JWT token.
      * - Verifies the token against each public key.
      * - Checks access token repository for the verified token to have been revoked.
