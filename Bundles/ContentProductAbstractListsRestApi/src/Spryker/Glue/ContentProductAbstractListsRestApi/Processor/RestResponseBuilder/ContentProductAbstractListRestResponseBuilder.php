@@ -89,19 +89,20 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
     /**
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createContentProductAbstractListsRestResponse(
         ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer,
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        string $storeName
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $idProductAbstracts = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
-        foreach ($idProductAbstracts as $idProductAbstract) {
-            $abstractProductResource = $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
-
+        $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds($idProductAbstracts, $restRequest, $storeName);
+        foreach ($abstractProductResources as $abstractProductResource) {
             $restResponse->addResource($abstractProductResource);
         }
 

@@ -31,12 +31,14 @@ interface ContentProductAbstractListRestResponseBuilderInterface
     /**
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createContentProductAbstractListsRestResponse(
         ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer,
-        RestRequestInterface $restRequest
+        RestRequestInterface $restRequest,
+        string $storeName
     ): RestResponseInterface;
 
     /**

@@ -9,6 +9,7 @@ namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
 
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -27,15 +28,23 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $contentProductAbstractListRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
+     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
-        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
+        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder,
+        ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
     ) {
         $this->contentProductClient = $contentProductClient;
         $this->contentProductAbstractListRestResponseBuilder = $contentProductAbstractListRestResponseBuilder;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -65,9 +74,10 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         if (!$contentProductAbstractListTypeTransfer) {
             return $this->contentProductAbstractListRestResponseBuilder->addContentItemtNotFoundError();
         }
+        $storeName = $this->storeClient->getCurrentStore()->getName();
 
         return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResponse($contentProductAbstractListTypeTransfer, $restRequest);
+            ->createContentProductAbstractListsRestResponse($contentProductAbstractListTypeTransfer, $restRequest, $storeName);
     }
 
     /**

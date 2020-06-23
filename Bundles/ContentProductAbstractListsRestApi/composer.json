@@ -10,6 +10,7 @@
     "spryker/glue-application-extension": "^1.2.0",
     "spryker/kernel": "^3.32.0",
     "spryker/products-rest-api": "^2.4.0",
+    "spryker/store": "^1.0.0",
     "spryker/symfony": "^3.2.0"
   },
   "require-dev": {

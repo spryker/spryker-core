@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ContentProductAbstractListsRestApiToProductsRestApiResourceBridge implements ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
@@ -23,17 +22,6 @@ class ContentProductAbstractListsRestApiToProductsRestApiResourceBridge implemen
     public function __construct($productsRestApiResource)
     {
         $this->productsRestApiResource = $productsRestApiResource;
-    }
-
-    /**
-     * @param int $idProductAbstract
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
-    {
-        return $this->productsRestApiResource->findProductAbstractById($idProductAbstract, $restRequest);
     }
 
     /**
