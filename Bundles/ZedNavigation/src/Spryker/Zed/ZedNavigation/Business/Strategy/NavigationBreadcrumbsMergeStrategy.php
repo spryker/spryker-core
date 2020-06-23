@@ -34,19 +34,19 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     {
         $rootDefinitionData = $rootDefinition->toArray();
         $coreNavigationDefinitionData = $coreNavigationDefinition->toArray();
-        foreach ($rootDefinitionData as &$rootNavigation) {
-            if (!$this->hasPages($rootNavigation)) {
+        foreach ($rootDefinitionData as &$rootNavigationElement) {
+            if (!$this->hasPages($rootNavigationElement)) {
                 continue;
             }
 
-            foreach ($rootNavigation[MenuFormatter::PAGES] as $navigationName => &$rootNavigationElement) {
+            foreach ($rootNavigationElement[MenuFormatter::PAGES] as $navigationName => &$childRootNavigationElement) {
                 $foundNavigationElement = $this->getNavigationInNavigationData(
                     $coreNavigationDefinitionData,
-                    $rootNavigationElement,
+                    $childRootNavigationElement,
                     $navigationName
                 );
 
-                $rootNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $rootNavigationElement);
+                $childRootNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childRootNavigationElement);
             }
         }
 
