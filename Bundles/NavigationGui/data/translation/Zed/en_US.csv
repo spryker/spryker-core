@@ -9,3 +9,5 @@ Save,Save
 "Save order","Save Order"
 Search,Search
 "Overview of Navigation Elements","Overview of Navigation Elements"
+"Navigation element %d was activated successfully.","Navigation element %d was activated successfully."
+"Navigation element %d was deactivated successfully.","Navigation element %d was deactivated successfully."

@@ -73,7 +73,8 @@ class RoleController extends AbstractController
                 $roleTransfer = $this->getFacade()->addRole($formData[RoleForm::FIELD_NAME]);
 
                 $this->addSuccessMessage(
-                    sprintf('Role "%s" successfully added.', $formData[RoleForm::FIELD_NAME])
+                    'Role \'%s\' successfully added.',
+                    ['%s' => $formData[RoleForm::FIELD_NAME]]
                 );
 
                 return $this->redirectResponse(

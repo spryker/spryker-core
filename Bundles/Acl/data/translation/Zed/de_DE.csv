@@ -5,7 +5,7 @@ Action,Aktion
 "Assigned groups","Zugewiesene Gruppen"
 "Assigned Roles","Zugewiesene Rollen"
 "Assigned Rules","Zugeordnete Regeln"
-Bundle,Bundle
+Bundle,Bündel
 Controller,Controller
 "Could not modify root role node!","Knotenpunkt kann nicht geändert werden"
 Create,Erstellen
@@ -28,7 +28,7 @@ Create,Erstellen
 "No roles","Keine Rollen"
 Permission,Berechtigung
 Role,Rolle
-"Role ""%s"" successfully added.","Rolle ""%s"" erfolgreich hinzugefügt."
+"Role '%s' successfully added.","Rolle '%s' erfolgreich hinzugefügt."
 "Role ""%s"" successfully updated.","Rolle ""%s"" erfolgreich aktualisiert."
 "Role couldn't be found","Rolle wurde nicht gefunden"
 "Role list",Rollenliste
@@ -55,3 +55,8 @@ Save,Speichern
 Users,Nutzer
 "Users Control",User-Verwaltung
 Groups,Gruppen
+allow,zulassen
+deny,verweigern
+"Edit Role","Rolle bearbeiten"
+"Created At","Erstellt am"
+"Create new Group","Neue Gruppe erstellen"

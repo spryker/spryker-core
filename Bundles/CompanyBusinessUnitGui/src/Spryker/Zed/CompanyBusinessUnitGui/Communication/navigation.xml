@@ -6,8 +6,8 @@
         <icon>fa-files-o</icon>
         <pages>
             <company-business-unit-gui>
-                <label>Company Units</label>
-                <title>Company Units</title>
+                <label>Business Units</label>
+                <title>Business Units</title>
                 <bundle>company-business-unit-gui</bundle>
                 <controller>list-company-business-unit</controller>
                 <action>index</action>

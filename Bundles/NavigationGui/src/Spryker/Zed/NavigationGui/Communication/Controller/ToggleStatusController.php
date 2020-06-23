@@ -47,7 +47,8 @@ class ToggleStatusController extends AbstractController
                 ->updateNavigation($navigationTransfer);
 
             $this->addSuccessMessage(
-                sprintf(static::MESSAGE_MAP_UPDATE_SUCCESS[$navigationTransfer->getIsActive()], $idNavigation)
+                static::MESSAGE_MAP_UPDATE_SUCCESS[$navigationTransfer->getIsActive()],
+                ['%d' => $idNavigation]
             );
         } else {
             $this->addErrorMessage('Navigation element %d was not found.', ['%d' => $idNavigation]);

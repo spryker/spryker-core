@@ -28,7 +28,7 @@ Create,Create
 "No roles","No roles"
 Permission,Permission
 Role,Role
-"Role ""%s"" successfully added.","Role ""%s"" successfully added."
+"Role '%s' successfully added.","Role '%s' successfully added."
 "Role ""%s"" successfully updated.","Role ""%s"" successfully updated."
 "Role couldn't be found","Role couldn't be found"
 "Role list","Role list"
@@ -55,3 +55,8 @@ Save,Save
 Users,Users
 "Users Control","Users Control"
 Groups,Groups
+allow,allow
+deny,deny
+"Edit Role","Edit Role"
+"Created At","Created At"
+"Create new Group","Create new Group"

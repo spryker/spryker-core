@@ -9,3 +9,5 @@ Save,Speichern
 "Save order","Bestellung speichern"
 Search,Suche
 "Overview of Navigation Elements","Übersicht der Navigationselemente"
+"Navigation element %d was activated successfully.","Navigationselement %d wurde erfolgreich aktiviert."
+"Navigation element %d was deactivated successfully.","Navigationselement %d wurde erfolgreich deaktiviert."

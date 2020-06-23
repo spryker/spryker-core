@@ -13,3 +13,12 @@ E-Mail,E-Mail
 "Attach customer to company","Attach customer to company"
 "Business Unit name","Business Unit name"
 "Attach ""%customer%""","Attach ""%customer%"""
+Disable,Disable
+"Company user successfully disabled","Company user successfully disabled"
+"Company user successfully enabled","Company user successfully enabled"
+Disabled,Disabled
+Enabled,Enabled
+Enable,Enable
+"User Name","User Name"
+"Attach to BU","Attach to BU"
+"Company user has been created.","Company user has been created."

@@ -15,3 +15,8 @@ Update,Aktualisieren
 "User was not deactivated.","Der User wurde nicht deaktiviert."
 "User was not deleted.","Der User wurde nicht gelöscht."
 User,Benutzer
+"Create new User","Kunden neu zuordnen"
+"Create user","Kunden erstellen"
+Warning,Warnung
+"Delete User","User löschen"
+"You are trying to delete user","Sie versuchen einen User zu löschen"
