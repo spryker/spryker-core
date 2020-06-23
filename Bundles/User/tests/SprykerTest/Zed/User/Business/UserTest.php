@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\MailBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
@@ -418,6 +421,58 @@ class UserTest extends Unit
 
         // Assert
         $this->assertNull($foundUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataReturnsUpdatedTransfer(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::USERNAME,
+        ]);
+        $mailTransfer = $this->getMailTransfer($userTransfer->getUsername());
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertSame($mailTransfer->getUser()->getIdUser(), $userTransfer->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $mailTransfer = $this->getMailTransfer('nonexistent_email@mail.com');
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertNull($mailTransfer->getUser());
+    }
+
+    /**
+     * @param string $recipientEmail
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function getMailTransfer(string $recipientEmail): MailTransfer
+    {
+        return (new MailBuilder())
+            ->seed()
+            ->withRecipient([
+                MailRecipientTransfer::EMAIL => $recipientEmail,
+            ])
+            ->build();
     }
 
     /**

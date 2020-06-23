@@ -37,7 +37,8 @@ class AuthMailConnectorBusinessFactory extends AbstractBusinessFactory
     public function createMailBuilder(): MailBuilderInterface
     {
         return new MailBuilder(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getAuthMailExpanderPlugins()
         );
     }
 
@@ -47,5 +48,13 @@ class AuthMailConnectorBusinessFactory extends AbstractBusinessFactory
     public function getMailFacade(): AuthMailConnectorToMailInterface
     {
         return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return \Spryker\Zed\AuthMailConnectorExtension\Dependency\Plugin\AuthMailExpanderPluginInterface[]
+     */
+    public function getAuthMailExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::PLUGINS_AUTH_MAIL_EXPANDER);
     }
 }
