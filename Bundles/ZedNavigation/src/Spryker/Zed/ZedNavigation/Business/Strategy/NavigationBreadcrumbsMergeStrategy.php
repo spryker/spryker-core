@@ -40,13 +40,13 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
             }
 
             foreach ($rootNavigation[MenuFormatter::PAGES] as $navigationName => &$rootNavigationElement) {
-                $navigationInMergedNavigationData = $this->getNavigationInNavigationData(
+                $foundNavigationElement = $this->getNavigationInNavigationData(
                     $coreNavigationDefinitionData,
                     $rootNavigationElement,
                     $navigationName
                 );
 
-                $rootNavigationElement = $this->mergeNavigationElementPages($navigationInMergedNavigationData, $rootNavigationElement);
+                $rootNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $rootNavigationElement);
             }
         }
 
@@ -54,25 +54,25 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigationInMergedNavigationData
+     * @param array $navigationElement
      * @param array $rootNavigationElement
      *
      * @return array
      */
-    protected function mergeNavigationElementPages(array $navigationInMergedNavigationData, array $rootNavigationElement): array
+    protected function mergeNavigationElementPages(array $navigationElement, array $rootNavigationElement): array
     {
-        if (!$this->hasPages($navigationInMergedNavigationData)) {
+        if (!$this->hasPages($navigationElement)) {
             return $rootNavigationElement;
         }
 
         if (!$this->hasPages($rootNavigationElement)) {
-            $rootNavigationElement[MenuFormatter::PAGES] = $navigationInMergedNavigationData[MenuFormatter::PAGES];
+            $rootNavigationElement[MenuFormatter::PAGES] = $navigationElement[MenuFormatter::PAGES];
 
             return $rootNavigationElement;
         }
 
         $rootNavigationElement[MenuFormatter::PAGES] = array_merge_recursive(
-            $navigationInMergedNavigationData[MenuFormatter::PAGES],
+            $navigationElement[MenuFormatter::PAGES],
             $rootNavigationElement[MenuFormatter::PAGES]
         );
 
@@ -108,13 +108,13 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigationData
+     * @param array $navigationElement
      *
      * @return bool
      */
-    protected function hasPages(array $navigationData): bool
+    protected function hasPages(array $navigationElement): bool
     {
-        return isset($navigationData[MenuFormatter::PAGES]);
+        return isset($navigationElement[MenuFormatter::PAGES]);
     }
 
     /**
