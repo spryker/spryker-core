@@ -23,7 +23,7 @@ class MerchantProductStoragePublishListener extends AbstractPlugin implements Ev
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $transfers, string $eventName): void
     {
         $this->getFacade()->writeMerchantProductStorageCollectionByIdProductAbstractEvents($transfers);
     }

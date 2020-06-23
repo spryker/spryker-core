@@ -10,4 +10,10 @@
         <property name="idProductAbstract" type="int"/>
     </transfer>
 
+    <transfer name="MerchantProduct" >
+        <property name="idProductAbstractMerchant" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="isShared" type="bool"/>
+    </transfer>
 </transfers>
