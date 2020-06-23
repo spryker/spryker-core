@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
-use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
@@ -60,31 +59,6 @@ class MerchantProductSearchCommunicationTester extends Actor
     public function getProductAbstractPageSearchPropelQuery(): SpyProductAbstractPageSearchQuery
     {
         return SpyProductAbstractPageSearchQuery::create();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    public function saveMerchantProduct(MerchantTransfer $merchantTransfer, ProductConcreteTransfer $productConcreteTransfer): void
-    {
-        $merchantProductAbstract = $this->getMerchantProductAbstractPropelQuery()
-            ->filterByFkMerchant($merchantTransfer->getIdMerchant())
-            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->findOneOrCreate();
-
-        $merchantProductAbstract->save();
-    }
-
-    /**
-     * @return void
-     */
-    public function ensureMerchantProductAbstractTableIsEmpty(): void
-    {
-        $merchantProductAbstractQuery = $this->getMerchantProductAbstractPropelQuery();
-        $merchantProductAbstractQuery->deleteAll();
     }
 
     /**
@@ -136,14 +110,6 @@ class MerchantProductSearchCommunicationTester extends Actor
         foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
             $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names'][$storeTransfer->getName()]);
         }
-    }
-
-    /**
-     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
-     */
-    protected function getMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
-    {
-        return SpyMerchantProductAbstractQuery::create();
     }
 
     /**

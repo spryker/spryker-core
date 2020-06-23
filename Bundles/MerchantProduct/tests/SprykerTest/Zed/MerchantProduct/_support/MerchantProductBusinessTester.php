@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\MerchantProduct;
 
 use Codeception\Actor;
-use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 
 /**
@@ -32,22 +30,6 @@ use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 class MerchantProductBusinessTester extends Actor
 {
     use _generated\MerchantProductBusinessTesterActions;
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return void
-     */
-    public function saveMerchantProduct(MerchantTransfer $merchantTransfer, ProductConcreteTransfer $productConcreteTransfer): void
-    {
-        $merchantProductAbstract = $this->getMerchantProductAbstractPropelQuery()
-            ->filterByFkMerchant($merchantTransfer->getIdMerchant())
-            ->filterByFkProductAbstract($productConcreteTransfer->getFkProductAbstract())
-            ->findOneOrCreate();
-
-        $merchantProductAbstract->save();
-    }
 
     /**
      * @return void

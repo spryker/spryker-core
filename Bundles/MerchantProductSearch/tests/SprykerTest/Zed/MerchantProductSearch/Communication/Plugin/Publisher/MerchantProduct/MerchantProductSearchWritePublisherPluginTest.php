@@ -52,16 +52,16 @@ class MerchantProductSearchWritePublisherPluginTest extends Unit
     public function testMerchantProductSearchWritePublisherPluginStoresData(): void
     {
         // Arrange
-        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $beforeCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
+        /** @var \Generated\Shared\Transfer\StoreTransfer $storeTransfer */
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
         $storeRelationTransfer = (new StoreRelationBuilder())->seed([
             StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
         ])->build();
         $productConcreteTransfer = $this->tester->haveProduct();
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
-        $this->tester->saveMerchantProduct($merchantTransfer, $productConcreteTransfer);
+        $this->tester->addMerchantProductRelation($merchantTransfer->getIdMerchant(), $productConcreteTransfer->getFkProductAbstract());
         $this->tester->addProductRelatedData($productConcreteTransfer);
 
         $merchantProductSearchWritePublisher = new MerchantProductSearchWritePublisherPlugin();
