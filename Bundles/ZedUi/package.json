@@ -31,21 +31,5 @@
         "tslib": "^1.10.0",
         "url-search-params-polyfill": "^8.0.0",
         "zone.js": "^0.10.2"
-    },
-    "devDependencies": {
-        "@angular-builders/custom-webpack": "^9.0.0-beta.1",
-        "@angular-devkit/build-angular": "^0.900.2",
-        "@angular/cli": "^9.0.2",
-        "@angular/compiler-cli": "^9.0.1",
-        "@angular/language-service": "^9.0.1",
-        "@types/node": "^12.11.1",
-        "codelyzer": "^5.1.2",
-        "copyfiles": "^2.2.0",
-        "custom-elements-es5-adapter": "^1.0.0",
-        "ngx-build-plus": "^9.0.6",
-        "npm-run-all": "^4.1.5",
-        "ts-node": "^8.3.0",
-        "tslint": "^5.18.0",
-        "typescript": "~3.8.3"
     }
 }
