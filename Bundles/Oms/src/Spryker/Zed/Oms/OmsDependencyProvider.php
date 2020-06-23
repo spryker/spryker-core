@@ -400,7 +400,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTimeoutProcessorPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_TIMEOUT_PROCESSOR, function (): array {
+        $container->set(static::PLUGINS_TIMEOUT_PROCESSOR, function () {
             return $this->getTimeoutProcessorPlugins();
         });
 

@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutResponseTransfer;
 
 /**
- * Allow to define their own timeout processor
+ * Allows to define timeout processor for state machine event to calculate event timeout.
  */
 interface TimeoutProcessorPluginInterface
 {
     /**
      * Specification:
-     * -
+     * - Returns name of TimeoutProcessor.
      *
      * @api
      *
@@ -29,7 +29,7 @@ interface TimeoutProcessorPluginInterface
 
     /**
      * Specification:
-     * -
+     * - Returns label for TimeoutProcessor that will be displayed on state machine visualisation.
      *
      * @api
      *
@@ -41,7 +41,8 @@ interface TimeoutProcessorPluginInterface
 
     /**
      * Specification:
-     * -
+     * - Calculates timeout based on event and order item.
+     * - Return `TimeoutProcessorTimeoutResponseTransfer` with timestamp when event should be triggered.
      *
      * @api
      *

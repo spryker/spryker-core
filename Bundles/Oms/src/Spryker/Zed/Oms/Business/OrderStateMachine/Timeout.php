@@ -243,7 +243,8 @@ class Timeout implements TimeoutInterface
         EventInterface $event,
         SpySalesOrderItem $spySalesOrderItem
     ): DateTime {
-        $spySalesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())->fromArray($spySalesOrderItem->toArray());
+        $spySalesOrderItemEntityTransfer = (new SpySalesOrderItemEntityTransfer())
+            ->fromArray($spySalesOrderItem->toArray(), true);
         $omsEventTransfer = (new OmsEventTransfer())->setTimeout($event->getTimeout());
         $timeoutProcessorTimeoutRequestTransfer = (new TimeoutProcessorTimeoutRequestTransfer())
             ->setSalesOrderItemEntity($spySalesOrderItemEntityTransfer)
@@ -253,6 +254,6 @@ class Timeout implements TimeoutInterface
         $timeoutProcessor = $this->timeoutProcessorCollection->get($event->getTimeoutProcessor());
         $timeoutProcessorTimeoutResponseTransfer = $timeoutProcessor->calculateTimeout($timeoutProcessorTimeoutRequestTransfer);
 
-        return (new DateTime)->setTimestamp($timeoutProcessorTimeoutResponseTransfer->getTimeoutTimestamp());
+        return (new DateTime())->setTimestamp($timeoutProcessorTimeoutResponseTransfer->getTimeoutTimestamp());
     }
 }
