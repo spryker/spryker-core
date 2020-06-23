@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
@@ -92,5 +93,26 @@ class OmsBusinessTester extends Actor
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $stateName
+     * @param int $orderItemsAmount One spy_sales_order_item is added always by the {@link \SprykerTest\Zed\Oms\_generated\OmsBusinessTesterActions::haveOrder()} method.
+     *
+     * @return void
+     */
+    public function createOrderWithOrderItemsInStateForStore(string $storeName, string $stateName, int $orderItemsAmount = 0): void
+    {
+        $processName = 'DummyPayment01';
+
+        $salesOrderTransferDE = $this->haveOrder([], $processName);
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
+        $salesOrderEntity->setStore($storeName)->save();
+
+        for ($i = 0; $i < $orderItemsAmount; $i++) {
+            $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), ['state' => $stateName, 'process' => $processName]);
+            $this->haveOmsOrderItemStateEntity($stateName);
+        }
     }
 }

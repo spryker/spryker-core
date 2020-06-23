@@ -12,6 +12,7 @@ use DateInterval;
 use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsProductReservation;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -146,5 +147,22 @@ class OmsHelper extends Module
         });
 
         return $omsProductReservationTransfer;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemState
+     */
+    public function haveOmsOrderItemStateEntity(string $name): SpyOmsOrderItemState
+    {
+        $omsOrderItemState = SpyOmsOrderItemStateQuery::create()->filterByName($name)->findOneOrCreate();
+        $omsOrderItemState->save();
+
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($omsOrderItemState): void {
+            $omsOrderItemState->delete();
+        });
+
+        return $omsOrderItemState;
     }
 }

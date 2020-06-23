@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationChangeVersionTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
@@ -39,10 +40,70 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @param array $states
      * @param string $processName
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByState(array $states, $processName)
+    public function querySalesOrderItemsByState(
+        array $states,
+        $processName,
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
+    ) {
+        $storeName = $this->getStoreNameFromOmsCheckConditionCriteria($omsCheckConditionsQueryCriteriaTransfer);
+        $limit = $this->getLimitFromOmsCheckConditionCriteria($omsCheckConditionsQueryCriteriaTransfer);
+
+        if ($storeName === null && $limit === null) {
+            return $this->querySalesOrderItemsByStateFallback($states, $processName);
+        }
+
+        $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $subQuery
+            ->setDistinct()
+            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
+            ->useProcessQuery()
+                ->filterByName($processName)
+            ->endUse()
+            ->useStateQuery()
+                ->filterByName_In($states)
+            ->endUse();
+
+        if ($storeName !== null) {
+            $subQuery
+                ->useOrderQuery()
+                    ->filterByStore($storeName)
+                ->endUse();
+        }
+
+        if ($limit !== null) {
+            $subQuery->setLimit($limit);
+        }
+
+        $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $baseQuery->addSelectQuery($subQuery, 't', false)
+            ->addSelectColumn('*')
+            ->addSelectColumn('t.fk_sales_order')
+            ->where('t.fk_sales_order = spy_sales_order_item.fk_sales_order')
+            ->useProcessQuery()
+                ->filterByName($processName)
+            ->endUse()
+            ->useStateQuery()
+                ->filterByName_In($states)
+            ->endUse();
+
+        return $baseQuery;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param array $states
+     * @param string $processName
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function querySalesOrderItemsByStateFallback(array $states, string $processName)
     {
         return $this->getFactory()
             ->getSalesQueryContainer()
@@ -51,6 +112,35 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->joinState(null, Criteria::INNER_JOIN)
             ->where('Process.name = ?', $processName)
             ->where("State.name IN ('" . implode("', '", $states) . "')");
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return string|null
+     */
+    protected function getStoreNameFromOmsCheckConditionCriteria(
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
+    ): ?string {
+        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
+            return null;
+        }
+
+        return $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return int|null
+     */
+    protected function getLimitFromOmsCheckConditionCriteria(?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null): ?int
+    {
+        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
+            return null;
+        }
+
+        return $omsCheckConditionsQueryCriteriaTransfer->getLimit();
     }
 
     /**

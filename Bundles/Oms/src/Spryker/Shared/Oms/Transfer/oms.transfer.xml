@@ -150,5 +150,10 @@
         <property name="storeName" type="string"/>
     </transfer>
 
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
 </transfers>
 

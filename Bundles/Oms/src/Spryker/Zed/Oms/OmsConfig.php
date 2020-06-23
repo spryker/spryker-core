@@ -90,4 +90,17 @@ class OmsConfig extends AbstractBundleConfig
     {
         return 'new';
     }
+
+    /**
+     * Specification:
+     * - Defines a limit of order which should be used for check order item conditions.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getOmsCheckConditionsQueryLimit(): ?int
+    {
+        return null;
+    }
 }

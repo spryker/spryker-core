@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -19,10 +20,15 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param array $states
      * @param string $processName
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByState(array $states, $processName);
+    public function querySalesOrderItemsByState(
+        array $states,
+        $processName,
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
+    );
 
     /**
      * @api
