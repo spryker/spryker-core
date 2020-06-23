@@ -22,9 +22,9 @@ class MerchantProductStorageClient extends AbstractClient implements MerchantPro
      *
      * @param int $idProductAbstract
      *
-     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer
+     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer|null
      */
-    public function findOne(int $idProductAbstract): MerchantProductStorageTransfer
+    public function findOne(int $idProductAbstract): ?MerchantProductStorageTransfer
     {
         return $this->getFactory()
             ->createMerchantProductStorageReader()
