@@ -12,6 +12,11 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ContentBannersRestApiResourceInterface
 {
     /**
+     * Specification:
+     * - Retrieves content banners by content banner keys.
+     *
+     * @api
+     *
      * @phpstan-param array<string, string> $contentBannerKeys
      *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>

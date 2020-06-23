@@ -103,9 +103,7 @@ class ProductsRestApiResource extends AbstractRestResource implements ProductsRe
     }
 
     /**
-     * Specification:
-     * - Retrieves multiple abstract product resource by ids.
-     * - Returned collection of rest resources is indexed by product abstract id.
+     * {@inheritDoc}
      *
      * @api
      *

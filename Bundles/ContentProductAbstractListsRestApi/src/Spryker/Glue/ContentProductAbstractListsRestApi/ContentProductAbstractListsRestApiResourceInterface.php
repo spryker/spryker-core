@@ -12,6 +12,11 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 interface ContentProductAbstractListsRestApiResourceInterface
 {
     /**
+     * Specification:
+     * - Retrieves content product abstract lists by content product abstract lists keys.
+     *
+     * @api
+     *
      * @phpstan-param array<string, string> $contentProductAbstractListKeys
      *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>

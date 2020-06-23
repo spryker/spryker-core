@@ -16,6 +16,10 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ContentBannersRestApiResource extends AbstractRestResource implements ContentBannersRestApiResourceInterface
 {
     /**
+     * {{@inheritDoc}}
+     *
+     * @api
+     *
      * @phpstan-param array<string, string> $contentBannerKeys
      *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
