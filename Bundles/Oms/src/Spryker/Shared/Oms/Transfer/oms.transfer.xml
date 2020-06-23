@@ -24,7 +24,7 @@
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
-        <property name="itemStateDisplayNames" type="string[]" singular="itemStateDisplayName"/>
+        <property name="itemStateDisplayNames" type="string[]" singular="itemStateDisplayName" associative="true" description="State name is used as a key"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>

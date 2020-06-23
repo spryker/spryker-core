@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Oms\Business\Expander;
 
 use Generated\Shared\Transfer\ItemStateTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
@@ -84,18 +83,14 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
         $itemStateDisplayNames = [];
         foreach ($itemTransfers as $itemTransfer) {
             $idSalesOrder = $itemTransfer->getFkSalesOrder();
-            if (!$idSalesOrder) {
+            $stateTransfer = $itemTransfer->getState();
+
+            if (!$idSalesOrder || !$stateTransfer) {
                 continue;
             }
 
-            $displayName = $this->findDisplayName($itemTransfer);
-            if (!$displayName) {
-                continue;
-            }
-
-            $stateName = trim($itemTransfer->getState()->getName());
-            $stateName = mb_strtolower($stateName);
-            $stateName = str_replace(' ', '-', $stateName);
+            $stateName = $this->getStateName($stateTransfer);
+            $displayName = $this->getDisplayName($stateTransfer);
             $itemStateDisplayNames[$idSalesOrder][$stateName] = $displayName;
         }
 
@@ -155,37 +150,32 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
      *
-     * @return string|null
+     * @return string
      */
-    protected function findDisplayName(ItemTransfer $itemTransfer): ?string
+    protected function getDisplayName(ItemStateTransfer $itemStateTransfer): string
     {
-        $stateTransfer = $itemTransfer->getState();
-        if (!$stateTransfer) {
-            return null;
+        if ($itemStateTransfer->getDisplayName()) {
+            return $itemStateTransfer->getDisplayName();
         }
 
-        if ($stateTransfer->getDisplayName()) {
-            return $stateTransfer->getDisplayName();
-        }
-
-        $stateName = $this->getStateName($stateTransfer);
+        $stateName = $this->getStateName($itemStateTransfer);
+        $stateName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $stateName;
 
         return $stateName;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemStateTransfer $stateTransfer
+     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
      *
      * @return string
      */
-    protected function getStateName(ItemStateTransfer $stateTransfer): string
+    protected function getStateName(ItemStateTransfer $itemStateTransfer): string
     {
-        $stateName = trim($stateTransfer->getName());
+        $stateName = trim($itemStateTransfer->getName());
         $stateName = mb_strtolower($stateName);
         $stateName = str_replace(' ', '-', $stateName);
-        $stateName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $stateName;
 
         return $stateName;
     }
