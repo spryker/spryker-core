@@ -12,10 +12,14 @@ use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpander;
+use Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpanderInterface;
+use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -51,5 +55,23 @@ class ProductManagementPersistenceFactory extends AbstractPersistenceFactory
     public function createProductManagementAttributeValueTranslationQuery()
     {
         return SpyProductManagementAttributeValueTranslationQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagement\Persistence\Expander\ProductAbstractQueryExpanderInterface
+     */
+    public function createProductAbstractQueryExpander(): ProductAbstractQueryExpanderInterface
+    {
+        return new ProductAbstractQueryExpander(
+            $this->getProductTableQueryCriteriaExpanderPluginInterfaces()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductTableQueryCriteriaExpanderPluginInterface[]
+     */
+    public function getProductTableQueryCriteriaExpanderPluginInterfaces(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_TABLE_QUERY_CRITERIA_EXPANDER);
     }
 }
