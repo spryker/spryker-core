@@ -543,4 +543,18 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
             ->createCustomerAccessTokenReader()
             ->getCustomerByAccessToken($accessToken);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getFactory()
+            ->getConfig()
+            ->isDoubleOptInEnabled();
+    }
 }
