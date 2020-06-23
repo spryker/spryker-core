@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesInvoice\Business\Reader;
 
 use Generated\Shared\Transfer\OrderInvoiceCollectionTransfer;
 use Generated\Shared\Transfer\OrderInvoiceCriteriaTransfer;
+use Generated\Shared\Transfer\OrderInvoiceTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface;
 use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface;
 use Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface;
@@ -31,18 +33,26 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
     protected $salesFacade;
 
     /**
+     * @var \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[]
+     */
+    protected $orderInvoicesExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface $repository
      * @param \Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface $orderInvoiceRenderer
      * @param \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface $salesFacade
+     * @param \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[] $orderInvoicesExpanderPlugins
      */
     public function __construct(
         SalesInvoiceRepositoryInterface $repository,
         OrderInvoiceRendererInterface $orderInvoiceRenderer,
-        SalesInvoiceToSalesFacadeInterface $salesFacade
+        SalesInvoiceToSalesFacadeInterface $salesFacade,
+        array $orderInvoicesExpanderPlugins
     ) {
         $this->repository = $repository;
         $this->orderInvoiceRenderer = $orderInvoiceRenderer;
         $this->salesFacade = $salesFacade;
+        $this->orderInvoicesExpanderPlugins = $orderInvoicesExpanderPlugins;
     }
 
     /**
@@ -58,7 +68,24 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
             return $orderInvoiceCollectionTransfer;
         }
 
-        return $this->expandWithRenderedInvoice($orderInvoiceCriteriaTransfer, $orderInvoiceCollectionTransfer);
+        $orderInvoiceCollectionTransfer = $this->executeOrderInvoicesExpanderPlugins($orderInvoiceCollectionTransfer);
+
+        return $this->expandOrderInvoiceCollectionWithRenderedInvoice($orderInvoiceCriteriaTransfer, $orderInvoiceCollectionTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderInvoiceTransfer $orderInvoiceTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer
+     */
+    public function expandOrderInvoiceWithRenderedInvoice(
+        OrderInvoiceTransfer $orderInvoiceTransfer,
+        OrderTransfer $orderTransfer
+    ): OrderInvoiceTransfer {
+        return $orderInvoiceTransfer->setRenderedInvoice(
+            $this->orderInvoiceRenderer->renderOrderInvoice($orderInvoiceTransfer, $orderTransfer)
+        );
     }
 
     /**
@@ -67,7 +94,7 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
      *
      * @return \Generated\Shared\Transfer\OrderInvoiceCollectionTransfer
      */
-    protected function expandWithRenderedInvoice(
+    protected function expandOrderInvoiceCollectionWithRenderedInvoice(
         OrderInvoiceCriteriaTransfer $orderInvoiceCriteriaTransfer,
         OrderInvoiceCollectionTransfer $orderInvoiceCollectionTransfer
     ): OrderInvoiceCollectionTransfer {
@@ -77,10 +104,26 @@ class OrderInvoiceReader implements OrderInvoiceReaderInterface
 
         foreach ($orderInvoiceCollectionTransfer->getOrderInvoices() as $orderInvoiceTransfer) {
             $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($orderInvoiceTransfer->getIdSalesOrder());
-            $orderInvoiceTransfer->setRenderedInvoice(
-                $this->orderInvoiceRenderer->renderOrderInvoice($orderInvoiceTransfer, $orderTransfer)
-            );
+            $this->expandOrderInvoiceWithRenderedInvoice($orderInvoiceTransfer, $orderTransfer);
         }
+
+        return $orderInvoiceCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderInvoiceCollectionTransfer $orderInvoiceCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderInvoiceCollectionTransfer
+     */
+    protected function executeOrderInvoicesExpanderPlugins(OrderInvoiceCollectionTransfer $orderInvoiceCollectionTransfer): OrderInvoiceCollectionTransfer
+    {
+        $orderInvoiceTransfers = $orderInvoiceCollectionTransfer->getOrderInvoices()->getArrayCopy();
+
+        foreach ($this->orderInvoicesExpanderPlugins as $orderInvoicesExpanderPlugin) {
+            $orderInvoiceTransfers = $orderInvoicesExpanderPlugin->expand($orderInvoiceTransfers);
+        }
+
+        $orderInvoiceCollectionTransfer->getOrderInvoices()->exchangeArray($orderInvoiceTransfers);
 
         return $orderInvoiceCollectionTransfer;
     }

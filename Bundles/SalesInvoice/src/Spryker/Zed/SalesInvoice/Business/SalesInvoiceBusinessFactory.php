@@ -51,7 +51,8 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createOrderInvoiceReferenceGenerator()
+            $this->createOrderInvoiceReferenceGenerator(),
+            $this->getOrderInvoiceBeforeSavePlugins()
         );
     }
 
@@ -63,7 +64,8 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
         return new OrderInvoiceReader(
             $this->getRepository(),
             $this->createOrderInvoiceRenderer(),
-            $this->getSalesFacade()
+            $this->getSalesFacade(),
+            $this->getOrderInvoicesExpanderPlugins()
         );
     }
 
@@ -85,7 +87,6 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
         return new OrderInvoiceEmailSender(
             $this->getEntityManager(),
             $this->createOrderInvoiceReader(),
-            $this->createOrderInvoiceRenderer(),
             $this->getSalesFacade(),
             $this->getMailFacade()
         );
@@ -102,7 +103,7 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Twig\Environment
      */
-    protected function getTwigEnvironment(): Environment
+    public function getTwigEnvironment(): Environment
     {
         return $this->getProvidedDependency(SalesInvoiceDependencyProvider::TWIG_ENVIRONMENT);
     }
@@ -121,5 +122,21 @@ class SalesInvoiceBusinessFactory extends AbstractBusinessFactory
     public function getSalesFacade(): SalesInvoiceToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesInvoiceDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface[]
+     */
+    public function getOrderInvoiceBeforeSavePlugins(): array
+    {
+        return $this->getProvidedDependency(SalesInvoiceDependencyProvider::PLUGINS_ORDER_INVOICE_BEFORE_SAVE);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[]
+     */
+    public function getOrderInvoicesExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesInvoiceDependencyProvider::PLUGINS_ORDER_INVOICES_EXPANDER);
     }
 }

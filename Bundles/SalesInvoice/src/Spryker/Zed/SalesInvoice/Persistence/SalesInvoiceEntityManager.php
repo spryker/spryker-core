@@ -71,6 +71,7 @@ class SalesInvoiceEntityManager extends AbstractEntityManager implements SalesIn
 
         $this->getFactory()
             ->getSalesOrderInvoicePropelQuery()
+            ->filterByIdSalesOrderInvoice_In($orderInvoiceIds)
             ->update([
                  $columnPhpName => true,
             ]);

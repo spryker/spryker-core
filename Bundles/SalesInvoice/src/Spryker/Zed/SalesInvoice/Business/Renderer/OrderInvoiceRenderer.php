@@ -36,6 +36,7 @@ class OrderInvoiceRenderer implements OrderInvoiceRendererInterface
     public function renderOrderInvoice(OrderInvoiceTransfer $orderInvoiceTransfer, OrderTransfer $orderTransfer): string
     {
         $this->setLocaleTransfer($orderTransfer->getLocale());
+
         return $this->twigEnvironment->render($orderInvoiceTransfer->getTemplatePath(), [
             'invoice' => $orderInvoiceTransfer,
             'order' => $orderTransfer,

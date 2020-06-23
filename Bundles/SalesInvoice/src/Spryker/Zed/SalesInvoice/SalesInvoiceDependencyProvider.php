@@ -26,6 +26,8 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
     public const FACADE_SALES = 'FACADE_SALES';
     public const TWIG_ENVIRONMENT = 'TWIG_ENVIRONMENT';
+    public const PLUGINS_ORDER_INVOICE_BEFORE_SAVE = 'PLUGINS_ORDER_INVOICE_BEFORE_SAVE';
+    public const PLUGINS_ORDER_INVOICES_EXPANDER = 'PLUGINS_ORDER_INVOICES_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,6 +42,8 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTwigEnvironment($container);
         $container = $this->addMailFacade($container);
         $container = $this->addSalesFacade($container);
+        $container = $this->addOrderInvoiceBeforeSavePlugins($container);
+        $container = $this->addOrderInvoicesExpanderPlugins($container);
 
         return $container;
     }
@@ -73,6 +77,7 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
                 $translator = new TwigTranslatorPlugin();
                 $twig->addExtension($translator);
             }
+
             return $twig;
         });
 
@@ -119,5 +124,49 @@ class SalesInvoiceDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderInvoiceBeforeSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_INVOICE_BEFORE_SAVE, function () {
+            return $this->getOrderInvoiceBeforeSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderInvoicesExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_INVOICES_EXPANDER, function () {
+            return $this->getOrderInvoiceBeforeSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoiceBeforeSavePluginInterface[]
+     */
+    protected function getOrderInvoiceBeforeSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin\OrderInvoicesExpanderPluginInterface[]
+     */
+    protected function getOrderInvoicesExpanderPlugins(): array
+    {
+        return [];
     }
 }

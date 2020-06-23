@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\SalesInvoice\Communication\Controller;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderInvoiceCollectionTransfer;
 use Generated\Shared\Transfer\OrderInvoiceCriteriaTransfer;
-use Generated\Shared\Transfer\OrderInvoiceSendRequestTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\SalesInvoice\Business\SalesInvoiceBusinessFactory;
 
 /**
  * @method \Spryker\Zed\SalesInvoice\Communication\SalesInvoiceCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesInvoice\Business\SalesInvoiceFacadeInterface getFacade()
+ * @method \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
@@ -29,8 +29,6 @@ class IndexController extends AbstractController
         return $this->viewResponse(['invoices' => $orderInvoiceCollectionTransfer->getOrderInvoices()]);
     }
 
-
-
     /**
      * @param \Generated\Shared\Transfer\OrderInvoiceSendRequestTransfer $orderInvoiceSendRequestTransfer
      *
@@ -39,9 +37,9 @@ class IndexController extends AbstractController
     protected function getOrderInvoices(): OrderInvoiceCollectionTransfer
     {
         $orderInvoiceCriteriaTransfer = (new OrderInvoiceCriteriaTransfer())
-            ->setSalesOrderIds()
+            ->setSalesOrderIds([2])
             ->setExpandWithRenderedInvoice(true);
 
-        return (new \Spryker\Zed\SalesInvoice\Business\SalesInvoiceBusinessFactory())->createOrderInvoiceReader()->getOrderInvoices($orderInvoiceCriteriaTransfer);
+        return (new SalesInvoiceBusinessFactory())->createOrderInvoiceReader()->getOrderInvoices($orderInvoiceCriteriaTransfer);
     }
 }

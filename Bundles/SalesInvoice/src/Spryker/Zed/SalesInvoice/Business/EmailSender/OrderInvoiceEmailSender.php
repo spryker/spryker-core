@@ -16,7 +16,6 @@ use Generated\Shared\Transfer\OrderInvoiceSendResponseTransfer;
 use Generated\Shared\Transfer\OrderInvoiceTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesInvoice\Business\Reader\OrderInvoiceReaderInterface;
-use Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface;
 use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface;
 use Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface;
 use Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceEntityManagerInterface;
@@ -52,21 +51,18 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
     /**
      * @param \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceEntityManagerInterface $entityManager
      * @param \Spryker\Zed\SalesInvoice\Business\Reader\OrderInvoiceReaderInterface $orderInvoiceReader
-     * @param \Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface $orderInvoiceRenderer
      * @param \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToMailFacadeInterface $mailFacade
      */
     public function __construct(
         SalesInvoiceEntityManagerInterface $entityManager,
         OrderInvoiceReaderInterface $orderInvoiceReader,
-        \Spryker\Zed\SalesInvoice\Business\Renderer\OrderInvoiceRendererInterface $orderInvoiceRenderer,
-        \Spryker\Zed\SalesInvoice\Dependency\Facade\SalesInvoiceToSalesFacadeInterface $salesFacade,
+        SalesInvoiceToSalesFacadeInterface $salesFacade,
         SalesInvoiceToMailFacadeInterface $mailFacade
     ) {
         $this->orderInvoiceReader = $orderInvoiceReader;
         $this->entityManager = $entityManager;
         $this->mailFacade = $mailFacade;
-        $this->orderInvoiceRenderer = $orderInvoiceRenderer;
         $this->salesFacade = $salesFacade;
     }
 
@@ -82,9 +78,7 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
         $orderInvoiceIds = [];
         foreach ($orderInvoiceCollectionTransfer->getOrderInvoices() as $orderInvoiceTransfer) {
             $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($orderInvoiceTransfer->getIdSalesOrder());
-            $orderInvoiceTransfer->setRenderedInvoice(
-                $this->orderInvoiceRenderer->renderOrderInvoice($orderInvoiceTransfer, $orderTransfer)
-            );
+            $this->orderInvoiceReader->expandOrderInvoiceWithRenderedInvoice($orderInvoiceTransfer, $orderTransfer);
             $this->handleMail($orderInvoiceTransfer, $orderTransfer);
             $orderInvoiceIds[] = $orderInvoiceTransfer->getIdSalesOrderInvoice();
         }

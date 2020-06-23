@@ -14,9 +14,9 @@ interface SalesInvoiceConstants
 {
     /**
      * Specification:
-     * - Store specific order invoice prefix for reference generation.
+     * - Store specific order invoice sequence for reference generation.
      *
      * @api
      */
-    public const ORDER_INVOICE_PREFIX = 'SALES_INVOICE:ORDER_INVOICE_PREFIX';
+    public const ORDER_INVOICE_SEQUENCE = 'SALES_INVOICE:ORDER_INVOICE_SEQUENCE';
 }

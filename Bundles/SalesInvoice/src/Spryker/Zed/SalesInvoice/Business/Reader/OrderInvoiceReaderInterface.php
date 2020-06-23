@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesInvoice\Business\Reader;
 
 use Generated\Shared\Transfer\OrderInvoiceCollectionTransfer;
 use Generated\Shared\Transfer\OrderInvoiceCriteriaTransfer;
+use Generated\Shared\Transfer\OrderInvoiceTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface OrderInvoiceReaderInterface
 {
@@ -18,4 +20,15 @@ interface OrderInvoiceReaderInterface
      * @return \Generated\Shared\Transfer\OrderInvoiceCollectionTransfer
      */
     public function getOrderInvoices(OrderInvoiceCriteriaTransfer $orderInvoiceCriteriaTransfer): OrderInvoiceCollectionTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderInvoiceTransfer $orderInvoiceTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderInvoiceTransfer
+     */
+    public function expandOrderInvoiceWithRenderedInvoice(
+        OrderInvoiceTransfer $orderInvoiceTransfer,
+        OrderTransfer $orderTransfer
+    ): OrderInvoiceTransfer;
 }

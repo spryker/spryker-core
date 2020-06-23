@@ -17,7 +17,6 @@ class SalesInvoiceConfig extends AbstractBundleConfig
     public const ORDER_INVOICE_MAIL_TYPE = 'order invoice';
 
     protected const ORDER_INVOICE_PREFIX_DEFAULT = 'Invoice';
-    protected const NAME_ORDER_INVOICE_REFERENCE = 'InvoiceReference';
 
     /**
      * @api
@@ -26,10 +25,12 @@ class SalesInvoiceConfig extends AbstractBundleConfig
      */
     public function getOrderInvoiceReferenceDefaults(): SequenceNumberSettingsTransfer
     {
-        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
-            ->setName(static::NAME_ORDER_INVOICE_REFERENCE);
+        $orderInvoiceSequence = $this->getOrderInvoiceSequence();
 
-        $prefix = $this->getOrderInvoicePrefix() . $this->getUniqueIdentifierSeparator();
+        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
+            ->setName($orderInvoiceSequence);
+
+        $prefix = $orderInvoiceSequence . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
@@ -38,9 +39,9 @@ class SalesInvoiceConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    protected function getOrderInvoicePrefix(): string
+    protected function getOrderInvoiceSequence(): string
     {
-        return (string)$this->get(SalesInvoiceConstants::ORDER_INVOICE_PREFIX, static::ORDER_INVOICE_PREFIX_DEFAULT);
+        return (string)$this->get(SalesInvoiceConstants::ORDER_INVOICE_SEQUENCE, static::ORDER_INVOICE_PREFIX_DEFAULT);
     }
 
     /**

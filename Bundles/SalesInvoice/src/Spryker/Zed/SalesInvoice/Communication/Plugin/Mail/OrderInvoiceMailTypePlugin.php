@@ -64,7 +64,7 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
     {
         $invoiceReference = $mailBuilder->getMailTransfer()->getOrderInvoice()->getReference();
         $mailBuilder->setSubject(static::GLOSSARY_KEY_MAIL_ORDER_INVOICE_SUBJECT, [
-            '%invoiceReference%' => $invoiceReference
+            '%invoiceReference%' => $invoiceReference,
         ]);
 
         return $this;

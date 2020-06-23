@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\SalesInvoice\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderListRequestTransfer;
-use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 class SalesInvoiceToSalesFacadeBridge implements SalesInvoiceToSalesFacadeInterface
