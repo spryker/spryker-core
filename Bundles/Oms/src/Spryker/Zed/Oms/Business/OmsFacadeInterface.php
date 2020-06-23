@@ -695,4 +695,17 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
     public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks for cancellable flag for each order item.
+     * - If all items are applicable for cancel, sets `Order::isCancellable=true`, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function setOrderIsCancellableByItemState(array $orderTransfers): array;
 }

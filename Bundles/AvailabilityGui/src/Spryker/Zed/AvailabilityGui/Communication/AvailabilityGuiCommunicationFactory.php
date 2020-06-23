@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -35,7 +36,8 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->createProductAvailabilityHelper(),
             $this->getStoreFacade(),
             $idStore,
-            $idLocale
+            $idLocale,
+            $this->getRepository()
         );
     }
 
@@ -172,5 +174,21 @@ class AvailabilityGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getOmsFacade()
     {
         return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityListActionViewDataExpanderPluginInterface[]
+     */
+    public function getAvailabilityListActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_LIST_ACTION_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\AvailabilityGuiExtension\Dependency\Plugin\AvailabilityViewActionViewDataExpanderPluginInterface[]
+     */
+    public function getAvailabilityViewActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(AvailabilityGuiDependencyProvider::PLUGINS_AVAILABILITY_VIEW_ACTION_VIEW_DATA_EXPANDER);
     }
 }
