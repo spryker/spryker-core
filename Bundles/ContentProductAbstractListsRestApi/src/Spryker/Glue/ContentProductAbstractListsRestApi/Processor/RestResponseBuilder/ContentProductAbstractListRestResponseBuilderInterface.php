@@ -9,7 +9,6 @@ namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponse
 
 use Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface ContentProductAbstractListRestResponseBuilderInterface
 {
@@ -30,14 +29,14 @@ interface ContentProductAbstractListRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createContentProductAbstractListsRestResponse(
         ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer,
-        RestRequestInterface $restRequest,
+        string $localeName,
         string $storeName
     ): RestResponseInterface;
 
@@ -47,14 +46,14 @@ interface ContentProductAbstractListRestResponseBuilderInterface
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[] $contentProductAbstractListTypeTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function createContentProductAbstractListsRestResources(
         array $contentProductAbstractListTypeTransfers,
-        RestRequestInterface $restRequest,
+        string $localeName,
         string $storeName
     ): array;
 }

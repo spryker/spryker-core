@@ -23,10 +23,10 @@ interface ContentProductAbstractListReaderInterface
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param string[] $contentProductAbstractListKeys
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, RestRequestInterface $restRequest, string $storeName): array;
+    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, string $localeName, string $storeName): array;
 }

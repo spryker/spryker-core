@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ContentBannersRestApi;
 
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
 
 /**
@@ -23,14 +22,14 @@ class ContentBannersRestApiResource extends AbstractRestResource implements Cont
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param string[] $contentBannerKeys
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentBannersByKeys(array $contentBannerKeys, RestRequestInterface $restRequest): array
+    public function getContentBannersByKeys(array $contentBannerKeys, string $localeName): array
     {
         return $this->getFactory()
             ->createContentBannerReader()
-            ->getContentBannersResources($contentBannerKeys, $restRequest);
+            ->getContentBannersResources($contentBannerKeys, $localeName);
     }
 }

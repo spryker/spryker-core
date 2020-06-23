@@ -69,15 +69,15 @@ class ContentBannerReader implements ContentBannerReaderInterface
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param string[] $contentBannerKeys
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentBannersResources(array $contentBannerKeys, RestRequestInterface $restRequest): array
+    public function getContentBannersResources(array $contentBannerKeys, string $localeName): array
     {
         $contentBannerTypeTransfers = $this->contentBannerClient->executeBannerTypeByKeys(
             $contentBannerKeys,
-            $restRequest->getMetadata()->getLocale()
+            $localeName
         );
 
         if (!$contentBannerTypeTransfers) {

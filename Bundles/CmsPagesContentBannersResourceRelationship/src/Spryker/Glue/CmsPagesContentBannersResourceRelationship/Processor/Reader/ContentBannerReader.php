@@ -55,9 +55,10 @@ class ContentBannerReader implements ContentBannerReaderInterface
      */
     public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageUuids,
-            $restRequest->getMetadata()->getLocale(),
+            $localeName,
             $this->storeClient->getCurrentStore()->getName()
         );
 
@@ -71,7 +72,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
             }
         }
 
-        $contentBannerResources = $this->contentBannerRestApiResource->getContentBannersByKeys($contentBannerKeys, $restRequest);
+        $contentBannerResources = $this->contentBannerRestApiResource->getContentBannersByKeys($contentBannerKeys, $localeName);
         if (!$contentBannerResources) {
             return [];
         }

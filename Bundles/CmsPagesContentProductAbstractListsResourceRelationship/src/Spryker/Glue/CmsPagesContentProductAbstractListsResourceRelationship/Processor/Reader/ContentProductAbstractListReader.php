@@ -55,10 +55,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      */
     public function getContentProductAbstractListsResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
         $storeName = $this->storeClient->getCurrentStore()->getName();
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
             $cmsPageUuids,
-            $restRequest->getMetadata()->getLocale(),
+            $localeName,
             $storeName
         );
 
@@ -74,7 +75,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
         $contentProductAbstractListResources = $this->contentProductAbstractListRestApiResource->getContentProductAbstractListsByKeys(
             $contentProductAbstractListKeys,
-            $restRequest,
+            $localeName,
             $storeName
         );
 

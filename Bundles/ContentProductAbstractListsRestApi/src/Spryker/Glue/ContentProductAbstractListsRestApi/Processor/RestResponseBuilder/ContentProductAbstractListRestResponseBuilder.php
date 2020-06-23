@@ -14,7 +14,6 @@ use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\C
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class ContentProductAbstractListRestResponseBuilder implements ContentProductAbstractListRestResponseBuilderInterface
@@ -88,20 +87,20 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
 
     /**
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createContentProductAbstractListsRestResponse(
         ContentProductAbstractListTypeTransfer $contentProductAbstractListTypeTransfer,
-        RestRequestInterface $restRequest,
+        string $localeName,
         string $storeName
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
         $productAbstractIds = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
-        $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds($productAbstractIds, $restRequest, $storeName);
+        $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds($productAbstractIds, $localeName, $storeName);
         foreach ($abstractProductResources as $abstractProductResource) {
             $restResponse->addResource($abstractProductResource);
         }
@@ -115,17 +114,17 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[] $contentProductAbstractListTypeTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     public function createContentProductAbstractListsRestResources(
         array $contentProductAbstractListTypeTransfers,
-        RestRequestInterface $restRequest,
+        string $localeName,
         string $storeName
     ): array {
-        $abstractProductRestResources = $this->getAbstractProductRestResources($contentProductAbstractListTypeTransfers, $restRequest, $storeName);
+        $abstractProductRestResources = $this->getAbstractProductRestResources($contentProductAbstractListTypeTransfers, $localeName, $storeName);
 
         return $this->getContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers, $abstractProductRestResources);
     }
@@ -136,14 +135,14 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
      * @phpstan-return array<int, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[] $contentProductAbstractListTypeTransfers
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
     protected function getAbstractProductRestResources(
         array $contentProductAbstractListTypeTransfers,
-        RestRequestInterface $restRequest,
+        string $localeName,
         string $storeName
     ): array {
         $productAbstractIds = [];
@@ -151,7 +150,7 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
             $productAbstractIds = array_merge($productAbstractIds, $contentProductAbstractListTypeTransfer->getIdProductAbstracts());
         }
 
-        return $this->productsRestApiResource->getProductAbstractsByIds($productAbstractIds, $restRequest, $storeName);
+        return $this->productsRestApiResource->getProductAbstractsByIds($productAbstractIds, $localeName, $storeName);
     }
 
     /**

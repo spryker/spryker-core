@@ -62,10 +62,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             return $this->contentProductAbstractListRestResponseBuilder->addContentItemIdNotSpecifiedError();
         }
 
+        $localeName = $restRequest->getMetadata()->getLocale();
         try {
             $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
                 $parentResource->getId(),
-                $restRequest->getMetadata()->getLocale()
+                $localeName
             );
         } catch (Throwable $e) {
             return $this->contentProductAbstractListRestResponseBuilder->addContentTypeInvalidError();
@@ -77,23 +78,23 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $storeName = $this->storeClient->getCurrentStore()->getName();
 
         return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResponse($contentProductAbstractListTypeTransfer, $restRequest, $storeName);
+            ->createContentProductAbstractListsRestResponse($contentProductAbstractListTypeTransfer, $localeName, $storeName);
     }
 
     /**
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param string[] $contentProductAbstractListKeys
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, RestRequestInterface $restRequest, string $storeName): array
+    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, $localeName, string $storeName): array
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
-            $restRequest->getMetadata()->getLocale()
+            $localeName
         );
 
         if (!$contentProductAbstractListTypeTransfers) {
@@ -101,6 +102,6 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers, $restRequest, $storeName);
+            ->createContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers, $localeName, $storeName);
     }
 }
