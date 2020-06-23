@@ -35,11 +35,11 @@ class ProductBarcodeDependencyProvider extends AbstractDependencyProvider
      */
     protected function addBarcodeService(Container $container): Container
     {
-        $container[static::SERVICE_BARCODE] = function (Container $container) {
+        $container->set(static::SERVICE_BARCODE, function (Container $container) {
             return new ProductBarcodeToBarcodeServiceBridge(
                 $container->getLocator()->barcode()->service()
             );
-        };
+        });
 
         return $container;
     }

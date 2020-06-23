@@ -49,11 +49,11 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductRelationStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_RELATION_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_RELATION_STORAGE, function (Container $container) {
             return new UpSellingProductsRestApiToProductRelationStorageClientBridge(
                 $container->getLocator()->productRelationStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -65,11 +65,11 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new UpSellingProductsRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -81,11 +81,11 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addCartsRestApiClient(Container $container): Container
     {
-        $container[static::CLIENT_CARTS_REST_API] = function (Container $container) {
+        $container->set(static::CLIENT_CARTS_REST_API, function (Container $container) {
             return new UpSellingProductsRestApiToCartsRestApiClientBridge(
                 $container->getLocator()->cartsRestApi()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -97,11 +97,11 @@ class UpSellingProductsRestApiDependencyProvider extends AbstractBundleDependenc
      */
     protected function addProductsRestApiResource(Container $container): Container
     {
-        $container[static::RESOURCE_PRODUCTS_REST_API] = function (Container $container) {
+        $container->set(static::RESOURCE_PRODUCTS_REST_API, function (Container $container) {
             return new UpSellingProductsRestApiToProductsRestApiResourceBridge(
                 $container->getLocator()->productsRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }

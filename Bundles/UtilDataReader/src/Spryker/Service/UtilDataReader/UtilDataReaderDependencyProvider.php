@@ -35,9 +35,9 @@ class UtilDataReaderDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addYamlReader(Container $container)
     {
-        $container[static::YAML_READER] = function () {
+        $container->set(static::YAML_READER, function () {
             return new YamlReaderBridge(new Yaml());
-        };
+        });
 
         return $container;
     }

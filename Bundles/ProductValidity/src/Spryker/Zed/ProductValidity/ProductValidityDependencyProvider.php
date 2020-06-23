@@ -35,9 +35,9 @@ class ProductValidityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductValidityToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }

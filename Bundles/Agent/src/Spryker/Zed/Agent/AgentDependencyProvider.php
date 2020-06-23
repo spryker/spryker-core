@@ -40,9 +40,9 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_USER] = function (): SpyUserQuery {
+        $container->set(static::PROPEL_QUERY_USER, $container->factory(function (): SpyUserQuery {
             return SpyUserQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -54,9 +54,9 @@ class AgentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CUSTOMER] = function (): SpyCustomerQuery {
+        $container->set(static::PROPEL_QUERY_CUSTOMER, $container->factory(function (): SpyCustomerQuery {
             return SpyCustomerQuery::create();
-        };
+        }));
 
         return $container;
     }

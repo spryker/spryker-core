@@ -29,17 +29,17 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::QUOTE_CALCULATOR_PLUGIN_STACK] = function (Container $container) {
+        $container->set(static::QUOTE_CALCULATOR_PLUGIN_STACK, function (Container $container) {
             return $this->getQuoteCalculatorPluginStack($container);
-        };
+        });
 
-        $container[static::ORDER_CALCULATOR_PLUGIN_STACK] = function (Container $container) {
+        $container->set(static::ORDER_CALCULATOR_PLUGIN_STACK, function (Container $container) {
             return $this->getOrderCalculatorPluginStack($container);
-        };
+        });
 
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         $container = $this->addQuotePostRecalculatePlugins($container);
 
@@ -53,9 +53,9 @@ class CalculationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuotePostRecalculatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_POST_RECALCULATE] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_POST_RECALCULATE, function (Container $container) {
             return $this->getQuotePostRecalculatePlugins();
-        };
+        });
 
         return $container;
     }
