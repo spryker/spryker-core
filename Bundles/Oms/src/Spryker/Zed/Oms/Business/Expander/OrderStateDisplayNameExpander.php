@@ -93,7 +93,10 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
                 continue;
             }
 
-            $itemStateDisplayNames[$idSalesOrder][$displayName] = $displayName;
+            $stateName = trim($itemTransfer->getState()->getName());
+            $stateName = mb_strtolower($stateName);
+            $stateName = str_replace(' ', '-', $stateName);
+            $itemStateDisplayNames[$idSalesOrder][$stateName] = $displayName;
         }
 
         return $itemStateDisplayNames;
