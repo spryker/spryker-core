@@ -39,18 +39,34 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
                 continue;
             }
 
-            foreach ($rootNavigationElement[MenuFormatter::PAGES] as $navigationName => &$childNavigationElement) {
-                $foundNavigationElement = $this->getNavigationInNavigationData(
-                    $coreNavigationDefinitionData,
-                    $childNavigationElement,
-                    $navigationName
-                );
-
-                $childNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childNavigationElement);
-            }
+            $rootNavigationElement = $this->mergeNavigationPages(
+                $rootNavigationElement[MenuFormatter::PAGES],
+                $coreNavigationDefinitionData
+            );
         }
 
         return $rootDefinitionData;
+    }
+
+    /**
+     * @param array $navigationPages
+     * @param array $coreNavigationDefinitionData
+     *
+     * @return array
+     */
+    protected function mergeNavigationPages(array $navigationPages, array $coreNavigationDefinitionData): array
+    {
+        foreach ($navigationPages as $navigationName => &$childNavigationElement) {
+            $foundNavigationElement = $this->getNavigationInNavigationData(
+                $coreNavigationDefinitionData,
+                $childNavigationElement,
+                $navigationName
+            );
+
+            $childNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childNavigationElement);
+        }
+
+        return $navigationPages;
     }
 
     /**
