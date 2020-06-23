@@ -9,7 +9,7 @@ namespace Spryker\Zed\ProductOfferAvailabilityStorage\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer;
-use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
+use Orm\Zed\OmsProductOfferReservation\Persistence\Map\SpyOmsProductOfferReservationTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
@@ -72,19 +72,19 @@ class ProductOfferAvailabilityStorageRepository extends AbstractRepository imple
     }
 
     /**
-     * @param int[] $omsProductReservationIds
+     * @param int[] $omsProductOfferReservationIds
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */
-    public function getProductOfferAvailabilityRequestsByOmsReservationIds(array $omsProductReservationIds): array
+    public function getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds(array $omsProductOfferReservationIds): array
     {
         $productOfferStockPropelQuery = $this->getFactory()
             ->getProductOfferStockPropelQuery()
             ->joinSpyProductOffer();
 
-        $productOfferStockPropelQuery->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyOmsProductReservationTableMap::COL_SKU, Criteria::INNER_JOIN)
-            ->addJoin(SpyOmsProductReservationTableMap::COL_FK_STORE, SpyStoreTableMap::COL_ID_STORE, Criteria::INNER_JOIN)
-            ->addOr(SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION, $omsProductReservationIds, Criteria::IN);
+        $productOfferStockPropelQuery->addJoin(SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE, SpyOmsProductOfferReservationTableMap::COL_PRODUCT_OFFER_REFERENCE, Criteria::INNER_JOIN)
+            ->addJoin(SpyOmsProductOfferReservationTableMap::COL_FK_STORE, SpyStoreTableMap::COL_ID_STORE, Criteria::INNER_JOIN)
+            ->addOr(SpyOmsProductOfferReservationTableMap::COL_ID_OMS_PRODUCT_OFFER_RESERVATION, $omsProductOfferReservationIds, Criteria::IN);
 
         $productOfferAvailabilityRequestsData = $this->addProductOfferAvailabilityRequestSelectColumns($productOfferStockPropelQuery)
             ->find()

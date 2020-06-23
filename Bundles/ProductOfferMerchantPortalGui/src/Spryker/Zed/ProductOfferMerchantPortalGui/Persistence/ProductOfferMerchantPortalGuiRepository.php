@@ -431,7 +431,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(ProductImageTransfer::EXTERNAL_URL_SMALL, sprintf('(%s)', $this->createProductImagesSubquery($idLocale)))
             ->addAsColumn(ProductOfferTransfer::STORES, sprintf('(%s)', $this->createProductOfferStoresSubquery()))
             ->addAsColumn(ProductOfferStockTransfer::QUANTITY, SpyProductOfferStockTableMap::COL_QUANTITY)
-            ->addAsColumn(ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK, SpyProductOfferStockTableMap::COL_IS_NEVER_OUT_OF_STOCK)
             ->addAsColumn(ProductOfferTransfer::IS_ACTIVE, SpyProductOfferTableMap::COL_IS_ACTIVE)
             ->addAsColumn(LocalizedAttributesTransfer::NAME, SpyProductLocalizedAttributesTableMap::COL_NAME)
             ->addAsColumn(ProductOfferTransfer::PRODUCT_ATTRIBUTES, SpyProductTableMap::COL_ATTRIBUTES)
@@ -448,7 +447,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
                 ProductImageTransfer::EXTERNAL_URL_SMALL,
                 ProductOfferTransfer::STORES,
                 ProductOfferStockTransfer::QUANTITY,
-                ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK,
                 ProductOfferTransfer::IS_ACTIVE,
                 LocalizedAttributesTransfer::NAME,
                 ProductOfferTransfer::PRODUCT_ATTRIBUTES,

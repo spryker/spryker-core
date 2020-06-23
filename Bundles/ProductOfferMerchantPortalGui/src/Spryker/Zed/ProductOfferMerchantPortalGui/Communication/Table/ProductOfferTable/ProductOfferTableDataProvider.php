@@ -25,7 +25,6 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
 {
     public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
     protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
-    protected const COLUMN_DATA_IS_NEVER_OUT_OF_STOCK = 'Always in stock';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
@@ -177,10 +176,6 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
 
         if (!$productOfferStockTransfer) {
             return null;
-        }
-
-        if ($productOfferStockTransfer->getIsNeverOutOfStock()) {
-            return $this->translatorFacade->trans(static::COLUMN_DATA_IS_NEVER_OUT_OF_STOCK);
         }
 
         $quantity = $productOfferStockTransfer->getQuantity();

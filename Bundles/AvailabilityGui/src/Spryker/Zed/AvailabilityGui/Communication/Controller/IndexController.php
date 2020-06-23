@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
@@ -38,11 +39,11 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return [
+        return $this->executeAvailabilityListActionViewDataExpanderPlugins([
             'indexTable' => $availabilityAbstractTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
-        ];
+        ]);
     }
 
     /**
@@ -76,13 +77,13 @@ class IndexController extends AbstractController
         $stores = $this->getFactory()->getStoreFacade()->getStoresWithSharedPersistence($storeTransfer);
         $stores[] = $storeTransfer;
 
-        return [
+        return $this->executeAvailabilityViewActionViewDataExpanderPlugins([
             'productAbstractAvailability' => $productAbstractAvailabilityTransfer,
             'indexTable' => $availabilityTable->render(),
             'stores' => $stores,
             'idStore' => $idStore,
             'idProduct' => $idProductAbstract,
-        ];
+        ]);
     }
 
     /**
@@ -282,5 +283,33 @@ class IndexController extends AbstractController
         }
 
         return $this->castId($idStore);
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeAvailabilityListActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getAvailabilityListActionViewDataExpanderPlugins() as $availabilityListActionViewDataExpanderPlugin) {
+            $viewData = $availabilityListActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeAvailabilityViewActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getAvailabilityViewActionViewDataExpanderPlugins() as $availabilityViewActionViewDataExpanderPlugin) {
+            $viewData = $availabilityViewActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }
