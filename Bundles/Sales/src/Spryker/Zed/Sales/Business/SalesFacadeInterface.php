@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderCancelRequestTransfer;
+use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -396,4 +398,22 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires OrderCancelRequestTransfer::orderReference to be set.
+     * - Requires CustomerTransfer:customerReference to be set.
+     * - Requires ItemTransfer::idSalesOrderItem to be set.
+     * - Retrieves OrderTransfer filtered by orderReference and customerReference.
+     * - Checks OrderTransfer::isCancellable.
+     * - Triggers cancel event for provided order items.
+     * - Returns "isSuccessful=true" and order transfer on success or `isSuccessful=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
+     */
+    public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
 }

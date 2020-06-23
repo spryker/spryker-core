@@ -70,4 +70,13 @@ interface SalesToOmsInterface
      * @return bool
      */
     public function isOrderFlaggedExcludeFromCustomer($idOrder);
+
+    /**
+     * @param string $eventId
+     * @param array $orderItemIds
+     * @param array $data
+     *
+     * @return array|null
+     */
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data = []);
 }
