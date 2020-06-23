@@ -14,6 +14,8 @@ class OmsConfig extends AbstractBundleConfig
 {
     public const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
+    public const EVENT_CANCEL = 'cancel';
+
     /**
      * @api
      *
