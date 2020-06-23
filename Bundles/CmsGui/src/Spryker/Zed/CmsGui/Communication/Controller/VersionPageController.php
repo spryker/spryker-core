@@ -41,7 +41,7 @@ class VersionPageController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage('CSRF token is not valid.');
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponse($request->headers->get('referer'));
         }
 
         try {

@@ -19,11 +19,11 @@
 
         {% block widget_content %}
 
-            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+            <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans }}</a>
             {{ form_start(deleteForm, {
                 'action': url('/tax/delete-rate/confirm', {'id-tax-rate': idTaxRate})
             }) }}
-                <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete Tax Rate' | trans}}">
+                <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete Tax Rate' | trans }}">
             {{ form_end(deleteForm) }}
 
         {% endblock %}

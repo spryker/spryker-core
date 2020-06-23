@@ -146,26 +146,6 @@ class CmsPageTable extends AbstractTable
      *
      * @return string
      */
-    protected function createPublishButton1(array $item)
-    {
-        return $this->generateCreateButton(
-            Url::generate('/cms-gui/version-page/publish', [
-                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_ID_CMS_PAGE => $item[CmsPageTableConstants::COL_ID_CMS_PAGE],
-                CmsPageTableConstants::VERSION_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
-            ]),
-            'Publish',
-            [
-                'icon' => 'fa-upload',
-                'class' => 'safe-submit',
-            ]
-        );
-    }
-
-    /**
-     * @param array $item
-     *
-     * @return string
-     */
     protected function createPublishButton(array $item)
     {
         return $this->generateFormButton(

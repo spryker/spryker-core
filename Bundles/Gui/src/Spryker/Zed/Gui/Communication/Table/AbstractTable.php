@@ -951,6 +951,23 @@ abstract class AbstractTable
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Table\AbstractTable::createForm()} instead.
+     *
+     * @param array $options
+     * @param string $name
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createDeleteForm(array $options, string $name = ''): FormInterface
+    {
+        if (!$name) {
+            return $this->getFormFactory()->create(DeleteForm::class, [], $options);
+        }
+
+        return $this->getFormFactory()->createNamed($name, DeleteForm::class, [], $options);
+    }
+
+    /**
      * @return \Symfony\Component\Form\FormFactoryInterface
      */
     protected function getFormFactory()

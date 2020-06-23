@@ -183,21 +183,6 @@ class ProductSetTable extends AbstractTable
      *
      * @return string
      */
-    protected function generateActivateButton1(SpyProductSet $productSetEntity)
-    {
-        return $this->generateViewButton(
-            Url::generate('/product-set-gui/edit/activate', [
-                EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
-            ]),
-            'Activate'
-        );
-    }
-
-    /**
-     * @param \Orm\Zed\ProductSet\Persistence\SpyProductSet $productSetEntity
-     *
-     * @return string
-     */
     protected function generateActivateButton(SpyProductSet $productSetEntity)
     {
         return $this->generateFormButton(
