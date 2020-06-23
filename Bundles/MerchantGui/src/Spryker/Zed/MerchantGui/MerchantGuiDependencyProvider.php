@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantGui;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
@@ -33,6 +34,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_MERCHANT_FORM_TABS_EXPANDER = 'PLUGINS_MERCHANT_FORM_TABS_EXPANDER';
     public const PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER = 'PLUGINS_MERCHANT_UPDATE_FORM_VIEW_EXPANDER';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -55,6 +57,7 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUpdateFormViewExpanderPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -80,9 +83,9 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelMerchantQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_MERCHANT_QUERY, function () {
+        $container->set(static::PROPEL_MERCHANT_QUERY, $container->factory(function () {
             return SpyMerchantQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -242,6 +245,22 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplication(Container $container): Container
+    {
+        $container->set(static::PLUGIN_APPLICATION, function () {
+            $pimplePlugin = new Pimple();
+
+            return $pimplePlugin->getApplication();
+        });
+
+        return $container;
     }
 
     /**

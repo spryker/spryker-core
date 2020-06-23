@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\MerchantProductOffersRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 class MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge implements MerchantProductOffersRestApiToMerchantProductOfferStorageClientInterface
@@ -22,6 +24,27 @@ class MerchantProductOffersRestApiToMerchantProductOfferStorageClientBridge impl
     public function __construct($merchantProductOfferStorageClient)
     {
         $this->merchantProductOfferStorageClient = $merchantProductOfferStorageClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
+     */
+    public function getProductOffersBySkus(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer {
+        return $this->merchantProductOfferStorageClient->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+     *
+     * @return string|null
+     */
+    public function findProductConcreteDefaultProductOffer(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
+    {
+        return $this->merchantProductOfferStorageClient->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer);
     }
 
     /**

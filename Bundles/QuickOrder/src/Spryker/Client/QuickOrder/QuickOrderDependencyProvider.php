@@ -42,9 +42,9 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container): QuickOrderToLocaleClientInterface {
+        $container->set(static::CLIENT_LOCALE, function (Container $container): QuickOrderToLocaleClientInterface {
             return new QuickOrderToLocaleClientBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -56,9 +56,9 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_EXPANDER] = function (): array {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_EXPANDER, function (): array {
             return $this->getProductConcreteExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuickOrderValidationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUICK_ORDER_BUILD_ITEM_VALIDATOR] = function (): array {
+        $container->set(static::PLUGINS_QUICK_ORDER_BUILD_ITEM_VALIDATOR, function (): array {
             return $this->getQuickOrderBuildItemValidatorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -100,9 +100,9 @@ class QuickOrderDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new QuickOrderToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }

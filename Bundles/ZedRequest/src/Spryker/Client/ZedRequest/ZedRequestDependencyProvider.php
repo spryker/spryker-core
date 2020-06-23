@@ -43,9 +43,9 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addUtilNetworkService(Container $container)
     {
-        $container[static::SERVICE_NETWORK] = function (Container $container) {
+        $container->set(static::SERVICE_NETWORK, function (Container $container) {
             return $container->getLocator()->utilNetwork()->service();
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addUtilTextService(Container $container)
     {
-        $container[static::SERVICE_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_TEXT, function (Container $container) {
             return $container->getLocator()->utilText()->service();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMetaDataProviderPlugins(Container $container)
     {
-        $container[static::META_DATA_PROVIDER_PLUGINS] = function (Container $container) {
+        $container->set(static::META_DATA_PROVIDER_PLUGINS, function (Container $container) {
             return $this->getMetaDataProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -85,11 +85,11 @@ class ZedRequestDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMessengerClient(Container $container)
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ZedRequestToMessengerClientBridge(
                 $container->getLocator()->messenger()->client()
             );
-        };
+        });
 
         return $container;
     }

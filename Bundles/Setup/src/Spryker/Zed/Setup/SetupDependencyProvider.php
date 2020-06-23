@@ -29,13 +29,13 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[static::SYMFONY_FILE_SYSTEM] = function () {
+        $container->set(static::SYMFONY_FILE_SYSTEM, function () {
             return new Filesystem();
-        };
+        });
 
-        $container[static::SYMFONY_FINDER] = function () {
+        $container->set(static::SYMFONY_FINDER, function () {
             return new Finder();
-        };
+        });
 
         return $container;
     }

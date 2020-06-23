@@ -44,9 +44,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new CheckoutRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutRequestAttributesValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR] = function () {
+        $container->set(static::PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR, function () {
             return $this->getCheckoutRequestAttributesValidatorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutResponseMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CHECKOUT_RESPONSE_MAPPER] = function () {
+        $container->set(static::PLUGINS_CHECKOUT_RESPONSE_MAPPER, function () {
             return $this->getCheckoutResponseMapperPlugins();
-        };
+        });
 
         return $container;
     }

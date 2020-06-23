@@ -19,6 +19,7 @@ use Spryker\Zed\Oms\Communication\Table\TransitionLogTable;
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface getEntityManager()
  */
 class OmsCommunicationFactory extends AbstractCommunicationFactory
 {

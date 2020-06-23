@@ -40,9 +40,9 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CompanyRoleToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CompanyRoleToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,11 +68,11 @@ class CompanyRoleDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPermissionClient(Container $container): Container
     {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return new CompanyRoleToPermissionClientBridge(
                 $container->getLocator()->permission()->client()
             );
-        };
+        });
 
         return $container;
     }

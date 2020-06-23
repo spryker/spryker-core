@@ -60,11 +60,11 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductMeasurementUnitStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -76,11 +76,11 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
      */
     protected function addProductMeasurementUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_MEASUREMENT_UNIT, function (Container $container) {
             return new ProductMeasurementUnitStorageToProductMeasurementUnitFacadeBridge(
                 $container->getLocator()->productMeasurementUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -94,13 +94,13 @@ class ProductMeasurementUnitStorageDependencyProvider extends AbstractBundleDepe
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_SALES_UNIT, $container->factory(function () {
             return SpyProductMeasurementSalesUnitQuery::create();
-        });
+        }));
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_MEASUREMENT_UNIT, $container->factory(function () {
             return SpyProductMeasurementUnitQuery::create();
-        });
+        }));
 
         return $container;
     }
