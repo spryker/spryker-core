@@ -40,9 +40,9 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUserProviderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_COMPANY_USER_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGIN_COMPANY_USER_PROVIDER, function (Container $container) {
             return $this->getCompanyUserProviderPlugin();
-        };
+        });
 
         return $container;
     }
