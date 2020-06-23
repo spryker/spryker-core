@@ -80,15 +80,15 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
     }
 
     /**
-     * @param array $navigationData
+     * @param array $navigationDefinitionData
      * @param array $rootNavigationElement
      * @param string $navigationName
      *
      * @return array
      */
-    protected function getNavigationInNavigationData(array $navigationData, array $rootNavigationElement, string $navigationName): array
+    protected function getNavigationInNavigationData(array $navigationDefinitionData, array $rootNavigationElement, string $navigationName): array
     {
-        $iterator = new RecursiveArrayIterator($navigationData);
+        $iterator = new RecursiveArrayIterator($navigationDefinitionData);
         $navigationRecursiveIterator = new RecursiveIteratorIterator(
             $iterator,
             RecursiveIteratorIterator::SELF_FIRST
