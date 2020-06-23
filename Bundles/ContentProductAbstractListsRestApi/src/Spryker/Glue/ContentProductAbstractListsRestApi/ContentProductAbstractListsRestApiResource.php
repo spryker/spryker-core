@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ContentProductAbstractListsRestApiResource extends AbstractRestResource implements ContentProductAbstractListsRestApiResourceInterface
 {
     /**
-     * {{@inheritDoc}}
+     * {@inheritDoc}
      *
      * @api
      *

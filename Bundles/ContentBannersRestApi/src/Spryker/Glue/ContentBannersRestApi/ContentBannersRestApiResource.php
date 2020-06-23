@@ -16,7 +16,7 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class ContentBannersRestApiResource extends AbstractRestResource implements ContentBannersRestApiResourceInterface
 {
     /**
-     * {{@inheritDoc}}
+     * {@inheritDoc}
      *
      * @api
      *
