@@ -14,10 +14,10 @@ interface ContentBannerReaderInterface
     /**
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $cmsPageReferences
+     * @param string[] $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array[]
      */
-    public function getContentBannersResources(array $cmsPageReferences, RestRequestInterface $restRequest): array;
+    public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array;
 }

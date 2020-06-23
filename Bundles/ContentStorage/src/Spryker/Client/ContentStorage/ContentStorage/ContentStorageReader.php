@@ -65,8 +65,6 @@ class ContentStorageReader implements ContentStorageReaderInterface
     }
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
      *
      * @param string[] $contentKeys
@@ -104,7 +102,7 @@ class ContentStorageReader implements ContentStorageReaderInterface
     }
 
     /**
-     * @param array $contentKeys
+     * @param string[] $contentKeys
      * @param string $localeName
      *
      * @return string[]

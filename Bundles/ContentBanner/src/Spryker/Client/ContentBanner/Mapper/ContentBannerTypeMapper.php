@@ -61,8 +61,6 @@ class ContentBannerTypeMapper implements ContentBannerTypeMapperInterface
     }
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
      *
      * @param string[] $contentKeys

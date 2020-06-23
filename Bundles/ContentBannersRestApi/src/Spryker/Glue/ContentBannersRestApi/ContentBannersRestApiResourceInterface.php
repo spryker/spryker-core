@@ -13,11 +13,10 @@ interface ContentBannersRestApiResourceInterface
 {
     /**
      * Specification:
-     * - Retrieves content banners by content banner keys.
+     * - Retrieves `content-banners` resources by content banner keys.
+     * - Returned resources will be indexed by content banner key.
      *
      * @api
-     *
-     * @phpstan-param array<string, string> $contentBannerKeys
      *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *

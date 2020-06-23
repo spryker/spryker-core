@@ -36,8 +36,6 @@ class ContentBannerToContentStorageClientBridge implements ContentBannerToConten
     }
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
      *
      * @param string[] $contentKeys

@@ -19,7 +19,7 @@ class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
-     * - Adds content-banners resource as a relationship by cms-page reference.
+     * - Adds content-banners resource as a relationship by cms-page UUID.
      *
      * @api
      *

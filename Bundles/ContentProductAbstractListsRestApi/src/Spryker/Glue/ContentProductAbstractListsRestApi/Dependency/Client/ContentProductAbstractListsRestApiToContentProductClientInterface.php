@@ -20,8 +20,6 @@ interface ContentProductAbstractListsRestApiToContentProductClientInterface
     public function executeProductAbstractListTypeByKey(string $contentKey, string $localeName): ?ContentProductAbstractListTypeTransfer;
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      *
      * @param string[] $contentKeys

@@ -48,16 +48,16 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     /**
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $cmsPageReferences
+     * @param string[] $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array[]
      */
-    public function getContentProductAbstractListsResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
+    public function getContentProductAbstractListsResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
         $storeName = $this->storeClient->getCurrentStore()->getName();
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
-            $cmsPageReferences,
+            $cmsPageUuids,
             $restRequest->getMetadata()->getLocale(),
             $storeName
         );
@@ -84,8 +84,11 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
 
         $mappedContentProductAbstractListResources = [];
         foreach ($groupedContentProductAbstractListKeys as $cmsPageUuid => $contentProductAbstractListKeys) {
-            foreach ($contentProductAbstractListKeys as $contentProductAbstractListKey => $contentProductAbstractListValue) {
-                $mappedContentProductAbstractListResources[$cmsPageUuid][$contentProductAbstractListKey] = $contentProductAbstractListResources[$contentProductAbstractListValue];
+            foreach ($contentProductAbstractListKeys as $contentProductAbstractListKey) {
+                if (!$contentProductAbstractListResources[$contentProductAbstractListKey]) {
+                    continue;
+                }
+                $mappedContentProductAbstractListResources[$cmsPageUuid][$contentProductAbstractListKey] = $contentProductAbstractListResources[$contentProductAbstractListKey];
             }
         }
 

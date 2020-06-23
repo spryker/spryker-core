@@ -20,8 +20,6 @@ interface ContentStorageReaderInterface
     public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer;
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
      *
      * @param string[] $contentKeys

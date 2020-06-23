@@ -63,8 +63,6 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
     }
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
      *
      * @param string[] $contentKeys

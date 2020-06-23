@@ -85,11 +85,11 @@ interface ProductsRestApiResourceInterface
      *
      * @api
      *
-     * @param int[] $ids
+     * @param int[] $productAbstractIds
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductAbstractsByIds(array $ids, RestRequestInterface $restRequest, string $storeName): array;
+    public function getProductAbstractsByIds(array $productAbstractIds, RestRequestInterface $restRequest, string $storeName): array;
 }

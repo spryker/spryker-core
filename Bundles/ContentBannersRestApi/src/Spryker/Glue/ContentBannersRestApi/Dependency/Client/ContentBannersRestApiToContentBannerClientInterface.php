@@ -20,8 +20,6 @@ interface ContentBannersRestApiToContentBannerClientInterface
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
 
     /**
-     * @phpstan-param array<string, string> $contentKeys
-     *
      * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
      *
      * @param string[] $contentKeys

@@ -33,10 +33,10 @@ class ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander 
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $cmsPageReferences = $this->getCmsPageReferences($resources);
+        $cmsPageUuids = $this->getCmsPageUuids($resources);
 
         $contentProductAbstractListsResources = $this->contentProductAbstractListReader
-            ->getContentProductAbstractListsResources($cmsPageReferences, $restRequest);
+            ->getContentProductAbstractListsResources($cmsPageUuids, $restRequest);
 
         foreach ($resources as $resource) {
             $cmsPageReference = $resource->getId();
@@ -55,7 +55,7 @@ class ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander 
      *
      * @return string[]
      */
-    protected function getCmsPageReferences(array $resources): array
+    protected function getCmsPageUuids(array $resources): array
     {
         $references = [];
         foreach ($resources as $resource) {

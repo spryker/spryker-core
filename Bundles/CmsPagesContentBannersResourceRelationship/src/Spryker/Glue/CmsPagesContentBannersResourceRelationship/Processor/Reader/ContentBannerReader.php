@@ -48,15 +48,15 @@ class ContentBannerReader implements ContentBannerReaderInterface
     /**
      * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
      *
-     * @param string[] $cmsPageReferences
+     * @param string[] $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return array[]
      */
-    public function getContentBannersResources(array $cmsPageReferences, RestRequestInterface $restRequest): array
+    public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
         $cmsPageStorageTransfers = $this->cmsStorageClient->getCmsPageStorageByUuids(
-            $cmsPageReferences,
+            $cmsPageUuids,
             $restRequest->getMetadata()->getLocale(),
             $this->storeClient->getCurrentStore()->getName()
         );
@@ -78,8 +78,11 @@ class ContentBannerReader implements ContentBannerReaderInterface
 
         $mappedContentBannerResources = [];
         foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
-            foreach ($contentBannerKeys as $contentBannerKey => $contentBannerValue) {
-                $mappedContentBannerResources[$cmsPageUuid][$contentBannerKey] = $contentBannerResources[$contentBannerValue];
+            foreach ($contentBannerKeys as $contentBannerKey) {
+                if (!$contentBannerResources[$contentBannerKey]) {
+                    continue;
+                }
+                $mappedContentBannerResources[$cmsPageUuid][$contentBannerKey] = $contentBannerResources[$contentBannerKey];
             }
         }
 

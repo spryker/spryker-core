@@ -33,10 +33,10 @@ class ContentBannersByCmsPageReferenceResourceRelationshipExpander implements Co
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $cmsPageReferences = $this->getCmsPageReferences($resources);
+        $cmsPageUuids = $this->getCmsPageUuids($resources);
 
         $contentBannersResources = $this->contentBannerReader
-            ->getContentBannersResources($cmsPageReferences, $restRequest);
+            ->getContentBannersResources($cmsPageUuids, $restRequest);
 
         foreach ($resources as $resource) {
             $cmsPageReference = $resource->getId();
@@ -55,7 +55,7 @@ class ContentBannersByCmsPageReferenceResourceRelationshipExpander implements Co
      *
      * @return string[]
      */
-    protected function getCmsPageReferences(array $resources): array
+    protected function getCmsPageUuids(array $resources): array
     {
         $references = [];
         foreach ($resources as $resource) {

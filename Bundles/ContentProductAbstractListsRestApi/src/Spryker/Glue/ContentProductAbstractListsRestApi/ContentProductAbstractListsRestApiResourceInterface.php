@@ -17,8 +17,6 @@ interface ContentProductAbstractListsRestApiResourceInterface
      *
      * @api
      *
-     * @phpstan-param array<string, string> $contentProductAbstractListKeys
-     *
      * @phpstan-return array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>
      *
      * @param string[] $contentProductAbstractListKeys

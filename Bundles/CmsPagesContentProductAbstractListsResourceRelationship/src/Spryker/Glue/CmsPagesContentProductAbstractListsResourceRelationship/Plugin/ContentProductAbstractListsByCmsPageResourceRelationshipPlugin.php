@@ -19,7 +19,7 @@ class ContentProductAbstractListsByCmsPageResourceRelationshipPlugin extends Abs
 {
     /**
      * {@inheritDoc}
-     * - Adds content-product-abstract-lists resource as a relationship by cms-page reference.
+     * - Adds content-product-abstract-lists resource as a relationship by cms-page UUID.
      *
      * @api
      *

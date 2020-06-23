@@ -100,8 +100,8 @@ class ContentProductAbstractListRestResponseBuilder implements ContentProductAbs
     ): RestResponseInterface {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        $idProductAbstracts = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
-        $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds($idProductAbstracts, $restRequest, $storeName);
+        $productAbstractIds = $contentProductAbstractListTypeTransfer->getIdProductAbstracts();
+        $abstractProductResources = $this->productsRestApiResource->getProductAbstractsByIds($productAbstractIds, $restRequest, $storeName);
         foreach ($abstractProductResources as $abstractProductResource) {
             $restResponse->addResource($abstractProductResource);
         }

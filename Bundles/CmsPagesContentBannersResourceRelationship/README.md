@@ -2,8 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/cms-pages-content-banners-resource-relationship.svg)](https://travis-ci.org/spryker/cms-pages-content-banners-resource-relationship)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-CmsPagesContentBannersResourceRelationship module provides a relationship between CMS store module and content banners resource.
-
+CmsPagesContentBannersResourceRelationship module provides a relationship between `cms-pages` resource and `content-banners` resource.
 ## Installation
 
 ```
