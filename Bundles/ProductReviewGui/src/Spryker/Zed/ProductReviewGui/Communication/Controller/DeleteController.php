@@ -20,6 +20,9 @@ class DeleteController extends AbstractController
 {
     public const PARAM_ID = 'id';
 
+    protected const MESSAGE_PRODUCT_REVIEW_DELETED_SUCCESSFULLY = 'Product Review #%id% deleted successfully.';
+    protected const MESSAGE_PARAM_ID = '%id%';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -36,8 +39,8 @@ class DeleteController extends AbstractController
             ->getProductReviewFacade()
             ->deleteProductReview($productSetTransfer);
 
-        $this->addSuccessMessage('Product Review #%d deleted successfully.', [
-            '%d' => $productSetTransfer->getIdProductReview(),
+        $this->addSuccessMessage(static::MESSAGE_PRODUCT_REVIEW_DELETED_SUCCESSFULLY, [
+            static::MESSAGE_PARAM_ID => $productSetTransfer->getIdProductReview(),
         ]);
 
         return $this->redirectResponse(

@@ -99,3 +99,9 @@ Stock,Bestand
 "Assign bundled products","Bündelprodukte zuordnen"
 "Valid From (GMT)","Gültig ab (GMT)"
 "Valid To (GMT)","Gültig bis (GMT)"
+Remove,Entfernen
+quantity,Menge
+Price,Preis
+"id product","Produkt-ID"
+select,auswählen
+"Product name",Produktname

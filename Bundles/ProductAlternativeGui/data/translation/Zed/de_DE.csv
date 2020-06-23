@@ -1,3 +1,7 @@
 Active,Aktiv
 Inactive,Inaktiv
 Remove,Entfernen
+"Product Alternatives","Alternative Produkte"
+"This is a list of alternative products that the current Concrete Product has.","Das ist eine Liste der alternativen Produkte die das konkrete Produkt hat."
+"Note: You can add a new product alternative using the text field below.","Hinweis: Sie können neue alternative Produkte hinzufügen indem Sie das Textfeld unten ausfüllen."
+"Add Product Alternative by Name or SKU","Alternatives Produkt per Namen oder SKU hinzufügen"

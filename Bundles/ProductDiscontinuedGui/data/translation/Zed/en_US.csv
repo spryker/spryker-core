@@ -4,3 +4,8 @@ Discontinue,Discontinue
 Discontinued,Discontinued
 Restore,Restore
 "Will be deactivated on:","Will be deactivated on:"
+"Discontinue Product","Discontinue Product"
+"You can discontinue a product on this tab and add a note - why this product is discontinued.","You can discontinue a product on this tab and add a note - why this product is discontinued."
+"Note: Discontinued products will still be visible in the shop and have stock, but it will not be possible to buy it.","Note: Discontinued products will still be visible in the shop and have stock, but it will not be possible to buy it."
+"Product has been marked as discontinued.","Product has been marked as discontinued."
+"Product has been unmarked as discontinued.","Product has been unmarked as discontinued."

@@ -227,7 +227,7 @@ class ProductReviewTable extends AbstractTable
 
         return $this->generateButtonGroup(
             $buttonGroupItems,
-            'Change status ',
+            'Change status',
             [
                 'icon' => '',
             ]

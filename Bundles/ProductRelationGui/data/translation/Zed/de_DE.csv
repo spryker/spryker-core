@@ -53,3 +53,13 @@ up-selling,Upselling
 "View in Shop","Im Shop ansehen"
 "View Product Relation: %s","Produktbeziehung anzeigen: %s"
 "View relations","Beziehungen ansehen"
+"Product Relation Key","Produktbeziehung Schlüssel"
+"Abstract SKU","Abstrakt SKU"
+"Select a relation type","Wählen Sie ein Beziehungsart aus."
+select,auswählen
+"Add rule","Regel hinzufügen"
+"Add group","Gruppe hinzufügen"
+Delete,Löschen
+"Edit Product Relation","Produktbeziehung bearbeiten"
+"Is active","Ist aktiv"
+"Yes, delete this product relation","Ja, diese Produktbeziehung löschen"

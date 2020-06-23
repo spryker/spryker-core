@@ -67,7 +67,9 @@ class DeleteController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addSuccessMessage(sprintf(static::MESSAGE_SUCCESS, $idProductLabel));
+        $this->addSuccessMessage(static::MESSAGE_SUCCESS, [
+            '%d' => $idProductLabel,
+        ]);
 
         return $this->redirectResponse($redirectUrl);
     }

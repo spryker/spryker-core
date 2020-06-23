@@ -1,5 +1,5 @@
 "# of Other Labels","# of Other Labels"
-"# of Products","# of Products"
+"Number of Products","# of Products"
 Activate,Activate
 Active,Active
 "Applied Products","Applied Products"
@@ -44,7 +44,7 @@ Save,Save
 "Select all","Select all"
 "Selected products to assign","Selected products to assign"
 "Selected products to de-assign","Selected products to de-assign"
-Settings,Settings
+Settings,Settingsx
 Status,Status
 "Store relation","Store relation"
 Stores,Stores
@@ -58,3 +58,4 @@ Validity,Validity
 View,View
 "Yes, delete this product label","Yes, delete this product label"
 Yes,Yes
+"Product label #%d successfully created.","Product label #%d successfully created."

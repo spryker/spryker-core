@@ -27,7 +27,7 @@ float,float
 "Manage Attributes for Product Abstract","Manage Attributes for Product Abstract"
 number,number
 "Predefined value translations","Predefined value translations"
-"Predefined values","Predefined values"
+"Predefined Values","Predefined Values"
 "Product Abstract Attributes Management","Product Abstract Attributes Management"
 "Product abstract attributes saved","Product abstract attributes saved"
 "Product attribute was created successfully.","Product attribute was created successfully."
@@ -49,3 +49,5 @@ Values,Values
 "View Attribute","View Attribute"
 "You can add new values by pressing ""Enter"" after each element","You can add new values by pressing ""Enter"" after each element"
 Remove,Remove
+"Edit Product Attribute","Edit Product Attribute"
+"Edit Attribute Translations","Edit Attribute Translations"

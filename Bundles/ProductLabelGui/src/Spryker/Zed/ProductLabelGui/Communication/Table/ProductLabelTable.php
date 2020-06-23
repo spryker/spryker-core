@@ -100,7 +100,7 @@ class ProductLabelTable extends AbstractTable
             static::COL_STATUS => 'Status',
             static::COL_STORES => 'Stores',
             static::COL_PRIORITY => 'Priority',
-            static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => '# of Products',
+            static::COL_ABSTRACT_PRODUCT_RELATION_COUNT => 'Number of Products',
             static::COL_ACTIONS => 'Actions',
         ]);
     }
@@ -116,6 +116,8 @@ class ProductLabelTable extends AbstractTable
             static::COL_STATUS,
             static::COL_STORES,
             static::COL_ACTIONS,
+            static::COL_IS_DYNAMIC,
+            static::COL_IS_EXCLUSIVE,
         ]);
     }
 
@@ -208,7 +210,10 @@ class ProductLabelTable extends AbstractTable
      */
     protected function getIsExclusiveLabel(SpyProductLabel $productLabelEntity)
     {
-        return $productLabelEntity->getIsExclusive() ? 'Yes' : 'No';
+        return $this->generateLabel(
+            $productLabelEntity->getIsExclusive() ? 'Yes' : 'No',
+            null
+        );
     }
 
     /**
@@ -218,7 +223,10 @@ class ProductLabelTable extends AbstractTable
      */
     protected function getIsDynamicLabel(SpyProductLabel $productLabelEntity)
     {
-        return $productLabelEntity->getIsDynamic() ? 'Yes' : 'No';
+        return $this->generateLabel(
+            $productLabelEntity->getIsDynamic() ? 'Yes' : 'No',
+            null
+        );
     }
 
     /**

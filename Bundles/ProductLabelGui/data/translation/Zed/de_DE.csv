@@ -1,5 +1,5 @@
 "# of Other Labels","# anderer Labels"
-"# of Products","# von Produkten"
+"Number of Products","# von Produkten"
 Activate,Aktivieren
 Active,Aktiv
 "Applied Products","Angewandte Produkte"
@@ -58,3 +58,4 @@ Validity,Gültigkeit
 View,Ansicht
 "Yes, delete this product label","Ja, dieses Produktlabel löschen"
 Yes,Ja
+"Product label #%d successfully created.","Produktlabel #%d wurde erfolgreich erstellt."

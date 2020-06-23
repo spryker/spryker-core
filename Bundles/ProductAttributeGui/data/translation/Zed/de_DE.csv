@@ -27,7 +27,7 @@ float,float
 "Manage Attributes for Product Abstract","Attribute für abstraktes Produkt verwalten"
 number,number
 "Predefined value translations","Vordefinierte Wertübersetzungen"
-"Predefined values","Vordefinierte Werte"
+"Predefined Values","Vordefinierte Werte"
 "Product Abstract Attributes Management","Verwaltung der abstrakten Produktattribute"
 "Product abstract attributes saved","Attribute des abstrakten Produkts gespeichert"
 "Product attribute was created successfully.","Produktattribut wurde erfolgreich erstellt."
@@ -49,3 +49,5 @@ Values,Werte
 "View Attribute","Attribute ansehen"
 "You can add new values by pressing ""Enter"" after each element","Sie können neue Werte hinzufügen, indem Sie nach jedem Element ""Enter"" drücken"
 Remove,Entfernen
+"Edit Product Attribute","Produktattribut bearbeiten"
+"Edit Attribute Translations","Attributübersetzungen bearbeiten"

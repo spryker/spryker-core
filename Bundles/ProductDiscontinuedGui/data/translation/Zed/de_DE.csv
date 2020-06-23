@@ -1,6 +1,11 @@
 "Add note","Notiz hinzufügen"
 "Days left:","Verbleibende Tage:"
-Discontinue,Abbrechen
+Discontinue,Einstellen
 Discontinued,"Nicht mehr lieferbar"
 Restore,Wiederherstellen
 "Will be deactivated on:","Wird deaktiviert am:"
+"Discontinue Product","Produkt einstellen"
+"You can discontinue a product on this tab and add a note - why this product is discontinued.","Hier können Sie ein Produkt einstellen und eine Notiz hinzufügen warum das Produkt eingestellt ist."
+"Note: Discontinued products will still be visible in the shop and have stock, but it will not be possible to buy it.","Hinweis: Das nicht länger verfügbare Produkt wird immer noch im Shop sichtbar sein und Bestand haben, es wird aber nicht möglich sein es zu kaufen."
+"Product has been marked as discontinued.","Produkt wurde als nicht länger verfügbar markiert."
+"Product has been unmarked as discontinued.","Produkt wurde nicht mehr als nicht länger verfügbar markiert."

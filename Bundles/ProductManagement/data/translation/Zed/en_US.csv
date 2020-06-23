@@ -99,3 +99,8 @@ Stock,Stock
 "Assign bundled products","Assign bundled products"
 "Valid From (GMT)","Valid From (GMT)"
 "Valid To (GMT)","Valid To (GMT)"
+Remove,Remove
+quantity,Quantity
+Price,Price
+select,select
+"Product name","Product name"
