@@ -1,0 +1,14 @@
+{% block meta %}
+    <meta charset="utf-8">
+{% endblock %}
+
+{% block headStyles %}
+<style type="text/css">
+</style>
+{% endblock %}
+
+{% block body %}
+    {% for invoice in invoices %}
+        {{ invoice.renderedInvoice | raw }}
+    {% endfor %}
+{% endblock %}

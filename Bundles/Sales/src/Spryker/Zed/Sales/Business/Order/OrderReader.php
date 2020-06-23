@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Order;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader as OrderReaderWithoutMultiShippingAddress;
 
@@ -21,13 +22,35 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
     {
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
+            ->joinWithLocale()
             ->findOne();
 
         if ($orderEntity === null) {
             return null;
         }
 
-        return $this->orderHydrator
+        $orderTransfer = $this->orderHydrator
             ->hydrateOrderTransferFromPersistenceBySalesOrder($orderEntity);
+
+        $orderTransfer = $this->expandWithLocale($orderTransfer, $orderEntity);
+
+        return $orderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function expandWithLocale(OrderTransfer $orderTransfer, \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity): OrderTransfer
+    {
+        if (!$orderEntity->getLocale()) {
+            return $orderTransfer;
+        }
+        $localeTransfer = (new LocaleTransfer())
+            ->fromArray($orderEntity->getLocale()->toArray(), true);
+
+        return $orderTransfer->setLocale($localeTransfer);
     }
 }

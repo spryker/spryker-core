@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config>
+  <sales-invoice>
+    <label>SalesInvoice</label>
+    <title>SalesInvoice</title>
+    <pages>
+      <sales-invoice>
+        <label>SalesInvoice</label>
+        <title>SalesInvoice</title>
+        <bundle>sales-invoice</bundle>
+        <controller>index</controller>
+        <action>index</action>
+      </sales-invoice>
+    </pages>
+  </sales-invoice>
+</config>
