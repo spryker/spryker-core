@@ -39,14 +39,14 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
                 continue;
             }
 
-            foreach ($rootNavigationElement[MenuFormatter::PAGES] as $navigationName => &$childRootNavigationElement) {
+            foreach ($rootNavigationElement[MenuFormatter::PAGES] as $navigationName => &$childNavigationElement) {
                 $foundNavigationElement = $this->getNavigationInNavigationData(
                     $coreNavigationDefinitionData,
-                    $childRootNavigationElement,
+                    $childNavigationElement,
                     $navigationName
                 );
 
-                $childRootNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childRootNavigationElement);
+                $childNavigationElement = $this->mergeNavigationElementPages($foundNavigationElement, $childNavigationElement);
             }
         }
 
