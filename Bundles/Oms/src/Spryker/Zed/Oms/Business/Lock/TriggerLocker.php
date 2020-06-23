@@ -9,13 +9,13 @@ namespace Spryker\Zed\Oms\Business\Lock;
 
 use DateInterval;
 use DateTime;
+use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
-use Exception;
 
 class TriggerLocker implements LockerInterface
 {
@@ -47,7 +47,7 @@ class TriggerLocker implements LockerInterface
      * Attempts to save a lock entity, and if it fails due to unique identifier constraint (entity already locked) -
      * throws a LockException
      *
-     * @param string|array $identifiers
+     * @param string|string[] $identifiers
      * @param string|null $details
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\LockException
@@ -83,7 +83,7 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
-     * @param string|array $identifiers
+     * @param string|string[] $identifiers
      *
      * @return void
      */
@@ -120,7 +120,7 @@ class TriggerLocker implements LockerInterface
      *
      * @return bool
      */
-    protected function acquireBatch(array $identifiers, string $details = null): bool
+    protected function acquireBatch(array $identifiers, ?string $details = null): bool
     {
         $expirationDate = $this->createExpirationDate();
 

@@ -184,6 +184,10 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @codeCoverageIgnore
+     *
+     * @deprecated Since we are creating one lock entry per item this method is not needed anymore.
+     *
      * @param array $orderItemIds
      *
      * @return string
@@ -199,6 +203,10 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @codeCoverageIgnore
+     *
+     * @deprecated Since we are creating one lock entry per item this method is not needed anymore.
+     *
      * @param array $orderItemIds
      *
      * @return string|null
