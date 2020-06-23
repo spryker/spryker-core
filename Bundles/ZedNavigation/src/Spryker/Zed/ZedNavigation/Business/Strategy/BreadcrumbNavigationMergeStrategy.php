@@ -9,12 +9,21 @@ namespace Spryker\Zed\ZedNavigation\Business\Strategy;
 
 use RecursiveArrayIterator;
 use RecursiveIteratorIterator;
-use Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter;
 use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 use Zend\Config\Config;
 
-class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInterface
+class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterface
 {
+    /**
+     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\static::PAGES
+     */
+    protected const PAGES = 'pages';
+
+    /**
+     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\static::BUNDLE
+     */
+    protected const BUNDLE = 'bundle';
+
     /**
      * @return string
      */
@@ -56,7 +65,7 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
      */
     protected function mergeNavigationPages(array $rootNavigationElement, array $coreNavigationDefinitionData): array
     {
-        foreach ($rootNavigationElement[MenuFormatter::PAGES] as $navigationName => &$childNavigationElement) {
+        foreach ($rootNavigationElement[static::PAGES] as $navigationName => &$childNavigationElement) {
             $foundNavigationElement = $this->getNavigationInNavigationData(
                 $coreNavigationDefinitionData,
                 $childNavigationElement,
@@ -82,14 +91,14 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
         }
 
         if (!$this->hasPages($rootNavigationElement)) {
-            $rootNavigationElement[MenuFormatter::PAGES] = $navigationElement[MenuFormatter::PAGES];
+            $rootNavigationElement[static::PAGES] = $navigationElement[static::PAGES];
 
             return $rootNavigationElement;
         }
 
-        $rootNavigationElement[MenuFormatter::PAGES] = array_merge_recursive(
-            $navigationElement[MenuFormatter::PAGES],
-            $rootNavigationElement[MenuFormatter::PAGES]
+        $rootNavigationElement[static::PAGES] = array_merge_recursive(
+            $navigationElement[static::PAGES],
+            $rootNavigationElement[static::PAGES]
         );
 
         return $rootNavigationElement;
@@ -130,7 +139,7 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
      */
     protected function hasPages(array $navigationElement): bool
     {
-        return isset($navigationElement[MenuFormatter::PAGES]);
+        return isset($navigationElement[static::PAGES]);
     }
 
     /**
@@ -141,7 +150,7 @@ class NavigationBreadcrumbsMergeStrategy implements NavigationMergeStrategyInter
      */
     protected function isSameModule(array $navigationElement, array $rootNavigationElement): bool
     {
-        return isset($navigationElement[MenuFormatter::BUNDLE])
-            && $navigationElement[MenuFormatter::BUNDLE] === $rootNavigationElement[MenuFormatter::BUNDLE];
+        return isset($navigationElement[static::BUNDLE])
+            && $navigationElement[static::BUNDLE] === $rootNavigationElement[static::BUNDLE];
     }
 }

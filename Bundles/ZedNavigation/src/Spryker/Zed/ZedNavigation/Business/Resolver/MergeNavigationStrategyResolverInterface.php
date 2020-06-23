@@ -12,9 +12,7 @@ use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
 interface MergeNavigationStrategyResolverInterface
 {
     /**
-     * @param string $mergeStrategy
-     *
      * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
      */
-    public function resolve(string $mergeStrategy): NavigationMergeStrategyInterface;
+    public function resolve(): NavigationMergeStrategyInterface;
 }

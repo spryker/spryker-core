@@ -23,7 +23,7 @@ use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
 use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolver;
 use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
-use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationBreadcrumbsMergeStrategy;
+use Spryker\Zed\ZedNavigation\Business\Strategy\BreadcrumbNavigationMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationFullMergeStrategy;
 use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
@@ -156,7 +156,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
             $this->getConfig(),
             [
                 $this->createNavigationFullMergeStrategy(),
-                $this->createNavigationBreadcrumbsMergeStrategy(),
+                $this->createBreadcrumbNavigationMergeStrategy(),
             ]
         );
     }
@@ -172,9 +172,9 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
      */
-    public function createNavigationBreadcrumbsMergeStrategy(): NavigationMergeStrategyInterface
+    public function createBreadcrumbNavigationMergeStrategy(): NavigationMergeStrategyInterface
     {
-        return new NavigationBreadcrumbsMergeStrategy();
+        return new BreadcrumbNavigationMergeStrategy();
     }
 
     /**

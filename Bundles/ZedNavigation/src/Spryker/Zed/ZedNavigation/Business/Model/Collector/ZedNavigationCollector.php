@@ -74,7 +74,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             $coreNavigationDefinition->merge($configFromFile);
         }
 
-        $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve($this->zedNavigationConfig->getMergeStrategy());
+        $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve();
 
         return $navigationMergeStrategy->mergeNavigation(
             $navigationDefinition,
