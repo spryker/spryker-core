@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\OmsEventTransfer;
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutResponseTransfer;
