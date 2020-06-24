@@ -24,14 +24,4 @@ class CustomerConfig extends AbstractBundleConfig
     {
         return $this->get(CustomerConstants::CUSTOMER_SECURED_PATTERN, '');
     }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function isDoubleOptInEnabled(): bool
-    {
-        return $this->getSharedConfig()->isDoubleOptInEnabled();
-    }
 }

@@ -416,14 +416,4 @@ interface CustomerClientInterface
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
     public function getCustomerByAccessToken(string $accessToken): CustomerResponseTransfer;
-
-    /**
-     * Specification:
-     * - Returns true if double opt in enabled.
-     *
-     * @api
-     *
-     * @return bool
-     */
-    public function isDoubleOptInEnabled(): bool;
 }
