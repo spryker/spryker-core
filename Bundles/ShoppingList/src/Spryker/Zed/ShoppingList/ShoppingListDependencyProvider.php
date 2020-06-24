@@ -70,9 +70,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ShoppingListToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new ShoppingListToPermissionFacadeBridge($container->getLocator()->permission()->facade());
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPersistentCartFacade(Container $container): Container
     {
-        $container[static::FACADE_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::FACADE_PERSISTENT_CART, function (Container $container) {
             return new ShoppingListToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new ShoppingListToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ShoppingListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -140,9 +140,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ShoppingListToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         return $container;
     }
@@ -156,9 +156,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEM_EXPANDER] = function () {
+        $container->set(static::PLUGINS_ITEM_EXPANDER, function () {
             return $this->getItemExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -184,9 +184,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteItemExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_ITEM_EXPANDER] = function () {
+        $container->set(static::PLUGINS_QUOTE_ITEM_EXPANDER, function () {
             return $this->getQuoteItemExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -198,9 +198,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAddItemPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_PRE_CHECK] = function () {
+        $container->set(static::PLUGINS_ADD_ITEM_PRE_CHECK, function () {
             return $this->getAddItemPreCheckPlugins();
-        };
+        });
 
         return $container;
     }
@@ -248,9 +248,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShoppingListItemPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE, function () {
             return $this->getShoppingListItemPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -294,9 +294,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBeforeDeleteShoppingListItemPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE, function () {
             return $this->getBeforeDeleteShoppingListItemPlugins();
-        };
+        });
 
         return $container;
     }
@@ -316,9 +316,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemToShoppingListItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER] = function () {
+        $container->set(static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER, function () {
             return $this->getItemToShoppingListItemMapperPlugins();
-        };
+        });
 
         return $container;
     }

@@ -30,9 +30,9 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new NewsletterToMailBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         $container = $this->addUtilValidateService($container);
 
@@ -46,12 +46,12 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new NewsletterToMailBridge($container->getLocator()->mail()->facade());
-        };
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        });
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new NewsletterToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilValidateService(Container $container)
     {
-        $container[static::SERVICE_UTIL_VALIDATE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_VALIDATE, function (Container $container) {
             return new NewsletterToUtilValidateServiceBridge($container->getLocator()->utilValidate()->service());
-        };
+        });
 
         return $container;
     }

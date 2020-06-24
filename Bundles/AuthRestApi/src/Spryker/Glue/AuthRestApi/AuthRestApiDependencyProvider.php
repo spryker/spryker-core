@@ -48,9 +48,9 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthClient(Container $container): Container
     {
-        $container[static::CLIENT_OAUTH] = function (Container $container) {
+        $container->set(static::CLIENT_OAUTH, function (Container $container) {
             return new AuthRestApiToOauthClientBridge($container->getLocator()->oauth()->client());
-        };
+        });
 
         return $container;
     }
@@ -62,11 +62,11 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthService(Container $container): Container
     {
-        $container[static::SERVICE_OAUTH] = function (Container $container) {
+        $container->set(static::SERVICE_OAUTH, function (Container $container) {
             return new AuthRestApiToOauthServiceBridge(
                 $container->getLocator()->oauth()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -78,11 +78,11 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new AuthRestApiToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -94,9 +94,9 @@ class AuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRestUserExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_REST_USER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_REST_USER_EXPANDER, function () {
             return $this->getRestUserExpanderPlugins();
-        };
+        });
 
         return $container;
     }

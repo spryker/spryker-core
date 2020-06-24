@@ -9,9 +9,12 @@ namespace Spryker\Client\Glossary\Storage;
 
 use Spryker\Client\Storage\StorageClientInterface;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
+use Symfony\Contracts\Translation\TranslatorTrait;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {
+    use TranslatorTrait;
+
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
@@ -64,11 +67,7 @@ class GlossaryStorage implements GlossaryStorageInterface
             return $this->translations[$keyName];
         }
 
-        return str_replace(
-            array_keys($parameters),
-            array_values($parameters),
-            $this->translations[$keyName]
-        );
+        return $this->trans($this->translations[$keyName], $parameters, $this->localeName);
     }
 
     /**
@@ -76,7 +75,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    protected function loadTranslation($keyName)
+    protected function loadTranslation($keyName): void
     {
         $key = $this->keyBuilder->generateKey($keyName, $this->localeName);
         $this->addTranslation($keyName, $this->storage->get($key));
@@ -88,7 +87,7 @@ class GlossaryStorage implements GlossaryStorageInterface
      *
      * @return void
      */
-    protected function addTranslation($keyName, $translation)
+    protected function addTranslation($keyName, $translation): void
     {
         if ($translation === null) {
             $translation = $keyName;

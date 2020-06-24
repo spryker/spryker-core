@@ -44,9 +44,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
      */
     protected function addGlossaryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_GLOSSARY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
             return new ProductDiscontinuedStorageToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductDiscontinuedStorageToLocaleClientBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductDiscontinuedStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductDiscontinuedStorageDependencyProvider extends AbstractDependencyPro
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductDiscontinuedStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }

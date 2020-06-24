@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="OmsProductOfferReservationCriteria">
+        <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="OmsProductOfferReservation">
+        <property name="idOmsProductOfferReservation" type="int"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="idStore" type="int"/>
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemStateAggregation">
+        <property name="sku" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateName" type="string"/>
+        <property name="sumAmount" type="decimal"/>
+    </transfer>
+
+    <transfer name="OmsStateCollection">
+        <property name="states" type="OmsState[]" associative="true" singular="state"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="OmsState">
+    </transfer>
+
+</transfers>

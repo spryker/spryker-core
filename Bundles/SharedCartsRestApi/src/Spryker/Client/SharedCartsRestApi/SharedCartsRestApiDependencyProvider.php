@@ -35,11 +35,11 @@ class SharedCartsRestApiDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new SharedCartsRestApiToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }

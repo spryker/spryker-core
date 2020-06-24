@@ -35,9 +35,9 @@ class CustomerOfferConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCustomerFacade(Container $container)
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new CustomerOfferConnectorToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }

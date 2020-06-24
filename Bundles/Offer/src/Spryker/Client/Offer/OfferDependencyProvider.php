@@ -37,11 +37,11 @@ class OfferDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new OfferToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -53,11 +53,11 @@ class OfferDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new OfferToCustomerClientBridge(
                 $container->getLocator()->customer()->client()
             );
-        };
+        });
 
         return $container;
     }
