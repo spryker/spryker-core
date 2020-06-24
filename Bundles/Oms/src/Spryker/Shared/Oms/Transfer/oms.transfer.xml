@@ -6,6 +6,7 @@
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
@@ -18,10 +19,12 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
         <property name="locale" type="Locale"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="itemStateDisplayNames" type="string[]" singular="itemStateDisplayName" associative="true" description="State name is used as a key"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
@@ -97,6 +100,7 @@
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="fkSalesOrder" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
@@ -135,6 +139,7 @@
 
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
         <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
     </transfer>
 
@@ -148,6 +153,10 @@
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
         <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="OrderList">
+        <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
 </transfers>

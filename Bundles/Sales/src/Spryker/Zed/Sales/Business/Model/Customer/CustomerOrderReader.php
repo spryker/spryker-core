@@ -33,18 +33,26 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     */
+    protected $orderListExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[] $orderListExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver,
-        ?SalesToOmsInterface $omsFacade = null
+        ?SalesToOmsInterface $omsFacade = null,
+        array $orderListExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydratorStrategyResolver = $orderHydratorStrategyResolver;
         $this->omsFacade = $omsFacade;
+        $this->orderListExpanderPlugins = $orderListExpanderPlugins;
     }
 
     /**
@@ -63,6 +71,7 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
 
         $orderListTransfer->setOrders($orders);
+        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
 
         return $orderListTransfer;
     }
@@ -122,5 +131,19 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected function hasOmsFacade()
     {
         return $this->omsFacade !== null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    protected function executeOrderListExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        foreach ($this->orderListExpanderPlugins as $orderListExpanderPlugin) {
+            $orderListTransfer = $orderListExpanderPlugin->expand($orderListTransfer);
+        }
+
+        return $orderListTransfer;
     }
 }

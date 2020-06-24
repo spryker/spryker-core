@@ -31,8 +31,10 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
 
         $orderListTransfer->setOrders($orders);
+        $orderListTransfer = $this->updatePaginationTransfer($orderListTransfer, $ordersQuery);
+        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
 
-        return $this->updatePaginationTransfer($orderListTransfer, $ordersQuery);
+        return $orderListTransfer;
     }
 
     /**

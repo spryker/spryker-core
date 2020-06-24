@@ -47,6 +47,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_SEARCH_ORDER_EXPANDER = 'PLUGINS_SEARCH_ORDER_EXPANDER';
     public const PLUGINS_ORDER_SEARCH_QUERY_EXPANDER = 'PLUGINS_ORDER_SEARCH_QUERY_EXPANDER';
     public const PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK = 'PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK';
+    public const PLUGINS_ORDER_LIST_EXPANDER = 'PLUGINS_ORDER_LIST_EXPANDER';
 
     /**
      * @deprecated Will be removed in the next major version.
@@ -80,6 +81,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addSearchOrderExpanderPlugins($container);
         $container = $this->addOrderSearchQueryExpanderPlugins($container);
         $container = $this->addCustomerOrderAccessCheckPlugins($container);
+        $container = $this->addOrderListExpanderPlugins($container);
 
         return $container;
     }
@@ -427,6 +429,20 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOrderListExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ORDER_LIST_EXPANDER, function () {
+            return $this->getOrderListExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Plugin\OrderExpanderPreSavePluginInterface[]
      */
     protected function getOrderExpanderPreSavePlugins()
@@ -518,6 +534,14 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
      */
     protected function getCustomerOrderAccessCheckPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     */
+    protected function getOrderListExpanderPlugins(): array
     {
         return [];
     }

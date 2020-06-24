@@ -698,6 +698,36 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands an order items state with displayName property if it exists in the XML definition.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands orders with a list of unique display item state names as associative array.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array;
+
+    /**
+     * Specification:
      * - Checks for cancellable flag for each order item.
      * - If all items are applicable for cancel, sets `Order::isCancellable=true`, false otherwise.
      *

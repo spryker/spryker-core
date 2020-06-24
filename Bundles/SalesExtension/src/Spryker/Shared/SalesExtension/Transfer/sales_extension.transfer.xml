@@ -24,4 +24,7 @@
     <transfer name="Customer">
     </transfer>
 
+    <transfer name="OrderList">
+    </transfer>
+
 </transfers>
