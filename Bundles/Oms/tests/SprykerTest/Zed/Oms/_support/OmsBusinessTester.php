@@ -98,14 +98,17 @@ class OmsBusinessTester extends Actor
     /**
      * @param string $storeName
      * @param string $stateName
+     * @param string $processName
      * @param int $orderItemsAmount One spy_sales_order_item is added always by the {@link \SprykerTest\Zed\Oms\_generated\OmsBusinessTesterActions::haveOrder()} method.
      *
      * @return void
      */
-    public function createOrderWithOrderItemsInStateForStore(string $storeName, string $stateName, int $orderItemsAmount = 0): void
-    {
-        $processName = 'DummyPayment01';
-
+    public function createOrderWithOrderItemsInStateAndProcessForStore(
+        string $storeName,
+        string $stateName,
+        string $processName,
+        int $orderItemsAmount = 0
+    ): void {
         $salesOrderTransferDE = $this->haveOrder([], $processName);
         $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
         $salesOrderEntity->setStore($storeName)->save();

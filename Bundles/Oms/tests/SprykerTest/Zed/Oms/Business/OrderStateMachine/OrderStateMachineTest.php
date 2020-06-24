@@ -183,13 +183,14 @@ class OrderStateMachineTest extends Unit
     public function testCheckConditionsWithCriteria(int $expectedAffectedOrderItemsCount, ?string $storeName = null, ?int $limit = null): void
     {
         $stateName = 'condition-test';
+        $processName = 'DummyPayment01';
 
         $orderStateMachineMock = $this->getOrderStatemachineMockForConditionsWithCriteriaTest([
             $stateName => $stateName,
-        ]);
+        ], $processName);
 
-        $this->tester->createOrderWithOrderItemsInStateForStore('DE', $stateName, 1);
-        $this->tester->createOrderWithOrderItemsInStateForStore('US', $stateName, 2);
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('DE', $stateName, $processName, 1);
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('US', $stateName, $processName, 2);
 
         $omsCheckConditionQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
         $omsCheckConditionQueryCriteriaTransfer
@@ -201,17 +202,18 @@ class OrderStateMachineTest extends Unit
 
     /**
      * @param array $statesForTransition
+     * @param string $processName
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
-    protected function getOrderStatemachineMockForConditionsWithCriteriaTest(array $statesForTransition): OrderStateMachine
+    protected function getOrderStatemachineMockForConditionsWithCriteriaTest(array $statesForTransition, string $processName): OrderStateMachine
     {
         $conditionCollection = new ConditionCollection();
-        $conditionCollection->add($this->getConditionMock(), self::CONDITION_NAME);
+        $conditionCollection->add($this->getConditionMock(), static::CONDITION_NAME);
 
         $omsConfig = new OmsConfig();
         $omsBusinessFactory = new OmsBusinessFactory();
-        $activeProcesses = new ReadOnlyArrayObject(['DummyPayment01']);
+        $activeProcesses = new ReadOnlyArrayObject([$processName]);
 
         $orderStateMachineMockBuilder = $this
             ->getMockBuilder(OrderStateMachine::class)

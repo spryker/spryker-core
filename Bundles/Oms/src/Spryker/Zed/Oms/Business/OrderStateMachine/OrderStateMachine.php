@@ -805,15 +805,31 @@ class OrderStateMachine implements OrderStateMachineInterface
         ProcessInterface $process,
         ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
     ) {
-        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
-            $omsCheckConditionsQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
-            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getOmsCheckConditionsQueryLimit());
-        }
+        $omsCheckConditionsQueryCriteriaTransfer = $this->prepareOmsCheckConditionsQueryCriteriaTransfer($omsCheckConditionsQueryCriteriaTransfer);
 
         return $this->queryContainer
             ->querySalesOrderItemsByState($states, $process->getName(), $omsCheckConditionsQueryCriteriaTransfer)
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer
+     */
+    protected function prepareOmsCheckConditionsQueryCriteriaTransfer(
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
+    ): OmsCheckConditionsQueryCriteriaTransfer {
+        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
+            $omsCheckConditionsQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
+        }
+
+        if ($omsCheckConditionsQueryCriteriaTransfer->getLimit() === null) {
+            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getOmsCheckConditionsQueryLimit());
+        }
+
+        return $omsCheckConditionsQueryCriteriaTransfer;
     }
 
     /**

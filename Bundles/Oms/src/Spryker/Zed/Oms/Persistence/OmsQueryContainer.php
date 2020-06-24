@@ -82,7 +82,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $baseQuery->addSelectQuery($subQuery, 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
-            ->where('t.fk_sales_order = spy_sales_order_item.fk_sales_order')
+            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER))
             ->useProcessQuery()
                 ->filterByName($processName)
             ->endUse()
