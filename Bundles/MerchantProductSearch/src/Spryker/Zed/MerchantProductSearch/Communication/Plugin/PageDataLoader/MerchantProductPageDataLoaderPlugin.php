@@ -29,7 +29,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
         $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 

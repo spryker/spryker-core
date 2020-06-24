@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantProductSearch\Dependency\Facade;
 interface MerchantProductSearchToProductPageSearchFacadeInterface
 {
     /**
-     * @phpstan-param array<string> $pageDataExpanderPluginNames
-     *
      * @param int[] $productAbstractIds
      * @param array $pageDataExpanderPluginNames
      *

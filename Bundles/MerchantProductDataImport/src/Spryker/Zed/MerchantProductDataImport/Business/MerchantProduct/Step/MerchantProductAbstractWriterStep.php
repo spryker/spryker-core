@@ -39,7 +39,7 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
         $merchantProductAbstractEntity->fromArray($dataSet->getArrayCopy());
         $merchantProductAbstractEntity->save();
 
-        $this->addPublishEvents(MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getFkMerchant());
+        $this->addPublishEvents(MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getIdProductAbstractMerchant());
     }
 
     /**

@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantProduct\Helper;
 
 use Codeception\Module;
+use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
@@ -19,9 +20,9 @@ class MerchantProductHelper extends Module
      * @param int $idMerchant
      * @param int $idProductAbstract
      *
-     * @return void
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract
      */
-    public function addMerchantProductRelation(int $idMerchant, int $idProductAbstract): void
+    public function addMerchantProductRelation(int $idMerchant, int $idProductAbstract): SpyMerchantProductAbstract
     {
         $merchantProductAbstract = $this->getMerchantProductAbstractPropelQuery()
             ->filterByFkMerchant($idMerchant)
@@ -29,11 +30,12 @@ class MerchantProductHelper extends Module
             ->findOneOrCreate();
 
         $merchantProductAbstract->save();
-        $idProductAbstractMerchant = $merchantProductAbstract->getIdProductAbstractMerchant();
 
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($idProductAbstractMerchant) {
-            $this->getMerchantProductAbstractPropelQuery()->filterByIdProductAbstractMerchant($idProductAbstractMerchant)->delete();
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantProductAbstract) {
+            $merchantProductAbstract->delete();
         });
+
+        return $merchantProductAbstract;
     }
 
     /**

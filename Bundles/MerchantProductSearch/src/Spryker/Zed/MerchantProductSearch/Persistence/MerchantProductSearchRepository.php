@@ -45,6 +45,26 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
     }
 
     /**
+     * @param int[] $productAbstractMerchantIds
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductAbstractMerchantIds(array $productAbstractMerchantIds): array
+    {
+        $merchantProductAbstractPropelQuery = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->filterByIdProductAbstractMerchant_In($productAbstractMerchantIds)
+            ->useMerchantQuery()
+                ->filterByIsActive(true)
+            ->endUse();
+
+        return $merchantProductAbstractPropelQuery
+            ->select([SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @module Store
      * @module Merchant
      *
@@ -73,10 +93,10 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
             ->find()
             ->getData();
 
-        $groupedMerchantDataByProductAbstractId = $this->groupMerchantDataByProductAbstractId($merchantData);
+        $groupedMerchantDataByIdProductAbstract = $this->groupMerchantDataByIdProductAbstract($merchantData);
         $productAbstractMerchantTransfers = [];
 
-        foreach ($groupedMerchantDataByProductAbstractId as $idProductAbstract => $productAbstractMerchantData) {
+        foreach ($groupedMerchantDataByIdProductAbstract as $idProductAbstract => $productAbstractMerchantData) {
             $productAbstractMerchantTransfers[] = $this->getFactory()
                 ->createMerchantProductAbstractMapper()
                 ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
@@ -97,7 +117,7 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
      *
      * @return array
      */
-    protected function groupMerchantDataByProductAbstractId(array $merchantData): array
+    protected function groupMerchantDataByIdProductAbstract(array $merchantData): array
     {
         $groupedProductAbstractMerchantData = [];
 

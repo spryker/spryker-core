@@ -29,7 +29,7 @@ class MerchantProductPageDataExpanderPlugin extends AbstractPlugin implements Pr
      *
      * @return void
      */
-    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer)
+    public function expandProductPageData(array $productData, ProductPageSearchTransfer $productAbstractPageSearchTransfer): void
     {
         $merchantNames = $productAbstractPageSearchTransfer->getMerchantNames();
 
