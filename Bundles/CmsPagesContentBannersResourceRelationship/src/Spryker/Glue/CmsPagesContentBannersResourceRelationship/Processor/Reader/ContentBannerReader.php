@@ -80,7 +80,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $mappedContentBannerResources = [];
         foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
             foreach ($contentBannerKeys as $contentBannerKey) {
-                if (!$contentBannerResources[$contentBannerKey]) {
+                if (!isset($contentBannerResources[$contentBannerKey])) {
                     continue;
                 }
                 $mappedContentBannerResources[$cmsPageUuid][$contentBannerKey] = $contentBannerResources[$contentBannerKey];

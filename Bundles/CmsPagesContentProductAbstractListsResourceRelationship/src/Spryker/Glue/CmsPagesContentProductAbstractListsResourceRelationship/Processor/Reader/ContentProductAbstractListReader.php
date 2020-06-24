@@ -86,7 +86,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $mappedContentProductAbstractListResources = [];
         foreach ($groupedContentProductAbstractListKeys as $cmsPageUuid => $contentProductAbstractListKeys) {
             foreach ($contentProductAbstractListKeys as $contentProductAbstractListKey) {
-                if (!$contentProductAbstractListResources[$contentProductAbstractListKey]) {
+                if (!isset($contentProductAbstractListResources[$contentProductAbstractListKey])) {
                     continue;
                 }
                 $mappedContentProductAbstractListResources[$cmsPageUuid][$contentProductAbstractListKey] = $contentProductAbstractListResources[$contentProductAbstractListKey];

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Plugin;
+namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Plugin\GlueApplication;
 
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\CmsPagesContentBannersResourceRelationshipConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
