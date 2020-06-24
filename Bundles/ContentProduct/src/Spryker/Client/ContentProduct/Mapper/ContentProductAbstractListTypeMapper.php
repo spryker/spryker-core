@@ -61,4 +61,38 @@ class ContentProductAbstractListTypeMapper implements ContentProductAbstractList
 
         return $productAbstractListTermToProductAbstractListTypeExecutor->execute($contentTypeContextTransfer);
     }
+
+    /**
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     */
+    public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
+    {
+        $contentTypeContextTransfers = $this->contentStorageClient->getContentTypeContextByKeys(
+            $contentKeys,
+            $localeName
+        );
+
+        if (!$contentTypeContextTransfers) {
+            return [];
+        }
+
+        $contentProductAbstractListTypeTransfers = [];
+        foreach ($contentTypeContextTransfers as $contentTypeContextTransfer) {
+            $term = $contentTypeContextTransfer->getTerm();
+            if (!isset($this->contentProductTermExecutors[$term])) {
+                return [];
+            }
+
+            $productAbstractListTermToBannerTypeExecutor = $this->contentProductTermExecutors[$term];
+
+            $contentProductAbstractListTypeTransfers[$contentTypeContextTransfer->getKey()] = $productAbstractListTermToBannerTypeExecutor->execute($contentTypeContextTransfer);
+        }
+
+        return $contentProductAbstractListTypeTransfers;
+    }
 }

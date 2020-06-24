@@ -51,4 +51,17 @@ interface ProductsRestApiToProductStorageClientInterface
      * @return array
      */
     public function findBulkProductAbstractStorageDataByMapping(string $mappingType, array $identifiers, string $localeName): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return array
+     */
+    public function getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+        array $productAbstractIds,
+        string $localeName,
+        string $storeName
+    ): array;
 }

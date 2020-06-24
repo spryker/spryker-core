@@ -16,6 +16,11 @@ class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS = 'content-product-abstract-lists';
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS = 'content-product-abstract';
 
+    /**
+     * @see \Spryker\Glue\ProductsRestApi\ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS
+     */
+    public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
+
     public const CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST = 'content-product-abstract-list';
 
     public const RESPONSE_CODE_CONTENT_NOT_FOUND = '2201';
