@@ -10,6 +10,10 @@ namespace Spryker\Glue\ContentProductAbstractListsRestApi;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource\ContentProductAbstractListsRestApiToProductsRestApiResourceInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander\ProductAbstractByContentProductAbstractListExpander;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander\ProductAbstractByContentProductAbstractListExpanderInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReader;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReaderInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListReader;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListReaderInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilder;
@@ -25,8 +29,20 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
     {
         return new ContentProductAbstractListReader(
             $this->getContentProductClient(),
+            $this->createContentProductAbstractListRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReaderInterface
+     */
+    public function createContentProductAbstractListProductReader(): ContentProductAbstractListProductReaderInterface
+    {
+        return new ContentProductAbstractListProductReader(
+            $this->getContentProductClient(),
             $this->createContentProductAbstractListRestResponseBuilder(),
-            $this->getStoreClient()
+            $this->getStoreClient(),
+            $this->getProductRestApiResource()
         );
     }
 
@@ -38,6 +54,16 @@ class ContentProductAbstractListsRestApiFactory extends AbstractFactory
         return new ContentProductAbstractListRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->getProductRestApiResource()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander\ProductAbstractByContentProductAbstractListExpanderInterface
+     */
+    public function createProductAbstractByContentProductAbstractListExpander(): ProductAbstractByContentProductAbstractListExpanderInterface
+    {
+        return new ProductAbstractByContentProductAbstractListExpander(
+            $this->createContentProductAbstractListProductReader()
         );
     }
 

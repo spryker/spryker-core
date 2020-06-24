@@ -34,7 +34,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentBannerIdNotSpecifiedError(): RestResponseInterface
+    public function createContentBannerIdNotSpecifiedErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
             ->createRestResponse()
@@ -49,7 +49,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentBannerNotFoundError(): RestResponseInterface
+    public function createContentBannerNotFoundErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
             ->createRestResponse()
@@ -64,7 +64,7 @@ class ContentBannerRestResponseBuilder implements ContentBannerRestResponseBuild
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentTypeInvalidError(): RestResponseInterface
+    public function createContentTypeInvalidErrorResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder
             ->createRestResponse()

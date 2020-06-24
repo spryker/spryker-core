@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\CmsPagesContentProductAbstractListsResourceRelationshipFactory getFactory()
  */
-class ContentProductAbstractListsByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ContentProductAbstractListByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class ContentProductAbstractListsByCmsPageResourceRelationshipPlugin extends Abs
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpander()
+            ->createContentProductAbstractListByCmsPageUuidResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 

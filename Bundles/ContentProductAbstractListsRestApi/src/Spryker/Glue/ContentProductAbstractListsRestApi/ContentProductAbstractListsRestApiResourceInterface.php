@@ -12,6 +12,7 @@ interface ContentProductAbstractListsRestApiResourceInterface
     /**
      * Specification:
      * - Retrieves content product abstract lists by content product abstract lists keys.
+     * - Returned resources are indexed by key.
      *
      * @api
      *
@@ -19,9 +20,8 @@ interface ContentProductAbstractListsRestApiResourceInterface
      *
      * @param string[] $contentProductAbstractListKeys
      * @param string $localeName
-     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsByKeys(array $contentProductAbstractListKeys, string $localeName, string $storeName): array;
+    public function getContentProductAbstractListsByKeys(array $contentProductAbstractListKeys, string $localeName): array;
 }

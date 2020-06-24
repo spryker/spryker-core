@@ -15,17 +15,17 @@ interface ContentBannerRestResponseBuilderInterface
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentBannerIdNotSpecifiedError(): RestResponseInterface;
+    public function createContentBannerIdNotSpecifiedErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentBannerNotFoundError(): RestResponseInterface;
+    public function createContentBannerNotFoundErrorResponse(): RestResponseInterface;
 
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function addContentTypeInvalidError(): RestResponseInterface;
+    public function createContentTypeInvalidErrorResponse(): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ContentBannerTypeTransfer $contentBannerTypeTransfer

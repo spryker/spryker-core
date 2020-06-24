@@ -14,9 +14,11 @@ interface CmsPagesContentProductAbstractListsResourceRelationshipToContentProduc
      *
      * @param string[] $contentProductAbstractListKeys
      * @param string $localeName
-     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsByKeys(array $contentProductAbstractListKeys, string $localeName, string $storeName): array;
+    public function getContentProductAbstractListsByKeys(
+        array $contentProductAbstractListKeys,
+        string $localeName
+    ): array;
 }

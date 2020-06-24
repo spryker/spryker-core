@@ -10,7 +10,7 @@ namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expa
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Reader\ContentBannerReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class ContentBannersByCmsPageReferenceResourceRelationshipExpander implements ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface
+class ContentBannerByCmsPageUuidResourceRelationshipExpander implements ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface
 {
     /**
      * @var \Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Reader\ContentBannerReaderInterface

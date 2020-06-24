@@ -27,12 +27,16 @@ class CmsPagesContentProductAbstractListsResourceRelationshipToContentProductAbs
      *
      * @param string[] $contentProductAbstractListKeys
      * @param string $localeName
-     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsByKeys(array $contentProductAbstractListKeys, string $localeName, string $storeName): array
-    {
-        return $this->contentProductAbstractListsRestApiResource->getContentProductAbstractListsByKeys($contentProductAbstractListKeys, $localeName, $storeName);
+    public function getContentProductAbstractListsByKeys(
+        array $contentProductAbstractListKeys,
+        string $localeName
+    ): array {
+        return $this->contentProductAbstractListsRestApiResource->getContentProductAbstractListsByKeys(
+            $contentProductAbstractListKeys,
+            $localeName
+        );
     }
 }

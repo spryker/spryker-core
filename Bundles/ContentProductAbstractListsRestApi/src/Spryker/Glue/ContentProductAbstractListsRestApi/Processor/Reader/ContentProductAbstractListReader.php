@@ -7,13 +7,10 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader;
 
-use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface;
 use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Throwable;
 
 class ContentProductAbstractListReader implements ContentProductAbstractListReaderInterface
 {
@@ -28,57 +25,15 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
     protected $contentProductAbstractListRestResponseBuilder;
 
     /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface
-     */
-    protected $storeClient;
-
-    /**
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient
      * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\RestResponseBuilder\ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\Client\ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         ContentProductAbstractListsRestApiToContentProductClientInterface $contentProductClient,
-        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder,
-        ContentProductAbstractListsRestApiToStoreClientInterface $storeClient
+        ContentProductAbstractListRestResponseBuilderInterface $contentProductAbstractListRestResponseBuilder
     ) {
         $this->contentProductClient = $contentProductClient;
         $this->contentProductAbstractListRestResponseBuilder = $contentProductAbstractListRestResponseBuilder;
-        $this->storeClient = $storeClient;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function getContentProductAbstractListById(RestRequestInterface $restRequest): RestResponseInterface
-    {
-        $parentResource = $restRequest->findParentResourceByType(
-            ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS
-        );
-
-        if (!$parentResource || !$parentResource->getId()) {
-            return $this->contentProductAbstractListRestResponseBuilder->addContentItemIdNotSpecifiedError();
-        }
-
-        $localeName = $restRequest->getMetadata()->getLocale();
-        try {
-            $contentProductAbstractListTypeTransfer = $this->contentProductClient->executeProductAbstractListTypeByKey(
-                $parentResource->getId(),
-                $localeName
-            );
-        } catch (Throwable $e) {
-            return $this->contentProductAbstractListRestResponseBuilder->addContentTypeInvalidError();
-        }
-
-        if (!$contentProductAbstractListTypeTransfer) {
-            return $this->contentProductAbstractListRestResponseBuilder->addContentItemtNotFoundError();
-        }
-        $storeName = $this->storeClient->getCurrentStore()->getName();
-
-        return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResponse($contentProductAbstractListTypeTransfer, $localeName, $storeName);
     }
 
     /**
@@ -86,11 +41,10 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      *
      * @param string[] $contentProductAbstractListKeys
      * @param string $localeName
-     * @param string $storeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, string $localeName, string $storeName): array
+    public function getContentProductAbstractListsResources(array $contentProductAbstractListKeys, string $localeName): array
     {
         $contentProductAbstractListTypeTransfers = $this->contentProductClient->executeProductAbstractListTypeByKeys(
             $contentProductAbstractListKeys,
@@ -102,6 +56,30 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         }
 
         return $this->contentProductAbstractListRestResponseBuilder
-            ->createContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers, $localeName, $storeName);
+            ->createContentProductAbstractListsRestResources($contentProductAbstractListTypeTransfers);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function getContentProductAbstractListsById(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        if (!$restRequest->getResource() || !$restRequest->getResource()->getId()) {
+            return $this->contentProductAbstractListRestResponseBuilder->createContentItemIdNotSpecifiedErrorResponse();
+        }
+
+        $contentProductAbstractListsResources = $this->getContentProductAbstractListsResources(
+            [$restRequest->getResource()->getId()],
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        if (!isset($contentProductAbstractListsResources[$restRequest->getResource()->getId()])) {
+            return $this->contentProductAbstractListRestResponseBuilder->createContentItemtNotFoundErrorResponse();
+        }
+
+        return $this->contentProductAbstractListRestResponseBuilder
+            ->createContentProductAbstractListRestResponse($contentProductAbstractListsResources[$restRequest->getResource()->getId()]);
     }
 }

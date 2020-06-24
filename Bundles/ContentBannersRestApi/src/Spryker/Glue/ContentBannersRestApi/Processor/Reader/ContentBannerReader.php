@@ -46,7 +46,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
     {
         $contentBannerKey = $restRequest->getResource()->getId();
         if (!$contentBannerKey) {
-            return $this->contentBannerRestResponseBuilder->addContentBannerIdNotSpecifiedError();
+            return $this->contentBannerRestResponseBuilder->createContentBannerIdNotSpecifiedErrorResponse();
         }
 
         try {
@@ -55,11 +55,11 @@ class ContentBannerReader implements ContentBannerReaderInterface
                 $restRequest->getMetadata()->getLocale()
             );
         } catch (MissingBannerTermException $bannerTermException) {
-            return $this->contentBannerRestResponseBuilder->addContentTypeInvalidError();
+            return $this->contentBannerRestResponseBuilder->createContentTypeInvalidErrorResponse();
         }
 
         if (!$contentBannerTypeTransfer) {
-            return $this->contentBannerRestResponseBuilder->addContentBannerNotFoundError();
+            return $this->contentBannerRestResponseBuilder->createContentBannerNotFoundErrorResponse();
         }
 
         return $this->contentBannerRestResponseBuilder->createContentBannersRestResponse($contentBannerTypeTransfer, $contentBannerKey);

@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CmsPagesContentProductAbstractListsResourceRelationship\Processor\Expander;
+namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ContentProductAbstractListsByCmsPageReferenceResourceRelationshipExpanderInterface
+interface ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

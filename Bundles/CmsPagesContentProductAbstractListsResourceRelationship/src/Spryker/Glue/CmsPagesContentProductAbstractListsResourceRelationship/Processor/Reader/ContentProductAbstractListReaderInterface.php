@@ -17,7 +17,7 @@ interface ContentProductAbstractListReaderInterface
      * @param string[] $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getContentProductAbstractListsResources(array $cmsPageUuids, RestRequestInterface $restRequest): array;
 }

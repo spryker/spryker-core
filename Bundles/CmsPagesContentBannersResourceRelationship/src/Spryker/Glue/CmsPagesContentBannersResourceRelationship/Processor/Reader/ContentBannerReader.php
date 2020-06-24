@@ -51,7 +51,7 @@ class ContentBannerReader implements ContentBannerReaderInterface
      * @param string[] $cmsPageUuids
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return array[]
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     public function getContentBannersResources(array $cmsPageUuids, RestRequestInterface $restRequest): array
     {
@@ -62,31 +62,61 @@ class ContentBannerReader implements ContentBannerReaderInterface
             $this->storeClient->getCurrentStore()->getName()
         );
 
-        $groupedContentBannerKeys = [];
-        $contentBannerKeys = [];
-        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
-            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
-                $contentBannerKeys = array_merge($contentBannerKeys, $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME]);
-                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()] = $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME];
-            }
-        }
+        $groupedContentBannerKeys = $this->getGroupedContentBannerKeys($cmsPageStorageTransfers);
+        $contentBannerKeys = array_merge(...array_values($groupedContentBannerKeys));
 
         $contentBannerResources = $this->contentBannerRestApiResource->getContentBannersByKeys($contentBannerKeys, $localeName);
         if (!$contentBannerResources) {
             return [];
         }
 
-        $mappedContentBannerResources = [];
+        return $this->groupRestResourcesByCmsPageUuid($contentBannerResources, $groupedContentBannerKeys);
+    }
+
+    /**
+     * @phpstan-return array<string, array<string, string>>
+     *
+     * @param \Generated\Shared\Transfer\CmsPageStorageTransfer[] $cmsPageStorageTransfers
+     *
+     * @return string[][]
+     */
+    protected function getGroupedContentBannerKeys(array $cmsPageStorageTransfers): array
+    {
+        $groupedContentBannerKeys = [];
+        foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
+            $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
+            if (!empty($contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
+                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()]
+                    = $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME];
+            }
+        }
+
+        return $groupedContentBannerKeys;
+    }
+
+    /**
+     * @phpstan-param array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface> $contentBannerResources
+     * @phpstan-param array<string, array<string, string>> $groupedContentBannerKeys
+     *
+     * @phpstan-return array<string, array<string, \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     *
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $contentBannerResources
+     * @param string[][] $groupedContentBannerKeys
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
+     */
+    protected function groupRestResourcesByCmsPageUuid(array $contentBannerResources, array $groupedContentBannerKeys): array
+    {
+        $groupedContentBannerResources = [];
         foreach ($groupedContentBannerKeys as $cmsPageUuid => $contentBannerKeys) {
             foreach ($contentBannerKeys as $contentBannerKey) {
                 if (!isset($contentBannerResources[$contentBannerKey])) {
                     continue;
                 }
-                $mappedContentBannerResources[$cmsPageUuid][$contentBannerKey] = $contentBannerResources[$contentBannerKey];
+                $groupedContentBannerResources[$cmsPageUuid][$contentBannerKey] = $contentBannerResources[$contentBannerKey];
             }
         }
 
-        return $mappedContentBannerResources;
+        return $groupedContentBannerResources;
     }
 }

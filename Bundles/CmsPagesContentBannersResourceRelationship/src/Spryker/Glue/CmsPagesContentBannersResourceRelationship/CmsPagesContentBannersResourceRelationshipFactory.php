@@ -10,8 +10,8 @@ namespace Spryker\Glue\CmsPagesContentBannersResourceRelationship;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\Client\CmsPagesContentBannersResourceRelationshipToCmsStorageClientInterface;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\Client\CmsPagesContentBannersResourceRelationshipToStoreClientInterface;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Dependency\RestApiResource\CmsPagesContentBannersResourceRelationshipToContentBannersRestApiResourceInterface;
-use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpander;
-use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface;
+use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannerByCmsPageUuidResourceRelationshipExpander;
+use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Reader\ContentBannerReader;
 use Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Reader\ContentBannerReaderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -31,11 +31,11 @@ class CmsPagesContentBannersResourceRelationshipFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface
+     * @return \Spryker\Glue\CmsPagesContentBannersResourceRelationship\Processor\Expander\ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface
      */
-    public function createContentBannersByCmsPageReferenceResourceRelationshipExpander(): ContentBannersByCmsPageReferenceResourceRelationshipExpanderInterface
+    public function createContentBannerByCmsPageUuidResourceRelationshipExpander(): ContentBannerByCmsPageUuidResourceRelationshipExpanderInterface
     {
-        return new ContentBannersByCmsPageReferenceResourceRelationshipExpander(
+        return new ContentBannerByCmsPageUuidResourceRelationshipExpander(
             $this->createContentBannerReader()
         );
     }

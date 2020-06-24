@@ -15,7 +15,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Glue\CmsPagesContentBannersResourceRelationship\CmsPagesContentBannersResourceRelationshipFactory getFactory()
  */
-class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ContentBannerByCmsPageResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class ContentBannersByCmsPageResourceRelationshipPlugin extends AbstractPlugin i
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createContentBannersByCmsPageReferenceResourceRelationshipExpander()
+            ->createContentBannerByCmsPageUuidResourceRelationshipExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
