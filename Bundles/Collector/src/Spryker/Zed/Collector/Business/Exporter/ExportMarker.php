@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\KeyBuilder\KeyBuilderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\CollectorConfig;
 
 class ExportMarker implements MarkerInterface
 {
@@ -31,15 +32,26 @@ class ExportMarker implements MarkerInterface
     protected $keyBuilder;
 
     /**
+     * @var \Spryker\Zed\Collector\CollectorConfig
+     */
+    protected $collectorConfig;
+
+    /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
      * @param \Spryker\Shared\KeyBuilder\KeyBuilderInterface $keyBuilder
+     * @param \Spryker\Zed\Collector\CollectorConfig $collectorConfig
      */
-    public function __construct(WriterInterface $writer, ReaderInterface $reader, KeyBuilderInterface $keyBuilder)
-    {
+    public function __construct(
+        WriterInterface $writer,
+        ReaderInterface $reader,
+        KeyBuilderInterface $keyBuilder,
+        CollectorConfig $collectorConfig
+    ) {
         $this->writer = $writer;
         $this->reader = $reader;
         $this->keyBuilder = $keyBuilder;
+        $this->collectorConfig = $collectorConfig;
     }
 
     /**
@@ -81,6 +93,10 @@ class ExportMarker implements MarkerInterface
      */
     public function deleteTimestamps(array $keys)
     {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return true;
+        }
+
         return $this->writer->delete($keys);
     }
 }
