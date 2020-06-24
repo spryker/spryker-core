@@ -209,6 +209,6 @@ class DrawerTest extends Unit
         $timeoutProcessorPluginMock->method('getName')->willReturn(static::TIMEOUT_PROCESSOR_NAME);
         $timeoutProcessorPluginMock->method('getLabel')->willReturn(static::TIMEOUT_PROCESSOR_LABEL);
 
-        return$timeoutProcessorPluginMock;
+        return $timeoutProcessorPluginMock;
     }
 }
