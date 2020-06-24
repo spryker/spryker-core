@@ -24,24 +24,24 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected $queryContainer;
 
     /**
-     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
-     */
-    protected $omsFacade;
-
-    /**
      * @var \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface
      */
     protected $customerOrderOverviewHydrator;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface
      */
-    protected $orderListExpanderPlugins;
+    protected $omsFacade;
 
     /**
      * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
     protected $searchOrderExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     */
+    protected $orderListExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
@@ -54,7 +54,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         SalesQueryContainerInterface $queryContainer,
         CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
         SalesToOmsInterface $omsFacade,
-        array $searchOrderExpanderPlugins
+        array $searchOrderExpanderPlugins,
         array $orderListExpanderPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
