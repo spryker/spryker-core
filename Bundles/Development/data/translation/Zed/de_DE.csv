@@ -26,7 +26,6 @@ in,in
 "in tests","in Tests"
 Incoming,Eingehend
 "Incoming dependencies of the","Eingehende Abhängigkeiten der"
-"Incoming dependencies of the","Eingehende Abhängigkeiten der"
 "Indirect Incoming","Indirekt Eingehend"
 "Indirect Outgoing","Indirect Ausgehend"
 "Indirect Stability","Indirekte Stabilität"
@@ -51,7 +50,7 @@ require-dev,require-dev
 "Simple Dependency Graph","Simple Dependency-Graph"
 "Spryker Stability","Spryker Stabilität"
 Stability,Stabilität
-"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stabilität wird wie folgt berechnet: "eingehende Abhängigkeiten + ausgehende Abhängigkeiten)". Das Ergebnis liegt zwischen 0 (stabil) und 1 (instabil)."
+"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stabilität wird wie folgt berechnet: ""eingehende Abhängigkeiten + ausgehende Abhängigkeiten)"". Das Ergebnis liegt zwischen 0 (stabil) und 1 (instabil)."
 "Stability of all core modules","Stabilität aller Kernmodule"
 "Suggested dependencies","Empfohlene Abhängigkeiten"
 SUM,SUM
@@ -59,4 +58,4 @@ To,An
 "Used Plugins","Verwendete Plug-ins"
 "You must specify a bundle for which the graph should be build","Sie müssen ein Bundle bestimmen, für das der Graph erstellt werden soll"
 "You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Bundle zu berechnen."
-"Dependencies","Abhängigkeiten"
+Dependencies,Abhängigkeiten

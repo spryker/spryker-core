@@ -102,5 +102,6 @@ Stock,Stock
 Remove,Remove
 quantity,Quantity
 Price,Price
+"id product","Product ID"
 select,select
 "Product name","Product name"

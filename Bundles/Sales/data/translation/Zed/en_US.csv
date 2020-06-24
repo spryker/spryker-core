@@ -82,7 +82,6 @@ delivery-return,"Deliver return back to customer"
 cancel,Cancel
 skip-timeout,"Skip timeout"
 "Cancelled amount","Cancelled amount"
-"Unique Product Quantity","Unique Product Quantity"
 "Comment successfully added","Comment successfully added."
 "Address Details","Address Details"
 "Middle name","Middle name"

@@ -45,7 +45,7 @@ Subtotal,Zwischensumme
 Totals,Gesamtsummen
 "Trigger all matching states","Alle passenden Stati antriggern"
 "Trigger event","Event auslösen"
-"Unique Product Quantity","Unique Product Quantity"
+"Unique Product Quantity","Anzahl der Produkte"
 "Unit Price",Stückpreis
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"
@@ -82,12 +82,11 @@ delivery-return,"Retoure zum Kunden zurücksenden"
 cancel,Stornieren
 skip-timeout,"Timeout überspringen"
 "Cancelled amount","Stornierter Betrag"
-"Unique Product Quantity","Anzahl der Produkte"
 "Comment successfully added","Kommentar erfolgreich hinzugefügt."
 "Address Details",Adressdetails
 "Middle name","Zweiter Vorname"
 "Po box",Postfach
-"Zip code","Postleitzahl"
+"Zip code",Postleitzahl
 Address1,"Adresse 1"
 Address2,"Adresse 2"
 "Cell phone",Mobiltelefon

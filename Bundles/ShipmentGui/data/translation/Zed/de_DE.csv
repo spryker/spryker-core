@@ -55,6 +55,8 @@ of,von
 "Shipping Method",Versandart
 Shipments,Liefermethoden
 "Available in the following store(s)","Verfügbar in den folgenden regionen"
+"Is active","Ist aktiv"
+"Add Carrier Company","Versandanbieter hinzufügen"
 "Create Shipment","Sendung Erstellen"
 "Edit Shipment","Sendung Bearbeiten"
 "New Shipment for Order: %idSalesOrder%","Neue Sendung für Bestellung: %idSalesOrder%"
@@ -72,6 +74,4 @@ Cellphone,Mobiltelefon
 "Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
 "Edit Shipment for Order: N%idSalesOrder%","Sendung für Bestellung N%idSalesOrder% bearbeiten"
 "Shipment has been successfully edited.","Sendung wurde erfolgreich bearbeitet."
-"Is active","Ist aktiv"
-"Add Carrier Company","Versandanbieter hinzufügen"
 "Create new Carrier company","Versandanbieter erstellen"

@@ -11,6 +11,6 @@ Threshold,Schwellenwert
 "The Global Thresholds is saved successfully.","Die globalen Bestellschwellen werden erfolgreich gespeichert."
 "Store and Currency","Region und Währung"
 "Enter threshold value","Schwellenwert eingeben"
-"Threshold settings","Schwellwerteinstellungen"
-"Soft","Weich"
-"Hard","Hart"
+"Threshold settings",Schwellwerteinstellungen
+Soft,Weich
+Hard,Hart

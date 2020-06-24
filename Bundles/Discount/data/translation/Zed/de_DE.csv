@@ -80,9 +80,6 @@ Inactive,Inaktiv
 "Calculator percentage",Prozentual
 "Calculator fixed",Fixbetrag
 "Discount application type","Art der Rabattanwendung"
-"Query String","Query String"
-"Add rule","Add rule"
-"Add group","Add group"
 Delete,Delete
 "Apply when","Apply when"
 "The discount can be applied if the query applies for at least X item(s).","Der Rabatt kann angewendet werden wenn die Abfrage für mindestens X Artikel gilt."

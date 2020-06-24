@@ -77,12 +77,9 @@ Inactive,Inactive
 "Discount Type","Discount Type"
 "Cart rules","Cart rules"
 "Voucher codes","Voucher codes"
-"Calculator percentage","Percentage"
+"Calculator percentage",Percentage
 "Calculator fixed","Fixed amount"
 "Discount application type","Discount application type"
-"Query String","Query String"
-"Add rule","Add rule"
-"Add group","Add group"
 Delete,Delete
 "Apply when","Apply when"
 "The discount can be applied if the query applies for at least X item(s).","The discount can be applied if the query applies for at least X item(s)."
