@@ -242,6 +242,8 @@ class Customer implements CustomerInterface
             $this->sendPasswordRestoreMail($customerTransfer);
         }
 
+        $customerResponseTransfer->setIsDoubleOptInEnabled($this->customerConfig->isDoubleOptInEnabled());
+
         return $customerResponseTransfer;
     }
 
