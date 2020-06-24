@@ -16,7 +16,7 @@ interface AuthMailExpanderPluginInterface
 {
     /**
      * Specification:
-     *  - Expands an auth mail transfer with an additional data.
+     * - Expands an auth mail transfer with an additional data.
      *
      * @api
      *
