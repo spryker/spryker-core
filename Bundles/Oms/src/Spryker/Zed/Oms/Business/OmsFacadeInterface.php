@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
-use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -171,34 +172,37 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads all transitions without event.
-     *  - Reads from database items with those transitions
-     *  - Executes each transition
-     *  - Returns number of affected items
+     *  - Reads from database items with those transitions.
+     *  - Executes each transition.
+     *  - Returns number of affected items.
+     *  - When OmsCheckConditionsQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for conditions.
+     *  - When OmsCheckConditionsQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = []);
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
      *  - Reads all expired timeout events.
      *  - Execute events.
      *  - Returns number of affected items.
-     *  - When OmsCheckTimeoutQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for timeout.
-     *  - When OmsCheckTimeoutQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
+     *  - When OmsCheckTimeoutsQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for timeout.
+     *  - When OmsCheckTimeoutsQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
      *
      * @api
      *
      * @param array $logContext
-     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null);
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null);
 
     /**
      * Specification:

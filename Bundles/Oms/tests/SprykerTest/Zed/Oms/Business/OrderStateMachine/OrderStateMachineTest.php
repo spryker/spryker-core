@@ -8,7 +8,9 @@
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use ReflectionClass;
+use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
@@ -21,6 +23,8 @@ use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
+use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
@@ -40,6 +44,11 @@ class OrderStateMachineTest extends Unit
     public const COMMAND_NAME = 'commandName';
 
     /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testInstantiationConditionsArrayShouldConvertedToCollection(): void
@@ -52,7 +61,8 @@ class OrderStateMachineTest extends Unit
             new ReadOnlyArrayObject(),
             [self::CONDITION_NAME => $this->getConditionMock()],
             [],
-            $this->getReservationMock()
+            $this->getReservationMock(),
+            new OmsConfig()
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -79,7 +89,8 @@ class OrderStateMachineTest extends Unit
             new ReadOnlyArrayObject(),
             $conditionCollection,
             [],
-            $this->getReservationMock()
+            $this->getReservationMock(),
+            new OmsConfig()
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -103,7 +114,8 @@ class OrderStateMachineTest extends Unit
             new ReadOnlyArrayObject(),
             [],
             [self::COMMAND_NAME => $this->getCommandMock()],
-            $this->getReservationMock()
+            $this->getReservationMock(),
+            new OmsConfig()
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -130,7 +142,8 @@ class OrderStateMachineTest extends Unit
             new ReadOnlyArrayObject(),
             [],
             $commandCollection,
-            $this->getReservationMock()
+            $this->getReservationMock(),
+            new OmsConfig()
         );
         $reflection = new ReflectionClass(OrderStateMachine::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -139,6 +152,96 @@ class OrderStateMachineTest extends Unit
 
         $this->assertInstanceOf(CommandCollectionInterface::class, $commands);
         $this->assertInstanceOf(CommandInterface::class, $commands->get(self::COMMAND_NAME));
+    }
+
+    /**
+     * @return array[]
+     */
+    public function conditionDataProvider(): array
+    {
+        return [
+            'no store name, no limit' => [3, null, null],
+            'no store name, limit' => [1, null, 1], // Will take only first created order
+            'US store, no limit' => [2, 'US', null],
+            'DE store, no limit' => [1, 'DE', null],
+        ];
+    }
+
+    /**
+     * This method will always create 2 orders:
+     * - One DE order with one order item in a defined state.
+     * - One US order with two order items in a defined state.
+     *
+     * @dataProvider conditionDataProvider()
+     *
+     * @param int $expectedAffectedOrderItemsCount
+     * @param string|null $storeName
+     * @param int|null $limit
+     *
+     * @return void
+     */
+    public function testCheckConditionsWithCriteria(int $expectedAffectedOrderItemsCount, ?string $storeName = null, ?int $limit = null): void
+    {
+        $stateName = 'condition-test';
+        $processName = 'DummyPayment01';
+
+        $orderStateMachineMock = $this->getOrderStatemachineMockForConditionsWithCriteriaTest([
+            $stateName => $stateName,
+        ], $processName);
+
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('DE', $stateName, $processName, 1);
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('US', $stateName, $processName, 2);
+
+        $omsCheckConditionQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
+        $omsCheckConditionQueryCriteriaTransfer
+            ->setStoreName($storeName)
+            ->setLimit($limit);
+
+        $this->assertSame($expectedAffectedOrderItemsCount, $orderStateMachineMock->checkConditions([], $omsCheckConditionQueryCriteriaTransfer));
+    }
+
+    /**
+     * @param array $statesForTransition
+     * @param string $processName
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
+     */
+    protected function getOrderStatemachineMockForConditionsWithCriteriaTest(array $statesForTransition, string $processName): OrderStateMachine
+    {
+        $conditionCollection = new ConditionCollection();
+        $conditionCollection->add($this->getConditionMock(), static::CONDITION_NAME);
+
+        $omsConfig = new OmsConfig();
+        $omsBusinessFactory = new OmsBusinessFactory();
+        $activeProcesses = new ReadOnlyArrayObject([$processName]);
+
+        $orderStateMachineMockBuilder = $this
+            ->getMockBuilder(OrderStateMachine::class)
+            ->setConstructorArgs([
+                new OmsQueryContainer(),
+                $omsBusinessFactory->createOrderStateMachineBuilder(),
+                $this->getTransitionLogMock(),
+                $this->getTimeoutMock(),
+                $activeProcesses,
+                $conditionCollection,
+                [],
+                $this->getReservationMock(),
+                $omsConfig,
+            ])
+            ->onlyMethods([
+                'createStateToTransitionMap',
+                'updateStateByTransition',
+                'saveOrderItems',
+                'filterItemsWithOnEnterEvent',
+                'triggerOnEnterEvents',
+            ]);
+
+        $orderStateMachineMock = $orderStateMachineMockBuilder->getMock();
+        $orderStateMachineMock->method('createStateToTransitionMap')->willReturn($statesForTransition);
+        $orderStateMachineMock->method('updateStateByTransition')->willReturn([]);
+        $orderStateMachineMock->method('filterItemsWithOnEnterEvent')->willReturn([]);
+
+        return $orderStateMachineMock;
     }
 
     /**

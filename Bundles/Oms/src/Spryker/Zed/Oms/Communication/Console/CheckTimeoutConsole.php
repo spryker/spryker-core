@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Communication\Console;
 
-use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Console\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -23,7 +23,7 @@ class CheckTimeoutConsole extends Console
 {
     public const COMMAND_NAME = 'oms:check-timeout';
     public const COMMAND_DESCRIPTION = 'Check timeouts';
-    protected const OPTION_STORE_NAME = 'storeName';
+    protected const OPTION_STORE_NAME = 'store-name';
     protected const OPTION_STORE_NAME_SHORT = 's';
     protected const OPTION_LIMIT = 'limit';
     protected const OPTION_LIMIT_SHORT = 'l';
@@ -50,9 +50,9 @@ class CheckTimeoutConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $omsCheckTimeoutQueryCriteriaTransfer = $this->buildOmsCheckTimeoutQueryCriteriaTransfer($input);
+        $omsCheckTimeoutsQueryCriteriaTransfer = $this->buildOmsCheckTimeoutsQueryCriteriaTransfer($input);
 
-        $this->getFacade()->checkTimeouts([], $omsCheckTimeoutQueryCriteriaTransfer);
+        $this->getFacade()->checkTimeouts([], $omsCheckTimeoutsQueryCriteriaTransfer);
 
         return static::CODE_SUCCESS;
     }
@@ -60,20 +60,20 @@ class CheckTimeoutConsole extends Console
     /**
      * @param \Symfony\Component\Console\Input\InputInterface $input
      *
-     * @return \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer
+     * @return \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer
      */
-    protected function buildOmsCheckTimeoutQueryCriteriaTransfer(InputInterface $input): OmsCheckTimeoutQueryCriteriaTransfer
+    protected function buildOmsCheckTimeoutsQueryCriteriaTransfer(InputInterface $input): OmsCheckTimeoutsQueryCriteriaTransfer
     {
-        $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutQueryCriteriaTransfer();
+        $omsCheckTimeoutsQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
 
         if ($input->getOption(static::OPTION_STORE_NAME)) {
-            $omsCheckTimeoutQueryCriteriaTransfer->setStoreName($input->getOption(static::OPTION_STORE_NAME));
+            $omsCheckTimeoutsQueryCriteriaTransfer->setStoreName($input->getOption(static::OPTION_STORE_NAME));
         }
 
         if ($input->getOption(static::OPTION_LIMIT)) {
-            $omsCheckTimeoutQueryCriteriaTransfer->setLimit((int)$input->getOption(static::OPTION_LIMIT));
+            $omsCheckTimeoutsQueryCriteriaTransfer->setLimit((int)$input->getOption(static::OPTION_LIMIT));
         }
 
-        return $omsCheckTimeoutQueryCriteriaTransfer;
+        return $omsCheckTimeoutsQueryCriteriaTransfer;
     }
 }

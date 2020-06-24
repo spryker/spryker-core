@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
@@ -109,7 +109,7 @@ class TimeoutTest extends Unit
         $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('DE', 1);
         $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('US', 2);
 
-        $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutQueryCriteriaTransfer();
+        $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
         $omsCheckTimeoutQueryCriteriaTransfer
             ->setStoreName($storeName)
             ->setLimit($limit);

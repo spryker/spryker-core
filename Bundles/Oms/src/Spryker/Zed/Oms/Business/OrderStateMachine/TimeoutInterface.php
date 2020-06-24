@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateTime;
-use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 
@@ -16,13 +16,13 @@ interface TimeoutInterface
 {
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
-     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
     public function checkTimeouts(
         OrderStateMachineInterface $orderStateMachine,
-        ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
     );
 
     /**

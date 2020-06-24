@@ -80,7 +80,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-            $this->createUtilReservation()
+            $this->createUtilReservation(),
+            $this->getConfig()
         );
     }
 

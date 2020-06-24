@@ -110,18 +110,37 @@ class OmsBusinessTester extends Actor
 
         $stateName = 'timeout-store-test';
         $salesOrderTransferDE = $this->haveOrder([], 'DummyPayment01');
+        $idSalesOrderItem = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder());
+        $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
+        $this->haveOmsEventTimeoutEntity([
+            'fk_sales_order_item' => $idSalesOrderItem,
+            'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
+            'event' => 'foo',
+            'timeout' => $dateTime,
+        ]);
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $stateName
+     * @param string $processName
+     * @param int $orderItemsAmount One spy_sales_order_item is added always by the {@link \SprykerTest\Zed\Oms\_generated\OmsBusinessTesterActions::haveOrder()} method.
+     *
+     * @return void
+     */
+    public function createOrderWithOrderItemsInStateAndProcessForStore(
+        string $storeName,
+        string $stateName,
+        string $processName,
+        int $orderItemsAmount = 0
+    ): void {
+        $salesOrderTransferDE = $this->haveOrder([], $processName);
         $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
         $salesOrderEntity->setStore($storeName)->save();
 
         for ($i = 0; $i < $orderItemsAmount; $i++) {
-            $idSalesOrderItem = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder());
-            $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
-            $this->haveOmsEventTimeoutEntity([
-                'fk_sales_order_item' => $idSalesOrderItem,
-                'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
-                'event' => 'foo',
-                'timeout' => $dateTime,
-            ]);
+            $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), ['state' => $stateName, 'process' => $processName]);
+            $this->haveOmsOrderItemStateEntity($stateName);
         }
     }
 }

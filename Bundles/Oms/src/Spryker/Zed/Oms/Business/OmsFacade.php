@@ -8,7 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
-use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -181,14 +182,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = [])
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null)
     {
         return $this->getFactory()
             ->createLockedOrderStateMachine($logContext)
-            ->checkConditions();
+            ->checkConditions($logContext, $omsCheckConditionsQueryCriteriaTransfer);
     }
 
     /**
@@ -197,18 +199,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $logContext
-     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null)
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null)
     {
         $factory = $this->getFactory();
         $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
         return $factory->createOrderStateMachineTimeout()
-            ->checkTimeouts($orderStateMachine, $omsCheckTimeoutQueryCriteriaTransfer);
+            ->checkTimeouts($orderStateMachine, $omsCheckTimeoutsQueryCriteriaTransfer);
     }
 
     /**
