@@ -30,6 +30,8 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="orderReference" type="string"/>
+        <property name="isCancellable" type="bool"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
@@ -102,6 +104,7 @@
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="Locale">
@@ -137,6 +140,7 @@
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
         <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
     </transfer>
 
     <transfer name="ReservationRequest">
