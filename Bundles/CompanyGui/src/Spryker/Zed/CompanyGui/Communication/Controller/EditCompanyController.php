@@ -88,8 +88,17 @@ class EditCompanyController extends AbstractController
      */
     public function activateAction(Request $request)
     {
-        $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+
+        $form = $this->getFactory()->createActivateCompanyForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
 
         $companyTransfer = $this->createCompanyTransfer();
         $companyTransfer
@@ -115,6 +124,14 @@ class EditCompanyController extends AbstractController
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
+        $form = $this->getFactory()->createDeativateCompanyForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $companyTransfer = $this->createCompanyTransfer();
         $companyTransfer
             ->setIdCompany($idCompany)
@@ -139,6 +156,14 @@ class EditCompanyController extends AbstractController
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
 
+        $form = $this->getFactory()->createApproveCompanyForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $companyTransfer = $this->createCompanyTransfer();
         $companyTransfer->setIdCompany($idCompany)->setStatus(SpyCompanyTableMap::COL_STATUS_APPROVED);
 
@@ -160,6 +185,14 @@ class EditCompanyController extends AbstractController
     {
         $idCompany = $this->castId($request->query->get(static::URL_PARAM_ID_COMPANY));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+
+        $form = $this->getFactory()->createDenyCompanyForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $companyTransfer = $this->createCompanyTransfer();
         $companyTransfer->setIdCompany($idCompany)->setStatus(SpyCompanyTableMap::COL_STATUS_DENIED);

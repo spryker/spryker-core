@@ -15,6 +15,8 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSetGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
+use Spryker\Zed\ProductSetGui\Communication\Form\ActivateProductSetForm;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeactivateProductSetForm;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -183,11 +185,12 @@ class ProductSetTable extends AbstractTable
      */
     protected function generateActivateButton(SpyProductSet $productSetEntity)
     {
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate('/product-set-gui/edit/activate', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Activate'
+            'Activate',
+            ActivateProductSetForm::class
         );
     }
 
@@ -198,11 +201,15 @@ class ProductSetTable extends AbstractTable
      */
     protected function generateDeactivateButton(SpyProductSet $productSetEntity)
     {
-        return $this->generateRemoveButton(
+        return $this->generateFormButton(
             Url::generate('/product-set-gui/edit/deactivate', [
                 EditController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Deactivate'
+            'Deactivate',
+            DeactivateProductSetForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-danger safe-submit',
+            ]
         );
     }
 }

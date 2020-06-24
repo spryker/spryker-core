@@ -13,6 +13,7 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Propel\Runtime\Collection\ArrayCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeleteConfigurableBundleSlotForm;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToProductListFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
@@ -210,7 +211,9 @@ class ConfigurableBundleTemplateSlotTable extends AbstractTable
             Url::generate(static::ROUTE_DELETE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT => $configurableBundleTemplateSlotData[SpyConfigurableBundleTemplateSlotTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT],
             ]),
-            'Delete'
+            'Delete',
+            [],
+            DeleteConfigurableBundleSlotForm::class
         );
 
         return implode(' ', $buttons);

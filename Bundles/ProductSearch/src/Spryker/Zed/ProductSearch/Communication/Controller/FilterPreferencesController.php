@@ -170,6 +170,14 @@ class FilterPreferencesController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
+        $form = $this->getFactory()->createDeleteFilterPreferencesForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $idProductSearchAttribute = $this->castId($request->query->getInt(self::PARAM_ID));
 
         $productSearchAttributeTransfer = new ProductSearchAttributeTransfer();
@@ -179,7 +187,7 @@ class FilterPreferencesController extends AbstractController
 
         $this->addSuccessMessage('Filter successfully deleted.');
 
-        return $this->redirectResponse('/product-search/filter-preferences');
+        return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
     }
 
     /**

@@ -16,6 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductOption\Communication\Form\ToggleActiveProductOptionForm;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -385,9 +386,20 @@ class ProductOptionListTable extends AbstractTable
     protected function generateStatusButton(Url $viewDiscountUrl, $isActive)
     {
         if ($isActive) {
-            return $this->generateRemoveButton($viewDiscountUrl, 'Deactivate');
+            return $this->generateFormButton(
+                $viewDiscountUrl,
+                'Deactivate',
+                ToggleActiveProductOptionForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
+            );
         }
 
-        return $this->generateViewButton($viewDiscountUrl, 'Activate');
+        return $this->generateFormButton(
+            $viewDiscountUrl,
+            'Activate',
+            ToggleActiveProductOptionForm::class
+        );
     }
 }

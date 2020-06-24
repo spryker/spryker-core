@@ -12,6 +12,7 @@ use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
@@ -194,7 +195,9 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-review-gui/delete', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ]),
-            'Delete'
+            'Delete',
+            [],
+            DeleteProductReviewForm::class
         );
 
         return implode(' ', $actions);

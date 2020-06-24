@@ -71,6 +71,15 @@ class EditController extends AbstractProductSetController
      */
     public function activateAction(Request $request)
     {
+        $form = $this->getFactory()->createActivateProductSetForm()->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(
+                Url::generate('/product-set-gui')->build()
+            );
+        }
+
         $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 
         $productSetTransfer = new ProductSetTransfer();
@@ -98,6 +107,15 @@ class EditController extends AbstractProductSetController
      */
     public function deactivateAction(Request $request)
     {
+        $form = $this->getFactory()->createDeactivateProductSetForm()->handleRequest($request);
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(
+                Url::generate('/product-set-gui')->build()
+            );
+        }
+
         $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 
         $productSetTransfer = new ProductSetTransfer();

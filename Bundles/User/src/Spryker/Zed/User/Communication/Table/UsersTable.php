@@ -12,6 +12,8 @@ use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\User\Communication\Form\ActivateUserForm;
+use Spryker\Zed\User\Communication\Form\DeactivateUserForm;
 use Spryker\Zed\User\Communication\Table\PluginExecutor\UserTablePluginExecutorInterface;
 use Spryker\Zed\User\Persistence\UserQueryContainerInterface;
 
@@ -196,19 +198,21 @@ class UsersTable extends AbstractTable
     protected function createStatusButton(array $user)
     {
         if ($user[SpyUserTableMap::COL_STATUS] === SpyUserTableMap::COL_STATUS_BLOCKED) {
-            return $this->generateViewButton(
-                Url::generate(self::ACTIVATE_USER_URL, [
-                    self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+            return $this->generateFormButton(
+                Url::generate(static::ACTIVATE_USER_URL, [
+                    static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
                 ]),
-                'Activate'
+                'Activate',
+                ActivateUserForm::class
             );
         }
 
-        return $this->generateViewButton(
-            Url::generate(self::DEACTIVATE_USER_URL, [
-                self::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
+        return $this->generateFormButton(
+            Url::generate(static::DEACTIVATE_USER_URL, [
+                static::PARAM_ID_USER => $user[SpyUserTableMap::COL_ID_USER],
             ]),
-            'Deactivate'
+            'Deactivate',
+            DeactivateUserForm::class
         );
     }
 

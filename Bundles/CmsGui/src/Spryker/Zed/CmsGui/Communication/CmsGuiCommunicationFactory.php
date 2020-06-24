@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsGlossaryTransfer;
 use Generated\Shared\Transfer\CmsPageTransfer;
 use Spryker\Zed\CmsGui\CmsGuiDependencyProvider;
 use Spryker\Zed\CmsGui\Communication\Autocomplete\AutocompleteDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\ActivateCmsPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\TwigContent;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueGlossaryForSearchType;
 use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueName;
@@ -18,8 +19,10 @@ use Spryker\Zed\CmsGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
+use Spryker\Zed\CmsGui\Communication\Form\DeactivateCmsPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
+use Spryker\Zed\CmsGui\Communication\Form\PublishVersionPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
@@ -248,6 +251,30 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
     {
         return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createActivateCmsPageForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ActivateCmsPageForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeactivateCmsPageForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeactivateCmsPageForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPublishVersionPageForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(PublishVersionPageForm::class);
     }
 
     /**

@@ -23,6 +23,8 @@ class DeleteSetController extends AbstractController
     protected const PARAM_REQUEST_ID_TAX_SET = 'id-tax-set';
     protected const PARAM_TEMPLATE_ID_TAX_SET = 'idTaxSet';
 
+    protected const DELETE_FORM = 'deleteForm';
+
     protected const MESSAGE_SUCCESS_DELETE_TAX_SET = 'The tax set has been deleted';
 
     /**
@@ -33,9 +35,11 @@ class DeleteSetController extends AbstractController
     public function indexAction(Request $request)
     {
         $idTaxSet = $this->castId($request->query->get(static::PARAM_REQUEST_ID_TAX_SET));
+        $form = $this->getFactory()->createDeleteTaxSetForm()->createView();
 
         return $this->viewResponse([
             static::PARAM_TEMPLATE_ID_TAX_SET => $idTaxSet,
+            static::DELETE_FORM => $form,
         ]);
     }
 
@@ -46,6 +50,14 @@ class DeleteSetController extends AbstractController
      */
     public function confirmAction(Request $request)
     {
+        $form = $this->getFactory()->createDeleteTaxSetForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(Url::generate('/tax/set/list')->build());
+        }
+
         $idTaxSet = $this->castId($request->query->getInt(static::PARAM_REQUEST_ID_TAX_SET));
 
         try {
