@@ -210,7 +210,7 @@ interface UserFacadeInterface
     /**
      * Specification:
      * - Requires MailTransfer.recipients and MailTransfer.recipients.email to be set.
-     * - Expands the given mail transfer with current user data.
+     * - Expands the given mail transfer with an additional user data.
      *
      * @api
      *
