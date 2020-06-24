@@ -99,7 +99,7 @@ class OmsConfig extends AbstractBundleConfig
      *
      * @return int|null
      */
-    public function getCheckTimoutQueryLimit(): ?int
+    public function getCheckTimeoutsQueryLimit(): ?int
     {
         return null;
     }
@@ -112,7 +112,7 @@ class OmsConfig extends AbstractBundleConfig
      *
      * @return int|null
      */
-    public function getOmsCheckConditionsQueryLimit(): ?int
+    public function getCheckConditionsQueryLimit(): ?int
     {
         return null;
     }

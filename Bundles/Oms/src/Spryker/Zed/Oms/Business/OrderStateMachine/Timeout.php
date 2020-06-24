@@ -198,14 +198,30 @@ class Timeout implements TimeoutInterface
     {
         $now = new DateTime('now');
 
-        if ($omsCheckTimeoutsQueryCriteriaTransfer === null) {
-            $omsCheckTimeoutsQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
-            $omsCheckTimeoutsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckTimoutQueryLimit());
-        }
+        $omsCheckTimeoutsQueryCriteriaTransfer = $this->prepareOmsCheckTimeoutsQueryCriteriaTransfer($omsCheckTimeoutsQueryCriteriaTransfer);
 
         return $this->queryContainer
             ->querySalesOrderItemsWithExpiredTimeouts($now, $omsCheckTimeoutsQueryCriteriaTransfer)
             ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer
+     */
+    protected function prepareOmsCheckTimeoutsQueryCriteriaTransfer(
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
+    ): OmsCheckTimeoutsQueryCriteriaTransfer {
+        if ($omsCheckTimeoutsQueryCriteriaTransfer === null) {
+            $omsCheckTimeoutsQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
+        }
+
+        if ($omsCheckTimeoutsQueryCriteriaTransfer->getLimit() === null) {
+            $omsCheckTimeoutsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckTimeoutsQueryLimit());
+        }
+
+        return $omsCheckTimeoutsQueryCriteriaTransfer;
     }
 
     /**

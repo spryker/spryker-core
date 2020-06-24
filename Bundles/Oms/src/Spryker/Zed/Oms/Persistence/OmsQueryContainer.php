@@ -57,30 +57,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             return $this->querySalesOrderItemsByStateFallback($states, $processName);
         }
 
-        $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $subQuery
-            ->setDistinct()
-            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->useProcessQuery()
-                ->filterByName($processName)
-            ->endUse()
-            ->useStateQuery()
-                ->filterByName_In($states)
-            ->endUse();
-
-        if ($storeName !== null) {
-            $subQuery
-                ->useOrderQuery()
-                    ->filterByStore($storeName)
-                ->endUse();
-        }
-
-        if ($limit !== null) {
-            $subQuery->setLimit($limit);
-        }
-
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($subQuery, 't', false)
+        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($processName, $states, $storeName, $limit), 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
             ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER))
@@ -92,6 +70,33 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->endUse();
 
         return $baseQuery;
+    }
+
+    /**
+     * @param string $processName
+     * @param array $states
+     * @param string|null $storeName
+     * @param int|null $limit
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function buildSubQueryForSalesOrderByItemStateQuery(string $processName, array $states, ?string $storeName = null, ?int $limit = null)
+    {
+        $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $subQuery
+            ->setDistinct()
+            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
+            ->useProcessQuery()
+                ->filterByName($processName)
+            ->endUse()
+            ->useStateQuery()
+                ->filterByName_In($states)
+            ->endUse();
+
+        $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
+        $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
+
+        return $subQuery;
     }
 
     /**
@@ -236,6 +241,27 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             return $this->querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible($now);
         }
 
+        $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $limit);
+
+        $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $baseQuery->addSelectQuery($subQuery, 't', false)
+            ->addSelectColumn('*')
+            ->addSelectColumn('t.fk_sales_order')
+            ->joinEventTimeout()
+            ->withColumn('EventTimeout.event', 'event')
+            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER));
+
+        return $baseQuery;
+    }
+
+    /**
+     * @param string|null $storeName
+     * @param int|null $limit
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery(?string $storeName = null, ?int $limit = null): SpySalesOrderItemQuery
+    {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
             ->distinct()
@@ -251,19 +277,43 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
                 ->endUse();
         }
 
-        if ($limit !== null) {
-            $subQuery->limit($limit);
+        $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
+        $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
+
+        return $subQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param string|null $storeName
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function addStoreFilterToSalesOrderItemQuery(SpySalesOrderItemQuery $query, ?string $storeName = null): SpySalesOrderItemQuery
+    {
+        if ($storeName !== null) {
+            $query
+                ->useOrderQuery()
+                    ->filterByStore($storeName)
+                ->endUse();
         }
 
-        $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($subQuery, 't', false)
-            ->addSelectColumn('*')
-            ->addSelectColumn('t.fk_sales_order')
-            ->joinEventTimeout()
-            ->withColumn('EventTimeout.event', 'event')
-            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER));
+        return $query;
+    }
 
-        return $baseQuery;
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param int|null $limit
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function addLimitToSalesOrderItemQuery(SpySalesOrderItemQuery $query, ?int $limit = null): SpySalesOrderItemQuery
+    {
+        if ($limit !== null) {
+            $query->limit($limit);
+        }
+
+        return $query;
     }
 
     /**

@@ -197,7 +197,13 @@ class OrderStateMachineTest extends Unit
             ->setStoreName($storeName)
             ->setLimit($limit);
 
-        $this->assertSame($expectedAffectedOrderItemsCount, $orderStateMachineMock->checkConditions([], $omsCheckConditionQueryCriteriaTransfer));
+        $affectedOrderItems = $orderStateMachineMock->checkConditions([], $omsCheckConditionQueryCriteriaTransfer);
+
+        $this->assertSame(
+            $expectedAffectedOrderItemsCount,
+            $affectedOrderItems,
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+        );
     }
 
     /**

@@ -826,7 +826,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         if ($omsCheckConditionsQueryCriteriaTransfer->getLimit() === null) {
-            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getOmsCheckConditionsQueryLimit());
+            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckConditionsQueryLimit());
         }
 
         return $omsCheckConditionsQueryCriteriaTransfer;

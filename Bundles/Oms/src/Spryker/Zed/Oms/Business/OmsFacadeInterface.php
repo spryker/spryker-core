@@ -175,8 +175,8 @@ interface OmsFacadeInterface
      *  - Reads from database items with those transitions.
      *  - Executes each transition.
      *  - Returns number of affected items.
-     *  - When OmsCheckConditionsQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for conditions.
-     *  - When OmsCheckConditionsQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
@@ -192,8 +192,8 @@ interface OmsFacadeInterface
      *  - Reads all expired timeout events.
      *  - Execute events.
      *  - Returns number of affected items.
-     *  - When OmsCheckTimeoutsQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for timeout.
-     *  - When OmsCheckTimeoutsQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *

@@ -117,9 +117,14 @@ class TimeoutTest extends Unit
         $orderStateMachineMock = $this->createOrderStateMachineMock();
 
         $timeout = new Timeout(new OmsQueryContainer(), new OmsConfig());
+
         $affectedOrderItems = $timeout->checkTimeouts($orderStateMachineMock, $omsCheckTimeoutQueryCriteriaTransfer);
 
-        $this->assertSame($expectedAffectedOrderItemsCount, $affectedOrderItems);
+        $this->assertSame(
+            $expectedAffectedOrderItemsCount,
+            $affectedOrderItems,
+            sprintf('Expected "%s" sales order items but "%s" are processed.', $expectedAffectedOrderItemsCount, $affectedOrderItems)
+        );
     }
 
     /**

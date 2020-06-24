@@ -110,14 +110,19 @@ class OmsBusinessTester extends Actor
 
         $stateName = 'timeout-store-test';
         $salesOrderTransferDE = $this->haveOrder([], 'DummyPayment01');
-        $idSalesOrderItem = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder());
-        $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
-        $this->haveOmsEventTimeoutEntity([
-            'fk_sales_order_item' => $idSalesOrderItem,
-            'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
-            'event' => 'foo',
-            'timeout' => $dateTime,
-        ]);
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
+        $salesOrderEntity->setStore($storeName)->save();
+
+        for ($i = 0; $i < $orderItemsAmount; $i++) {
+            $idSalesOrderItem = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder());
+            $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
+            $this->haveOmsEventTimeoutEntity([
+                'fk_sales_order_item' => $idSalesOrderItem,
+                'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
+                'event' => 'foo',
+                'timeout' => $dateTime,
+            ]);
+        }
     }
 
     /**
