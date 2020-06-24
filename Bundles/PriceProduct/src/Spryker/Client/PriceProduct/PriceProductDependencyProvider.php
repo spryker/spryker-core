@@ -46,9 +46,9 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new PriceProductToPriceClientBridge($container->getLocator()->price()->client());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new PriceProductToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductService(Container $container): Container
     {
-        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return $container->getLocator()->priceProduct()->service();
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class PriceProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient($container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new PriceProductToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }

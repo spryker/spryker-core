@@ -37,11 +37,11 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addContentBannerClient(Container $container): Container
     {
-        $container[static::CLIENT_CONTENT_BANNER] = function (Container $container) {
+        $container->set(static::CLIENT_CONTENT_BANNER, function (Container $container) {
             return new ContentBannersRestApiToContentBannerClientBridge(
                 $container->getLocator()->contentBanner()->client()
             );
-        };
+        });
 
         return $container;
     }

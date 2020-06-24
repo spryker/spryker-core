@@ -12,6 +12,7 @@ use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientBridge;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStoreClientBridge;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToUtilEncodingServiceBridge;
 
 class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependencyProvider
 {
@@ -19,6 +20,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
     public const CLIENT_STORE = 'CLIENT_STORE';
 
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -32,6 +34,7 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
         $container = $this->addStoreClient($container);
+        $container = $this->addUtilEncodingService($container);
 
         return $container;
     }
@@ -73,6 +76,22 @@ class ProductOfferAvailabilityStorageDependencyProvider extends AbstractDependen
     {
         $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductOfferAvailabilityStorageToStoreClientBridge($container->getLocator()->store()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductOfferAvailabilityStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
         });
 
         return $container;

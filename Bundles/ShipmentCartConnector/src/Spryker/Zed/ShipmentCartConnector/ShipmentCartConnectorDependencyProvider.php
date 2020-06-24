@@ -44,9 +44,9 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addShipmentFacade(Container $container)
     {
-        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new ShipmentCartConnectorToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class ShipmentCartConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addPriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new ShipmentCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }

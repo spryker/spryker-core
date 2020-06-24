@@ -15,7 +15,14 @@ class GiftCardCartCodeOperationMessageFinder implements GiftCardCartCodeOperatio
     public const CART_GIFT_CARD_APPLY_SUCCESSFUL = 'cart.giftcard.apply.successful';
     public const CART_GIFT_CARD_APPLY_FAILED = 'cart.giftcard.apply.failed';
 
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**

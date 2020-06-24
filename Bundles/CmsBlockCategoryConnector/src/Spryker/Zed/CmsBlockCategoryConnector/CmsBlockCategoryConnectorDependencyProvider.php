@@ -71,9 +71,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsBlockCategoryConnectorToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CmsBlockCategoryConnectorToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addCategoryQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new CmsBlockCategoryConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CmsBlockCategoryConnectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -155,9 +155,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addCmsBlockQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_BLOCK] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_BLOCK, function (Container $container) {
             return new CmsBlockCategoryConnectorToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -169,9 +169,9 @@ class CmsBlockCategoryConnectorDependencyProvider extends AbstractBundleDependen
      */
     protected function addEncodeService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
-        };
+        });
 
         return $container;
     }

@@ -61,9 +61,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesOrderThresholdDataSourceStrategies(Container $container): Container
     {
-        $container[static::SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES] = function () {
+        $container->set(static::SALES_ORDER_THRESHOLD_DATA_SOURCE_STRATEGIES, function () {
             return $this->getSalesOrderThresholdDataSourceStrategies();
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new SalesOrderThresholdToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     public function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesOrderThresholdToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new SalesOrderThresholdToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -119,9 +119,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new SalesOrderThresholdToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -133,9 +133,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addTaxFacade(Container $container): Container
     {
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new SalesOrderThresholdToTaxFacadeBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         return $container;
     }
@@ -169,9 +169,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesOrderThresholdStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY] = function () {
+        $container->set(static::PLUGINS_SALES_ORDER_THRESHOLD_STRATEGY, function () {
             return $this->getSalesOrderThresholdStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -183,9 +183,9 @@ class SalesOrderThresholdDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesOrderThresholdToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }

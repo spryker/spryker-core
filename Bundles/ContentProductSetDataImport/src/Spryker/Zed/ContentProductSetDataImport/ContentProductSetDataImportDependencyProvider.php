@@ -45,11 +45,11 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentProductSetDataImportToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
      */
     protected function addContentFacade(Container $container): Container
     {
-        $container[static::FACADE_CONTENT] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new ContentProductSetDataImportToContentBridge($container->getLocator()->content()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class ContentProductSetDataImportDependencyProvider extends DataImportDependency
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_SET] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_SET, $container->factory(function () {
             return SpyProductSetQuery::create();
-        };
+        }));
 
         return $container;
     }

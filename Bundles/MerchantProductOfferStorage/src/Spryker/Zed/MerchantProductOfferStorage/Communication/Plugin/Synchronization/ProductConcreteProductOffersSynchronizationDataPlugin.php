@@ -31,7 +31,7 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
      */
     public function getResourceName(): string
     {
-        return MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME;
+        return MerchantProductOfferStorageConfig::RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME;
     }
 
     /**

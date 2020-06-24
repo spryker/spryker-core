@@ -54,11 +54,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailProviderCollection(Container $container)
     {
-        $container[static::MAIL_PROVIDER_COLLECTION] = function () {
+        $container->set(static::MAIL_PROVIDER_COLLECTION, function () {
             $mailProviderCollection = $this->getMailProviderCollection();
 
             return $mailProviderCollection;
-        };
+        });
 
         return $container;
     }
@@ -78,11 +78,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailCollection(Container $container)
     {
-        $container[static::MAIL_TYPE_COLLECTION] = function () {
+        $container->set(static::MAIL_TYPE_COLLECTION, function () {
             $mailCollection = $this->getMailCollection();
 
             return $mailCollection;
-        };
+        });
 
         return $container;
     }
@@ -102,11 +102,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryFacade(Container $container)
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             $mailToGlossaryBridge = new MailToGlossaryBridge($container->getLocator()->glossary()->facade());
 
             return $mailToGlossaryBridge;
-        };
+        });
 
         return $container;
     }
@@ -118,7 +118,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderer(Container $container)
     {
-        $container[static::RENDERER] = function () {
+        $container->set(static::RENDERER, function () {
             $twig = $this->getTwigEnvironment();
             if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
                 $translator = new TwigTranslatorPlugin();
@@ -127,7 +127,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
             $rendererBridge = new MailToRendererBridge($twig);
 
             return $rendererBridge;
-        };
+        });
 
         return $container;
     }
@@ -150,7 +150,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailer(Container $container)
     {
-        $container[static::MAILER] = function () {
+        $container->set(static::MAILER, function () {
             $message = new Swift_Message();
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
@@ -170,7 +170,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
             $mailerBridge = new MailToMailerBridge($message, $mailer);
 
             return $mailerBridge;
-        };
+        });
 
         return $container;
     }
