@@ -52,9 +52,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addMerchantRelationshipFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new MerchantRelationshipGuiToMerchantRelationshipFacadeBridge($container->getLocator()->merchantRelationship()->facade());
-        };
+        });
 
         return $container;
     }
@@ -66,9 +66,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new MerchantRelationshipGuiToCompanyFacadeBridge($container->getLocator()->company()->facade());
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new MerchantRelationshipGuiToCompanyBusinessUnitFacadeBridge($container->getLocator()->companyBusinessUnit()->facade());
-        };
+        });
 
         return $container;
     }
@@ -94,9 +94,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPropelMerchantRelationshipQuery(Container $container): Container
     {
-        $container[static::PROPEL_MERCHANT_RELATIONSHIP_QUERY] = function () {
+        $container->set(static::PROPEL_MERCHANT_RELATIONSHIP_QUERY, $container->factory(function () {
             return SpyMerchantRelationshipQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -108,9 +108,9 @@ class MerchantRelationshipGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addMerchantFacade(Container $container): Container
     {
-        $container[static::FACADE_MERCHANT] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
             return new MerchantRelationshipGuiToMerchantFacadeBridge($container->getLocator()->merchant()->facade());
-        };
+        });
 
         return $container;
     }

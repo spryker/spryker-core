@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateTime;
 use Exception;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -693,7 +694,9 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($sourceState === $targetState && $targetState->isReserved()) {
-                $this->reservation->updateReservationQuantity($orderItem->getSku());
+                $reservationRequestTransfer = (new ReservationRequestTransfer())
+                    ->fromArray($orderItem->toArray(), true);
+                $this->reservation->updateReservation($reservationRequestTransfer);
             }
 
             if (
@@ -849,7 +852,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         $orderItem->save();
-        $this->updateReservation($process, $sourceState, $targetState, $orderItem->getSku());
+        $this->updateOmsReservation($process, $sourceState, $targetState, $orderItem);
         $log->save($orderItem);
     }
 
@@ -902,6 +905,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
+     * @deprecated Use `\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine::updateOmsReservation()` instead.
+     *
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $sourceStateId
      * @param string $targetStateId
@@ -916,6 +921,30 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         if ($sourceStateIsReserved !== $targetStateIsReserved) {
             $this->reservation->updateReservationQuantity($sku);
+        }
+    }
+
+    /**
+     * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param string $sourceState
+     * @param string $targetState
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItem
+     *
+     * @return void
+     */
+    protected function updateOmsReservation(
+        ProcessInterface $process,
+        string $sourceState,
+        string $targetState,
+        SpySalesOrderItem $salesOrderItem
+    ): void {
+        $sourceStateIsReserved = $process->getStateFromAllProcesses($sourceState)->isReserved();
+        $targetStateIsReserved = $process->getStateFromAllProcesses($targetState)->isReserved();
+
+        if ($sourceStateIsReserved !== $targetStateIsReserved) {
+            $reservationRequestTransfer = (new ReservationRequestTransfer())
+                ->fromArray($salesOrderItem->toArray(), true);
+            $this->reservation->updateReservation($reservationRequestTransfer);
         }
     }
 

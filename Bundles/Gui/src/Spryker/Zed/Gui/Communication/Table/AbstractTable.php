@@ -18,6 +18,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Symfony\Component\Form\FormInterface;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
@@ -34,6 +35,19 @@ abstract class AbstractTable
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
     public const URL_ANCHOR = '#';
+
+    /**
+     * Defines delete form name suffix allowing to avoid non-unique attributes (e.g. form name or id) for delete forms on one page.
+     * It is recommended to fill parameter $options in AbstractTable:generateRemoveButton() to avoid non-unique id warning in browser console.
+     *
+     * $options parameter example:
+     * [
+     *    'name_suffix' => $id,
+     * ]
+     */
+    protected const DELETE_FORM_NAME_SUFFIX = 'name_suffix';
+
+    protected const DELETE_FORM_NAME = 'delete_form';
 
     /**
      * @var \Symfony\Component\HttpFoundation\Request
@@ -410,11 +424,11 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     public function getOffset()
     {
-        return $this->request->query->get('start', 0);
+        return $this->request->query->getInt('start', 0);
     }
 
     /**
@@ -426,6 +440,7 @@ abstract class AbstractTable
     {
         $defaultSorting = [$this->getDefaultSorting($config)];
 
+        /** @var array|null $orderParameter */
         $orderParameter = $this->request->query->get('order');
 
         if (!is_array($orderParameter)) {
@@ -772,7 +787,7 @@ abstract class AbstractTable
         $data = $this->prepareData($this->config);
         $this->loadData($data);
         $wrapperArray = [
-            'draw' => $this->request->query->get('draw', 1),
+            'draw' => $this->request->query->getInt('draw', 1),
             'recordsTotal' => $this->total,
             'recordsFiltered' => $this->filtered,
             'data' => $this->data,
@@ -920,19 +935,33 @@ abstract class AbstractTable
      */
     protected function generateRemoveButton($url, $title, array $options = [])
     {
-        $formFactory = $this->getFormFactory();
+        $name = isset($options[static::DELETE_FORM_NAME_SUFFIX]) ? static::DELETE_FORM_NAME . $options[static::DELETE_FORM_NAME_SUFFIX] : '';
 
         $options = [
             'fields' => $options,
             'action' => $url,
         ];
 
-        $form = $formFactory->create(DeleteForm::class, [], $options);
-
+        $form = $this->createDeleteForm($options, $name);
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
         return $this->twig->render('delete-form.twig', $options);
+    }
+
+    /**
+     * @param array $options
+     * @param string $name
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createDeleteForm(array $options, string $name = ''): FormInterface
+    {
+        if (!$name) {
+            return $this->getFormFactory()->create(DeleteForm::class, [], $options);
+        }
+
+        return $this->getFormFactory()->createNamed($name, DeleteForm::class, [], $options);
     }
 
     /**

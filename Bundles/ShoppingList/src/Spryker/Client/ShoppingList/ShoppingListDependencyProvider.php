@@ -57,9 +57,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ShoppingListToPriceProductClientBridge($container->getLocator()->priceProduct()->client());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ShoppingListToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new ShoppingListToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new ShoppingListToProductClientBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ShoppingListToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new ShoppingListToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListItemToItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_TO_ITEM_MAPPER, function () {
             return $this->getShoppingListItemToItemMapperPlugins();
-        };
+        });
 
         return $container;
     }
@@ -155,9 +155,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteItemToItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER] = function () {
+        $container->set(static::PLUGINS_QUOTE_ITEM_TO_ITEM_MAPPER, function () {
             return $this->getQuoteItemToItemMapperPlugins();
-        };
+        });
 
         return $container;
     }
@@ -169,9 +169,9 @@ class ShoppingListDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAddItemShoppingListItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER] = function () {
+        $container->set(static::PLUGINS_ADD_ITEM_SHOPPING_LIST_ITEM_MAPPER, function () {
             return $this->getAddItemShoppingListItemMapperPlugins();
-        };
+        });
 
         return $container;
     }

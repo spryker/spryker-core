@@ -53,6 +53,10 @@ use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
 use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
+use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
+use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\Sales\Business\Writer\OrderWriter;
+use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
@@ -110,7 +114,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderOverview(
             $this->getQueryContainer(),
             $this->createCustomerOrderOverviewHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
@@ -506,6 +511,25 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getOrderItemExpanderPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Writer\OrderWriterInterface
+     */
+    public function createOrderWriter(): OrderWriterInterface
+    {
+        return new OrderWriter(
+            $this->createOmsEventTriggerer(),
+            $this->createOrderReaderWithMultiShippingAddress()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface
+     */
+    public function createOmsEventTriggerer(): OmsEventTriggererInterface
+    {
+        return new OmsEventTriggerer($this->getOmsFacade());
     }
 
     /**
