@@ -27,8 +27,6 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
-use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
-use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
@@ -46,6 +44,8 @@ use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
