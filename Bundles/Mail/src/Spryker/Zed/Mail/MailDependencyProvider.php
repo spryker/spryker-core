@@ -29,6 +29,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const MAIL_TYPE_COLLECTION = 'mail collection';
     public const FACADE_GLOSSARY = 'glossary facade';
     public const RENDERER = 'twig';
+    public const MAIL_TRANSPORT = 'MAIL_TRANSPORT';
     public const MAILER = 'mailer';
 
     /**
@@ -42,6 +43,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMailCollection($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addRenderer($container);
+        $container = $this->addMailTransport($container);
         $container = $this->addMailer($container);
 
         return $container;
@@ -148,10 +150,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailer(Container $container)
+    protected function addMailTransport(Container $container): Container
     {
-        $container->set(static::MAILER, $container->factory(function () {
-            $message = new Swift_Message();
+        $container->set(static::MAIL_TRANSPORT, function () {
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
                 $this->getConfig()->getSmtpPort(),
@@ -165,11 +166,24 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
                     ->setPassword($this->getConfig()->getSmtpPassword());
             }
 
-            $mailer = new Swift_Mailer($transport);
+            return $transport;
+        });
 
-            $mailerBridge = new MailToMailerBridge($message, $mailer);
+        return $container;
+    }
 
-            return $mailerBridge;
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailer(Container $container)
+    {
+        $container->set(static::MAILER, $container->factory(function (Container $container) {
+            $message = new Swift_Message();
+            $mailer = new Swift_Mailer($container->get(static::MAIL_TRANSPORT));
+
+            return new MailToMailerBridge($message, $mailer);
         }));
 
         return $container;
