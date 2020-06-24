@@ -14,7 +14,7 @@ interface SalesInvoiceConstants
 {
     /**
      * Specification:
-     * - Store specific order invoice sequence for reference generation.
+     * - Name of the order invoice sequence for incremental reference generation.
      *
      * @api
      */

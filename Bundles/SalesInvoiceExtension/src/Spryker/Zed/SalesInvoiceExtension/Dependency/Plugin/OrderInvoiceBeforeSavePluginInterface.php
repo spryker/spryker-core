@@ -11,13 +11,16 @@ use Generated\Shared\Transfer\OrderInvoiceTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 /**
- * todo
+ * Provides capabilities to expand order invoice before storing it into the database.
+ *
+ * Order transfer has limited amount of data.
+ * Order transfer changes would be ignored.
  */
 interface OrderInvoiceBeforeSavePluginInterface
 {
     /**
      * Specification:
-     * - todo
+     * - Executed before order invoice stored into persistence.
      *
      * @api
      *

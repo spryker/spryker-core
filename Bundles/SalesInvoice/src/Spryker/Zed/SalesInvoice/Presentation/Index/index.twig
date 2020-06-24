@@ -1,3 +1,4 @@
+{# @todo remove before merge #}
 {% block meta %}
     <meta charset="utf-8">
 {% endblock %}
@@ -9,6 +10,8 @@
 
 {% block body %}
     {% for invoice in invoices %}
+        <br>
         {{ invoice.renderedInvoice | raw }}
+        <br><hr>
     {% endfor %}
 {% endblock %}

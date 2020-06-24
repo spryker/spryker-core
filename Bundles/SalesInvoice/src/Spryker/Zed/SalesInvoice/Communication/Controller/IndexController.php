@@ -13,6 +13,8 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\SalesInvoice\Business\SalesInvoiceBusinessFactory;
 
 /**
+ * @todo remove this class before merge
+ *
  * @method \Spryker\Zed\SalesInvoice\Communication\SalesInvoiceCommunicationFactory getFactory()
  * @method \Spryker\Zed\SalesInvoice\Business\SalesInvoiceFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesInvoice\Persistence\SalesInvoiceRepositoryInterface getRepository()
@@ -30,14 +32,12 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderInvoiceSendRequestTransfer $orderInvoiceSendRequestTransfer
-     *
      * @return \Generated\Shared\Transfer\OrderInvoiceCollectionTransfer
      */
     protected function getOrderInvoices(): OrderInvoiceCollectionTransfer
     {
         $orderInvoiceCriteriaTransfer = (new OrderInvoiceCriteriaTransfer())
-            ->setSalesOrderIds([2])
+            ->setSalesOrderIds()
             ->setExpandWithRenderedInvoice(true);
 
         return (new SalesInvoiceBusinessFactory())->createOrderInvoiceReader()->getOrderInvoices($orderInvoiceCriteriaTransfer);

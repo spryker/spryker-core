@@ -8,15 +8,15 @@
 namespace Spryker\Zed\SalesInvoice;
 
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
-use Spryker\Shared\SalesInvoice\SalesInvoiceConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\SalesInvoice\Business\Exception\OrderInvoiceTemplatePathNotConfiguredException;
 
+/**
+ * @method \Spryker\Shared\SalesInvoice\SalesInvoiceConfig getSharedConfig()
+ */
 class SalesInvoiceConfig extends AbstractBundleConfig
 {
     public const ORDER_INVOICE_MAIL_TYPE = 'order invoice';
-
-    protected const ORDER_INVOICE_PREFIX_DEFAULT = 'Invoice';
 
     /**
      * @api
@@ -25,31 +25,19 @@ class SalesInvoiceConfig extends AbstractBundleConfig
      */
     public function getOrderInvoiceReferenceDefaults(): SequenceNumberSettingsTransfer
     {
-        $orderInvoiceSequence = $this->getOrderInvoiceSequence();
-
-        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsTransfer())
-            ->setName($orderInvoiceSequence);
-
-        $prefix = $orderInvoiceSequence . $this->getUniqueIdentifierSeparator();
-        $sequenceNumberSettingsTransfer->setPrefix($prefix);
-
-        return $sequenceNumberSettingsTransfer;
+        return (new SequenceNumberSettingsTransfer())
+            ->setName($this->getSharedConfig()->getOrderInvoiceSequence())
+            ->setPrefix(
+                $this->getOrderInvoiceReferencePrefix()
+            );
     }
 
     /**
      * @return string
      */
-    protected function getOrderInvoiceSequence(): string
+    protected function getOrderInvoiceReferencePrefix(): string
     {
-        return (string)$this->get(SalesInvoiceConstants::ORDER_INVOICE_SEQUENCE, static::ORDER_INVOICE_PREFIX_DEFAULT);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUniqueIdentifierSeparator(): string
-    {
-        return '-';
+        return $this->getSharedConfig()->getOrderInvoiceSequence() . '-';
     }
 
     /**

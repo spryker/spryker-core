@@ -21,6 +21,10 @@
             <unique-column name="reference"/>
         </unique>
 
+        <index name="index-spy_sales_order_invoice-fk_sales_order">
+            <index-column name="fk_sales_order"/>
+        </index>
+
         <index name="index-spy_sales_order_invoice-email_sent">
             <index-column name="email_sent"/>
         </index>

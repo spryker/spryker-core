@@ -19,14 +19,6 @@ interface SalesInvoiceEntityManagerInterface
     public function createOrderInvoice(OrderInvoiceTransfer $orderInvoiceTransfer): OrderInvoiceTransfer;
 
     /**
-     * @param int $idSalesOrder
-     * @param int $idSalesOrderInvoice
-     *
-     * @return void
-     */
-    public function updateOrderItemInvoiceIdByOrderId(int $idSalesOrder, int $idSalesOrderInvoice): void;
-
-    /**
      * @param int[] $orderInvoiceIds
      *
      * @return void

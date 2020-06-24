@@ -9,6 +9,7 @@ namespace Spryker\Zed\Sales\Business\Order;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Sales\Business\Model\Order\OrderReader as OrderReaderWithoutMultiShippingAddress;
 
 class OrderReader extends OrderReaderWithoutMultiShippingAddress
@@ -43,7 +44,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
-    protected function expandWithLocale(OrderTransfer $orderTransfer, \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity): OrderTransfer
+    protected function expandWithLocale(OrderTransfer $orderTransfer, SpySalesOrder $orderEntity): OrderTransfer
     {
         if (!$orderEntity->getLocale()) {
             return $orderTransfer;

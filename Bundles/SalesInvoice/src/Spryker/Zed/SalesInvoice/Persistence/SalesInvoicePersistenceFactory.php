@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesInvoice\Persistence;
 
-use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\SalesInvoice\Persistence\SpySalesOrderInvoiceQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
@@ -24,13 +23,5 @@ class SalesInvoicePersistenceFactory extends AbstractPersistenceFactory
     public function getSalesOrderInvoicePropelQuery(): SpySalesOrderInvoiceQuery
     {
         return SpySalesOrderInvoiceQuery::create();
-    }
-
-    /**
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
-    {
-        return SpySalesOrderItemQuery::create();
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesInvoice\Communication\Plugin\Mail;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
@@ -101,7 +102,7 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      */
     protected function setRecipient(MailBuilderInterface $mailBuilder)
     {
-        $orderTransfer = $mailBuilder->getMailTransfer()->requireOrder()->getOrder();
+        $orderTransfer = $this->getOrderTransfer($mailBuilder);
 
         $mailBuilder->addRecipient(
             $orderTransfer->getEmail(),
@@ -135,5 +136,17 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
         $mailBuilder->setSender(static::GLOSSARY_KEY_MAIL_SENDER_EMAIL, static::GLOSSARY_KEY_MAIL_SENDER_NAME);
 
         return $this;
+    }
+
+    /**
+     * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function getOrderTransfer(MailBuilderInterface $mailBuilder): OrderTransfer
+    {
+        return $mailBuilder->getMailTransfer()
+            ->requireOrder()
+            ->getOrder();
     }
 }

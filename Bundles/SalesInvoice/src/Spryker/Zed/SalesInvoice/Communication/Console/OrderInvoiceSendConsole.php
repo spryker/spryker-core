@@ -21,10 +21,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class OrderInvoiceSendConsole extends Console
 {
     protected const COMMAND_NAME = 'order:invoice:send';
-    protected const ADD_DESCRIPTION_HERE = 'ADD DESCRIPTION HERE';
+    protected const COMMAND_DESCRIPTION = 'Sends email for order invoices';
 
     protected const ARGUMENT_ORDER_IDS = 'order_ids';
+    protected const ARGUMENT_ORDER_IDS_DESCRIPTION = 'Filter order invoices by order ids';
+
     protected const ARGUMENT_FORCE_EMAIL_SEND = 'force';
+    protected const ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION = 'Allows to resend email';
+
     protected const BATCH = 20;
 
     /**
@@ -34,15 +38,18 @@ class OrderInvoiceSendConsole extends Console
     {
         $this
             ->setName(static::COMMAND_NAME)
-            ->setDescription(static::ADD_DESCRIPTION_HERE);
+            ->setDescription(static::COMMAND_DESCRIPTION);
 
         $this->addArgument(
             static::ARGUMENT_ORDER_IDS,
             InputArgument::OPTIONAL,
-            ''
+            static::ARGUMENT_ORDER_IDS_DESCRIPTION
         );
         $this->addOption(
-            static::ARGUMENT_FORCE_EMAIL_SEND
+            static::ARGUMENT_FORCE_EMAIL_SEND,
+            null,
+            null,
+            static::ARGUMENT_FORCE_EMAIL_SEND_DESCRIPTION
         );
     }
 
@@ -54,7 +61,7 @@ class OrderInvoiceSendConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $orderIds = $input->getArgument(static::ARGUMENT_ORDER_IDS);
+        $orderIds = $this->getArgumentOrderIdsValue($input);
         $force = $input->getOption(static::ARGUMENT_FORCE_EMAIL_SEND);
 
         $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())
@@ -72,11 +79,18 @@ class OrderInvoiceSendConsole extends Console
         do {
             $orderInvoiceSendResponseTransfer = $this->getFacade()
                 ->sendOrderInvoices($orderInvoiceSendRequestTransfer);
-            if ($orderIds) {
-                break;
-            }
-        } while ($orderInvoiceSendResponseTransfer->getCount() === $orderInvoiceSendRequestTransfer->getBatch());
+        } while (!$orderIds && $orderInvoiceSendResponseTransfer->getCount() === $orderInvoiceSendRequestTransfer->getBatch());
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return int[]
+     */
+    protected function getArgumentOrderIdsValue(InputInterface $input): array
+    {
+        return array_map('intval', (array)$input->getArgument(static::ARGUMENT_ORDER_IDS));
     }
 }

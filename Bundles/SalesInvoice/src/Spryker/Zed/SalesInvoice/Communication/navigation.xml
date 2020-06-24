@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
+<!-- @todo remove this before merge-->
 <config>
   <sales-invoice>
     <label>SalesInvoice</label>

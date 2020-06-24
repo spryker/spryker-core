@@ -18,6 +18,7 @@
         <property name="idSalesOrder" type="int"/>
         <property name="reference" type="string"/>
         <property name="issueDate" type="string"/>
+        <property name="emailSent" type="bool"/>
         <property name="templatePath" type="string"/>
         <property name="renderedInvoice" type="string"/>
     </transfer>
@@ -28,7 +29,6 @@
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
-        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OrderInvoiceCriteria">

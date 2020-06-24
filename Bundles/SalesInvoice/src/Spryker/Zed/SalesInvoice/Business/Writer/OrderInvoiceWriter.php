@@ -101,10 +101,6 @@ class OrderInvoiceWriter implements OrderInvoiceWriterInterface
         $orderInvoiceTransfer = $this->executeOrderInvoiceBeforeSavePlugins($orderInvoiceTransfer, $orderTransfer);
 
         $orderInvoiceTransfer = $this->entityManager->createOrderInvoice($orderInvoiceTransfer);
-        $this->entityManager->updateOrderItemInvoiceIdByOrderId(
-            $orderTransfer->getIdSalesOrder(),
-            $orderInvoiceTransfer->getIdSalesOrderInvoice()
-        );
 
         return (new OrderInvoiceResponseTransfer())
             ->setOrderInvoice($orderInvoiceTransfer)

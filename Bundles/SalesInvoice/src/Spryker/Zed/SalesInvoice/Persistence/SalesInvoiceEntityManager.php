@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SalesInvoice\Persistence;
 
 use Generated\Shared\Transfer\OrderInvoiceTransfer;
-use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\SalesInvoice\Persistence\Map\SpySalesOrderInvoiceTableMap;
 use Orm\Zed\SalesInvoice\Persistence\SpySalesOrderInvoice;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -32,28 +31,6 @@ class SalesInvoiceEntityManager extends AbstractEntityManager implements SalesIn
         $orderInvoiceEntity->save();
 
         return $orderInvoiceTransfer->setIdSalesOrderInvoice($orderInvoiceEntity->getIdSalesOrderInvoice());
-    }
-
-    /**
-     * @param int $idSalesOrder
-     * @param int $idSalesOrderInvoice
-     *
-     * @return void
-     */
-    public function updateOrderItemInvoiceIdByOrderId(int $idSalesOrder, int $idSalesOrderInvoice): void
-    {
-        $columnPhpName = SpySalesOrderItemTableMap::translateFieldName(
-            SpySalesOrderItemTableMap::COL_FK_SALES_ORDER_INVOICE,
-            SpySalesOrderItemTableMap::TYPE_COLNAME,
-            SpySalesOrderItemTableMap::TYPE_PHPNAME
-        );
-
-        $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
-            ->filterByFkSalesOrder($idSalesOrder)
-            ->update([
-                $columnPhpName => $idSalesOrderInvoice,
-            ]);
     }
 
     /**
