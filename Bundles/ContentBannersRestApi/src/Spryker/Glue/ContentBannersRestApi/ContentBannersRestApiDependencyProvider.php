@@ -25,6 +25,8 @@ class ContentBannersRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     public function provideDependencies(Container $container): Container
     {
+        $container = parent::provideDependencies($container);
+
         $container = $this->addContentBannerClient($container);
 
         return $container;

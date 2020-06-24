@@ -20,7 +20,7 @@ class ContentProductAbstractListController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves content item abstract products."
+     *              "Retrieves content item abstract list products."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
@@ -40,7 +40,7 @@ class ContentProductAbstractListController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createContentProductAbstractListReader()
-            ->getContentProductAbstractListById($restRequest);
+            ->createContentProductAbstractListProductReader()
+            ->getContentProductAbstractListProductsById($restRequest);
     }
 }

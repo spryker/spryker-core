@@ -8,32 +8,31 @@
 namespace Spryker\Glue\ContentBannersRestApi;
 
 use Spryker\Glue\ContentBannersRestApi\Dependency\Client\ContentBannersRestApiToContentBannerClientInterface;
-use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapper;
-use Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface;
-use Spryker\Glue\ContentBannersRestApi\Processor\ContentBannerReader;
-use Spryker\Glue\ContentBannersRestApi\Processor\ContentBannerReaderInterface;
+use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReader;
+use Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReaderInterface;
+use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilder;
+use Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class ContentBannersRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Processor\ContentBannerReaderInterface
+     * @return \Spryker\Glue\ContentBannersRestApi\Processor\Reader\ContentBannerReaderInterface
      */
     public function createContentBannerReader(): ContentBannerReaderInterface
     {
         return new ContentBannerReader(
-            $this->getResourceBuilder(),
-            $this->createContentBannerMapper(),
-            $this->getContentBannerClient()
+            $this->getContentBannerClient(),
+            $this->createContentBannerRestResponseBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ContentBannersRestApi\Mapper\ContentBannerMapperInterface
+     * @return \Spryker\Glue\ContentBannersRestApi\Processor\RestResponseBuilder\ContentBannerRestResponseBuilderInterface
      */
-    public function createContentBannerMapper(): ContentBannerMapperInterface
+    public function createContentBannerRestResponseBuilder(): ContentBannerRestResponseBuilderInterface
     {
-        return new ContentBannerMapper();
+        return new ContentBannerRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

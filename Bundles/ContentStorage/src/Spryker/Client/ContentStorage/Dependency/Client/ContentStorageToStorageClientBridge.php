@@ -31,4 +31,14 @@ class ContentStorageToStorageClientBridge implements ContentStorageToStorageClie
     {
         return $this->storageClient->get($key);
     }
+
+    /**
+     * @param string[] $keys
+     *
+     * @return array
+     */
+    public function getMulti(array $keys)
+    {
+        return $this->storageClient->getMulti($keys);
+    }
 }

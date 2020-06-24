@@ -7,16 +7,14 @@
 
 namespace Spryker\Glue\ContentProductAbstractListsRestApi\Dependency\RestApiResource;
 
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-
 interface ContentProductAbstractListsRestApiToProductsRestApiResourceInterface
 {
     /**
-     * @param int $idProductAbstract
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface;
+    public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array;
 }

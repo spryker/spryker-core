@@ -8,6 +8,8 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionAbstractProductsTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionCategoriesTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionCmsPagesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
@@ -99,6 +101,12 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         $categoriesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCategories($categoriesSuggestions);
 
+        foreach ($categoriesSuggestions as $categoriesSuggestion) {
+            $restSearchSuggestionsAttributesTransfer->addCategory(
+                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true)
+            );
+        }
+
         return $restSearchSuggestionsAttributesTransfer;
     }
 
@@ -116,6 +124,12 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY];
         $cmsPagesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCmsPages($cmsPagesSuggestions);
+
+        foreach ($cmsPagesSuggestions as $cmsPagesSuggestion) {
+            $restSearchSuggestionsAttributesTransfer->addCmsPage(
+                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true)
+            );
+        }
 
         return $restSearchSuggestionsAttributesTransfer;
     }
