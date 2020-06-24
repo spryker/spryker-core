@@ -38,9 +38,9 @@ class CartPermissionConnectorDependencyProvider extends AbstractBundleDependency
      */
     protected function addPermissionFacade(Container $container)
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CartPermissionConnectorToPermissionFacadeBridge($container->getLocator()->permission()->facade());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class CartPermissionConnectorDependencyProvider extends AbstractBundleDependency
      */
     protected function addMessengerFacade(Container $container)
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new CartPermissionConnectorToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }

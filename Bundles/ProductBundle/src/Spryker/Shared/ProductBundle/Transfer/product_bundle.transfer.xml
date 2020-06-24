@@ -203,4 +203,8 @@
         <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

@@ -25,9 +25,9 @@ class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyPro
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_DISCOUNT] = function (Container $container) {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new OmsDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
-        };
+        });
 
         return $container;
     }

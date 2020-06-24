@@ -54,21 +54,21 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductOptionToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductOptionToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductOptionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addStoreFacade($container);
@@ -86,9 +86,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ProductOptionToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -100,9 +100,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductOptionToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -114,9 +114,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new ProductOptionToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }
@@ -128,9 +128,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container)
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ProductOptionToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         return $container;
     }
@@ -142,13 +142,13 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return new ProductOptionToSalesQueryContainerBridge($container->getLocator()->sales()->queryContainer());
-        };
+        });
 
-        $container[self::QUERY_CONTAINER_COUNTRY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_COUNTRY, function (Container $container) {
             return new ProductOptionToCountryQueryContainerBridge($container->getLocator()->country()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -160,9 +160,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyCollectionFormTypePlugin(Container $container)
     {
-        $container[static::MONEY_COLLECTION_FORM_TYPE_PLUGIN] = function (Container $container) {
+        $container->set(static::MONEY_COLLECTION_FORM_TYPE_PLUGIN, function (Container $container) {
             return $this->createMoneyCollectionFormTypePlugin($container);
-        };
+        });
 
         return $container;
     }
@@ -193,25 +193,25 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ProductOptionToTaxFacadeBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductOptionToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ProductOptionToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductOptionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductOptionToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
@@ -226,9 +226,9 @@ class ProductOptionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductOptionValuesPreRemovePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRODUCT_OPTION_VALUES_PRE_REMOVE, function (Container $container) {
             return $this->getProductOptionValuesPreRemovePlugins();
-        };
+        });
 
         return $container;
     }

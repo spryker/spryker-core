@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Persistence;
 use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -192,5 +193,43 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
     public function getAllSalutations(): array
     {
         return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
+        $customerCollectionTransfer = new CustomerCollectionTransfer();
+
+        $this->hydrateCustomerListWithCustomers(
+            $customerCollectionTransfer,
+            $this->queryCustomersByCriteria($customerCriteriaFilterTransfer)->find()->toArray()
+        );
+
+        return $customerCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery
+     */
+    protected function queryCustomersByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): SpyCustomerQuery {
+        $query = $this->getFactory()->createSpyCustomerQuery();
+        if (!$customerCriteriaFilterTransfer->getRestorePasswordKeyExists()) {
+            $query->filterByRestorePasswordKey(null, Criteria::ISNULL);
+        }
+        if (!$customerCriteriaFilterTransfer->getPasswordExists() && $customerCriteriaFilterTransfer->getPasswordExists() !== null) {
+            $query->filterByPassword(null, Criteria::ISNULL)
+                ->addOr($query->getNewCriterion(SpyCustomerTableMap::COL_PASSWORD, '', Criteria::EQUAL));
+        }
+
+        return $query;
     }
 }

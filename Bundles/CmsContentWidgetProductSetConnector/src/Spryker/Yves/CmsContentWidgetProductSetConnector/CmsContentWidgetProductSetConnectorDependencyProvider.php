@@ -24,13 +24,13 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
      */
     public function provideDependencies(Container $container)
     {
-        $container[static::PRODUCT_SET_CLIENT] = function (Container $container) {
+        $container->set(static::PRODUCT_SET_CLIENT, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorToProductSetBridgeSet($container->getLocator()->productSet()->client());
-        };
+        });
 
-        $container[static::PRODUCT_CLIENT] = function (Container $container) {
+        $container->set(static::PRODUCT_CLIENT, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorToProductBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }

@@ -38,11 +38,11 @@ class CompanyBusinessUnitAddressesRestApiDependencyProvider extends AbstractBund
      */
     protected function addCompanyUnitAddressClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_UNIT_ADDRESS] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_UNIT_ADDRESS, function (Container $container) {
             return new CompanyBusinessUnitAddressesRestApiToCompanyUnitAddressClientBridge(
                 $container->getLocator()->companyUnitAddress()->client()
             );
-        };
+        });
 
         return $container;
     }
