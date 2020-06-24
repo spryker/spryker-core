@@ -100,7 +100,6 @@
         <property name="quantity" type="int"/>
         <property name="unitPrice" type="int"/>
         <property name="idSalesOrderItem" type="int"/>
-        <property name="fkSalesOrder" type="int"/>
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
