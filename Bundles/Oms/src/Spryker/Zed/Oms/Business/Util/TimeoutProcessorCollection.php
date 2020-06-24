@@ -5,14 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor;
+namespace Spryker\Zed\Oms\Business\Util;
 
-use ArrayAccess;
 use Spryker\Zed\Oms\Business\Exception\TimeoutProcessorPluginNotFoundException;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\HasAwareCollectionInterface;
 use Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface;
 
-class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface, HasAwareCollectionInterface, ArrayAccess
+class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface, HasAwareCollectionInterface
 {
     /**
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
@@ -53,62 +52,6 @@ class TimeoutProcessorCollection implements TimeoutProcessorCollectionInterface,
         }
 
         return $this->timeoutProcessorPlugins[$name];
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return bool
-     */
-    public function offsetExists($offset)
-    {
-        return $this->has($offset);
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface
-     */
-    public function offsetGet($offset)
-    {
-        return $this->get($offset);
-    }
-
-    /**
-     * @param string $offset
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface $value
-     *
-     * @return void
-     */
-    public function offsetSet($offset, $value)
-    {
-        $this->add($value, $offset);
-    }
-
-    /**
-     * @param string $offset
-     *
-     * @return void
-     */
-    public function offsetUnset($offset)
-    {
-        unset($this->timeoutProcessorPlugins[$offset]);
-    }
-
-    /**
-     * @param \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface $timeoutProcessorPlugin
-     * @param string $name
-     *
-     * @return void
-     */
-    protected function add(TimeoutProcessorPluginInterface $timeoutProcessorPlugin, string $name): void
-    {
-        if ($this->has($name)) {
-            return;
-        }
-
-        $this->timeoutProcessorPlugins[$name] = $timeoutProcessorPlugin;
     }
 
     /**

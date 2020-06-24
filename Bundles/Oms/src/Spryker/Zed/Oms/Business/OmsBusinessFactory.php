@@ -27,8 +27,8 @@ use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineFlagReader;
 use Spryker\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
-use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollection;
-use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\Event;
 use Spryker\Zed\Oms\Business\Process\Process;
 use Spryker\Zed\Oms\Business\Process\State;
@@ -452,7 +452,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface
+     * @return \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
      */
     public function createTimeoutProcessorCollection(): TimeoutProcessorCollectionInterface
     {

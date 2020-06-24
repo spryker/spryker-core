@@ -17,7 +17,7 @@ use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
-use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -40,13 +40,13 @@ class Timeout implements TimeoutInterface
     protected $stateIdToModelBuffer = [];
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface
+     * @var \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
      */
     protected $timeoutProcessorCollection;
 
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
-     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+     * @param \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,

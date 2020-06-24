@@ -10,7 +10,6 @@ namespace Spryker\Zed\Oms\Business\Util;
 use Generated\Shared\Transfer\OmsEventTransfer;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Exception\StatemachineException;
-use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -102,7 +101,7 @@ class Drawer implements DrawerInterface
     protected $utilTextService;
 
     /**
-     * @var \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface
+     * @var \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
      */
     protected $timeoutProcessorCollection;
 
@@ -111,7 +110,7 @@ class Drawer implements DrawerInterface
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Shared\Graph\GraphInterface $graph
      * @param \Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface $utilTextService
-     * @param \Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutProcessor\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+     * @param \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
      */
     public function __construct(
         $commands,
