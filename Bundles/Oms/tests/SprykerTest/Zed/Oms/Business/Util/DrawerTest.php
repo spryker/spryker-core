@@ -200,12 +200,7 @@ class DrawerTest extends Unit
      */
     private function getTimeoutProcessorPluginMock(): TimeoutProcessorPluginInterface
     {
-        $mockBuilder = $this->getMockBuilder(TimeoutProcessorPluginInterface::class);
-        $mockBuilder->addMethods([
-            'getName',
-            'getLabel',
-        ]);
-        $timeoutProcessorPluginMock = $mockBuilder->getMock();
+        $timeoutProcessorPluginMock = $this->getMockBuilder(TimeoutProcessorPluginInterface::class)->getMock();
         $timeoutProcessorPluginMock->method('getName')->willReturn(static::TIMEOUT_PROCESSOR_NAME);
         $timeoutProcessorPluginMock->method('getLabel')->willReturn(static::TIMEOUT_PROCESSOR_LABEL);
 
