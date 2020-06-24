@@ -29,8 +29,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const MAIL_TYPE_COLLECTION = 'mail collection';
     public const FACADE_GLOSSARY = 'glossary facade';
     public const RENDERER = 'twig';
-    public const MAIL_TRANSPORT = 'MAIL_TRANSPORT';
     public const MAILER = 'mailer';
+
+    protected const SWIFT_MAILER = 'SWIFT_MAILER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -43,7 +44,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMailCollection($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addRenderer($container);
-        $container = $this->addMailTransport($container);
+        $container = $this->addSwiftMailer($container);
         $container = $this->addMailer($container);
 
         return $container;
@@ -150,9 +151,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailTransport(Container $container): Container
+    protected function addSwiftMailer(Container $container): Container
     {
-        $container->set(static::MAIL_TRANSPORT, function () {
+        $container->set(static::SWIFT_MAILER, function () {
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
                 $this->getConfig()->getSmtpPort(),
@@ -166,7 +167,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
                     ->setPassword($this->getConfig()->getSmtpPassword());
             }
 
-            return $transport;
+            return new Swift_Mailer($transport);
         });
 
         return $container;
@@ -181,9 +182,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::MAILER, $container->factory(function (Container $container) {
             $message = new Swift_Message();
-            $mailer = new Swift_Mailer($container->get(static::MAIL_TRANSPORT));
+            $swiftMailer = $container->get(static::SWIFT_MAILER);
 
-            return new MailToMailerBridge($message, $mailer);
+            return new MailToMailerBridge($message, $swiftMailer);
         }));
 
         return $container;
