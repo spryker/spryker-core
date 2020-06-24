@@ -79,6 +79,8 @@ execute-return,"Execute return"
 cancel-return,"Cancel return"
 ship-return,"Send return back to customer"
 delivery-return,"Deliver return back to customer"
+cancel,Cancel
+skip-timeout,"Skip timeout"
 "Cancelled amount","Cancelled amount"
 "Unique Product Quantity","Unique Product Quantity"
 "Comment successfully added","Comment successfully added."

@@ -29,6 +29,9 @@ class EditController extends AbstractController
     protected const KEY_TITLE = 'title';
     protected const KEY_REDIRECT_URL = 'redirectUrl';
     protected const KEY_TIMEZONE_TEXT = 'timezoneText';
+    protected const KEY_ID_PRODUCT = 'idProduct';
+    protected const KEY_TIMEZONE = 'timezone';
+    protected const MESSAGE_TIMEZONE_TEXT = 'The timezone used for the scheduled price will be <b>%timezone%</b> as defined on the store selected';
 
     protected const REDIRECT_URL_MAIN_PAGE = '/';
 
@@ -99,18 +102,18 @@ class EditController extends AbstractController
     ): array {
         $dataExtractor = $this->getFactory()
             ->createPriceProductScheduleDataExtractor();
-        $title = $dataExtractor
-            ->extractTitleFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
-        $timezoneText = $dataExtractor
-            ->extractTimezoneTextFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
+        [$title, $idProduct] = $dataExtractor->extractTitleAndIdProductFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+        $timezone = $dataExtractor->extractTimezoneFromPriceProductScheduledTransfer($priceProductScheduleTransfer);
         $priceProductScheduleRedirectTransfer = $this->getFactory()->createPriceProductScheduleRedirectStrategyResolver()
             ->resolve($priceProductScheduleRedirectTransfer);
 
         return [
             static::KEY_FORM => $form->createView(),
             static::KEY_TITLE => $title,
+            static::KEY_ID_PRODUCT => $idProduct,
             static::KEY_REDIRECT_URL => $priceProductScheduleRedirectTransfer->getRedirectUrl() ?? static::REDIRECT_URL_MAIN_PAGE,
-            static::KEY_TIMEZONE_TEXT => $timezoneText,
+            static::KEY_TIMEZONE => $timezone,
+            static::KEY_TIMEZONE_TEXT => static::MESSAGE_TIMEZONE_TEXT,
         ];
     }
 

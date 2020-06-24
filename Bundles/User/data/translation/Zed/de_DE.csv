@@ -20,3 +20,4 @@ User,Benutzer
 Warning,Warnung
 "Delete User","User löschen"
 "You are trying to delete user","Sie versuchen einen User zu löschen"
+"Root group",Stammgruppe

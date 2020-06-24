@@ -82,3 +82,5 @@ View,Aussicht
 "Choose store","Store auswählen"
 "Choose currency","Währung auswählen"
 "Net price or gross price must be filled","Geben Sie einen Nettopreis oder einen Bruttopreis an."
+"Scheduled prices imported","Geplante Preise importiert"
+"The timezone used for the scheduled price will be <b class=""timezone""></b> as defined on the store selected","Die für den geplanten Preis verwendete Zeitzone ist <b class=""timezone""></b>, wie es im ausgewählten Store definiert wurde."

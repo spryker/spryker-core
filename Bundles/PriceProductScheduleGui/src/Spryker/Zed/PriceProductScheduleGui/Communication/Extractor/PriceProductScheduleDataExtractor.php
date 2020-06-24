@@ -13,6 +13,9 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 
 class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtractorInterface
 {
+    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
+    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToStoreFacadeInterface
      */
@@ -36,6 +39,8 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return string
@@ -50,6 +55,8 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
      *
      * @return string
@@ -64,5 +71,42 @@ class PriceProductScheduleDataExtractor implements PriceProductScheduleDataExtra
         $timezone = $storeTransfer->getTimezone();
 
         return $this->priceProductScheduleDataFormatter->formatTimezoneText($timezone);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return string
+     */
+    public function extractTimezoneFromPriceProductScheduledTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): string {
+        $priceProductScheduleTransfer->requireStore();
+        $storeTransfer = $this->storeFacade->getStoreById(
+            $priceProductScheduleTransfer->getStore()->getIdStore()
+        );
+
+        return $storeTransfer->getTimezone();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return array
+     */
+    public function extractTitleAndIdProductFromPriceProductScheduleTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array {
+        $priceProductScheduleTransfer->requirePriceProduct();
+        $priceProductTransfer = $priceProductScheduleTransfer->getPriceProduct();
+        $idProductAbstract = $priceProductTransfer->getIdProductAbstract();
+
+        if ($idProductAbstract !== null) {
+            return [static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract];
+        }
+
+        $idProductConcrete = $priceProductTransfer->getIdProduct();
+
+        return [static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete];
     }
 }

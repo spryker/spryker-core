@@ -82,3 +82,5 @@ View,View
 "Choose store","Choose store"
 "Choose currency","Choose currency"
 "Net price or gross price must be filled","Net price or gross price must be filled"
+"Scheduled prices imported","Scheduled prices imported"
+"The timezone used for the scheduled price will be <b class=""timezone""></b> as defined on the store selected","The timezone used for the scheduled price will be <b class=""timezone""></b> as defined on the store selected"
