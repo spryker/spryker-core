@@ -15,12 +15,12 @@ use Zend\Config\Config;
 class BreadcrumbNavigationMergeStrategy implements NavigationMergeStrategyInterface
 {
     /**
-     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\static::PAGES
+     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::PAGES
      */
     protected const PAGES = 'pages';
 
     /**
-     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\static::BUNDLE
+     * @see \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter::BUNDLE
      */
     protected const BUNDLE = 'bundle';
 
