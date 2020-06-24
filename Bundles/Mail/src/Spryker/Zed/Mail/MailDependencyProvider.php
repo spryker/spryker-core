@@ -150,7 +150,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailer(Container $container)
     {
-        $container->set(static::MAILER, function () {
+        $container->set(static::MAILER, $container->factory(function () {
             $message = new Swift_Message();
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
@@ -170,7 +170,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
             $mailerBridge = new MailToMailerBridge($message, $mailer);
 
             return $mailerBridge;
-        });
+        }));
 
         return $container;
     }
