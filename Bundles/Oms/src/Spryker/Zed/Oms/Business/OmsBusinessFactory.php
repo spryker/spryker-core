@@ -144,7 +144,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderStateMachineTimeout()
     {
         return new Timeout(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getConfig()
         );
     }
 

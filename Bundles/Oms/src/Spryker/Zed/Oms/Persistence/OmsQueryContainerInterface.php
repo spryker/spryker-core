@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -56,10 +57,11 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param \DateTime $now
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now);
+    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now, ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null);
 
     /**
      * @api

@@ -8,11 +8,14 @@
 namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
+use DateInterval;
+use DateTime;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use ReflectionClass;
 use Spryker\Zed\Oms\Business\Util\ActiveProcessFetcher;
 
@@ -92,5 +95,33 @@ class OmsBusinessTester extends Actor
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param string $storeName
+     * @param int $orderItemsAmount
+     *
+     * @return void
+     */
+    public function createOrderWithExpiredEventTimeoutOrderItemsForStore(string $storeName, int $orderItemsAmount): void
+    {
+        $dateTime = new DateTime('now');
+        $dateTime->sub(DateInterval::createFromDateString('1 day'));
+
+        $stateName = 'timeout-store-test';
+        $salesOrderTransferDE = $this->haveOrder([], 'DummyPayment01');
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
+        $salesOrderEntity->setStore($storeName)->save();
+
+        for ($i = 0; $i < $orderItemsAmount; $i++) {
+            $idSalesOrderItem = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder());
+            $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
+            $this->haveOmsEventTimeoutEntity([
+                'fk_sales_order_item' => $idSalesOrderItem,
+                'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
+                'event' => 'foo',
+                'timeout' => $dateTime,
+            ]);
+        }
     }
 }

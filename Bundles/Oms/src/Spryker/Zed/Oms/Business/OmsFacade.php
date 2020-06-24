@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -196,17 +197,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = [])
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null)
     {
         $factory = $this->getFactory();
         $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
         return $factory->createOrderStateMachineTimeout()
-            ->checkTimeouts($orderStateMachine);
+            ->checkTimeouts($orderStateMachine, $omsCheckTimeoutQueryCriteriaTransfer);
     }
 
     /**

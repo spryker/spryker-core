@@ -8,11 +8,14 @@
 namespace SprykerTest\Zed\Oms\Business\OrderStateMachine;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
+use Spryker\Zed\Oms\OmsConfig;
+use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
 
 /**
  * Auto-generated group annotations
@@ -32,6 +35,11 @@ class TimeoutTest extends Unit
     public const EVENT_SHIP = 'ship';
 
     /**
+     * @var \SprykerTest\Zed\Oms\OmsBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     public function testCheckTimeouts(): void
@@ -41,7 +49,7 @@ class TimeoutTest extends Unit
         $salesOrderItem3 = $this->createSalesOrderItem(20, 2, static::EVENT_PAY);
         $salesOrderItem4 = $this->createSalesOrderItem(21, 2, static::EVENT_SHIP);
 
-        $orderStateMachine = $this->createOrderStateMachine();
+        $orderStateMachine = $this->createOrderStateMachineMock();
 
         //Check with grouping by event + order
         $orderStateMachine
@@ -71,6 +79,50 @@ class TimeoutTest extends Unit
     }
 
     /**
+     * @return array[]
+     */
+    public function timeoutDataProvider(): array
+    {
+        return [
+            'no store name, no limit' => [3, null, null],
+            'no store name, limit' => [1, null, 1], // Will take only first created order
+            'US store, no limit' => [2, 'US', null],
+            'DE store, no limit' => [1, 'DE', null],
+        ];
+    }
+
+    /**
+     * This method will always create 2 orders:
+     * - One DE order with one order item which has an event timeout.
+     * - One US order with two order items which have an event timeout.
+     *
+     * @dataProvider timeoutDataProvider()
+     *
+     * @param int $expectedAffectedOrderItemsCount
+     * @param string|null $storeName
+     * @param int|null $limit
+     *
+     * @return void
+     */
+    public function testCheckTimeoutsWithCriteria(int $expectedAffectedOrderItemsCount, ?string $storeName = null, ?int $limit = null)
+    {
+        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('DE', 1);
+        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('US', 2);
+
+        $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutQueryCriteriaTransfer();
+        $omsCheckTimeoutQueryCriteriaTransfer
+            ->setStoreName($storeName)
+            ->setLimit($limit);
+
+        $orderStateMachineMock = $this->createOrderStateMachineMock();
+
+        $timeout = new Timeout(new OmsQueryContainer(), new OmsConfig());
+        $affectedOrderItems = $timeout->checkTimeouts($orderStateMachineMock, $omsCheckTimeoutQueryCriteriaTransfer);
+
+        $this->assertSame($expectedAffectedOrderItemsCount, $affectedOrderItems);
+    }
+
+    /**
      * @param int $idSalesOrderItem
      * @param int $idSalesOrder
      * @param string $eventName
@@ -88,7 +140,7 @@ class TimeoutTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine
      */
-    protected function createOrderStateMachine(): OrderStateMachine
+    protected function createOrderStateMachineMock(): OrderStateMachine
     {
         return $this->getMockBuilder(OrderStateMachine::class)
             ->disableOriginalConstructor()

@@ -10,12 +10,14 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use DateTime;
 use ErrorException;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
@@ -24,6 +26,11 @@ class Timeout implements TimeoutInterface
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
 
     /**
      * @var \DateTime[]
@@ -37,20 +44,25 @@ class Timeout implements TimeoutInterface
 
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer)
+    public function __construct(OmsQueryContainerInterface $queryContainer, OmsConfig $omsConfig)
     {
         $this->queryContainer = $queryContainer;
+        $this->omsConfig = $omsConfig;
     }
 
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(OrderStateMachineInterface $orderStateMachine)
-    {
-        $orderItems = $this->findItemsWithExpiredTimeouts();
+    public function checkTimeouts(
+        OrderStateMachineInterface $orderStateMachine,
+        ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null
+    ) {
+        $orderItems = $this->findItemsWithExpiredTimeouts($omsCheckTimeoutQueryCriteriaTransfer);
 
         $countAffectedItems = $orderItems->count();
 
@@ -178,13 +190,22 @@ class Timeout implements TimeoutInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findItemsWithExpiredTimeouts()
+    protected function findItemsWithExpiredTimeouts(?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null)
     {
         $now = new DateTime('now');
 
-        return $this->queryContainer->querySalesOrderItemsWithExpiredTimeouts($now)->find();
+        if ($omsCheckTimeoutQueryCriteriaTransfer === null) {
+            $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutQueryCriteriaTransfer();
+            $omsCheckTimeoutQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckTimoutQueryLimit());
+        }
+
+        return $this->queryContainer
+            ->querySalesOrderItemsWithExpiredTimeouts($now, $omsCheckTimeoutQueryCriteriaTransfer)
+            ->find();
     }
 
     /**

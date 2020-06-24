@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -184,17 +185,20 @@ interface OmsFacadeInterface
 
     /**
      * Specification:
-     *  - Reads all expired timeout events
-     *  - Execute events
-     *  - Returns number of affected items
+     *  - Reads all expired timeout events.
+     *  - Execute events.
+     *  - Returns number of affected items.
+     *  - When OmsCheckTimeoutQueryCriteriaTransfer::$storeName is set, only order items of the passed store name will be checked for timeout.
+     *  - When OmsCheckTimeoutQueryCriteriaTransfer::$limit is set, the number of order items will be limited by the amount of the passed orders to be checked.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = []);
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null);
 
     /**
      * Specification:

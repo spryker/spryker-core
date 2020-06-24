@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationChangeVersionTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
@@ -132,10 +133,85 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @api
      *
      * @param \DateTime $now
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now)
+    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now, ?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null)
+    {
+        $storeName = $this->getStoreNameFromOmsCheckTimeoutCriteria($omsCheckTimeoutQueryCriteriaTransfer);
+        $limit = $this->getLimitFromOmsCheckTimeoutCriteria($omsCheckTimeoutQueryCriteriaTransfer);
+
+        if ($storeName === null && $limit === null) {
+            return $this->querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible($now);
+        }
+
+        $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $subQuery
+            ->distinct()
+            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
+            ->useEventTimeoutQuery()
+                ->filterByTimeout('now', Criteria::LESS_THAN)
+            ->endUse();
+
+        if ($storeName !== null) {
+            $subQuery
+                ->useOrderQuery()
+                    ->filterByStore($storeName)
+                ->endUse();
+        }
+
+        if ($limit !== null) {
+            $subQuery->limit($limit);
+        }
+
+        $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
+        $baseQuery->addSelectQuery($subQuery, 't', false)
+            ->addSelectColumn('*')
+            ->addSelectColumn('t.fk_sales_order')
+            ->joinEventTimeout()
+            ->withColumn('EventTimeout.event', 'event')
+            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER));
+
+        return $baseQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     *
+     * @return string|null
+     */
+    protected function getStoreNameFromOmsCheckTimeoutCriteria(?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null): ?string
+    {
+        if ($omsCheckTimeoutQueryCriteriaTransfer === null) {
+            return null;
+        }
+
+        return $omsCheckTimeoutQueryCriteriaTransfer->getStoreName();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutQueryCriteriaTransfer|null $omsCheckTimeoutQueryCriteriaTransfer
+     *
+     * @return int|null
+     */
+    protected function getLimitFromOmsCheckTimeoutCriteria(?OmsCheckTimeoutQueryCriteriaTransfer $omsCheckTimeoutQueryCriteriaTransfer = null): ?int
+    {
+        if ($omsCheckTimeoutQueryCriteriaTransfer === null) {
+            return null;
+        }
+
+        return $omsCheckTimeoutQueryCriteriaTransfer->getLimit();
+    }
+
+    /**
+     * @deprecated Method is only used as BC fallback if store name and limit are not passed.
+     *
+     * @param \DateTime $now
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible(DateTime $now): SpySalesOrderItemQuery
     {
         return $this->getFactory()
             ->getSalesQueryContainer()
