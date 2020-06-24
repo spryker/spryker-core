@@ -35,6 +35,11 @@
 
     <transfer name="Mail">
         <property name="user" type="User"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
     </transfer>
 
     <transfer name="UserCriteria">

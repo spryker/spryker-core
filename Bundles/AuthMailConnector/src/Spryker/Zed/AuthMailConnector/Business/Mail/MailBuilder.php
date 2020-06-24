@@ -54,7 +54,7 @@ class MailBuilder implements MailBuilderInterface
         $mailTransfer->addRecipient($this->createMailRecipientTransfer($email));
         $mailTransfer->setResetPasswordLink($this->generateResetPasswordLink($token));
 
-        $mailTransfer = $this->applyAuthMailExpanderPlugins($mailTransfer);
+        $mailTransfer = $this->executeAuthMailExpanderPlugins($mailTransfer);
 
         return $mailTransfer;
     }
@@ -64,7 +64,7 @@ class MailBuilder implements MailBuilderInterface
      *
      * @return \Generated\Shared\Transfer\MailTransfer
      */
-    protected function applyAuthMailExpanderPlugins(MailTransfer $mailTransfer): MailTransfer
+    protected function executeAuthMailExpanderPlugins(MailTransfer $mailTransfer): MailTransfer
     {
         foreach ($this->authMailExpanderPlugins as $authMailExpanderPlugin) {
             $mailTransfer = $authMailExpanderPlugin->expand($mailTransfer);

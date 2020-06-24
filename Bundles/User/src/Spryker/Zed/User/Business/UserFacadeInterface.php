@@ -209,7 +209,8 @@ interface UserFacadeInterface
 
     /**
      * Specification:
-     *  - Expands the given mail transfer with current user data.
+     * - Requires MailTransfer.recipients and MailTransfer.recipients.email to be set.
+     * - Expands the given mail transfer with current user data.
      *
      * @api
      *
