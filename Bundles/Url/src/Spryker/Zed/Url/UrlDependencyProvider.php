@@ -39,41 +39,41 @@ class UrlDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new UrlToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new UrlToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+        $container->set(static::PLUGIN_PROPEL_CONNECTION, function () {
             return Propel::getConnection();
-        };
+        });
 
-        $container[self::PLUGINS_URL_BEFORE_CREATE] = function () {
+        $container->set(static::PLUGINS_URL_BEFORE_CREATE, function () {
             return $this->getUrlBeforeCreatePlugins();
-        };
+        });
 
-        $container[self::PLUGINS_URL_AFTER_CREATE] = function () {
+        $container->set(static::PLUGINS_URL_AFTER_CREATE, function () {
             return $this->getUrlAfterCreatePlugins();
-        };
+        });
 
-        $container[self::PLUGINS_URL_BEFORE_UPDATE] = function () {
+        $container->set(static::PLUGINS_URL_BEFORE_UPDATE, function () {
             return $this->getUrlBeforeUpdatePlugins();
-        };
+        });
 
-        $container[self::PLUGINS_URL_AFTER_UPDATE] = function () {
+        $container->set(static::PLUGINS_URL_AFTER_UPDATE, function () {
             return $this->getUrlAfterUpdatePlugins();
-        };
+        });
 
-        $container[self::PLUGINS_URL_BEFORE_DELETE] = function () {
+        $container->set(static::PLUGINS_URL_BEFORE_DELETE, function () {
             return $this->getUrlBeforeDeletePlugins();
-        };
+        });
 
-        $container[self::PLUGINS_URL_AFTER_DELETE] = function () {
+        $container->set(static::PLUGINS_URL_AFTER_DELETE, function () {
             return $this->getUrlAfterDeletePlugins();
-        };
+        });
 
         return $container;
     }

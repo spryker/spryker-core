@@ -42,11 +42,11 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
      */
     protected function addPriceProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductMerchantRelationshipToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -58,11 +58,11 @@ class PriceProductMerchantRelationshipDependencyProvider extends AbstractBundleD
      */
     protected function addMerchantRelationshipFacade(Container $container)
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new PriceProductMerchantRelationshipToMerchantRelationshipFacadeBridge(
                 $container->getLocator()->merchantRelationship()->facade()
             );
-        };
+        });
 
         return $container;
     }

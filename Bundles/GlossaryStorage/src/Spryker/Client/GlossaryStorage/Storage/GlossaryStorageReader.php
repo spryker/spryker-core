@@ -15,9 +15,12 @@ use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig as SharedGlossaryStorageConfig;
+use Symfony\Contracts\Translation\TranslatorTrait;
 
 class GlossaryStorageReader implements GlossaryStorageReaderInterface
 {
+    use TranslatorTrait;
+
     protected const KEY_VALUE = 'value';
     protected const KEY_GLOSSARY_KEY = 'GlossaryKey';
     protected const KEY_KEY = 'key';
@@ -87,11 +90,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             return $translation;
         }
 
-        return str_replace(
-            array_keys($parameters),
-            array_values($parameters),
-            $translation
-        );
+        return $this->trans($translation, $parameters, null, $localeName);
     }
 
     /**
@@ -109,11 +108,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
                 continue;
             }
 
-            $translation = str_replace(
-                array_keys($parameters[$keyName]),
-                array_values($parameters[$keyName]),
-                $translation
-            );
+            $translation = $this->trans($translation, $parameters[$keyName], null, $localeName);
         }
 
         return $translations;

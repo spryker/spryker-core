@@ -28,13 +28,13 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideDependencies(Container $container)
     {
-        $container[static::CMS_CONTENT_WIDGET_PLUGINS] = function (Container $container) {
+        $container->set(static::CMS_CONTENT_WIDGET_PLUGINS, function (Container $container) {
             return $this->getCmsContentWidgetPlugins();
-        };
+        });
 
-        $container[static::TWIG_ENVIRONMENT] = function (Container $container) {
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
             return $this->getTwigEnvironment();
-        };
+        });
 
         return $container;
     }

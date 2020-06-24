@@ -25,11 +25,11 @@ class CmsContentWidgetProductSetConnectorDependencyProvider extends AbstractBund
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_SET] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_SET, function (Container $container) {
             return new CmsContentWidgetProductSetConnectorProductSetQueryContainerBridge(
                 $container->getLocator()->productSet()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }

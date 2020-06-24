@@ -31,17 +31,17 @@ class ProductDiscountConnectorDependencyProvider extends AbstractBundleDependenc
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_DISCOUNT] = function (Container $container) {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new ProductDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());
-        };
+        });
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscountConnectorToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }

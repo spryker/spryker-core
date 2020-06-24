@@ -37,9 +37,9 @@ class UserLocaleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container): UserLocaleGuiToLocaleFacadeBridgeInterface {
+        $container->set(static::FACADE_LOCALE, function (Container $container): UserLocaleGuiToLocaleFacadeBridgeInterface {
             return new UserLocaleGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
