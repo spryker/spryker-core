@@ -64,7 +64,7 @@ Reference,Reference
 "Total taxes","Total taxes"
 Reclamations,Reclamations
 Claim,Claim
-"payment pending","Payment Pending"
+"payment pending","Payment pending"
 exported,Exported
 shipped,Shipped
 delivered,Delivered
@@ -72,9 +72,13 @@ refunded,Refunded
 closed,Closed
 pay,Pay
 ship,Ship
-stock-update,"Stock Update"
+stock-update,"Stock update"
 close,Close
 refund,Refund
+execute-return,"Execute return"
+cancel-return,"Cancel return"
+ship-return,"Send return back to customer"
+delivery-return,"Deliver return back to customer"
 "Cancelled amount","Cancelled amount"
 "Unique Product Quantity","Unique Product Quantity"
 "Comment successfully added","Comment successfully added."

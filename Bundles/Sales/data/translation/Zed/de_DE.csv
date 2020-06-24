@@ -64,7 +64,7 @@ Reference,Referenz
 "Total taxes","Gesamtsumme Steuern"
 Reclamations,Reklamationen
 Claim,Anspruch
-"payment pending","Ausstehende Zahlung"
+"payment pending","Ausstehende zahlung"
 exported,Exportiert
 shipped,Versandt
 delivered,Geliefert
@@ -75,6 +75,10 @@ ship,Versenden
 stock-update,Bestandsaktualisierung
 close,Schließen
 refund,Rückerstatten
+execute-return,"Retoure ausführen"
+cancel-return,"Retoure stornieren"
+ship-return,"Retoure zum Kunden zurückschicken"
+delivery-return,"Retoure zum Kunden zurücksenden"
 "Cancelled amount","Stornierter Betrag"
 "Unique Product Quantity","Anzahl der Produkte"
 "Comment successfully added","Kommentar erfolgreich hinzugefügt."
