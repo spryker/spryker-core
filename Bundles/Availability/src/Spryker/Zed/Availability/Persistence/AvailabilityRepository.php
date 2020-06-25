@@ -55,6 +55,42 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     }
 
     /**
+     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    public function getMappedProductConcreteAvailabilitiesByProductConcreteIds(
+        array $productConcreteIds,
+        StoreTransfer $storeTransfer
+    ): array {
+        $storeTransfer->requireIdStore();
+
+        $availabilityEntities = $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->where(sprintf('%s IN %d', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds)))
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT)
+            ->find()
+            ->toKeyIndex(SpyProductTableMap::COL_ID_PRODUCT);
+
+        $productConcreteAvailabilityTransfers = [];
+        $availabilityMapper = $this->getFactory()->createAvailabilityMapper();
+
+        foreach ($availabilityEntities as $idProductConcrete => $availabilityEntity) {
+            $productConcreteAvailabilityTransfer = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+                $availabilityEntity,
+                new ProductConcreteAvailabilityTransfer()
+            );
+
+            $productConcreteAvailabilityTransfers[$idProductConcrete] = $productConcreteAvailabilityTransfer;
+        }
+
+        return $productConcreteAvailabilityTransfers;
+    }
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
