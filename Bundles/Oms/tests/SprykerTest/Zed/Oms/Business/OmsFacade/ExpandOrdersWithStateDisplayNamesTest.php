@@ -25,10 +25,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 class ExpandOrdersWithStateDisplayNamesTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
-    protected const FAKE_SALES_ORDER_ITEM_ID = 666;
-
     protected const SHIPPED_STATE_NAME = 'shipped';
-    protected const DELIVERED_STATE_NAME = 'delivered';
     protected const SHIPPED_STATE_DISPLAY_NAME = 'in progress';
 
     /**

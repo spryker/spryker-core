@@ -16,7 +16,7 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
 
     /**
-     * @var \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface
+     * @var \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface
      */
     protected $stateDisplayNameExpander;
 
@@ -26,11 +26,11 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     protected $omsRepository;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface $stateDisplayNameExpander
+     * @param \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface $stateDisplayNameExpander
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
-        StateDisplayNameExpanderInterface $stateDisplayNameExpander,
+        OrderItemStateDisplayNameExpanderInterface $stateDisplayNameExpander,
         OmsRepositoryInterface $omsRepository
     ) {
         $this->stateDisplayNameExpander = $stateDisplayNameExpander;

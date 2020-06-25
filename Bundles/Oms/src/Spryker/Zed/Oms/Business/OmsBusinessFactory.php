@@ -12,10 +12,10 @@ use Spryker\Zed\Oms\Business\Checker\FlagChecker;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderStateDisplayNameExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderStateDisplayNameInterface;
-use Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpander;
-use Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpanderInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -402,7 +402,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function createOrderStateDisplayNameExpander(): OrderStateDisplayNameInterface
     {
         return new OrderStateDisplayNameExpander(
-            $this->createStateDisplayNameExpander(),
+            $this->createOrderItemStateDisplayNameExpander(),
             $this->getRepository()
         );
     }
@@ -419,11 +419,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Expander\StateDisplayNameExpanderInterface
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface
      */
-    public function createStateDisplayNameExpander(): StateDisplayNameExpanderInterface
+    public function createOrderItemStateDisplayNameExpander(): OrderItemStateDisplayNameExpanderInterface
     {
-        return new StateDisplayNameExpander(
+        return new OrderItemStateDisplayNameExpander(
             $this->createOrderStateMachineFinder(),
             $this->getRepository()
         );

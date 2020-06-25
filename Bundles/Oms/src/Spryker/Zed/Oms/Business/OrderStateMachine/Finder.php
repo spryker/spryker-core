@@ -378,6 +378,6 @@ class Finder implements FinderInterface
 
         $state = $allStates[$stateName];
 
-        return $state->getDisplay() ?? null;
+        return $state->getDisplay() ?: null;
     }
 }

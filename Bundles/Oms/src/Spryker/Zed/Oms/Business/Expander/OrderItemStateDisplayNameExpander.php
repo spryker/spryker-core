@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
-class StateDisplayNameExpander implements StateDisplayNameExpanderInterface
+class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpanderInterface
 {
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
@@ -58,7 +58,7 @@ class StateDisplayNameExpander implements StateDisplayNameExpanderInterface
                 continue;
             }
 
-            $this->setItemStateDisplayName($itemTransfer, $displayName);
+            $itemTransfer = $this->setItemStateDisplayName($itemTransfer, $displayName);
         }
 
         return $itemTransfers;
@@ -110,14 +110,16 @@ class StateDisplayNameExpander implements StateDisplayNameExpanderInterface
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param string $displayName
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setItemStateDisplayName(ItemTransfer $itemTransfer, string $displayName): void
+    protected function setItemStateDisplayName(ItemTransfer $itemTransfer, string $displayName): ItemTransfer
     {
         if (!$itemTransfer->getState()) {
-            $itemTransfer->setState((new ItemStateTransfer())->setDisplayName($displayName));
+            $itemTransfer->setState(new ItemStateTransfer());
         }
 
         $itemTransfer->getState()->setDisplayName($displayName);
+
+        return $itemTransfer;
     }
 }

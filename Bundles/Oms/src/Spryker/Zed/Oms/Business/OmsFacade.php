@@ -789,7 +789,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createStateDisplayNameExpander()
+            ->createOrderItemStateDisplayNameExpander()
             ->expandOrderItemsWithStateDisplayName($itemTransfers);
     }
 

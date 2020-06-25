@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
-interface StateDisplayNameExpanderInterface
+interface OrderItemStateDisplayNameExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers

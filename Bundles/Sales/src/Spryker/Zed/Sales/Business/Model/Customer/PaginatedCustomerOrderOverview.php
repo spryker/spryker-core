@@ -55,7 +55,7 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
         CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
         SalesToOmsInterface $omsFacade,
         array $searchOrderExpanderPlugins,
-        array $orderListExpanderPlugins = []
+        array $orderListExpanderPlugins
     ) {
         $this->queryContainer = $queryContainer;
         $this->customerOrderOverviewHydrator = $customerOrderOverviewHydrator;
