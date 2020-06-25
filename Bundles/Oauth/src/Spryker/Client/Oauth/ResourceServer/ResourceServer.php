@@ -8,14 +8,14 @@
 namespace Spryker\Client\Oauth\ResourceServer;
 
 use League\OAuth2\Server\Exception\OAuthServerException;
-use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface as AccessTokenRepositoryInterfaceAlias;
+use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
 use League\OAuth2\Server\ResourceServer as LeagueResourceServer;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ResourceServer extends LeagueResourceServer
 {
     /**
-     * @var \Spryker\Client\OauthExtention\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @var \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
      */
     protected $authorizationValidators;
 
@@ -32,11 +32,11 @@ class ResourceServer extends LeagueResourceServer
     /**
      * @param \League\OAuth2\Server\CryptKey[] $publicKeys
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
-     * @param \Spryker\Client\OauthExtention\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidators
+     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidators
      */
     public function __construct(
         array $publicKeys,
-        AccessTokenRepositoryInterfaceAlias $accessTokenRepository,
+        AccessTokenRepositoryInterface $accessTokenRepository,
         array $authorizationValidators
     ) {
         $this->publicKeys = $publicKeys;
@@ -45,8 +45,6 @@ class ResourceServer extends LeagueResourceServer
     }
 
     /**
-     * Determine the access token validity.
-     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      *
      * @throws \League\OAuth2\Server\Exception\OAuthServerException
@@ -55,19 +53,22 @@ class ResourceServer extends LeagueResourceServer
      */
     public function validateAuthenticatedRequest(ServerRequestInterface $request)
     {
+        $verifiedRequest = null;
         foreach ($this->authorizationValidators as $authorizationValidator) {
             try {
                 $authorizationValidator->setPublicKeys($this->publicKeys);
                 $authorizationValidator->setRepository($this->accessTokenRepository);
 
-                return $authorizationValidator->validateAuthorization($request);
-            }
-            catch (OAuthServerException $authServerException) {
+                $verifiedRequest = $authorizationValidator->validateAuthorization($request);
+            } catch (OAuthServerException $authServerException) {
                 continue;
             }
         }
 
-        // There is no validator to grant access.
+        if ($verifiedRequest) {
+            return $verifiedRequest;
+        }
+
         throw OAuthServerException::accessDenied('No validator found to authorize the token.');
     }
 }

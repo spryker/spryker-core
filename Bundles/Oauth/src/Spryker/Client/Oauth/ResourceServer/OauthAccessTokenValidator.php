@@ -13,9 +13,12 @@ use Generated\Shared\Transfer\OauthErrorTransfer;
 use GuzzleHttp\Psr7\ServerRequest;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer;
+use Symfony\Component\HttpFoundation\Request;
 
 class OauthAccessTokenValidator implements AccessTokenValidatorInterface
 {
+    protected const HEADER_AUTHORIZATION = 'Authorization';
+
     /**
      * @var \League\OAuth2\Server\ResourceServer
      */
@@ -40,12 +43,15 @@ class OauthAccessTokenValidator implements AccessTokenValidatorInterface
     {
         $oauthAccessTokenValidationResponseTransfer = (new OauthAccessTokenValidationResponseTransfer())->setIsValid(false);
 
+        $type = $authAccessTokenValidationRequestTransfer->getType();
+        $accessToken = $authAccessTokenValidationRequestTransfer->getAccessToken();
+
         try {
             $accessTokenRequest = new ServerRequest(
-                'POST',
+                Request::METHOD_POST,
                 '',
                 [
-                    'Authorization' => $authAccessTokenValidationRequestTransfer->getType() . ' ' . $authAccessTokenValidationRequestTransfer->getAccessToken(),
+                    static::HEADER_AUTHORIZATION => sprintf('%s %s', $type, $accessToken),
                 ]
             );
 

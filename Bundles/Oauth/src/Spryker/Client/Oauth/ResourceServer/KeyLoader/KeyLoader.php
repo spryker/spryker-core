@@ -10,12 +10,12 @@ namespace Spryker\Client\Oauth\ResourceServer\KeyLoader;
 class KeyLoader implements KeyLoaderInterface
 {
     /**
-     * @var \Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @var \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
      */
     protected $keyLoaderPlugins;
 
     /**
-     * @param \Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface[] $keyLoaderPlugins
+     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[] $keyLoaderPlugins
      */
     public function __construct(array $keyLoaderPlugins)
     {

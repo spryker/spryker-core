@@ -35,11 +35,11 @@ class OauthClient extends AbstractClient implements OauthClientInterface
     }
 
     /**
-     * @deprecated
-     *
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Oauth\OauthClient::validateOauthAccessToken()} instead.
      *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *

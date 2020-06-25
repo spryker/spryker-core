@@ -124,7 +124,7 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
+        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateOauthAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
 

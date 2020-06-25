@@ -79,6 +79,14 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
+     */
+    public function createOauthAccessTokenValidator(): OauthAccessTokenValidatorInterface
+    {
+        return new OauthAccessTokenValidator($this->getOauthClient());
+    }
+
+    /**
      * @return \Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter
      */
     public function createAuthenticationErrorResponseHeadersFormatter(): AuthenticationErrorResponseHeadersFormatter
@@ -104,14 +112,6 @@ class AuthRestApiFactory extends AbstractFactory
     public function createSimultaneousAuthenticationRestRequestValidator(): SimultaneousAuthenticationRestRequestValidatorInterface
     {
         return new SimultaneousAuthenticationRestRequestValidator();
-    }
-
-    /**
-     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
-     */
-    public function createOauthAccessTokenValidator(): OauthAccessTokenValidatorInterface
-    {
-        return new OauthAccessTokenValidator($this->getOauthClient());
     }
 
     /**

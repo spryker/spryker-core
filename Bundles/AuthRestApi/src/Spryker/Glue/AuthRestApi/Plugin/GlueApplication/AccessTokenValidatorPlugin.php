@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AuthRestApi\Plugin;
+namespace Spryker\Glue\AuthRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -16,11 +16,11 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * @method \Spryker\Glue\AuthRestApi\AuthRestApiFactory getFactory()
  */
-class AccessTokenRestRequestValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
+class AccessTokenValidatorPlugin extends AbstractPlugin implements RestRequestValidatorPluginInterface
 {
     /**
      * {@inheritDoc}
-     *  - Validates access token passed via Authorization header.
+     * - Validates access token passed via Authorization header.
      *
      * @api
      *
