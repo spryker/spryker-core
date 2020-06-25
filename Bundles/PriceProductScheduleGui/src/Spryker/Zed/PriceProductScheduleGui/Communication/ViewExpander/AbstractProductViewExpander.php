@@ -17,7 +17,7 @@ use Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGu
 class AbstractProductViewExpander implements AbstractProductViewExpanderInterface
 {
     protected const PRICE_TYPE_TEMPLATE = '@PriceProductScheduleGui/_partials/price-type-tabs/price-type-tab.twig';
-    protected const DEFAULT_TITLE = 'Price type: ';
+    protected const DEFAULT_TITLE = 'Price type';
 
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Dependency\Facade\PriceProductScheduleGuiToPriceProductFacadeInterface
@@ -95,7 +95,7 @@ class AbstractProductViewExpander implements AbstractProductViewExpanderInterfac
         $tabItemTransfer = new TabItemTransfer();
 
         return $tabItemTransfer->setName($priceTypeTransfer->getName())
-            ->setTitle($this->translate(static::DEFAULT_TITLE) . $priceTypeTransfer->getName())
+            ->setTitle(sprintf('%s: ', $this->translate(static::DEFAULT_TITLE)))
             ->setTemplate(static::PRICE_TYPE_TEMPLATE);
     }
 

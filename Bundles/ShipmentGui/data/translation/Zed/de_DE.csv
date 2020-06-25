@@ -46,15 +46,15 @@ Status,Status
 View,Aussicht
 "View Delivery Method: %s","Versandart anzeigen: %s"
 "Yes, delete this delivery method","Ja, diese Versandart löschen"
-"Trigger all matching states of order inside this shipment","Alle übereinstimmenden Stati innerhalb dieser Bestellung auslösen"
-Shipmnent,Lieferung
+"Trigger all matching states of order inside this shipment","Alle übereinstimmenden Status innerhalb dieser Bestellung auslösen"
+Shipment,Lieferung
 of,von
 "Delivery Address",Lieferadresse
 "Delivery Method","Service Methode"
 "Request delivery date","Angefragtes Lieferdatum"
 "Shipping Method",Versandart
 Shipments,Liefermethoden
-"Available in the following store(s)","Verfügbar in den folgenden regionen"
+"Available in the following store(s)","Verfügbar in den folgenden Stores"
 "Is active","Ist aktiv"
 "Add Carrier Company","Versandanbieter hinzufügen"
 "Create Shipment","Sendung Erstellen"

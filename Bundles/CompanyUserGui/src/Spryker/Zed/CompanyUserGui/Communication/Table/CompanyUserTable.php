@@ -74,7 +74,7 @@ class CompanyUserTable extends AbstractTable
         $config->setHeader([
             CompanyUserGuiConfig::COL_ID_COMPANY_USER => 'User ID',
             static::COL_COMPANY_NAME => 'Company Name',
-            static::COL_COMPANY_USER_NAME => 'User Name',
+            static::COL_COMPANY_USER_NAME => 'Company User Name',
         ]);
 
         $config->setSearchable([

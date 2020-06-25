@@ -13,11 +13,12 @@ E-Mail,E-Mail
 "Business Unit name","Name der Geschäftseinheit"
 "Attach ""%customer%""","""%customer%"" zuordnen"
 Disable,Deaktivieren
-"Company user successfully disabled","User erfolgreich deaktiviert"
-"Company user successfully enabled","User erfolgreich aktiviert"
+"Company user successfully disabled","Firmenkontonutzer erfolgreich deaktiviert"
+"Company user successfully enabled","Firmenkontonutzer erfolgreich aktiviert"
 Disabled,Deaktiviert
 Enabled,Aktiviert
 Enable,Aktivieren
 "User Name",Username
 "Attach to BU","Der Geschäftseinheit zuordnen"
 "Company user has been created.","Benutzer erfolgreich erstellt."
+"Company User Name",Firmenkontonutzer
