@@ -29,9 +29,9 @@ class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsBlockProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -43,9 +43,9 @@ class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new CmsBlockProductStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class CmsBlockProductStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_BLOCK_PRODUCT_CONNECTOR, function (Container $container) {
             return new CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerBridge($container->getLocator()->cmsBlockProductConnector()->queryContainer());
-        };
+        });
 
         return $container;
     }

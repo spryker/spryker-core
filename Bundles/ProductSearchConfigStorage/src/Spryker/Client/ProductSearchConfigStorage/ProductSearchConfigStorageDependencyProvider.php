@@ -39,9 +39,9 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractDependencyPro
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductSearchConfigStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractDependencyPro
      */
     public function addSynchronizationService(Container $container)
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductSearchConfigStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }

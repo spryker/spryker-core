@@ -37,9 +37,9 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductGroupToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
     }
 
     /**
@@ -49,8 +49,8 @@ class ProductGroupDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new ProductGroupToProductBridge($container->getLocator()->product()->client());
-        };
+        });
     }
 }

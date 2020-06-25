@@ -34,11 +34,11 @@ class CategoryGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }

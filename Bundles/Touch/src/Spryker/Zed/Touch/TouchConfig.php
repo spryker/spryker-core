@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class TouchConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isTouchEnabled(): bool
+    {
+        return true;
+    }
 }

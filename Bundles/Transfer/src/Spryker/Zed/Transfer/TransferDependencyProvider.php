@@ -32,13 +32,13 @@ class TransferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SYMFONY_FILE_SYSTEM] = function () {
+        $container->set(static::SYMFONY_FILE_SYSTEM, function () {
             return new Filesystem();
-        };
+        });
 
-        $container[static::SYMFONY_FINDER] = function () {
+        $container->set(static::SYMFONY_FINDER, function () {
             return new Finder();
-        };
+        });
 
         $container = $this->addUtilGlobService($container);
         $container = $this->addPropelFacade($container);

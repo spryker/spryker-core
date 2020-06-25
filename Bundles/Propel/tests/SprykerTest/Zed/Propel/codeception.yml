@@ -24,3 +24,10 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+    Persistence:
+        path: Persistence
+        class_name: PropelPersistenceTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

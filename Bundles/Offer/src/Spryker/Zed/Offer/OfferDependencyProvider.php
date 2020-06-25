@@ -79,9 +79,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartFacade(Container $container)
     {
-        $container[static::FACADE_CART] = function (Container $container) {
+        $container->set(static::FACADE_CART, function (Container $container) {
             return new OfferToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -93,11 +93,11 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new OfferToSalesFacadeBridge(
                 $container->getLocator()->sales()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -109,9 +109,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new OfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new OfferToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -137,9 +137,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOfferHydratorPlugins(Container $container)
     {
-        $container[static::PLUGINS_OFFER_HYDRATOR] = function (Container $container) {
+        $container->set(static::PLUGINS_OFFER_HYDRATOR, function (Container $container) {
             return $this->getOfferHydratorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -151,9 +151,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addServiceUtilEncoding(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OfferToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -175,9 +175,9 @@ class OfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOfferDoUpdatePlugins(Container $container)
     {
-        $container[static::PLUGINS_OFFER_DO_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGINS_OFFER_DO_UPDATE, function (Container $container) {
             return $this->getOfferDoUpdatePlugins();
-        };
+        });
 
         return $container;
     }

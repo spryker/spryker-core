@@ -12,6 +12,7 @@ Count,Anzahl
 "Declared in composer.json","Declared in composer.json"
 "Declared in composer.json (dev)","Declared in composer.json (dev)"
 Dependency,Abhängigkeit
+Dependencies,Abhängigkeiten
 "Dependency graphs of all core modules","Abhängigkeitsgraph aller Core Module"
 detailed,detailliert
 "Dev only dependencies","Dev only dependencies"
@@ -55,6 +56,6 @@ Stability,Stabilität
 "Suggested dependencies","Empfohlene Abhängigkeiten"
 SUM,SUM
 To,An
-"Used Plugins","Verwendete Plug-ins"
+"Used Plugins","Verwendete Plugins"
 "You must specify a bundle for which the graph should be build","Sie müssen ein Bundle bestimmen, für das der Graph erstellt werden soll"
 "You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Bundle zu berechnen."

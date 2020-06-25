@@ -71,9 +71,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new PersistentCartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartFacade(Container $container): Container
     {
-        $container[static::FACADE_CART] = function (Container $container) {
+        $container->set(static::FACADE_CART, function (Container $container) {
             return new PersistentCartToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new PersistentCartToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new PersistentCartToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteItemFinderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_QUOTE_ITEM_FINDER] = function (Container $container) {
+        $container->set(static::PLUGIN_QUOTE_ITEM_FINDER, function (Container $container) {
             return $this->getQuoteItemFinderPlugin();
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteResponseExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_RESPONSE_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_RESPONSE_EXPANDER, function (Container $container) {
             return $this->getQuoteResponseExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -155,9 +155,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRemoveItemsRequestExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER, function (Container $container) {
             return $this->getRemoveItemsRequestExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -169,9 +169,9 @@ class PersistentCartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartAddItemStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
+        $container->set(static::PLUGINS_CART_ADD_ITEM_STRATEGY, function (Container $container) {
             return $this->getCartAddItemStrategyPlugins($container);
-        };
+        });
 
         return $container;
     }

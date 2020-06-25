@@ -34,9 +34,9 @@ class ShoppingListNoteDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new ShoppingListNoteToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
