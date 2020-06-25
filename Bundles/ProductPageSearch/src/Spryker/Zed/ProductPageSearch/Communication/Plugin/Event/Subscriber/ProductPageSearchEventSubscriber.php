@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber;
 
+use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -16,6 +17,7 @@ use Spryker\Zed\Product\Dependency\ProductEvents;
 use Spryker\Zed\ProductCategory\Dependency\ProductCategoryEvents;
 use Spryker\Zed\ProductImage\Dependency\ProductImageEvents;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\PriceProductDefaultProductPagePublishListener;
+use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageAvailabilityStockSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategoryNodeSearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageCategorySearchListener;
 use Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener\ProductPageImageSetProductImageSearchListener;
@@ -78,6 +80,8 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
         $this->addProductImageEvents($eventCollection);
         $this->addProductCategoryEvents($eventCollection);
         $this->addProductSearchEvents($eventCollection);
+
+        $this->addProductPageAvailabilityStockUpdateSearchListener($eventCollection);
 
         return $eventCollection;
     }
@@ -584,5 +588,15 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_CREATE, new ProductSearchListener())
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_UPDATE, new ProductSearchListener())
             ->addListenerQueued(ProductSearchEvents::ENTITY_SPY_PRODUCT_SEARCH_DELETE, new ProductSearchListener());
+    }
+
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addProductPageAvailabilityStockUpdateSearchListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new ProductPageAvailabilityStockSearchListener());
     }
 }

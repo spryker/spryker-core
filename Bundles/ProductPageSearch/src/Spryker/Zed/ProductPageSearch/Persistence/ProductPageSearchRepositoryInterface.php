@@ -19,6 +19,13 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfers(array $productIds): array;
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array;
+
+    /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
