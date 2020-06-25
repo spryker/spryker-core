@@ -61,7 +61,7 @@ class ExpandOrdersWithAggregatedItemStatesTest extends Unit
             ->expandOrdersWithAggregatedItemStates([$orderTransfer]);
 
         // Assert
-        $this->assertContains(static::SHIPPED_STATE_DISPLAY_NAME, $expandedOrderTransfers[0]->getAggregatedItemStates()[0]->getDisplayName());
+        $this->assertStringContainsStringIgnoringCase(static::SHIPPED_STATE_DISPLAY_NAME, $expandedOrderTransfers[0]->getAggregatedItemStates()[0]->getDisplayName());
     }
 
     /**
