@@ -7,18 +7,17 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
-use Generated\Shared\Transfer\ItemStateTransfer;
+use ArrayObject;
+use Generated\Shared\Transfer\AggregatedItemStateTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
-class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
+class OrderAggregatedItemStateExpander implements OrderAggregatedItemStateExpanderInterface
 {
-    protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
-
     /**
-     * @var \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface
+     * @var \Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface
      */
-    protected $stateDisplayNameExpander;
+    protected $orderItemStateExpander;
 
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface
@@ -26,14 +25,14 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     protected $omsRepository;
 
     /**
-     * @param \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface $stateDisplayNameExpander
+     * @param \Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface $orderItemStateExpander
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
      */
     public function __construct(
-        OrderItemStateDisplayNameExpanderInterface $stateDisplayNameExpander,
+        OrderItemStateExpanderInterface $orderItemStateExpander,
         OmsRepositoryInterface $omsRepository
     ) {
-        $this->stateDisplayNameExpander = $stateDisplayNameExpander;
+        $this->orderItemStateExpander = $orderItemStateExpander;
         $this->omsRepository = $omsRepository;
     }
 
@@ -42,31 +41,31 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
     {
         $itemTransfers = $this->getOrderItems($orderTransfers);
         if (!$itemTransfers) {
             return $orderTransfers;
         }
 
-        $itemTransfers = $this->stateDisplayNameExpander->expandOrderItemsWithStateDisplayName($itemTransfers);
-        $groupedItemStateDisplayNames = $this->getItemStateDisplayNamesGroupedByIdSalesOrder($itemTransfers);
-        $orderTransfers = $this->updateOrders($orderTransfers, $groupedItemStateDisplayNames);
+        $itemTransfers = $this->orderItemStateExpander->expandOrderItemsWithItemState($itemTransfers);
+        $aggregatedItemStateMap = $this->getAggregatedItemStateMap($itemTransfers);
+        $orderTransfers = $this->updateOrders($orderTransfers, $aggregatedItemStateMap);
 
         return $orderTransfers;
     }
 
     /**
      * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
-     * @param string[][] $groupedItemStateDisplayNames
+     * @param \Generated\Shared\Transfer\AggregatedItemStateTransfer[][] $aggregatedItemStateMap
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function updateOrders(array $orderTransfers, array $groupedItemStateDisplayNames): array
+    protected function updateOrders(array $orderTransfers, array $aggregatedItemStateMap): array
     {
         foreach ($orderTransfers as $orderTransfer) {
-            $orderTransfer->setItemStateDisplayNames(
-                $groupedItemStateDisplayNames[$orderTransfer->getIdSalesOrder()] ?? []
+            $orderTransfer->setAggregatedItemStates(
+                new ArrayObject($aggregatedItemStateMap[$orderTransfer->getIdSalesOrder()] ?? [])
             );
         }
 
@@ -76,11 +75,11 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return string[][]
+     * @return \Generated\Shared\Transfer\AggregatedItemStateTransfer[][]
      */
-    protected function getItemStateDisplayNamesGroupedByIdSalesOrder(array $itemTransfers): array
+    protected function getAggregatedItemStateMap(array $itemTransfers): array
     {
-        $itemStateDisplayNames = [];
+        $aggregatedItemStateMap = [];
         foreach ($itemTransfers as $itemTransfer) {
             $idSalesOrder = $itemTransfer->getFkSalesOrder();
             $stateTransfer = $itemTransfer->getState();
@@ -89,12 +88,12 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
                 continue;
             }
 
-            $stateName = $this->getStateName($stateTransfer);
-            $displayName = $this->getDisplayName($stateTransfer);
-            $itemStateDisplayNames[$idSalesOrder][$stateName] = $displayName;
+            $aggregatedItemStateMap[$idSalesOrder][] = (new AggregatedItemStateTransfer())
+                ->setName($stateTransfer->getName())
+                ->setDisplayName($stateTransfer->getDisplayName());
         }
 
-        return $itemStateDisplayNames;
+        return $aggregatedItemStateMap;
     }
 
     /**
@@ -147,36 +146,5 @@ class OrderStateDisplayNameExpander implements OrderStateDisplayNameInterface
         }
 
         return array_merge([], ...$itemTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
-     *
-     * @return string
-     */
-    protected function getDisplayName(ItemStateTransfer $itemStateTransfer): string
-    {
-        if ($itemStateTransfer->getDisplayName()) {
-            return $itemStateTransfer->getDisplayName();
-        }
-
-        $stateName = $this->getStateName($itemStateTransfer);
-        $stateName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $stateName;
-
-        return $stateName;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemStateTransfer $itemStateTransfer
-     *
-     * @return string
-     */
-    protected function getStateName(ItemStateTransfer $itemStateTransfer): string
-    {
-        $stateName = trim($itemStateTransfer->getName());
-        $stateName = mb_strtolower($stateName);
-        $stateName = str_replace(' ', '-', $stateName);
-
-        return $stateName;
     }
 }

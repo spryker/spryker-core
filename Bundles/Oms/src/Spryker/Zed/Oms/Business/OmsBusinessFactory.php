@@ -10,12 +10,12 @@ namespace Spryker\Zed\Oms\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Checker\FlagChecker;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
+use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface;
-use Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpander;
-use Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface;
-use Spryker\Zed\Oms\Business\Expander\OrderStateDisplayNameExpander;
-use Spryker\Zed\Oms\Business\Expander\OrderStateDisplayNameInterface;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpanderInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -397,12 +397,12 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Expander\OrderStateDisplayNameInterface
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface
      */
-    public function createOrderStateDisplayNameExpander(): OrderStateDisplayNameInterface
+    public function createOrderAggregatedItemStateExpander(): OrderAggregatedItemStateExpanderInterface
     {
-        return new OrderStateDisplayNameExpander(
-            $this->createOrderItemStateDisplayNameExpander(),
+        return new OrderAggregatedItemStateExpander(
+            $this->createOrderItemStateExpander(),
             $this->getRepository()
         );
     }
@@ -419,11 +419,11 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Oms\Business\Expander\OrderItemStateDisplayNameExpanderInterface
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface
      */
-    public function createOrderItemStateDisplayNameExpander(): OrderItemStateDisplayNameExpanderInterface
+    public function createOrderItemStateExpander(): OrderItemStateExpanderInterface
     {
-        return new OrderItemStateDisplayNameExpander(
+        return new OrderItemStateExpander(
             $this->createOrderStateMachineFinder(),
             $this->getRepository()
         );

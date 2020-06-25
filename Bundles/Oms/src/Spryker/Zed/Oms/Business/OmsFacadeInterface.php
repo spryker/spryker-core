@@ -701,7 +701,7 @@ interface OmsFacadeInterface
      * - Reads order items from persistence.
      * - Gets the current state machine process for each order item.
      * - Reads state display name from XML definition.
-     * - Expands an order items state with displayName property if it exists in the XML definition.
+     * - Expands order items with item state.
      *
      * @api
      *
@@ -709,14 +709,14 @@ interface OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array;
+    public function expandOrderItemsWithItemState(array $itemTransfers): array;
 
     /**
      * Specification:
      * - Reads order items from persistence.
      * - Gets the current state machine process for each order item.
      * - Reads state display name from XML definition.
-     * - Expands orders with a list of unique display item state names as associative array.
+     * - Expands orders with aggregated item states.
      *
      * @api
      *
@@ -724,7 +724,7 @@ interface OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array;
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array;
 
     /**
      * Specification:

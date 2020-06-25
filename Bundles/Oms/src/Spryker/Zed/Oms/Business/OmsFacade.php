@@ -786,11 +786,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
         return $this->getFactory()
-            ->createOrderItemStateDisplayNameExpander()
-            ->expandOrderItemsWithStateDisplayName($itemTransfers);
+            ->createOrderItemStateExpander()
+            ->expandOrderItemsWithItemState($itemTransfers);
     }
 
     /**
@@ -802,11 +802,11 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    public function expandOrdersWithItemStateDisplayNames(array $orderTransfers): array
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
     {
         return $this->getFactory()
-            ->createOrderStateDisplayNameExpander()
-            ->expandOrdersWithItemStateDisplayNames($orderTransfers);
+            ->createOrderAggregatedItemStateExpander()
+            ->expandOrdersWithAggregatedItemStates($orderTransfers);
     }
 
     /**

@@ -16,11 +16,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterf
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
-class OrderStateDisplayNamesSearchOrderExpanderPlugin extends AbstractPlugin implements SearchOrderExpanderPluginInterface
+class OrderAggregatedItemStateSearchOrderExpanderPlugin extends AbstractPlugin implements SearchOrderExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands orders with a list of unique display state names from order items.
+     * - Expands orders with aggregated item states.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class OrderStateDisplayNamesSearchOrderExpanderPlugin extends AbstractPlugin imp
      */
     public function expand(array $orderTransfers): array
     {
-        return $this->getFacade()->expandOrdersWithItemStateDisplayNames($orderTransfers);
+        return $this->getFacade()->expandOrdersWithAggregatedItemStates($orderTransfers);
     }
 }

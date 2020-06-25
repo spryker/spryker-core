@@ -8,7 +8,8 @@
 namespace SprykerTest\Zed\Oms\Business\OmsFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\OrderTransfer;
 
 /**
  * Auto-generated group annotations
@@ -18,10 +19,10 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @group Oms
  * @group Business
  * @group OmsFacade
- * @group ExpandOrderItemsWithStateDisplayNameTest
+ * @group ExpandOrdersWithAggregatedItemStatesTest
  * Add your own group annotations below this line
  */
-class ExpandOrderItemsWithStateDisplayNameTest extends Unit
+class ExpandOrdersWithAggregatedItemStatesTest extends Unit
 {
     protected const DEFAULT_OMS_PROCESS_NAME = 'Test01';
     protected const SHIPPED_STATE_NAME = 'shipped';
@@ -45,7 +46,7 @@ class ExpandOrderItemsWithStateDisplayNameTest extends Unit
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithStateDisplayNameShouldExpandOrderItemsWithStateDisplayName(): void
+    public function testExpandOrdersWithAggregatedItemStatesExpandsOrders(): void
     {
         // Arrange
         $orderTransfer = $this->tester->createOrderByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
@@ -55,25 +56,29 @@ class ExpandOrderItemsWithStateDisplayNameTest extends Unit
         $this->tester->setItemState($itemTransfer->getIdSalesOrderItem(), static::SHIPPED_STATE_NAME);
 
         // Act
-        $itemTransfers = $this->tester
+        $expandedOrderTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithStateDisplayName([$itemTransfer]);
+            ->expandOrdersWithAggregatedItemStates([$orderTransfer]);
 
         // Assert
-        $this->assertSame(static::SHIPPED_STATE_DISPLAY_NAME, $itemTransfers[0]->getState()->getDisplayName());
+        $this->assertContains(static::SHIPPED_STATE_DISPLAY_NAME, $expandedOrderTransfers[0]->getAggregatedItemStates()[0]->getDisplayName());
     }
 
     /**
      * @return void
      */
-    public function testExpandOrderItemsWithStateDisplayNameWithoutSalesOrderItemId(): void
+    public function testExpandOrdersWithAggregatedItemStatesDoesNothingWithIncorrectData(): void
     {
+        // Arrange
+        $itemTransfer = (new ItemBuilder())->build();
+        $orderTransfer = (new OrderTransfer())->addItem($itemTransfer);
+
         // Act
-        $itemTransfers = $this->tester
+        $expandedOrderTransfers = $this->tester
             ->getFacade()
-            ->expandOrderItemsWithStateDisplayName([new ItemTransfer()]);
+            ->expandOrdersWithAggregatedItemStates([$orderTransfer]);
 
         // Assert
-        $this->assertEmpty($itemTransfers[0]->getState());
+        $this->assertEmpty($expandedOrderTransfers[0]->getAggregatedItemStates());
     }
 }

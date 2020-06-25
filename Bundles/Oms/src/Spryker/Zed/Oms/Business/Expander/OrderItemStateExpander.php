@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
-class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpanderInterface
+class OrderItemStateExpander implements OrderItemStateExpanderInterface
 {
+    protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
+
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
@@ -40,7 +42,7 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
         $orderItemFilterTransfer = $this->createOrderItemFilterTransfer($salesOrderItemIds);
@@ -53,15 +55,28 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
                 continue;
             }
 
-            $displayName = $this->finder->findItemStateDisplayName($mappedItemTransfer);
+            [$displayName, $stateName] = $this->finder->findItemStateDisplayName($mappedItemTransfer);
+            $normalizedItemStateName = $this->getNormalizedItemStateName($stateName);
             if (!$displayName) {
-                continue;
+                $displayName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $normalizedItemStateName;
             }
 
-            $itemTransfer = $this->setItemStateDisplayName($itemTransfer, $displayName);
+            $itemTransfer = $this->setItemState($itemTransfer, $normalizedItemStateName, $displayName);
         }
 
         return $itemTransfers;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return string
+     */
+    protected function getNormalizedItemStateName(string $name): string
+    {
+        $stateName = str_replace(' ', '-', mb_strtolower(trim($name)));
+
+        return $stateName;
     }
 
     /**
@@ -108,17 +123,20 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param string $name
      * @param string $displayName
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setItemStateDisplayName(ItemTransfer $itemTransfer, string $displayName): ItemTransfer
+    protected function setItemState(ItemTransfer $itemTransfer, string $name, string $displayName): ItemTransfer
     {
         if (!$itemTransfer->getState()) {
             $itemTransfer->setState(new ItemStateTransfer());
         }
 
-        $itemTransfer->getState()->setDisplayName($displayName);
+        $itemTransfer->getState()
+            ->setDisplayName($displayName)
+            ->setName($name);
 
         return $itemTransfer;
     }

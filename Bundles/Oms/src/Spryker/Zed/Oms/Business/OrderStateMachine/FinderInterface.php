@@ -97,7 +97,7 @@ interface FinderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string|null
+     * @return array
      */
-    public function findItemStateDisplayName(ItemTransfer $itemTransfer): ?string;
+    public function findItemStateDisplayName(ItemTransfer $itemTransfer): array;
 }
