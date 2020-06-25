@@ -13,6 +13,9 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Customer\CustomerConfig getSharedConfig()
+ */
 class CustomerConfig extends AbstractBundleConfig
 {
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
@@ -117,6 +120,16 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDoubleOptInEnabled();
     }
 
     /**

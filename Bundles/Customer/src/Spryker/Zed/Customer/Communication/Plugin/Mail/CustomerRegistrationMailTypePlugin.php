@@ -71,7 +71,11 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('customer/mail/customer_registration.html.twig');
+        $template = $this->getConfig()->isDoubleOptInEnabled()
+            ? 'customer/mail/customer_registration_token.html.twig'
+            : 'customer/mail/customer_registration.html.twig';
+
+        $mailBuilder->setHtmlTemplate($template);
 
         return $this;
     }
@@ -83,7 +87,11 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('customer/mail/customer_registration.text.twig');
+        $template = $this->getConfig()->isDoubleOptInEnabled()
+            ? 'customer/mail/customer_registration_token.text.twig'
+            : 'customer/mail/customer_registration.text.twig';
+
+        $mailBuilder->setTextTemplate($template);
 
         return $this;
     }

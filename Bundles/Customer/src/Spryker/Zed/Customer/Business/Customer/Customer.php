@@ -242,6 +242,8 @@ class Customer implements CustomerInterface
             $this->sendPasswordRestoreMail($customerTransfer);
         }
 
+        $customerResponseTransfer->setIsDoubleOptInEnabled($this->customerConfig->isDoubleOptInEnabled());
+
         return $customerResponseTransfer;
     }
 
@@ -751,6 +753,10 @@ class Customer implements CustomerInterface
 
         if ($customerEntity !== null) {
             $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());
+        }
+
+        if ($result && $this->customerConfig->isDoubleOptInEnabled() && !$customerEntity->getRegistered()) {
+            return false;
         }
 
         return $result;

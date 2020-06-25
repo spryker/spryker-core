@@ -10,6 +10,9 @@ namespace Spryker\Client\Customer;
 use Spryker\Client\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Customer\CustomerConstants;
 
+/**
+ * @method \Spryker\Shared\Customer\CustomerConfig getSharedConfig()
+ */
 class CustomerConfig extends AbstractBundleConfig
 {
     /**
