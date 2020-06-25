@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Availability\Business\Reader;
 
+use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface;
 
@@ -73,7 +74,7 @@ class AvailabilityReader implements AvailabilityReaderInterface
                 continue;
             }
 
-            if (!$productConcreteAvailabilityTransfer->getAvailability() && !$productConcreteAvailabilityTransfer->getIsNeverOutOfStock()) {
+            if (!$this->isProductConcreteAvailable($productConcreteAvailabilityTransfer)) {
                 continue;
             }
 
@@ -100,18 +101,17 @@ class AvailabilityReader implements AvailabilityReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer
      *
-     * @return int[]
+     * @return bool
      */
-    protected function extractProductAbstractIdsFromProductConcreteTransfers(array $productConcreteTransfers): array
+    protected function isProductConcreteAvailable(ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer): bool
     {
-        $productAbstractIds = [];
+        $isProductConcreteAvailable = $productConcreteAvailabilityTransfer->getAvailability() !== null
+            && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0);
 
-        foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            $productAbstractIds[] = $productConcreteTransfer->requireFkProductAbstract()->getFkProductAbstract();
-        }
+        $isNeverOutOfStock = $productConcreteAvailabilityTransfer->getIsNeverOutOfStock();
 
-        return $productAbstractIds;
+        return $isProductConcreteAvailable || $isNeverOutOfStock;
     }
 }

@@ -23,6 +23,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class AvailabilityRepository extends AbstractRepository implements AvailabilityRepositoryInterface
 {
+    protected const COL_ID_PRODUCT = 'id_product';
+
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -70,10 +72,10 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
             ->createSpyAvailabilityQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
             ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
-            ->where(sprintf('%s IN %d', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds)))
-            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT)
+            ->where(sprintf('%s IN (%s)', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds)))
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::COL_ID_PRODUCT)
             ->find()
-            ->toKeyIndex(SpyProductTableMap::COL_ID_PRODUCT);
+            ->toKeyIndex(static::COL_ID_PRODUCT);
 
         $productConcreteAvailabilityTransfers = [];
         $availabilityMapper = $this->getFactory()->createAvailabilityMapper();

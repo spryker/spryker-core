@@ -490,6 +490,124 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithNeverOutOfStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['is_never_out_of_stock' => true],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithZeroQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithoutStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithSeveralItems(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $firstProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        $secondProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->getConcreteProductsEligibleForProductAbstractAddToCart([$firstProductConcreteTransfer, $secondProductConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected function getAvailabilityFacade(): AvailabilityFacade
