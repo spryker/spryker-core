@@ -45,4 +45,5 @@ Status,Status
 "This shipment method key is already in use.","This shipment method key is already in use."
 View,View
 "View Delivery Method: %s","View Delivery Method: %s"
-"Yes, delete this delivery method","Yes, delete this delivery method"
+"Yes, delete this delivery method","Yes, delete this delivery method",
+Item total,Total

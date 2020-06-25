@@ -12,7 +12,7 @@ use ArrayObject;
 class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
 {
     /**
-     * @var array|\Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
      */
     protected $orderItemsTableExpanderPlugins;
 
@@ -25,7 +25,7 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getColumnHeaders(): array
     {
@@ -40,7 +40,9 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
      *
-     * @return array
+     * @phpstan-return array<string, string[]>
+     *
+     * @return string[]
      */
     public function getColumnCellsContent(ArrayObject $itemTransfers): array
     {

@@ -12,14 +12,14 @@ use ArrayObject;
 interface OrderItemsTableExpanderInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
-    public function getColumnHeaders();
+    public function getColumnHeaders(): array;
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
      *
-     * @return array
+     * @return string[]
      */
     public function getColumnCellsContent(ArrayObject $itemTransfers): array;
 }
