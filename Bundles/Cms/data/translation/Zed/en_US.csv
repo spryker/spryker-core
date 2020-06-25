@@ -3,7 +3,7 @@ Activate,Activate
 "Add a Cms page","Add a CMS page"
 "Add CMS Block","Add CMS Block"
 "Add CMS Page","Add CMS Page"
-"Add CMS Redirect","Add URL Redirect"
+"Add CMS Redirect","Add CMS Redirect"
 "Back to CMS","Back to CMS"
 "CMS blocks","CMS Blocks"
 Deactivate,Deactivate
@@ -25,7 +25,7 @@ Save,Save
 "To Url","To Url"
 "URL is already used.","URL is already used."
 "URL must start with a slash","URL must start with a slash"
-"Add a CMS Redirect","Add URL Redirect"
+"Add a CMS Redirect","Add CMS Redirect"
 "Create new CMS Redirect","Create new CMS Redirect"
 "Please select","Please Select"
 "Edit a CMS redirect","Edit a CMS redirect"

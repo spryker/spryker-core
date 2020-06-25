@@ -124,7 +124,6 @@ class AvailabilityAbstractTable extends AbstractTable
         $config->addRawColumn(static::TABLE_COL_ACTION);
         $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
         $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
-        $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
         $config->addRawColumn(SpyProductAbstractTableMap::COL_SKU);
         $config->addRawColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);

@@ -47,8 +47,8 @@ View,View
 "View Delivery Method: %s","View Delivery Method: %s"
 "Yes, delete this delivery method","Yes, delete this delivery method"
 "Trigger all matching states of order inside this shipment","Trigger all matching states of order inside this shipment"
-Shipmnent,Lieferung
-of,von
+Shipmnent,Shipmnent
+of,of
 "Delivery Address","Delivery Address"
 "Delivery Method","Delivery Method"
 "Request delivery date","Request delivery date"
