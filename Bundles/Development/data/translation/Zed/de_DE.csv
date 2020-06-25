@@ -59,4 +59,3 @@ To,An
 "Used Plugins","Verwendete Plugins"
 "You must specify a bundle for which the graph should be build","Sie müssen ein Bundle bestimmen, für das der Graph erstellt werden soll"
 "You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Bundle zu berechnen."
-Dependencies,Abhängigkeiten
