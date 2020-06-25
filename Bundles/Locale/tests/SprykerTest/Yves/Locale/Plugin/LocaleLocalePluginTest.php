@@ -18,7 +18,6 @@ use Spryker\Yves\Locale\Plugin\Locale\LocaleLocalePlugin;
  *
  * @group SprykerTest
  * @group Yves
- * @group Locale
  * @group Plugin
  * @group LocaleLocalePluginTest
  * Add your own group annotations below this line
