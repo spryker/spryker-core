@@ -6,6 +6,7 @@
 Save,Speichern
 "Soft Threshold","Weicher Grenzwert"
 "The Global Threshold is saved successfully.","Der globale Grenzwert wurde erfolgreich gespeichert."
+"Threshold Settings",Grenzwert-Einstellungen
 Threshold,Schwellenwert
 "You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","Sie können die Platzhalter <code>{{threshold}}</code> <code>{{fee}}</code> benutzen"
 "The Global Thresholds is saved successfully.","Die globalen Bestellschwellen werden erfolgreich gespeichert."

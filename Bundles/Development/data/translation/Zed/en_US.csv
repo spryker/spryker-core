@@ -12,6 +12,7 @@ Count,Count
 "Declared in composer.json","Declared in composer.json"
 "Declared in composer.json (dev)","Declared in composer.json (dev)"
 Dependency,Dependency
+Dependencies,Dependencies
 "Dependency graphs of all core modules","Dependency graphs of all core modules"
 detailed,detailed
 "Dev only dependencies","Dev only dependencies"

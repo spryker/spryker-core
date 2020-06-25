@@ -6,6 +6,7 @@
 Save,Save
 "Soft Threshold","Soft Threshold"
 "The Global Threshold is saved successfully.","The Global Threshold is saved successfully."
+"Threshold Settings","Threshold Settings"
 Threshold,Threshold
 "You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>"
 "The Global Thresholds is saved successfully.","The Global Thresholds is saved successfully."

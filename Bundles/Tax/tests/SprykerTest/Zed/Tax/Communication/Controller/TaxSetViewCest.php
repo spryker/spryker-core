@@ -32,6 +32,6 @@ class TaxSetViewCest
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableViewButton();
-        $i->seeBreadcrumbNavigation('Taxes / Tax Sets / View Tax Set');
+        $i->seeBreadcrumbNavigation('Administration / Tax Sets / View Tax Set');
     }
 }
