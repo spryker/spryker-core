@@ -56,27 +56,14 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
             }
 
             [$displayName, $stateName] = $this->finder->findItemStateDisplayName($mappedItemTransfer);
-            $normalizedItemStateName = $this->getNormalizedItemStateName($stateName);
-            if (!$displayName) {
-                $displayName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . $normalizedItemStateName;
+            if (!$stateName) {
+                continue;
             }
 
-            $itemTransfer = $this->setItemState($itemTransfer, $normalizedItemStateName, $displayName);
+            $itemTransfer = $this->setItemState($itemTransfer, $stateName, $displayName);
         }
 
         return $itemTransfers;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    protected function getNormalizedItemStateName(string $name): string
-    {
-        $stateName = str_replace(' ', '-', mb_strtolower(trim($name)));
-
-        return $stateName;
     }
 
     /**
@@ -123,20 +110,24 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $name
-     * @param string $displayName
+     * @param string $stateName
+     * @param string|null $displayName
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setItemState(ItemTransfer $itemTransfer, string $name, string $displayName): ItemTransfer
+    protected function setItemState(ItemTransfer $itemTransfer, string $stateName, ?string $displayName): ItemTransfer
     {
         if (!$itemTransfer->getState()) {
             $itemTransfer->setState(new ItemStateTransfer());
         }
 
+        if (!$displayName) {
+            $displayName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . str_replace(' ', '-', mb_strtolower(trim($stateName)));
+        }
+
         $itemTransfer->getState()
             ->setDisplayName($displayName)
-            ->setName($name);
+            ->setName($stateName);
 
         return $itemTransfer;
     }
