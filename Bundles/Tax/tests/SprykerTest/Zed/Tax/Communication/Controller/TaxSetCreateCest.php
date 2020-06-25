@@ -33,7 +33,7 @@ class TaxSetCreateCest
     public function breadcrumbIsVisible(TaxCommunicationTester $i): void
     {
         $i->amOnPage(TaxSetCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Taxes / Tax Sets / Create Tax Set');
+        $i->seeBreadcrumbNavigation('Administration / Tax Sets / Create Tax Set');
     }
 
     /**
