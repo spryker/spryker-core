@@ -71,7 +71,8 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
-            'tableExpanderPlugins' => $this->getFactory()->getOrderItemsTableExpanderPlugins(),
+            'tableColumnHeaders' => $this->getFactory()->createOrderItemsTableExpander()->getColumnHeaders(),
+            'tableColumnCellsContent' => $this->getFactory()->createOrderItemsTableExpander()->getColumnCellsContent($orderTransfer->getItems()),
         ], $blockResponseData);
     }
 

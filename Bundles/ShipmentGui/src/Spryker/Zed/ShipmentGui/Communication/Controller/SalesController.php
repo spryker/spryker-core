@@ -49,7 +49,8 @@ class SalesController extends AbstractController
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,
             'changeStatusRedirectUrl' => $request->attributes->get('changeStatusRedirectUrl'),
             'itemGroups' => $itemGroups,
-            'tableExpanderPlugins' => $request->attributes->get('tableExpanderPlugins', []),
+            'tableColumnHeaders' => $request->attributes->get('tableColumnHeaders'),
+            'tableColumnCellsContent' => $request->attributes->get('tableColumnCellsContent'),
         ]);
     }
 

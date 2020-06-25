@@ -56,23 +56,9 @@
                 {% endembed %}
             {% endif %}
 
-            <table class="footable table toggle-arrow-tiny order-group-items-table-{{ shipmentOrderItems.shipment.idSalesShipment }}" data-qa="order-item-list">
-                <thead>
-                    <tr class="text-left">
-                        <th><input type="checkbox" class="check-all-orders" /></th>
-                        <th colspan="2">{{ 'Product' | trans }}</th>
-                        <th>{{ 'Quantity' | trans }}</th>
-                        <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
-                        <th>{{ 'Total' | trans }}</th>
-                        <th>{{ 'State' | trans }}</th>
-                        <th>{{ 'Trigger event' | trans }}</th>
-                        {% for tableExpanderPlugin in tableExpanderPlugins %}
-                            <th>{{ tableExpanderPlugin.getColumnName | trans }}</th>
-                        {% endfor %}
-                    </tr>
-                </thead>
-
-                <tbody>
+            {% embed '@Sales/Detail/boxes/order-items-table.twig' with {shipmentOrderItems: shipmentOrderItems} %}
+                {% block order_item_table_class %}order-group-items-table-{{ shipmentOrderItems.shipment.idSalesShipment }}{% endblock %}
+                {% block order_item_table_body %}
                     {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
                         {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order, items: shipmentOrderItems.items} %}
                     {% else %}
@@ -80,12 +66,13 @@
                     {% endif %}
 
                     {% if itemGroups[shipmentOrderItems.hash] is defined and itemGroups[shipmentOrderItems.hash] | length > 0 %}
-                        {% include '@Sales/Detail/boxes/item-group.twig' with {groups: itemGroups[shipmentOrderItems.hash]} %}
+                        {% include '@Sales/Detail/boxes/item-group.twig' with {tableColumnCellsContent: tableColumnCellsContent, groups: itemGroups[shipmentOrderItems.hash]} %}
                     {% endif %}
 
-                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items, tableExpanderPlugins: tableExpanderPlugins} %}
-                </tbody>
-            </table>
+                    {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: shipmentOrderItems.items, tableColumnCellsContent: tableColumnCellsContent} %}
+                {% endblock %}
+            {% endembed %}
+
         {% endfor %}
     {% endblock %}
 {% endembed %}

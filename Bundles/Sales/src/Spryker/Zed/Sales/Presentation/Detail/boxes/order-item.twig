@@ -101,6 +101,8 @@
         } only %}
     {% endif %}
 </td>
-{% for tableExpanderPlugin in tableExpanderPlugins %}
-    <td>{{ tableExpanderPlugin.getColumnCellContent(orderItem) | raw  }}</td>
-{% endfor %}
+{% if tableColumnCellsContent[orderItem.idSalesOrderItem] is defined %}
+    {% for tableColumnCellContent in tableColumnCellsContent[orderItem.idSalesOrderItem] %}
+        <td>{{ tableColumnCellContent | raw  }}</td>
+    {% endfor %}
+{% endif %}
