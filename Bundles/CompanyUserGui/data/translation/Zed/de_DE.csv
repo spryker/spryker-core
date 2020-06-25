@@ -1,7 +1,7 @@
 "Attach customer to company","Kunden einem Unternehmen zuordnen"
 "Business Unit",Geschäftseinheit
 "Company user deletion confirmation","Löschen des Benutzers bestätigt"
-"Company Users",Benutzer
+"Company Users",Firmenkontonutzer
 "Create Company User","Benutzer erstellen"
 "Customer Access",Kundenzugang
 "Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
