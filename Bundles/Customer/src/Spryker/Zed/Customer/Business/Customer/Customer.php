@@ -755,6 +755,10 @@ class Customer implements CustomerInterface
             $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());
         }
 
+        if ($result && $this->customerConfig->isDoubleOptInEnabled() && !$customerEntity->getRegistered()) {
+            return false;
+        }
+
         return $result;
     }
 
