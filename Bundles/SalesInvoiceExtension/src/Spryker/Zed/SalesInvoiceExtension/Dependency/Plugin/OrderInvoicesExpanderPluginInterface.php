@@ -8,7 +8,7 @@
 namespace Spryker\Zed\SalesInvoiceExtension\Dependency\Plugin;
 
 /**
- * Provides capabilities to expand order invoice after getting it from the database.
+ * Provides capabilities to expand order invoice after getting it from the persistence.
  */
 interface OrderInvoicesExpanderPluginInterface
 {

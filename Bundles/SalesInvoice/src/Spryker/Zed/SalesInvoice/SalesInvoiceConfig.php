@@ -59,7 +59,7 @@ class SalesInvoiceConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Retrieves the BCC that will be added to all sent order invoice email
+     * - Retrieves the BCC that will be added to all sent order invoice email.
      *
      * @api
      *

@@ -19,7 +19,8 @@ interface SalesInvoiceFacadeInterface
     /**
      * Specification:
      * - Generates order invoice with the currently configured template path if it does not exist.
-     * - Assigns all order items to the related order invoice.
+     * - Executes OrderInvoiceBeforeSavePluginInterface plugins before storing it into the persistence.
+     * - Requires OrderTransfer::ID_SALES_ORDER to be set.
      *
      * @api
      *
@@ -31,7 +32,8 @@ interface SalesInvoiceFacadeInterface
 
     /**
      * Specification:
-     * - Generates invoices of the matches orders.
+     * - Loads order invoices according to provided criteria.
+     * - Executes OrderInvoicesExpanderPluginInterface plugins.
      * - Populates raw format invoices into results when OrderInvoiceCriteriaTransfer::expandWithRawInvoice is set.
      *
      * @api
@@ -46,6 +48,7 @@ interface SalesInvoiceFacadeInterface
      * Specification:
      * - Sends invoice emails with "email_sent=false" in batches.
      * - Includes only the already assigned sales order items.
+     * - Executes OrderInvoicesExpanderPluginInterface plugins.
      * - Sets "email_sent=true" after sending.
      * - Requires batch size to be provided.
      * - Ignores "email_sent" flag in case "forced=true" option is provided.
