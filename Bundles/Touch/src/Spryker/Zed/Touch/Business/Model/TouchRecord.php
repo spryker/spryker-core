@@ -16,6 +16,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\TouchConfig;
 
 class TouchRecord implements TouchRecordInterface
 {
@@ -37,18 +38,26 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
+     * @var \Spryker\Zed\Touch\TouchConfig
+     */
+    protected $touchConfig;
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\TouchConfig $touchConfig
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         TouchQueryContainerInterface $queryContainer,
-        ConnectionInterface $connection
+        ConnectionInterface $connection,
+        TouchConfig $touchConfig
     ) {
         $this->utilDataReaderService = $utilDataReaderService;
         $this->touchQueryContainer = $queryContainer;
         $this->connection = $connection;
+        $this->touchConfig = $touchConfig;
     }
 
     /**
@@ -65,9 +74,11 @@ class TouchRecord implements TouchRecordInterface
         $idItem,
         $keyChange = false
     ) {
-        $this->getTransactionHandler()->handleTransaction(function () use ($itemType, $itemEvent, $idItem, $keyChange): void {
-            $this->executeSaveTouchRecordTransaction($itemType, $itemEvent, $idItem, $keyChange);
-        });
+        if ($this->touchConfig->isTouchEnabled()) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($itemType, $itemEvent, $idItem, $keyChange): void {
+                $this->executeSaveTouchRecordTransaction($itemType, $itemEvent, $idItem, $keyChange);
+            });
+        }
 
         return true;
     }
@@ -272,6 +283,10 @@ class TouchRecord implements TouchRecordInterface
      */
     public function removeTouchEntriesMarkedAsDeleted()
     {
+        if (!$this->touchConfig->isTouchEnabled()) {
+            return 0;
+        }
+
         return $this->getTransactionHandler()->handleTransaction(function (): int {
             return $this->executeRemoveTouchEntriesMarkedAsDeletedTransaction();
         });
