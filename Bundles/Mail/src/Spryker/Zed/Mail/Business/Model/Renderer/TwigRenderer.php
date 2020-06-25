@@ -65,6 +65,7 @@ class TwigRenderer implements RendererInterface
         if (!$localeTransfer) {
             $localeTransfer = new LocaleTransfer();
             $localeTransfer->setLocaleName(Store::getInstance()->getCurrentLocale());
+            $mailTransfer->setLocale($localeTransfer);
         }
 
         return $localeTransfer;
