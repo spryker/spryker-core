@@ -66,7 +66,7 @@ View,Aussicht
 "Your prices are now available to your custoers based on their start and end date.","Ihre Preise sind nun entsprechend deren Start- und Enddaten für Ihre Kunden verfügbar."
 "Your prices are now available to your customers based on their start and end date.","Ihre Preise stehen Ihren Kunden nun basierend auf ihrem Start- und Enddatum zur Verfügung"
 "Your scheduled prices have been published","Ihre geplanten Preise wurden veröffentlicht"
-"Price type","Preistyp"
+"Price type",Preistyp
 "Start from (included)","Von (einschließlich)"
 "Finish at (included)","Bis (einschließlich)"
 "You can define a price for the product that will take effect at a date and time in the future. You can define multiple prices on the same period.","Sie können einen Preis für das Produkt definieren, der zu einem bestimmten Zeitpunkt wirksam wird. Sie können mehrere Preise für denselben Zeitraum definieren."
@@ -78,7 +78,6 @@ View,Aussicht
 "Edit Scheduled Price","Geplante Preise bearbeiten"
 "Scheduled price information","Geplante Preise bearbeiten"
 "Scheduled price was successfully removed","Geplanter Preis wurde erfolgreich gelöscht."
-"Price type",Preistyp
 "Choose store","Store auswählen"
 "Choose currency","Währung auswählen"
 "Net price or gross price must be filled","Geben Sie einen Nettopreis oder einen Bruttopreis an."
