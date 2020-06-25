@@ -149,7 +149,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCurrentStateReturnsStateForExistingOrderItem(): void
+    public function testFindCurrentStateByIdSalesOrderItemReturnsStateForExistingOrderItem(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -173,7 +173,7 @@ class MerchantOmsFacadeTest extends Unit
         ]);
 
         // Act
-        $stateMachineItemTransfer = $this->tester->getFacade()->findCurrentState($itemTransfer->getIdSalesOrderItem());
+        $stateMachineItemTransfer = $this->tester->getFacade()->findCurrentStateByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         // Assert
         $this->assertInstanceOf(StateMachineItemTransfer::class, $stateMachineItemTransfer);
@@ -183,7 +183,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindCurrentStateReturnsNullForNotExistingOrderItem(): void
+    public function testFindCurrentStateByIdSalesOrderItemReturnsNullForNotExistingOrderItem(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -207,7 +207,7 @@ class MerchantOmsFacadeTest extends Unit
         ]);
 
         // Act
-        $stateMachineItemTransfer = $this->tester->getFacade()->findCurrentState(999);
+        $stateMachineItemTransfer = $this->tester->getFacade()->findCurrentStateByIdSalesOrderItem(999);
 
         // Assert
         $this->assertNull($stateMachineItemTransfer);

@@ -25,12 +25,12 @@ class MerchantOmsGuiToMerchantOmsFacadeBridge implements MerchantOmsGuiToMerchan
     }
 
     /**
-     * @param int $idOrderItem
+     * @param int $idSalesOrderItem
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function findCurrentState(int $idOrderItem): ?StateMachineItemTransfer
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer
     {
-        return $this->merchantOmsFacade->findCurrentState($idOrderItem);
+        return $this->merchantOmsFacade->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
     }
 }

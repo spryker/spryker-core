@@ -82,9 +82,9 @@ interface MerchantOmsFacadeInterface
      *
      * @api
      *
-     * @param int $idOrderItem
+     * @param int $idSalesOrderItem
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function findCurrentState(int $idOrderItem): ?StateMachineItemTransfer;
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
 }

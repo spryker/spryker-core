@@ -19,11 +19,6 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginIn
 class MerchantNameOrderItemsTableExpanderPlugin extends AbstractPlugin implements OrderItemsTableExpanderPluginInterface
 {
     /**
-     * @var string[]
-     */
-    protected $merchants;
-
-    /**
      * {@inheritDoc}
      * - Returns Merchant column name.
      *
@@ -52,14 +47,10 @@ class MerchantNameOrderItemsTableExpanderPlugin extends AbstractPlugin implement
             return '';
         }
 
-        if (!isset($this->merchants[$itemTransfer->getMerchantReference()])) {
-            $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne(
-                (new MerchantCriteriaTransfer())->setMerchantReference($itemTransfer->getMerchantReference())
-            );
+        $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne(
+            (new MerchantCriteriaTransfer())->setMerchantReference($itemTransfer->getMerchantReference())
+        );
 
-            $this->merchants[$itemTransfer->getMerchantReference()] = $merchantTransfer ? $merchantTransfer->getName() : '';
-        }
-
-        return $this->merchants[$itemTransfer->getMerchantReference()];
+        return $merchantTransfer ? $merchantTransfer->getName() : '';
     }
 }

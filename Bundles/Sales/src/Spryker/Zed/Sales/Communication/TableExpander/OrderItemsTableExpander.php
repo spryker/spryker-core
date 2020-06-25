@@ -38,9 +38,9 @@ class OrderItemsTableExpander implements OrderItemsTableExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
+     * @phpstan-return array<int, string[]>
      *
-     * @phpstan-return array<string, string[]>
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
      *
      * @return string[]
      */

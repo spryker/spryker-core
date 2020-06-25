@@ -47,7 +47,7 @@ class MerchantOmsStateOrderItemsTableExpanderPlugin extends AbstractPlugin imple
         }
         $stateMachineItemTransfer = $this->getFactory()
             ->getMerchantOmsFacade()
-            ->findCurrentState($itemTransfer->getIdSalesOrderItem());
+            ->findCurrentStateByIdSalesOrderItem($itemTransfer->getIdSalesOrderItem());
 
         return $stateMachineItemTransfer ? $stateMachineItemTransfer->getStateName() : '';
     }

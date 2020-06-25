@@ -80,12 +80,12 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @api
      *
-     * @param int $idOrderItem
+     * @param int $idSalesOrderItem
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
-    public function findCurrentState(int $idOrderItem): ?StateMachineItemTransfer
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer
     {
-        return $this->getRepository()->findCurrentState($idOrderItem);
+        return $this->getRepository()->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
     }
 }
