@@ -66,7 +66,7 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
      */
     public function getContentProductAbstractListsById(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$restRequest->getResource() || !$restRequest->getResource()->getId()) {
+        if (!$restRequest->getResource()->getId()) {
             return $this->contentProductAbstractListRestResponseBuilder->createContentItemIdNotSpecifiedErrorResponse();
         }
 
