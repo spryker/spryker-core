@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Subscriber;
 
-use Spryker\Zed\Availability\Dependency\AvailabilityEvents;
 use Spryker\Zed\Category\Dependency\CategoryEvents;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
@@ -46,6 +45,11 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
  */
 class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
 {
+    /**
+     * @uses \Spryker\Zed\Availability\Dependency\AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE
+     */
+    protected const ENTITY_SPY_AVAILABILITY_UPDATE = 'Entity.spy_availability.update';
+
     /**
      * @api
      *
@@ -597,6 +601,6 @@ class ProductPageSearchEventSubscriber extends AbstractPlugin implements EventSu
      */
     protected function addProductPageAvailabilityStockUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new ProductPageAvailabilityStockSearchListener());
+        $eventCollection->addListenerQueued(static::ENTITY_SPY_AVAILABILITY_UPDATE, new ProductPageAvailabilityStockSearchListener());
     }
 }
