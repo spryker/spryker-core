@@ -5,13 +5,17 @@
 {% endblock %}
 
 {% block content %}
-    <mp-dashboard></mp-dashboard>
+    <mp-dashboard title="{{ 'Dashboard' | trans }}"></mp-dashboard>
 
     {% for dashboardCardPlugin in dashboardCardPlugins %}
         <div>
             <div>{{ dashboardCardPlugin.title | raw }}</div>
-            <div>{{ dashboardCardPlugin.content | raw }}</div>
-            <div>
+            <div class="content">
+                <div class="card">
+                    {{ dashboardCardPlugin.content | raw }}
+                </div>
+            </div>
+            <div class="actions">
                 {% for actionButton in dashboardCardPlugin.actionButtons %}
                     <a href="{{ actionButton.url }}">{{ actionButton.title | trans }}</a>
                 {% endfor %}
