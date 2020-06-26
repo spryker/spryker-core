@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
@@ -60,7 +61,9 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
             ->requireMerchantOrderItems();
 
         $stateMachineProcessTransfer = $this->stateMachineProcessReader
-            ->resolveMerchantStateMachineProcess($merchantOmsTriggerRequestTransfer->getMerchantReference());
+            ->resolveMerchantStateMachineProcess(
+                (new MerchantCriteriaTransfer())->setMerchantReference($merchantOmsTriggerRequestTransfer->getMerchantReference())
+            );
 
         $transitionCount = 0;
         foreach ($merchantOmsTriggerRequestTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {

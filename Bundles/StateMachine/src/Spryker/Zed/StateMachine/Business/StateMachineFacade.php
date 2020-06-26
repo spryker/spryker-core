@@ -322,4 +322,18 @@ class StateMachineFacade extends AbstractFacade implements StateMachineFacadeInt
     ): ?StateMachineProcessTransfer {
         return $this->getRepository()->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return string[]
+     */
+    public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array
+    {
+        return $this->getFactory()->createStateMachineFinder()->getProcessStates($stateMachineProcessTransfer);
+    }
 }

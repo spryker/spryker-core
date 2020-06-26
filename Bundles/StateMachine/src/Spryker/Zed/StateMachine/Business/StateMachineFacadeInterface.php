@@ -270,4 +270,16 @@ interface StateMachineFacadeInterface
     public function findStateMachineProcess(
         StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
     ): ?StateMachineProcessTransfer;
+
+    /**
+     * Specification:
+     * - Returns array of state names by provided process.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return string[]
+     */
+    public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
 }

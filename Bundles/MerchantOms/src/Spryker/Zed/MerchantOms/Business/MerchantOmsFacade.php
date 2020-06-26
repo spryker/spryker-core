@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantOms\Business;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -72,5 +74,20 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
         MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
     ): MerchantOmsTriggerResponseTransfer {
         return $this->getFactory()->createMerchantOmsEventTrigger()->triggerEventForMerchantOrderItem($merchantOmsTriggerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function getMerchantOmsProcessByMerchant(
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
+    ): StateMachineProcessTransfer {
+        return $this->getFactory()->createStateMachineProcessReader()->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
     }
 }

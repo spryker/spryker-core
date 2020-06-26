@@ -731,6 +731,33 @@ class StateMachineFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProcessStateNamesReturnsArrayOfStateNames(): void
+    {
+        // Arrange
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        // Act
+        $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
+
+        // Assert
+        $this->assertEquals('completed', array_pop($stateNames));
+        $this->assertEquals('state with condition', array_pop($stateNames));
+        $this->assertEquals('new', array_shift($stateNames));
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade

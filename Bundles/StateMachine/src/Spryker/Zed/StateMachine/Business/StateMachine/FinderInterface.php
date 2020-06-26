@@ -85,4 +85,11 @@ interface FinderInterface
      * @return \Spryker\Zed\StateMachine\Business\Process\ProcessInterface[]
      */
     public function findProcessesForItems(array $stateMachineItems);
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return string[]
+     */
+    public function getProcessStates(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
 }
