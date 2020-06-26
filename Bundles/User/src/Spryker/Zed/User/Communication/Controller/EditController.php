@@ -268,6 +268,14 @@ class EditController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
+        $userDeleteConfirmForm = $this->getFactory()->getUserDeleteConfirmForm()->handleRequest($request);
+
+        if (!$userDeleteConfirmForm->isSubmitted() || !$userDeleteConfirmForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_FORM_PROTECTION_ERROR);
+
+            return $this->redirectResponse(static::USER_LISTING_URL);
+        }
+
         $idUser = $this->castId($request->request->get(static::PARAM_ID_USER));
 
         if (empty($idUser)) {
