@@ -18,6 +18,7 @@ use Spryker\Zed\Oms\Business\OmsBusinessFactory;
 use Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Spryker\Zed\Oms\Business\OrderStateMachine\Timeout;
 use Spryker\Zed\Oms\Business\OrderStateMachine\TimeoutInterface;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\OmsDependencyProvider;
@@ -128,7 +129,7 @@ class TimeoutTest extends Unit
         $orderStateMachineMock = $this->createOrderStateMachineMock(['runCommand']);
         $orderStateMachineMock->method('runCommand')->willReturn([]);
 
-        $timeout = new Timeout(new OmsQueryContainer(), new OmsConfig());
+        $timeout = new Timeout(new OmsQueryContainer(), new TimeoutProcessorCollection(), new OmsConfig());
 
         $affectedOrderItems = $timeout->checkTimeouts($orderStateMachineMock, $omsCheckTimeoutQueryCriteriaTransfer);
 
@@ -174,7 +175,7 @@ class TimeoutTest extends Unit
             ->setLimit($limit);
 
         $orderStateMachineMock = $this->createOrderStatemachineMockForCheckTimeoutsWillRemoveTimeoutEntityAfterTransition($salesOrderEntity);
-        $timeout = new Timeout(new OmsQueryContainer(), new OmsConfig());
+        $timeout = new Timeout(new OmsQueryContainer(), new TimeoutProcessorCollection(), new OmsConfig());
 
         // Act
         $affectedOrderItems = $timeout->checkTimeouts($orderStateMachineMock, $omsCheckTimeoutQueryCriteriaTransfer);
