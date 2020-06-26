@@ -50,7 +50,7 @@ View,Aussicht
 Shipment,Lieferung
 of,von
 "Delivery Address",Lieferadresse
-"Delivery Method","Service Methode"
+"Delivery Method",Lieferart
 "Request delivery date","Angefragtes Lieferdatum"
 "Shipping Method",Versandart
 Shipments,Liefermethoden
