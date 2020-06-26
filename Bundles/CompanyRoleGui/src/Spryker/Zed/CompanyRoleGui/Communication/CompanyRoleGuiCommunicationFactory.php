@@ -10,6 +10,7 @@ namespace Spryker\Zed\CompanyRoleGui\Communication;
 use Generated\Shared\Transfer\CompanyRoleTransfer;
 use Orm\Zed\CompanyRole\Persistence\SpyCompanyRoleQuery;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleCreateForm;
+use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleDeleteForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyRoleEditForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\CompanyUserRoleByCompanyForm;
 use Spryker\Zed\CompanyRoleGui\Communication\Form\CompanyUserRoleByCompany\DataProvider\CompanyUserRoleByCompanyFormDataProvider;
@@ -111,6 +112,14 @@ class CompanyRoleGuiCommunicationFactory extends AbstractCommunicationFactory
             $dataProvider->getData($companyRoleTransfer),
             $dataProvider->getOptions()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCompanyRoleDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CompanyRoleDeleteForm::class);
     }
 
     /**

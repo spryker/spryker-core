@@ -18,8 +18,14 @@
             <p>{{ 'It will be deleted from everywhere' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
-                <a href="{{ url('/company-role-gui/delete-company-role/delete', {'id-company-role': companyRoleTransfer.idCompanyRole}) }}"
-                   class="btn btn-danger safe-submit">{{ 'Delete company role' | trans }}</a>
+                {{ form_start(deleteForm, {
+                    'action': url(
+                        '/company-role-gui/delete-company-role/delete',
+                        {'id-company-role': companyRoleTransfer.idCompanyRole}
+                    )
+                }) }}
+                <button class="btn btn-danger safe-submit"> {{ 'Delete company role' | trans }} </button>
+                {{ form_end(deleteForm) }}
             </div>
         {% endblock %}
 
