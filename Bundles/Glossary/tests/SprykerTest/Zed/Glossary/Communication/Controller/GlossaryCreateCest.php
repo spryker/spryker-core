@@ -31,6 +31,6 @@ class GlossaryCreateCest
     public function breadcrumbIsVisible(GlossaryCommunicationTester $i): void
     {
         $i->amOnPage(GlossaryCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Glossary / Create Translation');
+        $i->seeBreadcrumbNavigation('Administration / Glossary / Create Translation');
     }
 }
