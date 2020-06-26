@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
-use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap;
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -18,6 +17,11 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
     use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @uses \Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap::COL_SKU
+     */
+    protected const COL_SKU = 'spy_availability.sku';
 
     /**
      * @api
@@ -33,7 +37,7 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
 
         $productConcreteSkus = $this->getFactory()
             ->getEventBehaviorFacade()
-            ->getEventTransfersAdditionalValues($eventTransfers, SpyAvailabilityTableMap::COL_SKU);
+            ->getEventTransfersAdditionalValues($eventTransfers, static::COL_SKU);
 
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus);
 
