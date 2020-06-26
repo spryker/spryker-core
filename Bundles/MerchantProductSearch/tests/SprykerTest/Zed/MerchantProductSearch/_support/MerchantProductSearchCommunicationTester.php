@@ -17,9 +17,9 @@ use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\MerchantProductSearch\MerchantProductSearchConfig;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageDataExpander\MerchantProductPageDataExpanderPlugin;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageDataLoader\MerchantProductPageDataLoaderPlugin;
-use Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageMapExpander\MerchantProductAbstractMapExpanderPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch\MerchantProductAbstractMapExpanderPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch\MerchantProductPageDataExpanderPlugin;
+use Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch\MerchantProductPageDataLoaderPlugin;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBridge;
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
@@ -146,7 +146,7 @@ class MerchantProductSearchCommunicationTester extends Actor
         $this->setDependency(
             ProductPageSearchDependencyProvider::PLUGIN_PRODUCT_PAGE_DATA_EXPANDER,
             [
-                MerchantProductSearchConfig::PLUGIN_PRODUCT_MERCHANT_PRODUCT_DATA => new MerchantProductPageDataExpanderPlugin(),
+                MerchantProductSearchConfig::PLUGIN_MERCHANT_PRODUCT_DATA => new MerchantProductPageDataExpanderPlugin(),
             ]
         );
     }

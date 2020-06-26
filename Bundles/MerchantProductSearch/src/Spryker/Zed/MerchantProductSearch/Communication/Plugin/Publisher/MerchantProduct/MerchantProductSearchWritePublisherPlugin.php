@@ -21,7 +21,7 @@ class MerchantProductSearchWritePublisherPlugin extends AbstractPlugin implement
      * {@inheritDoc}
      * - Gets fkMerchants from event transfers.
      * - Retrieves product abstract ids by fkMerchants.
-     * - Publish merchant product data to Elasticsearch.
+     * - Triggers the product resource refresh.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class MerchantProductSearchWritePublisherPlugin extends AbstractPlugin implement
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByIdMerchantProductEvents($transfers);
+        $this->getFacade()->writeCollectionByIdProductAbstractMerchantEvents($transfers);
     }
 
     /**

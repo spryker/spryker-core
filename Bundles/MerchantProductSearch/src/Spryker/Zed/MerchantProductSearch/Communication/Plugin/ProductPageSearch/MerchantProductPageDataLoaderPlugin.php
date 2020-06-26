@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageDataLoader;
+namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
@@ -33,7 +33,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
     {
         $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
-        $productAbstractMerchantData = $this->getRepository()
+        $productAbstractMerchantData = $this->getFacade()
             ->getMerchantDataByProductAbstractIds($productAbstractIds);
 
         return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);

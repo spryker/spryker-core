@@ -14,8 +14,7 @@ interface MerchantProductSearchFacadeInterface
      *  - Gets merchant ids from eventTransfers.
      *  - Retrieves a list of abstract product ids by merchant ids.
      *  - Queries all product abstract with the given abstract product ids.
-     *  - Stores data as json encoded to storage table.
-     *  - Sends a copy of data to queue based on module config.
+     *  - Calls product page search facade to refresh stored data.
      *
      * @api
      *
@@ -27,10 +26,10 @@ interface MerchantProductSearchFacadeInterface
 
     /**
      * Specification:
-     *  - Gets abstract product ids from eventTransfers.
-     *  - Queries all product abstract with the given abstract product ids.
+     *  - Gets abstract product merchant ids from eventTransfers.
+     *  - Queries all product abstract with the given abstract product merchant ids.
      *  - Stores data as json encoded to storage table.
-     *  - Sends a copy of data to queue based on module config.
+     *  - Calls product page search facade to refresh stored data.
      *
      * @api
      *
@@ -38,5 +37,17 @@ interface MerchantProductSearchFacadeInterface
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProductEvents(array $eventTransfers): void;
+    public function writeCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Returns a list of ProductAbstractMerchantTransfers with data about merchant by product abstract ids.
+     *
+     * @api
+     *
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractMerchantTransfer[]
+     */
+    public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array;
 }

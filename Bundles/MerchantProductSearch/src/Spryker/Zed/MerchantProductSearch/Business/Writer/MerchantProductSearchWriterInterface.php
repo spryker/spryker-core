@@ -21,5 +21,5 @@ interface MerchantProductSearchWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProductEvents(array $eventTransfers): void;
+    public function writeCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void;
 }

@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\PageMapExpander;
+namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageMapTransfer;

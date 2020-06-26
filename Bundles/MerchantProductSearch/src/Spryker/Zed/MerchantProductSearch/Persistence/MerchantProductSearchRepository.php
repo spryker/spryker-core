@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductSearch\Persistence;
 
-use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
@@ -18,11 +17,10 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class MerchantProductSearchRepository extends AbstractRepository implements MerchantProductSearchRepositoryInterface
 {
-    protected const KEY_ABSTRACT_PRODUCT_ID = 'id';
-    protected const KEY_MERCHANT_NAME = 'name';
-    protected const KEY_MERCHANT_NAMES = 'names';
-    protected const KEY_MERCHANT_REFERENCES = 'references';
-    protected const KEY_STORE_NAME = 'storeName';
+    protected const KEY_PRODUCT_ABSTRACT_ID = 'id_product_abstract';
+    protected const KEY_MERCHANT_NAME = 'merchant_name';
+    protected const KEY_MERCHANT_NAMES = 'merchant_names';
+    protected const KEY_STORE_NAME = 'store_name';
 
     /**
      * @param int[] $merchantIds
@@ -79,57 +77,22 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->useMerchantQuery()
                 ->useSpyMerchantStoreQuery()
-                    ->joinWithSpyStore()
+                    ->joinSpyStore()
                 ->endUse()
                 ->filterByIsActive(true)
             ->endUse();
 
         $merchantData = $merchantProductAbstractPropelQuery
-            ->select([static::KEY_ABSTRACT_PRODUCT_ID, static::KEY_MERCHANT_NAME])
+            ->select([static::KEY_PRODUCT_ABSTRACT_ID, static::KEY_MERCHANT_NAME])
             ->withColumn(SpyMerchantTableMap::COL_NAME, static::KEY_MERCHANT_NAME)
-            ->withColumn(SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, static::KEY_ABSTRACT_PRODUCT_ID)
+            ->withColumn(SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT, static::KEY_PRODUCT_ABSTRACT_ID)
             ->withColumn(SpyStoreTableMap::COL_NAME, static::KEY_STORE_NAME)
-            ->orderBy(static::KEY_ABSTRACT_PRODUCT_ID)
+            ->orderBy(static::KEY_PRODUCT_ABSTRACT_ID)
             ->find()
             ->getData();
 
-        $groupedMerchantDataByIdProductAbstract = $this->groupMerchantDataByIdProductAbstract($merchantData);
-        $productAbstractMerchantTransfers = [];
-
-        foreach ($groupedMerchantDataByIdProductAbstract as $idProductAbstract => $productAbstractMerchantData) {
-            $productAbstractMerchantTransfers[] = $this->getFactory()
-                ->createMerchantProductAbstractMapper()
-                ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfer(
-                    $productAbstractMerchantData,
-                    new ProductAbstractMerchantTransfer()
-                );
-        }
-
-        return $productAbstractMerchantTransfers;
-    }
-
-    /**
-     * @phpstan-param array<int, mixed> $merchantData
-     *
-     * @phpstan-return array<int, mixed>
-     *
-     * @param array $merchantData
-     *
-     * @return array
-     */
-    protected function groupMerchantDataByIdProductAbstract(array $merchantData): array
-    {
-        $groupedProductAbstractMerchantData = [];
-
-        foreach ($merchantData as $productAbstractMerchant) {
-            $idProductAbstract = $productAbstractMerchant[static::KEY_ABSTRACT_PRODUCT_ID];
-            $merchantName = $productAbstractMerchant[static::KEY_MERCHANT_NAME];
-            $storeName = $productAbstractMerchant[static::KEY_STORE_NAME];
-
-            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_MERCHANT_NAMES][$storeName][] = $merchantName;
-            $groupedProductAbstractMerchantData[$idProductAbstract][static::KEY_ABSTRACT_PRODUCT_ID] = $idProductAbstract;
-        }
-
-        return $groupedProductAbstractMerchantData;
+        return $this->getFactory()
+            ->createMerchantProductAbstractMapper()
+            ->mapProductAbstractMerchantDataToProductAbstractMerchantTransfers($merchantData);
     }
 }

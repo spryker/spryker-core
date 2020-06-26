@@ -7,9 +7,9 @@
 
 namespace Spryker\Shared\MerchantProductSearch;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class MerchantProductSearchConfig extends AbstractBundleConfig
+class MerchantProductSearchConfig extends AbstractSharedConfig
 {
-    public const PLUGIN_PRODUCT_MERCHANT_PRODUCT_DATA = 'PLUGIN_PRODUCT_MERCHANT_PRODUCT_DATA';
+    public const PLUGIN_MERCHANT_PRODUCT_DATA = 'PLUGIN_MERCHANT_PRODUCT_DATA';
 }

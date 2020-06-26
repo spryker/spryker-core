@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductSearch\Plugin;
+namespace Spryker\Client\MerchantProductSearch\Plugin\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\FacetConfigTransfer;
@@ -16,8 +16,8 @@ use Spryker\Shared\Search\SearchConfig;
 
 class MerchantProductMerchantNameSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface
 {
-    protected const NAME = 'merchant_name';
-    protected const PARAMETER_NAME = 'merchant_name';
+    protected const FACET_CONFIG_NAME = 'merchant_name';
+    protected const FACET_CONFIG_PARAMETER_NAME = 'merchant_name';
 
     /**
      * {@inheritDoc}
@@ -38,8 +38,8 @@ class MerchantProductMerchantNameSearchConfigExpanderPlugin extends AbstractPlug
     protected function createMerchantNameFacetConfig(): FacetConfigTransfer
     {
         return (new FacetConfigTransfer())
-            ->setName(static::NAME)
-            ->setParameterName(static::PARAMETER_NAME)
+            ->setName(static::FACET_CONFIG_NAME)
+            ->setParameterName(static::FACET_CONFIG_PARAMETER_NAME)
             ->setFieldName(PageIndexMap::STRING_FACET)
             ->setType(SearchConfig::FACET_TYPE_ENUMERATION)
             ->setIsMultiValued(true);
