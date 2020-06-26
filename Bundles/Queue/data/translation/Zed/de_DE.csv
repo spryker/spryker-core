@@ -2,7 +2,7 @@
 Index,Index
 "Queue Name","Name der Warteschlange"
 "Queue PID","PID der Warteschlange"
-"Queue Processes","Prozesse der Warteschlange"
+"Queue Processes",Queue-Prozesse
 "Running Queue Processes","Warteschlangenprozesse werden ausgeführt"
 Score,Score
 "Search Key",Suchschlüssel
