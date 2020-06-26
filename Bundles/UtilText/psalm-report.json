@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of random_bytes expects int, float|int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/StringGenerator.php",
+            "snippet": "        $token = bin2hex(random_bytes($tokenLength));",
+            "selected_text": "$tokenLength",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 181,
+            "line_to": 181,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 3 of htmlspecialchars expects string, string|true provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilText/src/Spryker/Service/UtilText/Model/Url/Url.php",
+            "snippet": "        return htmlspecialchars($url, ENT_QUOTES | ENT_SUBSTITUTE, $charset);",
+            "selected_text": "$charset",
+            "error_level": 4,
+            "shortcode": 12
+        }
+    ],
+    "deprecation": []
+}

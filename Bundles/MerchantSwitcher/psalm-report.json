@@ -1,0 +1,126 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Client/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setMerchantReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
+            "snippet": "        $quoteTransfer->setMerchantReference($merchantSwitchRequestTransfer->getMerchantReference());",
+            "selected_text": "setMerchantReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getItems on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
+            "snippet": "        foreach ($quoteTransfer->getItems() as $itemTransfer) {",
+            "selected_text": "getItems",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Zed\\MerchantSwitcher\\Business\\MerchantSwitcher\\MerchantSwitcher::switchItemData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Business/MerchantSwitcher/MerchantSwitcher.php",
+            "snippet": "            $switchedItemTransfers[] = $this->switchItemData($itemTransfer, $merchantProductOfferCollectionTransfer, $merchantReference);",
+            "selected_text": "$merchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMerchantReference on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Cart/SingleMerchantCartPreCheckPlugin.php",
+            "snippet": "            ->setMerchantReference($cartChangeTransfer->getQuote()->getMerchantReference());",
+            "selected_text": "getMerchantReference",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\QuoteTransfer' for Spryker\\Zed\\MerchantSwitcher\\Communication\\Plugin\\Cart\\SingleMerchantPreReloadItemsPlugin::preReloadItems is not nullable, but 'Generated\\Shared\\Transfer\\QuoteTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Cart/SingleMerchantPreReloadItemsPlugin.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\QuoteTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\QuoteTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 50,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\QuoteTransfer' for Spryker\\Zed\\MerchantSwitcher\\Communication\\Plugin\\Cart\\SingleMerchantPreReloadItemsPlugin::preReloadItems is not nullable, but the function returns 'Generated\\Shared\\Transfer\\QuoteTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/Communication/Plugin/Cart/SingleMerchantPreReloadItemsPlugin.php",
+            "snippet": "        return $this->getFacade()\n            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)\n            ->getQuote();",
+            "selected_text": "$this->getFacade()\n            ->switchMerchantInQuoteItems($merchantSwitcherRequestTransfer)\n            ->getQuote()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherToCartFacadeBridge($container->getLocator()->cart()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSwitcher/src/Spryker/Zed/MerchantSwitcher/MerchantSwitcherDependencyProvider.php",
+            "snippet": "            return new MerchantSwitcherToMerchantProductOfferFacadeBridge($container->getLocator()->merchantProductOffer()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

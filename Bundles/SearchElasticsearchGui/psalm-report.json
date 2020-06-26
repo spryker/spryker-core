@@ -1,0 +1,200 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'mixed|true' does not match the declared return type 'null|string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Table\\DocumentTable::getSearchString",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "        return !$this->getSearchTerm() ?: $this->getSearchTerm()['value'];",
+            "selected_text": "!$this->getSearchTerm() ?: $this->getSearchTerm()['value']",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 143,
+            "line_to": 143,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getSearchStringFromSearchContext is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 151,
+            "line_to": 155,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getSearchStringFromSearchContext is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "        return $this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireSearchString()\n            ->getSearchString();",
+            "selected_text": "$this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireSearchString()\n            ->getSearchString()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 154,
+            "line_to": 154,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireSearchString on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "            ->requireSearchString()",
+            "selected_text": "requireSearchString",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 159,
+            "line_to": 159,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getLimitFromSearchContext is not nullable, but 'int|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 167,
+            "line_to": 171,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getLimitFromSearchContext is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "        return $this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireLimit()\n            ->getLimit();",
+            "selected_text": "$this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireLimit()\n            ->getLimit()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "            ->requireLimit()",
+            "selected_text": "requireLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 175,
+            "line_to": 175,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getOffsetFromSearchContext is not nullable, but 'int|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 183,
+            "line_to": 187,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\SearchElasticsearchGui\\Communication\\Plugin\\Query\\DocumentListQuery::getOffsetFromSearchContext is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "        return $this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireOffset()\n            ->getOffset();",
+            "selected_text": "$this->searchContextTransfer\n            ->requireElasticsearchContext()\n            ->getElasticsearchContext()\n            ->requireOffset()\n            ->getOffset()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireOffset on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php",
+            "snippet": "            ->requireOffset()",
+            "selected_text": "requireOffset",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "                $this->getIndexName()",
+            "selected_text": "$this->getIndexName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SearchElasticsearchGui\\Dependency\\Client\\SearchElasticsearchGuiToSearchElasticsearchClientInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, possibly different type Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface|Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "            $this->documentListQuery",
+            "selected_text": "$this->documentListQuery",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface::setSearchContext does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "        $this->documentListQuery->setSearchContext(",
+            "selected_text": "setSearchContext",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/SearchElasticsearchGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->searchElasticsearch()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/SearchElasticsearchGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->searchElasticsearch()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\SearchContextAwareQueryInterface::setSearchContext has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Table/DocumentTable.php",
+            "snippet": "        $this->documentListQuery->setSearchContext(",
+            "selected_text": "setSearchContext",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

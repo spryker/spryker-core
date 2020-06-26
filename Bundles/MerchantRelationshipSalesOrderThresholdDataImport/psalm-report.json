@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/Business/MerchantRelationshipSalesOrderThresholdDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep(",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/Business/MerchantRelationshipSalesOrderThresholdDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/Business/MerchantRelationshipSalesOrderThresholdDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/Business/MerchantRelationshipSalesOrderThresholdDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->createMerchantRelationshipSalesOrderThresholdDataImport()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantRelationshipSalesOrderThreshold()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantRelationship()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
+            "snippet": "                $container->getLocator()->store()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipSalesOrderThresholdDataImport/src/Spryker/Zed/MerchantRelationshipSalesOrderThresholdDataImport/MerchantRelationshipSalesOrderThresholdDataImportDependencyProvider.php",
+            "snippet": "                $container->getLocator()->currency()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

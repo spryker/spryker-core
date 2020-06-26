@@ -1,0 +1,211 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Client/ProductReviewStorage/ProductReviewStorageDependencyProvider.php",
+            "snippet": "            return new ProductReviewStorageToStorageBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Client/ProductReviewStorage/ProductReviewStorageDependencyProvider.php",
+            "snippet": "            return new ProductReviewStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\SynchronizationDataTransfer::setReference expects null|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Client/ProductReviewStorage/Storage/ProductReviewStorageKeyGenerator.php",
+            "snippet": "            ->setReference($resourceId);",
+            "selected_text": "$resourceId",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductReview\\Persistence\\SpyProductReview> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $productReviewEntities = $this->queryContainer->queryProductReviewsByIdProductAbstracts($productAbstractIds)->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of round cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $productReviewStorageTransfer->setAverageRating(round($productReviewStorageTransfer->getAverageRating(), 1));",
+            "selected_text": "$productReviewStorageTransfer->getAverageRating()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/ProductReviewEventResourceQueryContainerPlugin.php",
+            "snippet": "        return $query->orderBy($this->getIdColumnName());",
+            "selected_text": "$this->getIdColumnName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewStorage\\Persistence\\ProductReviewStorageQueryContainer::queryProductReviewsByIdProductAbstracts is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Persistence/ProductReviewStorageQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "selected_text": "\\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 60,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewStorage\\Persistence\\ProductReviewStorageQueryContainer::queryProductReviewsByIdProductAbstracts",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Persistence/ProductReviewStorageQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductReviewQuery()\n            ->queryProductReview()\n            ->filterByFkProductAbstract_In($productAbstractIds)\n            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)\n            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)\n            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)\n            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)\n            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])\n            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);",
+            "selected_text": "$this->getFactory()\n            ->getProductReviewQuery()\n            ->queryProductReview()\n            ->filterByFkProductAbstract_In($productAbstractIds)\n            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)\n            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)\n            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)\n            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)\n            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])\n            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewStorage\\Persistence\\ProductReviewStorageQueryContainer::queryProductReviewsByIds is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Persistence/ProductReviewStorageQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "selected_text": "\\Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 83,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductReview\\Persistence\\SpyProductReviewQuery' for Spryker\\Zed\\ProductReviewStorage\\Persistence\\ProductReviewStorageQueryContainer::queryProductReviewsByIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Persistence/ProductReviewStorageQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductReviewQuery()\n            ->queryProductReview()\n            ->filterByIdProductReview_In($productReviewsIds)\n            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)\n            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)\n            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)\n            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)\n            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])\n            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT);",
+            "selected_text": "$this->getFactory()\n            ->getProductReviewQuery()\n            ->queryProductReview()\n            ->filterByIdProductReview_In($productReviewsIds)\n            ->filterByStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED)\n            ->withColumn(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT, static::FIELD_FK_PRODUCT_ABSTRACT)\n            ->withColumn(sprintf('AVG(%s)', SpyProductReviewTableMap::COL_RATING), static::FIELD_AVERAGE_RATING)\n            ->withColumn(sprintf('COUNT(%s)', SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT), static::FIELD_COUNT)\n            ->select([static::FIELD_FK_PRODUCT_ABSTRACT, static::FIELD_AVERAGE_RATING, static::FIELD_COUNT])\n            ->groupBy(SpyProductReviewTableMap::COL_FK_PRODUCT_ABSTRACT)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/ProductReviewStorageDependencyProvider.php",
+            "snippet": "            return new ProductReviewStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/ProductReviewStorageDependencyProvider.php",
+            "snippet": "            return new ProductReviewStorageToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductReviewStorage\\ProductReviewStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/ProductReviewStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductReviewStorage\\Business\\Storage\\ProductReviewStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\ProductReviewStorage\\Persistence\\Base\\SpyProductAbstractReviewStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Business/Storage/ProductReviewStorageWriter.php",
+            "snippet": "        $spyProductAbstractReviewStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/Listener/ProductReviewPublishStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewStorage/src/Spryker/Zed/ProductReviewStorage/Communication/Plugin/Event/Listener/ProductReviewStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

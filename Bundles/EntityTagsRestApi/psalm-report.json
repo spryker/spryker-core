@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/EntityTagsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->entityTag()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\EntityTagsRestApi\\Dependency\\Client\\EntityTagsRestApiToEntityTagClientInterface::read cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagRequestValidator.php",
+            "snippet": "            $restRequest->getResource()->getId()",
+            "selected_text": "$restRequest->getResource()->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\EntityTagsRestApi\\Processor\\EntityTag\\EntityTagRequestValidator::getHashFromHeader cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagRequestValidator.php",
+            "snippet": "        if (!$this->compareEntityTags($this->getHashFromHeader($headerValue), $entityTag)) {",
+            "selected_text": "$headerValue",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\EntityTagsRestApi\\Dependency\\Client\\EntityTagsRestApiToEntityTagClientInterface::read cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResolver.php",
+            "snippet": "        $entityTag = $this->entityTagClient->read($restResource->getType(), $restResource->getId());",
+            "selected_text": "$restResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\EntityTagsRestApi\\Dependency\\Client\\EntityTagsRestApiToEntityTagClientInterface::write cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResolver.php",
+            "snippet": "            $restResource->getId(),",
+            "selected_text": "$restResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResolver.php",
+            "snippet": "            $restResource->getAttributes()->toArray()",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\EntityTagsRestApi\\Dependency\\Client\\EntityTagsRestApiToEntityTagClientInterface::write cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResponseHeaderFormatter.php",
+            "snippet": "            $restResource->getId(),",
+            "selected_text": "$restResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/EntityTagsRestApi/src/Spryker/Glue/EntityTagsRestApi/Processor/EntityTag/EntityTagResponseHeaderFormatter.php",
+            "snippet": "            $restResource->getAttributes()->toArray()",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}
