@@ -78,8 +78,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
-            $this->getOmsFacade(),
-            $this->getOrderListExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins(),
+            $this->getOmsFacade()
         );
     }
 
@@ -91,8 +91,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
-            $this->getOmsFacade(),
-            $this->getOrderListExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins(),
+            $this->getOmsFacade()
         );
     }
 
@@ -105,7 +105,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->createOrderHydrator(),
             $this->getOmsFacade(),
-            $this->getOrderListExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
@@ -118,8 +118,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->createCustomerOrderOverviewHydrator(),
             $this->getOmsFacade(),
-            $this->getSearchOrderExpanderPlugins(),
-            $this->getOrderListExpanderPlugins()
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
@@ -590,13 +589,5 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getCustomerOrderAccessCheckPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
-     */
-    public function getOrderListExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_LIST_EXPANDER);
     }
 }

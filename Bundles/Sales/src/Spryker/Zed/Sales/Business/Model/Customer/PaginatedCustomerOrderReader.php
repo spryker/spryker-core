@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Customer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
@@ -29,10 +30,10 @@ class PaginatedCustomerOrderReader extends CustomerOrderReader
         $orderCollection = $this->getOrderCollection($orderListTransfer, $ordersQuery);
 
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orders->getArrayCopy());
 
-        $orderListTransfer->setOrders($orders);
+        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
         $orderListTransfer = $this->updatePaginationTransfer($orderListTransfer, $ordersQuery);
-        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
 
         return $orderListTransfer;
     }

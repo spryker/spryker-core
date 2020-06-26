@@ -33,26 +33,26 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
-    protected $orderListExpanderPlugins;
+    protected $searchOrderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface|null $omsFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[] $orderListExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         OrderHydratorStrategyResolverInterface $orderHydratorStrategyResolver,
-        ?SalesToOmsInterface $omsFacade = null,
-        array $orderListExpanderPlugins = []
+        array $searchOrderExpanderPlugins,
+        ?SalesToOmsInterface $omsFacade = null
     ) {
         $this->queryContainer = $queryContainer;
         $this->orderHydratorStrategyResolver = $orderHydratorStrategyResolver;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
         $this->omsFacade = $omsFacade;
-        $this->orderListExpanderPlugins = $orderListExpanderPlugins;
     }
 
     /**
@@ -69,9 +69,8 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
             ->find();
 
         $orders = $this->hydrateOrderListCollectionTransferFromEntityCollection($orderCollection);
-
-        $orderListTransfer->setOrders($orders);
-        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orders->getArrayCopy());
+        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
 
         return $orderListTransfer;
     }
@@ -134,16 +133,16 @@ class CustomerOrderReader implements CustomerOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function executeOrderListExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {
-        foreach ($this->orderListExpanderPlugins as $orderListExpanderPlugin) {
-            $orderListTransfer = $orderListExpanderPlugin->expand($orderListTransfer);
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
         }
 
-        return $orderListTransfer;
+        return $orderTransfers;
     }
 }

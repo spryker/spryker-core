@@ -32,26 +32,26 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     protected $omsFacade;
 
     /**
-     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[]
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
      */
-    protected $orderListExpanderPlugins;
+    protected $searchOrderExpanderPlugins;
 
     /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
-     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterface[] $orderListExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
         OrderHydratorInterface $orderHydrator,
         SalesToOmsInterface $omsFacade,
-        array $orderListExpanderPlugins = []
+        array $searchOrderExpanderPlugins
     ) {
         $this->salesRepository = $salesRepository;
         $this->orderHydrator = $orderHydrator;
         $this->omsFacade = $omsFacade;
-        $this->orderListExpanderPlugins = $orderListExpanderPlugins;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
     }
 
     /**
@@ -69,7 +69,8 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
         }
 
         $orderListTransfer = $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
-        $orderListTransfer = $this->executeOrderListExpanderPlugins($orderListTransfer);
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orderListTransfer->getOrders()->getArrayCopy());
+        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
 
         return $orderListTransfer;
     }
@@ -95,16 +96,16 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     }
 
     /**
-     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderListTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
      */
-    protected function executeOrderListExpanderPlugins(OrderListTransfer $orderListTransfer): OrderListTransfer
+    protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
     {
-        foreach ($this->orderListExpanderPlugins as $orderListExpanderPlugin) {
-            $orderListTransfer = $orderListExpanderPlugin->expand($orderListTransfer);
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
         }
 
-        return $orderListTransfer;
+        return $orderTransfers;
     }
 }
