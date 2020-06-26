@@ -17,6 +17,7 @@ use Spryker\Zed\ProductSetGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductSetGui\Communication\Controller\ViewController;
 use Spryker\Zed\ProductSetGui\Communication\Form\ActivateProductSetForm;
 use Spryker\Zed\ProductSetGui\Communication\Form\DeactivateProductSetForm;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeleteProductSetForm;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainer;
 use Spryker\Zed\ProductSetGui\Persistence\ProductSetGuiQueryContainerInterface;
 
@@ -172,7 +173,9 @@ class ProductSetTable extends AbstractTable
             Url::generate('/product-set-gui/delete', [
                 DeleteController::PARAM_ID => $productSetEntity->getIdProductSet(),
             ]),
-            'Delete'
+            'Delete',
+            [],
+            DeleteProductSetForm::class
         );
 
         return implode(' ', $actions);

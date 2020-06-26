@@ -14,13 +14,15 @@
                     </a>
 
                     {% if idNavigationNode %}
-                        <a href="{{ url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode}) }}"
-                           id="remove-selected-node-btn"
+                        {{ form_start(deleteNavigationNodeForm, {
+                            'action': url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode})
+                        }) }}
+                        <i class="fa fa-trash"></i> <input type="submit" id="remove-selected-node-btn"
                            class="btn btn-xs btn-danger"
                            onclick="return confirm('{{ 'Are you sure you remove the selected node and all its children?' | trans }}')"
-                        >
-                            <i class="fa fa-trash"></i> {{ 'Delete selected node' | trans }}
-                        </a>
+                               value="{{ 'Delete selected node' | trans }}"
+                        />
+                        {{ form_end(deleteNavigationNodeForm) }}
                     {% endif %}
                 </div>
             </div>

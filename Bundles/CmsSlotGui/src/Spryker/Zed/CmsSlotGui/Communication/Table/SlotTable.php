@@ -11,6 +11,7 @@ use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsSlotGui\Communication\Controller\ActivateSlotController;
+use Spryker\Zed\CmsSlotGui\Communication\Form\ToggleActiveCmsSlotForm;
 use Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -238,16 +239,18 @@ class SlotTable extends AbstractTable
      */
     protected function buildLinks(array $slot): string
     {
-        $statusToggleButton = $this->generateButton(
+        $statusToggleButton = $this->generateFormButton(
             $this->getUrlActivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
             'Activate',
+            ToggleActiveCmsSlotForm::class,
             ['class' => 'btn-view js-slot-activation']
         );
 
         if ($slot[static::COL_STATUS]) {
-            $statusToggleButton = $this->generateButton(
+            $statusToggleButton = $this->generateFormButton(
                 $this->getUrlDeactivate($slot[SpyCmsSlotTableMap::COL_ID_CMS_SLOT]),
                 'Deactivate',
+                ToggleActiveCmsSlotForm::class,
                 ['class' => 'btn-danger js-slot-activation']
             );
         }

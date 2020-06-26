@@ -11,6 +11,7 @@ use Orm\Zed\FileManager\Persistence\Map\SpyFileTableMap;
 use Orm\Zed\FileManager\Persistence\SpyFileQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\FileManagerGui\Communication\Form\DeleteFileForm;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -194,7 +195,9 @@ class FileTable extends AbstractTable
             Url::generate(static::URL_FILE_MANAGER_GUI_DELETE, [
                 static::REQUEST_ID_FILE => $item[static::COL_ID_FILE],
             ]),
-            static::DELETE_TITLE
+            static::DELETE_TITLE,
+            [],
+            DeleteFileForm::class
         );
 
         return $buttons;

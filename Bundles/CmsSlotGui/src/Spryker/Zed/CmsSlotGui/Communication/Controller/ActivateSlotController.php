@@ -27,6 +27,15 @@ class ActivateSlotController extends AbstractController
      */
     public function activateAction(Request $request)
     {
+        $form = $this->getFactory()->createToggleActiveCmsSlotForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->jsonResponse([
+                static::RESPONSE_SUCCESS_KEY => false,
+                static::RESPONSE_MESSAGE => 'CSRF token is not valid.',
+            ]);
+        }
+
         $idCmsSlot = $this->castId($request->get(static::PARAM_ID_CMS_SLOT));
 
         try {
@@ -48,6 +57,15 @@ class ActivateSlotController extends AbstractController
      */
     public function deactivateAction(Request $request)
     {
+        $form = $this->getFactory()->createToggleActiveCmsSlotForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            return $this->jsonResponse([
+                static::RESPONSE_SUCCESS_KEY => false,
+                static::RESPONSE_MESSAGE => 'CSRF token is not valid.',
+            ]);
+        }
+
         $idCmsSlot = $this->castId($request->get(static::PARAM_ID_CMS_SLOT));
 
         try {

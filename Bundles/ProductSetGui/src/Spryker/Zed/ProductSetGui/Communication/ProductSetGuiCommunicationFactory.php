@@ -18,6 +18,7 @@ use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\CreateFormDataProv
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\ReorderProductSetsFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DataProvider\UpdateFormDataProvider;
 use Spryker\Zed\ProductSetGui\Communication\Form\DeactivateProductSetForm;
+use Spryker\Zed\ProductSetGui\Communication\Form\DeleteProductSetForm;
 use Spryker\Zed\ProductSetGui\Communication\Form\ReorderProductSetsFormType;
 use Spryker\Zed\ProductSetGui\Communication\Form\UpdateProductSetFormType;
 use Spryker\Zed\ProductSetGui\Communication\Table\Helper\ProductAbstractTableHelper;
@@ -273,6 +274,14 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getPriceProductFacade(),
             $this->getMoneyFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteProductSetForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteProductSetForm::class);
     }
 
     /**

@@ -12,6 +12,7 @@ use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Spryker\Zed\Cms\Communication\Controller\RedirectController;
+use Spryker\Zed\Cms\Communication\Form\DeleteCmsRedirectForm;
 use Spryker\Zed\Cms\Persistence\CmsQueryContainer;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -108,9 +109,14 @@ class CmsRedirectTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(sprintf('/cms/redirect/edit?%s=%s', RedirectController::REQUEST_ID_URL, $urlEntity->getIdUrl()), 'Edit');
-        $buttons[] = $this->generateRemoveButton('/cms/redirect/delete', 'Delete', [
-            RedirectController::REQUEST_ID_URL_REDIRECT => $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect(),
-        ]);
+        $buttons[] = $this->generateRemoveButton(
+            '/cms/redirect/delete',
+            'Delete',
+            [
+                RedirectController::REQUEST_ID_URL_REDIRECT => $urlEntity->getSpyUrlRedirect()->getIdUrlRedirect(),
+            ],
+            DeleteCmsRedirectForm::class
+        );
 
         return implode(' ', $buttons);
     }

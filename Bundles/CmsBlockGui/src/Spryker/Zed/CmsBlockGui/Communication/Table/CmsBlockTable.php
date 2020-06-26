@@ -11,6 +11,7 @@ use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CmsBlockGui\Communication\Form\ToggleActiveCmsBlockForm;
 use Spryker\Zed\CmsBlockGui\Dependency\QueryContainer\CmsBlockGuiToCmsBlockQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -159,18 +160,24 @@ class CmsBlockTable extends AbstractTable
     protected function generateStatusChangeButton(array $item)
     {
         if ($item[SpyCmsBlockTableMap::COL_IS_ACTIVE]) {
-            return $this->generateRemoveButton(
+            return $this->generateFormButton(
                 Url::generate(static::URL_CMS_BLOCK_DEACTIVATE, [
                     static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                 ]),
-                'Deactivate'
+                'Deactivate',
+                ToggleActiveCmsBlockForm::class,
+                [
+                    static::BUTTON_ICON => 'fa-trash',
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
             );
         } else {
-            return $this->generateViewButton(
+            return $this->generateFormButton(
                 Url::generate(static::URL_CMS_BLOCK_ACTIVATE, [
                         static::REQUEST_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                     ]),
-                'Activate'
+                'Activate',
+                ToggleActiveCmsBlockForm::class
             );
         }
     }
