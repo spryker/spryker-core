@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
  */
 class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
 {
-    protected const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES_LOCALE = 'locale';
     protected const FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES = 'merchantProfileGlossaryAttributeValues';
 
     /**
@@ -27,22 +26,7 @@ class MerchantProfileLocalizedGlossaryAttributesFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addMerchantProfileGlossaryAttributeLocaleField($builder)
-            ->addMerchantProfileGlossaryAttributeValuesSubform($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addMerchantProfileGlossaryAttributeLocaleField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_MERCHANT_PROFILE_GLOSSARY_ATTRIBUTES_LOCALE, MerchantProfileGlossaryAttributeLocaleFormType::class, [
-            'label' => false,
-        ]);
-
-        return $this;
+        $this->addMerchantProfileGlossaryAttributeValuesSubform($builder);
     }
 
     /**

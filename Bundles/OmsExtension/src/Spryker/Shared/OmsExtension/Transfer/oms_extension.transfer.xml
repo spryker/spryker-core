@@ -19,4 +19,19 @@
     <transfer name="OmsState">
     </transfer>
 
+    <transfer name="ReservationRequest">
+    </transfer>
+
+    <transfer name="ReservationResponse">
+    </transfer>
+
+    <transfer name="OmsEvent">
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
+    </transfer>
+
 </transfers>
