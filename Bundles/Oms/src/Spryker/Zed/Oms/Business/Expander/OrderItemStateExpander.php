@@ -45,17 +45,17 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
-        $orderItemFilterTransfer = $this->createOrderItemFilterTransfer($salesOrderItemIds);
-        $orderItemTransfers = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
-        $mappedItemTransfersByIdSalesOrderItem = $this->mapItemsByIdSalesOrderItem($orderItemTransfers);
+        $orderItemFilterTransfer = (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
+        $persistenceItems = $this->omsRepository->getOrderItems($orderItemFilterTransfer);
+        $persistenceItemMapByIdSalesOrderItem = $this->mapItemsByIdSalesOrderItem($persistenceItems);
 
         foreach ($itemTransfers as $itemTransfer) {
-            $mappedItemTransfer = $mappedItemTransfersByIdSalesOrderItem[$itemTransfer->getIdSalesOrderItem()] ?? null;
-            if (!$mappedItemTransfer) {
+            $persistenceItemTransfer = $persistenceItemMapByIdSalesOrderItem[$itemTransfer->getIdSalesOrderItem()] ?? null;
+            if (!$persistenceItemTransfer) {
                 continue;
             }
 
-            [$displayName, $stateName] = $this->finder->findItemStateDisplayName($mappedItemTransfer);
+            [$displayName, $stateName] = $this->finder->findItemStateDisplayName($persistenceItemTransfer);
             if (!$stateName) {
                 continue;
             }
@@ -96,16 +96,6 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
         }
 
         return $mappedItemTransfers;
-    }
-
-    /**
-     * @param int[] $salesOrderItemIds
-     *
-     * @return \Generated\Shared\Transfer\OrderItemFilterTransfer
-     */
-    protected function createOrderItemFilterTransfer(array $salesOrderItemIds): OrderItemFilterTransfer
-    {
-        return (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds);
     }
 
     /**
