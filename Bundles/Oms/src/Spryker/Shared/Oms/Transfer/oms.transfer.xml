@@ -162,5 +162,19 @@
         <property name="orders" type="Order[]" singular="order"/>
     </transfer>
 
+    <transfer name="OmsEvent">
+        <property name="timeout" type="string"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+        <property name="salesOrderItemEntity" type="SpySalesOrderItemEntity"/>
+        <property name="timestamp" type="int"/>
+        <property name="omsEvent" type="OmsEvent"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
+        <property name="timeoutTimestamp" type="int"/>
+    </transfer>
+
 </transfers>
 
