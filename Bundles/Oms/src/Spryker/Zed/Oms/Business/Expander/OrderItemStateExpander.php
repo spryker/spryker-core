@@ -112,7 +112,7 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
         }
 
         if (!$displayName) {
-            $displayName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . str_replace(' ', '-', mb_strtolower(trim($stateName)));
+            $displayName = $this->getFallbackDisplayName($stateName);
         }
 
         $itemTransfer->getState()
@@ -120,5 +120,15 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
             ->setName($stateName);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param string $stateName
+     *
+     * @return string
+     */
+    protected function getFallbackDisplayName(string $stateName): string
+    {
+        return static::ITEM_STATE_GLOSSARY_KEY_PREFIX . str_replace(' ', '-', mb_strtolower(trim($stateName)));
     }
 }
