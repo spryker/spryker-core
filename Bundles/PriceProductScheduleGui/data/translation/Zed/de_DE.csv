@@ -55,7 +55,7 @@ Status,Status
 "The timezone used for the scheduled price will be %s as defined on the store selected","Die Zeitzone für den geplanten Preis wird %s sein wie definiert im gewähltn Store"
 "They will be available to your customers based on the dates","Sie werden Ihren Kunden basierend auf den Daten zur Verfügung stehen"
 "Via data import","Via Datenimport"
-View,Aussicht
+View,Ansicht
 "Yes, delete this price","Ja, diesen Preis löschen"
 "Yes, delete those prices","Ja, diese Preise löschen"
 "No, I want to keep those prices","Nein, ich will diese Preise behalten"

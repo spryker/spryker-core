@@ -43,7 +43,7 @@ Status,Status
 "Tax set",Steuer-Set
 "This name is already in use.","Dieser Name wird schon benutzt."
 "This shipment method key is already in use.","Diese Versandart ID wird schon verwendet."
-View,Aussicht
+View,Ansicht
 "View Delivery Method: %s","Versandart anzeigen: %s"
 "Yes, delete this delivery method","Ja, diese Versandart löschen"
 "Trigger all matching states of order inside this shipment","Alle übereinstimmenden Status innerhalb dieser Bestellung auslösen"
