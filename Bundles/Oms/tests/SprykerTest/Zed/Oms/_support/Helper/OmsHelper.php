@@ -11,7 +11,7 @@ use Codeception\Module;
 use DateInterval;
 use Generated\Shared\DataBuilder\OmsProductReservationBuilder;
 use Generated\Shared\Transfer\OmsProductReservationTransfer;
-use Orm\Zed\Oms\Persistence\Base\SpyOmsEventTimeout;
+use Orm\Zed\Oms\Persistence\SpyOmsEventTimeout;
 use Orm\Zed\Oms\Persistence\SpyOmsEventTimeoutQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
@@ -170,7 +170,7 @@ class OmsHelper extends Module
     /**
      * @param array $seed
      *
-     * @return \Orm\Zed\Oms\Persistence\Base\SpyOmsEventTimeout
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsEventTimeout
      */
     public function haveOmsEventTimeoutEntity(array $seed): SpyOmsEventTimeout
     {

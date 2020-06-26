@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationChangeVersionTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsProductReservationTableMap;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -57,41 +58,50 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             return $this->querySalesOrderItemsByStateFallback($states, $processName);
         }
 
+        $idOmsOrderProcess = $this->queryProcess($processName)->findOne()->getIdOmsOrderProcess();
+        $omsOrderItemStateIds = $this->querySalesOrderItemStatesByName($states)->find()->getPrimaryKeys();
+
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($processName, $states, $storeName, $limit), 't', false)
+        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit), 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
             ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER))
-            ->useProcessQuery()
-                ->filterByName($processName)
-            ->endUse()
-            ->useStateQuery()
-                ->filterByName_In($states)
-            ->endUse();
+            ->where(sprintf('%s = %s', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS, $idOmsOrderProcess))
+            ->where(sprintf('%s IN (%s)', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, implode(', ', $omsOrderItemStateIds)));
 
         return $baseQuery;
     }
 
     /**
      * @param string $processName
-     * @param array $states
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
+     */
+    protected function queryProcess(string $processName): SpyOmsOrderProcessQuery
+    {
+        return $this->getFactory()->createOmsOrderProcessQuery()->filterByName($processName);
+    }
+
+    /**
+     * @param int $idOmsOrderProcess
+     * @param array $omsOrderItemStateIds
      * @param string|null $storeName
      * @param int|null $limit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    protected function buildSubQueryForSalesOrderByItemStateQuery(string $processName, array $states, ?string $storeName = null, ?int $limit = null)
-    {
+    protected function buildSubQueryForSalesOrderByItemStateQuery(
+        int $idOmsOrderProcess,
+        array $omsOrderItemStateIds,
+        ?string $storeName = null,
+        ?int $limit = null
+    ) {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
             ->setDistinct()
             ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->useProcessQuery()
-                ->filterByName($processName)
-            ->endUse()
-            ->useStateQuery()
-                ->filterByName_In($states)
-            ->endUse();
+            ->where(sprintf('%s = %s', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS, $idOmsOrderProcess))
+            ->where(sprintf('%s IN (%s)', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, implode(', ', $omsOrderItemStateIds)));
 
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
@@ -103,6 +113,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Method is only used as BC fallback if store name and limit are not passed.
      *
      * @param array $states
      * @param string $processName
@@ -244,10 +256,13 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $limit);
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($subQuery, 't', false)
-            ->addSelectColumn('*')
-            ->addSelectColumn('t.fk_sales_order')
+        $baseQuery
+            ->addSelectQuery($subQuery, 't', false)
             ->joinEventTimeout()
+            ->joinWithState()
+            ->useEventTimeoutQuery()
+                ->filterByTimeout('now', Criteria::LESS_THAN)
+            ->endUse()
             ->withColumn('EventTimeout.event', 'event')
             ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER));
 
@@ -265,22 +280,29 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
             ->distinct()
-            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->useEventTimeoutQuery()
-                ->filterByTimeout('now', Criteria::LESS_THAN)
-            ->endUse();
+            ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER);
 
-        if ($storeName !== null) {
-            $subQuery
-                ->useOrderQuery()
-                    ->filterByStore($storeName)
-                ->endUse();
-        }
-
+        $subQuery = $this->addEventTimeoutFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
 
         return $subQuery;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param string|null $storeName
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function addEventTimeoutFilterToSalesOrderItemQuery(SpySalesOrderItemQuery $query, ?string $storeName = null): SpySalesOrderItemQuery
+    {
+        $query
+            ->useEventTimeoutQuery()
+                ->filterByTimeout('now', Criteria::LESS_THAN)
+            ->endUse();
+
+        return $query;
     }
 
     /**
@@ -345,6 +367,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @deprecated Method is only used as BC fallback if store name and limit are not passed.
      *
      * @param \DateTime $now
@@ -356,6 +380,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->getSalesQueryContainer()
             ->querySalesOrderItem()
+            ->joinWithState()
             ->joinEventTimeout()
             ->where('EventTimeout.timeout < ?', $now)
             ->withColumn('EventTimeout.event', 'event');

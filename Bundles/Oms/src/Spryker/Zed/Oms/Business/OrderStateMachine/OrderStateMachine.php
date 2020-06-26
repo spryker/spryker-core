@@ -440,11 +440,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     {
         $orderItemsFiltered = [];
         foreach ($orderItems as $orderItem) {
-            $stateId = $orderItem->getState()->getName();
-            $processId = $orderItem->getProcess()->getName();
-            $process = $processes[$processId];
+            $stateName = $orderItem->getState()->getName();
+            $processName = $orderItem->getProcess()->getName();
+            $process = $processes[$processName];
 
-            $state = $process->getStateFromAllProcesses($stateId);
+            $state = $process->getStateFromAllProcesses($stateName);
 
             if ($state->hasEvent($eventId)) {
                 $orderItemsFiltered[] = $orderItem;
@@ -877,7 +877,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         TransitionLogInterface $log,
         DateTime $currentTime
     ) {
-
         $process = $processes[$orderItem->getProcess()->getName()];
 
         $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];
