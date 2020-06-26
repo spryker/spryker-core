@@ -104,4 +104,8 @@
         <property name="placeholderTo" type="string"/>
     </transfer>
 
+    <transfer name="CriteriaRangeFilter">
+        <property name="from" type="string"/>
+    </transfer>
+
 </transfers>

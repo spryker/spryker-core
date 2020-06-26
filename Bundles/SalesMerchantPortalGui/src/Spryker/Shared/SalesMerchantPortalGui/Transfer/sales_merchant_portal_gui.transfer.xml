@@ -36,6 +36,7 @@
         <property name="salutation" type="string"/>
         <property name="store" type="string"/>
         <property name="orderReference" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -87,6 +88,7 @@
         <property name="data" type="array" singular="data"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
+        <property name="total" type="int"/>
     </transfer>
 
     <transfer name="Money">
@@ -117,6 +119,9 @@
     </transfer>
 
     <transfer name="Currency">
+    </transfer>
+
+    <transfer name="GuiTableFilter">
     </transfer>
 
 </transfers>
