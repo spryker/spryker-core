@@ -87,7 +87,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     private function getPropelWriteConfiguration(): array
     {
-        $propelConfig = $this->getConfig()->getPropelConfig();
+        $propelConfig = $this->getConfig()->getPropelConfig()['database']['connections']['default'];
         $propelConfig['user'] = $this->getConfig()->getUsername();
         $propelConfig['password'] = $this->getConfig()->getPassword();
         $propelConfig['dsn'] = $this->getConfig()->getPropelConfig()['database']['connections']['default']['dsn'];
