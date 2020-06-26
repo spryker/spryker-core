@@ -41,9 +41,9 @@ class MerchantRelationshipDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addMerchantRelationshipPreDeletePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE] = function () {
+        $container->set(static::PLUGINS_MERCHANT_RELATIONSHIP_PRE_DELETE, function () {
             return $this->getMerchantRelationshipPreDeletePlugins();
-        };
+        });
 
         return $container;
     }

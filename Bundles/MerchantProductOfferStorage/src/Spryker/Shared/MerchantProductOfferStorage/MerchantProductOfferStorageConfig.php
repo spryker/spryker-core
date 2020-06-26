@@ -50,5 +50,5 @@ class MerchantProductOfferStorageConfig
      *
      * @api
      */
-    public const RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME = 'product_concrete_product_offers';
+    public const RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME = 'product_concrete_product_offers';
 }

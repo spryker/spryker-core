@@ -29,6 +29,7 @@ Save,Speichern
 "Tax rate with id %s doesn't exist","Steuersatz mit der ID %s existiert nicht"
 "Tax rate with provided name, percentage and country already exists.","Steuersatz mit dem angegebenen Namen, Prozentsatz und Land existiert bereits."
 "Tax rates",Steuersätze
+"Tax Rates",Steuersätze
 "Tax set %d was created successfully.","Steuerset %d wurde erfolgreich erstellt."
 "Tax set %d was updated successfully.","Steuerset %d wurde erfolgreich aktualisiert."
 "Tax Set deletion confirmation","Steuerset wurde erfolgreich gelöscht"
@@ -37,6 +38,7 @@ Save,Speichern
 "Tax set is not created. Please fill-in all required fields.","Steuerset wurde nicht erstellt. Bitte alle erforderlichen Felder ausfüllen."
 "Tax set with id %s doesn't exist","Steuerset mit der ID %s existiert nicht"
 "Tax Set with name ""%name%"" already exists.","Steuerset mit dem Namen ""%name%"" existiert bereits."
+"Tax Sets",Steuerarten
 Taxes,Steuern
 "The tax set has been deleted","Das Steuerset wurde gelöscht"
 "Updated at","Aktualisiert am"

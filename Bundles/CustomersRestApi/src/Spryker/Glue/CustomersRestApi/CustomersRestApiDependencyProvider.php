@@ -54,9 +54,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new CustomersRestApiToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new CustomersRestApiToSessionClientBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerPostCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_POST_CREATE] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_POST_CREATE, function () {
             return $this->getCustomerPostCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class CustomersRestApiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_EXPANDER, function () {
             return $this->getCustomerExpanderPlugins();
-        };
+        });
 
         return $container;
     }

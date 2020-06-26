@@ -33,9 +33,9 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -47,9 +47,9 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToCategoryBridge($container->getLocator()->category()->facade());
-        };
+        });
 
         return $container;
     }
@@ -61,17 +61,17 @@ class ProductCategoryStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToProductCategoryQueryContainerBridge($container->getLocator()->productCategory()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new ProductCategoryStorageToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductCategoryStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }

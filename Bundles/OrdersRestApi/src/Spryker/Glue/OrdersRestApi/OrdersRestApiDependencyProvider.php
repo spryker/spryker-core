@@ -41,9 +41,9 @@ class OrdersRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesClient(Container $container): Container
     {
-        $container[static::CLIENT_SALES] = function (Container $container) {
+        $container->set(static::CLIENT_SALES, function (Container $container) {
             return new OrdersRestApiToSalesClientBridge($container->getLocator()->sales()->client());
-        };
+        });
 
         return $container;
     }

@@ -41,11 +41,11 @@ class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addTaxProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_TAX_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_TAX_PRODUCT_STORAGE, function (Container $container) {
             return new ProductTaxSetsRestApiToTaxProductStorageClientBridge(
                 $container->getLocator()->taxProductStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -57,11 +57,11 @@ class ProductTaxSetsRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addTaxStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_TAX_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_TAX_STORAGE, function (Container $container) {
             return new ProductTaxSetsRestApiToTaxStorageClientBridge(
                 $container->getLocator()->taxStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

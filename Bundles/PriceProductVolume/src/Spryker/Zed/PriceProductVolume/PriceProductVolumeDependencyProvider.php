@@ -39,11 +39,11 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -55,11 +55,11 @@ class PriceProductVolumeDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addPriceProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductVolumeToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
-        };
+        });
 
         return $container;
     }

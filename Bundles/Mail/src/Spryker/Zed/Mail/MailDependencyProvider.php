@@ -31,6 +31,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const RENDERER = 'twig';
     public const MAILER = 'mailer';
 
+    protected const SWIFT_MAILER = 'SWIFT_MAILER';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -42,6 +44,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMailCollection($container);
         $container = $this->addGlossaryFacade($container);
         $container = $this->addRenderer($container);
+        $container = $this->addSwiftMailer($container);
         $container = $this->addMailer($container);
 
         return $container;
@@ -54,11 +57,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailProviderCollection(Container $container)
     {
-        $container[static::MAIL_PROVIDER_COLLECTION] = function () {
+        $container->set(static::MAIL_PROVIDER_COLLECTION, function () {
             $mailProviderCollection = $this->getMailProviderCollection();
 
             return $mailProviderCollection;
-        };
+        });
 
         return $container;
     }
@@ -78,11 +81,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMailCollection(Container $container)
     {
-        $container[static::MAIL_TYPE_COLLECTION] = function () {
+        $container->set(static::MAIL_TYPE_COLLECTION, function () {
             $mailCollection = $this->getMailCollection();
 
             return $mailCollection;
-        };
+        });
 
         return $container;
     }
@@ -102,11 +105,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryFacade(Container $container)
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             $mailToGlossaryBridge = new MailToGlossaryBridge($container->getLocator()->glossary()->facade());
 
             return $mailToGlossaryBridge;
-        };
+        });
 
         return $container;
     }
@@ -118,7 +121,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderer(Container $container)
     {
-        $container[static::RENDERER] = function () {
+        $container->set(static::RENDERER, function () {
             $twig = $this->getTwigEnvironment();
             if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
                 $translator = new TwigTranslatorPlugin();
@@ -127,7 +130,7 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
             $rendererBridge = new MailToRendererBridge($twig);
 
             return $rendererBridge;
-        };
+        });
 
         return $container;
     }
@@ -148,10 +151,9 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMailer(Container $container)
+    protected function addSwiftMailer(Container $container): Container
     {
-        $container[static::MAILER] = function () {
-            $message = new Swift_Message();
+        $container->set(static::SWIFT_MAILER, function () {
             $transport = new Swift_SmtpTransport(
                 $this->getConfig()->getSmtpHost(),
                 $this->getConfig()->getSmtpPort(),
@@ -165,12 +167,25 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
                     ->setPassword($this->getConfig()->getSmtpPassword());
             }
 
-            $mailer = new Swift_Mailer($transport);
+            return new Swift_Mailer($transport);
+        });
 
-            $mailerBridge = new MailToMailerBridge($message, $mailer);
+        return $container;
+    }
 
-            return $mailerBridge;
-        };
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMailer(Container $container)
+    {
+        $container->set(static::MAILER, $container->factory(function (Container $container) {
+            $message = new Swift_Message();
+            $swiftMailer = $container->get(static::SWIFT_MAILER);
+
+            return new MailToMailerBridge($message, $swiftMailer);
+        }));
 
         return $container;
     }

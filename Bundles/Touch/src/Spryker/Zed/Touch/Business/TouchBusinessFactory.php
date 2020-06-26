@@ -34,7 +34,8 @@ class TouchBusinessFactory extends AbstractBusinessFactory
         return new TouchRecord(
             $this->getUtilDataReaderService(),
             $this->getQueryContainer(),
-            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION),
+            $this->getConfig()
         );
     }
 
@@ -52,7 +53,8 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     public function createTouchModel()
     {
         return new Touch(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getConfig()
         );
     }
 
@@ -63,7 +65,7 @@ class TouchBusinessFactory extends AbstractBusinessFactory
     {
         $bulkTouchHandler = $this->createBulkTouchHandler();
 
-        return new BulkTouch($bulkTouchHandler);
+        return new BulkTouch($bulkTouchHandler, $this->getConfig());
     }
 
     /**
@@ -117,7 +119,8 @@ class TouchBusinessFactory extends AbstractBusinessFactory
         return new TouchWriter(
             $this->getQueryContainer(),
             $this->getEntityManager(),
-            $this->getUtilDataReaderService()
+            $this->getUtilDataReaderService(),
+            $this->getConfig()
         );
     }
 }

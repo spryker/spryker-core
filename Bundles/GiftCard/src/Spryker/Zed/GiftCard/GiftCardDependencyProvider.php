@@ -49,9 +49,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEncodingService(Container $container)
     {
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_ENCODING, function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAttributePlugins(Container $container)
     {
-        $container[static::ATTRIBUTE_PROVIDER_PLUGINS] = function (Container $container) {
+        $container->set(static::ATTRIBUTE_PROVIDER_PLUGINS, function (Container $container) {
             return $this->getAttributeProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDecisionRulePlugins(Container $container)
     {
-        $container[static::GIFT_CARD_DECISION_RULE_PLUGINS] = function (Container $container) {
+        $container->set(static::GIFT_CARD_DECISION_RULE_PLUGINS, function (Container $container) {
             return $this->getDecisionRulePlugins();
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentSaverPlugins(Container $container)
     {
-        $container[static::GIFT_CARD_PAYMENT_SAVER_PLUGINS] = function (Container $container) {
+        $container->set(static::GIFT_CARD_PAYMENT_SAVER_PLUGINS, function (Container $container) {
             return $this->getPaymentSaverPlugins();
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addValueProvider(Container $container)
     {
-        $container[static::GIFT_CARD_VALUE_PROVIDER] = function (Container $container) {
+        $container->set(static::GIFT_CARD_VALUE_PROVIDER, function (Container $container) {
             return $this->getValueProviderPlugin();
-        };
+        });
 
         return $container;
     }
@@ -119,9 +119,9 @@ class GiftCardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGiftCardCodeCandidateValidatorPlugins(Container $container)
     {
-        $container[static::GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS] = function (Container $container) {
+        $container->set(static::GIFT_CARD_CODE_CANDIDATE_VALIDATOR_PLUGINS, function (Container $container) {
             return $this->getGiftCardCodeValidationPlugins();
-        };
+        });
 
         return $container;
     }
