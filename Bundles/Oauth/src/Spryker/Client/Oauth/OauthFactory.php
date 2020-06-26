@@ -79,7 +79,7 @@ class OauthFactory extends AbstractFactory
     /**
      * @return \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface
      */
-    protected function createAccessTokenRepository(): AccessTokenRepositoryInterface
+    public function createAccessTokenRepository(): AccessTokenRepositoryInterface
     {
         return new AccessTokenRepository();
     }
@@ -95,7 +95,7 @@ class OauthFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface
      */
-    protected function createKeyLoader(): KeyLoaderInterface
+    public function createKeyLoader(): KeyLoaderInterface
     {
         return new KeyLoader($this->getKeyLoaderPlugins());
     }
@@ -111,7 +111,7 @@ class OauthFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
      */
-    protected function getAuthorizationValidatorPlugins(): array
+    public function getAuthorizationValidatorPlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_AUTHORIZATION_VALIDATOR);
     }

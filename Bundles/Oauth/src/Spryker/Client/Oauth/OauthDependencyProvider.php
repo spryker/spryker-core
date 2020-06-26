@@ -27,6 +27,8 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        parent::provideServiceLayerDependencies($container);
+
         $container = $this->addZedRequestClient($container);
         $container = $this->addKeyLoaderPlugins($container);
         $container = $this->addAuthorizationValidatorPlugins($container);
@@ -55,15 +57,15 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     protected function addKeyLoaderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_KEY_LOADER] = function () {
+        $container->set(static::PLUGINS_KEY_LOADER, function () {
             return $this->getKeyLoaderPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\OauthExtention\Dependency\Plugin\KeyLoaderPluginInterface[]
+     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
      */
     protected function getKeyLoaderPlugins(): array
     {
@@ -77,15 +79,15 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAuthorizationValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_AUTHORIZATION_VALIDATOR] = function () {
+        $container->set(static::PLUGINS_AUTHORIZATION_VALIDATOR, function () {
             return $this->getAuthorizationValidatorPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\OauthExtention\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
      */
     protected function getAuthorizationValidatorPlugins(): array
     {

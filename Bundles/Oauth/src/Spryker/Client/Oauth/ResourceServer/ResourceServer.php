@@ -65,10 +65,10 @@ class ResourceServer extends LeagueResourceServer
             }
         }
 
-        if ($verifiedRequest) {
-            return $verifiedRequest;
+        if (!$verifiedRequest) {
+            throw OAuthServerException::accessDenied('No validator found to authorize the token.');
         }
 
-        throw OAuthServerException::accessDenied('No validator found to authorize the token.');
+        return $verifiedRequest;
     }
 }
