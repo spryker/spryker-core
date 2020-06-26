@@ -53,7 +53,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->getFactory()
             ->getProductQuery()
             ->filterBySku_In($productConcreteSkus)
-            ->withColumn('DISTINCT ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
+            ->withColumn(Criteria::DISTINCT . ' ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
             ->select([static::FK_PRODUCT_ABSTRACT])
             ->find()
             ->getData();

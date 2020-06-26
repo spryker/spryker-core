@@ -35,8 +35,6 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
             ->getEventBehaviorFacade()
             ->getEventTransfersAdditionalValues($eventTransfers, SpyAvailabilityTableMap::COL_SKU);
 
-        // TODO: $productConcreteSkus is empty array every time, need to clarify
-
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus);
 
         $this->publish($productAbstractIds);
