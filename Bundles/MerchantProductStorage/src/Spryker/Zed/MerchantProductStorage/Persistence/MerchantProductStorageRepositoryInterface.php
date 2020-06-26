@@ -14,11 +14,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface MerchantProductStorageRepositoryInterface
 {
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $merchantProductAbstractIds
      *
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
-    public function getMerchantProductsByIdProductAbstracts(array $idProductAbstracts): MerchantProductCollectionTransfer;
+    public function getMerchantProducts(array $merchantProductAbstractIds): MerchantProductCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantProductFilterCriteriaTransfer $merchantProductFilterCriteriaTransfer

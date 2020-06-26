@@ -19,17 +19,17 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class MerchantProductStorageRepository extends AbstractRepository implements MerchantProductStorageRepositoryInterface
 {
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $merchantProductAbstractIds
      *
      * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
-    public function getMerchantProductsByIdProductAbstracts(array $idProductAbstracts): MerchantProductCollectionTransfer
+    public function getMerchantProducts(array $merchantProductAbstractIds): MerchantProductCollectionTransfer
     {
         $merchantProductEntities = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
             ->joinWithMerchant()
             ->joinWithProductAbstract()
-            ->filterByFkProductAbstract_In($idProductAbstracts)
+            ->filterByIdProductAbstractMerchant_In($merchantProductAbstractIds)
             ->find();
 
         $merchantProductCollectionTransfer = new MerchantProductCollectionTransfer();

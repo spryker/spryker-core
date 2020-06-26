@@ -11,7 +11,7 @@
     "spryker/storage": "^3.15.0",
     "spryker/synchronization": "^1.11.0",
     "spryker/synchronization-behavior": "^1.4.0",
-    "spryker/synchronization-extension": "*"
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/event": "*"

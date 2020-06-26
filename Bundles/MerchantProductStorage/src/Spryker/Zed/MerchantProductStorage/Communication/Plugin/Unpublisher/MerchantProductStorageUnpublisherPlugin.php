@@ -5,17 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener;
+namespace Spryker\Zed\MerchantProductStorage\Communication\Plugin\Unpublisher;
 
-use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
+use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
  * @method \Spryker\Zed\MerchantProductStorage\Business\MerchantProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductStorage\Communication\MerchantProductStorageCommunicationFactory getFactory()
  */
-class MerchantProductStorageUnpublishListener extends AbstractPlugin implements EventBulkHandlerInterface
+class MerchantProductStorageUnpublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,5 +31,20 @@ class MerchantProductStorageUnpublishListener extends AbstractPlugin implements 
     public function handleBulk(array $transfers, $eventName)
     {
         $this->getFacade()->deleteMerchantProductStorageCollectionByIdProductAbstractEvents($transfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getSubscribedEvents(): array
+    {
+        return [
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_UNPUBLISH,
+            MerchantProductEvents::ENTITY_SPY_MERCHANT_PRODUCT_ABSTRACT_DELETE,
+        ];
     }
 }

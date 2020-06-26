@@ -50,24 +50,24 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      */
     public function writeCollectionByIdProductAbstractEvents(array $eventTransfers): void
     {
-        $idProductAbstracts = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $merchantProductAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        if (!$idProductAbstracts) {
+        if (!$merchantProductAbstractIds) {
             return;
         }
 
-        $this->writeByIdProductAbstracts($idProductAbstracts);
+        $this->writeByIdMerchantProductAbstracts($merchantProductAbstractIds);
     }
 
     /**
-     * @param int[] $idProductAbstracts
+     * @param int[] $merchantProductAbstractIds
      *
      * @return void
      */
-    protected function writeByIdProductAbstracts(array $idProductAbstracts): void
+    protected function writeByIdMerchantProductAbstracts(array $merchantProductAbstractIds): void
     {
         $merchantProductsCollectionTransfer = $this->merchantProductStorageRepository
-            ->getMerchantProductsByIdProductAbstracts($idProductAbstracts);
+            ->getMerchantProducts($merchantProductAbstractIds);
 
         foreach ($merchantProductsCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
             $this->merchantProductStorageEntityManager->saveMerchantProductStorage($merchantProductTransfer);
