@@ -57,9 +57,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new SalesOrderThresholdGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new SalesOrderThresholdGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSalesOrderThresholdFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES_ORDER_THRESHOLD] = function (Container $container) {
+        $container->set(static::FACADE_SALES_ORDER_THRESHOLD, function (Container $container) {
             return new SalesOrderThresholdGuiToSalesOrderThresholdFacadeBridge($container->getLocator()->salesOrderThreshold()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesOrderThresholdGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -113,9 +113,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new SalesOrderThresholdGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -127,9 +127,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addTaxFacade(Container $container): Container
     {
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new SalesOrderThresholdGuiToTaxFacadeBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class SalesOrderThresholdGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSalesOrderThresholdFormExpanderPlugins(Container $container): Container
     {
-        $container[static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::SALES_ORDER_THRESHOLD_FORM_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getSalesOrderThresholdFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }

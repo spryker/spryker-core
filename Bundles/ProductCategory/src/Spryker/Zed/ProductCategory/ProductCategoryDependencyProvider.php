@@ -37,17 +37,17 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductCategoryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductCategoryToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
-        $container[self::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ProductCategoryToEventBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         $container = $this->addCategoryFacade($container);
 
@@ -61,17 +61,17 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductCategoryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+        $container->set(static::CATEGORY_QUERY_CONTAINER, function (Container $container) {
             return new ProductCategoryToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductCategoryToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         $container = $this->addCategoryFacade($container);
 
@@ -85,9 +85,9 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryFacade(Container $container): Container
     {
-        $container[static::FACADE_CATEGORY] = function (Container $container) {
+        $container->set(static::FACADE_CATEGORY, function (Container $container) {
             return new ProductCategoryToCategoryBridge($container->getLocator()->category()->facade());
-        };
+        });
 
         return $container;
     }

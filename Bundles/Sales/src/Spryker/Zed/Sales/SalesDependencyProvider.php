@@ -114,9 +114,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOrderExpanderPreSavePlugins(Container $container)
     {
-        $container[static::ORDER_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+        $container->set(static::ORDER_EXPANDER_PRE_SAVE_PLUGINS, function (Container $container) {
             return $this->getOrderExpanderPreSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -128,9 +128,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addHydrateOrderPlugins(Container $container)
     {
-        $container[static::HYDRATE_ORDER_PLUGINS] = function (Container $container) {
+        $container->set(static::HYDRATE_ORDER_PLUGINS, function (Container $container) {
             return $this->getOrderHydrationPlugins();
-        };
+        });
 
         return $container;
     }
@@ -142,9 +142,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOrderItemExpanderPreSavePlugins(Container $container)
     {
-        $container[static::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS] = function (Container $container) {
+        $container->set(static::ORDER_ITEM_EXPANDER_PRE_SAVE_PLUGINS, function (Container $container) {
             return $this->getOrderItemExpanderPreSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -156,9 +156,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemTransformerStrategyPlugins(Container $container): Container
     {
-        $container[static::ITEM_TRANSFORMER_STRATEGY_PLUGINS] = function (Container $container) {
+        $container->set(static::ITEM_TRANSFORMER_STRATEGY_PLUGINS, function (Container $container) {
             return $this->getItemTransformerStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -170,9 +170,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesTablePlugins(Container $container)
     {
-        $container[static::UI_SALES_TABLE_PLUGINS] = function (Container $container) {
+        $container->set(static::UI_SALES_TABLE_PLUGINS, function (Container $container) {
             return $this->getSalesTablePlugins();
-        };
+        });
 
         return $container;
     }
@@ -184,9 +184,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyPlugin(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -198,9 +198,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container)
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new SalesToOmsBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }
@@ -212,9 +212,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCountryFacade(Container $container)
     {
-        $container[static::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new SalesToCountryBridge($container->getLocator()->country()->facade());
-        };
+        });
 
         return $container;
     }
@@ -226,9 +226,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSequenceNumberFacade(Container $container)
     {
-        $container[static::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+        $container->set(static::FACADE_SEQUENCE_NUMBER, function (Container $container) {
             return new SalesToSequenceNumberBridge($container->getLocator()->sequenceNumber()->facade());
-        };
+        });
 
         return $container;
     }
@@ -240,9 +240,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFacade(Container $container)
     {
-        $container[static::FACADE_USER] = function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new SalesToUserBridge($container->getLocator()->user()->facade());
-        };
+        });
 
         return $container;
     }
@@ -254,9 +254,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container)
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new SalesToCustomerBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -268,9 +268,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateTimeFormatter(Container $container)
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -282,9 +282,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -296,9 +296,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -310,9 +310,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitizeService(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new SalesToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -324,9 +324,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationFacade(Container $container)
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new SalesToCalculationBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -338,9 +338,9 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOrderPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ORDER_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_ORDER_POST_SAVE, function () {
             return $this->getOrderPostSavePlugins();
-        };
+        });
 
         return $container;
     }

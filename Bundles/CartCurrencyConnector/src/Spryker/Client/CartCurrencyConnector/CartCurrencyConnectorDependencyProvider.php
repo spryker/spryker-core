@@ -34,9 +34,9 @@ class CartCurrencyConnectorDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartClient(Container $container): Container
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new CartCurrencyConnectorToCartClientBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }

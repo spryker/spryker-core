@@ -18,6 +18,7 @@ interface ZedNavigationFacadeInterface
      * - Calls a stack of `NavigationItemCollectionFilterPluginInterface` to filter navigation items.
      * - Calls a stack of `NavigationItemFilterPluginInterface` to filter navigation items.
      * - When navigation cache is enabled it returns cached navigation.
+     * - Uses a strategy to define navigation elements merging process.
      *
      * @api
      *
