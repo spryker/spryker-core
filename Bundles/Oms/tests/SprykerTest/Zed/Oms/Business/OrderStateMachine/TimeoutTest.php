@@ -154,8 +154,6 @@ class TimeoutTest extends Unit
     }
 
     /**
-     * @group dropEvents
-     *
      * @dataProvider dropEventsDataProvider()
      *
      * @param string|null $storeName

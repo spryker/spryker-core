@@ -270,8 +270,6 @@ class OrderStateMachineTest extends Unit
     }
 
     /**
-     * @group transitionOrderItems
-     *
      * @dataProvider transitionOrderItemsDataProvider()
      *
      * @param string|null $storeName
