@@ -35,11 +35,20 @@ interface CustomerStubInterface
     public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Customer\Zed\CustomerStubInterface::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

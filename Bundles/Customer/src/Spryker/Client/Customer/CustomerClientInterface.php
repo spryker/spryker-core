@@ -50,11 +50,27 @@ interface CustomerClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Customer\CustomerClientInterface::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Finds customer registration confirmation by provided registration key.
+     * - If found, sets customer as registered and removes the registration key from persistent storage.
+     * - Returns response with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 
     /**
      * Specification:
