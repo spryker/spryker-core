@@ -9,6 +9,7 @@
 "Company Business Unit ""%s"" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.","Company Business Unit ""%s"" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy."
 "Company Business Unit ""%s"" was deleted.","Company Business Unit ""%s"" was deleted."
 "Company name","Company name"
+"Company Units","Company Units"
 "Create Company Business Unit","Create Company Business Unit"
 "Edit Company Business Unit","Edit Company Business Unit"
 "List of Company Business Units","List of company business units"

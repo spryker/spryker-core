@@ -33,6 +33,6 @@ class ProductManagementProductCreateCest
         $i->registerMoneyCollectionFormTypePlugin();
 
         $i->amOnPage(ProductManagementProductCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Products / Products / Create a Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Create a Product');
     }
 }
