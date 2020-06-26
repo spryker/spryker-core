@@ -44,6 +44,8 @@ use Spryker\Zed\Oms\Business\Util\Drawer;
 use Spryker\Zed\Oms\Business\Util\OrderItemMatrix;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Business\Util\Reservation;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Business\Util\TransitionLog;
 use Spryker\Zed\Oms\OmsDependencyProvider;
 
@@ -146,6 +148,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new Timeout(
             $this->getQueryContainer(),
+            $this->createTimeoutProcessorCollection(),
             $this->getConfig()
         );
     }
@@ -211,7 +214,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getGraph()->init('Statemachine', $this->getConfig()->getGraphDefaults(), true, false),
-            $this->getUtilTextService()
+            $this->getUtilTextService(),
+            $this->createTimeoutProcessorCollection()
         );
     }
 
@@ -450,6 +454,14 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
+     */
+    public function createTimeoutProcessorCollection(): TimeoutProcessorCollectionInterface
+    {
+        return new TimeoutProcessorCollection($this->getTimeoutProcessorPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
      */
     public function getOmsOrderMailExpanderPlugins(): array
@@ -505,5 +517,13 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     public function getReservationHandlerTerminationAwareStrategyPlugins(): array
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY);
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     */
+    public function getTimeoutProcessorPlugins(): array
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::PLUGINS_TIMEOUT_PROCESSOR);
     }
 }
