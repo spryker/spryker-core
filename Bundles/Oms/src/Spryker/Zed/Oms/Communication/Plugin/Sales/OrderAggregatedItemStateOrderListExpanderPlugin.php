@@ -17,11 +17,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderListExpanderPluginInterfac
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()
  */
-class OrderStateDisplayNamesOrderListExpanderPlugin extends AbstractPlugin implements OrderListExpanderPluginInterface
+class OrderAggregatedItemStateOrderListExpanderPlugin extends AbstractPlugin implements OrderListExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands orders with a list of unique display state names from order items.
+     * - Expands orders with aggregated item states.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class OrderStateDisplayNamesOrderListExpanderPlugin extends AbstractPlugin imple
      */
     public function expand(OrderListTransfer $orderListTransfer): OrderListTransfer
     {
-        $orderTransfers = $this->getFacade()->expandOrdersWithItemStateDisplayNames(
+        $orderTransfers = $this->getFacade()->expandOrdersWithAggregatedItemStates(
             $orderListTransfer->getOrders()->getArrayCopy()
         );
 

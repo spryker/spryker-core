@@ -363,9 +363,9 @@ class Finder implements FinderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return string|null
+     * @return array
      */
-    public function findItemStateDisplayName(ItemTransfer $itemTransfer): ?string
+    public function findItemStateDisplayName(ItemTransfer $itemTransfer): array
     {
         $processName = $itemTransfer->requireProcess()->getProcess();
         $process = $this->builder->createProcess($processName);
@@ -373,11 +373,11 @@ class Finder implements FinderInterface
 
         $allStates = $process->getAllStates();
         if (!isset($allStates[$stateName])) {
-            return null;
+            return [null, null];
         }
 
         $state = $allStates[$stateName];
 
-        return $state->getDisplay() ?: null;
+        return [$state->getDisplay() ?: null, $stateName];
     }
 }

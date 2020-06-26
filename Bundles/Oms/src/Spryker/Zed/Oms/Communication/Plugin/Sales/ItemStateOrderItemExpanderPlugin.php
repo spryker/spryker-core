@@ -16,11 +16,11 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterfac
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
-class StateDisplayNameOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
+class ItemStateOrderItemExpanderPlugin extends AbstractPlugin implements OrderItemExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands an order items state with displayName property.
+     * - Expands an order items with item state.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class StateDisplayNameOrderItemExpanderPlugin extends AbstractPlugin implements 
      */
     public function expand(array $itemTransfers): array
     {
-        return $this->getFacade()->expandOrderItemsWithStateDisplayName($itemTransfers);
+        return $this->getFacade()->expandOrderItemsWithItemState($itemTransfers);
     }
 }

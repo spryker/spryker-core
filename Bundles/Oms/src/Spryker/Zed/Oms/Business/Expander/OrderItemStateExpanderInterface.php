@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
-interface OrderItemStateDisplayNameExpanderInterface
+interface OrderItemStateExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array;
+    public function expandOrderItemsWithItemState(array $itemTransfers): array;
 }

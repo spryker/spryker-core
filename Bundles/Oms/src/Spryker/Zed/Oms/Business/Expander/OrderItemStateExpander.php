@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
-class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpanderInterface
+class OrderItemStateExpander implements OrderItemStateExpanderInterface
 {
+    protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
+
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
@@ -40,7 +42,7 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function expandOrderItemsWithStateDisplayName(array $itemTransfers): array
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
     {
         $salesOrderItemIds = $this->extractSalesOrderItemIds($itemTransfers);
         $orderItemFilterTransfer = $this->createOrderItemFilterTransfer($salesOrderItemIds);
@@ -53,12 +55,12 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
                 continue;
             }
 
-            $displayName = $this->finder->findItemStateDisplayName($mappedItemTransfer);
-            if (!$displayName) {
+            [$displayName, $stateName] = $this->finder->findItemStateDisplayName($mappedItemTransfer);
+            if (!$stateName) {
                 continue;
             }
 
-            $itemTransfer = $this->setItemStateDisplayName($itemTransfer, $displayName);
+            $itemTransfer = $this->setItemState($itemTransfer, $stateName, $displayName);
         }
 
         return $itemTransfers;
@@ -108,17 +110,24 @@ class OrderItemStateDisplayNameExpander implements OrderItemStateDisplayNameExpa
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $displayName
+     * @param string $stateName
+     * @param string|null $displayName
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function setItemStateDisplayName(ItemTransfer $itemTransfer, string $displayName): ItemTransfer
+    protected function setItemState(ItemTransfer $itemTransfer, string $stateName, ?string $displayName): ItemTransfer
     {
         if (!$itemTransfer->getState()) {
             $itemTransfer->setState(new ItemStateTransfer());
         }
 
-        $itemTransfer->getState()->setDisplayName($displayName);
+        if (!$displayName) {
+            $displayName = static::ITEM_STATE_GLOSSARY_KEY_PREFIX . str_replace(' ', '-', mb_strtolower(trim($stateName)));
+        }
+
+        $itemTransfer->getState()
+            ->setDisplayName($displayName)
+            ->setName($stateName);
 
         return $itemTransfer;
     }
