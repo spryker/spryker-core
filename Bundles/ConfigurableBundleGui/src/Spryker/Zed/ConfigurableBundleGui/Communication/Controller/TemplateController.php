@@ -417,6 +417,13 @@ class TemplateController extends AbstractController
      */
     protected function executeDeleteAction(Request $request): RedirectResponse
     {
+        $deleteForm = $this->getFactory()->createDeleteConfigurableBundleTemplateForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
+        }
         $idConfigurableBundleTemplate = $this->castId(
             $request->query->get(static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE)
         );
@@ -478,8 +485,11 @@ class TemplateController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
+        $deleteForm = $this->getFactory()->createDeleteConfigurableBundleTemplateForm();
+
         return [
             'configurableBundleTemplateTransfer' => $configurableBundleTemplateTransfer,
+            'deleteForm' => $deleteForm->createView(),
         ];
     }
 

@@ -28,6 +28,7 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\Configurab
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeactivateConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeleteConfigurableBundleSlotForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeleteConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandler;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapper;
@@ -295,6 +296,14 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
         return $this->getFormFactory()->create(DeleteConfigurableBundleSlotForm::class, [], [
             'fields' => [],
         ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteConfigurableBundleTemplateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteConfigurableBundleTemplateForm::class);
     }
 
     /**
