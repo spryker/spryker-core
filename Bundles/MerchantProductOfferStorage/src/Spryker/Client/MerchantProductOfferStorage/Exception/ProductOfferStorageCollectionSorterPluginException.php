@@ -9,6 +9,6 @@ namespace Spryker\Client\MerchantProductOfferStorage\Exception;
 
 use Exception;
 
-class ProductOfferProviderPluginException extends Exception
+class ProductOfferStorageCollectionSorterPluginException extends Exception
 {
 }

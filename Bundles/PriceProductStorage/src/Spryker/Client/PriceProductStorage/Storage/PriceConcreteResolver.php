@@ -90,8 +90,7 @@ class PriceConcreteResolver implements PriceConcreteResolverInterface
 
         $currentProductPriceTransfer = $this->priceProductClient->resolveProductPriceTransferByPriceProductFilter(
             $priceProductTransfers,
-            (new PriceProductFilterTransfer())
-                ->setQuantity($priceProductFilterTransfer->getQuantity())
+            $priceProductFilterTransfer
         );
 
         // In case no $priceProductTransfers are provided for price resolving, the quantity is not copied in the result but required in the further process

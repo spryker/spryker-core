@@ -8,30 +8,20 @@
 namespace Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
-use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface;
 
 class ProductConcreteDefaultProductOfferReader implements ProductConcreteDefaultProductOfferReaderInterface
 {
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface
+     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[]
      */
-    protected $productOfferStorageReader;
+    protected $defaultProductOfferPlugins;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface
+     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface[] $defaultProductOfferPlugins
      */
-    protected $defaultProductOffer;
-
-    /**
-     * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageReaderInterface $productOfferStorageReader
-     * @param \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface $defaultProductOffer
-     */
-    public function __construct(
-        ProductOfferStorageReaderInterface $productOfferStorageReader,
-        ProductConcreteDefaultProductOfferInterface $defaultProductOffer
-    ) {
-        $this->productOfferStorageReader = $productOfferStorageReader;
-        $this->defaultProductOffer = $defaultProductOffer;
+    public function __construct(array $defaultProductOfferPlugins)
+    {
+        $this->defaultProductOfferPlugins = $defaultProductOfferPlugins;
     }
 
     /**
@@ -41,26 +31,12 @@ class ProductConcreteDefaultProductOfferReader implements ProductConcreteDefault
      */
     public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
     {
-        if (!$productOfferStorageCriteriaTransfer->getProductConcreteSkus()) {
-            return null;
+        foreach ($this->defaultProductOfferPlugins as $defaultProductOfferPlugin) {
+            if ($defaultProductOfferPlugin->isApplicable($productOfferStorageCriteriaTransfer)) {
+                return $defaultProductOfferPlugin->findProductOfferReference($productOfferStorageCriteriaTransfer);
+            }
         }
 
-        $productOfferStorageCollectionTransfer = $this->productOfferStorageReader->getProductOffersBySkus($productOfferStorageCriteriaTransfer);
-
-        if (!$productOfferStorageCollectionTransfer->getProductOffersStorage()->count()) {
-            return null;
-        }
-
-        $defaultProductOffers = $this->defaultProductOffer->getProductOfferReferences(
-            $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy(),
-            $productOfferStorageCriteriaTransfer
-        );
-
-        $productConcreteSku = $productOfferStorageCriteriaTransfer->getProductConcreteSkus()[0];
-        if (!isset($defaultProductOffers[$productConcreteSku])) {
-            return null;
-        }
-
-        return $defaultProductOffers[$productConcreteSku];
+        return null;
     }
 }
