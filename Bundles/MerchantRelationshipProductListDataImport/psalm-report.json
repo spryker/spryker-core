@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListDataImport/src/Spryker/Zed/MerchantRelationshipProductListDataImport/Business/MerchantRelationshipProductListDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createMerchantRelationshipKeyToIdMerchantRelationshipStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListDataImport/src/Spryker/Zed/MerchantRelationshipProductListDataImport/Business/MerchantRelationshipProductListDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListDataImport/src/Spryker/Zed/MerchantRelationshipProductListDataImport/Business/MerchantRelationshipProductListDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListDataImport/src/Spryker/Zed/MerchantRelationshipProductListDataImport/Business/MerchantRelationshipProductListDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->createMerchantRelationshipProductListDataImport()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setFkMerchantRelationship on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListDataImport/src/Spryker/Zed/MerchantRelationshipProductListDataImport/Business/Model/MerchantRelationshipProductListWriterStep.php",
+            "snippet": "            ->setFkMerchantRelationship($dataSet[MerchantRelationshipProductListDataSetInterface::ID_MERCHANT_RELATIONSHIP])",
+            "selected_text": "setFkMerchantRelationship",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

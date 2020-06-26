@@ -1,0 +1,187 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/BulkTouch/Filter/AbstractIdFilter.php",
+            "snippet": "        return $touchQuery->select([SpyTouchTableMap::COL_ITEM_ID])->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/BulkTouch/Handler/BulkTouchHandlerUpdate.php",
+            "snippet": "                ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "InvalidFalsableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Touch\\Business\\Model\\BulkTouch\\Handler\\BulkTouchHandlerUpdate::getItemEventValueFor does not allow false, but 'array-key|false' contains false",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/BulkTouch/Handler/BulkTouchHandlerUpdate.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 2,
+            "shortcode": 143
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "FalsableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Touch\\Business\\Model\\BulkTouch\\Handler\\BulkTouchHandlerUpdate::getItemEventValueFor does not allow false, but the function returns 'array-key|false'",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/BulkTouch/Handler/BulkTouchHandlerUpdate.php",
+            "snippet": "        return array_search($eventName, $itemEventValueSet);",
+            "selected_text": "array_search($eventName, $itemEventValueSet)",
+            "error_level": 5,
+            "shortcode": 137
+        },
+        {
+            "severity": "info",
+            "line_from": 125,
+            "line_to": 125,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch> variable $touchEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/TouchRecord.php",
+            "snippet": "        if ($touchEntityCollection->count() === 1) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Touch\\Persistence\\SpyTouch> variable $touchEntityCollection",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/TouchRecord.php",
+            "snippet": "            return $touchEntityCollection->getFirst();",
+            "selected_text": "getFirst",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::orderBy does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Persistence/TouchQueryContainer.php",
+            "snippet": "            ->orderBy(SpyTouchTableMap::COL_ITEM_TYPE)",
+            "selected_text": "orderBy",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery' for Spryker\\Zed\\Touch\\Persistence\\TouchQueryContainer::queryTouchDeleteStorageAndSearch is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Persistence/TouchQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery",
+            "selected_text": "\\Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 177,
+            "line_to": 177,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery' for Spryker\\Zed\\Touch\\Persistence\\TouchQueryContainer::queryTouchDeleteStorageAndSearch",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Persistence/TouchQueryContainer.php",
+            "snippet": "        return $query;",
+            "selected_text": "$query",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 273,
+            "line_to": 273,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery' for Spryker\\Zed\\Touch\\Persistence\\TouchQueryContainer::queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\Criteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Persistence/TouchQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery",
+            "selected_text": "\\Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 282,
+            "line_to": 282,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery&static|Propel\\Runtime\\ActiveQuery\\Criteria|Propel\\Runtime\\ActiveQuery\\ModelCriteria&static' is more general than the declared return type 'Orm\\Zed\\Touch\\Persistence\\SpyTouchQuery' for Spryker\\Zed\\Touch\\Persistence\\TouchQueryContainer::queryTouchEntriesByItemTypeAndItemIdsAllowableToUpdateWithItemEvent",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Persistence/TouchQueryContainer.php",
+            "snippet": "        return $query;",
+            "selected_text": "$query",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/TouchDependencyProvider.php",
+            "snippet": "            return $container->getLocator()->utilDataReader()->service();",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 324,
+            "line_to": 324,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\UtilDataReader\\UtilDataReaderServiceInterface::getPropelBatchIterator has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Model/TouchRecord.php",
+            "snippet": "        return $this->utilDataReaderService->getPropelBatchIterator($touchIdsToRemoveQuery);",
+            "selected_text": "getPropelBatchIterator",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\UtilDataReader\\UtilDataReaderServiceInterface::getPropelBatchIterator has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Business/Writer/TouchWriter.php",
+            "snippet": "        return $this->utilDataReaderService->getPropelBatchIterator($touchIdsToRemoveQuery);",
+            "selected_text": "getPropelBatchIterator",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Touch\\Business\\TouchFacadeInterface::removeTouchEntriesMarkedAsDeleted has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Touch/src/Spryker/Zed/Touch/Communication/Console/TouchCleanUpConsole.php",
+            "snippet": "        $deleteCount = $this->getFacade()->removeTouchEntriesMarkedAsDeleted();",
+            "selected_text": "removeTouchEntriesMarkedAsDeleted",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

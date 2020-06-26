@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\UserLocale\\Business\\UserLocaleReader\\UserLocaleReader::getLocaleTransferByLocaleName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocale/src/Spryker/Zed/UserLocale/Business/UserLocaleReader/UserLocaleReader.php",
+            "snippet": "        return $this->getLocaleTransferByLocaleName($this->getCurrentUser()->getLocaleName());",
+            "selected_text": "$this->getCurrentUser()->getLocaleName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocale/src/Spryker/Zed/UserLocale/UserLocaleDependencyProvider.php",
+            "snippet": "            return new UserLocaleToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UserLocale/src/Spryker/Zed/UserLocale/UserLocaleDependencyProvider.php",
+            "snippet": "            return new UserLocaleToUserFacadeBridge($container->getLocator()->user()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
