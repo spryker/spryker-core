@@ -52,6 +52,7 @@ Urls,URLs
 "Version History:",Versionshistorie:
 View,Ansicht
 "View CMS Page:","CMS-Seite anzeigen:"
+"You are editing a <br>draft </b> page. To make your changes visible in Yves, publish the page. Publishing the page will create a new version for this page","Sie bearbeiten eine <b>Entwurf</b>-Seite. Um Ihre Änderungen im Storefront sichtbar zu machen, veröffentlichen Sie die Seite. Durch die Veröffentlichung wird eine neue Version dieser Seite erstellt."
 "You are viewing a published page. It was published","Sie sehen sich eine veröffentlichte Seite an. Sie wurde durch"
 "You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version","Sie können diese Seite oder die Platzhalter bearbeiten um den aktuellen Entwurf zu ändern. Sie können den aktuellen Entwurf veröffentlichen, um eine neue Version zu erstellen."
 "CMS Redirect",Weiterleitungen

@@ -29,6 +29,7 @@ Save,Save
 "Tax rate with id %s doesn't exist","Tax rate with id %s doesn't exist"
 "Tax rate with provided name, percentage and country already exists.","Tax rate with provided name, percentage and country already exists."
 "Tax rates","Tax rates"
+"Tax Rates","Tax Rates"
 "Tax set %d was created successfully.","Tax set %d was created successfully."
 "Tax set %d was updated successfully.","Tax set %d was updated successfully."
 "Tax Set deletion confirmation","Are you sure about deleting this tax set?"

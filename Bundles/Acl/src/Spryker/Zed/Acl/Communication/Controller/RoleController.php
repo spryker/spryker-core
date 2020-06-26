@@ -73,7 +73,7 @@ class RoleController extends AbstractController
                 $roleTransfer = $this->getFacade()->addRole($formData[RoleForm::FIELD_NAME]);
 
                 $this->addSuccessMessage(
-                    'Role \'%s\' successfully added.',
+                    'Role "%s" successfully added.',
                     ['%s' => $formData[RoleForm::FIELD_NAME]]
                 );
 
@@ -236,7 +236,7 @@ class RoleController extends AbstractController
             try {
                 $this->getFacade()->updateRole($roleTransfer);
                 $this->addSuccessMessage(
-                    'Role \'%s\' successfully updated.',
+                    'Role "%s" successfully updated.',
                     ['%s' => $roleTransfer->getName()]
                 );
             } catch (RoleNameExistsException $e) {

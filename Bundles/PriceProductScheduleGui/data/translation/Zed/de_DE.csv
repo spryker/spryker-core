@@ -58,6 +58,7 @@ Status,Status
 View,Ansicht
 "Yes, delete this price","Ja, diesen Preis löschen"
 "Yes, delete those prices","Ja, diese Preise löschen"
+"You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Ist dies, was Sie wollen?"
 "No, I want to keep those prices","Nein, ich will diese Preise behalten"
 "Delete Import","Import löschen"
 "You will delete %d prices for %d products. Is this what you want?","Sie werden %d Preise für %d Produkte löschen. Wollen Sie das wirklich?"
