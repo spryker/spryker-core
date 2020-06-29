@@ -37,9 +37,9 @@ class PriceDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteClient(Container $container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new PriceToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }

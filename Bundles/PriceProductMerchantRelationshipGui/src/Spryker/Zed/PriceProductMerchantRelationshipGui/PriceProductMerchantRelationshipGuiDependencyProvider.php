@@ -39,11 +39,11 @@ class PriceProductMerchantRelationshipGuiDependencyProvider extends AbstractBund
      */
     protected function addMerchantRelationshipFacade(Container $container)
     {
-        $container[static::FACADE_MERCHANT_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::FACADE_MERCHANT_RELATIONSHIP, function (Container $container) {
             return new PriceProductMerchantRelationshipGuiToMerchantRelationshipFacadeBridge(
                 $container->getLocator()->merchantRelationship()->facade()
             );
-        };
+        });
 
         return $container;
     }

@@ -42,9 +42,9 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addOauthClient(Container $container): Container
     {
-        $container[static::CLIENT_OAUTH] = function (Container $container) {
+        $container->set(static::CLIENT_OAUTH, function (Container $container) {
             return new CompanyUserAuthRestApiToOauthClientBridge($container->getLocator()->oauth()->client());
-        };
+        });
 
         return $container;
     }
@@ -56,9 +56,9 @@ class CompanyUserAuthRestApiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCompanyUserStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_USER_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_USER_STORAGE, function (Container $container) {
             return new CompanyUserAuthRestApiToCompanyUserStorageClientBridge($container->getLocator()->companyUserStorage()->client());
-        };
+        });
 
         return $container;
     }

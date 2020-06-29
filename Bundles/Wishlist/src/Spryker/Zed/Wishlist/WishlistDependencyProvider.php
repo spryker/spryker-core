@@ -29,17 +29,17 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new FacadeWishlistToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new QueryContainerWishlistToProductBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
-        $container[static::PLUGINS_ITEM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_ITEM_EXPANDER, function (Container $container) {
             return $this->getItemExpanderPlugins();
-        };
+        });
 
         $container = $this->addAddItemPreCheckPlugins($container);
 
@@ -53,9 +53,9 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAddItemPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_PRE_CHECK] = function () {
+        $container->set(static::PLUGINS_ADD_ITEM_PRE_CHECK, function () {
             return $this->getAddItemPreCheckPlugins();
-        };
+        });
 
         return $container;
     }

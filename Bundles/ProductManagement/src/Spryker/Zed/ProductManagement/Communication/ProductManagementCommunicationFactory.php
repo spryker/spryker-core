@@ -47,6 +47,7 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()()
  */
 class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -383,7 +384,8 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
         return new ProductTable(
             $this->getProductQueryContainer(),
             $this->getLocaleFacade()->getCurrentLocale(),
-            $this->createProductTypeHelper()
+            $this->createProductTypeHelper(),
+            $this->getRepository()
         );
     }
 
@@ -687,5 +689,21 @@ class ProductManagementCommunicationFactory extends AbstractCommunicationFactory
     public function getProductConcreteEditViewExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_CONCRETE_EDIT_VIEW_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractListActionViewDataExpanderPluginInterface[]
+     */
+    public function getProductAbstractListActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_LIST_ACTION_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductAbstractViewActionViewDataExpanderPluginInterface[]
+     */
+    public function getProductAbstractViewActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductManagementDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_VIEW_ACTION_VIEW_DATA_EXPANDER);
     }
 }
