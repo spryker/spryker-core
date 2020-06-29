@@ -807,8 +807,29 @@ class OrderStateMachine implements OrderStateMachineInterface
     ) {
         $omsCheckConditionsQueryCriteriaTransfer = $this->prepareOmsCheckConditionsQueryCriteriaTransfer($omsCheckConditionsQueryCriteriaTransfer);
 
+        $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
+        $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
+
+        if ($storeName === null && $limit === null) {
+            return $this->queryContainer
+                ->querySalesOrderItemsByState($states, $process->getName())
+                ->find()
+                ->getData();
+        }
+
+        $omsProcessEntity = $this->queryContainer->queryProcess($process->getName())->findOne();
+        $omsOrderItemEntityCollection = $this->queryContainer->querySalesOrderItemStatesByName($states)->find();
+
+        if ($omsProcessEntity === null || $omsOrderItemEntityCollection->count() === 0) {
+            return [];
+        }
+
         return $this->queryContainer
-            ->querySalesOrderItemsByState($states, $process->getName(), $omsCheckConditionsQueryCriteriaTransfer)
+            ->querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
+                $omsProcessEntity->getIdOmsOrderProcess(),
+                $omsOrderItemEntityCollection->getPrimaryKeys(),
+                $omsCheckConditionsQueryCriteriaTransfer
+            )
             ->find()
             ->getData();
     }

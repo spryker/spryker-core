@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Persistence;
 use DateTime;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -21,15 +22,40 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      *
      * @param array $states
      * @param string $processName
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByState(
-        array $states,
-        $processName,
-        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
-    );
+    public function querySalesOrderItemsByState(array $states, $processName);
+
+    /**
+     * Specification:
+     * - Returns an optimized query based on store name and limit to fetch sales order items.
+     *
+     * @api
+     *
+     * @param int $idOmsOrderProcess
+     * @param array $omsOrderItemStateIds
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
+        int $idOmsOrderProcess,
+        array $omsOrderItemStateIds,
+        OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+    ): SpySalesOrderItemQuery;
+
+    /**
+     * Specification:
+     * - Returns a query to find a process by it's name.
+     *
+     * @api
+     *
+     * @param string $processName
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
+     */
+    public function queryProcess(string $processName): SpyOmsOrderProcessQuery;
 
     /**
      * @api

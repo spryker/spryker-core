@@ -40,26 +40,42 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @api
      *
+     * @deprecated Method is only used as BC fallback if store name and limit are not passed.
+     *
      * @param array $states
      * @param string $processName
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsByState(
-        array $states,
-        $processName,
-        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
-    ) {
-        $storeName = $this->getStoreNameFromOmsCheckConditionCriteria($omsCheckConditionsQueryCriteriaTransfer);
-        $limit = $this->getLimitFromOmsCheckConditionCriteria($omsCheckConditionsQueryCriteriaTransfer);
+    public function querySalesOrderItemsByState(array $states, $processName)
+    {
+        return $this->getFactory()
+            ->getSalesQueryContainer()
+            ->querySalesOrderItem()
+            ->joinProcess(null, Criteria::INNER_JOIN)
+            ->joinState(null, Criteria::INNER_JOIN)
+            ->where('Process.name = ?', $processName)
+            ->where("State.name IN ('" . implode("', '", $states) . "')");
+    }
 
-        if ($storeName === null && $limit === null) {
-            return $this->querySalesOrderItemsByStateFallback($states, $processName);
-        }
-
-        $idOmsOrderProcess = $this->queryProcess($processName)->findOne()->getIdOmsOrderProcess();
-        $omsOrderItemStateIds = $this->querySalesOrderItemStatesByName($states)->find()->getPrimaryKeys();
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idOmsOrderProcess
+     * @param array $omsOrderItemStateIds
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
+        int $idOmsOrderProcess,
+        array $omsOrderItemStateIds,
+        OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+    ): SpySalesOrderItemQuery {
+        $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
+        $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit), 't', false)
@@ -73,11 +89,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $processName
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
      */
-    protected function queryProcess(string $processName): SpyOmsOrderProcessQuery
+    public function queryProcess(string $processName): SpyOmsOrderProcessQuery
     {
         return $this->getFactory()->createOmsOrderProcessQuery()->filterByName($processName);
     }
@@ -107,58 +127,6 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
 
         return $subQuery;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Method is only used as BC fallback if store name and limit are not passed.
-     *
-     * @param array $states
-     * @param string $processName
-     *
-     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
-     */
-    protected function querySalesOrderItemsByStateFallback(array $states, string $processName)
-    {
-        return $this->getFactory()
-            ->getSalesQueryContainer()
-            ->querySalesOrderItem()
-            ->joinProcess(null, Criteria::INNER_JOIN)
-            ->joinState(null, Criteria::INNER_JOIN)
-            ->where('Process.name = ?', $processName)
-            ->where("State.name IN ('" . implode("', '", $states) . "')");
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
-     *
-     * @return string|null
-     */
-    protected function getStoreNameFromOmsCheckConditionCriteria(
-        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
-    ): ?string {
-        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
-            return null;
-        }
-
-        return $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
-     *
-     * @return int|null
-     */
-    protected function getLimitFromOmsCheckConditionCriteria(?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null): ?int
-    {
-        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
-            return null;
-        }
-
-        return $omsCheckConditionsQueryCriteriaTransfer->getLimit();
     }
 
     /**
