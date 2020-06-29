@@ -7,16 +7,14 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
-use Generated\Shared\Transfer\ItemStateTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsRepositoryInterface;
 
 class OrderItemStateExpander implements OrderItemStateExpanderInterface
 {
-    protected const ITEM_STATE_GLOSSARY_KEY_PREFIX = 'oms.state.';
-
     /**
      * @var \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface
      */
@@ -28,13 +26,20 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     protected $omsRepository;
 
     /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
+
+    /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface $finder
      * @param \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface $omsRepository
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
-    public function __construct(FinderInterface $finder, OmsRepositoryInterface $omsRepository)
+    public function __construct(FinderInterface $finder, OmsRepositoryInterface $omsRepository, OmsConfig $omsConfig)
     {
         $this->finder = $finder;
         $this->omsRepository = $omsRepository;
+        $this->omsConfig = $omsConfig;
     }
 
     /**
@@ -55,12 +60,14 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
                 continue;
             }
 
-            [$displayName, $stateName] = $this->finder->findItemStateDisplayName($persistenceItemTransfer);
-            if (!$stateName) {
+            $state = $this->finder->findStateByName($persistenceItemTransfer);
+            if (!$state) {
                 continue;
             }
 
-            $itemTransfer = $this->setItemState($itemTransfer, $stateName, $displayName);
+            $itemTransfer->getState()
+                ->setDisplayName($this->getDisplayName($state))
+                ->setName($state->getName());
         }
 
         return $itemTransfers;
@@ -99,36 +106,16 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $stateName
-     * @param string|null $displayName
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer
-     */
-    protected function setItemState(ItemTransfer $itemTransfer, string $stateName, ?string $displayName): ItemTransfer
-    {
-        if (!$itemTransfer->getState()) {
-            $itemTransfer->setState(new ItemStateTransfer());
-        }
-
-        if (!$displayName) {
-            $displayName = $this->getFallbackDisplayName($stateName);
-        }
-
-        $itemTransfer->getState()
-            ->setDisplayName($displayName)
-            ->setName($stateName);
-
-        return $itemTransfer;
-    }
-
-    /**
-     * @param string $stateName
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
      *
      * @return string
      */
-    protected function getFallbackDisplayName(string $stateName): string
+    protected function getDisplayName(StateInterface $state): string
     {
-        return static::ITEM_STATE_GLOSSARY_KEY_PREFIX . str_replace(' ', '-', mb_strtolower(trim($stateName)));
+        if ($state->getDisplay()) {
+            return $state->getDisplay();
+        }
+
+        return $this->omsConfig->getFallbackDisplayNamePrefix() . str_replace(' ', '-', mb_strtolower(trim($state->getName())));
     }
 }

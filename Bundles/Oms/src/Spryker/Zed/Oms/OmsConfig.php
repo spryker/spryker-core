@@ -62,6 +62,19 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - This prefix is used for the auto-generated display name in case of its absence.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getFallbackDisplayNamePrefix(): string
+    {
+        return '';
+    }
+
+    /**
      * @api
      *
      * @return string

@@ -429,7 +429,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new OrderItemStateExpander(
             $this->createOrderStateMachineFinder(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 

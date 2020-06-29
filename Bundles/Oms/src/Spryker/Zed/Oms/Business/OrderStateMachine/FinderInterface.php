@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 
 interface FinderInterface
 {
@@ -97,7 +98,7 @@ interface FinderInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return array
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface|null
      */
-    public function findItemStateDisplayName(ItemTransfer $itemTransfer): array;
+    public function findStateByName(ItemTransfer $itemTransfer): ?StateInterface;
 }
