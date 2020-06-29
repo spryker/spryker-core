@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
  * Provides capabilities to expand order invoice before storing it into the persistence.
  *
  * Order transfer has limited amount of data.
- * Order transfer changes would be ignored.
+ * Order transfer changes will be ignored.
  */
 interface OrderInvoiceBeforeSavePluginInterface
 {
