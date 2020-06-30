@@ -31,7 +31,7 @@ trait ContainerMocker
         }
 
         foreach ($containerMocks as $key => $containerMock) {
-            $container[$key] = $containerMock;
+            $container->set($key, $containerMock);
         }
 
         return $container;
