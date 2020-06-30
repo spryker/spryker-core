@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantProductStorage;
@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface;
 use Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapper;
+use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReader;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReaderInterface;
 
@@ -29,9 +30,9 @@ class MerchantProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapper
+     * @return \Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface
      */
-    public function createMerchantProductStorageMapper(): MerchantProductStorageMapper
+    public function createMerchantProductStorageMapper(): MerchantProductStorageMapperInterface
     {
         return new MerchantProductStorageMapper();
     }

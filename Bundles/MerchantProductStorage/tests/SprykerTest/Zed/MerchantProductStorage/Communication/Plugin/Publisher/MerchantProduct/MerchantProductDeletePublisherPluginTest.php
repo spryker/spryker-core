@@ -2,19 +2,20 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener;
+namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStoragePublishListener;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStorageUnpublishListener;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductDeletePublisherPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 
 /**
  * Auto-generated group annotations
@@ -24,22 +25,22 @@ use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\Merch
  * @group MerchantProductStorage
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
- * @group MerchantProductStorageUnpublishListenerTest
+ * @group Publisher
+ * @group MerchantProduct
+ * @group MerchantProductDeletePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantProductStorageUnpublishListenerTest extends Unit
+class MerchantProductDeletePublisherPluginTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStoragePublishListener
+     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin
      */
-    protected $merchantProductStoragePublishListener;
+    protected $merchantProductDeletePublisherPlugin;
 
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStorageUnpublishListener
+     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductDeletePublisherPlugin
      */
-    protected $merchantProductStorageUnpublishListener;
+    protected $merchantProductWritePublisherPlugin;
 
     /**
      * @var \SprykerTest\Zed\MerchantProductStorage\MerchantProductStorageTester
@@ -59,8 +60,8 @@ class MerchantProductStorageUnpublishListenerTest extends Unit
             ];
         });
 
-        $this->merchantProductStoragePublishListener = new MerchantProductStoragePublishListener();
-        $this->merchantProductStorageUnpublishListener = new MerchantProductStorageUnpublishListener();
+        $this->merchantProductDeletePublisherPlugin = new MerchantProductWritePublisherPlugin();
+        $this->merchantProductWritePublisherPlugin = new MerchantProductDeletePublisherPlugin();
     }
 
     /**
@@ -69,7 +70,14 @@ class MerchantProductStorageUnpublishListenerTest extends Unit
     public function testMerchantProductStorageUnpublishListener(): void
     {
         //Arrange
-        $merchantProductTransfer = $this->tester->haveMerchantProduct();
+        $merchant = $this->tester->haveMerchant();
+        $productAbstract = $this->tester->haveProductAbstract();
+
+        $merchantProductData = [
+            MerchantProductTransfer::ID_MERCHANT => $merchant->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstract->getIdProductAbstract(),
+        ];
+        $merchantProductTransfer = $this->tester->haveMerchantProduct($merchantProductData);
 
         $expectedCount = 0;
         $publishEventTransfers = [
@@ -83,11 +91,11 @@ class MerchantProductStorageUnpublishListenerTest extends Unit
         ];
 
         //Act
-        $this->merchantProductStoragePublishListener->handleBulk(
+        $this->merchantProductDeletePublisherPlugin->handleBulk(
             $publishEventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH
         );
-        $this->merchantProductStorageUnpublishListener->handleBulk(
+        $this->merchantProductWritePublisherPlugin->handleBulk(
             $unpublishEventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_UNPUBLISH
         );

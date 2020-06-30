@@ -54,7 +54,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductOfferReferenceStrategyPlugins(Container $container)
+    protected function addProductOfferReferenceStrategyPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY, function () {
             return $this->getProductOfferReferenceStrategyPlugins();
@@ -76,7 +76,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPriceProductOfferStorageExpanderPlugins(Container $container)
+    protected function addPriceProductOfferStorageExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_PRISE_PRODUCT_OFFER_STORAGE_EXPANDER, function () {
             return $this->getPriceProductOfferStorageExpanderPlugins();
@@ -98,7 +98,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductOfferStorageCollectionSorterPlugin(Container $container)
+    protected function addProductOfferStorageCollectionSorterPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_PRODUCT_OFFER_STORAGE_COLLECTION_SORTER, function () {
             return $this->createProductOfferStorageCollectionSorterPlugin();

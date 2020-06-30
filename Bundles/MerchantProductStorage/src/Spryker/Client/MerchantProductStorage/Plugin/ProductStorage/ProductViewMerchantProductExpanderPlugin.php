@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Client\MerchantProductStorage\Plugin\ProductStorage;
@@ -18,10 +18,10 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array $productData
+     * @param array<mixed> $productData
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer|void
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
     public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {

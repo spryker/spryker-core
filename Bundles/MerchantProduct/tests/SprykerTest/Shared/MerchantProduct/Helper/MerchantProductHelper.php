@@ -26,8 +26,8 @@ class MerchantProductHelper extends Module
     public function haveMerchantProduct(array $seedData = []): MerchantProductTransfer
     {
         $merchantProductAbstractEntity = new SpyMerchantProductAbstract();
-        $merchantProductAbstractEntity->setFkMerchant($this->getMerchantHelper()->haveMerchant()->getIdMerchant());
-        $merchantProductAbstractEntity->setFkProductAbstract($this->getProductDataHelper()->haveProductAbstract()->getIdProductAbstract());
+        $merchantProductAbstractEntity->setFkMerchant($seedData[MerchantProductTransfer::ID_MERCHANT]);
+        $merchantProductAbstractEntity->setFkProductAbstract($seedData[MerchantProductTransfer::ID_PRODUCT_ABSTRACT]);
         $merchantProductAbstractEntity->save();
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantProductAbstractEntity) {

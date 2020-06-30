@@ -2,17 +2,18 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener;
+namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
-use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStoragePublishListener;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 
 /**
  * Auto-generated group annotations
@@ -22,17 +23,17 @@ use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\Merch
  * @group MerchantProductStorage
  * @group Communication
  * @group Plugin
- * @group Event
- * @group Listener
- * @group MerchantProductStoragePublishListenerTest
+ * @group Publisher
+ * @group MerchantProduct
+ * @group MerchantProductWritePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantProductStoragePublishListenerTest extends Unit
+class MerchantProductWritePublisherPluginTest extends Unit
 {
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Event\Listener\MerchantProductStoragePublishListener
+     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin
      */
-    protected $merchantProductStoragePublishListener;
+    protected $merchantProductWritePublisherPlugin;
 
     /**
      * @var \SprykerTest\Zed\MerchantProductStorage\MerchantProductStorageTester
@@ -52,24 +53,33 @@ class MerchantProductStoragePublishListenerTest extends Unit
             ];
         });
 
-        $this->merchantProductStoragePublishListener = new MerchantProductStoragePublishListener();
+        $this->merchantProductWritePublisherPlugin = new MerchantProductWritePublisherPlugin();
     }
 
     /**
      * @return void
      */
-    public function testMerchantProductStoragePublishListener(): void
+    public function testMerchantProductWritePublisher(): void
     {
         //Arrange
         $expectedCount = 1;
-        $merchantProductTransfer = $this->tester->haveMerchantProduct();
+
+        $merchant = $this->tester->haveMerchant();
+        $productAbstract = $this->tester->haveProductAbstract();
+
+        $merchantProductData = [
+            MerchantProductTransfer::ID_MERCHANT => $merchant->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstract->getIdProductAbstract(),
+        ];
+
+        $merchantProductTransfer = $this->tester->haveMerchantProduct($merchantProductData);
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantProductTransfer->getIdProductAbstract()),
         ];
 
         //Act
-        $this->merchantProductStoragePublishListener->handleBulk(
+        $this->merchantProductWritePublisherPlugin->handleBulk(
             $eventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH
         );

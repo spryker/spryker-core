@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantProductStorage\Mapper;
 
 use Generated\Shared\Transfer\MerchantProductStorageTransfer;
 
-class MerchantProductStorageMapper implements MerchantProductStorageMapperInterface
+interface MerchantProductStorageMapperInterface
 {
     /**
      * @param array<mixed> $merchantProductStorageData
@@ -20,7 +20,5 @@ class MerchantProductStorageMapper implements MerchantProductStorageMapperInterf
     public function mapMerchantProductStorageDataToMerchantProductStorageTransfer(
         array $merchantProductStorageData,
         MerchantProductStorageTransfer $merchantProductStorageTransfer
-    ): MerchantProductStorageTransfer {
-        return $merchantProductStorageTransfer->fromArray($merchantProductStorageData, true);
-    }
+    ): MerchantProductStorageTransfer;
 }
