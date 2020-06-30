@@ -188,8 +188,6 @@ class OrderStateMachineTest extends Unit
         $stateName = 'condition-test';
         $processName = 'DummyPayment01';
 
-//        $this->tester->mockConfigMethod('getActiveProcesses', [$processName]);
-
         $methods = [
             'createStateToTransitionMap',
             'updateStateByTransition',
