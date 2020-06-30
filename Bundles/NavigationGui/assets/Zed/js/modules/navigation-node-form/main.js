@@ -55,6 +55,8 @@ $(document).ready(function() {
             minLength: 3
         });
     });
+
+    deleteNavigationNodeHandler();
 });
 
 /**
@@ -73,6 +75,23 @@ function changeNodeType() {
     resetNodeTypeFields();
     displaySelectedNodeTypeField($(this).val());
     triggerResize();
+}
+
+/**
+ * @return {void}
+ */
+function deleteNavigationNodeHandler() {
+    var $deleteSelectedNodeButton = $('#remove-selected-node-btn');
+    var $deleteNavigationNodeForm = $('form[name="delete_navigation_node_form"]');
+    var message = $deleteSelectedNodeButton.data('confirm-message');
+
+    $deleteSelectedNodeButton.on('click', function (event) {
+        event.preventDefault();
+
+        if (confirm(message)) {
+            $deleteNavigationNodeForm[0].submit();
+        }
+    });
 }
 
 /**
