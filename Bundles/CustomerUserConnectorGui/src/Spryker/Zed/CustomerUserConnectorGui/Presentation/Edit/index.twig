@@ -24,6 +24,7 @@
             {% include '@CustomerUserConnectorGui/Edit/Partial/available-customers.twig' with {'availableCustomers': availableCustomers} only %}
             {% include '@CustomerUserConnectorGui/Edit/Partial/assigned-customers.twig' with {'assignedCustomers': assignedCustomers} only %}
 
+            <input type="hidden" id="remove-link-text" value="{{ 'Remove' | trans }}" />
             <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
 
             {{ form_end(form) }}

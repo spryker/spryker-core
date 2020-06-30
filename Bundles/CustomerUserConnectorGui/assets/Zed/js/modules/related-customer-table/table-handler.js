@@ -68,6 +68,8 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
         }
         destinationTableIdSelector.addIdToSelection(idCustomer);
 
+        var $removeLinkTextInput = $('#remove-link-text');
+
         destinationTable.DataTable()
             .row
             .add([
@@ -75,7 +77,7 @@ function TableHandler(sourceTable, destinationTable, labelCaption, labelId, form
                 decodeURIComponent((firstname + '').replace(/\+/g, '%20')),
                 decodeURIComponent((lastname + '').replace(/\+/g, '%20')),
                 decodeURIComponent((gender + '').replace(/\+/g, '%20')),
-                '<div><a data-id="' + idCustomer + '" href="#" class="btn btn-xs remove-item">Remove</a></div>'
+                '<div><a data-id="' + idCustomer + '" href="#" class="btn btn-xs remove-item">' + ($removeLinkTextInput ? $removeLinkTextInput.val() : 'Remove') + '</a></div>'
             ])
             .draw();
 
