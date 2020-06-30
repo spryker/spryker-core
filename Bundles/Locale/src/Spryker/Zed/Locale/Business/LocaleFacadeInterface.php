@@ -60,6 +60,8 @@ interface LocaleFacadeInterface
      *
      * @api
      *
+     * @deprecated @deprecated Use {@link \Spryker\Zed\Locale\Business\LocaleFacadeInterface::getLocale()} instead.
+     *
      * @param int $idLocale
      *
      * @throws \Spryker\Zed\Locale\Business\Exception\MissingLocaleException
