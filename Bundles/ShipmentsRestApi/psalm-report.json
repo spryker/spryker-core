@@ -1,0 +1,175 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $shipmentMethodTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentMethodTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Mapper/ShipmentMethodMapper.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[] $shipmentMethodTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $restShipmentMethodsAttributesTransfers[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Mapper/ShipmentMethodMapper.php",
+            "snippet": "            $restShipmentMethodsAttributesTransfers[$shipmentMethodTransfer->getIdShipmentMethod()] = $restShipmentMethodsAttributesTransfer;",
+            "selected_text": "$restShipmentMethodsAttributesTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethods on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Mapper/ShipmentMethodMapper.php",
+            "snippet": "        foreach ($restCheckoutDataTransfer->getShipmentMethods()->getMethods() as $shipmentMethodTransfer) {",
+            "selected_text": "getMethods",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $shipmentMethodTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentMethodTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Mapper/ShipmentMethodMapperInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[] $shipmentMethodTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\RestShipmentMethodsAttributesTransfer::offsetExists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Sorter/ShipmentMethodSorter.php",
+            "snippet": "        return $restShipmentMethodAttributeTransfer->offsetExists($resourceValue)",
+            "selected_text": "$resourceValue",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\RestShipmentMethodsAttributesTransfer::offsetGet cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Glue/ShipmentsRestApi/Processor/Sorter/ShipmentMethodSorter.php",
+            "snippet": "            ? (string)$restShipmentMethodAttributeTransfer->offsetGet($resourceValue) : null;",
+            "selected_text": "$resourceValue",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentsRestApi\\Dependency\\Facade\\ShipmentsRestApiToShipmentFacadeInterface::findAvailableMethodById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "        $shipmentMethodTransfer = $this->shipmentFacade->findAvailableMethodById($idShipmentMethod, $quoteTransfer);",
+            "selected_text": "$idShipmentMethod",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method toArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "        $shipmentExpenseTransfer->fromArray($shipmentTransfer->getMethod()->toArray(), true);",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getStoreCurrencyPrice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "        $shipmentExpenseTransfer->setUnitGrossPrice($shipmentTransfer->getMethod()->getStoreCurrencyPrice());",
+            "selected_text": "getStoreCurrencyPrice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ShipmentsRestApi\\Dependency\\Facade\\ShipmentsRestApiToShipmentFacadeInterface::findMethodById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Validator/ShipmentMethodCheckoutDataValidator.php",
+            "snippet": "            ->findMethodById($checkoutDataTransfer->getShipment()->getIdShipmentMethod());",
+            "selected_text": "$checkoutDataTransfer->getShipment()->getIdShipmentMethod()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdShipmentMethod on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Validator/ShipmentMethodCheckoutDataValidator.php",
+            "snippet": "            ->findMethodById($checkoutDataTransfer->getShipment()->getIdShipmentMethod());",
+            "selected_text": "getIdShipmentMethod",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/ShipmentsRestApiDependencyProvider.php",
+            "snippet": "            return new ShipmentsRestApiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getShippingAddress has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "            ->setShippingAddress($quoteTransfer->getShippingAddress());",
+            "selected_text": "getShippingAddress",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setShipment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentsRestApi/src/Spryker/Zed/ShipmentsRestApi/Business/Quote/ShipmentQuoteMapper.php",
+            "snippet": "        $quoteTransfer->setShipment($shipmentTransfer);",
+            "selected_text": "setShipment",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

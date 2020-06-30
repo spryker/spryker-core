@@ -1,0 +1,103 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setPaymentProvider on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Expander/DummyMarketplacePaymentExpander.php",
+            "snippet": "            ->setPaymentProvider(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME)",
+            "selected_text": "setPaymentProvider",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getDummyMarketplacePaymentInvoice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "        if ($quoteTransfer->getPayment()->getDummyMarketplacePaymentInvoice()) {",
+            "selected_text": "getDummyMarketplacePaymentInvoice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setDummyMarketplacePaymentInvoice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "        $quoteTransfer->getPayment()->setDummyMarketplacePaymentInvoice(new DummyMarketplacePaymentTransfer());",
+            "selected_text": "setDummyMarketplacePaymentInvoice",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Expander/DummyMarketplacePaymentExpander.php",
+            "snippet": "        $quoteTransfer->getPayment()",
+            "selected_text": "getPayment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "        if (!$quoteTransfer->getPayment()) {",
+            "selected_text": "getPayment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "            $quoteTransfer->setPayment(new PaymentTransfer());",
+            "selected_text": "setPayment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "        if ($quoteTransfer->getPayment()->getDummyMarketplacePaymentInvoice()) {",
+            "selected_text": "getPayment",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::getPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/DummyMarketplacePayment/src/Spryker/Yves/DummyMarketplacePayment/Form/DataProvider/InvoiceFormDataProvider.php",
+            "snippet": "        $quoteTransfer->getPayment()->setDummyMarketplacePaymentInvoice(new DummyMarketplacePaymentTransfer());",
+            "selected_text": "getPayment",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
