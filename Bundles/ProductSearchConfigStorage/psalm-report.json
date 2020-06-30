@@ -1,0 +1,163 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Client/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
+            "snippet": "            return new ProductSearchConfigStorageToStorageClientBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Client/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
+            "snippet": "            return new ProductSearchConfigStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $availableProductSearchFilterConfigs using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/Storage/ProductSearchConfigStorageWriter.php",
+            "snippet": "            $facetConfigTransfer = clone $availableProductSearchFilterConfigs[$productSearchAttributeTransfer->getFilterType()];",
+            "selected_text": "$availableProductSearchFilterConfigs",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method delete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/Storage/ProductSearchConfigStorageWriter.php",
+            "snippet": "        $spyProductStorageEntity->delete();",
+            "selected_text": "delete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
+            "snippet": "            return new ProductSearchConfigStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/ProductSearchConfigStorageDependencyProvider.php",
+            "snippet": "            return new ProductSearchConfigStorageToProductSearchFacadeBridge($container->getLocator()->productSearch()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\Search\\Dependency\\Plugin\\SearchConfigExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Client/ProductSearchConfigStorage/Plugin/Config/ProductSearchConfigExpanderPlugin.php",
+            "snippet": "class ProductSearchConfigExpanderPlugin extends AbstractPlugin implements SearchConfigExpanderPluginInterface",
+            "selected_text": "ProductSearchConfigExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductSearchConfigStorage\\ProductSearchConfigStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/ProductSearchConfigStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\ProductSearchConfigStorage\\Business\\Storage\\ProductSearchConfigStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/Storage/ProductSearchConfigStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\ProductSearchConfigStorage\\Persistence\\Base\\SpyProductSearchConfigStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Business/Storage/ProductSearchConfigStorageWriter.php",
+            "snippet": "        $spyProductSearchConfigStorageEntity->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/Listener/ProductSearchConfigStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/Listener/ProductSearchConfigStoragePublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductSearchConfigStorage/src/Spryker/Zed/ProductSearchConfigStorage/Communication/Plugin/Event/Listener/ProductSearchConfigStorageUnpublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

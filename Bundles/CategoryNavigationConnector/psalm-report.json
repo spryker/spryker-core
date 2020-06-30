@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\NavigationNodeTransfer' for Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeReader::getNavigationNodesFromCategoryNodeId is incorrect, got 'list<Generated\\Shared\\Transfer\\NavigationNodeTransfer>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/Model/NavigationNodeReader.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\NavigationNodeTransfer []",
+            "selected_text": "\\Generated\\Shared\\Transfer\\NavigationNodeTransfer",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<Generated\\Shared\\Transfer\\NavigationNodeTransfer>' does not match the declared return type 'Generated\\Shared\\Transfer\\NavigationNodeTransfer' for Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeReader::getNavigationNodesFromCategoryNodeId",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/Model/NavigationNodeReader.php",
+            "snippet": "        return $navigationNodes;",
+            "selected_text": "$navigationNodes",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeIsActiveUpdaterInterface::updateCategoryNodeNavigationNodes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/CategoryNavigationConnectorFacade.php",
+            "snippet": "            ->updateCategoryNodeNavigationNodes($categoryTransfer->getCategoryNode()->getIdCategoryNode(), $categoryTransfer->getIsActive());",
+            "selected_text": "$categoryTransfer->getCategoryNode()->getIdCategoryNode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCategoryNode on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/CategoryNavigationConnectorFacade.php",
+            "snippet": "            ->updateCategoryNodeNavigationNodes($categoryTransfer->getCategoryNode()->getIdCategoryNode(), $categoryTransfer->getIsActive());",
+            "selected_text": "getIdCategoryNode",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CategoryNavigationConnector\\Business\\Model\\NavigationNodeIsActiveUpdaterInterface::updateCategoryNodeNavigationNodes cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/Business/CategoryNavigationConnectorFacade.php",
+            "snippet": "            ->updateCategoryNodeNavigationNodes($categoryTransfer->getCategoryNode()->getIdCategoryNode(), $categoryTransfer->getIsActive());",
+            "selected_text": "$categoryTransfer->getIsActive()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
+            "snippet": "            return new CategoryNavigationConnectorToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
+            "snippet": "            return new CategoryNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryNavigationConnector/src/Spryker/Zed/CategoryNavigationConnector/CategoryNavigationConnectorDependencyProvider.php",
+            "snippet": "            return new CategoryNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
