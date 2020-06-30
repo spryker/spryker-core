@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 176,
+            "line_to": 176,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of Spryker\\Client\\StorageRedis\\StorageRedisClientInterface::scanKeys cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/Plugin/StorageRedisPlugin.php",
+            "snippet": "        return $this->getClient()->scanKeys($pattern, $limit, $cursor);",
+            "selected_text": "$cursor",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of json_decode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/Redis/StorageRedisWrapper.php",
+            "snippet": "        $result = json_decode($value, true);",
+            "selected_text": "$value",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Client/StorageRedis/StorageRedisDependencyProvider.php",
+            "snippet": "                $container->getLocator()->redis()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StorageRedis\\Communication\\Export\\StorageRedisExporterInterface::export expects string, possibly different type array<array-key, string>|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisExportRdbConsole.php",
+            "snippet": "        if ($storageRedisExporter->export($destination)) {",
+            "selected_text": "$destination",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of sprintf expects float|int|string, possibly different type array<array-key, string>|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisExportRdbConsole.php",
+            "snippet": "            $this->info(sprintf('Exported rdb file to \"%s\"', $destination));",
+            "selected_text": "$destination",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\StorageRedis\\Communication\\Import\\StorageRedisImporterInterface::import expects string, possibly different type array<array-key, string>|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisImportRdbConsole.php",
+            "snippet": "        if ($storageRedisImporter->import($source)) {",
+            "selected_text": "$source",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 2 of sprintf expects float|int|string, possibly different type array<array-key, string>|null|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/Communication/Console/StorageRedisImportRdbConsole.php",
+            "snippet": "            $this->info(sprintf('Imported rdb file \"%s\"', $source));",
+            "selected_text": "$source",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageRedis/src/Spryker/Zed/StorageRedis/StorageRedisDependencyProvider.php",
+            "snippet": "                $container->getLocator()->redis()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

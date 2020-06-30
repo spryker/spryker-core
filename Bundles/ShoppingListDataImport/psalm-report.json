@@ -1,0 +1,163 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\ShoppingListDataImport\\Business\\ShoppingListDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportBusinessFactory.php",
+            "snippet": "class ShoppingListDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "ShoppingListDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idCompanyBusinessUnitCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "            $this->idCompanyBusinessUnitCache[$companyBusinessUnitKey] = $idCompanyUser;",
+            "selected_text": "$this->idCompanyBusinessUnitCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idCompanyUserCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/CompanyUserKeyToIdCompanyUserStep.php",
+            "snippet": "            $this->idCompanyUserCache[$companyUserKey] = $idCompanyUser;",
+            "selected_text": "$this->idCompanyUserCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->customerReferenceCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/CustomerReferenceValidationStep.php",
+            "snippet": "            $this->customerReferenceCache[$customerReference] = $idCustomer;",
+            "selected_text": "$this->customerReferenceCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->productConcreteSkuCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ProductConcreteSkuValidationStep.php",
+            "snippet": "            $this->productConcreteSkuCache[$sku] = $idProduct;",
+            "selected_text": "$this->productConcreteSkuCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idShoppingListCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingList|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ShoppingListKeyToIdShoppingList.php",
+            "snippet": "            $this->idShoppingListCache[$shoppingListKey] = $idShoppingList;",
+            "selected_text": "$this->idShoppingListCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idPermissionGroupCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\ShoppingList\\Persistence\\SpyShoppingListPermissionGroup|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ShoppingListPermissionGroupNameToIdShoppingListPermissionGroupStep.php",
+            "snippet": "            $this->idPermissionGroupCache[$shoppingListPermissionGroupName] = $idPermissionGroup;",
+            "selected_text": "$this->idPermissionGroupCache",
+            "error_level": 6,
+            "shortcode": 145
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "                ->findOneByKey($companyBusinessUnitKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/CompanyUserKeyToIdCompanyUserStep.php",
+            "snippet": "                ->findOneByKey($companyUserKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycustomerreference does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/CustomerReferenceValidationStep.php",
+            "snippet": "                ->findOneByCustomerReference($customerReference);",
+            "selected_text": "findOneByCustomerReference",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebysku does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ProductConcreteSkuValidationStep.php",
+            "snippet": "                ->findOneBySku($sku);",
+            "selected_text": "findOneBySku",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ShoppingListKeyToIdShoppingList.php",
+            "snippet": "                ->findOneByKey($shoppingListKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyname does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ShoppingListDataImport/src/Spryker/Zed/ShoppingListDataImport/Business/ShoppingListDataImportStep/ShoppingListPermissionGroupNameToIdShoppingListPermissionGroupStep.php",
+            "snippet": "                ->findOneByName($shoppingListPermissionGroupName);",
+            "selected_text": "findOneByName",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

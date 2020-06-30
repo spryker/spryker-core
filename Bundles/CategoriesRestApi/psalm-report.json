@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/CategoriesRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->categoryStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\CategoriesRestApi\\Processor\\Reader\\CategoryReader::getCategoryNode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
+            "snippet": "        return $this->getCategoryNode($nodeId, $restRequest->getMetadata()->getLocale());",
+            "selected_text": "$nodeId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $restResources[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoriesRestApi/src/Spryker/Glue/CategoriesRestApi/Processor/Reader/CategoryReader.php",
+            "snippet": "            $restResources[$categoryNodeStorageTransfer->getIdCategory()] = $this->buildProductCategoryResource($categoryNodeStorageTransfer);",
+            "selected_text": "$restResources",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,54 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CartPermissionGroupsRestApi/src/Spryker/Glue/CartPermissionGroupsRestApi/CartPermissionGroupsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->sharedCart()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CartPermissionGroupsRestApi/src/Spryker/Glue/CartPermissionGroupsRestApi/Processor/CartPermissionGroup/CartPermissionGroupReader.php",
+            "snippet": "            $quotePermissionGroupResponseTransfer->getQuotePermissionGroups()->offsetGet(0)",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $quotePermissionGroups has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartPermissionGroupsRestApi/src/Spryker/Glue/CartPermissionGroupsRestApi/Processor/ResponseBuilder/CartPermissionGroupResponseBuilder.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer[] $quotePermissionGroups",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $quotePermissionGroups has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/CartPermissionGroupsRestApi/src/Spryker/Glue/CartPermissionGroupsRestApi/Processor/ResponseBuilder/CartPermissionGroupResponseBuilderInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer[] $quotePermissionGroups",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\QuotePermissionGroupTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        }
+    ],
+    "deprecation": []
+}

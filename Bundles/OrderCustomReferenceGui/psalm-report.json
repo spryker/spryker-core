@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OrderCustomReferenceGui\\Dependency\\Facade\\OrderCustomReferenceGuiToOrderCustomReferenceFacadeInterface::updateOrderCustomReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/Communication/Controller/SalesController.php",
+            "snippet": "            ->updateOrderCustomReference($orderCustomReference, $orderTransfer);",
+            "selected_text": "$orderCustomReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OrderCustomReferenceGui\\Communication\\Controller\\SalesController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/Communication/Controller/SalesController.php",
+            "snippet": "            return $this->redirectResponse($backUrl);",
+            "selected_text": "$backUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OrderCustomReferenceGui\\Communication\\Controller\\SalesController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/Communication/Controller/SalesController.php",
+            "snippet": "        return $this->redirectResponse($backUrl);",
+            "selected_text": "$backUrl",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\OrderCustomReferenceGui\\Communication\\Controller\\SalesController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/Communication/Controller/SalesController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReferenceGui/src/Spryker/Zed/OrderCustomReferenceGui/OrderCustomReferenceGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->orderCustomReference()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

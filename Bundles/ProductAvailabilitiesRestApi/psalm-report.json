@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\AbstractProductAvailability\\AbstractProductAvailabilitiesReader::findAbstractProductAvailabilityBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/AbstractProductAvailability/AbstractProductAvailabilitiesReader.php",
+            "snippet": "        $productAbstractAvailabilityRestResource = $this->findAbstractProductAvailabilityBySku($productAbstractSku, $restRequest);",
+            "selected_text": "$productAbstractSku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\ConcreteProductAvailability\\ConcreteProductAvailabilitiesReader::findConcreteProductAvailabilityBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/ConcreteProductAvailability/ConcreteProductAvailabilitiesReader.php",
+            "snippet": "            $productConcreteSku,",
+            "selected_text": "$productConcreteSku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\AbstractProductAvailability\\AbstractProductAvailabilitiesReaderInterface::findAbstractProductAvailabilityBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/Expander/AbstractProductAvailabilitiesRelationshipExpander.php",
+            "snippet": "                ->findAbstractProductAvailabilityBySku($resource->getId(), $restRequest);",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\ConcreteProductAvailability\\ConcreteProductAvailabilitiesReaderInterface::findConcreteProductAvailabilityBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/Expander/ConcreteProductAvailabilitiesRelationshipExpander.php",
+            "snippet": "                ->findConcreteProductAvailabilityBySku($resource->getId(), $restRequest);",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method greaterThan on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/Mapper/AbstractProductAvailabilitiesResourceMapper.php",
+            "snippet": "            && $productAbstractAvailabilityTransfer->getAvailability()->greaterThan(0)",
+            "selected_text": "greaterThan",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method greaterThan on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/Mapper/ConcreteProductAvailabilitiesResourceMapper.php",
+            "snippet": "            && $productConcreteAvailabilityTransfer->getAvailability()->greaterThan(0);",
+            "selected_text": "greaterThan",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductAvailabilitiesRestApi\\Processor\\RestResponseBuilder\\ProductConcreteAvailabilityRestResponseBuilder::getProductConcreteAvailabilityResourceSelfLink cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/Processor/RestResponseBuilder/ProductConcreteAvailabilityRestResponseBuilder.php",
+            "snippet": "            $this->getProductConcreteAvailabilityResourceSelfLink($productConcreteAvailabilityTransfer->getSku())",
+            "selected_text": "$productConcreteAvailabilityTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/ProductAvailabilitiesRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->availabilityStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductAvailabilitiesRestApi/src/Spryker/Glue/ProductAvailabilitiesRestApi/ProductAvailabilitiesRestApiDependencyProvider.php",
+            "snippet": "            return new ProductAvailabilitiesRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
