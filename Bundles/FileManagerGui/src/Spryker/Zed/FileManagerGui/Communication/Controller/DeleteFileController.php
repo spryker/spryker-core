@@ -53,7 +53,7 @@ class DeleteFileController extends AbstractController
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->addErrorMessage('CSRF token is not valid');
 
-            $this->redirectResponse($redirectUrl);
+            return $this->redirectResponse($redirectUrl);
         }
         $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
 

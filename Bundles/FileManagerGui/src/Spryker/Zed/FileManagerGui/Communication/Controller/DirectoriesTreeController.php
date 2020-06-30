@@ -29,6 +29,7 @@ class DirectoriesTreeController extends AbstractController
             ->createFileTable();
 
         return [
+            'deleteDirectoryForm' => $this->getFactory()->createDeleteDirectoryForm()->createView(),
             'files' => $fileTable->render(),
             'fileDirectoryTree' => $fileDirectoryTreeTransfer,
         ];

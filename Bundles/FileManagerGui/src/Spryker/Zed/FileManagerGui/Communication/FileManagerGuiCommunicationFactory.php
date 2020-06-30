@@ -10,6 +10,7 @@ namespace Spryker\Zed\FileManagerGui\Communication;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileDirectoryFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\FileFormDataProvider;
 use Spryker\Zed\FileManagerGui\Communication\Form\DataProvider\MimeTypeFormDataProvider;
+use Spryker\Zed\FileManagerGui\Communication\Form\DeleteDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\DeleteFileForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileDirectoryForm;
 use Spryker\Zed\FileManagerGui\Communication\Form\FileForm;
@@ -204,6 +205,16 @@ class FileManagerGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createDeleteFileForm(): FormInterface
     {
         return $this->getFormFactory()->create(DeleteFileForm::class, [], [
+            'fields' => [],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteDirectoryForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteDirectoryForm::class, [], [
             'fields' => [],
         ]);
     }
