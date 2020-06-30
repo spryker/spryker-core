@@ -27,6 +27,7 @@ class ProductOfferStorageMapper
     ): ProductOfferStorageTransfer {
         $productOfferStorageTransfer->fromArray($productOfferTransfer->toArray(), true);
         $productOfferStorageTransfer->setIdMerchant($productOfferTransfer->getFkMerchant());
+        $productOfferStorageTransfer->setProductConcreteSku($productOfferTransfer->getConcreteSku());
 
         return $productOfferStorageTransfer;
     }
@@ -46,8 +47,8 @@ class ProductOfferStorageMapper
             true
         );
         $productOfferTransfer = $productOfferTransfer->setMerchantReference($productOfferEntity->getSpyMerchant()->getMerchantReference())
-        ->setIdProductAbstract($productOfferEntity->getIdProductAbstract())
-        ->setIdProductConcrete($productOfferEntity->getIdProductConcrete());
+            ->setIdProductAbstract($productOfferEntity->getIdProductAbstract())
+            ->setIdProductConcrete($productOfferEntity->getIdProductConcrete());
 
         return $productOfferTransfer;
     }

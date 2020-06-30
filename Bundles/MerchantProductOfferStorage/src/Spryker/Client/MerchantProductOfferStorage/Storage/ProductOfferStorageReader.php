@@ -134,11 +134,16 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
         $productOfferStorageTransfers = $this->expandProductOffersWithPrices($productOfferStorageTransfers);
-        $productOfferStorageTransfers = $this->expandProductOffersWithDefaultProductOffer($productOfferStorageTransfers, $productOfferStorageCriteriaTransfer);
 
         $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        $productOfferStorageCollectionTransfer = $this->productOfferStorageCollectionSorterPlugin
+            ->sort($productOfferStorageCollectionTransfer);
 
-        return $this->productOfferStorageCollectionSorterPlugin->sort($productOfferStorageCollectionTransfer);
+        $productOfferStorageTransfers = $this->expandProductOffersWithDefaultProductOffer(
+            $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy()
+        );
+
+        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
     }
 
     /**
@@ -281,30 +286,13 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
-     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    protected function expandProductOffersWithDefaultProductOffer(
-        array $productOfferStorageTransfers,
-        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
-    ): array {
-        $defaultProductOffers = $this->productConcreteDefaultProductOffer->getProductOfferReferences(
-            $productOfferStorageTransfers,
-            $productOfferStorageCriteriaTransfer
-        );
-
-        foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            if (
-                !isset($defaultProductOffers[$productOfferStorageTransfer->getProductConcreteSku()])
-                || $productOfferStorageTransfer->getProductOfferReference() !== $defaultProductOffers[$productOfferStorageTransfer->getProductConcreteSku()]
-            ) {
-                $productOfferStorageTransfer->setIsDefault(false);
-
-                continue;
-            }
-
-            $productOfferStorageTransfer->setIsDefault(true);
+    protected function expandProductOffersWithDefaultProductOffer(array $productOfferStorageTransfers): array
+    {
+        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
+            $productOfferStorageTransfer->setIsDefault($key < 1);
         }
 
         return $productOfferStorageTransfers;
