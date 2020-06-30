@@ -58,8 +58,7 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      */
     public function getMerchantDataByProductAbstractIds(array $productAbstractIds): array
     {
-        return $this->getFactory()
-            ->createMerchantProductSearchReader()
+        return $this->getRepository()
             ->getMerchantDataByProductAbstractIds($productAbstractIds);
     }
 }

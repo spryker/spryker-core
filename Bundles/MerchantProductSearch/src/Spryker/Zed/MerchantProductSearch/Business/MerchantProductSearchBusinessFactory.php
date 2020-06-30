@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProductSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantProductSearch\Business\Reader\MerchantProductSearchReader;
-use Spryker\Zed\MerchantProductSearch\Business\Reader\MerchantProductSearchReaderInterface;
 use Spryker\Zed\MerchantProductSearch\Business\Writer\MerchantProductSearchWriter;
 use Spryker\Zed\MerchantProductSearch\Business\Writer\MerchantProductSearchWriterInterface;
 use Spryker\Zed\MerchantProductSearch\Dependency\Facade\MerchantProductSearchToEventBehaviorFacadeInterface;
@@ -32,14 +30,6 @@ class MerchantProductSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductPageSearchFacade(),
             $this->getRepository()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductSearch\Business\Reader\MerchantProductSearchReaderInterface
-     */
-    public function createMerchantProductSearchReader(): MerchantProductSearchReaderInterface
-    {
-        return new MerchantProductSearchReader($this->getRepository());
     }
 
     /**

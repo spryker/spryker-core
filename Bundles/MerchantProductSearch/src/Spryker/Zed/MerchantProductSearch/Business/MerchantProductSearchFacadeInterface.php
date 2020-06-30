@@ -28,7 +28,6 @@ interface MerchantProductSearchFacadeInterface
      * Specification:
      *  - Gets abstract product merchant ids from eventTransfers.
      *  - Queries all product abstract with the given abstract product merchant ids.
-     *  - Stores data as json encoded to storage table.
      *  - Calls product page search facade to refresh stored data.
      *
      * @api

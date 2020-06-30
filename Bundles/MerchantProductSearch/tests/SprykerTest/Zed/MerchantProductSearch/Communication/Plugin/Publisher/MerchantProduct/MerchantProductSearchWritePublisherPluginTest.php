@@ -61,12 +61,12 @@ class MerchantProductSearchWritePublisherPluginTest extends Unit
         ])->build();
         $productConcreteTransfer = $this->tester->haveProduct();
         $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
-        $merchantProductAbstractEntity = $this->tester->addMerchantProductRelation($merchantTransfer->getIdMerchant(), $productConcreteTransfer->getFkProductAbstract());
+        $idProductAbstractMerchant = $this->tester->addMerchantProductRelation($merchantTransfer->getIdMerchant(), $productConcreteTransfer->getFkProductAbstract());
         $this->tester->addProductRelatedData($productConcreteTransfer);
 
         $merchantProductSearchWritePublisher = new MerchantProductSearchWritePublisherPlugin();
         $eventTransfers = [
-            (new EventEntityTransfer())->setId($merchantProductAbstractEntity->getIdProductAbstractMerchant()),
+            (new EventEntityTransfer())->setId($idProductAbstractMerchant),
         ];
 
         // Act

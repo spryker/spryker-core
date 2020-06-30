@@ -83,4 +83,22 @@ class MerchantProductSearchFacadeTest extends Unit
         $this->assertIsArray($productAbstractMerchantTransfers);
         $this->assertEquals($expectedResult, $productAbstractMerchantTransfers);
     }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantDataByProductAbstractIdsForNotExistingAbstractProductReturnsEmptyArray(): void
+    {
+        // Arrange
+        $notExistingProductAbstractIds = [0];
+        $expectedProductAbstractMerchantTransfers = [];
+
+        // Act
+        $productAbstractMerchantTransfers = $this->tester
+            ->getFacade()
+            ->getMerchantDataByProductAbstractIds($notExistingProductAbstractIds);
+
+        // Assert
+        $this->assertEquals($expectedProductAbstractMerchantTransfers, $productAbstractMerchantTransfers);
+    }
 }
