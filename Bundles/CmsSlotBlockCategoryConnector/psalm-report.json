@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CmsSlotBlockConditionTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryConnector/src/Spryker/Client/CmsSlotBlockCategoryConnector/Resolver/CategoryCmsSlotBlockConditionResolver.php",
+            "snippet": "            ->offsetExists(CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY);",
+            "selected_text": "offsetExists",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CmsSlotBlockConditionTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockCategoryConnector/src/Spryker/Client/CmsSlotBlockCategoryConnector/Resolver/CategoryCmsSlotBlockConditionResolver.php",
+            "snippet": "            ->offsetGet(CmsSlotBlockCategoryConnectorConfig::CONDITION_KEY);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

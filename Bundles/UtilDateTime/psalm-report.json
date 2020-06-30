@@ -1,0 +1,175 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, array<array-key, mixed>>' for Twig\\Extension\\ExtensionInterface::getOperators is more specific than the implemented return type for Spryker\\Service\\Twig\\Plugin\\AbstractTwigExtensionPlugin::getoperators 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Service/Twig/Plugin/AbstractTwigExtensionPlugin.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDate is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDate is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "        return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE, static::DEFAULT_FORMAT_DATE);",
+            "selected_text": "$this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE, static::DEFAULT_FORMAT_DATE)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDateTime is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDateTime is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "        return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME, static::DEFAULT_FORMAT_DATE_TIME);",
+            "selected_text": "$this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_DATE_TIME, static::DEFAULT_FORMAT_DATE_TIME)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDateTimeToIso8601 is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatDateTimeToIso8601 is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "        return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM);",
+            "selected_text": "$this->format($dateTime, DateTime::ATOM, DateTime::ATOM)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatTime is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatter::formatTime is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatter.php",
+            "snippet": "        return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_TIME, static::DEFAULT_FORMAT_TIME);",
+            "selected_text": "$this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_TIME, static::DEFAULT_FORMAT_TIME)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, Twig\\TwigFilter>' for Twig\\Extension\\ExtensionInterface::getFilters is more specific than the implemented return type for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatterTwigExtension::getfilters 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatterTwigExtension.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, Twig\\TwigFunction>' for Twig\\Extension\\ExtensionInterface::getFunctions is more specific than the implemented return type for Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatterTwigExtension::getfunctions 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/Model/DateTimeFormatterTwigExtension.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::share has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
+            "snippet": "        $app['twig'] = $app->share(",
+            "selected_text": "share",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Service\\UtilDateTime\\Model\\DateTimeFormatterTwigExtension is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDateTime/src/Spryker/Service/UtilDateTime/ServiceProvider/DateTimeFormatterServiceProvider.php",
+            "snippet": "                $twig->addExtension(new DateTimeFormatterTwigExtension($utilDateTimeService));",
+            "selected_text": "new DateTimeFormatterTwigExtension($utilDateTimeService)",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

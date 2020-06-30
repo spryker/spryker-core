@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductTaxSetsRestApi\\Processor\\ProductTaxSet\\ProductTaxSetReaderInterface::findProductAbstractTaxSetsByProductAbstractSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/Processor/Expander/ProductTaxSetRelationshipExpander.php",
+            "snippet": "                $resource->getId(),",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductTaxSetsRestApi\\Processor\\ProductTaxSet\\ProductTaxSetReader::findProductAbstractTaxSetsByProductAbstractSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/Processor/ProductTaxSet/ProductTaxSetReader.php",
+            "snippet": "        $restResource = $this->findProductAbstractTaxSetsByProductAbstractSku($parentResource->getId(), $restRequest);",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductTaxSetsRestApi\\Dependency\\Client\\ProductTaxSetsRestApiToTaxStorageClientInterface::findTaxSetStorageByIdTaxSet cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/Processor/ProductTaxSet/ProductTaxSetReader.php",
+            "snippet": "        $taxStorageTransfer = $this->taxStorageClient->findTaxSetStorageByIdTaxSet($taxProductStorageTransfer->getIdTaxSet());",
+            "selected_text": "$taxProductStorageTransfer->getIdTaxSet()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductTaxSetsRestApi\\Processor\\ProductTaxSet\\ProductTaxSetReader::formatRestResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/Processor/ProductTaxSet/ProductTaxSetReader.php",
+            "snippet": "        return $this->formatRestResource($restProductTaxSetsAttributesTransfer, $taxStorageTransfer->getUuid(), $productAbstractSku);",
+            "selected_text": "$taxStorageTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/ProductTaxSetsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->taxProductStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductTaxSetsRestApi/src/Spryker/Glue/ProductTaxSetsRestApi/ProductTaxSetsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->taxStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

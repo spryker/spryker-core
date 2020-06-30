@@ -10,6 +10,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 use DateInterval;
 use DateTime;
 use ErrorException;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsEventTransfer;
 use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Generated\Shared\Transfer\TimeoutProcessorTimeoutRequestTransfer;
@@ -20,6 +21,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Business\Process\EventInterface;
 use Spryker\Zed\Oms\Business\Process\ProcessInterface;
 use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Timeout implements TimeoutInterface
@@ -28,6 +30,11 @@ class Timeout implements TimeoutInterface
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
     protected $queryContainer;
+
+    /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
 
     /**
      * @var \DateTime[]
@@ -47,23 +54,29 @@ class Timeout implements TimeoutInterface
     /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
-        TimeoutProcessorCollectionInterface $timeoutProcessorCollection
+        TimeoutProcessorCollectionInterface $timeoutProcessorCollection,
+        OmsConfig $omsConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->timeoutProcessorCollection = $timeoutProcessorCollection;
+        $this->omsConfig = $omsConfig;
     }
 
     /**
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachineInterface $orderStateMachine
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(OrderStateMachineInterface $orderStateMachine)
-    {
-        $orderItems = $this->findItemsWithExpiredTimeouts();
+    public function checkTimeouts(
+        OrderStateMachineInterface $orderStateMachine,
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
+    ) {
+        $orderItems = $this->findItemsWithExpiredTimeouts($omsCheckTimeoutsQueryCriteriaTransfer);
 
         $countAffectedItems = $orderItems->count();
 
@@ -200,13 +213,38 @@ class Timeout implements TimeoutInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
+     *
      * @return \Propel\Runtime\Collection\ObjectCollection
      */
-    protected function findItemsWithExpiredTimeouts()
+    protected function findItemsWithExpiredTimeouts(?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null)
     {
         $now = new DateTime('now');
 
-        return $this->queryContainer->querySalesOrderItemsWithExpiredTimeouts($now)->find();
+        $omsCheckTimeoutsQueryCriteriaTransfer = $this->prepareOmsCheckTimeoutsQueryCriteriaTransfer($omsCheckTimeoutsQueryCriteriaTransfer);
+
+        return $this->queryContainer
+            ->querySalesOrderItemsWithExpiredTimeouts($now, $omsCheckTimeoutsQueryCriteriaTransfer)
+            ->find();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer
+     */
+    protected function prepareOmsCheckTimeoutsQueryCriteriaTransfer(
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
+    ): OmsCheckTimeoutsQueryCriteriaTransfer {
+        if ($omsCheckTimeoutsQueryCriteriaTransfer === null) {
+            $omsCheckTimeoutsQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
+        }
+
+        if ($omsCheckTimeoutsQueryCriteriaTransfer->getLimit() === null) {
+            $omsCheckTimeoutsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckTimeoutsQueryLimit());
+        }
+
+        return $omsCheckTimeoutsQueryCriteriaTransfer;
     }
 
     /**

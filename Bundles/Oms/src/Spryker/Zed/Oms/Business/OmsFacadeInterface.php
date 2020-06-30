@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -170,31 +172,37 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads all transitions without event.
-     *  - Reads from database items with those transitions
-     *  - Executes each transition
-     *  - Returns number of affected items
+     *  - Reads from database items with those transitions.
+     *  - Executes each transition.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = []);
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
-     *  - Reads all expired timeout events
-     *  - Execute events
-     *  - Returns number of affected items
+     *  - Reads all expired timeout events.
+     *  - Execute events.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = []);
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null);
 
     /**
      * Specification:

@@ -1,0 +1,224 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 197,
+            "line_to": 197,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Client\\CmsBlockStorage\\Storage\\CmsBlockStorage::getBlockKeysFromTransfers is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/Storage/CmsBlockStorage.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 207,
+            "line_to": 207,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Client\\CmsBlockStorage\\Storage\\CmsBlockStorage::getBlockKeysFromTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/Storage/CmsBlockStorage.php",
+            "snippet": "        return $blockKeys;",
+            "selected_text": "$blockKeys",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockStorageToStorageBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->utilEncoding()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\CmsBlockStorage\\Storage\\CmsBlockStorage::getBlocksByKeys cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Client/CmsBlockStorage/Storage/CmsBlockStorage.php",
+            "snippet": "        return $this->getBlocksByKeys($blockKeys, $localeName, $storeName);",
+            "selected_text": "$blockKeys",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 254,
+            "line_to": 254,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $mappedCmsBlockStorageEntities[int][string][null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "            $mappedCmsBlockStorageEntities[$entity->getFkCmsBlock()][$entity->getLocale()][$entity->getStore()] = $entity;",
+            "selected_text": "$mappedCmsBlockStorageEntities[$entity->getFkCmsBlock()][$entity->getLocale()]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 267,
+            "line_to": 267,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlock> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "        return $this->queryContainer->queryBlockWithRelationsByIds($cmsBlockIds)->find()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 277,
+            "line_to": 277,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CmsBlockStorage\\Persistence\\SpyCmsBlockStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "        return $this->queryContainer->queryCmsBlockStorageEntities($cmsBlockIds)->find()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 348,
+            "line_to": 348,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $localeNameMapByStoreName[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();",
+            "selected_text": "$localeNameMapByStoreName",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/CmsBlockStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockStorageToStoreFacadeBridge($container->getLocator()->store()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsBlock\\Persistence\\SpyCmsBlockQuery::orderBy cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Communication/Plugin/Event/CmsBlockEventResourceQueryContainerPlugin.php",
+            "snippet": "        return $query->orderBy($this->getIdColumnName());",
+            "selected_text": "$this->getIdColumnName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Orm\\Zed\\Glossary\\Persistence\\SpyGlossaryKeyQuery::joinwithspycmsblockstore does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Persistence/CmsBlockStorageQueryContainer.php",
+            "snippet": "            ->joinWithSpyCmsBlockStore()",
+            "selected_text": "joinWithSpyCmsBlockStore",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CmsBlockStorage\\CmsBlockStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/CmsBlockStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue()",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\CmsBlockStorage\\Business\\Storage\\CmsBlockStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 206,
+            "line_to": 206,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\CmsBlockStorage\\Persistence\\Base\\SpyCmsBlockStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockStorage/src/Spryker/Zed/CmsBlockStorage/Business/Storage/CmsBlockStorageWriter.php",
+            "snippet": "            ->setIsSendingToQueue($this->isSendingToQueue)",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

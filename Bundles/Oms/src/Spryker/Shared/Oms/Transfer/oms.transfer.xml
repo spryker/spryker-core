@@ -158,8 +158,14 @@
         <property name="storeName" type="string"/>
     </transfer>
 
-    <transfer name="OrderList">
-        <property name="orders" type="Order[]" singular="order"/>
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
     </transfer>
 
     <transfer name="OmsEvent">

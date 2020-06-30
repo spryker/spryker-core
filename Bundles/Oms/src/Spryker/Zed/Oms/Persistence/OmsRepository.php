@@ -140,7 +140,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
+            ->getSalesQueryContainer()->querySalesOrderItem()
             ->joinWithState()
             ->joinWithProcess();
 

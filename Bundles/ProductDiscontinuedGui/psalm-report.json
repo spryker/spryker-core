@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedGui\\Communication\\Controller\\IndexController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Communication/Controller/IndexController.php",
+            "snippet": "            $this->addErrorMessage($messageTransfer->getValue(), $messageTransfer->getParameters());",
+            "selected_text": "$messageTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedProductDiscontinuedNoteTransfers[$idLocale] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Communication/Form/DataProvider/DiscontinueProductFormDataProvider.php",
+            "snippet": "            $indexedProductDiscontinuedNoteTransfers[$idLocale] = (new ProductDiscontinuedNoteTransfer())",
+            "selected_text": "$indexedProductDiscontinuedNoteTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 100,
+            "line_to": 100,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedProductDiscontinuedNoteTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Communication/Form/DataProvider/DiscontinueProductFormDataProvider.php",
+            "snippet": "            $indexedProductDiscontinuedNoteTransfers[$productDiscontinuedNoteTransfer->getFkLocale()] = $productDiscontinuedNoteTransfer;",
+            "selected_text": "$indexedProductDiscontinuedNoteTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedGui\\Communication\\Form\\DataProvider\\DiscontinueProductFormDataProvider::getData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/Communication/Plugin/DiscontinueProductConcreteFormEditDataProviderExpanderPlugin.php",
+            "snippet": "            ->getData($productConcrete->getIdProductConcrete());",
+            "selected_text": "$productConcrete->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/ProductDiscontinuedGuiDependencyProvider.php",
+            "snippet": "            return new ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedGui/src/Spryker/Zed/ProductDiscontinuedGui/ProductDiscontinuedGuiDependencyProvider.php",
+            "snippet": "            return new ProductDiscontinuedGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
