@@ -9,6 +9,7 @@
 "Company Business Unit ""%s"" has not been updated. A Business Unit cannot be set as a child to an own child Business Unit, please check the Business Unit hierarchy.","Geschäftseinheit ""%s"" des Unternehmens wurde nicht aktualisiert. Eine Geschäftseinheit kann nicht als Kind einer eigenen Kinder-Geschäftseinheit festgelegt werden. Bitte die Geschäftseinheitenhierarchie beachten."
 "Company Business Unit ""%s"" was deleted.","Geschäftseinheit ""%s"" des Unternehmens wurde gelöscht."
 "Company name","Name der Firma"
+"Company Units",Geschäftseinheiten
 "Create Company Business Unit","Geschäftseinheit erstellen"
 "Edit Company Business Unit","Unternehmenseinheit bearbeiten"
 "List of Company Business Units","Liste der Geschäftseinheiten"

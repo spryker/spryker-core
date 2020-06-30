@@ -150,5 +150,29 @@
         <property name="storeName" type="string"/>
     </transfer>
 
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsEvent">
+        <property name="timeout" type="string"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+        <property name="salesOrderItemEntity" type="SpySalesOrderItemEntity"/>
+        <property name="timestamp" type="int"/>
+        <property name="omsEvent" type="OmsEvent"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
+        <property name="timeoutTimestamp" type="int"/>
+    </transfer>
+
 </transfers>
 

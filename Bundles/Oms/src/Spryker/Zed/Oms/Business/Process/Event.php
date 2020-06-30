@@ -40,6 +40,11 @@ class Event implements EventInterface
     protected $manual;
 
     /**
+     * @var string|null
+     */
+    protected $timeoutProcessor;
+
+    /**
      * @param bool $manual
      *
      * @return void
@@ -179,5 +184,31 @@ class Event implements EventInterface
     public function hasTimeout()
     {
         return isset($this->timeout);
+    }
+
+    /**
+     * @param string|null $timeoutProcessor
+     *
+     * @return void
+     */
+    public function setTimeoutProcessor(?string $timeoutProcessor): void
+    {
+        $this->timeoutProcessor = $timeoutProcessor;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTimeoutProcessor(): ?string
+    {
+        return $this->timeoutProcessor;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasTimeoutProcessor(): bool
+    {
+        return isset($this->timeoutProcessor);
     }
 }

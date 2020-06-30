@@ -41,6 +41,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_OMS_RESERVATION_READER_STRATEGY = 'PLUGINS_OMS_RESERVATION_READER_STRATEGY';
     public const PLUGINS_OMS_RESERVATION_WRITER_STRATEGY = 'PLUGINS_OMS_RESERVATION_WRITER_STRATEGY';
     public const PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY = 'PLUGINS_RESERVATION_HANDLER_TERMINATION_AWARE_STRATEGY';
+    public const PLUGINS_TIMEOUT_PROCESSOR = 'PLUGINS_TIMEOUT_PROCESSOR';
 
     public const FACADE_MAIL = 'FACADE_MAIL';
     public const FACADE_SALES = 'FACADE_SALES';
@@ -50,6 +51,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::QUERY_CONTAINER_SALES} instead.
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
@@ -77,6 +81,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOmsManualEventGrouperPlugins($container);
         $container = $this->addOmsReservationWriterStrategyPlugins($container);
         $container = $this->addReservationPostSaveTerminationAwareStrategyPlugins($container);
+        $container = $this->addTimeoutProcessorPlugins($container);
 
         return $container;
     }
@@ -110,10 +115,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
-            return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
-        });
-
+        $container = $this->addSalesQueryContainer($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
@@ -308,6 +310,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::addSalesQueryContainer()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -487,6 +491,28 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface[]
      */
     protected function getReservationPostSaveTerminationAwareStrategyPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTimeoutProcessorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_TIMEOUT_PROCESSOR, function () {
+            return $this->getTimeoutProcessorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface[]
+     */
+    protected function getTimeoutProcessorPlugins(): array
     {
         return [];
     }
