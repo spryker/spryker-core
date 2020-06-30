@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/BarcodeDependencyProvider.php",
+            "snippet": "            return $container->getLocator()->barcode()->service();",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/Plugin/Twig/BarcodeTwigPlugin.php",
+            "snippet": "            return sprintf('<img src=\"%s,%s\">', $barcodeResponseTransfer->getEncoding(), $barcodeResponseTransfer->getCode());",
+            "selected_text": "$barcodeResponseTransfer->getEncoding()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Barcode/src/Spryker/Zed/Barcode/Plugin/Twig/BarcodeTwigPlugin.php",
+            "snippet": "            return sprintf('<img src=\"%s,%s\">', $barcodeResponseTransfer->getEncoding(), $barcodeResponseTransfer->getCode());",
+            "selected_text": "$barcodeResponseTransfer->getCode()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

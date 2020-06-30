@@ -34,6 +34,6 @@ class ProductManagementProductViewCest
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
 
-        $i->seeBreadcrumbNavigation('Products / Products / View Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / View Product');
     }
 }

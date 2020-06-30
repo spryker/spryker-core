@@ -9,6 +9,7 @@ namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use DateTime;
 use Exception;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\ReservationRequestTransfer;
 use LogicException;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
@@ -27,6 +28,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByItemInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
+use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
@@ -103,6 +105,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $reservation;
 
     /**
+     * @var \Spryker\Zed\Oms\OmsConfig
+     */
+    protected $omsConfig;
+
+    /**
      * @param \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Oms\Business\OrderStateMachine\BuilderInterface $builder
      * @param \Spryker\Zed\Oms\Business\Util\TransitionLogInterface $transitionLog
@@ -111,6 +118,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface|array $conditions
      * @param \Spryker\Zed\Oms\Dependency\Plugin\Command\CommandCollectionInterface|array $commands
      * @param \Spryker\Zed\Oms\Business\Util\ReservationInterface $reservation
+     * @param \Spryker\Zed\Oms\OmsConfig $omsConfig
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -120,7 +128,8 @@ class OrderStateMachine implements OrderStateMachineInterface
         ReadOnlyArrayObject $activeProcesses,
         $conditions,
         $commands,
-        ReservationInterface $reservation
+        ReservationInterface $reservation,
+        OmsConfig $omsConfig
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -130,6 +139,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->setConditions($conditions);
         $this->setCommands($commands);
         $this->reservation = $reservation;
+        $this->omsConfig = $omsConfig;
     }
 
     /**
@@ -297,16 +307,17 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = [])
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null)
     {
         $affectedOrderItems = 0;
         foreach ($this->activeProcesses as $processName) {
             $process = $this->builder->createProcess($processName);
             $orderStateMachine = clone $this;
-            $affectedOrderItems += $orderStateMachine->checkConditionsForProcess($process);
+            $affectedOrderItems += $orderStateMachine->checkConditionsForProcess($process, $omsCheckConditionsQueryCriteriaTransfer);
         }
 
         return $affectedOrderItems;
@@ -314,16 +325,17 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    protected function checkConditionsForProcess(ProcessInterface $process)
+    protected function checkConditionsForProcess(ProcessInterface $process, ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer)
     {
         $transitions = $process->getAllTransitionsWithoutEvent();
 
         $stateToTransitionsMap = $this->createStateToTransitionMap($transitions);
 
-        $orderItems = $this->getOrderItemsByState(array_keys($stateToTransitionsMap), $process);
+        $orderItems = $this->getOrderItemsByState(array_keys($stateToTransitionsMap), $process, $omsCheckConditionsQueryCriteriaTransfer);
 
         $countAffectedItems = count($orderItems);
 
@@ -428,11 +440,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     {
         $orderItemsFiltered = [];
         foreach ($orderItems as $orderItem) {
-            $stateId = $orderItem->getState()->getName();
-            $processId = $orderItem->getProcess()->getName();
-            $process = $processes[$processId];
+            $stateName = $orderItem->getState()->getName();
+            $processName = $orderItem->getProcess()->getName();
+            $process = $processes[$processName];
 
-            $state = $process->getStateFromAllProcesses($stateId);
+            $state = $process->getStateFromAllProcesses($stateName);
 
             if ($state->hasEvent($eventId)) {
                 $orderItemsFiltered[] = $orderItem;
@@ -784,15 +796,61 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param array $states
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem[]
      */
-    protected function getOrderItemsByState(array $states, ProcessInterface $process)
-    {
+    protected function getOrderItemsByState(
+        array $states,
+        ProcessInterface $process,
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+    ) {
+        $omsCheckConditionsQueryCriteriaTransfer = $this->prepareOmsCheckConditionsQueryCriteriaTransfer($omsCheckConditionsQueryCriteriaTransfer);
+
+        $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
+        $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
+
+        if ($storeName === null && $limit === null) {
+            return $this->queryContainer
+                ->querySalesOrderItemsByState($states, $process->getName())
+                ->find()
+                ->getData();
+        }
+
+        $omsProcessEntity = $this->queryContainer->queryProcess($process->getName())->findOne();
+        $omsOrderItemEntityCollection = $this->queryContainer->querySalesOrderItemStatesByName($states)->find();
+
+        if ($omsProcessEntity === null || $omsOrderItemEntityCollection->count() === 0) {
+            return [];
+        }
+
         return $this->queryContainer
-            ->querySalesOrderItemsByState($states, $process->getName())
+            ->querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
+                $omsProcessEntity->getIdOmsOrderProcess(),
+                $omsOrderItemEntityCollection->getPrimaryKeys(),
+                $omsCheckConditionsQueryCriteriaTransfer
+            )
             ->find()
             ->getData();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer
+     */
+    protected function prepareOmsCheckConditionsQueryCriteriaTransfer(
+        ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null
+    ): OmsCheckConditionsQueryCriteriaTransfer {
+        if ($omsCheckConditionsQueryCriteriaTransfer === null) {
+            $omsCheckConditionsQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
+        }
+
+        if ($omsCheckConditionsQueryCriteriaTransfer->getLimit() === null) {
+            $omsCheckConditionsQueryCriteriaTransfer->setLimit($this->omsConfig->getCheckConditionsQueryLimit());
+        }
+
+        return $omsCheckConditionsQueryCriteriaTransfer;
     }
 
     /**
@@ -840,7 +898,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         TransitionLogInterface $log,
         DateTime $currentTime
     ) {
-
         $process = $processes[$orderItem->getProcess()->getName()];
 
         $sourceState = $sourceStateBuffer[$orderItem->getIdSalesOrderItem()];

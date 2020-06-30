@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+
 interface OrderStateMachineInterface
 {
     /**
@@ -28,10 +30,11 @@ interface OrderStateMachineInterface
 
     /**
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = []);
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null);
 
     /**
      * @param array $orderItemIds

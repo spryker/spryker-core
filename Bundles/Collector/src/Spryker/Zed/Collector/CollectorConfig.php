@@ -96,6 +96,16 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isCollectorEnabled(): bool
+    {
+        return true;
+    }
+
+    /**
      * @return array
      */
     protected function getQueryToDbEngineClassMap()
