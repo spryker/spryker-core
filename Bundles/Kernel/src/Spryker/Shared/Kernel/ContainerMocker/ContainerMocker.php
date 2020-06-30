@@ -14,9 +14,9 @@ use Spryker\Shared\Kernel\KernelConstants;
 trait ContainerMocker
 {
     /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Shared\Kernel\ContainerInterface $container
      *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Service\Container\ContainerInterface
+     * @return \Spryker\Shared\Kernel\ContainerInterface
      */
     protected function overwriteForTesting(ContainerInterface $container)
     {
@@ -31,6 +31,7 @@ trait ContainerMocker
         }
 
         foreach ($containerMocks as $key => $containerMock) {
+            /** @var \Spryker\Service\Container\ContainerInterface $container */
             $container->set($key, $containerMock);
         }
 
