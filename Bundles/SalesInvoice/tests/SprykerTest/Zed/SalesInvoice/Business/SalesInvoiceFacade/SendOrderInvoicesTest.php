@@ -53,7 +53,7 @@ class SendOrderInvoicesTest extends Unit
     {
         // Arrange
         $this->tester->createInvoice();
-        $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer());
+        $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())->setBatch(10);
 
         // Act
         $orderInvoiceSendResponseTransfer = $this->tester->getMockedFacade()
@@ -74,7 +74,7 @@ class SendOrderInvoicesTest extends Unit
         $this->tester->haveOrderInvoice($idSalesOrder, [
             'email_sent' => true,
         ]);
-        $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer());
+        $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())->setBatch(10);
 
         // Act
         $orderInvoiceSendResponseTransfer = $this->tester->getMockedFacade()
@@ -96,6 +96,7 @@ class SendOrderInvoicesTest extends Unit
             'email_sent' => true,
         ]);
         $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())
+            ->setBatch(10)
             ->setForce(true);
 
         // Act
@@ -118,6 +119,7 @@ class SendOrderInvoicesTest extends Unit
         $this->tester->haveOrderInvoice($idSalesOrder);
 
         $orderInvoiceSendRequestTransfer = (new OrderInvoiceSendRequestTransfer())
+            ->setBatch(10)
             ->addSalesOrderId($idSalesOrder);
 
         // Act
