@@ -25,6 +25,8 @@ class CompanyUser implements CompanyUserInterface
 {
     use TransactionTrait;
 
+    protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+
     /**
      * @var \Spryker\Zed\CompanyUser\Persistence\CompanyUserRepositoryInterface
      */
@@ -330,6 +332,12 @@ class CompanyUser implements CompanyUserInterface
                 $customerResponseTransfer->getCustomerTransfer()
                     ->getIdCustomer()
             );
+
+            if ($customerResponseTransfer->getIsDoubleOptInEnabled()) {
+                $companyUserResponseTransfer->addMessage(
+                    (new ResponseMessageTransfer())->setText(static::GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS)
+                );
+            }
 
             return $companyUserResponseTransfer;
         }
