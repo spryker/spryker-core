@@ -1,0 +1,90 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\UserTransfer' for Spryker\\Client\\Agent\\AgentClient::getAgent is not nullable, but 'Generated\\Shared\\Transfer\\UserTransfer|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentClient.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\UserTransfer",
+            "selected_text": "\\Generated\\Shared\\Transfer\\UserTransfer",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 62,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Generated\\Shared\\Transfer\\UserTransfer' for Spryker\\Client\\Agent\\AgentClient::getAgent is not nullable, but the function returns 'Generated\\Shared\\Transfer\\UserTransfer|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentClient.php",
+            "snippet": "        return $this->getFactory()\n            ->createAgentSession()\n            ->getAgent();",
+            "selected_text": "$this->getFactory()\n            ->createAgentSession()\n            ->getAgent()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentDependencyProvider.php",
+            "snippet": "                $container->getLocator()->zedRequest()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Client/Agent/AgentDependencyProvider.php",
+            "snippet": "                $container->getLocator()->session()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Agent\\Persistence\\AgentRepositoryInterface::findCustomersByQuery cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Business/Customer/CustomerReader.php",
+            "snippet": "            $customerQueryTransfer->getQuery(),",
+            "selected_text": "$customerQueryTransfer->getQuery()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Agent\\Persistence\\AgentRepositoryInterface::findCustomersByQuery cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Business/Customer/CustomerReader.php",
+            "snippet": "            $customerQueryTransfer->getLimit()",
+            "selected_text": "$customerQueryTransfer->getLimit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Agent\\Business\\AgentFacadeInterface::findAgentByUsername cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Agent/src/Spryker/Zed/Agent/Communication/Controller/GatewayController.php",
+            "snippet": "            ->findAgentByUsername($userTransfer->getUsername());",
+            "selected_text": "$userTransfer->getUsername()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

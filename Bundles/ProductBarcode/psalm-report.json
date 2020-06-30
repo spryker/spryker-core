@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Client/ProductBarcode/ProductBarcodeDependencyProvider.php",
+            "snippet": "                $container->getLocator()->barcode()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductBarcode\\Business\\Product\\ProductSkuProvider::getConcreteProductSku is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of strlen cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "        if (strlen($sku) > 0) {",
+            "selected_text": "$sku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductBarcode\\Business\\Product\\ProductSkuProvider::getConcreteProductSku is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "            return $sku;",
+            "selected_text": "$sku",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductBarcode\\Business\\Product\\ProductSkuProvider::getConcreteProductSkuFromDatabase cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "        return $this->getConcreteProductSkuFromDatabase($idProductConcrete);",
+            "selected_text": "$idProductConcrete",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductBarcode\\Business\\Product\\ProductSkuProvider::getConcreteProductSkuFromDatabase is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 58,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ProductBarcode\\Business\\Product\\ProductSkuProvider::getConcreteProductSkuFromDatabase is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Business/Product/ProductSkuProvider.php",
+            "snippet": "        return $this\n            ->productBarcodeRepository\n            ->getProductById($idProductConcrete)\n            ->getSku();",
+            "selected_text": "$this\n            ->productBarcodeRepository\n            ->getProductById($idProductConcrete)\n            ->getSku()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductBarcode\\Persistence\\Mapper\\ProductMapperInterface::mapSpyProductToProductConcreteTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/Persistence/ProductBarcodeRepository.php",
+            "snippet": "            ->mapSpyProductToProductConcreteTransfer($spyProduct);",
+            "selected_text": "$spyProduct",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBarcode/src/Spryker/Zed/ProductBarcode/ProductBarcodeDependencyProvider.php",
+            "snippet": "                $container->getLocator()->barcode()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,31 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Assertion\\Business\\Model\\Assertion::throwException cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Assertion/src/Spryker/Zed/Assertion/Business/Model/Assertion.php",
+            "snippet": "            $this->throwException($message, 'Value is not numeric');",
+            "selected_text": "$message",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetSet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Assertion/src/Spryker/Zed/Assertion/Communication/Plugin/ServiceProvider/AssertionServiceProvider.php",
+            "snippet": "        $app[self::ASSERTION] = function () {",
+            "selected_text": "$app",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
