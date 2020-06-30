@@ -77,9 +77,6 @@ function changeNodeType() {
     triggerResize();
 }
 
-/**
- * @return {void}
- */
 function deleteNavigationNodeHandler() {
     var $deleteSelectedNodeButton = $('#remove-selected-node-btn');
     var $deleteNavigationNodeForm = $('form[name="delete_navigation_node_form"]');
