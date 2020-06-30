@@ -125,6 +125,8 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
      * @return bool
      */
     public function isDoubleOptInEnabled(): bool

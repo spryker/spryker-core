@@ -325,8 +325,12 @@ class Customer implements CustomerInterface
 
         $customerTransfer->setConfirmationLink($confirmationLink);
 
+        $mailType = $this->customerConfig->isDoubleOptInEnabled()
+            ? CustomerRegistrationMailTypePlugin::MAIL_TYPE
+            : CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE;
+
         $mailTransfer = new MailTransfer();
-        $mailTransfer->setType(CustomerRegistrationMailTypePlugin::MAIL_TYPE);
+        $mailTransfer->setType($mailType);
         $mailTransfer->setCustomer($customerTransfer);
         $mailTransfer->setLocale($customerTransfer->getLocale());
 
@@ -769,20 +773,22 @@ class Customer implements CustomerInterface
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
     {
-        $result = false;
-
         $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
             ->findOne();
 
-        if ($customerEntity !== null) {
-            $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());
-        }
-
-        if ($result && $this->customerConfig->isDoubleOptInEnabled() && !$customerEntity->getRegistered()) {
+        if (!$customerEntity) {
             return false;
         }
 
-        return $result;
+        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {
+            return false;
+        }
+
+        if ($this->customerConfig->isDoubleOptInEnabled() && !$customerEntity->getRegistered()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

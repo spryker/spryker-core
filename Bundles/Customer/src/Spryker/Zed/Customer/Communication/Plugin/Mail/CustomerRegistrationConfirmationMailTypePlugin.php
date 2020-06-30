@@ -17,9 +17,9 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  * @method \Spryker\Zed\Customer\CustomerConfig getConfig()
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
  */
-class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+class CustomerRegistrationConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'customer registration mail';
+    public const MAIL_TYPE = 'customer registration confirmation mail';
 
     /**
      * {@inheritDoc}
@@ -35,6 +35,7 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
 
     /**
      * {@inheritDoc}
+     * - Builds a mail for customer registration confirmation that uses when double opt in feature is enabled.
      *
      * @api
      *
@@ -71,7 +72,7 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
      */
     protected function setHtmlTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setHtmlTemplate('customer/mail/customer_registration.html.twig');
+        $mailBuilder->setHtmlTemplate('customer/mail/customer_registration_token.html.twig');
 
         return $this;
     }
@@ -83,7 +84,7 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
      */
     protected function setTextTemplate(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setTextTemplate('customer/mail/customer_registration.text.twig');
+        $mailBuilder->setTextTemplate('customer/mail/customer_registration_token.text.twig');
 
         return $this;
     }

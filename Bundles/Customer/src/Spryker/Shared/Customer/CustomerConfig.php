@@ -18,6 +18,6 @@ class CustomerConfig extends AbstractSharedConfig
      */
     public function isDoubleOptInEnabled(): bool
     {
-        return true;
+        return false;
     }
 }
