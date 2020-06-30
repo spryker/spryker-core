@@ -56,6 +56,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Customer\CustomerClient::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -65,6 +67,22 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getFactory()
             ->createZedCustomerStub()
             ->confirmRegistration($customerTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFactory()
+            ->createZedCustomerStub()
+            ->confirmCustomerRegistration($customerTransfer);
     }
 
     /**

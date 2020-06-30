@@ -32,6 +32,8 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Customer\Communication\Controller\GatewayController::confirmCustomerRegistrationAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -40,6 +42,16 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->confirmRegistration($customerTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistrationAction(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        return $this->getFacade()->confirmCustomerRegistration($customerTransfer);
     }
 
     /**

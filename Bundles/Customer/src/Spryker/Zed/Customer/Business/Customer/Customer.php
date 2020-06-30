@@ -44,6 +44,7 @@ class Customer implements CustomerInterface
     protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
     protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
+    protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -352,6 +353,8 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Customer\Business\Customer\Customer::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -366,13 +369,33 @@ class Customer implements CustomerInterface
             throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));
         }
 
-        $customerEntity->setRegistered(new DateTime());
-        $customerEntity->setRegistrationKey(null);
-
-        $customerEntity->save();
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
+        $customerTransfer = $this->saveCustomer($customerEntity, $customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setCustomerTransfer($customerTransfer)
+            ->setIsSuccess(true);
+
+        $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())->findOne();
+
+        if (!$customerEntity) {
+            return $customerResponseTransfer
+                ->setIsSuccess(false)
+                ->addError((new CustomerErrorTransfer())->setMessage(static::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED));
+        }
+
+        $customerTransfer = $this->saveCustomer($customerEntity, $customerTransfer);
+
+        return $customerResponseTransfer->setCustomerTransfer($customerTransfer);
     }
 
     /**
@@ -981,5 +1004,20 @@ class Customer implements CustomerInterface
                 $index === $customersCount ? PHP_EOL : ''
             ));
         }
+    }
+
+    /**
+     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function saveCustomer(SpyCustomer $customerEntity, CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerEntity->setRegistered(new DateTime());
+        $customerEntity->setRegistrationKey(null);
+        $customerEntity->save();
+
+        return $customerTransfer->fromArray($customerEntity->toArray(), true);
     }
 }
