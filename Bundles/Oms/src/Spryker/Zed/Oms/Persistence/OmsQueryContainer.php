@@ -81,9 +81,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit), 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
-            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER))
-            ->where(sprintf('%s = %s', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS, $idOmsOrderProcess))
-            ->where(sprintf('%s IN (%s)', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, implode(', ', $omsOrderItemStateIds)));
+            ->filterByFkOmsOrderProcess($idOmsOrderProcess)
+            ->filterByFkOmsOrderItemState_In($omsOrderItemStateIds)
+            ->where(sprintf('t.fk_sales_order = %s', SpySalesOrderItemTableMap::COL_FK_SALES_ORDER));
 
         return $baseQuery;
     }
@@ -120,8 +120,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $subQuery
             ->setDistinct()
             ->addSelectColumn(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
-            ->where(sprintf('%s = %s', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_PROCESS, $idOmsOrderProcess))
-            ->where(sprintf('%s IN (%s)', SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, implode(', ', $omsOrderItemStateIds)));
+            ->filterByFkOmsOrderProcess($idOmsOrderProcess)
+            ->filterByFkOmsOrderItemState_In($omsOrderItemStateIds);
 
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
