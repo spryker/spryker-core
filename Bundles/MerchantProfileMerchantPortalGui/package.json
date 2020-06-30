@@ -26,6 +26,7 @@
         "@spryker/card": "^0.1.0-next.15",
         "@spryker/collapsible": "^0.1.0-next.5",
         "@spryker/form-item": "^0.1.0-next.14",
+        "@spryker/headline": "0.1.0-next.1",
         "@spryker/icon": "^0.1.0-next.15",
         "@spryker/input": "^0.1.0-next.22",
         "@spryker/label": "^0.1.0-next.2",

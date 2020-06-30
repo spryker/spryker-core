@@ -27,7 +27,7 @@ describe('ProductOfferComponent', () => {
 
     it('should render @Input(title) inside `h1` element', () => {
         const mockTitle = 'Test Title';
-        const headingContainer = fixture.debugElement.query(By.css('h1'));
+        const headingContainer = fixture.debugElement.query(By.css('spy-headline h1'));
 
         component.title = mockTitle;
         fixture.detectChanges();

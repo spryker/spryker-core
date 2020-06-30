@@ -120,7 +120,8 @@
         {% endfor %}
 
         <mp-profile cloak>
-            <h1 title class="mp-profile__title">{{ 'Profile' | trans }}</h1>
+            <h1 title>{{ 'Profile' | trans }}</h1>
+
             <spy-tabs>
                 <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
                     <div class="mp-profile__row">

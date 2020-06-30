@@ -27,7 +27,7 @@ describe('ProfileComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ProfileModule],
-            declarations: [TestComponent]
+            declarations: [TestComponent],
         }).compileComponents();
     }));
 
@@ -44,19 +44,19 @@ describe('ProfileComponent', () => {
 
 	describe('Profile header', () => {
 		it('should render page header',  () => {
-			const headerElem = fixture.debugElement.query(By.css('.mp-profile__header'));
+			const headerElem = fixture.debugElement.query(By.css('spy-headline'));
 
 			expect(headerElem).toBeTruthy();
 		});
 
 		it('should render projected title inside header',  () => {
-			const titleElem = fixture.debugElement.query(By.css('.mp-profile__header .test-title'));
+			const titleElem = fixture.debugElement.query(By.css('spy-headline .test-title'));
 
 			expect(titleElem).toBeTruthy();
 		});
 
 		it('should render projected action inside header',  () => {
-			const actionElem = fixture.debugElement.query(By.css('.mp-profile__header .test-action'));
+			const actionElem = fixture.debugElement.query(By.css('spy-headline .test-action'));
 
 			expect(actionElem).toBeTruthy();
 		});

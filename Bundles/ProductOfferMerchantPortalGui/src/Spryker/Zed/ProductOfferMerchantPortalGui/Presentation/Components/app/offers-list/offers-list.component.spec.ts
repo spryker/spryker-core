@@ -26,14 +26,14 @@ describe('OffersListComponent', () => {
     });
 
     it('should render `spy-button-link` component', () => {
-        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-button-link'));
+        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-headline spy-button-link'));
 
         expect(buttonLinkComponent).toBeTruthy();
     });
 
     it('should render @Input(title) inside `h1` element', () => {
         const mockTitle = 'Test Title';
-        const headingContainer = fixture.debugElement.query(By.css('h1'));
+        const headingContainer = fixture.debugElement.query(By.css('spy-headline h1'));
 
         component.title = mockTitle;
         fixture.detectChanges();
@@ -43,7 +43,7 @@ describe('OffersListComponent', () => {
 
     it('should render @Input(actionTitle) inside `spy-button-link` component', () => {
         const mockActionTitle = 'Test Title';
-        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-button-link'));
+        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-headline spy-button-link'));
 
         component.actionTitle = mockActionTitle;
         fixture.detectChanges();
@@ -53,7 +53,7 @@ describe('OffersListComponent', () => {
 
     it('should bind @Input(actionUrl) to `url` of `spy-button-link` component', () => {
         const mockActionUrl = 'Test Title';
-        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-button-link'));
+        const buttonLinkComponent = fixture.debugElement.query(By.css('spy-headline spy-button-link'));
 
         component.actionUrl = mockActionUrl;
         fixture.detectChanges();
