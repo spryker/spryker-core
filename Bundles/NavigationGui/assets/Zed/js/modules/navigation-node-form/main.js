@@ -85,7 +85,7 @@ function deleteNavigationNodeHandler() {
     var $deleteNavigationNodeForm = $('form[name="delete_navigation_node_form"]');
     var message = $deleteSelectedNodeButton.data('confirm-message');
 
-    $deleteSelectedNodeButton.on('click', function (event) {
+    $deleteSelectedNodeButton.on('click', function(event) {
         event.preventDefault();
 
         if (confirm(message)) {
