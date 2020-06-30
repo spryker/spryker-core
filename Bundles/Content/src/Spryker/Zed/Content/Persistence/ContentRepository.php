@@ -67,13 +67,9 @@ class ContentRepository extends AbstractRepository implements ContentRepositoryI
             ->filterByKey_In($contentKeys)
             ->find();
 
-        $contentTransfers = [];
-        $contentMapper = $this->getFactory()->createContentMapper();
-        foreach ($contentEntities as $contentEntity) {
-            $contentTransfers[] = $contentMapper->mapContentEntityToTransfer($contentEntity);
-        }
-
-        return $contentTransfers;
+        return $this->getFactory()
+            ->createContentMapper()
+            ->mapContentEntitiesToContentTransfers($contentEntities);
     }
 
     /**

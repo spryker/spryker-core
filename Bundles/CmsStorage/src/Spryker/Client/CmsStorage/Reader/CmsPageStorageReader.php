@@ -16,9 +16,6 @@ use Spryker\Shared\CmsStorage\CmsStorageConstants;
 
 class CmsPageStorageReader implements CmsPageStorageReaderInterface
 {
-    protected const KEY_ID = 'id';
-    protected const KEY_UUID = 'uuid';
-
     /**
      * @var \Spryker\Client\CmsStorage\Dependency\Client\CmsStorageToStorageClientInterface
      */
@@ -76,7 +73,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
             if (!is_array($decodedCmsPageStorageMappingData)) {
                 continue;
             }
-            $cmsPageIds[] = $decodedCmsPageStorageMappingData[static::KEY_ID];
+            $cmsPageIds[] = $decodedCmsPageStorageMappingData['id'];
         }
 
         if (!$cmsPageIds) {
@@ -132,7 +129,7 @@ class CmsPageStorageReader implements CmsPageStorageReaderInterface
     {
         $cmsPageStorageKeys = [];
         foreach ($cmsPageUuids as $cmsPageUuid) {
-            $cmsPageReference = sprintf('%s:%s', static::KEY_UUID, $cmsPageUuid);
+            $cmsPageReference = sprintf('%s:%s', 'uuid', $cmsPageUuid);
             $cmsPageStorageKeys[] = $this->generateKey($cmsPageReference, $localeName, $storeName);
         }
 

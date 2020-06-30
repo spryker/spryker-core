@@ -10,10 +10,10 @@ namespace Spryker\Glue\CmsPagesRestApi;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsStorageClientInterface;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToStoreClientInterface;
-use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReader;
-use Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReaderInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapper;
 use Spryker\Glue\CmsPagesRestApi\Processor\Mapper\CmsPageMapperInterface;
+use Spryker\Glue\CmsPagesRestApi\Processor\Reader\CmsPageReader;
+use Spryker\Glue\CmsPagesRestApi\Processor\Reader\CmsPageReaderInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilder;
 use Spryker\Glue\CmsPagesRestApi\Processor\RestResponseBuilder\CmsPageRestResponseBuilderInterface;
 use Spryker\Glue\CmsPagesRestApi\Processor\UrlResolver\CmsPageUrlResolver;
@@ -23,7 +23,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class CmsPagesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\CmsPagesRestApi\Processor\CmsPage\CmsPageReaderInterface
+     * @return \Spryker\Glue\CmsPagesRestApi\Processor\Reader\CmsPageReaderInterface
      */
     public function createCmsPageReader(): CmsPageReaderInterface
     {

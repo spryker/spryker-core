@@ -61,7 +61,7 @@ class ContentProductAbstractListProductReader implements ContentProductAbstractL
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getContentProductAbstractListProductsById(RestRequestInterface $restRequest): RestResponseInterface
+    public function getProductAbstractByContentProductAbstractListId(RestRequestInterface $restRequest): RestResponseInterface
     {
         $parentResource = $restRequest->findParentResourceByType(
             ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS

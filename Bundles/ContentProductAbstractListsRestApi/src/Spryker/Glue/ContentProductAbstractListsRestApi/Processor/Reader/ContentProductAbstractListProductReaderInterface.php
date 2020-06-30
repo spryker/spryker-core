@@ -17,7 +17,7 @@ interface ContentProductAbstractListProductReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getContentProductAbstractListProductsById(RestRequestInterface $restRequest): RestResponseInterface;
+    public function getProductAbstractByContentProductAbstractListId(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
      * @param string[] $contentProductAbstractListKeys

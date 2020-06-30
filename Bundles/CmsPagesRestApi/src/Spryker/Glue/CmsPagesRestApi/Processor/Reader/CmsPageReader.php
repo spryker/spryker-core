@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\CmsPagesRestApi\Processor\CmsPage;
+namespace Spryker\Glue\CmsPagesRestApi\Processor\Reader;
 
 use Spryker\Glue\CmsPagesRestApi\CmsPagesRestApiConfig;
 use Spryker\Glue\CmsPagesRestApi\Dependency\Client\CmsPagesRestApiToCmsPageSearchClientInterface;
@@ -17,7 +17,14 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CmsPageReader implements CmsPageReaderInterface
 {
+    /**
+     * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\RawCmsPageSearchResultFormatterPlugin::NAME
+     */
     protected const SEARCH_RESULT_CMS_PAGES = 'cms_pages';
+
+    /**
+     * @uses \Spryker\Client\CmsPageSearch\Plugin\Elasticsearch\ResultFormatter\PaginatedCmsPageResultFormatterPlugin::NAME
+     */
     protected const SEARCH_RESULT_PAGINATION = 'pagination';
 
     protected const ID_CMS_PAGE = 'id_cms_page';
