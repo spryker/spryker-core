@@ -23,7 +23,7 @@ class OrderReader extends OrderReaderWithoutMultiShippingAddress
     {
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
-            ->joinWithLocale()
+            ->leftJoinWithLocale()
             ->findOne();
 
         if ($orderEntity === null) {
