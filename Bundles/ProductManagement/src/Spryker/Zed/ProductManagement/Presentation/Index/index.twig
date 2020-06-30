@@ -10,7 +10,9 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' } %}
+    {% include '@ProductManagement/_partials/filters.twig' %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' | trans } %}
 
         {% block widget_content %}
             {{ productTable | raw }}

@@ -38,7 +38,7 @@ class AvailabilityViewCest
             AvailabilityPage::AVAILABILITY_ID_STORE
         ));
 
-        $i->seeBreadcrumbNavigation('Products / Availability / Product Availability');
+        $i->seeBreadcrumbNavigation('Catalog / Availability / Product Availability');
 
         $i->wait(1);
 

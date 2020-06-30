@@ -123,6 +123,7 @@ class GuestCartItemUpdater implements GuestCartItemUpdaterInterface
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setQuoteUuid($uuidQuote)
             ->setSku($itemIdentifier)
+            ->setGroupKey($itemIdentifier)
             ->setCustomer($customerTransfer);
     }
 }

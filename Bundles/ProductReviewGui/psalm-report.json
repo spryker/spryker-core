@@ -1,0 +1,151 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 37,
+            "line_to": 44,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Persistence/ProductReviewGuiQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductReviewQueryContainer()\n            ->queryProductReview()\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->endUse()",
+            "selected_text": "$this->getFactory()\n            ->getProductReviewQueryContainer()\n            ->queryProductReview()\n            ->useSpyProductAbstractQuery()\n                ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->filterByFkLocale($idLocale)\n                ->endUse()\n            ->endUse()",
+            "error_level": -1,
+            "shortcode": 200
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductReviewTransfer::setStatus expects int|null, string(approved) provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Controller/UpdateController.php",
+            "snippet": "            ->setStatus(SpyProductReviewTableMap::COL_STATUS_APPROVED);",
+            "selected_text": "SpyProductReviewTableMap::COL_STATUS_APPROVED",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductReviewTransfer::setStatus expects int|null, string(rejected) provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Controller/UpdateController.php",
+            "snippet": "            ->setStatus(SpyProductReviewTableMap::COL_STATUS_REJECTED);",
+            "selected_text": "SpyProductReviewTableMap::COL_STATUS_REJECTED",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Persistence\\ProductReviewGuiQueryContainerInterface::queryProductReview cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "        $query = $this->productReviewGuiQueryContainer->queryProductReview($this->localeTransfer->getIdLocale());",
+            "selected_text": "$this->localeTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 285,
+            "line_to": 285,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Dependency\\Service\\ProductReviewGuiToUtilSanitizeInterface::escapeHtml cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "            $this->utilSanitizeService->escapeHtml($productReviewEntity->getSummary()),",
+            "selected_text": "$productReviewEntity->getSummary()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 286,
+            "line_to": 286,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductReviewGui\\Dependency\\Service\\ProductReviewGuiToUtilSanitizeInterface::escapeHtml cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Communication/Table/ProductReviewTable.php",
+            "snippet": "            $this->utilSanitizeService->escapeHtml($productReviewEntity->getDescription())",
+            "selected_text": "$productReviewEntity->getDescription()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::withColumn does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/Persistence/ProductReviewGuiQueryContainer.php",
+            "snippet": "            ->withColumn(SpyProductReviewTableMap::COL_CREATED_AT, static::FIELD_CREATED)",
+            "selected_text": "withColumn",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/ProductReviewGuiDependencyProvider.php",
+            "snippet": "            return new ServiceProductReviewGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/ProductReviewGuiDependencyProvider.php",
+            "snippet": "            return new ServiceProductReviewGuiToDateTimeBridge($container->getLocator()->utilDateTime()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/ProductReviewGuiDependencyProvider.php",
+            "snippet": "            return new ProductReviewGuiToProductReviewBridge($container->getLocator()->productReview()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/ProductReviewGuiDependencyProvider.php",
+            "snippet": "            return new ProductReviewGuiToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewGui/src/Spryker/Zed/ProductReviewGui/ProductReviewGuiDependencyProvider.php",
+            "snippet": "            return new ProductReviewGuiToLocaleBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

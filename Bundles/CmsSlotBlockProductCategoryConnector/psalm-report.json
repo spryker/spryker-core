@@ -1,0 +1,79 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Client\\CmsSlotBlockProductCategoryConnector\\Reader\\ProductCategoryReader::getCategoryIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/Reader/ProductCategoryReader.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Client\\CmsSlotBlockProductCategoryConnector\\Reader\\ProductCategoryReader::getCategoryIds",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/Reader/ProductCategoryReader.php",
+            "snippet": "        return $categoryIds;",
+            "selected_text": "$categoryIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/CmsSlotBlockProductCategoryConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->locale()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/CmsSlotBlockProductCategoryConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productCategoryStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CmsSlotBlockConditionTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/Resolver/ProductCategoryCmsSlotBlockConditionResolver.php",
+            "snippet": "            ->offsetExists(CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY);",
+            "selected_text": "offsetExists",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CmsSlotBlockConditionTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotBlockProductCategoryConnector/src/Spryker/Client/CmsSlotBlockProductCategoryConnector/Resolver/ProductCategoryCmsSlotBlockConditionResolver.php",
+            "snippet": "            ->offsetGet(CmsSlotBlockProductCategoryConnectorConfig::CONDITION_KEY);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

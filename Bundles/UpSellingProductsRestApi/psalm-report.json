@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\UpSellingProductsRestApi\\Processor\\Quote\\QuoteReader::createQuoteTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/Processor/Quote/QuoteReader.php",
+            "snippet": "        $quoteTransfer = $this->createQuoteTransfer($uuid, $restRequest->getRestUser());",
+            "selected_text": "$restRequest->getRestUser()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\UpSellingProductsRestApi\\Processor\\Quote\\QuoteReaderInterface::findQuoteByUuid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/Processor/UpSellingProduct/UpSellingProductReader.php",
+            "snippet": "        $quoteTransfer = $this->quoteReader->findQuoteByUuid($parentResource->getId(), $restRequest);",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/UpSellingProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productRelationStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/UpSellingProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/UpSellingProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->cartsRestApi()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/UpSellingProductsRestApi/src/Spryker/Glue/UpSellingProductsRestApi/UpSellingProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productsRestApi()->resource()",
+            "selected_text": "resource",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

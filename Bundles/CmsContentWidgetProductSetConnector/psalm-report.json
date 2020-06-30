@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Yves/CmsContentWidgetProductSetConnector/CmsContentWidgetProductSetConnectorDependencyProvider.php",
+            "snippet": "            return new CmsContentWidgetProductSetConnectorToProductSetBridgeSet($container->getLocator()->productSet()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Yves/CmsContentWidgetProductSetConnector/CmsContentWidgetProductSetConnectorDependencyProvider.php",
+            "snippet": "            return new CmsContentWidgetProductSetConnectorToProductBridge($container->getLocator()->product()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductSet\\Persistence\\SpyProductSet> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Zed/CmsContentWidgetProductSetConnector/Business/Mapper/CmsProductSetKeyParameterMapper.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Zed/CmsContentWidgetProductSetConnector/CmsContentWidgetProductSetConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productSet()->queryContainer()",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyproductsetkey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsContentWidgetProductSetConnector/src/Spryker/Zed/CmsContentWidgetProductSetConnector/Persistence/CmsContentWidgetProductSetConnectorQueryContainer.php",
+            "snippet": "            ->filterByProductSetKey($keyList, Criteria::IN);",
+            "selected_text": "filterByProductSetKey",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

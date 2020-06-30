@@ -1,0 +1,91 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\MerchantProductOffersRestApi\\Processor\\Expander\\ProductOfferExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/Expander/ProductOfferExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\MerchantProductOffersRestApi\\Processor\\Expander\\ProductOfferExpander::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/Expander/ProductOfferExpander.php",
+            "snippet": "        return $productConcreteSkus;",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/MerchantProductOffersRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantProductOfferStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOffersRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/Expander/ProductOfferExpander.php",
+            "snippet": "            foreach ($productOffersRestResources[$resource->getId()] as $productConcreteProductOffersRestResources) {",
+            "selected_text": "$productOffersRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\MerchantProductOffersRestApi\\Processor\\RestResponseBuilder\\ProductOfferRestResponseBuilderInterface::createProductOfferRestResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/Reader/ProductOfferReader.php",
+            "snippet": "            $defaultMerchantProductOfferReference",
+            "selected_text": "$defaultMerchantProductOfferReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Generated\\Shared\\Transfer\\ProductOfferStorageCriteriaTransfer::addProductConcreteSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/Reader/ProductOfferReader.php",
+            "snippet": "            ->addProductConcreteSku($productOfferStorageTransfer->getProductConcreteSku());",
+            "selected_text": "$productOfferStorageTransfer->getProductConcreteSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productOffersRestResources[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffersRestApi/src/Spryker/Glue/MerchantProductOffersRestApi/Processor/RestResponseBuilder/ProductOfferRestResponseBuilder.php",
+            "snippet": "            $productOffersRestResources[$productOfferStorageTransfer->getProductConcreteSku()][] =",
+            "selected_text": "$productOffersRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

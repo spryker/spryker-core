@@ -12,6 +12,7 @@ use Propel\Runtime\Formatter\SimpleArrayFormatter;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\CollectorConfig;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface;
 use Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
@@ -40,20 +41,28 @@ class CollectorExporter
     protected $storeFacade;
 
     /**
+     * @var \Spryker\Zed\Collector\CollectorConfig
+     */
+    protected $collectorConfig;
+
+    /**
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $touchQueryContainer
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToLocaleInterface $localeFacade
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
+     * @param \Spryker\Zed\Collector\CollectorConfig $collectorConfig
      * @param \Spryker\Zed\Collector\Dependency\Facade\CollectorToStoreFacadeInterface|null $storeFacade
      */
     public function __construct(
         TouchQueryContainerInterface $touchQueryContainer,
         CollectorToLocaleInterface $localeFacade,
         ExporterInterface $exporter,
+        CollectorConfig $collectorConfig,
         ?CollectorToStoreFacadeInterface $storeFacade = null
     ) {
         $this->touchQueryContainer = $touchQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->exporter = $exporter;
+        $this->collectorConfig = $collectorConfig;
         $this->storeFacade = $storeFacade;
     }
 
@@ -65,6 +74,10 @@ class CollectorExporter
      */
     public function exportStorageByLocale(LocaleTransfer $locale, OutputInterface $output)
     {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return [];
+        }
+
         $results = [];
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->getAvailableCollectorTypes($types);
@@ -102,6 +115,10 @@ class CollectorExporter
      */
     public function exportStorage(OutputInterface $output)
     {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return [];
+        }
+
         $storeName = $this->getStoreName();
 
         $results = [];
@@ -160,6 +177,10 @@ class CollectorExporter
      */
     public function getAllCollectorTypes()
     {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return [];
+        }
+
         return $this->touchQueryContainer
             ->queryExportTypes()
             ->setFormatter(new SimpleArrayFormatter())
@@ -172,6 +193,10 @@ class CollectorExporter
      */
     public function getEnabledCollectorTypes()
     {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return [];
+        }
+
         return array_keys($this->exporter->getCollectorPlugins());
     }
 

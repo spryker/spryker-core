@@ -1,0 +1,187 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesReclamationGui\\Communication\\ReclamationItem\\ReclamationItemEventsFinder::getOrderItemsIdsByReclamationItems is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinder.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\SalesReclamationGui\\Communication\\ReclamationItem\\ReclamationItemEventsFinder::getOrderItemsIdsByReclamationItems",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinder.php",
+            "snippet": "        return $orderItemsIds;",
+            "selected_text": "$orderItemsIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesReclamationGui\\Dependency\\Facade\\SalesReclamationGuiToOmsFacadeInterface::getManualEventsByIdSalesOrder cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Controller/DetailController.php",
+            "snippet": "            ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());",
+            "selected_text": "$reclamationTransfer->getOrder()->getIdSalesOrder()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrder on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Controller/DetailController.php",
+            "snippet": "            ->getManualEventsByIdSalesOrder($reclamationTransfer->getOrder()->getIdSalesOrder());",
+            "selected_text": "getIdSalesOrder",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrder on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Controller/DetailController.php",
+            "snippet": "            'idSalesOrder' => $reclamationTransfer->getOrder()->getIdSalesOrder(),",
+            "selected_text": "getIdSalesOrder",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 92,
+            "line_to": 92,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Controller/DetailController.php",
+            "snippet": "            sprintf('Reclamation with id %s closed', $reclamationTransfer->getIdSalesReclamation())",
+            "selected_text": "$reclamationTransfer->getIdSalesReclamation()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $reclamationItems has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ReclamationItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinder.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[] $reclamationItems",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $reclamationItems has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ReclamationItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinder.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[] $reclamationItems",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdSalesOrderItem on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinder.php",
+            "snippet": "            $orderItemsIds[] = $item->getOrderItem()->getIdSalesOrderItem();",
+            "selected_text": "getIdSalesOrderItem",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $reclamationItems has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ReclamationItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/ReclamationItem/ReclamationItemEventsFinderInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[] $reclamationItems",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ReclamationItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesReclamationGui\\Communication\\Table\\ReclamationTable::formatQueryData expects array<array-key, mixed>, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, mixed> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/Communication/Table/ReclamationTable.php",
+            "snippet": "        return $this->formatQueryData($queryResults);",
+            "selected_text": "$queryResults",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
+            "snippet": "            return new SalesReclamationGuiToSalesReclamationFacadeBridge($container->getLocator()->salesReclamation()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->utilDateTime()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
+            "snippet": "            return new SalesReclamationGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReclamationGui/src/Spryker/Zed/SalesReclamationGui/SalesReclamationGuiDependencyProvider.php",
+            "snippet": "            return new SalesReclamationGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
