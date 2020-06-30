@@ -5,7 +5,7 @@
     <div class="ibox float-e-margins">
         {% if idNavigationNode %}
             {{ form_start(deleteNavigationNodeForm, {
-                'action': url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode})
+                action: url('/navigation-gui/node/delete', {'id-navigation': idNavigation, 'id-navigation-node': idNavigationNode})
             }) }}
             {{ form_end(deleteNavigationNodeForm) }}
         {% endif %}
