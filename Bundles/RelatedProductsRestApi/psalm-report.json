@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductStorageClientInterface::findProductAbstractStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",
+            "snippet": "                $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\RelatedProductsRestApi\\Dependency\\Client\\RelatedProductsRestApiToProductRelationStorageClientInterface::findRelatedAbstractProductIds cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/Processor/RelatedProduct/RelatedProductReader.php",
+            "snippet": "            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $storeName);",
+            "selected_text": "$storeName",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/RelatedProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->store()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/RelatedProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productRelationStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/RelatedProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/RelatedProductsRestApi/src/Spryker/Glue/RelatedProductsRestApi/RelatedProductsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productsRestApi()->resource()",
+            "selected_text": "resource",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

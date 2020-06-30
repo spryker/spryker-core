@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilCsv/src/Spryker/Service/UtilCsv/Exporter/FileExporter.php",
+            "snippet": "        $streamedResponse->headers->set('Content-Disposition', 'attachment; filename=\"' . $csvFileTransfer->getFileName() . '\"');",
+            "selected_text": "$csvFileTransfer->getFileName()",
+            "error_level": 1,
+            "shortcode": 80
+        }
+    ],
+    "deprecation": []
+}

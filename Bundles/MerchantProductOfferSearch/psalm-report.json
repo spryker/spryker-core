@@ -1,0 +1,139 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 94,
+            "line_to": 94,
+            "type": "UndefinedConstant",
+            "message": "Constant Orm\\Zed\\Merchant\\Persistence\\Map\\SpyMerchantTableMap::COL_IS_ACTIVE is not defined",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->where(SpyMerchantTableMap::COL_IS_ACTIVE, true)",
+            "selected_text": "SpyMerchantTableMap::COL_IS_ACTIVE",
+            "error_level": -1,
+            "shortcode": 20
+        },
+        {
+            "severity": "error",
+            "line_from": 116,
+            "line_to": 116,
+            "type": "UndefinedConstant",
+            "message": "Constant Orm\\Zed\\Merchant\\Persistence\\Map\\SpyMerchantTableMap::COL_IS_ACTIVE is not defined",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->where(SpyMerchantTableMap::COL_IS_ACTIVE, true)",
+            "selected_text": "SpyMerchantTableMap::COL_IS_ACTIVE",
+            "error_level": -1,
+            "shortcode": 20
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $updatedPayLoadTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageDataLoader/MerchantProductPageDataLoaderPlugin.php",
+            "snippet": "            $updatedPayLoadTransfers[$payloadTransfer->getIdProductAbstract()] = $this->setMerchantDataToPayloadTransfer($payloadTransfer, $productAbstractMerchantData);",
+            "selected_text": "$updatedPayLoadTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productData[static::KEY_MERCHANT_NAMES] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageMapExpander/MerchantNamesProductAbstractMapExpanderPlugin.php",
+            "snippet": "        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {",
+            "selected_text": "$productData[static::KEY_MERCHANT_NAMES]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productData[static::KEY_MERCHANT_REFERENCES] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Communication/Plugin/PageMapExpander/MerchantReferencesProductAbstractsMapExpanderPlugin.php",
+            "snippet": "        return $pageMapTransfer->setMerchantReferences($productData[static::KEY_MERCHANT_REFERENCES][$pageMapTransfer->getStore()]);",
+            "selected_text": "$productData[static::KEY_MERCHANT_REFERENCES]",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/MerchantProductOfferSearchDependencyProvider.php",
+            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/MerchantProductOfferSearchDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productPageSearch()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Orm\\Zed\\Merchant\\Persistence\\SpyMerchantQuery::usespymerchantstorequery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "                ->useSpyMerchantStoreQuery()",
+            "selected_text": "useSpyMerchantStoreQuery",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 119,
+            "line_to": 119,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferSearch/src/Spryker/Zed/MerchantProductOfferSearch/Persistence/MerchantProductOfferSearchRepository.php",
+            "snippet": "            ->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}
