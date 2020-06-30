@@ -1,0 +1,66 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Shared\\ErrorHandler\\ErrorHandler::getLastError is not nullable, but 'array{file: string, line: int, message: string, type: int}|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandler.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Shared\\ErrorHandler\\ErrorHandler::getLastError is not nullable, but the function returns 'array{file: string, line: int, message: string, type: int}|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandler.php",
+            "snippet": "        return error_get_last();",
+            "selected_text": "error_get_last()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Spryker\\Shared\\ErrorHandler\\ErrorRenderer\\ErrorRendererInterface' for Spryker\\Shared\\ErrorHandler\\ErrorHandlerFactory::createWebErrorRenderer is more specific than the inferred return type 'object'",
+            "file_name": "vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandlerFactory.php",
+            "snippet": "     * @return \\Spryker\\Shared\\ErrorHandler\\ErrorRenderer\\ErrorRendererInterface",
+            "selected_text": "\\Spryker\\Shared\\ErrorHandler\\ErrorRenderer\\ErrorRendererInterface",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'object' is more general than the declared return type 'Spryker\\Shared\\ErrorHandler\\ErrorRenderer\\ErrorRendererInterface' for Spryker\\Shared\\ErrorHandler\\ErrorHandlerFactory::createWebErrorRenderer",
+            "file_name": "vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorHandlerFactory.php",
+            "snippet": "        return new $errorRenderer($this->application);",
+            "selected_text": "new $errorRenderer($this->application)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method critical on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ErrorHandler/src/Spryker/Shared/ErrorHandler/ErrorLogger.php",
+            "snippet": "            $this->getLogger()->critical($message, ['exception' => $exception]);",
+            "selected_text": "critical",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

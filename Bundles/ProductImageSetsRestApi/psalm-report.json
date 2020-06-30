@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Processor\\Reader\\AbstractProductImageSetsReaderInterface::findAbstractProductImageSetsBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Expander/AbstractProductsProductImageSetsResourceRelationshipExpander.php",
+            "snippet": "                ->findAbstractProductImageSetsBySku($resource->getId(), $restRequest);",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Processor\\Reader\\ConcreteProductImageSetsReaderInterface::findConcreteProductImageSetsBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Expander/ConcreteProductsProductImageSetsResourceRelationshipExpander.php",
+            "snippet": "                ->findConcreteProductImageSetsBySku($resource->getId(), $restRequest);",
+            "selected_text": "$resource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Processor\\Reader\\AbstractProductImageSetsReader::findAbstractProductImageSetsBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Reader/AbstractProductImageSetsReader.php",
+            "snippet": "        $restResource = $this->findAbstractProductImageSetsBySku($abstractSku, $restRequest);",
+            "selected_text": "$abstractSku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Dependency\\Client\\ProductImageSetsRestApiToProductImageStorageClientInterface::findProductImageAbstractStorageTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Reader/AbstractProductImageSetsReader.php",
+            "snippet": "            ->findProductImageAbstractStorageTransfer($abstractProductTransfer->getIdProductAbstract(), $restRequest->getMetadata()->getLocale());",
+            "selected_text": "$abstractProductTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Processor\\Reader\\ConcreteProductImageSetsReader::findConcreteProductImageSetsBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Reader/ConcreteProductImageSetsReader.php",
+            "snippet": "        $restResource = $this->findConcreteProductImageSetsBySku($concreteSku, $restRequest);",
+            "selected_text": "$concreteSku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductImageSetsRestApi\\Dependency\\Client\\ProductImageSetsRestApiToProductImageStorageClientInterface::resolveProductImageSetStorageTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Reader/ConcreteProductImageSetsReader.php",
+            "snippet": "                $concreteProductStorageTransfer->getIdProductConcrete(),",
+            "selected_text": "$concreteProductStorageTransfer->getIdProductConcrete()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 122,
+            "line_to": 122,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductImageSetsRestApi\\Dependency\\Client\\ProductImageSetsRestApiToProductImageStorageClientInterface::resolveProductImageSetStorageTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/Processor/Reader/ConcreteProductImageSetsReader.php",
+            "snippet": "                $concreteProductStorageTransfer->getIdProductAbstract(),",
+            "selected_text": "$concreteProductStorageTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/ProductImageSetsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productImageStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageSetsRestApi/src/Spryker/Glue/ProductImageSetsRestApi/ProductImageSetsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

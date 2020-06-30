@@ -1,0 +1,139 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\MerchantProfileDataImport\\Business\\MerchantProfileDataImportBusinessFactory::getMerchantProfileDataImporter is incorrect, got 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface' does not match the declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\MerchantProfileDataImport\\Business\\MerchantProfileDataImportBusinessFactory::getMerchantProfileDataImporter",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "        return $dataImporter;",
+            "selected_text": "$dataImporter",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 114,
+            "line_to": 114,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/Address/Step/CountryIsoCodeToIdCountryStep.php",
+            "snippet": "            throw new EntityNotFoundException(sprintf('Could not find a country by iso2_code \"%s\" or iso3_code \"%s\"!', $iso2Code, $iso3Code));",
+            "selected_text": "$iso2Code",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 114,
+            "line_to": 114,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/Address/Step/CountryIsoCodeToIdCountryStep.php",
+            "snippet": "            throw new EntityNotFoundException(sprintf('Could not find a country by iso2_code \"%s\" or iso3_code \"%s\"!', $iso2Code, $iso3Code));",
+            "selected_text": "$iso3Code",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createAddLocalesStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createMerchantKeyToIdMerchantProfileStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileDataImport/src/Spryker/Zed/MerchantProfileDataImport/Business/MerchantProfileDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->getMerchantProfileAddressDataImport()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        }
+    ],
+    "deprecation": []
+}

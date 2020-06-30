@@ -1,0 +1,67 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\QuoteRequestDataImport\\Business\\QuoteRequestDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportBusinessFactory.php",
+            "snippet": "class QuoteRequestDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "QuoteRequestDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idCompanyUserCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\CompanyUser\\Persistence\\SpyCompanyUser|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportStep/CompanyUserKeyToIdCompanyUser.php",
+            "snippet": "            $this->idCompanyUserCache[$companyUserKey] = $idCompanyUser;",
+            "selected_text": "$this->idCompanyUserCache",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idQuoteRequestCache with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\QuoteRequest\\Persistence\\SpyQuoteRequest|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportStep/QuoteRequestReferenceToIdQuoteRequest.php",
+            "snippet": "            $this->idQuoteRequestCache[$quoteRequestReference] = $idQuoteRequest;",
+            "selected_text": "$this->idQuoteRequestCache",
+            "error_level": 6,
+            "shortcode": 145
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportStep/CompanyUserKeyToIdCompanyUser.php",
+            "snippet": "                ->findOneByKey($companyUserKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebyquoterequestreference does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/QuoteRequestDataImport/src/Spryker/Zed/QuoteRequestDataImport/Business/QuoteRequestDataImportStep/QuoteRequestReferenceToIdQuoteRequest.php",
+            "snippet": "                ->findOneByQuoteRequestReference($quoteRequestReference);",
+            "selected_text": "findOneByQuoteRequestReference",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

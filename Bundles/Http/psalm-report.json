@@ -1,0 +1,115 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/HttpDependencyProvider.php",
+            "snippet": "            return new HttpToLocaleClientBridge($container->getLocator()->locale()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/HttpDependencyProvider.php",
+            "snippet": "            return new HttpToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/Plugin/EventDispatcher/CookieEventDispatcherPlugin.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/Plugin/EventDispatcher/HeaderEventDispatcherPlugin.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Yves/Http/Plugin/EventDispatcher/HstsHeaderEventDispatcher.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/CookieEventDispatcherPlugin.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) use ($container): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/HeaderEventDispatcherPlugin.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/HeaderEventDispatcherPlugin.php",
+            "snippet": "     * @param \\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent $event A FilterResponseEvent instance",
+            "selected_text": "\\Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "DeprecatedClass",
+            "message": "Class Symfony\\Component\\HttpKernel\\Event\\FilterResponseEvent is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Http/src/Spryker/Zed/Http/Communication/Plugin/EventDispatcher/HstsHeaderEventDispatcher.php",
+            "snippet": "        $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event): void {",
+            "selected_text": "FilterResponseEvent",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

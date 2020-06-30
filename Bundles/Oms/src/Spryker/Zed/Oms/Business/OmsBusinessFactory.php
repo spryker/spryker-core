@@ -82,7 +82,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-            $this->createUtilReservation()
+            $this->createUtilReservation(),
+            $this->getConfig()
         );
     }
 
@@ -147,7 +148,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new Timeout(
             $this->getQueryContainer(),
-            $this->createTimeoutProcessorCollection()
+            $this->createTimeoutProcessorCollection(),
+            $this->getConfig()
         );
     }
 

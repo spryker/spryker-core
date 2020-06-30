@@ -1,0 +1,138 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Dependency\\Facade\\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface::findProductAbstractRelationsByIdProductLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Business/ProductDiscontinuedProductLabelReader/ProductAbstractRelationReader.php",
+            "snippet": "        $labeledProductAbstractIds = $this->productLabelFacade->findProductAbstractRelationsByIdProductLabel($idProductLabel);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Dependency\\Facade\\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Business/ProductDiscontinuedProductLabelWriter/ProductDiscontinuedProductLabelWriter.php",
+            "snippet": "            $this->productLabelFacade->removeProductAbstractRelationsForLabel($idProductLabel, [$idProductAbstract]);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Dependency\\Facade\\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface::addAbstractProductRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Business/ProductDiscontinuedProductLabelWriter/ProductDiscontinuedProductLabelWriter.php",
+            "snippet": "            $this->productLabelFacade->addAbstractProductRelationsForLabel($idProductLabel, [$idProductAbstract]);",
+            "selected_text": "$idProductLabel",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Dependency\\Facade\\ProductDiscontinuedProductLabelConnectorToProductLabelFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Business/ProductDiscontinuedProductLabelWriter/ProductDiscontinuedProductLabelWriter.php",
+            "snippet": "        $this->productLabelFacade->removeProductAbstractRelationsForLabel($productLabelTransfer->getIdProductLabel(), [$idProductAbstract]);",
+            "selected_text": "$productLabelTransfer->getIdProductLabel()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Business\\ProductDiscontinuedProductLabelConnectorFacadeInterface::removeProductAbstractRelationsForLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Communication/Plugin/PostDeleteProductDiscontinuedPlugin.php",
+            "snippet": "        $this->getFacade()->removeProductAbstractRelationsForLabel($productDiscontinuedTransfer->getFkProduct());",
+            "selected_text": "$productDiscontinuedTransfer->getFkProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductDiscontinuedProductLabelConnector\\Business\\ProductDiscontinuedProductLabelConnectorFacadeInterface::updateAbstractProductWithDiscontinuedLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Communication/Plugin/PostProductDiscontinuedPlugin.php",
+            "snippet": "        $this->getFacade()->updateAbstractProductWithDiscontinuedLabel($productDiscontinuedTransfer->getFkProduct());",
+            "selected_text": "$productDiscontinuedTransfer->getFkProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/Persistence/ProductDiscontinuedProductLabelConnectorRepository.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/ProductDiscontinuedProductLabelConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productLabel()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/ProductDiscontinuedProductLabelConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->product()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/ProductDiscontinuedProductLabelConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productDiscontinued()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 129,
+            "line_to": 129,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscontinuedProductLabelConnector/src/Spryker/Zed/ProductDiscontinuedProductLabelConnector/ProductDiscontinuedProductLabelConnectorDependencyProvider.php",
+            "snippet": "                $container->getLocator()->locale()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

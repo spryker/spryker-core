@@ -1,0 +1,151 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 122,
+            "line_to": 122,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Mail\\Business\\Model\\Mailer\\MailHandler::getMailTypeNameFromTransfer is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Mailer/MailHandler.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Mail\\Business\\Model\\Mailer\\MailHandler::getMailTypeNameFromTransfer is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Mailer/MailHandler.php",
+            "snippet": "        return $mailTypeName;",
+            "selected_text": "$mailTypeName",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::setSubject cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "        $this->mailer->setSubject($mailTransfer->getSubject());",
+            "selected_text": "$mailTransfer->getSubject()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::setFrom cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "        $this->mailer->setFrom($senderTransfer->getEmail(), $senderTransfer->getName());",
+            "selected_text": "$senderTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getEmail on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "        $this->mailer->setFrom($senderTransfer->getEmail(), $senderTransfer->getName());",
+            "selected_text": "getEmail",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::setFrom cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "        $this->mailer->setFrom($senderTransfer->getEmail(), $senderTransfer->getName());",
+            "selected_text": "$senderTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::addTo cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "            $this->mailer->addTo($recipientTransfer->getEmail(), $recipientTransfer->getName());",
+            "selected_text": "$recipientTransfer->getEmail()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::addTo cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "            $this->mailer->addTo($recipientTransfer->getEmail(), $recipientTransfer->getName());",
+            "selected_text": "$recipientTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::setHtmlContent cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "                $this->mailer->setHtmlContent($templateTransfer->getContent());",
+            "selected_text": "$templateTransfer->getContent()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 110,
+            "line_to": 110,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Mail\\Dependency\\Mailer\\MailToMailerInterface::setTextContent cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/Business/Model/Provider/SwiftMailer.php",
+            "snippet": "                $this->mailer->setTextContent($templateTransfer->getContent());",
+            "selected_text": "$templateTransfer->getContent()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/MailDependencyProvider.php",
+            "snippet": "            $mailToGlossaryBridge = new MailToGlossaryBridge($container->getLocator()->glossary()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Mail/src/Spryker/Zed/Mail/MailDependencyProvider.php",
+            "snippet": "        $twig = $pimplePlugin->getApplication()['twig'];",
+            "selected_text": "$pimplePlugin->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

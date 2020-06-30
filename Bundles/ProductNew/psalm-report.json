@@ -1,0 +1,200 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\Search\\SearchClientInterface::search expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToSearchClientBridge.php",
+            "snippet": "        return $this->searchClient->search($searchQuery, $resultFormatters, $requestParameters);",
+            "selected_text": "$searchQuery",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductNew\\Dependency\\Client\\ProductNewToSearchClientBridge::expandQuery is incorrect, got 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToSearchClientBridge.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface' does not match the declared return type 'Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface' for Spryker\\Client\\ProductNew\\Dependency\\Client\\ProductNewToSearchClientBridge::expandQuery",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToSearchClientBridge.php",
+            "snippet": "        return $this->searchClient->expandQuery($searchQuery, $searchQueryExpanders, $requestParameters);",
+            "selected_text": "$this->searchClient->expandQuery($searchQuery, $searchQueryExpanders, $requestParameters)",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\Search\\SearchClientInterface::expandQuery expects Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryInterface, Spryker\\Client\\Search\\Dependency\\Plugin\\QueryInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Dependency/Client/ProductNewToSearchClientBridge.php",
+            "snippet": "        return $this->searchClient->expandQuery($searchQuery, $searchQueryExpanders, $requestParameters);",
+            "selected_text": "$searchQuery",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 148,
+            "line_to": 148,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\ProductNew\\Plugin\\Elasticsearch\\Query\\NewProductsQueryPlugin::createStringFacetValueFilter cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
+            "snippet": "        $stringFacetValueFilter = $this->createStringFacetValueFilter($labelId);",
+            "selected_text": "$labelId",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 179,
+            "line_to": 179,
+            "type": "InvalidScalarArgument",
+            "message": "Argument 2 of Elastica\\Query\\Term::setTerm expects array<array-key, mixed>|string, int provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/Plugin/Elasticsearch/Query/NewProductsQueryPlugin.php",
+            "snippet": "        $termQuery->setTerm(PageIndexMap::STRING_FACET_FACET_VALUE, $idProductLabel);",
+            "selected_text": "$idProductLabel",
+            "error_level": 4,
+            "shortcode": 12
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "            return new ProductNewToSearchClientBridge($container->getLocator()->search()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "            return new ProductNewToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingActive is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
+            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 84,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Orm\\Zed\\ProductLabel\\Persistence\\SpyProductLabelQuery&static|Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAbstractQuery' for Spryker\\Zed\\ProductNew\\Persistence\\ProductNewQueryContainer::queryRelationsBecomingActive",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->getProductQueryContainer()\n            ->queryProductAbstract()\n                ->mergeWith($timeRangeCriteria)\n            ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)\n                ->filterByFkProductLabel(null, Criteria::ISNULL)\n            ->endUse()\n            ->addJoinCondition('rel', sprintf('rel.fk_product_label = %d', $idProductLabel));",
+            "selected_text": "$this->getFactory()\n            ->getProductQueryContainer()\n            ->queryProductAbstract()\n                ->mergeWith($timeRangeCriteria)\n            ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)\n                ->filterByFkProductLabel(null, Criteria::ISNULL)\n            ->endUse()\n            ->addJoinCondition('rel', sprintf('rel.fk_product_label = %d', $idProductLabel))",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::usespyproductlabelproductabstractquery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Persistence/ProductNewQueryContainer.php",
+            "snippet": "            ->useSpyProductLabelProductAbstractQuery('rel', Criteria::LEFT_JOIN)",
+            "selected_text": "useSpyProductLabelProductAbstractQuery",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "            return new ProductNewToProductLabelBridge($container->getLocator()->productLabel()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "            return new ProductNewToProductBridge($container->getLocator()->product()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewDependencyProvider.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]|\\Spryker\\Client\\SearchExtension\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Client/ProductNew/ProductNewFactory.php",
+            "snippet": "     * @return \\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "selected_text": "\\Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface[]",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\ProductLabel\\Persistence\\ProductLabelQueryContainerInterface::queryProductLabelByName has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductNew/src/Spryker/Zed/ProductNew/Dependency/QueryContainer/ProductNewToProductLabelBridge.php",
+            "snippet": "        return $this->productLabelQueryContainer->queryProductLabelByName($labelName);",
+            "selected_text": "queryProductLabelByName",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

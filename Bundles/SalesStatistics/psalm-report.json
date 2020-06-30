@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/Persistence/SalesStatisticsRepository.php",
+            "snippet": "            ->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 114,
+            "line_to": 114,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrderItem|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/Persistence/SalesStatisticsRepository.php",
+            "snippet": "            ->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 140,
+            "line_to": 140,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Sales\\Persistence\\SpySalesOrder|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/Persistence/SalesStatisticsRepository.php",
+            "snippet": "            ->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesStatistics/src/Spryker/Zed/SalesStatistics/SalesStatisticsDependencyProvider.php",
+            "snippet": "            return $pimplePlugin->getApplication()['twig'];",
+            "selected_text": "$pimplePlugin->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
