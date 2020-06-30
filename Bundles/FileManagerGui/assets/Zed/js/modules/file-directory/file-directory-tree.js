@@ -73,7 +73,7 @@ function initJsTree() {
         var $filesList = $('#file-directory-files-list'),
             $filesTable = $filesList.find('table').first(),
             $deleteDirectoryButton = $('#delete-directory-link'),
-            $deleteDirectoryConfirmationButton = $('#delete-directory-confirmation-link');
+            $deleteDirectoryConfirmationButton = $('#delete-directory-confirmation-button');
 
         $('#add-file-link').attr('href', '/file-manager-gui/add-file?file-directory-id=' + data.node.data.idFileDirectoryNode);
 
@@ -88,7 +88,7 @@ function initJsTree() {
         $filesList.show();
         $filesTable.DataTable().ajax.url('/file-manager-gui/files/table?file-directory-id=' + data.node.data.idFileDirectoryNode).load();
         $deleteDirectoryButton.removeAttr('disabled');
-        $deleteDirectoryConfirmationButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
+        $deleteDirectoryConfirmationButton.closest('form').attr('action', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
         $deleteDirectoryButton.attr('href', '/file-manager-gui/delete-directory?id-directory=' + data.node.data.idFileDirectoryNode);
         $deleteDirectoryButton.attr('data-id-parent', data.node.data.idParentFileDirectoryNode);
     });
