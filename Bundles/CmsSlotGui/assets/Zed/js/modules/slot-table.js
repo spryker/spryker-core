@@ -57,23 +57,36 @@ var SlotTable = function (options) {
                 return false;
             }
 
-            var url = $that.attr('href');
             $that.data('processing', true);
 
-            $.get(url, function (response) {
-                if (response.success) {
-                    _self.slotTable.DataTable().ajax.reload(null, false);
+            $.ajax({
+                url: $that.closest('form')[0].action,
+                type: 'POST',
+                data: $that.closest('form').serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        _self.slotTable.DataTable().ajax.reload(null, false);
 
-                    return;
+                        return false;
+                    }
+
+                    $that.data('processing', false);
+                    window.sweetAlert({
+                        title: 'Error',
+                        text: response.message,
+                        html: true,
+                        type: 'error'
+                    });
+                },
+                error: function(response) {
+                    $that.data('processing', false);
+                    window.sweetAlert({
+                        title: 'Error',
+                        text: response.status + ' ' + response.statusText,
+                        html: true,
+                        type: 'error'
+                    });
                 }
-
-                $that.data('processing', false);
-                window.sweetAlert({
-                    title: 'Error',
-                    text: response.message,
-                    html: true,
-                    type: 'error'
-                });
             });
 
             return false;
