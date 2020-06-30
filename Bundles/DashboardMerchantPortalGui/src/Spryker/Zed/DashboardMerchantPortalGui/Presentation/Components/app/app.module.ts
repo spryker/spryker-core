@@ -1,6 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
+import { ButtonLinkComponent, ButtonLinkModule } from '@spryker/button';
+import { ChipsComponent, ChipsModule } from '@spryker/chips';
 
 import { DashboardModule } from './dashboard/dashboard.module';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -14,6 +16,8 @@ import { DashboardStatsBlockComponent } from './dashboard-stats-block/dashboard-
 @NgModule({
     imports: [
         BrowserModule,
+        ButtonLinkModule,
+        ChipsModule,
         DashboardModule,
         DashboardCardModule,
         DashboardStatsModule,
@@ -38,6 +42,14 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-mp-dashboard-stats-block',
             component: DashboardStatsBlockComponent,
+        },
+        {
+            selector: 'web-spy-button-link',
+            component: ButtonLinkComponent,
+        },
+        {
+            selector: 'web-spy-chips',
+            component: ChipsComponent,
         },
     ];
 }

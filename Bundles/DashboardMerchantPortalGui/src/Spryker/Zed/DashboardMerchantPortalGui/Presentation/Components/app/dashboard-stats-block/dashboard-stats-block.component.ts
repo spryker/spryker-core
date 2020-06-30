@@ -6,6 +6,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
     styleUrls: ['./dashboard-stats-block.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-dashboard-stats-block',
+    },
 })
 export class DashboardStatsBlockComponent {
     @Input() name?: string;

@@ -1,20 +1,27 @@
-<div>
-    <div>
-        {{ 'Per Store' | trans }}
-    </div>
-    <div>
-        {% for countOrdersPetStore in ordersStoresCountData %}
-            <div>
-                {{ countOrdersPetStore.ordersCountTotal }} {{ countOrdersPetStore.store }}
-            </div>
-        {% endfor %}
-    </div>
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Per Store' | trans }}</span>
+
+        <div class="mp-dashboard-stats__block">
+            {% for countOrdersPetStore in ordersStoresCountData %}
+                <div class="mp-dashboard-stats__block-col">
+                    <web-mp-dashboard-stats-block
+                        name="{{ countOrdersPetStore.store }}"
+                        count="{{ countOrdersPetStore.ordersCountTotal }}"
+                    ></web-mp-dashboard-stats-block>
+                </div>
+            {% endfor %}
+        </div>
+    </web-mp-dashboard-stats>
 </div>
-<div>
-    <div>
-        {{ 'New' | trans }}
-    </div>
-    <div>
-        {{ ordersCountNew }} {{ 'From the last %newOrdersLimit% days' | trans({ '%newOrdersLimit%': newOrdersLimit }) }}
-    </div>
+
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'New' | trans }}</span>
+
+        <web-mp-dashboard-stats-block
+            name="{{ 'From the last %newOrdersLimit% days' | trans({ '%newOrdersLimit%': newOrdersLimit }) }}"
+            count="{{ ordersCountNew }}"
+        ></web-mp-dashboard-stats-block>
+    </web-mp-dashboard-stats>
 </div>

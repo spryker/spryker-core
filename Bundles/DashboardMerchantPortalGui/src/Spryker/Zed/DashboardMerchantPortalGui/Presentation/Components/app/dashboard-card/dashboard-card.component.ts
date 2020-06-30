@@ -6,6 +6,9 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
     styleUrls: ['./dashboard-card.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-dashboard-card',
+    },
 })
 export class DashboardCardComponent {
     @Input() count?: number;

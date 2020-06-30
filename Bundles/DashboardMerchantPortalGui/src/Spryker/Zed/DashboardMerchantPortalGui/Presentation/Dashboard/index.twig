@@ -5,23 +5,32 @@
 {% endblock %}
 
 {% block content %}
-    <mp-dashboard title="{{ 'Dashboard' | trans }}"></mp-dashboard>
+    <web-mp-dashboard title="{{ 'Dashboard' | trans }}">
+        <div class="mp-dashboard-grid">
+            {% for dashboardCardPlugin in dashboardCardPlugins %}
 
-    {% for dashboardCardPlugin in dashboardCardPlugins %}
-        <div>
-            <div>{{ dashboardCardPlugin.title | raw }}</div>
-            <div class="content">
-                <div class="card">
-                    {{ dashboardCardPlugin.content | raw }}
+                <div class="mp-dashboard-grid__col">
+                    <web-mp-dashboard-card>
+                        <div title class="mp-dashboard-card__heading">
+                            {{ dashboardCardPlugin.title | raw }}
+                        </div>
+
+                        <div actions class="mp-dashboard-card__heading">
+                            {% for actionButton in dashboardCardPlugin.actionButtons %}
+                                <div class="mp-dashboard-card__heading-col">
+                                    <web-spy-button-link url="{{ actionButton.url }}" size="sm">{{ actionButton.title | trans }}</web-spy-button-link>
+                                </div>
+                            {% endfor %}
+                        </div>
+
+                        <div class="mp-dashboard-grid">
+                            {{ dashboardCardPlugin.content | raw }}
+                        </div>
+                    </web-mp-dashboard-card>
                 </div>
-            </div>
-            <div class="actions">
-                {% for actionButton in dashboardCardPlugin.actionButtons %}
-                    <a href="{{ actionButton.url }}">{{ actionButton.title | trans }}</a>
-                {% endfor %}
-            </div>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </web-mp-dashboard>
 {% endblock %}
 
 {% block footerJs %}

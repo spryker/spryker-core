@@ -1,8 +1,12 @@
-@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+.mp-dashboard-grid {
+    display: flex;
+    flex-wrap: wrap;
+    margin: -10px -15px;
 
-.dashboard-title {
-    font-size: @heading-1-font-size;
-    font-weight: @font-weight-semi-bold;
-    margin-bottom: 65px;
-    letter-spacing: 0.2px;
+    &__col {
+        flex-grow: 1;
+        flex-basis: 50%;
+        min-width: 220px;
+        padding: 10px 15px;
+    }
 }

@@ -1,35 +1,78 @@
-<div>
-    <div>
-        {{ 'Stock' | trans }}
-    </div>
-    <div>
-        {{ offersCountWithStock }} {{ 'With Stock' | trans }}
-        {{ offersCountLowOnStock }} {{ 'Low on Stock' | trans }}
-    </div>
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Stock' | trans }}</span>
+
+        <div class="mp-dashboard-stats__block">
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'With Stock' | trans }}"
+                    count="{{ offersCountWithStock }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Low on Stock' | trans }}"
+                    count="{{ offersCountLowOnStock }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
 </div>
-<div>
-    <div>
-        {{ 'Validity' | trans }}
-    </div>
-    <div>
-        {{ offersCountValid }} {{ 'Valid' | trans }}
-        {{ offersCountExpiring }} {{ 'Expiring in %expiringOffersLimit% days' | trans({ '%expiringOffersLimit%': expiringOffersLimit }) }}
-    </div>
+
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Validity' | trans }}</span>
+
+        <div class="mp-dashboard-stats__block">
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Valid' | trans }}"
+                    count="{{ offersCountValid }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Expiring in %expiringOffersLimit% days' | trans({
+                        '%expiringOffersLimit%': expiringOffersLimit
+                    }) }}"
+                    count="{{ offersCountExpiring }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
 </div>
-<div>
-    <div>
-        {{ 'Visibility' | trans }}
-    </div>
-    <div>
-        {{ offersCountActive }} {{ 'Online' | trans }}
-        {{ offersCountInactive }} {{ 'Offline' | trans }}
-    </div>
+
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'Visibility' | trans }}</span>
+
+        <div class="mp-dashboard-stats__block">
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Online' | trans }}"
+                    count="{{ offersCountActive }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+
+            <div class="mp-dashboard-stats__block-col">
+                <web-mp-dashboard-stats-block
+                    name="{{ 'Offline' | trans }}"
+                    count="{{ offersCountInactive }}"
+                ></web-mp-dashboard-stats-block>
+            </div>
+        </div>
+    </web-mp-dashboard-stats>
 </div>
-<div>
-    <div>
-        {{ 'On Marketplace' | trans }}
-    </div>
-    <div>
-        {{ offersCountOnMarketplace }} {{ 'Valid, online & with Stock' | trans }}
-    </div>
+
+<div class="mp-dashboard-grid__col">
+    <web-mp-dashboard-stats>
+        <span title>{{ 'On Marketplace' | trans }}</span>
+
+        <web-mp-dashboard-stats-block
+            name="{{ 'Valid, online & with Stock' | trans }}"
+            count="{{ offersCountOnMarketplace }}"
+        ></web-mp-dashboard-stats-block>
+    </web-mp-dashboard-stats>
 </div>
