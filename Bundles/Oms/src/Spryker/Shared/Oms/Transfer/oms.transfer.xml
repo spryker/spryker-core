@@ -150,6 +150,16 @@
         <property name="storeName" type="string"/>
     </transfer>
 
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
     <transfer name="OmsEvent">
         <property name="timeout" type="string"/>
     </transfer>

@@ -128,6 +128,8 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory::getSalesQueryContainer()} to get the required query instead.
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery

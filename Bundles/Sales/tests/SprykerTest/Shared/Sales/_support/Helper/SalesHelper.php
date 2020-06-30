@@ -145,9 +145,9 @@ class SalesHelper extends Module
      * @param int $idSalesOrder
      * @param array $salesOrderItem
      *
-     * @return int
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    public function createSalesOrderItemForOrder(int $idSalesOrder, array $salesOrderItem = []): int
+    public function createSalesOrderItemForOrder(int $idSalesOrder, array $salesOrderItem = []): SpySalesOrderItem
     {
         $salesOrderQuery = new SpySalesOrderQuery();
         $salesOrderEntity = $salesOrderQuery->findOneByIdSalesOrder($idSalesOrder);
@@ -156,7 +156,7 @@ class SalesHelper extends Module
         $salesOrderItem->setFkSalesOrder($salesOrderEntity->getIdSalesOrder());
         $salesOrderItem->save();
 
-        return $salesOrderItem->getIdSalesOrderItem();
+        return $salesOrderItem;
     }
 
     /**
