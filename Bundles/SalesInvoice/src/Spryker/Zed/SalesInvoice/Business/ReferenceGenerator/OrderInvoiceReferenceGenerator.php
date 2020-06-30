@@ -39,6 +39,6 @@ class OrderInvoiceReferenceGenerator implements OrderInvoiceReferenceGeneratorIn
      */
     public function generateOrderInvoiceReference(): string
     {
-        return $this->sequenceNumberFacade->generate($this->config->getOrderInvoiceReferenceDefaults());
+        return $this->sequenceNumberFacade->generate($this->config->getOrderInvoiceReferenceSequence());
     }
 }

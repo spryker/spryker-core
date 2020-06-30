@@ -23,7 +23,7 @@ class SalesInvoiceConfig extends AbstractBundleConfig
      *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
-    public function getOrderInvoiceReferenceDefaults(): SequenceNumberSettingsTransfer
+    public function getOrderInvoiceReferenceSequence(): SequenceNumberSettingsTransfer
     {
         return (new SequenceNumberSettingsTransfer())
             ->setName($this->getSharedConfig()->getOrderInvoiceSequence())

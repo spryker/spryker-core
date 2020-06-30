@@ -108,7 +108,7 @@ class OrderInvoiceEmailSender implements OrderInvoiceEmailSenderInterface
 
         $orderInvoiceCriteriaTransfer->setFilter(
             (new FilterTransfer())
-                ->setLimit($orderInvoiceSendRequestTransfer->getBatch())
+                ->setLimit($orderInvoiceSendRequestTransfer->requireBatch()->getBatch())
                 ->setOffset(0)
         );
 

@@ -47,7 +47,6 @@ interface SalesInvoiceFacadeInterface
     /**
      * Specification:
      * - Sends invoice emails with "email_sent=false" in batches.
-     * - Includes only the already assigned sales order items.
      * - Executes OrderInvoicesExpanderPluginInterface plugins.
      * - Sets "email_sent=true" after sending.
      * - Requires batch size to be provided.
