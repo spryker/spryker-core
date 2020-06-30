@@ -81,7 +81,7 @@ class ProductOfferRestResponseBuilder implements ProductOfferRestResponseBuilder
     ): array {
         $productOffersRestResources = [];
 
-        foreach ($productOfferStorageCollectionTransfer->getProductOffersStorage() as $productOfferStorageTransfer) {
+        foreach ($productOfferStorageCollectionTransfer->getProductOffers() as $productOfferStorageTransfer) {
             $productOffersRestResources[$productOfferStorageTransfer->getProductConcreteSku()][] =
                 $this->createProductOfferRestResource($productOfferStorageTransfer);
         }

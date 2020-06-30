@@ -118,7 +118,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
         $productOfferStorageTransfers = $this->expandProductOffersWithDefaultProductOffer($productOfferStorageTransfers, $productOfferStorageCriteriaTransfer);
 
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $productOfferStorageCollectionTransfer->setProductOffers(new ArrayObject($productOfferStorageTransfers));
     }
 
     /**

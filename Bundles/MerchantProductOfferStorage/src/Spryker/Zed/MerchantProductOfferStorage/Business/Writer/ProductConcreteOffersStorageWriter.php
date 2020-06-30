@@ -138,11 +138,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
                     continue;
                 }
-                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList, $storeName);
+                $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffers($concreteSku, $productOfferReferenceList, $storeName);
             }
 
             if ($storeNamesToRemove) {
-                $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
+                $this->deleteProductConcreteProductOffers($storeNamesToRemove, $concreteSku);
             }
         }
     }
@@ -198,7 +198,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
-    protected function deleteProductConcreteProductOffersStorage(array $storeNamesToRemove, string $productSku): void
+    protected function deleteProductConcreteProductOffers(array $storeNamesToRemove, string $productSku): void
     {
         foreach ($storeNamesToRemove as $storeName) {
             $this->productConcreteOffersStorageDeleter->deleteCollectionByProductSkus(

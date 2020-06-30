@@ -31,7 +31,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
@@ -92,6 +92,8 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
     }
 
     /**
+     * @module Pro
+     *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *

@@ -44,6 +44,8 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     }
 
     /**
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer

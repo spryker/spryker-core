@@ -18,7 +18,7 @@ interface ProductOfferRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
+    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter

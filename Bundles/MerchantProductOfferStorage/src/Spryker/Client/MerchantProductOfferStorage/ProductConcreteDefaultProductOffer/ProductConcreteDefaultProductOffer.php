@@ -28,13 +28,13 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
     /**
      * @phpstan-return array<string, string>
      *
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOffersStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return string[]
      */
     public function getProductOfferReferences(
-        array $productOffersStorageTransfers,
+        array $productOfferStorageTransfers,
         ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
     ): array {
         if (!$productOfferStorageCriteriaTransfer->getProductConcreteSkus()) {
@@ -42,7 +42,7 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
         }
 
         $groupedProductOfferReferences = [];
-        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
+        foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
             $groupedProductOfferReferences[$productOfferStorageTransfer->getProductConcreteSku()][]
                 = $productOfferStorageTransfer->getProductOfferReference();
         }

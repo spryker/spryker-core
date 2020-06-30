@@ -69,7 +69,7 @@ class InactiveProductOfferItemsFilter implements InactiveProductOfferItemsFilter
             ->setIdStore(
                 $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
             );
-        $productOfferCollectionTransfer = $this->productOfferRepository->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->productOfferRepository->get($productOfferCriteriaFilterTransfer);
 
         $indexedProductConcreteTransfers = $this->indexByProductOfferReferences($productOfferCollectionTransfer);
 

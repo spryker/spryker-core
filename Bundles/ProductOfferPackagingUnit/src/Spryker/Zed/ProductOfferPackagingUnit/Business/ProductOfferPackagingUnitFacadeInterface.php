@@ -13,7 +13,7 @@ interface ProductOfferPackagingUnitFacadeInterface
 {
     /**
      * Specification:
-     * - Aggregates reservations for product offers.
+     * - Aggregates reservations for product offers packaging unit.
      * - Requires ReservationRequestTransfer.productOfferReference transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *

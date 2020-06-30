@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage;
-use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorageQuery;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage;
+use Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\MerchantProductOfferStorage\MerchantProductOfferStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -20,7 +20,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  * @method \Spryker\Zed\MerchantProductOfferStorage\Business\MerchantProductOfferStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductOfferStorage\Communication\MerchantProductOfferStorageCommunicationFactory getFactory()
  */
-class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
+class ProductConcreteProductOffersSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -31,7 +31,7 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function getResourceName(): string
     {
-        return MerchantProductOfferStorageConfig::RESOURCE_MERCHANT_PRODUCT_OFFER_NAME;
+        return MerchantProductOfferStorageConfig::RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME;
     }
 
     /**
@@ -43,12 +43,12 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
      */
     public function hasStore(): bool
     {
-        return false;
+        return true;
     }
 
     /**
      * {@inheritDoc}
-     * - Returns SynchronizationDataTransfer[] for ProductOfferStorage entity.
+     *  - Returns SynchronizationDataTransfer[] for ProductConcreteProductOffersStorage entity.
      *
      * @api
      *
@@ -61,10 +61,10 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     public function getData(int $offset, int $limit, array $ids = []): array
     {
         $synchronizationDataTransfers = [];
-        $productOfferStorageEntities = $this->getProductOfferStorageEntities($offset, $limit, $ids);
+        $productConcreteProductOffersStorageEntities = $this->getProductConcreteProductOffersStorageEntities($offset, $limit, $ids);
 
-        foreach ($productOfferStorageEntities as $productOfferStorageEntity) {
-            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productOfferStorageEntity);
+        foreach ($productConcreteProductOffersStorageEntities as $productConcreteProductOffersStorageEntity) {
+            $synchronizationDataTransfers[] = $this->createSynchronizationDataTransfer($productConcreteProductOffersStorageEntity);
         }
 
         return $synchronizationDataTransfers;
@@ -108,18 +108,19 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
     }
 
     /**
-     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage $productOfferStorage
+     * @param \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductOfferStorage $productOfferStorage): SynchronizationDataTransfer
-    {
+    protected function createSynchronizationDataTransfer(
+        SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
+    ): SynchronizationDataTransfer {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
         /** @var string $data */
-        $data = $productOfferStorage->getData();
+        $data = $productConcreteProductOffersStorageEntity->getData();
         $synchronizationDataTransfer->setData($data);
-        $synchronizationDataTransfer->setKey($productOfferStorage->getKey());
+        $synchronizationDataTransfer->setKey($productConcreteProductOffersStorageEntity->getKey());
 
         return $synchronizationDataTransfer;
     }
@@ -129,18 +130,18 @@ class ProductOfferSynchronizationDataPlugin extends AbstractPlugin implements Sy
      * @param int $limit
      * @param array $ids
      *
-     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductOfferStorage[]|\Propel\Runtime\Collection\ObjectCollection
+     * @return \Orm\Zed\MerchantProductOfferStorage\Persistence\SpyProductConcreteProductOffersStorage[]|\Propel\Runtime\Collection\ObjectCollection
      */
-    protected function getProductOfferStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
+    protected function getProductConcreteProductOffersStorageEntities(int $offset, int $limit, array $ids): ObjectCollection
     {
-        $productOfferStorageQuery = SpyProductOfferStorageQuery::create();
+        $productConcreteProductOffersStorageQuery = SpyProductConcreteProductOffersStorageQuery::create();
 
         if ($ids) {
-            $productOfferStorageQuery->filterByIdProductOfferStorage_In($ids);
+            $productConcreteProductOffersStorageQuery->filterByIdProductConcreteProductOffersStorage_In($ids);
         }
-        $productOfferStorageQuery->offset($offset);
-        $productOfferStorageQuery->limit($limit);
+        $productConcreteProductOffersStorageQuery->offset($offset);
+        $productConcreteProductOffersStorageQuery->limit($limit);
 
-        return $productOfferStorageQuery->find();
+        return $productConcreteProductOffersStorageQuery->find();
     }
 }

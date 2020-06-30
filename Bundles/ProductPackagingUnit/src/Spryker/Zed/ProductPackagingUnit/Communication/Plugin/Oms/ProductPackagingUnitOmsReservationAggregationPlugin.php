@@ -20,7 +20,7 @@ class ProductPackagingUnitOmsReservationAggregationPlugin extends AbstractPlugin
 {
     /**
      * {@inheritDoc}
-     * - Aggregates reservations for product offers.
+     * - Aggregates reservations for provided SKU both with or without packaging unit.
      * - Requires ReservationRequestTransfer.sku transfer field to be set.
      * - Requires ReservationRequestTransfer.reservedStates transfer field to be set.
      *
