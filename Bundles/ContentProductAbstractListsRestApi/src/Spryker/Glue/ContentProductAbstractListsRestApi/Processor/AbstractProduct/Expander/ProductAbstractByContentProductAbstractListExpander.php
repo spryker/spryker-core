@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Expander;
+namespace Spryker\Glue\ContentProductAbstractListsRestApi\Processor\AbstractProduct\Expander;
 
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
-use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReaderInterface;
+use Spryker\Glue\ContentProductAbstractListsRestApi\Processor\AbstractProduct\Reader\ProductAbstractReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ProductAbstractByContentProductAbstractListExpander implements ProductAbstractByContentProductAbstractListExpanderInterface
 {
     /**
-     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReaderInterface
+     * @var \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\AbstractProduct\Reader\ProductAbstractReaderInterface
      */
-    protected $contentProductAbstractReader;
+    protected $productAbstractReader;
 
     /**
-     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\Reader\ContentProductAbstractListProductReaderInterface $contentProductAbstractReader
+     * @param \Spryker\Glue\ContentProductAbstractListsRestApi\Processor\AbstractProduct\Reader\ProductAbstractReaderInterface $productAbstractReader
      */
-    public function __construct(ContentProductAbstractListProductReaderInterface $contentProductAbstractReader)
+    public function __construct(ProductAbstractReaderInterface $productAbstractReader)
     {
-        $this->contentProductAbstractReader = $contentProductAbstractReader;
+        $this->productAbstractReader = $productAbstractReader;
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductAbstractByContentProductAbstractListExpander implements ProductAbst
     {
         $contentProductAbstractListKeys = $this->getContentProductAbstractListKeys($resources);
 
-        $productAbstractRestResources = $this->contentProductAbstractReader
+        $productAbstractRestResources = $this->productAbstractReader
             ->getProductAbstractRestResources($contentProductAbstractListKeys, $restRequest->getMetadata()->getLocale());
 
         foreach ($resources as $restResource) {

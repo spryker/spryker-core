@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ContentProductAbstractListsRestApi\Plugin;
+namespace Spryker\Glue\ContentProductAbstractListsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
 use Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiConfig;
@@ -14,10 +14,7 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginI
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-/**
- * @deprecated Use {@link \Spryker\Glue\ContentProductAbstractListsRestApi\Plugin\GlueApplication\AbstractProductsResourceRoutePlugin} instead.
- */
-class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
+class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,10 +27,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addGet(
-            ContentProductAbstractListsRestApiConfig::ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET,
-            false
-        );
+        $resourceRouteCollection->addGet('get', false);
 
         return $resourceRouteCollection;
     }
@@ -47,7 +41,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getResourceType(): string
     {
-        return ContentProductAbstractListsRestApiConfig::RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS;
+        return ContentProductAbstractListsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS;
     }
 
     /**
@@ -59,7 +53,7 @@ class ContentProductAbstractListRoutePlugin extends AbstractPlugin implements Re
      */
     public function getController(): string
     {
-        return ContentProductAbstractListsRestApiConfig::CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST;
+        return 'abstract-products-resource';
     }
 
     /**

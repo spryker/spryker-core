@@ -62,7 +62,16 @@ class ContentBannerReader implements ContentBannerReaderInterface
             $this->storeClient->getCurrentStore()->getName()
         );
 
+        if (!$cmsPageStorageTransfers) {
+            return [];
+        }
+
         $groupedContentBannerKeys = $this->getGroupedContentBannerKeys($cmsPageStorageTransfers);
+
+        if (!$groupedContentBannerKeys) {
+            return [];
+        }
+
         $contentBannerKeys = array_merge(...array_values($groupedContentBannerKeys));
 
         $contentBannerResources = $this->contentBannerRestApiResource->getContentBannersByKeys($contentBannerKeys, $localeName);
@@ -85,10 +94,11 @@ class ContentBannerReader implements ContentBannerReaderInterface
         $groupedContentBannerKeys = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
-                $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()]
-                    = $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME];
+            if (empty($contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
+                continue;
             }
+            $groupedContentBannerKeys[$cmsPageStorageTransfer->getUuid()]
+                = $contentWidgetParameterMap[CmsPagesContentBannersResourceRelationshipConfig::TWIG_FUNCTION_NAME];
         }
 
         return $groupedContentBannerKeys;

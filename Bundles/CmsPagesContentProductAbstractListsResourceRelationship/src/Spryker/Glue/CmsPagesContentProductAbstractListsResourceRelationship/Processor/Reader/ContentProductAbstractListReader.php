@@ -63,7 +63,15 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
             $storeName
         );
 
+        if (!$cmsPageStorageTransfers) {
+            return [];
+        }
+
         $groupedContentProductAbstractListKeys = $this->getGroupedContentProductAbstractListKeys($cmsPageStorageTransfers);
+
+        if (!$groupedContentProductAbstractListKeys) {
+            return [];
+        }
         $contentProductAbstractListKeys = array_merge(...array_values($groupedContentProductAbstractListKeys));
 
         $contentProductAbstractListResources = $this->contentProductAbstractListsRestApiResource
@@ -91,10 +99,12 @@ class ContentProductAbstractListReader implements ContentProductAbstractListRead
         $groupedContentProductAbstractListKeys = [];
         foreach ($cmsPageStorageTransfers as $cmsPageStorageTransfer) {
             $contentWidgetParameterMap = $cmsPageStorageTransfer->getContentWidgetParameterMap();
-            if (!empty($contentWidgetParameterMap[CmsPagesContentProductAbstractListsResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
-                $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()]
-                    = $contentWidgetParameterMap[CmsPagesContentProductAbstractListsResourceRelationshipConfig::TWIG_FUNCTION_NAME];
+            if (empty($contentWidgetParameterMap[CmsPagesContentProductAbstractListsResourceRelationshipConfig::TWIG_FUNCTION_NAME])) {
+                continue;
             }
+
+            $groupedContentProductAbstractListKeys[$cmsPageStorageTransfer->getUuid()]
+                = $contentWidgetParameterMap[CmsPagesContentProductAbstractListsResourceRelationshipConfig::TWIG_FUNCTION_NAME];
         }
 
         return $groupedContentProductAbstractListKeys;

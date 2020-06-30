@@ -11,9 +11,16 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
 {
+    /**
+     * @deprecated Will be removed in the next major release.
+     */
     public const ACTION_RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_GET = 'get';
 
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS = 'content-product-abstract-lists';
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     */
     public const RESOURCE_CONTENT_PRODUCT_ABSTRACT_LISTS_PRODUCTS = 'content-product-abstract';
 
     /**
