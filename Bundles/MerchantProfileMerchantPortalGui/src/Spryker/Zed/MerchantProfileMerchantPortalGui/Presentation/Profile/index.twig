@@ -122,9 +122,7 @@
         <mp-profile cloak>
             <span title>{{ 'Profile' | trans }}</span>
 
-            <spy-button action type="submit" class="mp-profile__submit">
-                {{ 'Save' | trans }}
-            </spy-button>
+            <spy-button action type="submit">{{ 'Save' | trans }}</spy-button>
 
             <spy-tabs>
                 <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
