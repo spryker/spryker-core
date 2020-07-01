@@ -8,5 +8,4 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
     encapsulation: ViewEncapsulation.None,
 })
 export class DashboardComponent {
-    @Input() title?: string;
 }

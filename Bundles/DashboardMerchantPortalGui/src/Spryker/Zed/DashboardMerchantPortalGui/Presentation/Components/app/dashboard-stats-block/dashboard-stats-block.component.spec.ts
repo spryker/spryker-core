@@ -34,7 +34,7 @@ describe('DashboardStatsComponent', () => {
     it('should render @Input(name) in the `.mp-dashboard-stats-block__text:last-child` element', () => {
         const mockName = 'name';
 
-        component.count = mockName;
+        component.name = mockName;
         fixture.detectChanges();
 
         const nameContentElement = fixture.debugElement.query(By.css('.mp-dashboard-stats-block__text:last-child'));

@@ -39,14 +39,9 @@ describe('DashboardStatsComponent', () => {
         expect(defaultContentElement).toBeTruthy();
     });
 
-    it('should @Input(title) content in the `spy-headline` element', () => {
-        const mockTitle = 'title';
+    it('should render `spy-headline` component', () => {
+        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
 
-        component.title = mockTitle;
-        fixture.detectChanges();
-
-        const titleContentElement = fixture.debugElement.query(By.css('spy-headline'));
-
-        expect(titleContentElement.nativeElement.textContent).toContain(mockTitle);
+        expect(headlineComponent).toBeTruthy();
     });
 });

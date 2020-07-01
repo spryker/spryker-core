@@ -1,5 +1,5 @@
 <spy-headline>
-    <h1>{{ title }}</h1>
+    <ng-content select="[title]"></ng-content>
 </spy-headline>
 
 <mp-product-offer-table [config]="tableConfig"></mp-product-offer-table>

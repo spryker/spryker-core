@@ -1,14 +1,8 @@
-.mp-dashboard-stats {
-    &__block {
-        display: flex;
-        flex-wrap: wrap;
-        margin: -5px;
-        justify-content: space-between;
+@import '../../styles.less';
 
-        &-col {
-            max-width: 100%;
-            padding: 5px;
-            flex-shrink: 0;
-        }
-    }
+.mp-dashboard-stats {
+    flex-grow: 1;
+    flex-basis: 50%;
+    min-width: @dashboard-stats-min-width + @dashboard-grid-x-padding * 2;
+    padding: @dashboard-grid-x-padding @dashboard-grid-y-padding;
 }

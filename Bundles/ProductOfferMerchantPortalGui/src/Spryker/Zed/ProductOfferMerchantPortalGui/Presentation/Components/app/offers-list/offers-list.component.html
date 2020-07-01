@@ -1,7 +1,6 @@
 <spy-headline>
-    <h1>{{ title }}</h1>
-    
-    <spy-button-link actions [url]="actionUrl" size="lg">{{ actionTitle }}</spy-button-link>
+    <ng-content select="[title]"></ng-content>
+    <ng-content actions select="[action]"></ng-content>
 </spy-headline>
 
 <mp-offers-list-table [config]="tableConfig"></mp-offers-list-table>

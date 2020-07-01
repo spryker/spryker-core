@@ -1,12 +1,12 @@
+@import '../../styles.less';
+
 .mp-dashboard-grid {
     display: flex;
     flex-wrap: wrap;
-    margin: -10px -15px;
+    margin: -@dashboard-grid-x-padding -@dashboard-grid-y-padding;
 
-    &__col {
-        flex-grow: 1;
-        flex-basis: 50%;
-        min-width: 220px;
-        padding: 10px 15px;
+    &--stats {
+        margin: -@dashboard-grid-default-padding;
+        justify-content: space-between;
     }
 }

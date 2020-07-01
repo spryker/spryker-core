@@ -5,29 +5,29 @@
 {% endblock %}
 
 {% block content %}
-    <web-mp-dashboard title="{{ 'Dashboard' | trans }}">
+    <web-mp-dashboard>
+        <div title>{{ 'Dashboard' | trans }}</div>
+
         <div class="mp-dashboard-grid">
             {% for dashboardCardPlugin in dashboardCardPlugins %}
 
-                <div class="mp-dashboard-grid__col">
-                    <web-mp-dashboard-card>
-                        <div title class="mp-dashboard-card__heading">
-                            {{ dashboardCardPlugin.title | raw }}
-                        </div>
+                <web-mp-dashboard-card>
+                    <div title class="mp-dashboard-card__heading">
+                        {{ dashboardCardPlugin.title | raw }}
+                    </div>
 
-                        <div actions class="mp-dashboard-card__heading">
-                            {% for actionButton in dashboardCardPlugin.actionButtons %}
-                                <div class="mp-dashboard-card__heading-col">
-                                    <web-spy-button-link url="{{ actionButton.url }}" size="sm">{{ actionButton.title | trans }}</web-spy-button-link>
-                                </div>
-                            {% endfor %}
-                        </div>
+                    <div actions class="mp-dashboard-card__heading">
+                        {% for actionButton in dashboardCardPlugin.actionButtons %}
+                            <div class="mp-dashboard-card__heading-col">
+                                <web-spy-button-link url="{{ actionButton.url }}" size="sm">{{ actionButton.title | trans }}</web-spy-button-link>
+                            </div>
+                        {% endfor %}
+                    </div>
 
-                        <div class="mp-dashboard-grid">
-                            {{ dashboardCardPlugin.content | raw }}
-                        </div>
-                    </web-mp-dashboard-card>
-                </div>
+                    <div class="mp-dashboard-grid">
+                        {{ dashboardCardPlugin.content | raw }}
+                    </div>
+                </web-mp-dashboard-card>
             {% endfor %}
         </div>
     </web-mp-dashboard>
