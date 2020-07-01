@@ -143,8 +143,8 @@ class NodeController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
-        $idNavigationNode = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION_NODE));
+        $idNavigation = $this->castId($request->request->getInt(static::PARAM_ID_NAVIGATION));
+        $idNavigationNode = $this->castId($request->request->getInt(static::PARAM_ID_NAVIGATION_NODE));
 
         $queryParams = [
             static::PARAM_ID_NAVIGATION => $idNavigation,
