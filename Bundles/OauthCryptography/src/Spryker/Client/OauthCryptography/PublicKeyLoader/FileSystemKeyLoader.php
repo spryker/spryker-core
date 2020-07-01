@@ -36,6 +36,6 @@ class FileSystemKeyLoader implements FileSystemKeyLoaderInterface
             $publicKey = new CryptKey($publicKey);
         }
 
-        return [$publicKey];
+        return [$publicKey, $publicKey];
     }
 }
