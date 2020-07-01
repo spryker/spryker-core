@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\Resolver\MerchantRelationshipThresholdDataProviderResolverInterface;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\MerchantRelationshipThresholdType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardMaximumThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipSoftThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Dependency\Facade\MerchantRelationshipSalesOrderThresholdGuiToCurrencyFacadeInterface;
@@ -72,6 +73,7 @@ class MerchantRelationshipThresholdDataProvider
             MerchantRelationshipThresholdType::OPTION_CURRENCY_CODE => $currencyTransfer->getCode(),
             MerchantRelationshipThresholdType::OPTION_STORE_CURRENCY_ARRAY => $this->getStoreCurrencyList(),
             MerchantRelationshipThresholdType::OPTION_HARD_TYPES_ARRAY => $this->getHardTypesList(),
+            MerchantRelationshipThresholdType::OPTION_HARD_MAXIMUM_TYPES_ARRAY => $this->getHardMaximumTypesList(),
             MerchantRelationshipThresholdType::OPTION_SOFT_TYPES_ARRAY => $this->getSoftTypesList(),
         ];
     }
@@ -92,6 +94,9 @@ class MerchantRelationshipThresholdDataProvider
             MerchantRelationshipThresholdType::FIELD_ID_MERCHANT_RELATIONSHIP => $idMerchantRelationship,
             MerchantRelationshipThresholdType::FIELD_HARD => [
                 MerchantRelationshipHardThresholdType::FIELD_STRATEGY => current($this->getHardTypesList()),
+            ],
+            MerchantRelationshipThresholdType::FIELD_HARD_MAXIMUM => [
+                MerchantRelationshipHardMaximumThresholdType::FIELD_STRATEGY => current($this->getHardMaximumTypesList()),
             ],
             MerchantRelationshipThresholdType::FIELD_SOFT => [
                 MerchantRelationshipSoftThresholdType::FIELD_STRATEGY => current($this->getSoftTypesList()),
@@ -164,6 +169,21 @@ class MerchantRelationshipThresholdDataProvider
         $hardTypesList = [];
         foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdGroup() === MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD) {
+                $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
+            }
+        }
+
+        return $hardTypesList;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getHardMaximumTypesList(): array
+    {
+        $hardTypesList = [];
+        foreach ($this->formExpanderPlugins as $formExpanderPlugin) {
+            if ($formExpanderPlugin->getThresholdGroup() === MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX) {
                 $hardTypesList[$formExpanderPlugin->getThresholdName()] = $formExpanderPlugin->getThresholdKey();
             }
         }
