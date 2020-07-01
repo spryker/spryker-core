@@ -157,9 +157,12 @@ class FilterPreferencesController extends AbstractController
             return $this->redirectResponse('/product-search/filter-preferences');
         }
 
+        $deleteForm = $this->getFactory()->createDeleteFilterPreferencesForm();
+
         return $this->viewResponse([
             'attributeTransfer' => $attributeTransfer,
             'locales' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+            'deleteForm' => $deleteForm->createView(),
         ]);
     }
 

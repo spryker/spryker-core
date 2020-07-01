@@ -34,7 +34,7 @@ class VersionPageController extends AbstractController
     public function publishAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
 
         $form = $this->getFactory()->createPublishVersionPageForm()->handleRequest($request);
 

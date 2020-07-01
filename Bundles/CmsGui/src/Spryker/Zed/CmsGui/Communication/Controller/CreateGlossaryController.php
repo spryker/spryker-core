@@ -55,6 +55,8 @@ class CreateGlossaryController extends AbstractController
 
         $cmsPageTransfer = $this->getFactory()->getCmsFacade()->findCmsPageById($idCmsPage);
 
+        $publishForm = $this->getFactory()->createPublishVersionPageForm();
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $this->getPlaceholderTabs($cmsGlossaryTransfer),
@@ -63,6 +65,7 @@ class CreateGlossaryController extends AbstractController
             'cmsVersion' => $this->getFactory()->getCmsFacade()->findLatestCmsVersionByIdCmsPage($idCmsPage),
             'cmsPage' => $cmsPageTransfer,
             'viewActionButtons' => $this->getViewActionButtons($cmsPageTransfer),
+            'publishForm' => $publishForm->createView(),
         ];
     }
 

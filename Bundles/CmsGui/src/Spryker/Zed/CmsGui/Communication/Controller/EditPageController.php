@@ -82,6 +82,8 @@ class EditPageController extends AbstractController
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
+        $publishForm = $this->getFactory()->createPublishVersionPageForm();
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -90,6 +92,7 @@ class EditPageController extends AbstractController
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'publishForm' => $publishForm->createView(),
         ];
     }
 
