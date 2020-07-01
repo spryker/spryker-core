@@ -20,10 +20,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Zed
  * @group ProductPackagingUnit
  * @group Business
- * @group GetConcreteProductsEligibleForProductAbstractAddToCartTest
+ * @group FilterProductsWithoutPackagingUnitTest
  * Add your own group annotations below this line
  */
-class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
+class FilterProductsWithoutPackagingUnitTest extends Unit
 {
     protected const PACKAGING_UNIT_NAME = 'packagingUnit';
     protected const PACKAGING_UNIT_AMOUNT = 1;
@@ -36,7 +36,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestThrowsExceptionForMissingProperty(): void
+    public function testFilterProductsWithoutPackagingUnitTestThrowsExceptionForMissingProperty(): void
     {
         // Arrange
         $productConcreteTransfers = [new ProductConcreteTransfer()];
@@ -45,13 +45,13 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+        $this->tester->getFacade()->filterProductsWithoutPackagingUnit($productConcreteTransfers);
     }
 
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestExcludesProduct(): void
+    public function testFilterProductsWithoutPackagingUnitTestExcludesProduct(): void
     {
         // Arrange
         $productConcreteTransferWithPackagingUnit = $this->tester->haveProduct();
@@ -69,7 +69,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         ]);
 
         // Act
-        $productConcreteTransfers = $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart([
+        $productConcreteTransfers = $this->tester->getFacade()->filterProductsWithoutPackagingUnit([
             $productConcreteTransfer,
             $productConcreteTransferWithPackagingUnit,
         ]);
@@ -81,14 +81,14 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestReturnsUnmodifiedArray(): void
+    public function testFilterProductsWithoutPackagingUnitTestReturnsUnmodifiedArray(): void
     {
         // Arrange
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $secondProductConcreteTransfer = $this->tester->haveProduct();
 
         // Act
-        $productConcreteTransfers = $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart([
+        $productConcreteTransfers = $this->tester->getFacade()->filterProductsWithoutPackagingUnit([
             $firstProductConcreteTransfer,
             $secondProductConcreteTransfer,
         ]);

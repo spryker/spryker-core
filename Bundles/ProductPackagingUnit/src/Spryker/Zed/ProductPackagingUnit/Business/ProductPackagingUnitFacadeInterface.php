@@ -477,5 +477,5 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array;
+    public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array;
 }

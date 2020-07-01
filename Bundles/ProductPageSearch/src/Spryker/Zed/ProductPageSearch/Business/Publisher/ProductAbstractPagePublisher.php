@@ -186,18 +186,18 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         $productCategories = $this->getProductCategoriesByProductAbstractIds($productAbstractIds);
         $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductCategories($productCategories, $productAbstractLocalizedEntities);
 
-        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
+        if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
+            $productAbstractLocalizedEntities = $this->hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
+                $productAbstractLocalizedEntities,
+                $productAbstractIds
+            );
+        }
 
+        $productAbstractPageSearchEntities = $this->findProductAbstractPageSearchEntities($productAbstractIds);
         if (!$productAbstractLocalizedEntities) {
             $this->deleteProductAbstractPageSearchEntities($productAbstractPageSearchEntities);
 
             return;
-        }
-
-        $productAbstractAddToCartSkus = [];
-
-        if ($this->productPageSearchConfig->isProductAbstractAddToCartEnabled()) {
-            $productAbstractAddToCartSkus = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds);
         }
 
         $this->storeData(
@@ -205,8 +205,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
             $productAbstractPageSearchEntities,
             $pageDataExpanderPlugins,
             $productPageLoadTransfer,
-            $isRefresh,
-            $productAbstractAddToCartSkus
+            $isRefresh
         );
     }
 
@@ -216,7 +215,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
      * @param \Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageDataExpanderInterface[] $pageDataExpanderPlugins
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $productPageLoadTransfer
      * @param bool $isRefresh
-     * @param string[] $productAbstractAddToCartSkus
      *
      * @return void
      */
@@ -225,8 +223,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         array $productAbstractPageSearchEntities,
         array $pageDataExpanderPlugins,
         ProductPageLoadTransfer $productPageLoadTransfer,
-        $isRefresh = false,
-        array $productAbstractAddToCartSkus = []
+        $isRefresh = false
     ) {
         $pairedEntities = $this->pairProductAbstractLocalizedEntitiesWithProductAbstractPageSearchEntities(
             $productAbstractLocalizedEntities,
@@ -246,8 +243,6 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
                 continue;
             }
-
-            $productAbstractLocalizedEntity[ProductPageSearchTransfer::ADD_TO_CART_SKU] = $productAbstractAddToCartSkus[$productAbstractPageSearchEntity->getFkProductAbstract()] ?? null;
 
             $this->storeProductAbstractPageSearchEntity(
                 $productAbstractLocalizedEntity,
@@ -691,5 +686,25 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         }
 
         return [$pairs, $mappedProductAbstractPageSearchEntities];
+    }
+
+    /**
+     * @param array $productAbstractLocalizedEntities
+     * @param int[] $productAbstractIds
+     *
+     * @return array
+     */
+    protected function hydrateProductAbstractLocalizedEntitiesWithProductAbstractAddToCartSku(
+        array $productAbstractLocalizedEntities,
+        array $productAbstractIds
+    ): array {
+        $productConcreteSkuMapByIdProductAbstract = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds);
+
+        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+            $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
+            $productAbstractLocalizedEntity[ProductPageSearchTransfer::ADD_TO_CART_SKU] = $productConcreteSkuMapByIdProductAbstract[$productAbstractId] ?? null;
+        }
+
+        return $productAbstractLocalizedEntities;
     }
 }

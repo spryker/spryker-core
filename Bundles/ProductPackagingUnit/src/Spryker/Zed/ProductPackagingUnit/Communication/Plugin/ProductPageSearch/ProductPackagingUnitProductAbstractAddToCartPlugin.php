@@ -30,6 +30,6 @@ class ProductPackagingUnitProductAbstractAddToCartPlugin extends AbstractPlugin 
      */
     public function getEligibleConcreteProducts(array $productConcreteTransfers): array
     {
-        return $this->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+        return $this->getFacade()->filterProductsWithoutPackagingUnit($productConcreteTransfers);
     }
 }

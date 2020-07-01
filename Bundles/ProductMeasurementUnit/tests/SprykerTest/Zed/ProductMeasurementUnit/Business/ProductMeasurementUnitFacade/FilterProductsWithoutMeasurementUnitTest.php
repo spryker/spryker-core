@@ -19,10 +19,10 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
  * @group Zed
  * @group ProductMeasurementUnit
  * @group Business
- * @group GetConcreteProductsEligibleForProductAbstractAddToCartTest
+ * @group FilterProductsWithoutMeasurementUnitTest
  * Add your own group annotations below this line
  */
-class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
+class FilterProductsWithoutMeasurementUnitTest extends Unit
 {
     /**
      * @var \SprykerTest\Zed\ProductMeasurementUnit\ProductMeasurementUnitBusinessTester
@@ -32,7 +32,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestThrowsExceptionForMissingIdProductConcrete(): void
+    public function testFilterProductsWithoutMeasurementUnitTestThrowsExceptionForMissingIdProductConcrete(): void
     {
         // Arrange
         $productConcreteTransfers = [(new ProductConcreteTransfer())->setFkProductAbstract(1)];
@@ -41,13 +41,13 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+        $this->tester->getFacade()->filterProductsWithoutMeasurementUnit($productConcreteTransfers);
     }
 
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestThrowsExceptionForMissingFkProductAbstract(): void
+    public function testFilterProductsWithoutMeasurementUnitTestThrowsExceptionForMissingFkProductAbstract(): void
     {
         // Arrange
         $productConcreteTransfers = [(new ProductConcreteTransfer())->setIdProductConcrete(1)];
@@ -56,13 +56,13 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+        $this->tester->getFacade()->filterProductsWithoutMeasurementUnit($productConcreteTransfers);
     }
 
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestExcludesProductWithSalesUnit(): void
+    public function testFilterProductsWithoutMeasurementUnitTestExcludesProductWithSalesUnit(): void
     {
         // Arrange
         $productConcreteTransferWithMeasurementUnit = $this->tester->haveProduct();
@@ -84,7 +84,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         );
 
         // Act
-        $productConcreteTransfers = $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart([
+        $productConcreteTransfers = $this->tester->getFacade()->filterProductsWithoutMeasurementUnit([
             $productConcreteTransfer,
             $productConcreteTransferWithMeasurementUnit,
         ]);
@@ -96,7 +96,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestExcludesProductWithBaseUnit(): void
+    public function testFilterProductsWithoutMeasurementUnitTestExcludesProductWithBaseUnit(): void
     {
         // Arrange
         $productConcreteTransferWithMeasurement = $this->tester->haveProduct();
@@ -112,7 +112,7 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
         );
 
         // Act
-        $productConcreteTransfers = $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart([
+        $productConcreteTransfers = $this->tester->getFacade()->filterProductsWithoutMeasurementUnit([
             $productConcreteTransfer,
             $productConcreteTransferWithMeasurement,
         ]);
@@ -124,14 +124,14 @@ class GetConcreteProductsEligibleForProductAbstractAddToCartTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartTestReturnsUnmodifiedArray(): void
+    public function testFilterProductsWithoutMeasurementUnitTestReturnsUnmodifiedArray(): void
     {
         // Arrange
         $firstProductConcreteTransfer = $this->tester->haveProduct();
         $secondProductConcreteTransfer = $this->tester->haveProduct();
 
         // Act
-        $productConcreteTransfers = $this->tester->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart([
+        $productConcreteTransfers = $this->tester->getFacade()->filterProductsWithoutMeasurementUnit([
             $firstProductConcreteTransfer,
             $secondProductConcreteTransfer,
         ]);

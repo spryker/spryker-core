@@ -331,10 +331,10 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array
     {
         return $this->getFactory()
             ->createProductMeasurementUnitReader()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+            ->filterProductsWithoutMeasurementUnit($productConcreteTransfers);
     }
 }
