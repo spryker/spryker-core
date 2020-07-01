@@ -24,7 +24,7 @@ Edit,Bearbeiten
 "Full text",Volltext
 "Full text boosted","Volltext boosted"
 "General Information","Allgemeine Informationen"
-"Include for completion","In Autovervollständigung eingebunde"
+"Include for completion","In Autovervollständigung eingebunden"
 "Include for full text","In Volltextsuche eingebunden"
 "Include for full text boosted","In boosted Volltextsuche eingebunden"
 "Include for suggestion","In Suchvorschläge eingebunden"
@@ -49,4 +49,3 @@ Translations,Übersetzungen
 "Deactivate all","Alle deaktivieren"
 "Create Filter","Filter Erstellen"
 "Edit filter","Filter Bearbeiten"
-"Include for completion","In Autovervollständigung eingebunden"
