@@ -14,5 +14,5 @@ interface ProductMeasurementUnitReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array;
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array;
 }

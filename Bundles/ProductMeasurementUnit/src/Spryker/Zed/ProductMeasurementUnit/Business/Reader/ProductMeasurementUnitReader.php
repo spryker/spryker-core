@@ -29,7 +29,7 @@ class ProductMeasurementUnitReader implements ProductMeasurementUnitReaderInterf
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array
     {
         if (!$productConcreteTransfers) {
             return [];

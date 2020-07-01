@@ -47,13 +47,13 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
         }
 
         if (!$this->productAbstractAddToCartPlugins) {
-            return $this->productPageSearchRepository->getProductAbstractSkusByProductAbstractIds($productAbstractIds);
+            return $this->productPageSearchRepository->getProductConcreteSkusByProductAbstractIds($productAbstractIds);
         }
 
         $productConcreteTransfers = $this->productPageSearchRepository->getConcreteProductsByProductAbstractIds($productAbstractIds);
         $productConcreteTransfers = $this->executeProductAbstractAddToCartPlugins($productConcreteTransfers);
 
-        return $this->mapProductConcreteTransfersToProductAbstractSkus($productConcreteTransfers);
+        return $this->mapProductConcreteTransfersToProductConcreteSkus($productConcreteTransfers);
     }
 
     /**
@@ -75,14 +75,14 @@ class AddToCartSkuReader implements AddToCartSkuReaderInterface
      *
      * @return string[]
      */
-    protected function mapProductConcreteTransfersToProductAbstractSkus(array $productConcreteTransfers): array
+    protected function mapProductConcreteTransfersToProductConcreteSkus(array $productConcreteTransfers): array
     {
-        $productAbstractAddToCartSkus = [];
+        $productConcreteSkuMapByIdProductAbstract = [];
 
         foreach ($productConcreteTransfers as $productConcreteTransfer) {
-            $productAbstractAddToCartSkus[$productConcreteTransfer->getFkProductAbstract()] = $productConcreteTransfer->getSku();
+            $productConcreteSkuMapByIdProductAbstract[$productConcreteTransfer->getFkProductAbstract()] = $productConcreteTransfer->getSku();
         }
 
-        return $productAbstractAddToCartSkus;
+        return $productConcreteSkuMapByIdProductAbstract;
     }
 }

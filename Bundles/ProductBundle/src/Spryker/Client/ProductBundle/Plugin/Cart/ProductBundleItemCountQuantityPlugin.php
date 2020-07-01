@@ -14,7 +14,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 /**
  * @method \Spryker\Client\ProductBundle\ProductBundleFactory getFactory()
  */
-class ItemCountQuantityPlugin extends AbstractPlugin implements ItemCountPluginInterface
+class ProductBundleItemCountQuantityPlugin extends AbstractPlugin implements ItemCountPluginInterface
 {
     /**
      * Specification:

@@ -100,13 +100,13 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      *
      * @return string[]
      */
-    public function getProductAbstractSkusByProductAbstractIds(array $productAbstractIds): array
+    public function getProductConcreteSkusByProductAbstractIds(array $productAbstractIds): array
     {
         if (!$productAbstractIds) {
             return [];
         }
 
-         $concreteProductsData = $this->getFactory()
+        $productConcreteSkuMapByIdProductAbstract = $this->getFactory()
             ->getProductQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
             ->select([
@@ -114,15 +114,9 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
                 SpyProductTableMap::COL_SKU,
             ])
             ->find()
-            ->toArray();
+            ->toKeyValue(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_SKU);
 
-        $addToCartSkus = [];
-
-        foreach ($concreteProductsData as $concreteProductData) {
-            $addToCartSkus[$concreteProductData[SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT]] = $concreteProductData[SpyProductTableMap::COL_SKU];
-        }
-
-        return $addToCartSkus;
+        return $productConcreteSkuMapByIdProductAbstract;
     }
 
     /**
