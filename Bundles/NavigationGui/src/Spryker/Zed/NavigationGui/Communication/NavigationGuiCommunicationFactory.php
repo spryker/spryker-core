@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
+use Spryker\Zed\NavigationGui\Communication\Form\DeleteNavigationForm;
+use Spryker\Zed\NavigationGui\Communication\Form\DuplicateNavigationForm;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\UpdateNavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
@@ -34,7 +37,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getNavigationForm()` instead.
+     * @deprecated Use {@link getNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array $options
@@ -68,7 +71,26 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getUpdateNavigationForm()` instead.
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDuplicateNavigationForm(?NavigationTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(DuplicateNavigationForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteNavigationForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteNavigationForm::class);
+    }
+
+    /**
+     * @deprecated Use {@link getUpdateNavigationForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
      * @param array $options
@@ -110,7 +132,7 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getNavigationNodeForm()` instead.
+     * @deprecated Use {@link getNavigationNodeForm()} instead.
      *
      * @param \Generated\Shared\Transfer\NavigationNodeTransfer|null $data
      * @param array $options

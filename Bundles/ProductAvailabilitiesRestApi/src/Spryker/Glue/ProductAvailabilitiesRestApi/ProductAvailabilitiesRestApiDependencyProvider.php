@@ -42,11 +42,11 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      */
     protected function addAvailabilityStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_AVAILABILITY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_AVAILABILITY_STORAGE, function (Container $container) {
             return new ProductAvailabilitiesRestApiToAvailabilityStorageClientBridge(
                 $container->getLocator()->availabilityStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class ProductAvailabilitiesRestApiDependencyProvider extends AbstractBundleDepen
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductAvailabilitiesRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());
-        };
+        });
 
         return $container;
     }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver as CheckoutCustomerOrderSaver;
 
 /**
- * @deprecated Use Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver instead
+ * @deprecated Use {@link \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaver} instead
  */
 class CustomerOrderSaver extends CheckoutCustomerOrderSaver implements CustomerOrderSaverInterface
 {

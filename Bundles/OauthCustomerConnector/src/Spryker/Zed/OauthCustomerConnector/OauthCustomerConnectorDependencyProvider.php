@@ -47,9 +47,9 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new OauthCustomerConnectorToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addOauthFacade(Container $container): Container
     {
-        $container[static::FACADE_OAUTH] = function (Container $container) {
+        $container->set(static::FACADE_OAUTH, function (Container $container) {
             return new OauthCustomerConnectorToOauthFacadeBridge($container->getLocator()->oauth()->facade());
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthCustomerConnectorToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class OauthCustomerConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addOauthCustomerIdentifierExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_OAUTH_CUSTOMER_IDENTIFIER_EXPANDER, function () {
             return $this->getOauthCustomerIdentifierExpanderPlugins();
-        };
+        });
 
         return $container;
     }

@@ -258,7 +258,7 @@ interface ProductStorageClientInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param string $localeName
      * @param string $storeName
      *

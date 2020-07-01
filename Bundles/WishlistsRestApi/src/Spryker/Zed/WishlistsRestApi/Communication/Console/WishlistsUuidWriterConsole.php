@@ -12,7 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole instead.
+ * @deprecated Use {@link \Spryker\Zed\Uuid\Communication\Console\UuidGeneratorConsole} instead.
  *
  * @method \Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface getFacade()
  */

@@ -127,7 +127,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $returnTransfer = (new ReturnTransfer())
             ->setStore($returnCreateRequestTransfer->getStore())
-            ->setCustomerReference($returnCreateRequestTransfer->getCustomer()->getCustomerReference())
+            ->setCustomerReference($this->extractCustomerReference($returnCreateRequestTransfer))
             ->setReturnItems($returnCreateRequestTransfer->getReturnItems());
 
         $returnReference = $this->returnReferenceGenerator->generateReturnReference($returnTransfer);
@@ -163,10 +163,7 @@ class ReturnWriter implements ReturnWriterInterface
     {
         $returnCreateRequestTransfer
             ->requireReturnItems()
-            ->requireStore()
-            ->requireCustomer()
-            ->getCustomer()
-                ->requireCustomerReference();
+            ->requireStore();
     }
 
     /**
@@ -285,9 +282,11 @@ class ReturnWriter implements ReturnWriterInterface
         ReturnCreateRequestTransfer $returnCreateRequestTransfer,
         OrderItemFilterTransfer $orderItemFilterTransfer
     ): OrderItemFilterTransfer {
-        $orderItemFilterTransfer->addCustomerReference(
-            $returnCreateRequestTransfer->getCustomer()->getCustomerReference()
-        );
+        $customerReference = $this->extractCustomerReference($returnCreateRequestTransfer);
+
+        if ($customerReference) {
+            $orderItemFilterTransfer->addCustomerReference($customerReference);
+        }
 
         foreach ($returnCreateRequestTransfer->getReturnItems() as $returnItemTransfer) {
             $itemTransfer = $returnItemTransfer->getOrderItem();
@@ -302,5 +301,19 @@ class ReturnWriter implements ReturnWriterInterface
         }
 
         return $orderItemFilterTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnCreateRequestTransfer $returnCreateRequestTransfer
+     *
+     * @return string|null
+     */
+    protected function extractCustomerReference(ReturnCreateRequestTransfer $returnCreateRequestTransfer): ?string
+    {
+        if (!$returnCreateRequestTransfer->getCustomer()) {
+            return null;
+        }
+
+        return $returnCreateRequestTransfer->getCustomer()->getCustomerReference();
     }
 }

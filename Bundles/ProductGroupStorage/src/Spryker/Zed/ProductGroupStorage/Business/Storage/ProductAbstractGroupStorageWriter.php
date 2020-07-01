@@ -20,7 +20,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     protected $queryContainer;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -37,7 +37,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -63,7 +63,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -142,7 +142,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param array $groupedProductAbstractIds
      *
      * @return array
@@ -206,7 +206,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
 
     /**
      * @param array $groupedProductAbstractIds
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -249,7 +249,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductGroup\Persistence\SpyProductAbstractGroup[]
      */
@@ -259,7 +259,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -269,7 +269,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -279,7 +279,7 @@ class ProductAbstractGroupStorageWriter implements ProductAbstractGroupStorageWr
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

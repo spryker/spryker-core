@@ -14,7 +14,7 @@ interface ProductOfferAvailabilityStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void;
+    public function writeCollectionByOmsProductOfferReservationIdEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers

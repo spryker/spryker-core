@@ -238,7 +238,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin` instead.
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin} instead.
      *
      * @return \Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin
      */

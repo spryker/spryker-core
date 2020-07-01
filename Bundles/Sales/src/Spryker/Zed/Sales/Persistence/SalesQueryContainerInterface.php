@@ -94,7 +94,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
+     * @deprecated Use {@link querySalesOrderDetailsWithoutShippingAddress()} instead.
      *
      * @param int $idSalesOrder
      *

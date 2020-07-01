@@ -113,7 +113,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use saveOrderProductOptions() instead
+     * @deprecated Use {@link saveOrderProductOptions()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -200,7 +200,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use {@link ProductOptionFacade::expandOrderItemsWithProductOptions()} instead.
+     * @deprecated Use {@link expandOrderItemsWithProductOptions()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -317,7 +317,7 @@ class ProductOptionFacade extends AbstractFacade implements ProductOptionFacadeI
      *
      * @api
      *
-     * @deprecated Use checkProductOptionGroupExistenceByProductOptionValueId() instead
+     * @deprecated Use {@link checkProductOptionGroupExistenceByProductOptionValueId()} instead
      *
      * @param int $idProductOptionValue
      *

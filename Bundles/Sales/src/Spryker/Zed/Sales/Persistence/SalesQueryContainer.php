@@ -212,7 +212,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
+     * @deprecated Use {@link querySalesOrderDetailsWithoutShippingAddress()} instead.
      *
      * @param int $idSalesOrder
      *

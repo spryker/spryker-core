@@ -35,8 +35,8 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization\Prod
 use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Synchronization\ProductGroupSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductAbstractImageSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductConcreteImageSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataRepositoryPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataRepositoryPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization\ProductOptionSynchronizationDataPlugin;
@@ -450,8 +450,8 @@ class SynchronizationFacadeTest extends Unit
             new ProductGroupSynchronizationDataPlugin(),
             new ProductAbstractImageSynchronizationDataPlugin(),
             new ProductConcreteImageSynchronizationDataPlugin(),
-            new ProductAbstractLabelSynchronizationDataPlugin(),
-            new ProductLabelDictionarySynchronizationDataPlugin(),
+            new ProductAbstractLabelSynchronizationDataRepositoryPlugin(),
+            new ProductLabelDictionarySynchronizationDataRepositoryPlugin(),
             new ProductMeasurementUnitSynchronizationDataPlugin(),
             new ProductConcreteMeasurementUnitSynchronizationDataPlugin(),
             new ProductQuantitySynchronizationDataPlugin(),

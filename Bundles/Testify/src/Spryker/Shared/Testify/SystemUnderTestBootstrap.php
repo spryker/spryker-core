@@ -9,7 +9,6 @@ namespace Spryker\Shared\Testify;
 
 use Exception;
 use InvalidArgumentException;
-use Propel\Runtime\Propel;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Config\Application\Environment;
@@ -18,6 +17,7 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 /**
@@ -25,6 +25,8 @@ use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvide
  */
 class SystemUnderTestBootstrap
 {
+    use InstancePoolingTrait;
+
     public const APPLICATION_ZED = 'Zed';
     public const APPLICATION_YVES = 'Yves';
     public const APPLICATION_SHARED = 'Shared';
@@ -65,7 +67,7 @@ class SystemUnderTestBootstrap
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
 
         $this->validateApplication($application);
         error_reporting(E_ALL | E_STRICT);

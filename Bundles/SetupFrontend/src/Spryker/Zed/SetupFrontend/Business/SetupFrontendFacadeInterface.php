@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 
 interface SetupFrontendFacadeInterface
@@ -48,20 +49,24 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Yves frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildYvesFrontend(LoggerInterface $logger);
+    public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:
      * - Installs needed Yves dependencies.
      *
      * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -85,6 +90,8 @@ interface SetupFrontendFacadeInterface
      *
      * @api
      *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
@@ -94,14 +101,16 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Zed frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildZedFrontend(LoggerInterface $logger);
+    public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:
@@ -112,4 +121,32 @@ interface SetupFrontendFacadeInterface
      * @return bool
      */
     public function removeZedAssets();
+
+    /**
+     * Specification:
+     * - Installs needed Merchant Portal dependencies.
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMerchantPortalDependencies(LoggerInterface $logger): bool;
+
+    /**
+     * Specification:
+     * - Runs Merchant Portal frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
+     *
+     * @return bool
+     */
+    public function buildMerchantPortalFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool;
 }

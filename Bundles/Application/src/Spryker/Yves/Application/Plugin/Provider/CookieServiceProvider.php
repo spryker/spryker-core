@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use `Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin` and `Spryker\Yves\Http\Plugin\EventDispatcher\CookieEventDispatcherPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin} and `Spryker\Yves\Http\Plugin\EventDispatcher\CookieEventDispatcherPlugin` instead.
  */
 class CookieServiceProvider implements ServiceProviderInterface
 {

@@ -50,9 +50,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new ProductNewToSearchClientBridge($container->getLocator()->search()->client());
-        };
+        });
 
         return $container;
     }
@@ -64,9 +64,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductLabelStorageClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_LABEL_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_LABEL_STORAGE, function (Container $container) {
             return new ProductNewToProductLabelStorageClientBridge($container->getLocator()->productLabelStorage()->client());
-        };
+        });
 
         return $container;
     }
@@ -78,9 +78,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsQueryPlugin(Container $container)
     {
-        $container[static::NEW_PRODUCTS_QUERY_PLUGIN] = function () {
+        $container->set(static::NEW_PRODUCTS_QUERY_PLUGIN, function () {
             return $this->getNewProductsQueryPlugin();
-        };
+        });
 
         return $container;
     }
@@ -106,9 +106,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsQueryExpanderPlugins(Container $container)
     {
-        $container[static::NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS] = function () {
+        $container->set(static::NEW_PRODUCTS_QUERY_EXPANDER_PLUGINS, function () {
             return $this->getNewProductsQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -120,9 +120,9 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
      */
     protected function addNewProductsResultFormatterPlugins(Container $container)
     {
-        $container[static::NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS] = function () {
+        $container->set(static::NEW_PRODUCTS_RESULT_FORMATTER_PLUGINS, function () {
             return $this->getNewProductsResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -136,7 +136,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function getNewProductsQueryExpanderPlugins()
     {
@@ -144,7 +144,7 @@ class ProductNewDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     protected function getNewProductsResultFormatterPlugins()
     {

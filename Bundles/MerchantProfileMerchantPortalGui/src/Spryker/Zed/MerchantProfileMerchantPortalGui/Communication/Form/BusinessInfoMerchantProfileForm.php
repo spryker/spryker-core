@@ -12,13 +12,11 @@ use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\U
 use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint\UniqueMerchantReference;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\MerchantProfileMerchantPortalGuiConfig getConfig()
@@ -64,8 +62,7 @@ class BusinessInfoMerchantProfileForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdMerchantField($builder)
-            ->addContactPersonTitleField($builder)
+        $this->addContactPersonTitleField($builder)
             ->addContactPersonFirstNameField($builder)
             ->addContactPersonLastNameField($builder)
             ->addContactPersonRoleField($builder)
@@ -78,28 +75,14 @@ class BusinessInfoMerchantProfileForm extends AbstractType
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdMerchantField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_ID_MERCHANT, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
      * @param array $choices
      *
      * @return $this
      */
     protected function addContactPersonTitleField(FormBuilderInterface $builder, array $choices = [])
     {
-        $choices = $this->getConfig()->getSalutationChoices();
-
         $builder->add(static::FIELD_CONTACT_PERSON_TITLE, ChoiceType::class, [
-            'choices' => array_flip($choices),
+            'choices' => array_flip($this->getConfig()->getSalutationChoices()),
             'required' => false,
             'label' => static::LABEL_CONTACT_PERSON_TITLE,
             'placeholder' => 'select.default.placeholder',
@@ -272,7 +255,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
             new Length(['max' => 255]),
         ];
     }
@@ -285,7 +267,6 @@ class BusinessInfoMerchantProfileForm extends AbstractType
     protected function getEmailFieldConstraints(?int $currentId = null): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Email(),
             new Length(['max' => 255]),

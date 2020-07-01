@@ -59,9 +59,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container): ProductStorageToEventBehaviorFacadeInterface {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container): ProductStorageToEventBehaviorFacadeInterface {
             return new ProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container): ProductStorageToProductInterface {
+        $container->set(static::FACADE_PRODUCT, function (Container $container): ProductStorageToProductInterface {
             return new ProductStorageToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container): ProductStorageToStoreFacadeInterface {
+        $container->set(static::FACADE_STORE, function (Container $container): ProductStorageToStoreFacadeInterface {
             return new ProductStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

@@ -14,6 +14,8 @@
         <property name="merchantSku" type="string"/>
         <property name="merchantReference" type="string"/>
         <property name="merchantStorage" type="MerchantStorage"/>
+        <property name="productConcreteSku" type="string"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
@@ -55,7 +57,7 @@
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
-        <property name="sku" type="string"/>
+        <property name="productConcreteSkus" type="string[]" singular="productConcreteSku"/>
         <property name="merchantReference" type="string"/>
         <property name="productOfferReference" type="string"/>
     </transfer>

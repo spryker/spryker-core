@@ -443,7 +443,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
+     * @deprecated Use {@link findHydratedDiscountConfiguratorByIdDiscount()} instead.
      *
      * @param int $idDiscount
      *

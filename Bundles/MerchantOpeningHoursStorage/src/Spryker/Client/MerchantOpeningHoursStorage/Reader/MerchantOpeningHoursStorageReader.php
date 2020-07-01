@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface;
 use Spryker\Shared\MerchantOpeningHoursStorage\MerchantOpeningHoursStorageConfig;
 
@@ -32,18 +33,26 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
     protected $merchantOpeningHoursMapper;
 
     /**
+     * @var \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Client\MerchantOpeningHoursStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\MerchantOpeningHoursStorage\Mapper\MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
+     * @param \Spryker\Client\MerchantOpeningHoursStorage\Dependency\Service\MerchantOpeningHoursStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         MerchantOpeningHoursStorageToStorageClientInterface $storageClient,
         MerchantOpeningHoursStorageToSynchronizationServiceInterface $synchronizationService,
-        MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper
+        MerchantOpeningHoursMapperInterface $merchantOpeningHoursMapper,
+        MerchantOpeningHoursStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->merchantOpeningHoursMapper = $merchantOpeningHoursMapper;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -63,6 +72,69 @@ class MerchantOpeningHoursStorageReader implements MerchantOpeningHoursStorageRe
 
         return $this->merchantOpeningHoursMapper
             ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer($merchantOpeningHoursStorageData, (new MerchantOpeningHoursStorageTransfer()));
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantOpeningHoursStorageTransfer[]
+     */
+    public function getMerchantOpeningHoursByMerchantIds(array $merchantIds): array
+    {
+        $merchantOpeningHoursStorageData = $this->storageClient->getMulti(
+            $this->generateKeys($merchantIds)
+        );
+
+        if (!$merchantOpeningHoursStorageData) {
+            return [];
+        }
+
+        $merchantOpeningHoursStorageTransfers = [];
+        foreach ($merchantOpeningHoursStorageData as $storageKey => $merchantOpeningHoursStorageDatum) {
+            if (!$merchantOpeningHoursStorageDatum) {
+                continue;
+            }
+
+            $merchantOpeningHoursStorageData = $this->utilEncodingService->decodeJson($merchantOpeningHoursStorageDatum, true);
+            if (!is_array($merchantOpeningHoursStorageData)) {
+                continue;
+            }
+
+            $merchantOpeningHoursStorageTransfers[$this->getIdMerchant($storageKey)] = $this->merchantOpeningHoursMapper
+                ->mapMerchantOpeningHoursStorageDataToMerchantOpeningHoursStorageTransfer(
+                    $merchantOpeningHoursStorageData,
+                    new MerchantOpeningHoursStorageTransfer()
+                );
+        }
+
+        return $merchantOpeningHoursStorageTransfers;
+    }
+
+    /**
+     * @param string $storageKey
+     *
+     * @return int
+     */
+    protected function getIdMerchant(string $storageKey): int
+    {
+        $storageKeyArray = explode(':', $storageKey);
+
+        return (int)end($storageKeyArray);
+    }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return string[]
+     */
+    protected function generateKeys(array $merchantIds): array
+    {
+        $merchantOpeningHoursStorageKeys = [];
+        foreach ($merchantIds as $idMerchant) {
+            $merchantOpeningHoursStorageKeys[] = $this->generateKey($idMerchant);
+        }
+
+        return $merchantOpeningHoursStorageKeys;
     }
 
     /**

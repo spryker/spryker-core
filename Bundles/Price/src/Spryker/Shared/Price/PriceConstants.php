@@ -13,7 +13,7 @@ namespace Spryker\Shared\Price;
 interface PriceConstants
 {
     /**
-     * @deprecated Use \Spryker\Shared\PriceProduct\PriceProductConfig instead.
+     * @deprecated Use {@link \Spryker\Shared\PriceProduct\PriceProductConfig} instead.
      */
     public const DEFAULT_PRICE_TYPE = 'DEFAULT_PRICE_TYPE';
 }

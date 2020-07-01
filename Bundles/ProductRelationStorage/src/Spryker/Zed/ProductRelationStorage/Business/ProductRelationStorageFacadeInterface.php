@@ -19,7 +19,13 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationStoreEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationPublishingEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
+     *   instead.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -32,7 +38,13 @@ interface ProductRelationStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationStoreEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationPublishingEvents()},
+     *   {@link \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface::writeCollectionByProductRelationProductAbstractEvents()}
+     *   instead.
+     *
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

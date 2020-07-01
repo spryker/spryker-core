@@ -1,0 +1,34 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Navigation removal confirmation' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title 'Delete Navigation' | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <span>{{ 'Are you sure about deleting this navigation?' | trans }}</span>
+                </div>
+            </div>
+            <hr/>
+            <ul class="list-inline m-b-none">
+                <li>
+                    <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'No, I want to keep this navigation' | trans }}</a>
+                </li>
+                <li>
+                    {{ form_start(deleteNavigationForm) }}
+                    {{ form_widget(deleteNavigationForm.submit) }}
+                    {{ form_end(deleteNavigationForm) }}
+                </li>
+            </ul>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

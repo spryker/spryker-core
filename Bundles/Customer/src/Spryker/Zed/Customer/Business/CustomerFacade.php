@@ -10,12 +10,14 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerBusinessFactory getFactory()
@@ -461,7 +463,7 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderCustomer() instead
+     * @deprecated Use {@link saveOrderCustomer()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -582,5 +584,38 @@ class CustomerFacade extends AbstractFacade implements CustomerFacadeInterface
     public function getAllSalutations(): array
     {
         return $this->getRepository()->getAllSalutations();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer {
+        return $this->getRepository()->getCustomerCollectionByCriteria($customerCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void {
+        $this->getFactory()
+            ->createCustomer()->sendPasswordRestoreMailForCustomerCollection($customerCollectionTransfer, $output);
     }
 }

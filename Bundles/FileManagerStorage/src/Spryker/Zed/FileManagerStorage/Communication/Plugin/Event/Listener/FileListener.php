@@ -10,7 +10,7 @@ namespace Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener;
 use Spryker\Zed\FileManager\Dependency\FileManagerEvents;
 
 /**
- * @deprecated Use `\Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FilePublishListener` and `\Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FilePublishListener} and `\Spryker\Zed\FileManagerStorage\Communication\Plugin\Event\Listener\FileUnpublishListener` instead.
  *
  * @method \Spryker\Zed\FileManagerStorage\Communication\FileManagerStorageCommunicationFactory getFactory()
  */

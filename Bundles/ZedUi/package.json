@@ -4,13 +4,12 @@
     "scripts": {
         "ng": "ng",
         "start": "ng serve",
-        "build": "ng build --prod",
+        "build": "ng build --prod && npm run postbuild",
         "postbuild": "run-s copy:*",
         "copy:build": "copyfiles -u 1 dist/**/* $FE_ROOT_DIR/public/Zed/assets/js/zed-ui",
         "copy:reset": "copyfiles -u 7 src/Spryker/Zed/ZedUi/Presentation/Components/assets/**/*.css $FE_ROOT_DIR/public/Zed/assets/css",
         "test": "ng test",
-        "lint": "ng lint",
-        "postinstall": "ngcc --properties es2015 browser module main --first-only --create-ivy-entry-points || exit 0"
+        "lint": "ng lint"
     },
     "private": true,
     "dependencies": {
@@ -24,15 +23,16 @@
         "@angular/platform-browser": "^9.0.1",
         "@angular/platform-browser-dynamic": "^9.0.1",
         "@angular/router": "^9.0.1",
-        "@spryker/header": "^0.1.0-next.8",
-        "@spryker/icon": "^0.1.0-next.10",
-        "@spryker/layout": "^0.1.0-next.7",
-        "@spryker/logo": "^0.1.0-next.6",
-        "@spryker/navigation": "^0.1.0-next.9",
-        "@spryker/notification": "^0.1.0-next.5",
-        "@spryker/sidebar": "^0.1.0-next.12",
-        "@spryker/styles": "^0.1.0-next.36",
-        "@spryker/utils": "^0.1.0-next.10",
+        "@spryker/header": "^0.1.0-next.9",
+        "@spryker/icon": "^0.1.0-next.15",
+        "@spryker/layout": "^0.1.0-next.8",
+        "@spryker/locale": "^0.1.0-next.7",
+        "@spryker/logo": "^0.1.0-next.7",
+        "@spryker/navigation": "^0.1.0-next.10",
+        "@spryker/notification": "^0.1.0-next.7",
+        "@spryker/sidebar": "^0.1.0-next.13",
+        "@spryker/styles": "^0.1.0-next.60",
+        "@spryker/utils": "^0.1.0-next.16",
         "@spryker/web-components": "^0.2.0-next.2",
         "@webcomponents/webcomponentsjs": "^2.4.1",
         "classlist.js": "^1.1.20150312",
@@ -66,6 +66,6 @@
         "protractor": "^5.4.3",
         "ts-node": "^8.3.0",
         "tslint": "^5.18.0",
-        "typescript": "^3.7.5"
+        "typescript": "~3.8.3"
     }
 }

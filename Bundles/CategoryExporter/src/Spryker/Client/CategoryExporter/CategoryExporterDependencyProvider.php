@@ -33,9 +33,9 @@ class CategoryExporterDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
+        });
 
         return $container;
     }

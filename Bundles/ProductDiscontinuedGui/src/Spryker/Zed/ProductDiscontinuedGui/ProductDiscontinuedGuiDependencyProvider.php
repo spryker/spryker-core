@@ -38,9 +38,9 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductDiscontinuedFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedGuiToProductDiscontinuedFacadeBridge($container->getLocator()->productDiscontinued()->facade());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class ProductDiscontinuedGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscontinuedGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

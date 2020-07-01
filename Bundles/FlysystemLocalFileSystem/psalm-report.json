@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FlysystemLocalFileSystem/src/Spryker/Service/FlysystemLocalFileSystem/Model/Builder/Adapter/LocalAdapterBuilder.php",
+            "snippet": "            $this->adapterConfig->getRoot(),",
+            "selected_text": "$this->adapterConfig->getRoot()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 4 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/FlysystemLocalFileSystem/src/Spryker/Service/FlysystemLocalFileSystem/Model/Builder/Adapter/LocalAdapterBuilder.php",
+            "snippet": "            $this->adapterConfig->getPath()",
+            "selected_text": "$this->adapterConfig->getPath()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

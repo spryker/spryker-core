@@ -36,9 +36,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductDecisionPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_DECISION] = function () {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_DECISION, function () {
             return $this->getPriceProductDecisionPlugins();
-        };
+        });
 
         return $container;
     }

@@ -31,6 +31,6 @@ class AclRoleListCest
     public function breadcrumbIsVisible(AclCommunicationTester $i): void
     {
         $i->amOnPage(AclRoleListPage::URL);
-        $i->seeBreadcrumbNavigation('Users Control / Roles');
+        $i->seeBreadcrumbNavigation('Users / User Roles');
     }
 }

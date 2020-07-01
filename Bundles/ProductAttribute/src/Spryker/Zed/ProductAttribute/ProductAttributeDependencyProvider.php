@@ -53,9 +53,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilEncodingService($container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductAttributeToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -67,9 +67,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAttributeToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -81,9 +81,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addGlossaryFacade(Container $container)
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductAttributeToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class ProductAttributeDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAttributeToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }

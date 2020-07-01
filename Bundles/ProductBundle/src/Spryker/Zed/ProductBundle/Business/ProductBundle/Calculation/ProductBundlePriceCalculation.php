@@ -64,7 +64,7 @@ class ProductBundlePriceCalculation implements ProductBundlePriceCalculationInte
      *
      * @return void
      */
-    protected function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer)
+    public function calculateBundleAmounts(ItemTransfer $bundleItemTransfer, ItemTransfer $itemTransfer): void
     {
         $this->addPrice($bundleItemTransfer, $itemTransfer);
         $this->addNetPrice($bundleItemTransfer, $itemTransfer);

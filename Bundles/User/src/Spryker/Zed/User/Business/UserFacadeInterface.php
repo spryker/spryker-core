@@ -61,7 +61,7 @@ interface UserFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::findUser()} instead.
+     * @deprecated Use {@link findUser()} instead.
      *
      * @param int $idUser
      *
@@ -94,7 +94,7 @@ interface UserFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\User\Business\UserFacadeInterface::createUser instead.
+     * @deprecated Use {@link \Spryker\Zed\User\Business\UserFacadeInterface::createUser()} instead.
      *
      * @param string $firstName
      * @param string $lastName

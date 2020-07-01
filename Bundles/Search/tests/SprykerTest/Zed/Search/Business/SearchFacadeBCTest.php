@@ -138,8 +138,6 @@ class SearchFacadeBCTest extends Unit
      */
     public function testDeleteDeletesAnIndex(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $index = $this->tester->haveIndex(static::INDEX_NAME);
 

@@ -56,7 +56,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTaxRateForm()` instead.
+     * @deprecated Use {@link getTaxRateForm()} instead.
      *
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
      *
@@ -96,7 +96,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTaxSetForm()` instead.
+     * @deprecated Use {@link getTaxSetForm()} instead.
      *
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
      *

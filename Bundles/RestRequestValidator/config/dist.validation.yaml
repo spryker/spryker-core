@@ -11,4 +11,4 @@ access-tokens:
 refresh-tokens:
   post:
     refresh_token:
-    - Required
+      - NotBlank

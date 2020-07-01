@@ -10,7 +10,7 @@ namespace Spryker\Zed\Messenger\Dependency\Plugin;
 use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface as ExtensionTranslationPluginInterface;
 
 /**
- * @deprecated Use Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\MessengerExtension\Dependency\Plugin\TranslationPluginInterface} instead.
  */
 interface TranslationPluginInterface extends ExtensionTranslationPluginInterface
 {

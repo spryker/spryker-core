@@ -78,6 +78,7 @@ class TriggerController extends AbstractController
         $idOrder = $this->castId($request->query->getInt(static::REQUEST_PARAMETER_ID_SALES_ORDER));
         $event = $request->query->get(static::REQUEST_PARAMETER_EVENT);
         $redirect = $request->query->get(static::REQUEST_PARAMETER_REDIRECT, '/');
+        /** @var array $itemsList */
         $itemsList = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
 
         $orderItems = $this->getOrderItemsToTriggerAction($idOrder, $itemsList);
@@ -145,8 +146,9 @@ class TriggerController extends AbstractController
      */
     protected function getRequestIdSalesOrderItems(Request $request): array
     {
+        /** @var array|null $idOrderItems */
         $idOrderItems = $request->query->get(static::REQUEST_PARAMETER_ITEMS);
-        if (is_array($idOrderItems) === false) {
+        if (!is_array($idOrderItems)) {
             $idOrderItems = [];
         }
 

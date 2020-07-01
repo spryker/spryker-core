@@ -17,4 +17,11 @@ interface ProductOptionExpanderInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderProductBundlesWithProductOptions(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array;
 }

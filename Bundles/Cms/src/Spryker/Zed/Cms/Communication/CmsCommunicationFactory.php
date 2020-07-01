@@ -95,7 +95,7 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use getTemplateRealPaths() instead.
+     * @deprecated Use {@link getTemplateRealPaths()} instead.
      *
      * @param string $templateRelativePath
      *

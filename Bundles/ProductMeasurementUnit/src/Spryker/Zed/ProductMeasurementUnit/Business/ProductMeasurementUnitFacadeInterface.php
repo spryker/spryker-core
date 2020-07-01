@@ -151,11 +151,25 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::expandOrderItemsWithQuantitySalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with quantity sales unit if applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithQuantitySalesUnit(array $itemTransfers): array;
 
     /**
      * Specification:

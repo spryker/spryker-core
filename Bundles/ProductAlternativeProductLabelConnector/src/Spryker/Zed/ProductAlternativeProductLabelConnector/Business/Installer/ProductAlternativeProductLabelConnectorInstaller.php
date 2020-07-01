@@ -67,6 +67,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
             $productLabelTransfer = new ProductLabelTransfer();
             $productLabelTransfer->setName($this->config->getProductAlternativesLabelName());
             $productLabelTransfer->setFrontEndReference($this->config->getProductAlternativesLabelFrontEndReference());
+            $productLabelTransfer->setPosition($this->config->getProductLabelDefaultPosition());
 
             $this->addDataToProductLabelTransfer($productLabelTransfer);
             $this->productLabelFacade->createLabel(
@@ -93,6 +94,7 @@ class ProductAlternativeProductLabelConnectorInstaller implements ProductAlterna
         $productLabelTransfer
             ->setIsActive(true)
             ->setIsExclusive(false)
+            ->setIsDynamic(true)
             ->setIsPublished(true);
 
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {

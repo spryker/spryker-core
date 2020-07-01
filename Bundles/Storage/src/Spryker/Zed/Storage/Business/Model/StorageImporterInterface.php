@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Storage\Business\Model;
 
 /**
- * @deprecated Use `Spryker\Zed\Redis\Business\Import\RedisImporterInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\Redis\Business\Import\RedisImporterInterface} instead.
  */
 interface StorageImporterInterface
 {

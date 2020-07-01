@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Spryker\Zed\Oms\Business\Lock\LockerInterface;
 
 class LockedOrderStateMachine implements OrderStateMachineInterface
@@ -74,12 +75,13 @@ class LockedOrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = [])
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null)
     {
-        return $this->stateMachine->checkConditions($logContext);
+        return $this->stateMachine->checkConditions($logContext, $omsCheckConditionsQueryCriteriaTransfer);
     }
 
     /**

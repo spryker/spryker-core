@@ -38,9 +38,9 @@ class CompanyUserAgentDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyUserAgentToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }

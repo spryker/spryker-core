@@ -10,6 +10,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 use DateTime;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -32,6 +33,7 @@ use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
 use Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer implements CustomerInterface
@@ -946,5 +948,32 @@ class Customer implements CustomerInterface
         }
 
         return $customerResponseTransfer->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void {
+        $customersCount = $customerCollectionTransfer->getCustomers()->count();
+        foreach ($customerCollectionTransfer->getCustomers() as $index => $customer) {
+            $this->sendPasswordRestoreMail($customer);
+
+            if (!$output) {
+                continue;
+            }
+
+            $output->write(sprintf(
+                "%d out of %d emails sent \r%s",
+                ++$index,
+                $customersCount,
+                $index === $customersCount ? PHP_EOL : ''
+            ));
+        }
     }
 }

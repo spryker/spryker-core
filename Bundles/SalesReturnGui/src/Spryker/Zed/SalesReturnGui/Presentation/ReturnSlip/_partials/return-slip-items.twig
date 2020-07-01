@@ -1,0 +1,42 @@
+{% set returnItems = returnItemGroup | filter(returnItem => not (returnItem.orderItem.productBundle or returnItem.orderItem.salesOrderConfiguredBundle)) %}
+
+{% for returnItem in returnItems %}
+    {% set orderItem = returnItem.orderItem %}
+    {% set hasProductOptions = orderItem.productOptions | length %}
+    {% set noBottomBorderClass = hasProductOptions ? 'no-bottom-border' %}
+
+    <tr>
+        <td class="{{ noBottomBorderClass }}">{{ barcode(returnItem.orderItem.sku) }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sku }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.name }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ (returnItem.orderItem.sumPrice - returnItem.orderItem.sumDiscountAmountFullAggregation) | money(true, currencyIsoCode) }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.quantity }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.orderItem.sumPriceToPayAggregation | money(true, currencyIsoCode) }}</td>
+        <td class="{{ noBottomBorderClass }}">{{ returnItem.reason ?? '--' }}</td>
+    </tr>
+
+    {% for productOption in orderItem.productOptions %}
+        {% set noBottomBorderClass = not loop.last ? 'no-bottom-border' %}
+        {% set firstProductOptionClass = loop.first ? 'product-option--first' %}
+
+        <tr>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+                {% if loop.first %}
+                    <hr>
+                {% endif %}
+                {{ productOption.value }}
+            </td>
+            <td class="no-top-border {{ noBottomBorderClass }} product-option {{ firstProductOptionClass }}">
+                {% if loop.first %}
+                    <hr>
+                {% endif %}
+                {{ productOption.unitPrice | money(true, orderItem.currencyIsoCode) }}
+            </td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+            <td class="no-top-border {{ noBottomBorderClass }}"></td>
+        </tr>
+    {% endfor %}
+{% endfor %}

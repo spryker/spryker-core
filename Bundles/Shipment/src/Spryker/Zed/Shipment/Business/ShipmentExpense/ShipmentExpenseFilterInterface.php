@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Shipment\Business\ShipmentExpense;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Business\ShipmentExpense\MultiShipmentExpenseFilterInterface} instead.
  */
 interface ShipmentExpenseFilterInterface extends MultiShipmentExpenseFilterInterface
 {

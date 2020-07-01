@@ -15,7 +15,7 @@ class MonitoringConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return mixed
+     * @return string[]
      */
     public function getIgnorableTransactions()
     {

@@ -37,7 +37,7 @@ class CategoryPageDataLoaderPlugin extends AbstractPlugin implements ProductPage
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer[] $payloadTransfers
      *
      * @return array

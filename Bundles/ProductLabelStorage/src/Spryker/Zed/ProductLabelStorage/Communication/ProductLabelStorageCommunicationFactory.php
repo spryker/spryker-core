@@ -8,12 +8,15 @@
 namespace Spryker\Zed\ProductLabelStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductLabelStorage\ProductLabelStorageConfig getConfig()
  * @method \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface getRepository()
  */
 class ProductLabelStorageCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -23,5 +26,13 @@ class ProductLabelStorageCommunicationFactory extends AbstractCommunicationFacto
     public function getEventBehaviorFacade()
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface
+     */
+    public function getProductLabelFacade(): ProductLabelStorageToProductLabelFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_PRODUCT_LABEL);
     }
 }

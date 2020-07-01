@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/customer": "^7.23.0",
-    "spryker/gui": "^3.26.0",
+    "spryker/gui": "^3.31.0",
     "spryker/kernel": "^3.33.0",
     "spryker/sales": "^11.4.0",
     "spryker/shipment": "^8.0.0",

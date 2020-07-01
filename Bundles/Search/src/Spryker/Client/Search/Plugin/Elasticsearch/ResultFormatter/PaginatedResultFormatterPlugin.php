@@ -11,7 +11,7 @@ use Elastica\ResultSet;
 use Generated\Shared\Transfer\PaginationSearchResultTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFormatterPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\PaginatedResultFormatterPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

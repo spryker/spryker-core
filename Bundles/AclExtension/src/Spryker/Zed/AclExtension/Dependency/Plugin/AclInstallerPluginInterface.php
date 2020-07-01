@@ -9,7 +9,7 @@ namespace Spryker\Zed\AclExtension\Dependency\Plugin;
 
 /**
  * Specification:
- * - Executed by AclFacade::install().
+ * - Executed by @link \Spryker\Zed\Acl\Business\AclFacadeInterface::install()}.
  * - Provides required for project ACL Roles and Groups.
  */
 interface AclInstallerPluginInterface

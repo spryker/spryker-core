@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Business\Writer;
 interface GlossaryTranslationStorageWriterInterface
 {
     /**
-     * @deprecated Use `\Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface::writeGlossaryStorageCollectionByGlossaryKeyEvents()` instead
+     * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Business\Writer\GlossaryTranslationStorageWriterInterface::writeGlossaryStorageCollectionByGlossaryKeyEvents()} instead
      *
      * @param array $glossaryKeyIds
      *

@@ -1,0 +1,55 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductsRestApi\\Dependency\\Client\\ProductsRestApiToProductStorageClientInterface::findProductAbstractStorageData cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/AbstractProducts/Storage/ProductAbstractRestUrlResolverAttributesReader.php",
+            "snippet": "            $urlStorageTransfer->getFkResourceProductAbstract(),",
+            "selected_text": "$urlStorageTransfer->getFkResourceProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/ProductsRestApiDependencyProvider.php",
+            "snippet": "            return new ProductsRestApiToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/ProductsRestApiDependencyProvider.php",
+            "snippet": "            return new ProductsRestApiToGlossaryStorageClientBridge($container->getLocator()->glossaryStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Glue\\ProductsRestApi\\Processor\\AbstractProducts\\AbstractProductsReader::addConcreteProducts has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsRestApi/src/Spryker/Glue/ProductsRestApi/Processor/AbstractProducts/AbstractProductsReader.php",
+            "snippet": "        $restResource = $this->addConcreteProducts($restResource, $restRequest);",
+            "selected_text": "addConcreteProducts",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

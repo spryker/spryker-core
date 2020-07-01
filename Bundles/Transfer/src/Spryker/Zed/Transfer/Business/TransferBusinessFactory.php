@@ -183,7 +183,7 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createTransferGeneratedDirectory() instead
+     * @deprecated Use {@link createTransferGeneratedDirectory()} instead
      *
      * @return \Spryker\Zed\Transfer\Business\Model\TransferCleanerInterface
      */
@@ -195,8 +195,8 @@ class TransferBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createDataTransferGeneratedDirectory()` instead to manipulate regular transfers.
-     * @deprecated Use `Spryker\Zed\Transfer\Business\TransferBusinessFactory::createEntityTransferGeneratedDirectory()` instead to manipulate entity transfers.
+     * @deprecated Use {@link \Spryker\Zed\Transfer\Business\TransferBusinessFactory::createDataTransferGeneratedDirectory()} instead to manipulate regular transfers.
+     * @deprecated Use {@link \Spryker\Zed\Transfer\Business\TransferBusinessFactory::createEntityTransferGeneratedDirectory()} instead to manipulate entity transfers.
      *
      * @return \Spryker\Zed\Transfer\Business\Model\GeneratedTransferDirectoryInterface
      */

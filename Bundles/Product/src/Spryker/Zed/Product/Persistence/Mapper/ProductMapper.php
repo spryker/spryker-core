@@ -149,7 +149,7 @@ class ProductMapper implements ProductMapperInterface
     ): ProductConcreteTransfer {
         $productConcreteTransfer->fromArray($productEntity->toArray(), true);
 
-        $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes());
+        $attributes = $this->utilEncodingService->decodeJson($productEntity->getAttributes(), true);
         $productConcreteTransfer->setAttributes(is_array($attributes) ? $attributes : []);
 
         $productConcreteTransfer->setIdProductConcrete($productEntity->getIdProduct());

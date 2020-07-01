@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class IndexController extends AbstractController
 {
@@ -27,9 +28,11 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createProductTable();
 
-        return $this->viewResponse([
+        $viewData = $this->executeProductAbstractListActionViewDataExpanderPlugins([
             'productTable' => $productTable->render(),
         ]);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -44,5 +47,19 @@ class IndexController extends AbstractController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeProductAbstractListActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getProductAbstractListActionViewDataExpanderPlugins() as $productAbstractListActionViewDataExpanderPlugin) {
+            $viewData = $productAbstractListActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

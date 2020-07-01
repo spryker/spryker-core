@@ -9,7 +9,7 @@
     "spryker/category": "^4.3.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/event-behavior": "^1.10.0",
-    "spryker/kernel": "^3.33.0",
+    "spryker/kernel": "^3.49.0",
     "spryker/locale": "^3.3.0",
     "spryker/price": "^5.3.0",
     "spryker/price-product": "^1.1.0 || ^2.8.0 || ^4.0.0",

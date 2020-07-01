@@ -22,9 +22,9 @@ class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleD
      */
     public function provideDependencies(Container $container)
     {
-        $container[static::PRODUCT_CLIENT] = function (Container $container) {
+        $container->set(static::PRODUCT_CLIENT, function (Container $container) {
             return new CmsContentWidgetProductConnectorToProductBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }

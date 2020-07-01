@@ -132,7 +132,7 @@ class ProductOptionBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createProductOptionTaxRateWithItemShipmentTaxRateCalculator() instead.
+     * @deprecated Use {@link createProductOptionTaxRateWithItemShipmentTaxRateCalculator()} instead.
      *
      * @return \Spryker\Zed\ProductOption\Business\Calculator\CalculatorInterface
      */

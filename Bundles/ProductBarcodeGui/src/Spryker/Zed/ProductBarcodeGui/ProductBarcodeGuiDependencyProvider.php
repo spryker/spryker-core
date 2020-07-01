@@ -37,11 +37,11 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductBarcodeFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BARCODE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BARCODE, function (Container $container) {
             return new ProductBarcodeGuiToProductBarcodeFacadeBridge(
                 $container->getLocator()->productBarcode()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -53,11 +53,11 @@ class ProductBarcodeGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductBarcodeGuiToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }

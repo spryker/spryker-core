@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver as BaseProductOptionOrderSaver;
 
 /**
- * @deprecated Use Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver instead
+ * @deprecated Use {@link \Spryker\Zed\ProductOption\Business\PlaceOrder\ProductOptionOrderSaver} instead
  */
 class ProductOptionOrderSaver extends BaseProductOptionOrderSaver implements ProductOptionOrderSaverInterface
 {

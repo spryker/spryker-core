@@ -93,9 +93,9 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_CMS_BLOCK, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_CMS_BLOCK, $container->factory(function () {
             return SpyCmsBlockQuery::create();
-        });
+        }));
 
         return $container;
     }

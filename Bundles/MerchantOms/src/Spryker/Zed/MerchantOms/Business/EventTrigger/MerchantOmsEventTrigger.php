@@ -8,9 +8,12 @@
 namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface;
+use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 
 class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
@@ -26,15 +29,23 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
     protected $stateMachineProcessReader;
 
     /**
+     * @var \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface
+     */
+    protected $merchantSalesOrderFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface $stateMachineFacade
      * @param \Spryker\Zed\MerchantOms\Business\StateMachineProcess\StateMachineProcessReaderInterface $stateMachineProcessReader
+     * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface $merchantSalesOrderFacade
      */
     public function __construct(
         MerchantOmsToStateMachineFacadeInterface $stateMachineFacade,
-        StateMachineProcessReaderInterface $stateMachineProcessReader
+        StateMachineProcessReaderInterface $stateMachineProcessReader,
+        MerchantOmsToMerchantSalesOrderFacadeInterface $merchantSalesOrderFacade
     ) {
         $this->stateMachineFacade = $stateMachineFacade;
         $this->stateMachineProcessReader = $stateMachineProcessReader;
+        $this->merchantSalesOrderFacade = $merchantSalesOrderFacade;
     }
 
     /**
@@ -85,6 +96,50 @@ class MerchantOmsEventTrigger implements MerchantOmsEventTriggerInterface
         );
 
         return $transitionCount ?? 0;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer
+     */
+    public function triggerEventForMerchantOrderItem(
+        MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+    ): MerchantOmsTriggerResponseTransfer {
+        $merchantOmsTriggerRequestTransfer->requireMerchantOrderItemReference();
+        $merchantOmsTriggerRequestTransfer->requireMerchantOmsEventName();
+
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setMerchantOrderItemReference($merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference());
+
+        $merchantOmsTriggerResponseTransfer = new MerchantOmsTriggerResponseTransfer();
+
+        $merchantOrderItemTransfer = $this->merchantSalesOrderFacade->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
+
+        if (!$merchantOrderItemTransfer) {
+            return $merchantOmsTriggerResponseTransfer->setIsSuccessful(false)
+                ->setMessage(sprintf(
+                    'Merchant order item with reference "%s" was not found.',
+                    $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference()
+                ));
+        }
+
+        $transitionedItemsCount = $this->triggerEventForMerchantOrderItems(
+            (new MerchantOmsTriggerRequestTransfer())
+                ->setMerchantOmsEventName($merchantOmsTriggerRequestTransfer->getMerchantOmsEventName())
+                ->addMerchantOrderItem($merchantOrderItemTransfer)
+        );
+
+        if (!$transitionedItemsCount) {
+            return $merchantOmsTriggerResponseTransfer->setIsSuccessful(false)
+                ->setMessage(sprintf(
+                    'Event "%s" was not successfully triggered for merchant order item with reference "%s".',
+                    $merchantOmsTriggerRequestTransfer->getMerchantOmsEventName(),
+                    $merchantOmsTriggerRequestTransfer->getMerchantOrderItemReference()
+                ));
+        }
+
+        return $merchantOmsTriggerResponseTransfer->setIsSuccessful(true)->setMessage('Success.');
     }
 
     /**

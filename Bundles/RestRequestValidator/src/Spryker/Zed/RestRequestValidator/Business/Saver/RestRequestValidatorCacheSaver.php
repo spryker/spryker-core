@@ -44,7 +44,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
-     * @deprecated Use saveCacheForCodeBucket() instead.
+     * @deprecated Use {@link saveCacheForCodeBucket()} instead.
      *
      * @param array $validatorConfig
      * @param string $storeName
@@ -80,7 +80,7 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
-     * @deprecated Use getCodeBucketCacheFilePath() instead.
+     * @deprecated Use {@link getCodeBucketCacheFilePath()} instead.
      *
      * @param string $storeName
      *
