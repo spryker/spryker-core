@@ -31,10 +31,6 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
             return;
         }
 
-        if (!Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false)) {
-            return;
-        }
-
         $redirectUrl = $response->headers->get(static::HTTP_HEADER_LOCATION);
         $domain = (string)parse_url($redirectUrl, PHP_URL_HOST);
 
@@ -58,6 +54,12 @@ class RedirectUrlValidator implements RedirectUrlValidatorInterface
             return true;
         }
 
-        return in_array($domain, Config::get(KernelConstants::DOMAIN_WHITELIST, []), true);
+        $allowedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
+
+        if (empty($allowedDomains)) {
+            return !Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
+        }
+
+        return in_array($domain, $allowedDomains, true);
     }
 }
