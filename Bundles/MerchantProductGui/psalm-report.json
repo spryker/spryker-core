@@ -1,0 +1,56 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "UndefinedClass",
+            "message": "Class or interface Orm\\Zed\\MerchantProduct\\Persistence\\Map\\SpyMerchantProductAbstractTableMap does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductGui/src/Spryker/Zed/MerchantProductGui/Persistence/MerchantProductGuiRepository.php",
+            "snippet": "                    ->setCondition(SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT . sprintf(' = %d', $merchantProductCriteriaTransfer->getIdMerchant()))",
+            "selected_text": "SpyMerchantProductAbstractTableMap",
+            "error_level": -1,
+            "shortcode": 19
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::merchantProduct does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductGui/src/Spryker/Zed/MerchantProductGui/MerchantProductGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantProduct()->facade()",
+            "selected_text": "merchantProduct",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductGui/src/Spryker/Zed/MerchantProductGui/Persistence/MerchantProductGuiRepository.php",
+            "snippet": "                    ->setCondition(SpyMerchantProductAbstractTableMap::COL_FK_MERCHANT . sprintf(' = %d', $merchantProductCriteriaTransfer->getIdMerchant()))",
+            "selected_text": "$merchantProductCriteriaTransfer->getIdMerchant()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Service\\Container\\Container::offsetGet has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductGui/src/Spryker/Zed/MerchantProductGui/Communication/MerchantProductGuiCommunicationFactory.php",
+            "snippet": "        return $this->getApplication()['request'];",
+            "selected_text": "$this->getApplication()",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}
