@@ -90,4 +90,30 @@ class OmsConfig extends AbstractBundleConfig
     {
         return 'new';
     }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckTimeoutsQueryLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckConditionsQueryLimit(): ?int
+    {
+        return null;
+    }
 }
