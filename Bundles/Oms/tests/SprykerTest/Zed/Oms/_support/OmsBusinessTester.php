@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\Oms;
 
 use Codeception\Actor;
 use Codeception\Stub;
+use DateInterval;
+use DateTime;
 use Exception;
 use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -16,7 +18,9 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\Collection\ObjectCollection;
 use ReflectionClass;
@@ -104,6 +108,75 @@ class OmsBusinessTester extends Actor
             ->setStore($storeTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $eventName
+     * @param string $stateName
+     * @param int $orderItemsAmount
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function createOrderWithExpiredEventTimeoutOrderItemsForStore(
+        string $storeName,
+        string $eventName,
+        string $stateName,
+        int $orderItemsAmount
+    ): SpySalesOrder {
+        $dateTime = new DateTime('now');
+        $dateTime->sub(DateInterval::createFromDateString('1 day'));
+        $processName = 'DummyPayment01';
+        $salesOrderTransferDE = $this->haveOrder([], $processName);
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
+        $salesOrderEntity->setStore($storeName)->save();
+
+        $salesOrderItemDefaults = [
+            'state' => $stateName,
+            'process' => $processName,
+        ];
+        for ($i = 0; $i < $orderItemsAmount; $i++) {
+            $salesOrderItemEntity = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), $salesOrderItemDefaults);
+            $omsOrderItemStateEntity = $this->haveOmsOrderItemStateEntity($stateName);
+            $omsEventTimeoutEntity = $this->haveOmsEventTimeoutEntity([
+                'fk_sales_order_item' => $salesOrderItemEntity->getIdSalesOrderItem(),
+                'fk_oms_order_item_state' => $omsOrderItemStateEntity->getIdOmsOrderItemState(),
+                'event' => $eventName,
+                'timeout' => $dateTime,
+            ]);
+            $salesOrderItemEntity->addEventTimeout($omsEventTimeoutEntity);
+            $salesOrderItemEntity->setState($omsOrderItemStateEntity);
+            $salesOrderEntity->addItem($salesOrderItemEntity);
+        }
+
+        return $salesOrderEntity;
+    }
+
+    /**
+     * @param string $storeName
+     * @param string $stateName
+     * @param string $processName
+     * @param int $orderItemsAmount One spy_sales_order_item is added always by the {@link \SprykerTest\Zed\Oms\_generated\OmsBusinessTesterActions::haveOrder()} method.
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
+     */
+    public function createOrderWithOrderItemsInStateAndProcessForStore(
+        string $storeName,
+        string $stateName,
+        string $processName,
+        int $orderItemsAmount = 0
+    ): SpySalesOrder {
+        $salesOrderTransferDE = $this->haveOrder([], $processName);
+        $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
+        $salesOrderEntity->setStore($storeName)->save();
+
+        for ($i = 0; $i < $orderItemsAmount; $i++) {
+            $salesOrderItemEntity = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), ['state' => $stateName, 'process' => $processName]);
+            $salesOrderEntity->addItem($salesOrderItemEntity);
+            $this->haveOmsOrderItemStateEntity($stateName);
+        }
+
+        return $salesOrderEntity;
     }
 
     /**
