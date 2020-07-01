@@ -81,7 +81,7 @@ cancel-return,"Cancel return"
 ship-return,"Send return back to customer"
 delivery-return,"Deliver return back to customer"
 cancel,Cancel
-skip-timeout,"Skip timeout"
+"skip timeout","Skip timeout"
 "Cancelled amount","Cancelled amount"
 "Comment successfully added","Comment successfully added."
 "Address Details","Address Details"

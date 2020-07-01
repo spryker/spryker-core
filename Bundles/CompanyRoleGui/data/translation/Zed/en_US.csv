@@ -25,3 +25,4 @@ Roles,Roles
 "Company role has been successfully updated","Company role has been successfully updated"
 "Delete company role","Delete company role"
 "Company role has been successfully removed","Company role has been successfully removed"
+"You can not delete a default role, please set another default role before delete action","You can not delete a default role, please set another default role before delete action."

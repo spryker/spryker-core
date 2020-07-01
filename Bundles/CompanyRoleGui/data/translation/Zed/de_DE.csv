@@ -25,3 +25,4 @@ Roles,Rollen
 "Company role has been successfully updated","Rolle wurde erfolgreich aktualisiert"
 "Delete company role","Rolle löschen"
 "Company role has been successfully removed","Rolle wurde erfolgreich gelöscht"
+"You can not delete a default role, please set another default role before delete action","Sie können eine Standardrolle nicht löschen. Bitte  eine andere Standardrolle vor dem Löschen setzen."
