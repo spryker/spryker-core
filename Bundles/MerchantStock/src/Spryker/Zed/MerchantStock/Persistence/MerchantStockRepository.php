@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\MerchantStock\Persistence\Exception\DefaultMerchantStockNotFoundException;
 
 /**
  * @method \Spryker\Zed\MerchantStock\Persistence\MerchantStockPersistenceFactory getFactory()
@@ -42,5 +43,34 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
         }
 
         return $stockCollectionTransfer;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @throws \Spryker\Zed\MerchantStock\Persistence\Exception\DefaultMerchantStockNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function getDefaultMerchantStock(int $idMerchant): StockTransfer
+    {
+        $merchantStockEntity = $this->getFactory()
+            ->createMerchantStockPropelQuery()
+            ->leftJoinWithSpyStock()
+            ->filterByFkMerchant($idMerchant)
+            ->filterByIsDefault(true)
+            ->findOne();
+
+        if (!$merchantStockEntity) {
+            throw new DefaultMerchantStockNotFoundException(sprintf(
+                'Default Merchant stock not found by Merchant ID `%s`',
+                $idMerchant
+            ));
+        }
+
+        return $this->getFactory()->createMerchantStockMapper()->mapStockEntityToStockTransfer(
+            $merchantStockEntity->getSpyStock(),
+            new StockTransfer()
+        );
     }
 }

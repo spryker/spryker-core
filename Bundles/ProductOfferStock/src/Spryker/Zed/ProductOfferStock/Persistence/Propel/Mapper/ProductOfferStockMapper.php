@@ -8,7 +8,9 @@
 namespace Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
+use Orm\Zed\Stock\Persistence\SpyStock;
 
 class ProductOfferStockMapper
 {
@@ -23,7 +25,39 @@ class ProductOfferStockMapper
         ProductOfferStockTransfer $productOfferStockTransfer
     ): ProductOfferStockTransfer {
         $productOfferStockTransfer->fromArray($productOfferStockEntity->toArray(), true);
+        $productOfferStockTransfer->setIdProductOffer($productOfferStockEntity->getFkProductOffer());
+        $productOfferStockTransfer->setStock(
+            $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer())
+        );
 
         return $productOfferStockTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
+     * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity
+     *
+     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock
+     */
+    public function mapProductOfferStockTransferToProductOfferStockEntity(
+        ProductOfferStockTransfer $productOfferStockTransfer,
+        SpyProductOfferStock $productOfferStockEntity
+    ): SpyProductOfferStock {
+        $productOfferStockEntity->fromArray($productOfferStockTransfer->toArray(false));
+        $productOfferStockEntity->setFkProductOffer($productOfferStockTransfer->getIdProductOffer());
+        $productOfferStockEntity->setFkStock($productOfferStockTransfer->getStock()->getIdStock());
+
+        return $productOfferStockEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\Stock\Persistence\SpyStock $stockEntity
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    protected function mapStockEntityToStockTransfer(SpyStock $stockEntity, StockTransfer $stockTransfer): StockTransfer
+    {
+        return $stockTransfer->fromArray($stockEntity->toArray(), true);
     }
 }

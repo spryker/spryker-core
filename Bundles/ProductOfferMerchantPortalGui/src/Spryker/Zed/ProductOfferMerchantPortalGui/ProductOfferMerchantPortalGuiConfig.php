@@ -38,7 +38,7 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
      */
     public function getTableDefaultPageSize(): int
     {
-        return 10;
+        return 25;
     }
 
     /**

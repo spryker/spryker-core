@@ -110,6 +110,7 @@ class ProductTableDataProvider extends AbstractTableDataProvider
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
             $productTableDataArray[] = [
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductTable::COL_KEY_SKU => $productConcreteTransfer->getSku(),
                 ProductTable::COL_KEY_NAME => $this->productNameBuilder->buildProductName($productConcreteTransfer),
                 ProductTable::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),

@@ -32,19 +32,19 @@ abstract class AbstractTable
     protected const CONFIG_PAGINATION = 'pagination';
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
+    protected const CONFIG_ROW_ACTIONS_CLICK = 'click';
     protected const CONFIG_SEARCH = 'search';
     protected const CONFIG_COLUMN_CONFIGURATOR = 'columnConfigurator';
     protected const CONFIG_ITEM_SELECTION = 'itemselection';
     protected const CONFIG_SYNC_STATE_URL = 'syncStateUrl';
     protected const CONFIG_ENABLED = 'enabled';
     protected const CONFIG_ACTIONS = 'actions';
-    protected const CONFIG_SIZES = 'sizes';
+    protected const CONFIG_PAGE_SIZES = 'sizes';
     protected const CONFIG_ITEMS = 'items';
 
     public const COLUMN_TYPE_TEXT = 'text';
     public const COLUMN_TYPE_IMAGE = 'image';
     public const COLUMN_TYPE_DATE = 'date';
-    public const COLUMN_TYPE_DATE_RANGE = 'date_range';
     public const COLUMN_TYPE_CHIP = 'chip';
     public const COLUMN_TYPE_LIST = 'list';
 
@@ -126,7 +126,7 @@ abstract class AbstractTable
 
         return [
             static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsPaginationEnabled() ?? true,
-            static::CONFIG_SIZES => $sizes,
+            static::CONFIG_PAGE_SIZES => $sizes,
         ];
     }
 
@@ -164,6 +164,7 @@ abstract class AbstractTable
 
         return [
             static::CONFIG_ENABLED => $guiTableConfigurationTransfer->getIsRowActionsEnabled() ?? true,
+            static::CONFIG_ROW_ACTIONS_CLICK => $guiTableConfigurationTransfer->getRowActionsClick(),
             static::CONFIG_ACTIONS => $actions,
         ];
     }

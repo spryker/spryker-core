@@ -11,6 +11,7 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
@@ -153,10 +154,16 @@ class ProductTable extends AbstractTable
             ->setId('create-offer')
             ->setTitle('Create Offer')
             ->setType('form-overlay')
-            ->addTypeOption('url', 'https://path-to-create-offer-action/${row.sku}')
-            ->addTypeOption('icon', 'icon-name');
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/product-offer-merchant-portal-gui/create-product-offer?product-id=${row.%s}',
+                    ProductConcreteTransfer::ID_PRODUCT_CONCRETE
+                )
+            );
 
         $guiTableConfigurationTransfer->addRowAction($guiTableRowActionTransfer);
+        $guiTableConfigurationTransfer->setRowActionsClick('create-offer');
 
         return $guiTableConfigurationTransfer;
     }

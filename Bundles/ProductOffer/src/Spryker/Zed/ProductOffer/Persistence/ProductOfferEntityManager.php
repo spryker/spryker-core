@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -56,5 +57,41 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
         return $this->getFactory()
             ->createPropelProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function createProductOfferStores(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    {
+        $productOfferTransfer->requireIdProductOffer();
+
+        foreach ($productOfferTransfer->getStores() as $storeTransfer) {
+            $productOfferStoreEntity = (new SpyProductOfferStore())
+                ->setFkProductOffer($productOfferTransfer->getIdProductOffer())
+                ->setFkStore($storeTransfer->getIdStore());
+
+            $productOfferStoreEntity->save();
+        }
+
+        return $productOfferTransfer;
+    }
+
+    /**
+     * @param int $idProductOffer
+     * @param int[] $storeIds
+     *
+     * @return void
+     */
+    public function deleteProductOfferStores(int $idProductOffer, array $storeIds): void
+    {
+        $this->getFactory()
+            ->createProductOfferStoreQuery()
+            ->filterByFkProductOffer($idProductOffer)
+            ->filterByFkStore_In($storeIds)
+            ->find()
+            ->delete();
     }
 }

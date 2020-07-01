@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -46,5 +47,19 @@ class MerchantStockFacade extends AbstractFacade implements MerchantStockFacadeI
     public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
         return $this->getRepository()->get($merchantStockCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function getDefaultMerchantStock(int $idMerchant): StockTransfer
+    {
+        return $this->getRepository()->getDefaultMerchantStock($idMerchant);
     }
 }

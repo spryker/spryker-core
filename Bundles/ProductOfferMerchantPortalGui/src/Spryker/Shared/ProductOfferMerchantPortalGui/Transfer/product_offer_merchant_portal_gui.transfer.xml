@@ -18,6 +18,7 @@
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
         <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
+        <property name="rowActionsClick" type="string"/>
         <property name="search" type="array" associative="true" singular="searchOption"/>
         <property name="isPaginationEnabled" type="bool"/>
         <property name="isFiltersEnabled" type="bool"/>
@@ -139,6 +140,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -156,11 +158,16 @@
         <property name="isActive" type="bool"/>
         <property name="validTo" type="string"/>
         <property name="validFrom" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
         <property name="attributes" type="array" singular="attribute"/>
         <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -176,10 +183,15 @@
         <property name="merchantSku" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
         <property name="isActive" type="bool"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="idProductOffer" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="ProductOfferStock">
         <property name="quantity" type="decimal"/>
+        <property name="stock" type="Stock"/>
     </transfer>
 
     <transfer name="ProductOfferValidity">
@@ -189,10 +201,77 @@
 
     <transfer name="ProductImageSet">
         <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ProductImage">
         <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType" type="PriceType"/>
+        <property name="fkPriceType" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferResponse">
+        <property name="errors" type="ProductOfferError[]" singular="error"/>
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="Stock">
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+    </transfer>
+
+    <transfer name="ProductOfferError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="RawProductAttributes">
+        <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+        <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
     </transfer>
 
 </transfers>

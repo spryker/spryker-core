@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantStock\Persistence;
 
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 
 interface MerchantStockRepositoryInterface
 {
@@ -18,4 +19,13 @@ interface MerchantStockRepositoryInterface
      * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
     public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer;
+
+    /**
+     * @param int $idMerchant
+     *
+     * @throws \Spryker\Zed\MerchantStock\Persistence\Exception\DefaultMerchantStockNotFoundException
+     *
+     * @return \Generated\Shared\Transfer\StockTransfer
+     */
+    public function getDefaultMerchantStock(int $idMerchant): StockTransfer;
 }

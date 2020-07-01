@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\ProductOfferStock\Business;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Zed\ProductOfferStock\Business\Exception\ProductOfferNotFoundException;
@@ -139,5 +140,78 @@ class ProductOfferStockFacadeTest extends Unit
 
         // Assert
         $this->assertNull($productOfferStockTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePersistsNewEntityToDatabase(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferStockTransfer = (new ProductOfferStockTransfer())
+            ->setStock($this->tester->haveStock())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+            ->setQuantity(5)
+            ->setIsNeverOutOfStock(true);
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $this->tester->getFacade()->create($productOfferStockTransfer);
+        $productOfferStockTransferFromDb = $this->tester->getProductOfferStockRepository()->findOne($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertEquals($productOfferStockTransfer->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
+        $this->assertEquals($productOfferStockTransfer->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
+        $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateUpdatesProductOfferStock(): void
+    {
+        // Arrange
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock();
+        $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
+        $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $productOfferStockTransfer->setQuantity($productOfferStockTransfer->getQuantity()->toInt() + 1);
+        $productOfferStockTransfer->setIsNeverOutOfStock(!$productOfferStockTransfer->getIsNeverOutOfStock());
+        $productOfferStockTransfer->setStock($this->tester->haveStock());
+
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $this->tester->getFacade()->update($productOfferStockTransfer);
+        $productOfferStockTransferFromDb = $this->tester->getProductOfferStockRepository()->findOne($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertEquals($productOfferStockTransfer->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
+        $this->assertEquals($productOfferStockTransfer->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
+        $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductOfferWithProductOfferStockExpandsProductOffer(): void
+    {
+        $productOfferStockTransfer = $this->tester->haveProductOfferStock();
+        $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
+        $productOfferStockRequestTransfer = (new ProductOfferStockRequestTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $productOfferStockTransfer = $this->tester->getFacade()->expandProductOfferWithProductOfferStock(
+            (new ProductOfferTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference())
+        )->getProductOfferStock();
+        $productOfferStockTransferFromDb = $this->tester->getProductOfferStockRepository()->findOne($productOfferStockRequestTransfer);
+
+        // Assert
+        $this->assertEquals($productOfferStockTransfer->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
+        $this->assertEquals($productOfferStockTransfer->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
+        $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
     }
 }

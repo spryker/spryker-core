@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValid
 /**
  * @method \Spryker\Zed\ProductOfferValidity\ProductOfferValidityConfig getConfig()
  * @method \Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityEntityManagerInterface getEntityManager()
  */
 class ProductOfferValidityPersistenceFactory extends AbstractPersistenceFactory
 {

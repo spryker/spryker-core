@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductO
 use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\TableDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
@@ -80,6 +82,7 @@ class ProductOfferTable extends AbstractTable
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addSearchOptionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataUrl(static::DATA_URL);
 
@@ -185,5 +188,30 @@ class ProductOfferTable extends AbstractTable
         }
 
         return $storeOptions;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
+            ->setId('update-offer')
+            ->setTitle('Manage Offer')
+            ->setType('form-overlay')
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/product-offer-merchant-portal-gui/update-product-offer?product-offer-id=${row.%s}',
+                    ProductOfferTransfer::ID_PRODUCT_OFFER
+                )
+            );
+
+        $guiTableConfigurationTransfer->addRowAction($guiTableRowActionTransfer);
+        $guiTableConfigurationTransfer->setRowActionsClick('update-offer');
+
+        return $guiTableConfigurationTransfer;
     }
 }

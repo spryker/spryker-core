@@ -1,0 +1,41 @@
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+
+.image-slider {
+    height: 125px;
+    display: flex;
+
+    &-preview {
+        display: flex;
+        flex-direction: column;
+        margin-right: 10px;
+
+        &-img {
+            height: 38px;
+            width: 38px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+
+            &:not(:last-child) {
+                margin-bottom: 4px;
+            }
+
+            &--selected {
+                border-color: @green-dark;
+            }
+        }
+    }
+
+    &-showcard {
+        width: 125px;
+        height: 125px;
+        border-radius: 10px;
+
+        &-image {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            max-height: 100%;
+            max-width: 100%;
+        }
+    }
+}

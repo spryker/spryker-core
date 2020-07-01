@@ -51,4 +51,20 @@ class ProductOfferValidityMapper
 
         return $productOfferValidityTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferValidityTransfer $productOfferValidityTransfer
+     * @param \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity $productOfferValidityEntity
+     *
+     * @return \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidity
+     */
+    public function mapProductOfferValidityTransferToProductOfferValidityEntity(
+        ProductOfferValidityTransfer $productOfferValidityTransfer,
+        SpyProductOfferValidity $productOfferValidityEntity
+    ): SpyProductOfferValidity {
+        $productOfferValidityEntity->fromArray($productOfferValidityTransfer->toArray(false));
+        $productOfferValidityEntity->setFkProductOffer($productOfferValidityTransfer->getIdProductOffer());
+
+        return $productOfferValidityEntity;
+    }
 }

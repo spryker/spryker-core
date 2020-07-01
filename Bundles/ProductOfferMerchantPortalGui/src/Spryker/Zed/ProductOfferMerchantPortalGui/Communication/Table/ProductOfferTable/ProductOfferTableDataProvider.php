@@ -111,6 +111,7 @@ class ProductOfferTableDataProvider extends AbstractTableDataProvider
 
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             $productTableDataArray[] = [
+                ProductOfferTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
                 ProductOfferTable::COL_KEY_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
                 ProductOfferTable::COL_KEY_MERCHANT_SKU => $productOfferTransfer->getMerchantSku(),
                 ProductOfferTable::COL_KEY_CONCRETE_SKU => $productOfferTransfer->getConcreteSku(),

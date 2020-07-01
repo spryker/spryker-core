@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferStock\Business;
 
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferStockFacadeInterface
 {
@@ -25,4 +26,40 @@ interface ProductOfferStockFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
     public function getProductOfferStock(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ProductOfferStockTransfer;
+
+    /**
+     * Specification:
+     * - Persists new Product Offer Stock entity to database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     */
+    public function create(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer;
+
+    /**
+     * Specification:
+     * - Updates existing Product Offer Stock entity in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
+     */
+    public function update(ProductOfferStockTransfer $productOfferStockTransfer): ProductOfferStockTransfer;
+
+    /**
+     * Specification:
+     * - Expands provided ProductOfferTransfer with Product Offer Stock.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function expandProductOfferWithProductOfferStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

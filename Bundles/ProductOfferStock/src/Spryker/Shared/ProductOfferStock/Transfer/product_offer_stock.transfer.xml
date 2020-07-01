@@ -9,6 +9,7 @@
     </transfer>
 
     <transfer name="ProductOfferStock">
+        <property name="idProductOffer" type="int"/>
         <property name="idProductOfferStock" type="int"/>
         <property name="quantity" type="decimal"/>
         <property name="productOffer" type="ProductOffer"/>
@@ -22,9 +23,13 @@
     </transfer>
 
     <transfer name="ProductOffer">
+        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="idProductOffer" type="int"/>
     </transfer>
 
     <transfer name="Stock">
+        <property name="idStock" type="int"/>
     </transfer>
 
 </transfers>
