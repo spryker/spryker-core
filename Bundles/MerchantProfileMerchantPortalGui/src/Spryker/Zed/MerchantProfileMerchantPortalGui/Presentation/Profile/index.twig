@@ -355,8 +355,10 @@
                         <div class="mp-profile__col mp-profile__col--online-right">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Online Status' | trans }}">
                                 <div class="mp-profile__status">
-                                    <h3 class="mp-profile__status-title {{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
-                                        {{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
+                                    {% set isProfileMerchantActiveChecked = onlineProfileMerchantProfileFields.is_active.vars.checked %}
+                                    
+                                    <h3 class="mp-profile__status-title {{ isProfileMerchantActiveChecked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
+                                        {{ isProfileMerchantActiveChecked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
                                     </h3>
                                     <div>
                                         <spy-form-item
@@ -371,7 +373,7 @@
                                             ></spy-toggle>
                                         </spy-form-item>
                                     </div>
-                                    {{ onlineProfileMerchantProfileFields.is_active.vars.checked ?
+                                    {{ isProfileMerchantActiveChecked ?
                                     'profile.status.message.online' | trans | raw :
                                     'profile.status.message.offline' | trans | raw }}
                                 </div>
