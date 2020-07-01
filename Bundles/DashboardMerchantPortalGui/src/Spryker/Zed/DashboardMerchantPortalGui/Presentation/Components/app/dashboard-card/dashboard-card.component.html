@@ -4,12 +4,10 @@
 
 <ng-template #title>
     <ng-content select="[title]"></ng-content>
+    
+    <spy-chips *ngIf="count" color="grey">{{ count }}</spy-chips>
 </ng-template>
 
 <ng-template #actions>
     <ng-content select="[actions]"></ng-content>
-    
-    <ng-container *ngIf="count">
-        <spy-chips color="grey">{{ count }}</spy-chips>
-    </ng-container>
 </ng-template>

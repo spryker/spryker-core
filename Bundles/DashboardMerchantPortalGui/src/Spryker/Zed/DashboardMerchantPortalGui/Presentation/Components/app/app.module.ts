@@ -10,7 +10,6 @@ import { DashboardCardModule } from './dashboard-card/dashboard-card.module';
 import { DashboardCardComponent } from './dashboard-card/dashboard-card.component';
 import { DashboardStatsModule } from './dashboard-stats/dashboard-stats.module';
 import { DashboardStatsComponent } from './dashboard-stats/dashboard-stats.component';
-import { DashboardStatsBlockModule } from './dashboard-stats-block/dashboard-stats-block.module';
 import { DashboardStatsBlockComponent } from './dashboard-stats-block/dashboard-stats-block.component';
 
 @NgModule({
@@ -21,7 +20,6 @@ import { DashboardStatsBlockComponent } from './dashboard-stats-block/dashboard-
         DashboardModule,
         DashboardCardModule,
         DashboardStatsModule,
-        DashboardStatsBlockModule,
     ],
     providers: [],
 })

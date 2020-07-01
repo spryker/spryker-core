@@ -58,13 +58,13 @@ describe('DashboardCardComponent', () => {
         expect(actionsContentElement).toBeTruthy();
     });
 
-    it('should render spy-chips component in the `.ant-card-extra` if @Input(count) has bound', () => {
+    it('should render spy-chips component in the `.ant-card-head-title` if @Input(count) has bound', () => {
         const mockCount = '5';
 
         component.count = mockCount
         fixture.detectChanges();
 
-        const chipsComponent = fixture.debugElement.query(By.css('.ant-card-extra spy-chips'));
+        const chipsComponent = fixture.debugElement.query(By.css('.ant-card-head-title spy-chips'));
 
         expect(chipsComponent).toBeTruthy();
         expect(chipsComponent.nativeElement.textContent).toContain(mockCount);

@@ -120,7 +120,11 @@
         {% endfor %}
 
         <mp-profile cloak>
-            <h1 title>{{ 'Profile' | trans }}</h1>
+            <ng-container title>{{ 'Profile' | trans }}</ng-container>
+
+            <spy-button action type="submit" class="mp-profile__submit">
+                {{ 'Save' | trans }}
+            </spy-button>
 
             <spy-tabs>
                 <spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
@@ -385,10 +389,6 @@
                     </div>
                 </spy-tab>
             </spy-tabs>
-
-            <spy-button action type="submit" class="mp-profile__submit">
-                {{ 'Save' | trans }}
-            </spy-button>
         </mp-profile>
     </form>
 {% endblock %}
