@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Kernel\Persistence"
+          package="src.Orm.Zed.Kernel.Persistence">
+
+    <table name="spy_test" identifierQuoting="true">
+        <column name="id_test" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="test" type="INTEGER" defaultValue="0"/>
+    </table>
+
+</database>

@@ -108,7 +108,8 @@ class TransferToEntityMapper implements TransferToEntityMapperInterface
         $entity->fromArray($transferArray);
 
         if ($entity->getPrimaryKey()) {
-            $entity->setNew(false);
+            $entity->reload(false);
+            $entity->fromArray($transferArray);
         }
 
         return $entity;
