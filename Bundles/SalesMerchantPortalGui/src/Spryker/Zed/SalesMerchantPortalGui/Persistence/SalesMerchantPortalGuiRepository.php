@@ -27,14 +27,14 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     /**
      * @param int $idMerchant
      *
-     * @return int[][]
+     * @return mixed[][]
      */
     public function getOrdersStoresCountData(int $idMerchant): array
     {
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
 
-        $merchantSalesOrderQuery = $merchantSalesOrderQuery->joinOrder()
+        return $merchantSalesOrderQuery->joinOrder()
             ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
             ->addAsColumn(static::ORDERS_COUNT_TOTAL, 'COUNT(*)')
             ->useOrderQuery()
@@ -46,8 +46,6 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ])
             ->find()
         ->toArray();
-
-        return $merchantSalesOrderQuery;
     }
 
     /**
@@ -58,7 +56,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
      *
      * @return int[]
      */
-    public function getOrdersDashboardCardCountData(int $idMerchant): array
+    public function getOrdersDashboardCardCounts(int $idMerchant): array
     {
         $salesMerchantPortalGuiConfig = $this->getFactory()->getConfig();
         $dashboardNewOrdersLimit = $salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();

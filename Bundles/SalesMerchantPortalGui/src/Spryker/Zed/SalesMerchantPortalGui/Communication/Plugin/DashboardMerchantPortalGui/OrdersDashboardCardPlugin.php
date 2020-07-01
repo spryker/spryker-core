@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Plugin\DashboardMerchantPortalGui;
 
+use Generated\Shared\Transfer\DashboardCardTransfer;
 use Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\DashboardCardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,40 +19,14 @@ class OrdersDashboardCardPlugin extends AbstractPlugin implements DashboardCardP
 {
     /**
      * {@inheritDoc}
-     * - Provides the Merchant orders card title HTML.
+     * - Returns the data for displaying the Merchant orders card.
      *
      * @api
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\DashboardCardTransfer
      */
-    public function getTitle(): string
+    public function getDashboardCard(): DashboardCardTransfer
     {
-        return $this->getFactory()->createOrdersDashboardCardDataProvider()->getTitle();
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Provides the Merchant orders card content HTML.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->getFactory()->createOrdersDashboardCardDataProvider()->getContent();
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Provides the Merchant orders card buttons.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DashboardActionButtonTransfer[]
-     */
-    public function getActionButtons(): array
-    {
-        return $this->getFactory()->createOrdersDashboardCardDataProvider()->getActionButtons();
+        return $this->getFactory()->createOrdersDashboardCardProvider()->getDashboardCard();
     }
 }

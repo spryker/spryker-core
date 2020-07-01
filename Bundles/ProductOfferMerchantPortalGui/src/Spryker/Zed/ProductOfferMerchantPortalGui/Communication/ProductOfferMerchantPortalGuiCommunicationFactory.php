@@ -10,8 +10,9 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\AbstractTable;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\GuiTableDataRequestBuilderInterface;
@@ -109,11 +110,11 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface
      */
-    public function createOffersDashboardCardDataProvider(): OffersDashboardCardDataProviderInterface
+    public function createOffersDashboardCardProvider(): OffersDashboardCardProviderInterface
     {
-        return new OffersDashboardCardDataProvider(
+        return new OffersDashboardCardProvider(
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getRouterFacade(),

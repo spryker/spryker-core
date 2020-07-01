@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Plugin\DashboardMerchantPortalGui;
 
+use Generated\Shared\Transfer\DashboardCardTransfer;
 use Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\DashboardCardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -18,40 +19,14 @@ class OffersDashboardCardPlugin extends AbstractPlugin implements DashboardCardP
 {
     /**
      * {@inheritDoc}
-     * - Provides the Product offers card title HTML.
+     * - Returns the data for displaying the Product offers card.
      *
      * @api
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\DashboardCardTransfer
      */
-    public function getTitle(): string
+    public function getDashboardCard(): DashboardCardTransfer
     {
-        return $this->getFactory()->createOffersDashboardCardDataProvider()->getTitle();
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Provides the Product offers card content HTML.
-     *
-     * @api
-     *
-     * @return string
-     */
-    public function getContent(): string
-    {
-        return $this->getFactory()->createOffersDashboardCardDataProvider()->getContent();
-    }
-
-    /**
-     * {@inheritDoc}
-     * - Provides the Product offers card buttons.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\DashboardActionButtonTransfer[]
-     */
-    public function getActionButtons(): array
-    {
-        return $this->getFactory()->createOffersDashboardCardDataProvider()->getActionButtons();
+        return $this->getFactory()->createOffersDashboardCardProvider()->getDashboardCard();
     }
 }

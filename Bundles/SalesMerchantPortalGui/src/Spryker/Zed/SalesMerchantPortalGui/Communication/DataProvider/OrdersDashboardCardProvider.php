@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DashboardActionButtonTransfer;
+use Generated\Shared\Transfer\DashboardCardTransfer;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiConfig;
 use Twig\Environment;
 
-class OrdersDashboardCardDataProvider implements OrdersDashboardCardDataProviderInterface
+class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterface
 {
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
@@ -42,11 +44,6 @@ class OrdersDashboardCardDataProvider implements OrdersDashboardCardDataProvider
     protected $twigEnvironment;
 
     /**
-     * @var int[]|null
-     */
-    protected static $ordersDashboardCardCountData;
-
-    /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface $salesMerchantPortalGuiRepository
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface $routerFacade
@@ -68,58 +65,33 @@ class OrdersDashboardCardDataProvider implements OrdersDashboardCardDataProvider
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\DashboardCardTransfer
      */
-    public function getTitle(): string
+    public function getDashboardCard(): DashboardCardTransfer
     {
-        return $this->twigEnvironment->render(
+        $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
+        $ordersDashboardCardCounts = $this->salesMerchantPortalGuiRepository->getOrdersDashboardCardCounts($idMerchant);
+        $ordersDashboardCardCounts['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();
+        $ordersDashboardCardCounts['ordersStoresCountData'] = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
+            $idMerchant
+        );
+
+        $title = $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_title.twig',
-            $this->getOrdersDashboardCardCountData()
+            $ordersDashboardCardCounts
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        $ordersDashboardCardCountData = $this->getOrdersDashboardCardCountData();
-        $ordersDashboardCardCountData['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();
-        $ordersDashboardCardCountData['ordersStoresCountData'] = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
-            $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
-        );
-
-        return $this->twigEnvironment->render(
+        $content = $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_content.twig',
-            $ordersDashboardCardCountData
-        );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\DashboardActionButtonTransfer[]
-     */
-    public function getActionButtons(): array
-    {
-        return [
-            (new DashboardActionButtonTransfer())
-                ->setTitle('Manage Orders')
-                ->setUrl($this->routerFacade->getRouter()->generate('sales-merchant-portal-gui:orders')),
-        ];
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getOrdersDashboardCardCountData(): array
-    {
-        if (static::$ordersDashboardCardCountData) {
-            return static::$ordersDashboardCardCountData;
-        }
-
-        static::$ordersDashboardCardCountData = $this->salesMerchantPortalGuiRepository->getOrdersDashboardCardCountData(
-            $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
+            $ordersDashboardCardCounts
         );
 
-        return static::$ordersDashboardCardCountData;
+        return (new DashboardCardTransfer())
+            ->setTitle($title)
+            ->setContent($content)
+            ->setActionButtons(new ArrayObject([
+                (new DashboardActionButtonTransfer())
+                    ->setTitle('Manage Orders')
+                    ->setUrl($this->routerFacade->getRouter()->generate('sales-merchant-portal-gui:orders')),
+            ]));
     }
 }
