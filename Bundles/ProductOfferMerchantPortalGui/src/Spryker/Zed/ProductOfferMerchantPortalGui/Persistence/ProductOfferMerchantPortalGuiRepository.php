@@ -288,8 +288,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productSkuSearchCriterion = $this->getProductSkuSearchCriteria($criteria, $searchTerm);
         $productNameSearchCriterion->addOr($productSkuSearchCriterion);
 
-        $productConcreteQuery->setIgnoreCase(true);
-
         return $productConcreteQuery->addAnd($productNameSearchCriterion);
     }
 
@@ -318,8 +316,6 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productNameSearchCriterion->addOr($productSkuSearchCriterion);
         $productSkuSearchCriterion->addOr($productOfferReferenceSearchCriterion);
         $productOfferReferenceSearchCriterion->addOr($productOfferMerchantSkuSearchCriterion);
-
-        $productOfferQuery->setIgnoreCase(true);
 
         return $productOfferQuery->add($productNameSearchCriterion);
     }
