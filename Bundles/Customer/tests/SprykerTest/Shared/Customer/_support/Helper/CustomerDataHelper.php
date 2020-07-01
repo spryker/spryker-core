@@ -45,6 +45,7 @@ class CustomerDataHelper extends Module
         $this->ensureCustomerWithReferenceDoesNotExist($customerTransfer);
 
         $customerResponseTransfer = $this->getCustomerFacade()->registerCustomer($customerTransfer);
+        $customerResponseTransfer = $this->getCustomerFacade()->confirmCustomerRegistration($customerResponseTransfer->getCustomerTransfer());
 
         if (!$customerResponseTransfer->getIsSuccess() || $customerResponseTransfer->getCustomerTransfer() === null) {
             throw new TestRuntimeException(sprintf('Could not create customer %s', $customerTransfer->getEmail()));
