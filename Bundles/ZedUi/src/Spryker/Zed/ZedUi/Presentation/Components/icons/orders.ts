@@ -18,6 +18,6 @@ const svg = `
     providers: [provideIcons([IconOrdersModule])],
 })
 export class IconOrdersModule {
-    static icon = 'offer-orders';
+    static icon = 'orders';
     static svg = svg;
 }

@@ -3,7 +3,7 @@
     <sales-merchant-portal-gui>
         <label>Orders</label>
         <title>Orders</title>
-        <icon>offer-orders</icon>
+        <icon>orders</icon>
         <bundle>sales-merchant-portal-gui</bundle>
         <controller>orders</controller>
         <action>index</action>
