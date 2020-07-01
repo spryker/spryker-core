@@ -8,6 +8,9 @@
 namespace Spryker\Zed\Oms\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
@@ -24,6 +27,36 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function querySalesOrderItemsByState(array $states, $processName);
+
+    /**
+     * Specification:
+     * - Returns an optimized query based on store name and limit to fetch sales order items.
+     *
+     * @api
+     *
+     * @param int $idOmsOrderProcess
+     * @param array $omsOrderItemStateIds
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    public function querySalesOrderItemsByProcessIdStateIdsAndQueryCriteria(
+        int $idOmsOrderProcess,
+        array $omsOrderItemStateIds,
+        OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer
+    ): SpySalesOrderItemQuery;
+
+    /**
+     * Specification:
+     * - Returns a query to find a process by it's name.
+     *
+     * @api
+     *
+     * @param string $processName
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery
+     */
+    public function queryProcess(string $processName): SpyOmsOrderProcessQuery;
 
     /**
      * @api
@@ -57,10 +90,14 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @api
      *
      * @param \DateTime $now
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    public function querySalesOrderItemsWithExpiredTimeouts(DateTime $now);
+    public function querySalesOrderItemsWithExpiredTimeouts(
+        DateTime $now,
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
+    );
 
     /**
      * @api
@@ -195,15 +232,6 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $identifiers
-     *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
-     */
-    public function queryLockItemsByIdentifiers(array $identifiers): SpyOmsStateMachineLockQuery;
-
-    /**
-     * @api
-     *
      * @param string $identifier
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
@@ -280,4 +308,13 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
     public function queryOmsProductReservationById($idOmsProductReservation);
+
+    /**
+     * @api
+     *
+     * @param array $identifiers
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifiers(array $identifiers): SpyOmsStateMachineLockQuery;
 }
