@@ -1,0 +1,162 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Client/PersistentCartShare/PersistentCartShareDependencyProvider.php",
+            "snippet": "            return new PersistentCartShareToResourceShareClientBridge($container->getLocator()->resourceShare()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Client/PersistentCartShare/PersistentCartShareDependencyProvider.php",
+            "snippet": "                $container->getLocator()->zedRequest()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCartShare\\Business\\Reader\\QuoteReader::getQuoteByResourceShare cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "            $resourceShareResponseTransfer->getResourceShare()",
+            "selected_text": "$resourceShareResponseTransfer->getResourceShare()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "                ->requireIdQuote();",
+            "selected_text": "requireIdQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCartShare\\Dependency\\Facade\\PersistentCartShareToQuoteFacadeInterface::findQuoteById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "            $resourceShareTransfer->getResourceShareData()->getIdQuote()",
+            "selected_text": "$resourceShareTransfer->getResourceShareData()->getIdQuote()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdQuote on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "            $resourceShareTransfer->getResourceShareData()->getIdQuote()",
+            "selected_text": "getIdQuote",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $resourceShareResponseMessages has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\MessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[] $resourceShareResponseMessages",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\MessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\QuoteErrorTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\QuoteErrorTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\QuoteErrorTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getResourceType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "        if ($resourceShareTransfer->getResourceType() !== PersistentCartShareConfig::RESOURCE_TYPE_QUOTE) {",
+            "selected_text": "getResourceType",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 144,
+            "line_to": 144,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getShareOption on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "        if ($resourceShareDataTransfer->getShareOption() !== PersistentCartShareConfig::SHARE_OPTION_KEY_PREVIEW) {",
+            "selected_text": "getShareOption",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 164,
+            "line_to": 164,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\PersistentCartShare\\Dependency\\Facade\\PersistentCartShareToQuoteFacadeInterface::isQuoteLocked cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/Business/Reader/QuoteReader.php",
+            "snippet": "        if ($this->quoteFacade->isQuoteLocked($quoteResponseTransfer->getQuoteTransfer())) {",
+            "selected_text": "$quoteResponseTransfer->getQuoteTransfer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/PersistentCartShareDependencyProvider.php",
+            "snippet": "            return new PersistentCartShareToQuoteFacadeBridge($container->getLocator()->quote()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PersistentCartShare/src/Spryker/Zed/PersistentCartShare/PersistentCartShareDependencyProvider.php",
+            "snippet": "            return new PersistentCartShareToResourceShareFacadeBridge($container->getLocator()->resourceShare()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,43 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 81,
+            "line_to": 86,
+            "type": "UndefinedDocblockClass",
+            "message": "Docblock-defined class or interface Orm\\Zed\\ProductMerchantConnector\\Persistence\\SpyProductAbstractMerchantQuery does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataFeed/src/Spryker/Zed/CategoryDataFeed/Persistence/CategoryDataFeedQueryContainer.php",
+            "snippet": "        $categoryQuery\n            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)\n                ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)\n                    ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->endUse()\n                ->endUse()",
+            "selected_text": "$categoryQuery\n            ->useSpyProductCategoryQuery(null, Criteria::LEFT_JOIN)\n                ->useSpyProductAbstractQuery(null, Criteria::LEFT_JOIN)\n                    ->useSpyProductAbstractLocalizedAttributesQuery()\n                    ->endUse()\n                ->endUse()",
+            "error_level": -1,
+            "shortcode": 200
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataFeed/src/Spryker/Zed/CategoryDataFeed/CategoryDataFeedDependencyProvider.php",
+            "snippet": "                ->queryContainer();",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryDataFeed\\Dependency\\QueryContainer\\CategoryDataFeedToCategoryInterface::queryCategory cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataFeed/src/Spryker/Zed/CategoryDataFeed/Persistence/CategoryDataFeedQueryContainer.php",
+            "snippet": "            ->queryCategory($categoryDataFeedTransfer->getIdLocale());",
+            "selected_text": "$categoryDataFeedTransfer->getIdLocale()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

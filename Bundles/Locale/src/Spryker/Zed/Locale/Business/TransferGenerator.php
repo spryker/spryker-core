@@ -24,7 +24,7 @@ class TransferGenerator implements TransferGeneratorInterface
     }
 
     /**
-     * @deprecated Invalid collection method. Use convertLocale() directly.
+     * @deprecated Use {@link \Spryker\Zed\Locale\Business\TransferGenerator::convertLocale()} instead.
      *
      * @param \Orm\Zed\Locale\Persistence\SpyLocale $localeEntityList
      *

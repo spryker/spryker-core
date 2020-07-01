@@ -1,0 +1,248 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductOffer\\Business\\InactiveProductOfferItemsFilter\\InactiveProductOfferItemsFilter::getProductOfferReferencesFromQuoteTransfer is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\ProductOffer\\Business\\InactiveProductOfferItemsFilter\\InactiveProductOfferItemsFilter::getProductOfferReferencesFromQuoteTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "        return $productOfferReferences;",
+            "selected_text": "$productOfferReferences",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkusByOfferReference[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Checker/ItemProductOfferChecker.php",
+            "snippet": "            $productConcreteSkusByOfferReference[$cartItem->getProductOfferReference()] = $cartItem->getSku();",
+            "selected_text": "$productConcreteSkusByOfferReference",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductOfferTransfer> variable $productOfferTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Checker/ItemProductOfferChecker.php",
+            "snippet": "        if (!$productOfferTransfers->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productConcreteSkusByOfferReference using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Checker/ItemProductOfferChecker.php",
+            "snippet": "                && $productOfferTransfer->getConcreteSku() === $productConcreteSkusByOfferReference[$productOfferTransfer->getProductOfferReference()]",
+            "selected_text": "$productConcreteSkusByOfferReference",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Business\\Checker\\ItemProductOfferChecker::createErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/Checker/ItemProductOfferChecker.php",
+            "snippet": "                ->addMessage($this->createErrorMessage($productOfferTransfer->getConcreteSku()));",
+            "selected_text": "$productOfferTransfer->getConcreteSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Dependency\\Facade\\ProductOfferToStoreFacadeInterface::getStoreByName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()",
+            "selected_text": "$quoteTransfer->getStore()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "                $quoteTransfer->getItems()->offsetUnset($key);",
+            "selected_text": "offsetUnset",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOffer\\Business\\InactiveProductOfferItemsFilter\\InactiveProductOfferItemsFilter::addFilterMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "                $this->addFilterMessage($itemTransfer->getSku());",
+            "selected_text": "$itemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 133,
+            "line_to": 133,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedProductOfferTransfers[mixed|null|string] using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Business/InactiveProductOfferItemsFilter/InactiveProductOfferItemsFilter.php",
+            "snippet": "            $indexedProductOfferTransfers[$productOfferTransfer->getProductOfferReference()] = $productOfferTransfer;",
+            "selected_text": "$indexedProductOfferTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Communication/Plugin/Cart/ProductOfferGroupKeyItemExpanderPlugin.php",
+            "snippet": "        return $itemTransfer->getGroupKey() . static::GROUP_KEY_DELIMITER . $itemTransfer->getProductOfferReference();",
+            "selected_text": "$itemTransfer->getProductOfferReference()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of findOneByIdProductOffer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferEntityManager.php",
+            "snippet": "            ->findOneByIdProductOffer($productOfferTransfer->getIdProductOffer());",
+            "selected_text": "$productOfferTransfer->getIdProductOffer()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductOffer\\Persistence\\Propel\\Mapper\\ProductOfferMapper::mapProductOfferTransferToProductOfferEntity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferEntityManager.php",
+            "snippet": "            ->mapProductOfferTransferToProductOfferEntity($productOfferTransfer, $productOfferEntity);",
+            "selected_text": "$productOfferEntity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\StoreTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "     * @return \\Generated\\Shared\\Transfer\\StoreTransfer[]|\\ArrayObject",
+            "selected_text": "\\Generated\\Shared\\Transfer\\StoreTransfer[]|\\ArrayObject",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 171,
+            "line_to": 171,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
+            "selected_text": "$page",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 171,
+            "line_to": 171,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Propel\\Runtime\\ActiveQuery\\ModelCriteria::paginate cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Persistence/ProductOfferRepository.php",
+            "snippet": "            $paginationModel = $query->paginate($page, $maxPerPage);",
+            "selected_text": "$maxPerPage",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/ProductOfferDependencyProvider.php",
+            "snippet": "            return new ProductOfferToMessengerFacadeBridge($container->getLocator()->messenger()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/ProductOfferDependencyProvider.php",
+            "snippet": "            return new ProductOfferToStoreFacadeBridge($container->getLocator()->store()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\ItemExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOffer/src/Spryker/Zed/ProductOffer/Communication/Plugin/Cart/ProductOfferGroupKeyItemExpanderPlugin.php",
+            "snippet": "class ProductOfferGroupKeyItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface",
+            "selected_text": "ProductOfferGroupKeyItemExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

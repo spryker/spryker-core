@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/OrderCustomReference/src/Spryker/Client/OrderCustomReference/OrderCustomReferenceDependencyProvider.php",
+            "snippet": "            return new OrderCustomReferenceToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

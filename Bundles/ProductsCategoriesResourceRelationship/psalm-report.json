@@ -1,0 +1,91 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductsCategoriesResourceRelationship\\Processor\\Reader\\AbstractProductsCategoriesReaderInterface::findProductCategoryNodeIdsBySkus expects array<array-key, string>, list<null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/Processor/Expander/CategoriesResourceRelationshipExpander.php",
+            "snippet": "            ->findProductCategoryNodeIdsBySkus($productAbstractSkus, $localeName);",
+            "selected_text": "$productAbstractSkus",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of array_key_exists cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/Processor/Expander/CategoriesResourceRelationshipExpander.php",
+            "snippet": "            if (!array_key_exists($restResource->getId(), $productCategoryNodeIds)) {",
+            "selected_text": "$restResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productCategoryNodeIds using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/Processor/Expander/CategoriesResourceRelationshipExpander.php",
+            "snippet": "            foreach ($productCategoryNodeIds[$restResource->getId()] as $categoryNodeId) {",
+            "selected_text": "$productCategoryNodeIds",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 124,
+            "line_to": 124,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productAbstractIds using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/Processor/Reader/AbstractProductsCategoriesReader.php",
+            "snippet": "                $productCategoryNodeIds[$productAbstractIds[$productAbstractCategoryStorageTransfer->getIdProductAbstract()]][]",
+            "selected_text": "$productAbstractIds",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::resource does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
+            "snippet": "                $container->getLocator()->categoriesRestApi()->resource()",
+            "selected_text": "resource",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductsCategoriesResourceRelationship/src/Spryker/Glue/ProductsCategoriesResourceRelationship/ProductsCategoriesResourceRelationshipDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productCategoryStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

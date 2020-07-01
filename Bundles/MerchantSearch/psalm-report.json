@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/MerchantSearchDependencyProvider.php",
+            "snippet": "            return new MerchantSearchToZedRequestClientBridge($container->getLocator()->zedRequest()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Client/MerchantSearch/MerchantSearchDependencyProvider.php",
+            "snippet": "            return new MerchantSearchToStoreClientBridge($container->getLocator()->store()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantSearch/src/Spryker/Zed/MerchantSearch/MerchantSearchDependencyProvider.php",
+            "snippet": "            return new MerchantSearchToMerchantFacadeBridge($container->getLocator()->merchant()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

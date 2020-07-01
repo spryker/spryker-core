@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\F
 
 use Spryker\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
+use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardMaximumThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipHardThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\Type\ThresholdGroup\MerchantRelationshipSoftThresholdType;
 use Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\MerchantRelationshipSalesOrderThresholdGuiConfig;
@@ -29,11 +30,13 @@ class MerchantRelationshipThresholdType extends AbstractType
     public const FIELD_ID_MERCHANT_RELATIONSHIP = 'idMerchantRelationship';
     public const FIELD_HARD = 'hardThreshold';
     public const FIELD_SOFT = 'softThreshold';
+    public const FIELD_HARD_MAXIMUM = 'hardMaximumThreshold';
 
     public const OPTION_CURRENCY_CODE = 'option-currency-code';
     public const OPTION_STORE_CURRENCY_ARRAY = 'option-store-currency-array';
     public const OPTION_HARD_TYPES_ARRAY = 'option-hard-types-array';
     public const OPTION_SOFT_TYPES_ARRAY = 'option-soft-types-array';
+    public const OPTION_HARD_MAXIMUM_TYPES_ARRAY = 'option-hard-maximum-types-array';
 
     /**
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -47,6 +50,7 @@ class MerchantRelationshipThresholdType extends AbstractType
         $this->addIdMerchantRelationshipField($builder);
         $this->addHardThresholdForm($builder, $options);
         $this->addSoftThresholdForm($builder, $options);
+        $this->addHardMaximumThresholdForm($builder, $options);
 
         $this->addPluginForms($builder, $options);
     }
@@ -62,6 +66,7 @@ class MerchantRelationshipThresholdType extends AbstractType
         $resolver->setRequired(static::OPTION_STORE_CURRENCY_ARRAY);
         $resolver->setRequired(static::OPTION_SOFT_TYPES_ARRAY);
         $resolver->setRequired(static::OPTION_HARD_TYPES_ARRAY);
+        $resolver->setRequired(static::OPTION_HARD_MAXIMUM_TYPES_ARRAY);
     }
 
     /**
@@ -127,6 +132,22 @@ class MerchantRelationshipThresholdType extends AbstractType
      *
      * @return $this
      */
+    protected function addHardMaximumThresholdForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder->add(static::FIELD_HARD_MAXIMUM, MerchantRelationshipHardMaximumThresholdType::class, [
+            static::OPTION_HARD_MAXIMUM_TYPES_ARRAY => $options[static::OPTION_HARD_MAXIMUM_TYPES_ARRAY],
+            static::OPTION_CURRENCY_CODE => $options[static::OPTION_CURRENCY_CODE],
+        ]);
+
+        return $this;
+    }
+
+    /**
+     * @param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return $this
+     */
     protected function addSoftThresholdForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(static::FIELD_SOFT, MerchantRelationshipSoftThresholdType::class, [
@@ -148,6 +169,12 @@ class MerchantRelationshipThresholdType extends AbstractType
         foreach ($this->getFactory()->getSalesOrderThresholdFormExpanderPlugins() as $formExpanderPlugin) {
             if ($formExpanderPlugin->getThresholdGroup() === MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_SOFT) {
                 $formExpanderPlugin->expand($builder->get(static::FIELD_SOFT), $options);
+
+                continue;
+            }
+
+            if ($formExpanderPlugin->getThresholdGroup() === MerchantRelationshipSalesOrderThresholdGuiConfig::GROUP_HARD_MAX) {
+                $formExpanderPlugin->expand($builder->get(static::FIELD_HARD_MAXIMUM), $options);
 
                 continue;
             }

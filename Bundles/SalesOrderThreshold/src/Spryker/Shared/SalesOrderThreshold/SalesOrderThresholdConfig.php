@@ -10,9 +10,11 @@ namespace Spryker\Shared\SalesOrderThreshold;
 class SalesOrderThresholdConfig
 {
     public const GROUP_HARD = 'Hard';
+    public const GROUP_HARD_MAX = 'Hard-Max';
     public const GROUP_SOFT = 'Soft';
 
     public const THRESHOLD_STRATEGY_KEY_HARD = 'hard-minimum-threshold';
+    public const THRESHOLD_STRATEGY_KEY_HARD_MAXIMUM = 'hard-maximum-threshold';
     public const THRESHOLD_STRATEGY_KEY_SOFT = 'soft-minimum-threshold';
     public const THRESHOLD_STRATEGY_KEY_SOFT_FIXED_FEE = 'soft-minimum-threshold-fixed-fee';
     public const THRESHOLD_STRATEGY_KEY_SOFT_FLEXIBLE_FEE = 'soft-minimum-threshold-flexible-fee';

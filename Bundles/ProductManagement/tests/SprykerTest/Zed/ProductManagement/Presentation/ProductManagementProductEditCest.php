@@ -38,7 +38,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Product');
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Product');
         $i->click('Save');
 
         $i->waitForJS('return document.readyState == "complete"');
