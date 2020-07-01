@@ -31,6 +31,6 @@ class AvailabilityProductAbstractAddToCartPlugin extends AbstractPlugin implemen
      */
     public function getEligibleConcreteProducts(array $productConcreteTransfers): array
     {
-        return $this->getFacade()->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+        return $this->getFacade()->filterAvailableProducts($productConcreteTransfers);
     }
 }

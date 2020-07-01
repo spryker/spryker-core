@@ -14,5 +14,5 @@ interface AvailabilityReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array;
+    public function filterAvailableProducts(array $productConcreteTransfers): array;
 }

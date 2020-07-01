@@ -492,7 +492,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithNeverOutOfStock(): void
+    public function testFilterAvailableProductsWithNeverOutOfStock(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
@@ -506,7 +506,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+            ->filterAvailableProducts([$productConcreteTransfer]);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfers);
@@ -515,7 +515,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithQuantity(): void
+    public function testFilterAvailableProductsWithQuantity(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
@@ -529,7 +529,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+            ->filterAvailableProducts([$productConcreteTransfer]);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfers);
@@ -538,7 +538,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithZeroQuantity(): void
+    public function testFilterAvailableProductsWithZeroQuantity(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
@@ -552,7 +552,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+            ->filterAvailableProducts([$productConcreteTransfer]);
 
         // Assert
         $this->assertCount(0, $productConcreteTransfers);
@@ -561,7 +561,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithoutStock(): void
+    public function testFilterAvailableProductsWithoutStock(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
@@ -569,7 +569,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart([$productConcreteTransfer]);
+            ->filterAvailableProducts([$productConcreteTransfer]);
 
         // Assert
         $this->assertCount(0, $productConcreteTransfers);
@@ -578,7 +578,7 @@ class AvailabilityFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetConcreteProductsEligibleForProductAbstractAddToCartWithSeveralItems(): void
+    public function testFilterAvailableProductsWithSeveralItems(): void
     {
         // Arrange
         $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
@@ -601,7 +601,7 @@ class AvailabilityFacadeTest extends Unit
 
         // Act
         $productConcreteTransfers = $this->getAvailabilityFacade()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart([$firstProductConcreteTransfer, $secondProductConcreteTransfer]);
+            ->filterAvailableProducts([$firstProductConcreteTransfer, $secondProductConcreteTransfer]);
 
         // Assert
         $this->assertCount(1, $productConcreteTransfers);

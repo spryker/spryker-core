@@ -50,6 +50,10 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
     {
+        if (empty($productConcreteSkus)) {
+            return [];
+        }
+
         return $this->getFactory()
             ->getProductQuery()
             ->filterBySku_In($productConcreteSkus)

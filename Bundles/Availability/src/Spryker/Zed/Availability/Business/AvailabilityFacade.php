@@ -286,10 +286,10 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
-    public function getConcreteProductsEligibleForProductAbstractAddToCart(array $productConcreteTransfers): array
+    public function filterAvailableProducts(array $productConcreteTransfers): array
     {
         return $this->getFactory()
             ->createAvailabilityReader()
-            ->getConcreteProductsEligibleForProductAbstractAddToCart($productConcreteTransfers);
+            ->filterAvailableProducts($productConcreteTransfers);
     }
 }
