@@ -41,7 +41,7 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
 
         $productAbstractIds = $this->getRepository()->getProductAbstractIdsByProductConcreteSkus($productConcreteSkus);
 
-        if (empty($productAbstractIds)) {
+        if (!$productAbstractIds) {
             return;
         }
 

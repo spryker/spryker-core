@@ -700,7 +700,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
     ): array {
         $productConcreteSkuMapByIdProductAbstract = $this->addToCartSkuReader->getProductAbstractAddToCartSkus($productAbstractIds);
 
-        foreach ($productAbstractLocalizedEntities as $productAbstractLocalizedEntity) {
+        foreach ($productAbstractLocalizedEntities as &$productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
             $productAbstractLocalizedEntity[ProductPageSearchTransfer::ADD_TO_CART_SKU] = $productConcreteSkuMapByIdProductAbstract[$productAbstractId] ?? null;
         }

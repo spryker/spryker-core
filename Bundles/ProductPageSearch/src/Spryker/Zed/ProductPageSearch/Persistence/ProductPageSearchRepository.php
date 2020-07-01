@@ -50,7 +50,7 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
      */
     public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
     {
-        if (empty($productConcreteSkus)) {
+        if (!$productConcreteSkus) {
             return [];
         }
 
