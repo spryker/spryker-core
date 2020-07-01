@@ -39,4 +39,12 @@ interface ProductPageSearchToEventBehaviorFacadeInterface
      * @return \Generated\Shared\Transfer\EventEntityTransfer[]
      */
     public function getGroupedEventTransferForeignKeysByForeignKey(array $eventTransfers, string $foreignKeyColumnName);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param string $columnName
+     *
+     * @return array
+     */
+    public function getEventTransfersAdditionalValues(array $eventTransfers, string $columnName): array;
 }

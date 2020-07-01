@@ -24,6 +24,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
+    protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /**
      * @param int[] $productIds
      *
@@ -39,6 +41,26 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
+    }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
+    {
+        if (empty($productConcreteSkus)) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterBySku_In($productConcreteSkus)
+            ->withColumn(Criteria::DISTINCT . ' ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
+            ->select([static::FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->getData();
     }
 
     /**
