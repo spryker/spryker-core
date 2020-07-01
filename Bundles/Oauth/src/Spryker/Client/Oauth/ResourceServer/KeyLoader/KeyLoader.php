@@ -30,9 +30,9 @@ class KeyLoader implements KeyLoaderInterface
         $collectedKeys = [];
 
         foreach ($this->keyLoaderPlugins as $keyLoaderPlugin) {
-            $collectedKeys = array_merge($collectedKeys, $keyLoaderPlugin->loadKeys());
+            $collectedKeys[] = $keyLoaderPlugin->loadKeys();
         }
 
-        return $collectedKeys;
+        return $collectedKeys ? array_merge(...$collectedKeys) : [];
     }
 }
