@@ -73,7 +73,7 @@ class ProductReviewTable extends AbstractTable
             ProductReviewTableConstants::COL_CREATED => 'Date',
             ProductReviewTableConstants::COL_CUSTOMER_NAME => 'Customer',
             ProductReviewTableConstants::COL_NICK_NAME => 'Nickname',
-            ProductReviewTableConstants::COL_PRODUCT_NAME => 'Product Name',
+            ProductReviewTableConstants::COL_PRODUCT_NAME => 'Product name',
             ProductReviewTableConstants::COL_RATING => 'Rating',
             ProductReviewTableConstants::COL_STATUS => 'Status',
             ProductReviewTableConstants::COL_ACTIONS => 'Actions',

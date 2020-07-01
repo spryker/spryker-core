@@ -6,8 +6,8 @@ Addresses,Adressen
 "Canceled amount","Stornierter Betrag"
 "Cart Notes","Einkaufswagen Notizen"
 Comments,Kommentare
-"Customer Full Name ","Vollständiger Name des Kunden"
-"Customer Full Name","Vollständiger Name des Kunden"
+"Customer Full Name ","Vollständiger Kundenname"
+"Customer Full Name","Vollständiger Kundenname"
 "Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
@@ -21,7 +21,7 @@ Legend,Legende
 "List of orders","Liste der Bestellungen"
 Matrix,Matrix
 Note,Hinweis
-"Number of Items","Menge der Artikel"
+"Number of Items","Artikelanzahl"
 Option,Option
 "Order Matrix",Bestellungsmatrix
 "Order Source","Quelle der Bestellung"

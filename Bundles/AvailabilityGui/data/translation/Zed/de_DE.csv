@@ -7,7 +7,7 @@ Available,Verfügbar
 "Back to product","Zurück zu Produkt"
 "Current Stock","Aktueller Bestand"
 "Edit Stock","Lagerbestand bearbeiten"
-"Is never out of stock","Ist immer auf Lager"
+"Is never out of stock","Immer auf LagerI"
 "List of product availability","Liste der Produktverfügbarkeit"
 n/a,k.A.
 Name,Name
@@ -23,4 +23,5 @@ SKU,SKU
 "Variant availability",Variantenverfügbarkeit
 Yes,Ja
 "Overview of Products Availability","Übersicht der Verfügbarkeit"
-"Is bundle product","Ist Bündelprodukt"
+"Is bundle product","Bündelprodukt"
+"Store","Store"

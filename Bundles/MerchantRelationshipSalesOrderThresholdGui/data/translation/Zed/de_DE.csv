@@ -17,3 +17,4 @@ Soft,Weich
 Hard,Hart
 "The Merchant Relationship Thresholds is saved successfully.","Schwellenwerte der Händlerbeziehung wurde erfolgreich gespeichert."
 "You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","Sie können die Platzhalter <code>{{threshold}}</code> und <code>{{fee}}</code> benutzen"
+"BU name","Name der Geschäftseinheit"

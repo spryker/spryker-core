@@ -10,7 +10,7 @@ Inactive,Inaktiv
 "Is this payment method active?","Ist die Zahlart aktiviert?"
 "List Payment Methods","Alle Zahlungsarten"
 Name,Name
-"Payment Method Key","Zahlart Key"
+"Payment Method Key","Zahlart Schlüssel"
 "Payment method not found","Zahlart nicht gefunden"
 "Payment Methods",Zahlarten
 "Payment Provider",Zahlungsanbieter

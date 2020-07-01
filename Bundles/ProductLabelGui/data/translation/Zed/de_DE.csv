@@ -21,8 +21,8 @@ Edit,Bearbeiten
 General,Allgemein
 ID,ID
 "Is Active","Ist aktiv"
-"Is Dynamic","Ist dynamisch"
-"Is Exclusive","Ist exklusiv."
+"Is Dynamic","Dynamisch"
+"Is Exclusive","Exklusiv"
 "List of Product Labels","Liste der Produktlabels"
 "Missing or wrong request data","Fehlende oder falsche Abfragedaten"
 N/A,N/A
@@ -59,4 +59,4 @@ View,Ansicht
 "Yes, delete this product label","Ja, dieses Produktlabel löschen"
 Yes,Ja
 "Product label #%d successfully created.","Produktlabel #%d wurde erfolgreich erstellt."
-"Number of Products","# von Produkten"
+"Number of Products","Artikelanzahl"
