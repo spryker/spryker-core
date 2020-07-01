@@ -11,6 +11,12 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
+    <transfer name="DashboardCard">
+        <property name="actionButtons" type="DashboardActionButton[]" singular="actionButton"/>
+        <property name="title" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
     <transfer name="DashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>

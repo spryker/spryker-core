@@ -21,5 +21,5 @@ interface SalesMerchantPortalGuiRepositoryInterface
      *
      * @return int[]
      */
-    public function getOrdersDashboardCardCountData(int $idMerchant): array;
+    public function getOrdersDashboardCardCounts(int $idMerchant): array;
 }

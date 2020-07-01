@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin;
+namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\DashboardCardTransfer;
 
-interface DashboardCardPluginInterface
+interface OffersDashboardCardProviderInterface
 {
     /**
-     * Specification:
-     * - Returns the data for displaying the dashboard card.
-     *
-     * @api
-     *
      * @return \Generated\Shared\Transfer\DashboardCardTransfer
      */
     public function getDashboardCard(): DashboardCardTransfer;

@@ -1,3 +1,7 @@
+{#
+@var dashboardCard \Generated\Shared\Transfer\DashboardCardTransfer
+#}
+
 {% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
 
 {% block headTitle %}
@@ -7,12 +11,12 @@
 {% block content %}
     <mp-dashboard></mp-dashboard>
 
-    {% for dashboardCardPlugin in dashboardCardPlugins %}
+    {% for dashboardCard in dashboardCards %}
         <div>
-            <div>{{ dashboardCardPlugin.title | raw }}</div>
-            <div>{{ dashboardCardPlugin.content | raw }}</div>
+            <div>{{ dashboardCard.title | raw }}</div>
+            <div>{{ dashboardCard.content | raw }}</div>
             <div>
-                {% for actionButton in dashboardCardPlugin.actionButtons %}
+                {% for actionButton in dashboardCard.actionButtons %}
                     <a href="{{ actionButton.url }}">{{ actionButton.title | trans }}</a>
                 {% endfor %}
             </div>

@@ -821,7 +821,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
      *
      * @return int[]
      */
-    public function getOffersDashboardCardCountData(int $idMerchant): array
+    public function getOffersDashboardCardCounts(int $idMerchant): array
     {
         $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
         $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
@@ -834,7 +834,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->leftJoinProductOfferStock()
             ->filterByFkMerchant($idMerchant)
             ->addAsColumn(static::OFFERS_COUNT_TOTAL, 'COUNT(*)')
-            ->addAsColumn(static::OFFERS_COUNT_ACTIVE, sprintf('COUNT(CASE WHEN %s IS TRUE THEN 1 END)', SpyProductOfferTableMap::COL_IS_ACTIVE))
+            ->addAsColumn(static::OFFERS_COUNT_ACTIVE, sprintf("COUNT(CASE WHEN %s IS TRUE THEN 1 END)", SpyProductOfferTableMap::COL_IS_ACTIVE))
             ->addAsColumn(static::OFFERS_COUNT_WITH_STOCK, sprintf('COUNT(CASE WHEN %s > 0 THEN 1 END)', SpyProductOfferStockTableMap::COL_QUANTITY))
             ->addAsColumn(static::OFFERS_COUNT_LOW_ON_STOCK, sprintf(
                 'COUNT(CASE WHEN %s < %s THEN 1 END)',

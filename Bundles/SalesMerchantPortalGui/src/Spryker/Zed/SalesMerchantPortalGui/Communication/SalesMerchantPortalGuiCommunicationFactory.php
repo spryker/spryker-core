@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardDataProvider;
-use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardDataProviderInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
@@ -21,11 +21,11 @@ use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardDataProviderInterface
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface
      */
-    public function createOrdersDashboardCardDataProvider(): OrdersDashboardCardDataProviderInterface
+    public function createOrdersDashboardCardProvider(): OrdersDashboardCardProviderInterface
     {
-        return new OrdersDashboardCardDataProvider(
+        return new OrdersDashboardCardProvider(
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getRouterFacade(),

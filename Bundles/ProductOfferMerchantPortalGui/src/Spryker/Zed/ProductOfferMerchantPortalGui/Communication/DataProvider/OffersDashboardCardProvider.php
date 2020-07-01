@@ -7,14 +7,16 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\DashboardActionButtonTransfer;
+use Generated\Shared\Transfer\DashboardCardTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig;
 use Twig\Environment;
 
-class OffersDashboardCardDataProvider implements OffersDashboardCardDataProviderInterface
+class OffersDashboardCardProvider implements OffersDashboardCardProviderInterface
 {
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
@@ -42,11 +44,6 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
     protected $twigEnvironment;
 
     /**
-     * @var int[]|null
-     */
-    protected static $offersDashboardCardCountData;
-
-    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface $routerFacade
@@ -68,60 +65,36 @@ class OffersDashboardCardDataProvider implements OffersDashboardCardDataProvider
     }
 
     /**
-     * @return string
+     * @return \Generated\Shared\Transfer\DashboardCardTransfer
      */
-    public function getTitle(): string
+    public function getDashboardCard(): DashboardCardTransfer
     {
-        return $this->twigEnvironment->render(
-            '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',
-            $this->getOffersDashboardCardCountData()
-        );
-    }
-
-    /**
-     * @return string
-     */
-    public function getContent(): string
-    {
-        $offersDashboardCardData = $this->getOffersDashboardCardCountData();
-        $offersDashboardCardData['expiringOffersLimit'] = $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
-        $offersDashboardCardData['lowStockThreshold'] = $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
-        $offersDashboardCardData['offersCountInactive'] = $offersDashboardCardData['offersCountTotal'] - $offersDashboardCardData['offersCountActive'];
-
-        return $this->twigEnvironment->render(
-            '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_content.twig',
-            $offersDashboardCardData
-        );
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\DashboardActionButtonTransfer[]
-     */
-    public function getActionButtons(): array
-    {
-        return [
-            (new DashboardActionButtonTransfer())
-                ->setTitle('Manage Offers')
-                ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:offers')),
-            (new DashboardActionButtonTransfer())
-                ->setTitle('Add Offer')
-                ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:create-offer')),
-        ];
-    }
-
-    /**
-     * @return int[]
-     */
-    protected function getOffersDashboardCardCountData(): array
-    {
-        if (static::$offersDashboardCardCountData) {
-            return static::$offersDashboardCardCountData;
-        }
-
-        static::$offersDashboardCardCountData = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCountData(
+        $offersDashboardCardCounts = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
         );
+        $offersDashboardCardCounts['expiringOffersLimit'] = $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
+        $offersDashboardCardCounts['lowStockThreshold'] = $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
+        $offersDashboardCardCounts['offersCountInactive'] = $offersDashboardCardCounts['offersCountTotal'] - $offersDashboardCardCounts['offersCountActive'];
 
-        return static::$offersDashboardCardCountData;
+        $title = $this->twigEnvironment->render(
+            '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',
+            $offersDashboardCardCounts
+        );
+        $content = $this->twigEnvironment->render(
+            '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_content.twig',
+            $offersDashboardCardCounts
+        );
+
+        return (new DashboardCardTransfer())
+            ->setTitle($title)
+            ->setContent($content)
+            ->setActionButtons(new ArrayObject([
+                (new DashboardActionButtonTransfer())
+                    ->setTitle('Manage Offers')
+                    ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:offers')),
+                (new DashboardActionButtonTransfer())
+                    ->setTitle('Add Offer')
+                    ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:create-offer')),
+            ]));
     }
 }
