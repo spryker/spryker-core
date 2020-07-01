@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ButtonLinkModule, ButtonLinkComponent } from '@spryker/button';
 import { CustomElementModule } from '@spryker/web-components';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -32,6 +33,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
 
 @NgModule({
     imports: [
+        ButtonLinkModule,
         BrowserModule,
         HttpClientModule,
         BrowserAnimationsModule,
@@ -75,13 +77,17 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
 export class AppModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'mp-offers-list',
+            selector: 'web-mp-offers-list',
             component: OffersListComponent,
         },
         {
-            selector: 'mp-product-offer',
+            selector: 'web-mp-product-offer',
             component: ProductOfferComponent,
         },
+        {
+            selector: 'web-spy-button-link',
+            component: ButtonLinkComponent,
+        }
     ];
 }
 

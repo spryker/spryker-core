@@ -1,11 +1,6 @@
-<div class="offers-list-heading">
-    <h1 class="offers-list-heading__title">{{ title }}</h1>
-
-    <div class="offers-list-heading__actions">
-        <div class="offers-list-heading__actions-col">
-            <spy-button-link [url]="actionUrl" size="lg">{{ actionTitle }}</spy-button-link>
-        </div>
-    </div>
-</div>
+<spy-headline>
+    <ng-content select="[title]"></ng-content>
+    <ng-content actions select="[action]"></ng-content>
+</spy-headline>
 
 <mp-offers-list-table [config]="tableConfig"></mp-offers-list-table>

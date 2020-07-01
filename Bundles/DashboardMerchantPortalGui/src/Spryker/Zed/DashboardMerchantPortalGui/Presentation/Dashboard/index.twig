@@ -9,19 +9,32 @@
 {% endblock %}
 
 {% block content %}
-    <mp-dashboard></mp-dashboard>
+    <web-mp-dashboard>
+        <div title>{{ 'Dashboard' | trans }}</div>
 
-    {% for dashboardCard in dashboardCards %}
-        <div>
-            <div>{{ dashboardCard.title | raw }}</div>
-            <div>{{ dashboardCard.content | raw }}</div>
-            <div>
-                {% for actionButton in dashboardCard.actionButtons %}
-                    <a href="{{ actionButton.url }}">{{ actionButton.title | trans }}</a>
-                {% endfor %}
-            </div>
+        <div class="mp-dashboard-grid">
+            {% for dashboardCard in dashboardCards %}
+
+                <web-mp-dashboard-card>
+                    <div title class="mp-dashboard-card__heading">
+                        {{ dashboardCard.title | raw }}
+                    </div>
+
+                    <div actions class="mp-dashboard-card__heading">
+                        {% for actionButton in dashboardCard.actionButtons %}
+                            <div class="mp-dashboard-card__heading-col">
+                                <web-spy-button-link url="{{ actionButton.url }}" size="sm">{{ actionButton.title | trans }}</web-spy-button-link>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mp-dashboard-grid">
+                        {{ dashboardCard.content | raw }}
+                    </div>
+                </web-mp-dashboard-card>
+            {% endfor %}
         </div>
-    {% endfor %}
+    </web-mp-dashboard>
 {% endblock %}
 
 {% block footerJs %}

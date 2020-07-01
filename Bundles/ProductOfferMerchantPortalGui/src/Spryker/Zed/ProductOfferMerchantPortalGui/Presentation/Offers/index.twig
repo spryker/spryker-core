@@ -20,14 +20,11 @@
         filters: filters,
     } %}
 
-    <mp-offers-list
-        cloak
-        title="{{ 'Offers' | trans }}"
-        action-url="/product-offer-merchant-portal-gui/create-offer"
-        action-title="{{ 'Add Offer' | trans }}"
-        table-config="{{ config | json_encode() }}"
-    >
-    </mp-offers-list>
+    <web-mp-offers-list cloak table-config="{{ config | json_encode() }}">
+        <span title>{{ 'Offers' | trans }}</span>
+
+        <web-spy-button-link action url="/product-offer-merchant-portal-gui/create-offer" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>
+    </web-mp-offers-list>
 {% endblock %}
 
 {% block footerJs %}
