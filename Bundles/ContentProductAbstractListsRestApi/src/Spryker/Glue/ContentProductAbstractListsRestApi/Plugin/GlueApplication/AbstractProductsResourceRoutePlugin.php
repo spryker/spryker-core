@@ -18,6 +18,7 @@ class AbstractProductsResourceRoutePlugin extends AbstractPlugin implements Reso
 {
     /**
      * {@inheritDoc}
+     * - Configures available actions for `abstract-products` resource with `content-product-abstract-lists` as a parent resource.
      *
      * @api
      *

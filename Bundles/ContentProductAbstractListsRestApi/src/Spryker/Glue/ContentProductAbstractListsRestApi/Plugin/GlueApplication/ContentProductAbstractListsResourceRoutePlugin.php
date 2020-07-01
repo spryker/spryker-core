@@ -21,6 +21,7 @@ class ContentProductAbstractListsResourceRoutePlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
+     * - Configures available actions for `content-product-abstract-lists` resource.
      *
      * @api
      *

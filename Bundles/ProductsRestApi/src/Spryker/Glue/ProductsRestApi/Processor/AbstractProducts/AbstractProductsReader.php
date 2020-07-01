@@ -24,7 +24,6 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_IDS_KEY = 'product_concrete_ids';
     protected const PRODUCT_ABSTRACT_MAPPING_TYPE = 'sku';
-    protected const PRODUCT_ABSTRACT_MAPPING_TYPE_ID = 'id';
     protected const KEY_SKU = 'sku';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 

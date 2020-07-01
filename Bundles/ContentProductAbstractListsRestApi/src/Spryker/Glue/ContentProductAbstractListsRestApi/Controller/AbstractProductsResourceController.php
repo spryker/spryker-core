@@ -18,9 +18,9 @@ class AbstractProductsResourceController extends AbstractController
 {
     /**
      * @Glue({
-     *     "getResourceById": {
+     *     "getCollection": {
      *          "summary": [
-     *              "Retrieves product abstarct list by the content abstract product list content item."
+     *              "Retrieves product abstract list by the content abstract product list content item."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
