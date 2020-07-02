@@ -17,7 +17,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Search\SearchConstants;
 
 /**
- * @deprecated `\Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\Query\SearchKeysQuery} instead.
  */
 class SearchKeysQuery implements QueryInterface
 {

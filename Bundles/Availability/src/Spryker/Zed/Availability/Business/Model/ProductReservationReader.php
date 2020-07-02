@@ -54,8 +54,6 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
-     *
      * @param int $idProductAbstract
      * @param int $idLocale
      *
@@ -80,8 +78,6 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
-     *
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
@@ -111,8 +107,6 @@ class ProductReservationReader implements ProductReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `ProductAvailabilityReader::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
-     *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null

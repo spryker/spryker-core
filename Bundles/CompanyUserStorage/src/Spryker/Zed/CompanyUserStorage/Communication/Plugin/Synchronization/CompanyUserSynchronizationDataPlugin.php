@@ -13,8 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
 
 /**
- * @deprecated Use `CompanyUserSynchronizationDataBulkPlugin` instead.
- * @see \Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization\CompanyUserSynchronizationDataBulkPlugin
+ * @deprecated Use {@link \Spryker\Zed\CompanyUserStorage\Communication\Plugin\Synchronization\CompanyUserSynchronizationDataBulkPlugin} instead.
  *
  * @method \Spryker\Zed\CompanyUserStorage\CompanyUserStorageConfig getConfig()
  * @method \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface getRepository()
