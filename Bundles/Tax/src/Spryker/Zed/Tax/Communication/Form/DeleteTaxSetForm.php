@@ -10,6 +10,9 @@ namespace Spryker\Zed\Tax\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
+ * This class is empty, because this form needs to implement csrf protection and all options and form content
+ * will be defined in twig templates.
+ *
  * @method \Spryker\Zed\Tax\TaxConfig getConfig()
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Tax\Persistence\TaxRepositoryInterface getRepository()

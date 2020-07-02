@@ -10,6 +10,9 @@ namespace Spryker\Zed\Discount\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
+ * This class is empty, because this form needs to implement csrf protection and all options and form content
+ * will be defined in twig templates.
+ *
  * @method \Spryker\Zed\Discount\DiscountConfig getConfig()
  * @method \Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Discount\Persistence\DiscountRepositoryInterface getRepository()

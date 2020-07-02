@@ -10,6 +10,9 @@ namespace Spryker\Zed\CmsSlotGui\Communication\Form;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 
 /**
+ * This class is empty, because this form needs to implement csrf protection and all options and form content
+ * will be defined in twig templates.
+ *
  * @method \Spryker\Zed\CmsSlotGui\Communication\CmsSlotGuiCommunicationFactory getFactory()
  */
 class ToggleActiveCmsSlotForm extends AbstractType
