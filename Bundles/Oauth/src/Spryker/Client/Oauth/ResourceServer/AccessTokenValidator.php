@@ -14,6 +14,9 @@ use GuzzleHttp\Psr7\ServerRequest;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\ResourceServer;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\Oauth\ResourceServer\OauthAccessTokenValidator} instead.
+ */
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     /**

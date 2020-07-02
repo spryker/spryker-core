@@ -12,9 +12,14 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\Oauth\Dependency\Client\OauthToZedRequestClientInterface;
 use Spryker\Client\Oauth\ResourceServer\AccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface;
+use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoader;
+use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface;
+use Spryker\Client\Oauth\ResourceServer\OauthAccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\Repository\AccessTokenRepository;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilder;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilderInterface;
+use Spryker\Client\Oauth\ResourceServer\ResourceServerCreator;
+use Spryker\Client\Oauth\ResourceServer\ResourceServerCreatorInterface;
 use Spryker\Client\Oauth\Zed\OauthStub;
 use Spryker\Client\Oauth\Zed\OauthStubInterface;
 
@@ -32,6 +37,8 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Oauth\OauthFactory::createOauthAccessTokenValidator()} instead.
+     *
      * @return \Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface
      */
     public function createAccessTokenValidator(): AccessTokenValidatorInterface
@@ -40,6 +47,8 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Oauth\OauthFactory::createResourceServerCreator()} instead.
+     *
      * @return \Spryker\Client\Oauth\ResourceServer\ResourceServerBuilderInterface
      */
     public function createResourceServerBuilder(): ResourceServerBuilderInterface
@@ -48,9 +57,29 @@ class OauthFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface
+     */
+    public function createOauthAccessTokenValidator(): AccessTokenValidatorInterface
+    {
+        return new OauthAccessTokenValidator($this->createResourceServerCreator()->create());
+    }
+
+    /**
+     * @return \Spryker\Client\Oauth\ResourceServer\ResourceServerCreatorInterface
+     */
+    public function createResourceServerCreator(): ResourceServerCreatorInterface
+    {
+        return new ResourceServerCreator(
+            $this->createKeyLoader(),
+            $this->createAccessTokenRepository(),
+            $this->getAuthorizationValidatorPlugins()
+        );
+    }
+
+    /**
      * @return \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface
      */
-    protected function createAccessTokenRepository(): AccessTokenRepositoryInterface
+    public function createAccessTokenRepository(): AccessTokenRepositoryInterface
     {
         return new AccessTokenRepository();
     }
@@ -61,5 +90,29 @@ class OauthFactory extends AbstractFactory
     public function getZedRequestClient(): OauthToZedRequestClientInterface
     {
         return $this->getProvidedDependency(OauthDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return \Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface
+     */
+    public function createKeyLoader(): KeyLoaderInterface
+    {
+        return new KeyLoader($this->getKeyLoaderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\KeyLoaderPluginInterface[]
+     */
+    public function getKeyLoaderPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_KEY_LOADER);
+    }
+
+    /**
+     * @return \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[]
+     */
+    public function getAuthorizationValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_AUTHORIZATION_VALIDATOR);
     }
 }
