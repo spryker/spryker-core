@@ -27,17 +27,17 @@ class QueueDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::CLIENT_QUEUE] = function (Container $container) {
+        $container->set(static::CLIENT_QUEUE, function (Container $container) {
             return $container->getLocator()->queue()->client();
-        };
+        });
 
-        $container[static::QUEUE_MESSAGE_PROCESSOR_PLUGINS] = function (Container $container) {
+        $container->set(static::QUEUE_MESSAGE_PROCESSOR_PLUGINS, function (Container $container) {
             return $this->getProcessorMessagePlugins($container);
-        };
+        });
 
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new QueueToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

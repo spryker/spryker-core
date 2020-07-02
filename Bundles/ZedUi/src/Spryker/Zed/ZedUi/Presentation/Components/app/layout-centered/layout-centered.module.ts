@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthFooterModule } from '../auth-footer/auth-footer.module';
+import { LayoutFooterModule } from '../layout-footer/layout-footer.module';
 import { LayoutCenteredComponent } from './layout-centered.component';
 
 @NgModule({
-    imports: [CommonModule, AuthFooterModule],
+    imports: [CommonModule, LayoutFooterModule],
     declarations: [LayoutCenteredComponent],
     exports: [LayoutCenteredComponent],
 })

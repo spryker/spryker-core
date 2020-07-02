@@ -51,9 +51,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductReviewCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
     }
 
     /**
@@ -63,9 +63,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSearchFacade(Container $container)
     {
-        $container[static::FACADE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_SEARCH, function (Container $container) {
             return new ProductReviewCollectorToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
     }
 
     /**
@@ -75,9 +75,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
     }
 
     /**
@@ -87,9 +87,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
     }
 
     /**
@@ -99,9 +99,9 @@ class ProductReviewCollectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }

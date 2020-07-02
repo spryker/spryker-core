@@ -80,11 +80,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new DataImportToTouchBridge(
                 $container->getLocator()->touch()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -96,11 +96,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container)
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new DataImportToEventBridge(
                 $container->getLocator()->event()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     private function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -126,11 +126,11 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelConnection(Container $container)
     {
-        $container[static::PROPEL_CONNECTION] = function () {
+        $container->set(static::PROPEL_CONNECTION, function () {
             return new DataImportToPropelConnectionBridge(
                 Propel::getConnection()
             );
-        };
+        });
 
         return $container;
     }
@@ -142,9 +142,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImporterPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORTER_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORTER_PLUGINS, function () {
             return $this->getDataImporterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -164,9 +164,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportBeforeImportHookPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_BEFORE_HOOK_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_BEFORE_HOOK_PLUGINS, function () {
             return $this->getDataImportBeforeImportHookPlugins();
-        };
+        });
 
         return $container;
     }
@@ -186,9 +186,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportAfterImportHookPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_AFTER_HOOK_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_AFTER_HOOK_PLUGINS, function () {
             return $this->getDataImportAfterImportHookPlugins();
-        };
+        });
 
         return $container;
     }
@@ -208,9 +208,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataImportDefaultWriterPlugins(Container $container): Container
     {
-        $container[static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS] = function () {
+        $container->set(static::DATA_IMPORT_DEFAULT_WRITER_PLUGINS, function () {
             return $this->getDataImportDefaultWriterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -230,9 +230,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueueClient(Container $container): Container
     {
-        $container[static::CLIENT_QUEUE] = function (Container $container) {
+        $container->set(static::CLIENT_QUEUE, function (Container $container) {
             return new DataImportToQueueClientBridge($container->getLocator()->queue()->client());
-        };
+        });
 
         return $container;
     }
@@ -244,9 +244,9 @@ class DataImportDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new DataImportToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

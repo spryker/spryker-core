@@ -10,7 +10,9 @@ namespace SprykerTest\Zed\Oms\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
@@ -269,6 +271,97 @@ class OmsFacadeTest extends Unit
 
         // Assert
         $this->assertEmpty($expandedOrderTransfer->getItemStates());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateReservationUpdatesExistingReservationQuantity(): void
+    {
+        // Arrange
+        $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setSku($omsProductReservationTransfer->getSku())
+            ->setStore($storeTransfer)
+            ->setReservationQuantity(5);
+
+        // Act
+        $this->createOmsFacade()->updateReservation($reservationRequestTransfer);
+
+        // Assert
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
+        $this->assertTrue($reservationResponseTransfer->getReservationQuantity()->isZero());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreateProductReservationForDifferentStores(): void
+    {
+        // Arrange
+        $omsProductReservationTransfer1 = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $omsProductReservationTransfer2 = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 2,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 3,
+        ]);
+
+        $storeTransfer1 = (new StoreTransfer())->setIdStore($omsProductReservationTransfer1->getFkStore());
+        $storeTransfer2 = (new StoreTransfer())->setIdStore($omsProductReservationTransfer2->getFkStore());
+
+        $reservationRequestTransfer1 = (new ReservationRequestTransfer())
+            ->setSku($omsProductReservationTransfer1->getSku())
+            ->setStore($storeTransfer1);
+
+        $reservationRequestTransfer2 = (new ReservationRequestTransfer())
+            ->setSku($omsProductReservationTransfer2->getSku())
+            ->setStore($storeTransfer2);
+
+        // Act
+        $reservationResponseTransfer1 = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer1);
+        $reservationResponseTransfer2 = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer2);
+
+        // Assert
+        $this->assertSame(5, $reservationResponseTransfer1->getReservationQuantity()->toInt());
+        $this->assertSame(3, $reservationResponseTransfer2->getReservationQuantity()->toInt());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetOmsReservedProductQuantityForProduct(): void
+    {
+        // Arrange
+        $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
+            OmsProductReservationTransfer::SKU => 'test',
+            OmsProductReservationTransfer::FK_STORE => 1,
+            OmsProductReservationTransfer::RESERVATION_QUANTITY => 5,
+        ]);
+
+        $storeTransfer = (new StoreTransfer())->setIdStore($omsProductReservationTransfer->getFkStore());
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setSku($omsProductReservationTransfer->getSku())
+            ->setStore($storeTransfer);
+
+        // Act
+        $reservationResponseTransfer = $this->createOmsFacade()->getOmsReservedProductQuantity($reservationRequestTransfer);
+
+        // Assert
+        $this->assertSame(
+            $omsProductReservationTransfer->getReservationQuantity()->toInt(),
+            $reservationResponseTransfer->getReservationQuantity()->toInt()
+        );
     }
 
     /**

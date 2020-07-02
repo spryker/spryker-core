@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOffer\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -81,4 +83,17 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Check if cart items product offer belongs to product.
+     * - Returns pre-check transfer with error messages in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

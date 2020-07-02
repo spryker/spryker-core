@@ -35,9 +35,9 @@ class UtilUuidGeneratorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addUuidGenerator(Container $container): Container
     {
-        $container[static::UUID_GENERATOR] = function () {
+        $container->set(static::UUID_GENERATOR, function () {
             return new UtilUuidGeneratorToRamseyUuidAdapter();
-        };
+        });
 
         return $container;
     }

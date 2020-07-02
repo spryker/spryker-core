@@ -62,7 +62,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createRangeExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
-        return new RangeExtractor($facetConfigTransfer);
+        return new RangeExtractor(
+            $facetConfigTransfer,
+            $this->createFacetValueTransformerFactory()->createTransformer($facetConfigTransfer)
+        );
     }
 
     /**

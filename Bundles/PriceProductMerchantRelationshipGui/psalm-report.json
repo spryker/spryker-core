@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $choices[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipGui/src/Spryker/Zed/PriceProductMerchantRelationshipGui/Communication/Form/DataProvider/MerchantRelationshipPriceDimensionFormDataProvider.php",
+            "snippet": "            $choices[$merchantRelationshipTransfer->getMerchant()->getName()][$merchantRelationshipTransfer->getName()] = $merchantRelationshipTransfer->getIdMerchantRelationship();",
+            "selected_text": "$choices",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipGui/src/Spryker/Zed/PriceProductMerchantRelationshipGui/Communication/Form/DataProvider/MerchantRelationshipPriceDimensionFormDataProvider.php",
+            "snippet": "            $choices[$merchantRelationshipTransfer->getMerchant()->getName()][$merchantRelationshipTransfer->getName()] = $merchantRelationshipTransfer->getIdMerchantRelationship();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceProductMerchantRelationshipGui/src/Spryker/Zed/PriceProductMerchantRelationshipGui/PriceProductMerchantRelationshipGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantRelationship()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

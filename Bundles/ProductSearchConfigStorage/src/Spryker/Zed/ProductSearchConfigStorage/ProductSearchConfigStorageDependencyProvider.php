@@ -29,9 +29,9 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDepende
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductSearchConfigStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -43,13 +43,13 @@ class ProductSearchConfigStorageDependencyProvider extends AbstractBundleDepende
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::CONFIG_PRODUCT_SEARCH] = function (Container $container) {
+        $container->set(static::CONFIG_PRODUCT_SEARCH, function (Container $container) {
             return new ProductSearchConfig();
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SEARCH, function (Container $container) {
             return new ProductSearchConfigStorageToProductSearchFacadeBridge($container->getLocator()->productSearch()->facade());
-        };
+        });
 
         return $container;
     }

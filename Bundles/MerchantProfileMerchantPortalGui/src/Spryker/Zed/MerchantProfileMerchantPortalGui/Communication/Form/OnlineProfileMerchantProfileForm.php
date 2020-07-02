@@ -14,7 +14,7 @@ use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\MerchantProf
 use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
@@ -28,26 +28,18 @@ use Symfony\Component\Validator\Constraints\Regex;
  */
 class OnlineProfileMerchantProfileForm extends AbstractType
 {
-    protected const FIELD_ID_MERCHANT_PROFILE = 'id_merchant_profile';
     protected const FIELD_LOGO_URL = 'logo_url';
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
+    protected const FIELD_ADDRESS_COLLECTION = 'addressCollection';
     protected const FIELD_IS_ACTIVE = 'is_active';
     protected const FIELD_URL_COLLECTION = 'urlCollection';
-    protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
-    protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
-    protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
-    protected const FIELD_TERMS_CONDITIONS_GLOSSARY_KEY = 'terms_conditions_glossary_key';
-    protected const FIELD_CANCELLATION_POLICY_GLOSSARY_KEY = 'cancellation_policy_glossary_key';
-    protected const FIELD_IMPRINT_GLOSSARY_KEY = 'imprint_glossary_key';
-    protected const FIELD_DATA_PRIVACY_GLOSSARY_KEY = 'data_privacy_glossary_key';
     protected const FIELD_LATITUDE = 'latitude';
     protected const FIELD_LONGITUDE = 'longitude';
     protected const FIELD_FAX_NUMBER = 'fax_number';
 
     protected const LABEL_LOGO_URL = 'Logo URL';
-    protected const LABEL_URL = 'Profile URL';
     protected const LABEL_PUBLIC_EMAIL = 'Email';
     protected const LABEL_PUBLIC_PHONE = 'Phone Number';
     protected const LABEL_IS_ACTIVE = 'Is Active';
@@ -67,21 +59,13 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdMerchantProfileField($builder)
-            ->addPublicEmailField($builder)
+        $this->addPublicEmailField($builder)
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
             ->addIsActiveField($builder)
             ->addUrlCollectionField($builder)
-            ->addDescriptionGlossaryKeyField($builder)
-            ->addBannerUrlGlossaryKeyField($builder)
-            ->addDeliveryTimeGlossaryKeyField($builder)
-            ->addTermsConditionsGlossaryKeyField($builder)
-            ->addCancellationPolicyGlossaryKeyField($builder)
-            ->addImprintGlossaryKeyField($builder)
-            ->addDataPrivacyGlossaryKeyField($builder)
             ->addMerchantProfileLocalizedGlossaryAttributesSubform($builder)
-            ->addFaxNumber($builder)
+            ->addFaxNumberField($builder)
             ->addLatitudeField($builder)
             ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
@@ -97,7 +81,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
         $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
             'entry_type' => MerchantProfileUrlCollectionFormType::class,
             'allow_add' => true,
-            'label' => static::LABEL_URL,
+            'label' => false,
             'required' => true,
             'allow_delete' => true,
             'entry_options' => [
@@ -133,111 +117,16 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addIdMerchantProfileField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_ID_MERCHANT_PROFILE, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addDescriptionGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_DESCRIPTION_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addBannerUrlGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_BANNER_URL_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addDeliveryTimeGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_DELIVERY_TIME_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addTermsConditionsGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_TERMS_CONDITIONS_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addCancellationPolicyGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_CANCELLATION_POLICY_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addImprintGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_IMPRINT_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addDataPrivacyGlossaryKeyField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_DATA_PRIVACY_GLOSSARY_KEY, HiddenType::class);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
     protected function addPublicEmailField(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PUBLIC_EMAIL, TextType::class, [
+        $builder->add(static::FIELD_PUBLIC_EMAIL, EmailType::class, [
             'label' => static::LABEL_PUBLIC_EMAIL,
             'required' => false,
             'constraints' => [
                 new Email(),
                 new Length(['max' => 255]),
             ],
+            'property_path' => 'merchantProfile.publicEmail',
         ]);
 
         return $this;
@@ -254,6 +143,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'label' => static::LABEL_PUBLIC_PHONE,
             'constraints' => $this->getTextFieldConstraints(),
             'required' => false,
+            'property_path' => 'merchantProfile.publicPhone',
         ]);
 
         return $this;
@@ -273,6 +163,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'attr' => [
                 'placeholder' => static::PLACEHOLDER_LOGO_URL,
             ],
+            'property_path' => 'merchantProfile.logoUrl',
         ]);
 
         return $this;
@@ -290,6 +181,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             'entry_type' => MerchantProfileLocalizedGlossaryAttributesFormType::class,
             'allow_add' => true,
             'allow_delete' => true,
+            'property_path' => 'merchantProfile.merchantProfileLocalizedGlossaryAttributes',
         ]);
 
         return $this;
@@ -302,10 +194,9 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      */
     protected function addAddressCollectionSubform(FormBuilderInterface $builder)
     {
-        $builder->add(
-            'addressCollection',
-            MerchantProfileAddressFormType::class
-        );
+        $builder->add(static::FIELD_ADDRESS_COLLECTION, MerchantProfileAddressFormType::class, [
+            'property_path' => 'merchantProfile.addressCollection',
+        ]);
 
         return $this;
     }
@@ -342,7 +233,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
             new Length(['max' => 255]),
             new Regex([
                 'pattern' => static::URL_PATH_PATTERN,
-                'message' => 'Invalid url provided. "Space" and "\" character is not allowed.',
+                'message' => 'Invalid URL provided. "Space" and "\" character is not allowed.',
             ]),
         ];
     }
@@ -365,6 +256,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'pattern' => '/^(\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
                 ]),
             ],
+            'property_path' => 'merchantProfile.longitude',
         ]);
 
         return $this;
@@ -388,6 +280,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'pattern' => '/^(\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?))$/',
                 ]),
             ],
+            'property_path' => 'merchantProfile.latitude',
         ]);
 
         return $this;
@@ -398,7 +291,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
      *
      * @return $this
      */
-    protected function addFaxNumber(FormBuilderInterface $builder)
+    protected function addFaxNumberField(FormBuilderInterface $builder)
     {
         $builder->add(static::FIELD_FAX_NUMBER, TextType::class, [
             'label' => static::LABEL_FAX_NUMBER,
@@ -408,6 +301,7 @@ class OnlineProfileMerchantProfileForm extends AbstractType
                     'max' => 255,
                 ]),
             ],
+            'property_path' => 'merchantProfile.faxNumber',
         ]);
 
         return $this;

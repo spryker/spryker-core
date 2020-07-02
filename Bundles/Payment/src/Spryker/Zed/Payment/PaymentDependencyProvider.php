@@ -66,9 +66,9 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCheckoutPlugins(Container $container)
     {
-        $container[static::CHECKOUT_PLUGINS] = function (Container $container) {
+        $container->set(static::CHECKOUT_PLUGINS, function (Container $container) {
             return new CheckoutPluginCollection();
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentHydrationPlugins(Container $container)
     {
-        $container[static::PAYMENT_HYDRATION_PLUGINS] = function (Container $container) {
+        $container->set(static::PAYMENT_HYDRATION_PLUGINS, function (Container $container) {
             return $this->getPaymentHydrationPlugins();
-        };
+        });
 
         return $container;
     }
@@ -94,9 +94,9 @@ class PaymentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentMethodFilterPlugins(Container $container)
     {
-        $container[static::PAYMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+        $container->set(static::PAYMENT_METHOD_FILTER_PLUGINS, function (Container $container) {
             return $this->getPaymentMethodFilterPlugins();
-        };
+        });
 
         return $container;
     }

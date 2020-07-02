@@ -27,6 +27,8 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="orderReference" type="string"/>
+        <property name="isCancellable" type="bool"/>
+        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
@@ -98,6 +100,7 @@
         <property name="state" type="ItemState"/>
         <property name="process" type="string"/>
         <property name="stateHistory" type="ItemState[]" singular="stateHistory"/>
+        <property name="fkSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="Locale">
@@ -132,6 +135,43 @@
 
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="sku" type="string"/>
+        <property name="store" type="Store"/>
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+        <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsEvent">
+        <property name="timeout" type="string"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutRequest">
+        <property name="salesOrderItemEntity" type="SpySalesOrderItemEntity"/>
+        <property name="timestamp" type="int"/>
+        <property name="omsEvent" type="OmsEvent"/>
+    </transfer>
+
+    <transfer name="TimeoutProcessorTimeoutResponse">
+        <property name="timeoutTimestamp" type="int"/>
     </transfer>
 
 </transfers>

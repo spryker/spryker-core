@@ -1,0 +1,224 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesQuantity\\Business\\Cart\\Expander\\ItemExpander::getSkusFromCartChangeTransfer is incorrect, got 'list<mixed|null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Cart/Expander/ItemExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<mixed|null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Zed\\SalesQuantity\\Business\\Cart\\Expander\\ItemExpander::getSkusFromCartChangeTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Cart/Expander/ItemExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SalesQuantity\\Business\\Discount\\DiscountableItem\\DiscountableItemTransformer::createBaseCalculatedDiscountTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $calculatedDiscountTransfer = $this->createBaseCalculatedDiscountTransfer($discountTransfer);",
+            "selected_text": "$discountTransfer",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;",
+            "selected_text": "$discountableItemTransfer->getUnitPrice()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUnitPrice on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;",
+            "selected_text": "getUnitPrice",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;",
+            "selected_text": "$quantity",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $singleItemAmountShare = $discountableItemTransfer->getUnitPrice() * $quantity / $totalAmount;",
+            "selected_text": "$totalAmount",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;",
+            "selected_text": "$totalDiscountAmount",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got float|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $itemDiscountAmount = ($totalDiscountAmount * $singleItemAmountShare) + $roundingError;",
+            "selected_text": "$roundingError",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyNullOperand",
+            "message": "Right operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $distributedDiscountTransfer->setUnitAmount((int)round($itemDiscountAmountRounded / $quantity));",
+            "selected_text": "$quantity",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CalculatedDiscountTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/Discount/DiscountableItem/DiscountableItemTransformer.php",
+            "snippet": "        $discountableItemTransfer->getOriginalItemCalculatedDiscounts()->append($distributedDiscountTransfer);",
+            "selected_text": "append",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProduct|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Persistence/SalesQuantityRepository.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",
+            "snippet": "            return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Business/SalesQuantityBusinessFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeInterface",
+            "selected_text": "\\Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeInterface",
+            "error_level": 2,
+            "shortcode": 98
+        },
+        {
+            "severity": "info",
+            "line_from": 18,
+            "line_to": 18,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\ItemExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Communication/Plugin/Cart/IsQuantitySplittableItemExpanderPlugin.php",
+            "snippet": "class IsQuantitySplittableItemExpanderPlugin extends AbstractPlugin implements ItemExpanderPluginInterface",
+            "selected_text": "IsQuantitySplittableItemExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/Dependency/Facade/SalesQuantityToProductFacadeBridge.php",
+            "snippet": "class SalesQuantityToProductFacadeBridge implements SalesQuantityToProductFacadeInterface",
+            "selected_text": "SalesQuantityToProductFacadeBridge",
+            "error_level": 2,
+            "shortcode": 152
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\SalesQuantity\\SalesQuantityDependencyProvider::addProductFacade has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",
+            "snippet": "        $container = $this->addProductFacade($container);",
+            "selected_text": "addProductFacade",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "DeprecatedClass",
+            "message": "Spryker\\Zed\\SalesQuantity\\Dependency\\Facade\\SalesQuantityToProductFacadeBridge is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesQuantity/src/Spryker/Zed/SalesQuantity/SalesQuantityDependencyProvider.php",
+            "snippet": "            return new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade());",
+            "selected_text": "new SalesQuantityToProductFacadeBridge($container->getLocator()->product()->facade())",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

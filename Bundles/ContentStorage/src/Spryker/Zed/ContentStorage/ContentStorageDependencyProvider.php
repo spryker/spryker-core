@@ -72,11 +72,11 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ContentStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -88,11 +88,11 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ContentStorageToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -104,9 +104,9 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addContentQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CONTENT] = function () {
+        $container->set(static::PROPEL_QUERY_CONTENT, $container->factory(function () {
             return SpyContentQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -118,9 +118,9 @@ class ContentStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncoding(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

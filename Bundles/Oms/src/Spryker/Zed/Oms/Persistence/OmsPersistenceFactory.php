@@ -19,12 +19,14 @@ use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\Oms\Persistence\Propel\Mapper\OmsMapper;
 use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapper;
 use Spryker\Zed\Oms\Persistence\Propel\Mapper\OrderItemMapperInterface;
 
 /**
  * @method \Spryker\Zed\Oms\OmsConfig getConfig()
  * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface getEntityManager()
  * @method \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface getQueryContainer()
  */
 class OmsPersistenceFactory extends AbstractPersistenceFactory
@@ -126,10 +128,20 @@ class OmsPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Persistence\OmsPersistenceFactory::getSalesQueryContainer()} to get the required query instead.
+     *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     public function getSalesOrderItemPropelQuery(): SpySalesOrderItemQuery
     {
         return $this->getProvidedDependency(OmsDependencyProvider::PROPEL_QUERY_SALES_ORDER_ITEM);
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Persistence\Propel\Mapper\OmsMapper
+     */
+    public function createOmsMapper(): OmsMapper
+    {
+        return new OmsMapper();
     }
 }

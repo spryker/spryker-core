@@ -26,9 +26,9 @@ class QueueDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[static::QUEUE_ADAPTERS] = function (Container $container) {
+        $container->set(static::QUEUE_ADAPTERS, function (Container $container) {
             return $this->createQueueAdapters($container);
-        };
+        });
 
         return $container;
     }

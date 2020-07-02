@@ -38,9 +38,9 @@ class CustomerAccessStorageDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCustomerAccessPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CUSTOMER_ACCESS] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_CUSTOMER_ACCESS, $container->factory(function () {
             return SpyUnauthenticatedCustomerAccessQuery::create();
-        };
+        }));
 
         return $container;
     }

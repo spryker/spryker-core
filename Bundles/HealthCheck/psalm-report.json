@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface::setStatus cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/HealthCheck/src/Spryker/Glue/HealthCheck/Processor/HealthCheck.php",
+            "snippet": "            ->setStatus($healthCheckResponseTransfer->getStatusCode());",
+            "selected_text": "$healthCheckResponseTransfer->getStatusCode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Yves\\HealthCheck\\Controller\\IndexController::jsonResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/HealthCheck/src/Spryker/Yves/HealthCheck/Controller/IndexController.php",
+            "snippet": "            $healthCheckResponseTransfer->getStatusCode()",
+            "selected_text": "$healthCheckResponseTransfer->getStatusCode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\HealthCheck\\Communication\\Controller\\IndexController::jsonResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/HealthCheck/src/Spryker/Zed/HealthCheck/Communication/Controller/IndexController.php",
+            "snippet": "            $healthCheckResponseTransfer->getStatusCode()",
+            "selected_text": "$healthCheckResponseTransfer->getStatusCode()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

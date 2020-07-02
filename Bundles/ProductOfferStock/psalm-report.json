@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferStock/src/Spryker/Zed/ProductOfferStock/Business/ProductOfferStock/ProductOfferStockReader.php",
+            "snippet": "            ->requireName();",
+            "selected_text": "requireName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferStock/src/Spryker/Zed/ProductOfferStock/Business/ProductOfferStock/ProductOfferStockReader.php",
+            "snippet": "                    $productOfferStockRequestTransfer->getProductOfferReference()",
+            "selected_text": "$productOfferStockRequestTransfer->getProductOfferReference()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

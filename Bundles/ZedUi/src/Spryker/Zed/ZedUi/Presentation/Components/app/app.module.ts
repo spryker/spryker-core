@@ -4,6 +4,9 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { CustomElementModule } from '@spryker/web-components';
 import { NotificationModule, NotificationComponent } from '@spryker/notification';
+import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
+import { EnLocaleModule, EN_LOCALE } from '@spryker/locale/locales/en';
+import { DeLocaleModule } from '@spryker/locale/locales/de';
 
 import { LayoutCenteredComponent } from './layout-centered/layout-centered.component';
 import { LayoutCenteredModule } from './layout-centered/layout-centered.module';
@@ -27,6 +30,9 @@ import { MerchantLayoutMainComponent } from './merchant-layout-main/merchant-lay
         LayoutMainModule,
         HeaderModule,
         NotificationModule,
+        LocaleModule.forRoot({ defaultLocale: EN_LOCALE }),
+        EnLocaleModule,
+        DeLocaleModule,
     ],
     providers: [],
 })
@@ -55,6 +61,10 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'spy-notification',
             component: NotificationComponent,
+        },
+        {
+            selector: 'spy-locale-switcher',
+            component: LocaleSwitcherComponent,
         },
     ];
 }

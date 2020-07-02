@@ -89,7 +89,7 @@ class ViewController extends AddController
             ->getProductCategoryFacade()
             ->getCategoryTransferCollectionByIdProductAbstract($idProductAbstract, $localeProvider->getCurrentLocale());
 
-        return $this->viewResponse([
+        $viewData = $this->executeProductAbstractViewActionViewDataExpanderPlugins([
             'currentLocale' => $this->getFactory()->getLocaleFacade()->getCurrentLocale()->getLocaleName(),
             'currentProduct' => $productAbstractTransfer->toArray(),
             'concreteProductCollection' => $concreteProductCollection,
@@ -109,6 +109,8 @@ class ViewController extends AddController
             'isGiftCard' => $isGiftCard,
             'categories' => $categoryCollectionTransfer->getCategories(),
         ]);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -325,5 +327,19 @@ class ViewController extends AddController
         return array_map(function (StoreTransfer $storeTransfer) {
             return $storeTransfer->getName();
         }, $stores->getArrayCopy());
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeProductAbstractViewActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getProductAbstractViewActionViewDataExpanderPlugins() as $productAbstractViewActionViewDataExpanderPlugin) {
+            $viewData = $productAbstractViewActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }

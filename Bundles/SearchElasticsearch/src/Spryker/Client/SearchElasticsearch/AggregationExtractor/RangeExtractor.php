@@ -10,6 +10,7 @@ namespace Spryker\Client\SearchElasticsearch\AggregationExtractor;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 use Generated\Shared\Transfer\RangeSearchResultTransfer;
 use Spryker\Client\SearchElasticsearch\Aggregation\NumericFacetAggregation;
+use Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class RangeExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
@@ -20,11 +21,18 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
     protected $facetConfigTransfer;
 
     /**
-     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @var \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null
      */
-    public function __construct(FacetConfigTransfer $facetConfigTransfer)
+    protected $valueTransformerPlugin;
+
+    /**
+     * @param \Generated\Shared\Transfer\FacetConfigTransfer $facetConfigTransfer
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface|null $valueTransformerPlugin
+     */
+    public function __construct(FacetConfigTransfer $facetConfigTransfer, ?FacetSearchResultValueTransformerPluginInterface $valueTransformerPlugin = null)
     {
         $this->facetConfigTransfer = $facetConfigTransfer;
+        $this->valueTransformerPlugin = $valueTransformerPlugin;
     }
 
     /**
@@ -126,9 +134,14 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
         $statsFieldName = $fieldName . NumericFacetAggregation::STATS_SUFFIX;
 
         if (isset($aggregation[$nameFieldName][$statsFieldName])) {
+            ['min' => $min, 'max' => $max] = $aggregation[$nameFieldName][$statsFieldName];
+            if ($this->valueTransformerPlugin) {
+                ['min' => $min, 'max' => $max] = $this->valueTransformerPlugin->transformForDisplay($aggregation[$nameFieldName][$statsFieldName]);
+            }
+
             return [
-                $aggregation[$nameFieldName][$statsFieldName]['min'],
-                $aggregation[$nameFieldName][$statsFieldName]['max'],
+                $min,
+                $max,
             ];
         }
 
@@ -138,9 +151,14 @@ class RangeExtractor extends AbstractAggregationExtractor implements Aggregation
             }
 
             if (isset($nameBucket[$statsFieldName])) {
+                ['min' => $min, 'max' => $max] = $nameBucket[$statsFieldName];
+                if ($this->valueTransformerPlugin) {
+                    ['min' => $min, 'max' => $max] = $this->valueTransformerPlugin->transformForDisplay($nameBucket[$statsFieldName]);
+                }
+
                 return [
-                    $nameBucket[$statsFieldName]['min'],
-                    $nameBucket[$statsFieldName]['max'],
+                    $min,
+                    $max,
                 ];
             }
         }

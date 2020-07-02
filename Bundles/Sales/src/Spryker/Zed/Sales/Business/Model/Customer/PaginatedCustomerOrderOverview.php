@@ -34,18 +34,26 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
     protected $customerOrderOverviewHydrator;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     */
+    protected $searchOrderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Business\Model\Order\CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         CustomerOrderOverviewHydratorInterface $customerOrderOverviewHydrator,
-        SalesToOmsInterface $omsFacade
+        SalesToOmsInterface $omsFacade,
+        array $searchOrderExpanderPlugins
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
         $this->customerOrderOverviewHydrator = $customerOrderOverviewHydrator;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
     }
 
     /**
@@ -81,9 +89,24 @@ class PaginatedCustomerOrderOverview implements CustomerOrderOverviewInterface
             $orders->append($orderTransfer);
         }
 
-        $orderListTransfer->setOrders($orders);
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orders->getArrayCopy());
+        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
+    {
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
+        }
+
+        return $orderTransfers;
     }
 
     /**

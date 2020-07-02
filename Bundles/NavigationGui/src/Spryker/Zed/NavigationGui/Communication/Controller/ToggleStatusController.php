@@ -7,11 +7,12 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Controller;
 
-use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * @deprecated Will be removed in the next major release.
  * @method \Spryker\Zed\NavigationGui\Communication\NavigationGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface getQueryContainer()
  */
@@ -33,11 +34,10 @@ class ToggleStatusController extends AbstractController
     {
         $idNavigation = $this->castId($request->query->getInt(self::PARAM_ID_NAVIGATION));
 
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($idNavigation);
+        $navigationCriteriaTransfer = (new NavigationCriteriaTransfer())->setIdNavigation($idNavigation);
         $navigationTransfer = $this->getFactory()
             ->getNavigationFacade()
-            ->findNavigation($navigationTransfer);
+            ->findNavigationByCriteria($navigationCriteriaTransfer);
 
         if ($navigationTransfer) {
             $navigationTransfer->setIsActive(!$navigationTransfer->getIsActive());

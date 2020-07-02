@@ -59,9 +59,9 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new QuoteRequestToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationFacade(Container $container): Container
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new QuoteRequestToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartFacade(Container $container): Container
     {
-        $container[static::FACADE_CART] = function (Container $container) {
+        $container->set(static::FACADE_CART, function (Container $container) {
             return new QuoteRequestToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class QuoteRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new QuoteRequestToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

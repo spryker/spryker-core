@@ -54,9 +54,9 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return $container->getLocator()->search()->client();
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingFacade(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPluginSearchPageMaps(Container $container)
     {
-        $container[static::PLUGIN_SEARCH_PAGE_MAPS] = function (Container $container) {
+        $container->set(static::PLUGIN_SEARCH_PAGE_MAPS, function (Container $container) {
             return $this->getSearchPageMapPlugins();
-        };
+        });
 
         return $container;
     }
@@ -166,9 +166,9 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGuzzleClient(Container $container)
     {
-        $container[static::GUZZLE_CLIENT] = function (Container $container) {
+        $container->set(static::GUZZLE_CLIENT, function (Container $container) {
             return new Client();
-        };
+        });
 
         return $container;
     }

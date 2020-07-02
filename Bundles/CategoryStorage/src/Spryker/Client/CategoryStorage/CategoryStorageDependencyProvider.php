@@ -27,13 +27,13 @@ class CategoryStorageDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new CategoryStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new CategoryStorageToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }

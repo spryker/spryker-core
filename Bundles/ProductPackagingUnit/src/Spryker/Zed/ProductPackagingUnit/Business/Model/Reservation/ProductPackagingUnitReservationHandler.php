@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation;
 
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
@@ -54,7 +55,10 @@ class ProductPackagingUnitReservationHandler implements ProductPackagingUnitRese
             return;
         }
 
-        $this->omsFacade->updateReservationQuantity($productPackagingLeadProductTransfer->getSku());
+        $reservationRequestTransfer = (new ReservationRequestTransfer())
+            ->setSku($productPackagingLeadProductTransfer->getSku());
+
+        $this->omsFacade->updateReservation($reservationRequestTransfer);
     }
 
     /**

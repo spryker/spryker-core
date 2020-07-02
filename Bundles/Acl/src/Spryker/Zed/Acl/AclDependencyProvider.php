@@ -33,9 +33,9 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addFacadeUser($container);
         $container = $this->addAclQueryContainer($container);
 
-        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_USER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_USER, function (Container $container) {
             return $container->getLocator()->user()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFacadeUser(Container $container)
     {
-        $container[self::FACADE_USER] = function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new AclToUserBridge($container->getLocator()->user()->facade());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class AclDependencyProvider extends AbstractBundleDependencyProvider
     protected function addAclQueryContainer(Container $container)
     {
         /** @deprecated Use {@link getQueryContainer()} directly for the own bundle's query container */
-        $container[self::QUERY_CONTAINER_ACL] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_ACL, function (Container $container) {
             return $container->getLocator()->acl()->queryContainer();
-        };
+        });
 
         return $container;
     }

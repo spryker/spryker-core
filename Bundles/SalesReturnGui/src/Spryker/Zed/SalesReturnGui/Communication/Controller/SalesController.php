@@ -25,8 +25,11 @@ class SalesController extends AbstractController
      */
     public function listAction(Request $request): array
     {
+        /** @var \Generated\Shared\Transfer\OrderTransfer $orderTransfer */
+        $orderTransfer = $request->request->get('orderTransfer');
+        
         $orderReturnTable = $this->getFactory()
-            ->createOrderReturnTable($request->request->get('orderTransfer'));
+            ->createOrderReturnTable($orderTransfer);
 
         return [
             'orderReturnTable' => $orderReturnTable->render(),
@@ -40,7 +43,7 @@ class SalesController extends AbstractController
      */
     public function tableAction(Request $request): JsonResponse
     {
-        $idSalesOrder = $request->query->get(OrderReturnTable::PARAM_ID_ORDER);
+        $idSalesOrder = $request->query->getInt(OrderReturnTable::PARAM_ID_ORDER) ?: null;
 
         $orderReturnTable = $this->getFactory()
             ->createOrderReturnTable((new OrderTransfer())->setIdSalesOrder($idSalesOrder));

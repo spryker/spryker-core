@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductOffer\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferChecker;
+use Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferCheckerInterface;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilter;
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilterInterface;
 use Spryker\Zed\ProductOffer\Business\ProductOffer\ProductOfferWriter;
@@ -44,6 +46,14 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getMessengerFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Checker\ItemProductOfferCheckerInterface
+     */
+    public function createItemProductOfferChecker(): ItemProductOfferCheckerInterface
+    {
+        return new ItemProductOfferChecker($this->getRepository());
     }
 
     /**

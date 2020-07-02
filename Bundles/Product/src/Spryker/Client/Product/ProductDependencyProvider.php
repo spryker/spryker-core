@@ -40,9 +40,9 @@ class ProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
+        $container->set(static::KV_STORAGE, function (Container $container) {
             return new ProductToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductToLocaleBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ProductDependencyProvider extends AbstractDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_ENCODING, function (Container $container) {
             return new ProductToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

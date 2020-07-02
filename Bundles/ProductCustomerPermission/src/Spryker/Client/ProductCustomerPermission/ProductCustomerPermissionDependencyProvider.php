@@ -40,9 +40,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new ProductCustomerPermissionToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      */
     protected function addLocaleClient(Container $container): Container
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductCustomerPermissionToLocaleClientBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractDependencyProv
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductCustomerPermissionToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }

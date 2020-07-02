@@ -32,7 +32,7 @@ class CompanyUserStatusController extends AbstractController
      */
     public function enableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
@@ -64,7 +64,7 @@ class CompanyUserStatusController extends AbstractController
      */
     public function disableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 

@@ -12,6 +12,8 @@ use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 use Spryker\Zed\Stock\Dependency\Plugin\StockUpdateHandlerPluginInterface;
 
 /**
+ * @deprecated Use `\Spryker\Zed\Availability\Communication\Plugin\AvailabilityReservationHandlerTerminationAwareStrategyPlugin` instead.
+ *
  * @method \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface getFacade()
  * @method \Spryker\Zed\Availability\Communication\AvailabilityCommunicationFactory getFactory()
  * @method \Spryker\Zed\Availability\AvailabilityConfig getConfig()

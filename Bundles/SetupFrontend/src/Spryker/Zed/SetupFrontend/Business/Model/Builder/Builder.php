@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business\Model\Builder;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
@@ -28,12 +29,18 @@ class Builder implements BuilderInterface
 
     /**
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function build(LoggerInterface $logger)
+    public function build(LoggerInterface $logger, SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer)
     {
-        $process = new Process(explode(' ', $this->buildCommand), APPLICATION_ROOT_DIR, null, null, null);
+        $command = $this->buildCommand;
+        if ($setupFrontendConfigurationTransfer->getEnvironment()) {
+            $command .= sprintf(':%s', $setupFrontendConfigurationTransfer->getEnvironment());
+        }
+
+        $process = new Process(explode(' ', $command), APPLICATION_ROOT_DIR, null, null, null);
 
         $process->run(function ($type, $buffer) use ($logger) {
             $this->handleOutput($buffer, $logger);

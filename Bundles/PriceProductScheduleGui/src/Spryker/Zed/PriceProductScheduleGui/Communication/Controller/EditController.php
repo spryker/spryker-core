@@ -40,7 +40,7 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPriceProductSchedule = $this->castId($request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE));
-        $idPriceProductScheduleList = $request->query->get(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST);
+        $idPriceProductScheduleList = $request->query->getInt(static::PARAM_ID_PRICE_PRODUCT_SCHEDULE_LIST) ?: null;
 
         $priceProductScheduleTransfer = $this->getFactory()
             ->getPriceProductScheduleFacade()
