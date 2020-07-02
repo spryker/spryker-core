@@ -8,8 +8,8 @@ import { ProductOfferModule } from './product-offer/product-offer.module';
 import { ProductOfferComponent } from './product-offer/product-offer.component';
 import { OffersListModule } from './offers-list/offers-list.module';
 import { OffersListComponent } from './offers-list/offers-list.component';
-import { LocaleModule } from '@spryker/locale';
-import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
+import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
+import { EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { TableModule } from '@spryker/table';
 import {
@@ -39,7 +39,7 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
         BrowserAnimationsModule,
         ProductOfferModule,
         OffersListModule,
-        LocaleModule.forRoot({ defaultLocale: EN_LOCALE }),
+        LocaleModule.forRoot(),
         EnLocaleModule,
         DeLocaleModule,
         TableModule.forRoot(),
@@ -87,6 +87,10 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-button-link',
             component: ButtonLinkComponent,
+        },
+        {
+            selector: 'web-spy-locale-switcher',
+            component: LocaleSwitcherComponent,
         }
     ];
 }
