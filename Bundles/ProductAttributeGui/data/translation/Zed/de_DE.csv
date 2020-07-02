@@ -38,7 +38,7 @@ number,number
 "Product attributes saved","Produktattribute gespeichert"
 Save,Speichern
 select,select
-"Super attribute",Superattribute
+"Super attribute",Superattribut
 text,text
 textarea,textarea
 time,time
@@ -52,5 +52,4 @@ Remove,Entfernen
 "Edit Product Attribute","Produktattribut bearbeiten"
 "Edit Attribute Translations","Attributübersetzungen bearbeiten"
 "Predefined Values","Vordefinierte Werte"
-"Super Attribute",Superattribut
 "Please select attribute key first","Wählen Sie zuerst einen Attributschlüssel aus."
