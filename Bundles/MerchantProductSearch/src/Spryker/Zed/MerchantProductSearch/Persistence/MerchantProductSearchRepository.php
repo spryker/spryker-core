@@ -31,9 +31,6 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
     {
         $merchantProductAbstractPropelQuery = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
-            ->useMerchantQuery()
-                ->filterByIsActive(true)
-            ->endUse()
             ->filterByFkMerchant_In($merchantIds);
 
         return $merchantProductAbstractPropelQuery
@@ -51,10 +48,7 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
     {
         $merchantProductAbstractPropelQuery = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
-            ->filterByIdProductAbstractMerchant_In($productAbstractMerchantIds)
-            ->useMerchantQuery()
-                ->filterByIsActive(true)
-            ->endUse();
+            ->filterByIdProductAbstractMerchant_In($productAbstractMerchantIds);
 
         return $merchantProductAbstractPropelQuery
             ->select([SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])

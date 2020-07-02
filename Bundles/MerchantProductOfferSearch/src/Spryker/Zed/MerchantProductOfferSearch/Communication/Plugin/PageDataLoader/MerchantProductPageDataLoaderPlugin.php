@@ -73,7 +73,18 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($productAbstractMerchantTransfer->getMerchantNames())
+            $merchantNames = $payloadTransfer->getMerchantNames();
+            foreach ($productAbstractMerchantTransfer->getMerchantNames() as $store => $names) {
+                if (array_key_exists($store, $merchantNames)) {
+                    $merchantNames[$store] = array_unique(array_merge($merchantNames[$store], $names));
+
+                    continue;
+                }
+
+                $merchantNames[$store] = $names;
+            }
+
+            $payloadTransfer->setMerchantNames($merchantNames)
                 ->setMerchantReferences($productAbstractMerchantTransfer->getMerchantReferences());
         }
 
