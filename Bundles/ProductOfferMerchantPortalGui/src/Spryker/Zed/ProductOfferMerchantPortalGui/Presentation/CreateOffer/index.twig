@@ -20,6 +20,8 @@
         filters: filters,
     } %}
 
+    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+
     <web-mp-product-offer cloak table-config="{{ config | json_encode() }}">
         <span title>{{ 'Create Offer' | trans }}</span>
     </web-mp-product-offer>
