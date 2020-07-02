@@ -80,6 +80,13 @@ class GlobalController extends AbstractController
         );
 
         $this->handleThresholdData(
+            $data[GlobalThresholdType::FIELD_HARD_MAXIMUM],
+            SalesOrderThresholdGuiConfig::GROUP_HARD_MAX,
+            $storeTransfer,
+            $currencyTransfer
+        );
+
+        $this->handleThresholdData(
             $data[GlobalThresholdType::FIELD_SOFT],
             SalesOrderThresholdGuiConfig::GROUP_SOFT,
             $storeTransfer,
