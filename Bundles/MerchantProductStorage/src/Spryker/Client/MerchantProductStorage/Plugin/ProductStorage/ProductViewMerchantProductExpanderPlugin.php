@@ -23,7 +23,7 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, string $localeName)
+    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
     {
         if (isset($productViewTransfer->getSelectedAttributes()['merchant_reference'])) {
             $merchantProductStorageTransfer = $this->getFactory()
