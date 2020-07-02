@@ -27,7 +27,7 @@ class OauthDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
-        parent::provideServiceLayerDependencies($container);
+        $container = parent::provideServiceLayerDependencies($container);
 
         $container = $this->addZedRequestClient($container);
         $container = $this->addKeyLoaderPlugins($container);

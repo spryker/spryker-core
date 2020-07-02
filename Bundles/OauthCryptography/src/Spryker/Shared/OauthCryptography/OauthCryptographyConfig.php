@@ -24,6 +24,6 @@ class OauthCryptographyConfig extends AbstractSharedConfig
      */
     public function getPublicKeyPath(): string
     {
-        return Config::getInstance()->get(OauthCryptographyConstants::PUBLIC_KEY_PATH);
+        return $this->get(OauthCryptographyConstants::PUBLIC_KEY_PATH);
     }
 }

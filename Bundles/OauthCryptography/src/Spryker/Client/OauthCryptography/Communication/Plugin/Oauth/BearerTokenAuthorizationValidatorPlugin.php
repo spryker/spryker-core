@@ -19,44 +19,6 @@ use Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPlugin
 class BearerTokenAuthorizationValidatorPlugin extends AbstractPlugin implements AuthorizationValidatorPluginInterface
 {
     /**
-     * @var \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface
-     */
-    protected $accessTokenRepository;
-
-    /**
-     * @var \League\OAuth2\Server\CryptKey[]
-     */
-    protected $publicKeys;
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $repository
-     *
-     * @return void
-     */
-    public function setRepository(AccessTokenRepositoryInterface $repository): void
-    {
-        $this->accessTokenRepository = $repository;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
-     *
-     * @return void
-     */
-    public function setPublicKeys(array $publicKeys): void
-    {
-        $this->publicKeys = $publicKeys;
-    }
-
-    /**
      * {@inheritDoc}
      * - Checks if `authorization` header is present.
      * - Parses the JWT token.
@@ -68,17 +30,22 @@ class BearerTokenAuthorizationValidatorPlugin extends AbstractPlugin implements 
      * @api
      *
      * @param \Psr\Http\Message\ServerRequestInterface $request
+     * @param \League\OAuth2\Server\CryptKey[] $publicKeys
+     * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
      *
      * @throws \League\OAuth2\Server\Exception\OAuthServerException
      *
      * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function validateAuthorization(ServerRequestInterface $request)
-    {
+    public function validateAuthorization(
+        ServerRequestInterface $request,
+        array $publicKeys,
+        AccessTokenRepositoryInterface $accessTokenRepository
+    ): ServerRequestInterface {
         return $this->getClient()->validateAuthorization(
             $request,
-            $this->publicKeys,
-            $this->accessTokenRepository
+            $publicKeys,
+            $accessTokenRepository
         );
     }
 }

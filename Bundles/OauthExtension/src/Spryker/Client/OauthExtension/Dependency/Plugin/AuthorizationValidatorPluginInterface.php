@@ -7,37 +7,34 @@
 
 namespace Spryker\Client\OauthExtension\Dependency\Plugin;
 
-use League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface as LeagueAuthorizationValidatorInterface;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Authorization validator plugin for validating bearer token authorization.
  *
  * Plugin interface assumes multiple encryption keys.
  */
-interface AuthorizationValidatorPluginInterface extends LeagueAuthorizationValidatorInterface
+interface AuthorizationValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Sets array of public keys to the validator.
+     * - Validates request with the keys given as a parameter.
+     * - Can use AccessTokenRepositoryInterface to pull data on the token.
      *
      * @api
      *
+     * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \League\OAuth2\Server\CryptKey[] $publicKeys
+     * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
      *
-     * @return void
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
+     * @return \Psr\Http\Message\ServerRequestInterface
      */
-    public function setPublicKeys(array $publicKeys): void;
-
-    /**
-     * Specification:
-     * - Sets the access token repository instance to the validator.
-     *
-     * @api
-     *
-     * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $repository
-     *
-     * @return void
-     */
-    public function setRepository(AccessTokenRepositoryInterface $repository): void;
+    public function validateAuthorization(
+        ServerRequestInterface $request,
+        array $publicKeys,
+        AccessTokenRepositoryInterface $accessTokenRepository
+    ): ServerRequestInterface;
 }

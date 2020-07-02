@@ -32,16 +32,16 @@ class ResourceServer extends LeagueResourceServer
     /**
      * @param \League\OAuth2\Server\CryptKey[] $publicKeys
      * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
-     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidators
+     * @param \Spryker\Client\OauthExtension\Dependency\Plugin\AuthorizationValidatorPluginInterface[] $authorizationValidatorPlugins
      */
     public function __construct(
         array $publicKeys,
         AccessTokenRepositoryInterface $accessTokenRepository,
-        array $authorizationValidators
+        array $authorizationValidatorPlugins
     ) {
         $this->publicKeys = $publicKeys;
         $this->accessTokenRepository = $accessTokenRepository;
-        $this->authorizationValidators = $authorizationValidators;
+        $this->authorizationValidators = $authorizationValidatorPlugins;
     }
 
     /**
