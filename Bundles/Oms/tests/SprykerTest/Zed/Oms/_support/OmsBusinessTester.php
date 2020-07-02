@@ -247,9 +247,9 @@ class OmsBusinessTester extends Actor
     {
         $triggerLocker = $this->createTriggerLocker();
 
-        $orderStatemachineMock = $this->getOrderStatemachineMockForFailedTriggeredEvents();
+        $orderStateMachineMock = $this->getOrderStatemachineMockForFailedTriggeredEvents();
 
-        return new LockedOrderStateMachine($orderStatemachineMock, $triggerLocker);
+        return new LockedOrderStateMachine($orderStateMachineMock, $triggerLocker);
     }
 
     /**
