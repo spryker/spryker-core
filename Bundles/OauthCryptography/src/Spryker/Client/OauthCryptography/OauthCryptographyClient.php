@@ -46,10 +46,8 @@ class OauthCryptographyClient extends AbstractClient implements OauthCryptograph
         array $publicKeys,
         AccessTokenRepositoryInterface $accessTokenRepository
     ): ServerRequestInterface {
-        return $this->getFactory()->createBearerTokenAuthorizationValidator()->validateAuthorization(
-            $request,
-            $publicKeys,
-            $accessTokenRepository
-        );
+        return $this->getFactory()
+            ->createBearerTokenAuthorizationValidator()
+            ->validateAuthorization($request, $publicKeys, $accessTokenRepository);
     }
 }
