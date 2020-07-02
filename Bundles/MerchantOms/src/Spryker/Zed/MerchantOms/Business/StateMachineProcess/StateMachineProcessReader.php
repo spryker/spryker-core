@@ -49,13 +49,29 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     }
 
     /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
      */
-    public function resolveMerchantStateMachineProcess(string $merchantReference): StateMachineProcessTransfer
+    public function getMerchantOmsProcessByMerchant(
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
+    ): StateMachineProcessTransfer {
+        $stateMachineProcessTransfer = $this->resolveMerchantStateMachineProcess($merchantCriteriaTransfer);
+        $stateMachineProcessTransfer->setStateNames(
+            $this->stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer)
+        );
+
+        return $stateMachineProcessTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function resolveMerchantStateMachineProcess(MerchantCriteriaTransfer $merchantCriteriaTransfer): StateMachineProcessTransfer
     {
-        $merchantTransfer = $this->getMerchantByReference($merchantReference);
+        $merchantTransfer = $this->getMerchantByCriteria($merchantCriteriaTransfer);
 
         $stateMachineProcessTransfer = $this->stateMachineFacade->findStateMachineProcess(
             (new StateMachineProcessCriteriaTransfer())
@@ -72,20 +88,18 @@ class StateMachineProcessReader implements StateMachineProcessReaderInterface
     }
 
     /**
-     * @param string $merchantReference
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @throws \Spryker\Zed\MerchantOms\Business\Exception\MerchantNotFoundException
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer
      */
-    protected function getMerchantByReference(string $merchantReference): MerchantTransfer
+    protected function getMerchantByCriteria(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantTransfer
     {
-        $merchantTransfer = $this->merchantFacade->findOne(
-            (new MerchantCriteriaTransfer())->setMerchantReference($merchantReference)
-        );
+        $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
 
         if (!$merchantTransfer) {
-            throw new MerchantNotFoundException(sprintf('Merchant with reference "%s" is not found.', $merchantReference));
+            throw new MerchantNotFoundException('Merchant is not found.');
         }
 
         return $merchantTransfer;
