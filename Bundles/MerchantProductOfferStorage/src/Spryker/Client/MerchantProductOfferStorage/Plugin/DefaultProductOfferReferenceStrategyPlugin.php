@@ -62,13 +62,6 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
             $productOfferStorageTransfers
         );
 
-        if (
-            $productOfferStorageCriteriaTransfer->getProductOfferReference()
-            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences)
-        ) {
-            return $productOfferStorageCriteriaTransfer->getProductOfferReference();
-        }
-
-        return null;
+        return reset($productOfferReferences);
     }
 }
