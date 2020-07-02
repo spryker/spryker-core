@@ -25,10 +25,6 @@ class CustomerConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin::MAIL_TYPE
      */
     public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
-
-    /**
-     * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationConfirmationMailTypePlugin::MAIL_TYPE
-     */
     public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
