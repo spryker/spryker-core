@@ -358,11 +358,11 @@
                         <div class="mp-profile__col mp-profile__col--online-right">
                             <spy-card class="mp-profile__card" cloak title="{{ 'Online Status' | trans }}">
                                 <div class="mp-profile__status">
-                                    <div>
-                                        <h3 class="{{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
-                                            {{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
-                                        </h3>
-                                    </div>
+                                    {% set isProfileMerchantActiveChecked = onlineProfileMerchantProfileFields.is_active.vars.checked %}
+                                    
+                                    <h3 class="mp-profile__status-title {{ isProfileMerchantActiveChecked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
+                                        {{ isProfileMerchantActiveChecked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
+                                    </h3>
                                     <div>
                                         <spy-form-item
                                             error="{{ onlineProfileMerchantProfileFields.is_active.vars.errors[0].message | default | trans }}"
@@ -376,11 +376,9 @@
                                             ></spy-toggle>
                                         </spy-form-item>
                                     </div>
-                                    <div>
-                                        {{ onlineProfileMerchantProfileFields.is_active.vars.checked ?
-                                            'profile.status.message.online' | trans | raw :
-                                            'profile.status.message.offline' | trans | raw }}
-                                    </div>
+                                    {{ isProfileMerchantActiveChecked ?
+                                    'profile.status.message.online' | trans | raw :
+                                    'profile.status.message.offline' | trans | raw }}
                                 </div>
                             </spy-card>
                         </div>
