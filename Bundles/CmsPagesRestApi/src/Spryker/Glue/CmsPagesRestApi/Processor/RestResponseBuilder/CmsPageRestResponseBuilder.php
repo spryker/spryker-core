@@ -51,7 +51,7 @@ class CmsPageRestResponseBuilder implements CmsPageRestResponseBuilderInterface
         $restCmsPagesAttributesTransfer = (new RestCmsPagesAttributesTransfer())
             ->fromArray($cmsPageStorageTransfer->toArray(), true);
 
-        $cmsPageRestResource = $this->createCmsPageRestResource($restCmsPagesAttributesTransfer->getUuid(), $restCmsPagesAttributesTransfer);
+        $cmsPageRestResource = $this->createCmsPageRestResource($cmsPageStorageTransfer->getUuid(), $restCmsPagesAttributesTransfer);
 
         return $this->restResourceBuilder->createRestResponse()->addResource($cmsPageRestResource);
     }
