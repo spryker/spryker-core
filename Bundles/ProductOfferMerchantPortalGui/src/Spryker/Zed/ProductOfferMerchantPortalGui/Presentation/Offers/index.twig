@@ -7,27 +7,12 @@
 {% block content %}
     <web-spy-product-offer-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-product-offer-locale-switcher>
 
-    {% set rowActions = rowActions | merge({'click': 'update-offer'}) %}
-    {% set config = {
-        dataSource: {
-            type: 'http',
-            url: dataUrl,
-        },
-        columns: columns,
-        itemSelection: true,
-        syncStateUrl: true,
-        rowActions: rowActions,
-        pagination: pagination,
-        search: search,
-        filters: filters,
-    } %}
-
     <web-mp-offers-list
         cloak
         title="{{ 'Offers' | trans }}"
         action-url="/product-offer-merchant-portal-gui/create-offer"
         action-title="{{ 'Add Offer' | trans }}"
-        table-config="{{ config | json_encode() }}"
+        table-config='{{ guiTableConfiguration(productOfferTableConfiguration) }}'
     >
     </web-mp-offers-list>
 {% endblock %}
