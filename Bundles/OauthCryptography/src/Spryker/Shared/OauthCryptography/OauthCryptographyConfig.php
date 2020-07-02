@@ -7,7 +7,6 @@
 
 namespace Spryker\Shared\OauthCryptography;
 
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 
 class OauthCryptographyConfig extends AbstractSharedConfig
