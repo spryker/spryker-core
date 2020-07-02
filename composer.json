@@ -6,7 +6,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-bugfix/mp-3261-sniffer-removes-throw-annotation"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
