@@ -11,6 +11,7 @@ use DateTime;
 use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
@@ -307,4 +308,13 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
      * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationQuery
      */
     public function queryOmsProductReservationById($idOmsProductReservation);
+
+    /**
+     * @api
+     *
+     * @param array $identifiers
+     *
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsStateMachineLockQuery
+     */
+    public function queryLockItemsByIdentifiers(array $identifiers): SpyOmsStateMachineLockQuery;
 }
