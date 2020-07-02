@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config>
+    <sales-merchant-portal-gui>
+        <label>Orders</label>
+        <title>Orders</title>
+        <icon>orders</icon>
+        <bundle>sales-merchant-portal-gui</bundle>
+        <controller>orders</controller>
+        <action>index</action>
+    </sales-merchant-portal-gui>
+</config>
