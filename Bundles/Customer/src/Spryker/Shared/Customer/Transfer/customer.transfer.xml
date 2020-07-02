@@ -95,7 +95,6 @@
         <property name="isSuccess" type="bool"/>
         <property name="message" type="Message"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
-        <property name="isDoubleOptInEnabled" type="bool"/>
     </transfer>
 
     <transfer name="Message">

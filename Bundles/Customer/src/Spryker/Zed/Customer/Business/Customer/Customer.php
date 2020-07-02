@@ -26,7 +26,6 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
-use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -45,6 +44,8 @@ class Customer implements CustomerInterface
     protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
     protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+    protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -243,7 +244,14 @@ class Customer implements CustomerInterface
             $this->sendPasswordRestoreMail($customerTransfer);
         }
 
-        $customerResponseTransfer->setIsDoubleOptInEnabled($this->customerConfig->isDoubleOptInEnabled());
+        $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS;
+        if ($this->customerConfig->isDoubleOptInEnabled()) {
+            $message = static::GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS;
+        }
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        $customerResponseTransfer->setMessage($messageTransfer);
 
         return $customerResponseTransfer;
     }
@@ -326,8 +334,8 @@ class Customer implements CustomerInterface
         $customerTransfer->setConfirmationLink($confirmationLink);
 
         $mailType = $this->customerConfig->isDoubleOptInEnabled()
-            ? CustomerRegistrationMailTypePlugin::MAIL_TYPE
-            : CustomerRestoredPasswordConfirmationMailTypePlugin::MAIL_TYPE;
+            ? CustomerConfig::CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE
+            : CustomerConfig::CUSTOMER_REGISTRATION_MAIL_TYPE;
 
         $mailTransfer = new MailTransfer();
         $mailTransfer->setType($mailType);
@@ -367,15 +375,12 @@ class Customer implements CustomerInterface
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
-            ->findOne();
-        if ($customerEntity === null) {
+        $customerResponseTransfer = $this->confirmCustomerRegistration($customerTransfer);
+        if (!$customerResponseTransfer->getIsSuccess()) {
             throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));
         }
 
-        $customerTransfer = $this->saveCustomer($customerEntity, $customerTransfer);
-
-        return $customerTransfer;
+        return $customerResponseTransfer->getCustomerTransfer();
     }
 
     /**
@@ -397,7 +402,11 @@ class Customer implements CustomerInterface
                 ->addError((new CustomerErrorTransfer())->setMessage(static::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED));
         }
 
-        $customerTransfer = $this->saveCustomer($customerEntity, $customerTransfer);
+        $customerEntity->setRegistered(new DateTime());
+        $customerEntity->setRegistrationKey(null);
+        $customerEntity->save();
+
+        $customerTransfer = $customerTransfer->fromArray($customerEntity->toArray(), true);
 
         return $customerResponseTransfer->setCustomerTransfer($customerTransfer);
     }
@@ -1010,20 +1019,5 @@ class Customer implements CustomerInterface
                 $index === $customersCount ? PHP_EOL : ''
             ));
         }
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customerEntity
-     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
-     *
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function saveCustomer(SpyCustomer $customerEntity, CustomerTransfer $customerTransfer): CustomerTransfer
-    {
-        $customerEntity->setRegistered(new DateTime());
-        $customerEntity->setRegistrationKey(null);
-        $customerEntity->save();
-
-        return $customerTransfer->fromArray($customerEntity->toArray(), true);
     }
 }
