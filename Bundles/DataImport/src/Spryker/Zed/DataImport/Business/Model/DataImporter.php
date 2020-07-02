@@ -152,8 +152,7 @@ class DataImporter implements
 
         foreach ($dataReader as $dataSet) {
             try {
-                $this->importDataSet($dataSet);
-                $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
+                $this->processDataSet($dataSet, $dataImporterReportTransfer);
             } catch (Exception $dataImportException) {
                 if ($dataImportException instanceof TransactionRolledBackAwareExceptionInterface) {
                     $dataImporterReportTransfer = $this->recalculateImportedDataSetCount($dataImporterReportTransfer, $dataImportException);
@@ -178,6 +177,18 @@ class DataImporter implements
         }
 
         return $dataImporterReportTransfer;
+    }
+
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Generated\Shared\Transfer\DataImporterReportTransfer $dataImporterReportTransfer
+     *
+     * @return void
+     */
+    protected function processDataSet(DataSetInterface $dataSet, DataImporterReportTransfer $dataImporterReportTransfer): void
+    {
+        $this->importDataSet($dataSet);
+        $dataImporterReportTransfer->setImportedDataSetCount($dataImporterReportTransfer->getImportedDataSetCount() + 1);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Propel\Persistence\BatchProcessor;
 
+use Closure;
 use Codeception\Test\Unit;
 use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
@@ -28,6 +29,10 @@ use Throwable;
  */
 class ActiveRecordBatchProcessorTraitTest extends Unit
 {
+    protected const MODULES_TO_EXCLUDE = [
+        'Payone',
+    ];
+
     /**
      * @var \SprykerTest\Zed\Propel\PropelPersistenceTester
      */
@@ -44,7 +49,9 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
     public function dataProvider(): array
     {
         $finder = new Finder();
-        $finder->in(sprintf('%s/Orm/Zed/*/Persistence/', rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR)))->depth('== 0');
+        $finder->in(sprintf('%s/Orm/Zed/*/Persistence/', rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR)))
+            ->filter($this->getDirectoriesFilter())
+            ->depth('== 0');
 
         $classNames = [];
 
@@ -58,6 +65,20 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
         }
 
         return $classNames;
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getDirectoriesFilter(): Closure
+    {
+        return function (SplFileInfo $splFileInfo) {
+            foreach (static::MODULES_TO_EXCLUDE as $module) {
+                if (strpos($splFileInfo->getPath(), $module)) {
+                    return false;
+                }
+            }
+        };
     }
 
     /**

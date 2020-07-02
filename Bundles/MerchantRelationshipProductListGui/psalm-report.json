@@ -1,0 +1,176 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\DataProvider\\ProductListMerchantRelationshipFormDataProvider::getProductListChoices is incorrect, got 'array<string, int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<string, int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\DataProvider\\ProductListMerchantRelationshipFormDataProvider::getProductListChoices",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "        return $productListChoices;",
+            "selected_text": "$productListChoices",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 68,
+            "line_to": 68,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\DataProvider\\ProductListMerchantRelationshipFormDataProvider::getAssignedProductListIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 86,
+            "line_to": 86,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\DataProvider\\ProductListMerchantRelationshipFormDataProvider::getAssignedProductListIds",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "        return $assignedProductListIds;",
+            "selected_text": "$assignedProductListIds",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
+            "snippet": "                $merchantRelationshipTransfer->getMerchant()->getName(),",
+            "selected_text": "$merchantRelationshipTransfer->getMerchant()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
+            "snippet": "                $merchantRelationshipTransfer->getMerchant()->getName(),",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
+            "snippet": "                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "selected_text": "$merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/MerchantRelationshipChoiceFormDataProvider.php",
+            "snippet": "                $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "        return sprintf('%s (%s)', $productListTransfer->getTitle(), $productListTransfer->getType());",
+            "selected_text": "$productListTransfer->getTitle()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/DataProvider/ProductListMerchantRelationshipFormDataProvider.php",
+            "snippet": "        return sprintf('%s (%s)', $productListTransfer->getTitle(), $productListTransfer->getType());",
+            "selected_text": "$productListTransfer->getType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdProductList on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
+            "snippet": "        $productListUsedByTableTransfer->getProductList()->requireIdProductList();",
+            "selected_text": "requireIdProductList",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipProductListGui\\Communication\\Expander\\ProductListUsedByTableExpander::getMerchantRelationshipTransfers cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
+            "snippet": "        $merchantRelationshipTransfers = $this->getMerchantRelationshipTransfers($productListUsedByTableTransfer->getProductList());",
+            "selected_text": "$productListUsedByTableTransfer->getProductList()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationshipProductListGui\\Dependency\\Facade\\MerchantRelationshipProductListGuiToMerchantRelationshipProductListFacadeInterface::getMerchantRelationshipIdsByProductListId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Expander/ProductListUsedByTableExpander.php",
+            "snippet": "            ->getMerchantRelationshipIdsByProductListId($productListTransfer->getIdProductList());",
+            "selected_text": "$productListTransfer->getIdProductList()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\ProductListGuiExtension\\Dependency\\Plugin\\ProductListOwnerTypeFormExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationshipProductListGui/src/Spryker/Zed/MerchantRelationshipProductListGui/Communication/Plugin/ProductListGuiExtension/MerchantRelationshipProductListOwnerTypeFormExpanderPlugin.php",
+            "snippet": "class MerchantRelationshipProductListOwnerTypeFormExpanderPlugin extends AbstractPlugin implements ProductListOwnerTypeFormExpanderPluginInterface",
+            "selected_text": "MerchantRelationshipProductListOwnerTypeFormExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

@@ -32,6 +32,6 @@ class ProductAttributeGuiAttributeEditCest
     {
         $i->listDataTable(ProductAttributeGuiAttributeListPage::URL . '/table');
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Products / Attributes / Edit Product Attribute');
+        $i->seeBreadcrumbNavigation('Catalog / Attributes / Edit Product Attribute');
     }
 }
