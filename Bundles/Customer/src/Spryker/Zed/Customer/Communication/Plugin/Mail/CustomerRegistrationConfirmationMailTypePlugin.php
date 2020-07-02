@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Customer\Communication\Plugin\Mail;
 
+use Spryker\Zed\Customer\CustomerConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
 use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
@@ -19,8 +20,6 @@ use Spryker\Zed\Mail\Dependency\Plugin\MailTypePluginInterface;
  */
 class CustomerRegistrationConfirmationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
 {
-    public const MAIL_TYPE = 'customer registration confirmation mail';
-
     /**
      * {@inheritDoc}
      *
@@ -30,7 +29,7 @@ class CustomerRegistrationConfirmationMailTypePlugin extends AbstractPlugin impl
      */
     public function getName()
     {
-        return static::MAIL_TYPE;
+        return CustomerConfig::CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE;
     }
 
     /**
