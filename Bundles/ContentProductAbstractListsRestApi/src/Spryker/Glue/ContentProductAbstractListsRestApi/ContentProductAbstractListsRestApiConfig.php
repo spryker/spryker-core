@@ -28,6 +28,9 @@ class ContentProductAbstractListsRestApiConfig extends AbstractBundleConfig
      */
     public const RESOURCE_ABSTRACT_PRODUCTS = 'abstract-products';
 
+    /**
+     * @deprecated Will be removed in the next major release.
+     */
     public const CONTROLLER_CONTENT_PRODUCT_ABSTRACT_LIST = 'content-product-abstract-list';
 
     public const RESPONSE_CODE_CONTENT_NOT_FOUND = '2201';

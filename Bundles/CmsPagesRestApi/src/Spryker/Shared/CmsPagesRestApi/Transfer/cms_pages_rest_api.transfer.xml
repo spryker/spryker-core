@@ -7,7 +7,6 @@
         <property name="validTo" type="string"/>
         <property name="isSearchable" type="bool"/>
         <property name="url" type="string"/>
-        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="LocaleCmsPageData">
