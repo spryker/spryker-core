@@ -67,11 +67,10 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
 
         return $merchantSalesOrderQuery
             ->addAsColumn(static::ORDERS_COUNT_TOTAL, 'COUNT(*)')
-            ->addAsColumn(static::ORDERS_COUNT_NEW, sprintf(
-                "COUNT(CASE WHEN '%s' < %s THEN 1 END)",
-                $newOrdersDateTime,
-                SpyMerchantSalesOrderTableMap::COL_CREATED_AT
-            ))
+            ->addAsColumn(
+                static::ORDERS_COUNT_NEW,
+                "COUNT(CASE WHEN '$newOrdersDateTime' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)'
+            )
             ->select([
                 static::ORDERS_COUNT_TOTAL,
                 static::ORDERS_COUNT_NEW,
@@ -80,11 +79,12 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     }
 
     /**
+     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
+     *
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
      * @param int $idMerchant
-     *
-     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
-     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */

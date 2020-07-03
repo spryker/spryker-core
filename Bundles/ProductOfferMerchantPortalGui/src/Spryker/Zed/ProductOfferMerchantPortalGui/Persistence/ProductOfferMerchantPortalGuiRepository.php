@@ -834,36 +834,37 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->leftJoinProductOfferStock()
             ->filterByFkMerchant($idMerchant)
             ->addAsColumn(static::OFFERS_COUNT_TOTAL, 'COUNT(*)')
-            ->addAsColumn(static::OFFERS_COUNT_ACTIVE, sprintf("COUNT(CASE WHEN %s IS TRUE THEN 1 END)", SpyProductOfferTableMap::COL_IS_ACTIVE))
-            ->addAsColumn(static::OFFERS_COUNT_WITH_STOCK, sprintf('COUNT(CASE WHEN %s > 0 THEN 1 END)', SpyProductOfferStockTableMap::COL_QUANTITY))
-            ->addAsColumn(static::OFFERS_COUNT_LOW_ON_STOCK, sprintf(
-                'COUNT(CASE WHEN %s < %s THEN 1 END)',
-                SpyProductOfferStockTableMap::COL_QUANTITY,
-                $dashboardLowStockThreshold
-            ))
-            ->addAsColumn(static::OFFERS_COUNT_VALID, sprintf(
-                "COUNT(CASE WHEN '%s' BETWEEN %s AND %s OR %s IS NULL THEN 1 END)",
-                $currentDateTime,
-                SpyProductOfferValidityTableMap::COL_VALID_FROM,
-                SpyProductOfferValidityTableMap::COL_VALID_TO,
-                SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY
-            ))
-            ->addAsColumn(static::OFFERS_COUNT_EXPIRING, sprintf(
-                "COUNT(CASE WHEN '%s' < %s AND '%s' > %s THEN 1 END)",
-                $currentDateTime,
-                SpyProductOfferValidityTableMap::COL_VALID_TO,
-                $expiringOffersDateTime,
-                SpyProductOfferValidityTableMap::COL_VALID_TO
-            ))
-            ->addAsColumn(static::OFFERS_COUNT_ON_MARKETPLACE, sprintf(
-                "COUNT(CASE WHEN %s IS TRUE AND %s > 0 AND ('%s' BETWEEN %s AND %s OR %s IS NULL) THEN 1 END)",
-                SpyProductOfferTableMap::COL_IS_ACTIVE,
-                SpyProductOfferStockTableMap::COL_QUANTITY,
-                $currentDateTime,
-                SpyProductOfferValidityTableMap::COL_VALID_FROM,
-                SpyProductOfferValidityTableMap::COL_VALID_TO,
-                SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY
-            ))
+            ->addAsColumn(
+                static::OFFERS_COUNT_ACTIVE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . ' IS TRUE THEN 1 END)'
+            )
+            ->addAsColumn(
+                static::OFFERS_COUNT_WITH_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 THEN 1 END)'
+            )
+            ->addAsColumn(
+                static::OFFERS_COUNT_LOW_ON_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . " < $dashboardLowStockThreshold THEN 1 END)"
+            )
+            ->addAsColumn(
+                static::OFFERS_COUNT_VALID,
+                "COUNT(CASE WHEN '$currentDateTime' BETWEEN " .
+                    SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
+                    ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
+            )
+            ->addAsColumn(
+                static::OFFERS_COUNT_EXPIRING,
+                "COUNT(CASE WHEN '$currentDateTime' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
+                . " AND '$expiringOffersDateTime' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
+            )
+            ->addAsColumn(
+                static::OFFERS_COUNT_ON_MARKETPLACE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . " IS TRUE
+                    AND " . SpyProductOfferStockTableMap::COL_QUANTITY . " > 0 AND (
+                    '$currentDateTime' BETWEEN " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
+                        ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
+                    ) THEN 1 END)"
+            )
             ->select([
                 static::OFFERS_COUNT_TOTAL,
                 static::OFFERS_COUNT_ACTIVE,
