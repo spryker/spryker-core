@@ -12,9 +12,9 @@ interface MerchantProductStorageFacadeInterface
     /**
      * Specification:
      * - Gets idMerchantProducts from eventTransfers.
-     * - Finds merhant product by idMerchantProducts.
-     * - Extracts $idProductAbstracts from merchant products.
-     * - Runs product storage publisher with $idProductAbstracts.
+     * - Finds merchant products by ids.
+     * - Finds product abstract ids for merchant products.
+     * - Runs product storage publisher for found product abstract ids.
      *
      * @api
      *
@@ -22,12 +22,12 @@ interface MerchantProductStorageFacadeInterface
      *
      * @return void
      */
-    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void;
+    public function writeByIdProductAbstractMerchantEvents(array $eventTransfers): void;
 
     /**
      * Specification:
-     * - Gets idProductAbstracts from eventTransfers.
-     * - Runs product storage publisher with $idProductAbstracts.
+     * - Gets product abstract ids from eventTransfers.
+     * - Runs product storage publisher with found product abstract ids.
      *
      * @api
      *
@@ -35,5 +35,5 @@ interface MerchantProductStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteMerchantProductStorageCollectionByIdProductAbstractEvents(array $eventTransfers): void;
+    public function deleteByIdProductAbstractEvents(array $eventTransfers): void;
 }

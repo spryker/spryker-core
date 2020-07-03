@@ -133,17 +133,13 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         }
 
         $productOfferStorageTransfers = $this->expandProductOffersWithMerchants($productOfferStorageTransfers);
-        $productOfferStorageTransfers = $this->expandProductOffersWithPrices($productOfferStorageTransfers);
+        $productOfferStorageTransfers = $this->executeProductOfferStorageExpanderPlugins($productOfferStorageTransfers);
 
         $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
         $productOfferStorageCollectionTransfer = $this->productOfferStorageCollectionSorterPlugin
             ->sort($productOfferStorageCollectionTransfer);
 
-        $productOfferStorageTransfers = $this->expandProductOffersWithDefaultProductOffer(
-            $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy()
-        );
-
-        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
+        return $this->expandProductOffersWithDefaultProductOffer($productOfferStorageCollectionTransfer);
     }
 
     /**
@@ -232,7 +228,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     ): array {
         $filteredProductOfferStorageTransfers = [];
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            if ($productOfferStorageTransfer->getMerchantReference() !== $merchantReference) {
+            if ($productOfferStorageTransfer->getMerchantReference() === $merchantReference) {
                 continue;
             }
 
@@ -273,7 +269,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
      */
-    protected function expandProductOffersWithPrices(array $productOfferStorageTransfers): array
+    protected function executeProductOfferStorageExpanderPlugins(array $productOfferStorageTransfers): array
     {
         foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
             foreach ($this->productOfferStorageExpanderPlugins as $productOfferStorageExpanderPlugin) {
@@ -285,17 +281,24 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOfferStorageTransfers
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    protected function expandProductOffersWithDefaultProductOffer(array $productOfferStorageTransfers): array
-    {
-        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            $productOfferStorageTransfer->setIsDefault($key < 1);
+    protected function expandProductOffersWithDefaultProductOffer(
+        ProductOfferStorageCollectionTransfer $productOfferStorageCollectionTransfer
+    ): ProductOfferStorageCollectionTransfer {
+        if ($productOfferStorageCollectionTransfer->getProductOffersStorage()->count() < 1) {
+            return $productOfferStorageCollectionTransfer;
         }
 
-        return $productOfferStorageTransfers;
+        $productOfferStorageTransfers = $productOfferStorageCollectionTransfer->getProductOffersStorage()->getArrayCopy();
+
+        foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
+            $productOfferStorageTransfers[$key] = $productOfferStorageTransfer->setIsDefault($key < 1);
+        }
+
+        return $productOfferStorageCollectionTransfer->setProductOffersStorage(new ArrayObject($productOfferStorageTransfers));
     }
 
     /**

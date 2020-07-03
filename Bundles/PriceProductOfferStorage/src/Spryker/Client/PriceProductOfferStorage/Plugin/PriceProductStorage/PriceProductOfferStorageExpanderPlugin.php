@@ -20,7 +20,7 @@ class PriceProductOfferStorageExpanderPlugin extends AbstractPlugin implements P
 {
     /**
      * {@inheritDoc}
-     * - Resolves price for provided product offer storage transfer object.
+     * - Expands ProductOfferStorageTransfer with price.
      *
      * @api
      *

@@ -25,9 +25,9 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
      *
      * @return void
      */
-    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
+    public function writeByIdProductAbstractMerchantEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createMerchantProductStorageWriter()->writeMerchantProductCollectionByIdProductAbstractMerchantEvents($eventTransfers);
+        $this->getFactory()->createMerchantProductStorageWriter()->writeByIdProductAbstractMerchantEvents($eventTransfers);
     }
 
     /**
@@ -39,8 +39,8 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
      *
      * @return void
      */
-    public function deleteMerchantProductStorageCollectionByIdProductAbstractEvents(array $eventTransfers): void
+    public function deleteByIdProductAbstractEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createMerchantProductStorageDeleter()->deleteCollectionByIdProductAbstractEvents($eventTransfers);
+        $this->getFactory()->createMerchantProductStorageDeleter()->deleteByIdProductAbstractEvents($eventTransfers);
     }
 }

@@ -36,12 +36,12 @@ class MerchantProductStorageToMerchantProductFacadeBridge implements MerchantPro
     }
 
     /**
-     * @param int[] $idProductAbstractMerchants
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
      */
-    public function findMerchantProducts(array $idProductAbstractMerchants): array
+    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): array
     {
-        return $this->merchantProductFacade->findMerchantProducts($idProductAbstractMerchants);
+        return $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
     }
 }

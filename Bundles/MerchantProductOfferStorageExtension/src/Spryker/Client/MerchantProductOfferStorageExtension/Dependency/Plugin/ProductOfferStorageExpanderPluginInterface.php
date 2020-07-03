@@ -9,6 +9,9 @@ namespace Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
+/**
+ * Provides ability to expand ProductOfferStorage transfer object.
+ */
 interface ProductOfferStorageExpanderPluginInterface
 {
     /**

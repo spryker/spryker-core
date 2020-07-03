@@ -17,14 +17,9 @@ use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\Merch
 class MerchantProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
     /**
-     * @uses \Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH
+     * @uses \Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
      */
     protected const EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
-
-    /**
-     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_PUBLISH
-     */
-    protected const EVENT_PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
 
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProductDataSetInterface::FK_MERCHANT,

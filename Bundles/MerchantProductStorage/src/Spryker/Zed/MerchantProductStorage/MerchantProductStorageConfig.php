@@ -11,13 +11,4 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class MerchantProductStorageConfig extends AbstractBundleConfig
 {
-    /**
-     * @api
-     *
-     * @return string|null
-     */
-    public function getMerchantSynchronizationPoolName(): ?string
-    {
-        return null;
-    }
 }

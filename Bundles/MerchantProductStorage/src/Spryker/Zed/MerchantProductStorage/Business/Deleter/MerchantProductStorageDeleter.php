@@ -40,7 +40,7 @@ class MerchantProductStorageDeleter implements MerchantProductStorageDeleterInte
      *
      * @return void
      */
-    public function deleteCollectionByIdProductAbstractEvents(array $eventTransfers): void
+    public function deleteByIdProductAbstractEvents(array $eventTransfers): void
     {
         $idProductAbstracts = $this->eventBehaviorFacade->getEventTransfersAdditionalValues(
             $eventTransfers,

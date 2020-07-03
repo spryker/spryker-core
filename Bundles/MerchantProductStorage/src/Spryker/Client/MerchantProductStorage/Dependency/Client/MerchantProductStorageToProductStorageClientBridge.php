@@ -26,10 +26,10 @@ class MerchantProductStorageToProductStorageClientBridge implements MerchantProd
      * @param int $idProductAbstract
      * @param string $localeName
      *
-     * @return array<mixed>
+     * @return array|null
      */
-    public function getProductAbstractStorageData($idProductAbstract, $localeName)
+    public function findProductAbstractStorageData(int $idProductAbstract, string $localeName): ?array
     {
-        return $this->productStorageClient->getProductAbstractStorageData($idProductAbstract, $localeName);
+        return $this->productStorageClient->findProductAbstractStorageData($idProductAbstract, $localeName);
     }
 }

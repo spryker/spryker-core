@@ -8,7 +8,6 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
-use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface;
 
@@ -55,13 +54,6 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
             return null;
         }
 
-        $productOfferReferences = array_map(
-            function (ProductOfferStorageTransfer $productOfferStorageTransfer) {
-                return $productOfferStorageTransfer->getProductOfferReference();
-            },
-            $productOfferStorageTransfers
-        );
-
-        return reset($productOfferReferences);
+        return $productOfferStorageTransfers[0] ? $productOfferStorageTransfers[0]->getProductOfferReference() : null;
     }
 }

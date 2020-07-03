@@ -9,6 +9,9 @@ namespace Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 
+/**
+ * Provides ability to find product offer reference by provided ProductOfferStorageCriteria transfer object.
+ */
 interface ProductOfferReferenceStrategyPluginInterface
 {
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductStorage\Business\Writer;
 
+use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface;
@@ -48,15 +49,18 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      *
      * @return void
      */
-    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
+    public function writeByIdProductAbstractMerchantEvents(array $eventTransfers): void
     {
-        $idProductAbstractMerchants = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productAbstractMerchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        if (!$idProductAbstractMerchants) {
+        if (!$productAbstractMerchantIds) {
             return;
         }
 
-        $merchantProductTransfers = $this->merchantProductFacade->findMerchantProducts($idProductAbstractMerchants);
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->setIdProductAbstractMerchants($productAbstractMerchantIds);
+
+        $merchantProductTransfers = $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
 
         if (!$merchantProductTransfers) {
             return;

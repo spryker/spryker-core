@@ -30,7 +30,7 @@ class MerchantProductDeletePublisherPlugin extends AbstractPlugin implements Pub
      */
     public function handleBulk(array $transfers, $eventName)
     {
-        $this->getFacade()->deleteMerchantProductStorageCollectionByIdProductAbstractEvents($transfers);
+        $this->getFacade()->deleteByIdProductAbstractEvents($transfers);
     }
 
     /**

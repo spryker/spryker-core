@@ -52,7 +52,7 @@ class MerchantProductStorageReader implements MerchantProductStorageReaderInterf
     public function findOne(int $idProductAbstract): ?MerchantProductStorageTransfer
     {
         $productStorageData = $this->productStorageClient
-            ->getProductAbstractStorageData($idProductAbstract, $this->localeClient->getCurrentLocale());
+            ->findProductAbstractStorageData($idProductAbstract, $this->localeClient->getCurrentLocale());
 
         if (!$productStorageData) {
             return null;

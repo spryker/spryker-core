@@ -42,14 +42,17 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
-     * @param int[] $idProductAbstractMerchants
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
      */
-    public function findMerchantProducts(array $idProductAbstractMerchants): array
+    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): array
     {
-        $merchantProductEntities = $this->getFactory()->getMerchantProductAbstractPropelQuery()
-            ->filterByIdProductAbstractMerchant_In($idProductAbstractMerchants)
+        $merchantProductCriteriaTransfer->requireIdProductAbstractMerchants();
+
+        $merchantProductEntities = $this->getFactory()
+            ->getMerchantProductAbstractPropelQuery()
+            ->filterByIdProductAbstractMerchant_In($merchantProductCriteriaTransfer->getIdProductAbstractMerchants())
             ->find();
 
         $merchantProductTransfers = [];

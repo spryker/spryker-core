@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 
+/**
+ * Provides ability to expand ProductAbstractStorage transfer object.
+ */
 interface ProductAbstractStorageExpanderPluginInterface
 {
     /**

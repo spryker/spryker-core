@@ -9,6 +9,9 @@ namespace Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
 
+/**
+ * Provides ability to sort ProductOfferStorageCollection.productOffersStorage.
+ */
 interface ProductOfferStorageCollectionSorterPluginInterface
 {
     /**
