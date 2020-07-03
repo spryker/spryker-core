@@ -29,16 +29,16 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
             ->getMerchantProductAbstractPropelQuery()
             ->joinWithMerchant();
 
-        $merchantProductEntity = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer)
+        $merchantProductAbstractEntity = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer)
             ->findOne();
 
-        if (!$merchantProductEntity) {
+        if (!$merchantProductAbstractEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createMerchantMapper()
-            ->mapMerchantEntityToMerchantTransfer($merchantProductEntity->getMerchant(), new MerchantTransfer());
+            ->mapMerchantEntityToMerchantTransfer($merchantProductAbstractEntity->getMerchant(), new MerchantTransfer());
     }
 
     /**
@@ -48,19 +48,18 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
      */
     public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): array
     {
-        $merchantProductCriteriaTransfer->requireIdProductAbstractMerchants();
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
 
-        $merchantProductEntities = $this->getFactory()
-            ->getMerchantProductAbstractPropelQuery()
-            ->filterByIdProductAbstractMerchant_In($merchantProductCriteriaTransfer->getIdProductAbstractMerchants())
-            ->find();
+        $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
+
+        $merchantProductAbstractEntities = $merchantProductAbstractQuery->find();
 
         $merchantProductTransfers = [];
         $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
 
-        foreach ($merchantProductEntities as $merchantProductEntity) {
+        foreach ($merchantProductAbstractEntities as $merchantProductAbstractEntity) {
             $merchantProductTransfers[] = $merchantProductMapper
-                ->mapMerchantProductEntityToMerchantProductTransfer($merchantProductEntity, new MerchantProductTransfer());
+                ->mapMerchantProductEntityToMerchantProductTransfer($merchantProductAbstractEntity, new MerchantProductTransfer());
         }
 
         return $merchantProductTransfers;
@@ -78,6 +77,10 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     ): SpyMerchantProductAbstractQuery {
         if ($merchantProductCriteriaTransfer->getIdProductAbstract()) {
             $merchantProductAbstractQuery->filterByFkProductAbstract($merchantProductCriteriaTransfer->getIdProductAbstract());
+        }
+
+        if ($merchantProductCriteriaTransfer->getMerchantProductAbstractIds()) {
+            $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In($merchantProductCriteriaTransfer->getMerchantProductAbstractIds());
         }
 
         return $merchantProductAbstractQuery;

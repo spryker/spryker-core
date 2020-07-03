@@ -49,16 +49,16 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      *
      * @return void
      */
-    public function writeByIdProductAbstractMerchantEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantProductAbstractEvents(array $eventTransfers): void
     {
-        $productAbstractMerchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $merchantProductAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        if (!$productAbstractMerchantIds) {
+        if (!$merchantProductAbstractIds) {
             return;
         }
 
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
-            ->setIdProductAbstractMerchants($productAbstractMerchantIds);
+            ->setMerchantProductAbstractIds($merchantProductAbstractIds);
 
         $merchantProductTransfers = $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
 

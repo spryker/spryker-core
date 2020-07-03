@@ -22,7 +22,7 @@ interface MerchantProductStorageFacadeInterface
      *
      * @return void
      */
-    public function writeByIdProductAbstractMerchantEvents(array $eventTransfers): void;
+    public function writeCollectionByIdMerchantProductAbstractEvents(array $eventTransfers): void;
 
     /**
      * Specification:
@@ -35,5 +35,5 @@ interface MerchantProductStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteByIdProductAbstractEvents(array $eventTransfers): void;
+    public function deleteCollectionByIdProductAbstractEvents(array $eventTransfers): void;
 }

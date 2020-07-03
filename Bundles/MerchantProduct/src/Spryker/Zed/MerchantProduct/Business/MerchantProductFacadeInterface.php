@@ -27,7 +27,7 @@ interface MerchantProductFacadeInterface
 
     /**
      * Specification:
-     * - Finds merchant products by provided MerchantProductCriteria.idProductAbstractMerchants.
+     * - Finds merchant products by provided MerchantProductCriteria.idMerchantProductAbstract.
      * - Returns MerchantProduct transfers.
      *
      * @api

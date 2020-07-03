@@ -27,6 +27,6 @@
     </transfer>
 
     <transfer name="MerchantProductCriteria">
-        <property name="idProductAbstractMerchants" type="int[]" singular="idProductAbstractMerchant"/>
+        <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
     </transfer>
 </transfers>
