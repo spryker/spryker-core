@@ -31,6 +31,6 @@ class UserCreateCest
     public function breadcrumbIsVisible(UserCommunicationTester $i): void
     {
         $i->amOnPage(UserCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Users Control / User / Create new User');
+        $i->seeBreadcrumbNavigation('Users / Users / Create new User');
     }
 }

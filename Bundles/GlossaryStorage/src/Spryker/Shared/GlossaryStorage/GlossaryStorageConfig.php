@@ -14,6 +14,11 @@ class GlossaryStorageConfig extends AbstractBundleConfig
     /**
      * Defines queue name as used for processing translation messages.
      */
+    public const PUBLISH_TRANSLATION = 'publish.translation';
+
+    /**
+     * Defines queue name as used for processing translation messages.
+     */
     public const SYNC_STORAGE_TRANSLATION = 'sync.storage.translation';
 
     /**

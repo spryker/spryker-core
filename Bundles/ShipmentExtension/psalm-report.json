@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ShipmentMethodTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ShipmentExtension/src/Spryker/Zed/ShipmentExtension/Dependency/Plugin/ShipmentMethodFilterPluginInterface.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ShipmentMethodTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        }
+    ],
+    "deprecation": []
+}

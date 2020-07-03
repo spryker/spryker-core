@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 143,
+            "line_to": 143,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Client\\QuickOrder\\Expander\\ProductConcreteExpanderInterface::expand expects array<array-key, Generated\\Shared\\Transfer\\ProductConcreteTransfer>, array{Generated\\Shared\\Transfer\\ProductConcreteTransfer|null} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Builder/QuickOrderTransferBuilder.php",
+            "snippet": "        $expandedProductConcretes = $this->productConcreteExpander->expand([$quickOrderItemTransfer->getProductConcrete()]);",
+            "selected_text": "[$quickOrderItemTransfer->getProductConcrete()]",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 91,
+            "line_to": 91,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\QuickOrder\\Product\\ProductConcreteResolverInterface::findProductConcreteWithProductAbstractBySku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Builder/QuickOrderTransferBuilder.php",
+            "snippet": "        $productConcreteTransfer = $this->productConcreteResolver->findProductConcreteWithProductAbstractBySku($quickOrderItemTransfer->getSku());",
+            "selected_text": "$quickOrderItemTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 117,
+            "line_to": 117,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Builder/QuickOrderTransferBuilder.php",
+            "snippet": "        if ($itemValidationTransfer->getMessages()->count() > 0) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 139,
+            "line_to": 139,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductConcrete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Builder/QuickOrderTransferBuilder.php",
+            "snippet": "        if (!$quickOrderItemTransfer->getProductConcrete()->getIdProductConcrete()) {",
+            "selected_text": "getIdProductConcrete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 175,
+            "line_to": 175,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method modifiedToArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Builder/QuickOrderTransferBuilder.php",
+            "snippet": "        $suggestedValues = $itemValidationTransfer->getSuggestedValues()->modifiedToArray();",
+            "selected_text": "modifiedToArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\QuickOrderItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/Product/ProductConcreteResolver.php",
+            "snippet": "        }, $quickOrderTransfer->getItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/QuickOrderDependencyProvider.php",
+            "snippet": "            return new QuickOrderToLocaleClientBridge($container->getLocator()->locale()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/QuickOrder/src/Spryker/Client/QuickOrder/QuickOrderDependencyProvider.php",
+            "snippet": "            return new QuickOrderToProductStorageClientBridge($container->getLocator()->productStorage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffer/src/Spryker/Zed/MerchantProductOffer/MerchantProductOfferDependencyProvider.php",
+            "snippet": "            return new MerchantProductOfferToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOffer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOffer/src/Spryker/Zed/MerchantProductOffer/Persistence/MerchantProductOfferRepository.php",
+            "snippet": "        return $productOfferQuery->find()->getData();",
+            "selected_text": "getData",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

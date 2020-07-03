@@ -1,0 +1,115 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\MerchantOpeningHoursRestApi\\Dependency\\Client\\MerchantOpeningHoursRestApiToMerchantOpeningHoursStorageClientInterface::getMerchantOpeningHoursByMerchantIds expects array<array-key, int>, array{int|null} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Reader/MerchantOpeningHoursReader.php",
+            "snippet": "            ->getMerchantOpeningHoursByMerchantIds([$merchantStorageTransfer->getIdMerchant()]);",
+            "selected_text": "[$merchantStorageTransfer->getIdMerchant()]",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 118,
+            "line_to": 118,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Glue\\MerchantOpeningHoursRestApi\\Processor\\Reader\\MerchantOpeningHoursReader::getMerchantIdsIndexedByReference is incorrect, got 'array<int(0)|string, int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Reader/MerchantOpeningHoursReader.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 129,
+            "line_to": 129,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<int(0)|string, int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Glue\\MerchantOpeningHoursRestApi\\Processor\\Reader\\MerchantOpeningHoursReader::getMerchantIdsIndexedByReference",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Reader/MerchantOpeningHoursReader.php",
+            "snippet": "        return $merchantIdsIndexedByReference;",
+            "selected_text": "$merchantIdsIndexedByReference",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantOpeningHoursStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 65,
+            "line_to": 65,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Generated\\Glue\\Ide\\AutoCompletion::merchantStorage does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->merchantStorage()->client()",
+            "selected_text": "merchantStorage",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/MerchantOpeningHoursRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->glossaryStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\MerchantOpeningHoursRestApi\\Dependency\\Client\\MerchantOpeningHoursRestApiToMerchantStorageClientInterface::findOneByMerchantReference cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Reader/MerchantOpeningHoursReader.php",
+            "snippet": "        $merchantStorageTransfer = $this->merchantStorageClient->findOneByMerchantReference($merchantReference);",
+            "selected_text": "$merchantReference",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $merchantIdsIndexedByReference[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Reader/MerchantOpeningHoursReader.php",
+            "snippet": "            $merchantIdsIndexedByReference[$merchantStorageTransfer->getMerchantReference()] = $merchantStorageTransfer->getIdMerchant();",
+            "selected_text": "$merchantIdsIndexedByReference",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $translatedNotes using possibly null offset mixed|null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantOpeningHoursRestApi/src/Spryker/Glue/MerchantOpeningHoursRestApi/Processor/Translator/MerchantOpeningHoursTranslator.php",
+            "snippet": "                    $dateScheduleTransfer->setNote($translatedNotes[$dateScheduleTransfer->getNote()]);",
+            "selected_text": "$translatedNotes",
+            "error_level": 3,
+            "shortcode": 125
+        }
+    ],
+    "deprecation": []
+}

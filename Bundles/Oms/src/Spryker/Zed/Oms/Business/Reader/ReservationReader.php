@@ -42,6 +42,8 @@ class ReservationReader implements ReservationReaderInterface
     protected $omsReservationReaderStrategyPlugins;
 
     /**
+     * @deprecated Use {@link omsReservationAggregationPlugins} instead.
+     *
      * @var \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
     protected $reservationAggregationPlugins;
@@ -193,7 +195,7 @@ class ReservationReader implements ReservationReaderInterface
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\Reservation::sumReservedProductQuantities()` instead.
+     * @deprecated Use {@link sumReservedProductQuantities()} instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer

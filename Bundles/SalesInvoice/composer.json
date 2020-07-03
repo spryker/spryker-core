@@ -1,0 +1,51 @@
+{
+  "name": "spryker/sales-invoice",
+  "type": "library",
+  "description": "SalesInvoice module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/glossary": "^3.0.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/mail": "^4.3.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sales": "^11.11.0",
+    "spryker/sales-invoice-extension": "^1.0.0",
+    "spryker/sequence-number": "^3.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/twig": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/oms": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/oms": "If you want to use GenerateOrderInvoiceCommandPlugin plugin"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/",
+      "SprykerTest\\Shared\\SalesInvoice\\Helper\\": "tests/SprykerTest/Shared/SalesInvoice/_support/Helper/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

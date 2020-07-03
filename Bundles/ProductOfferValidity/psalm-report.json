@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductOfferValidity\\Persistence\\Propel\\Mapper\\ProductOfferValidityMapper::productOfferValidityEntitiesToProductOfferValidityCollectionTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductOfferValidity\\Persistence\\SpyProductOfferValidity> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/Persistence/ProductOfferValidityRepository.php",
+            "snippet": "                $productOfferValidityEntities,",
+            "selected_text": "$productOfferValidityEntities",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductOfferValidity/src/Spryker/Zed/ProductOfferValidity/ProductOfferValidityDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productOffer()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

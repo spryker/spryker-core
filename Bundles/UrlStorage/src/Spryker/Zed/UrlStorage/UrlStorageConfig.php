@@ -42,4 +42,24 @@ class UrlStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getUrlEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getUrlRedirectEventQueueName(): ?string
+    {
+        return null;
+    }
 }
