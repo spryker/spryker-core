@@ -81,7 +81,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductAbstractStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_ABSTRACT_PUBLISH, new PriceProductAbstractStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -91,7 +91,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH, new PriceProductAbstractStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_ABSTRACT_UNPUBLISH, new PriceProductAbstractStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -101,7 +101,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductConcretePublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_CONCRETE_PUBLISH, new PriceProductConcreteStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_CONCRETE_PUBLISH, new PriceProductConcreteStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -111,7 +111,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductConcreteUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_CONCRETE_UNPUBLISH, new PriceProductConcreteStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::PRICE_CONCRETE_UNPUBLISH, new PriceProductConcreteStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -121,7 +121,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductAbstractEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductAbstractEntityStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -131,7 +131,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new PriceProductAbstractEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new PriceProductAbstractEntityStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -141,7 +141,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductAbstractStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductAbstractStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -151,7 +151,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductConcreteCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductConcreteEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_CREATE, new PriceProductConcreteEntityStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -161,7 +161,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductConcreteUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new PriceProductConcreteEntityStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_UPDATE, new PriceProductConcreteEntityStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -171,7 +171,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductConcreteDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductConcreteEntityStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE, new PriceProductConcreteEntityStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -181,7 +181,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceTypeProductAbstractUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new PriceTypeProductAbstractStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new PriceTypeProductAbstractStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -191,7 +191,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceTypeProductAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new PriceTypeProductAbstractStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new PriceTypeProductAbstractStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -201,7 +201,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceTypeProductConcreteUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new PriceTypeProductConcreteStoragePublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_UPDATE, new PriceTypeProductConcreteStoragePublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -211,7 +211,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceTypeProductConcreteDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new PriceTypeProductConcreteStorageUnpublishListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE, new PriceTypeProductConcreteStorageUnpublishListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -221,7 +221,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreConcreteCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new PriceProductStoreConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new PriceProductStoreConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -231,7 +231,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreConcreteUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -241,7 +241,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreConcreteDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -251,7 +251,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreAbstractCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new PriceProductStoreAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_CREATE, new PriceProductStoreAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -261,7 +261,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreAbstractUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_UPDATE, new PriceProductStoreAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -271,7 +271,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductStoreAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_STORE_DELETE, new PriceProductStoreAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -281,7 +281,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultAbstractCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -291,7 +291,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultAbstractUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -301,7 +301,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultAbstractDeleteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultAbstractStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultAbstractStorageListener(), 0, null, $this->getConfig()->getPriceProductAbstractEventQueueName());
     }
 
     /**
@@ -311,7 +311,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultConcreteCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_CREATE, new PriceProductDefaultConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -321,7 +321,7 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultConcreteUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_UPDATE, new PriceProductDefaultConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 
     /**
@@ -331,6 +331,6 @@ class PriceProductStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addPriceProductDefaultConcreteDeleteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultConcreteStorageListener());
+        $eventCollection->addListenerQueued(PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DEFAULT_DELETE, new PriceProductDefaultConcreteStorageListener(), 0, null, $this->getConfig()->getPriceProductConcreteEventQueueName());
     }
 }

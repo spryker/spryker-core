@@ -49,6 +49,26 @@ class ProductListStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @return string|null
+     */
+    public function getProductAbstractProductListEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcreteProductListEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
      * @return int
      */
     public function getProductListProductAbstractPublishChunkSize(): int

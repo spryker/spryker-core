@@ -8,13 +8,19 @@
 namespace Spryker\Zed\Publisher\Business\Collator;
 
 use Spryker\Shared\Event\EventConstants;
+use Spryker\Zed\Publisher\PublisherConfig;
 
 class PublisherEventCollator implements PublisherEventCollatorInterface
 {
     /**
-     * @var \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     * @var array
      */
     protected $publisherPlugins;
+
+    /**
+     * @var \Spryker\Zed\Publisher\PublisherConfig
+     */
+    protected $publisherConfig;
 
     /**
      * @var string[]
@@ -22,11 +28,13 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     protected static $eventCollectionBuffer;
 
     /**
-     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[] $publisherPlugins
+     * @param array $publisherPlugins
+     * @param \Spryker\Zed\Publisher\PublisherConfig $publisherConfig
      */
-    public function __construct(array $publisherPlugins)
+    public function __construct(array $publisherPlugins, PublisherConfig $publisherConfig)
     {
         $this->publisherPlugins = $publisherPlugins;
+        $this->publisherConfig = $publisherConfig;
     }
 
     /**
@@ -48,12 +56,32 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
     {
         $eventCollection = [];
 
-        foreach ($this->publisherPlugins as $publisherPlugin) {
-            $eventCollection = $this->registerSubscribedEventsByPublisher(
-                $eventCollection,
-                $publisherPlugin->getSubscribedEvents(),
-                get_class($publisherPlugin)
-            );
+        foreach ($this->publisherPlugins as $queueName => $publisherData) {
+            if (is_object($publisherData)) {
+                $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherData->getSubscribedEvents(), get_class($publisherData));
+
+                continue;
+            }
+
+            if (is_array($publisherData)) {
+                $eventCollection = $this->registerSubscribedEventsByQueueName($eventCollection, $publisherData, $queueName);
+            }
+        }
+
+        return $eventCollection;
+    }
+
+    /**
+     * @param array $eventCollection
+     * @param \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[] $publisherPlugins
+     * @param string $publishQueueName
+     *
+     * @return array
+     */
+    public function registerSubscribedEventsByQueueName(array $eventCollection, array $publisherPlugins, string $publishQueueName): array
+    {
+        foreach ($publisherPlugins as $publisherPlugin) {
+            $eventCollection = $this->registerSubscribedEventsByPublisher($eventCollection, $publisherPlugin->getSubscribedEvents(), get_class($publisherPlugin), $publishQueueName);
         }
 
         return $eventCollection;
@@ -63,21 +91,20 @@ class PublisherEventCollator implements PublisherEventCollatorInterface
      * @param array $eventCollection
      * @param string[] $subscribedEvents
      * @param string $publisherClassName
+     * @param string|null $publishQueueName
      *
      * @return array
      */
-    protected function registerSubscribedEventsByPublisher(array $eventCollection, array $subscribedEvents, string $publisherClassName): array
-    {
-        $publishQueueName = EventConstants::EVENT_QUEUE;
-
-        if (!isset($eventCollection[$publishQueueName])) {
-            $eventCollection[$publishQueueName] = [];
-        }
+    protected function registerSubscribedEventsByPublisher(
+        array $eventCollection,
+        array $subscribedEvents,
+        string $publisherClassName,
+        ?string $publishQueueName = null
+    ): array {
+        $defaultPublishQueueName = $this->publisherConfig->getPublishQueueName() ?? EventConstants::EVENT_QUEUE;
+        $publishQueueName = $publishQueueName ?? $defaultPublishQueueName;
 
         foreach ($subscribedEvents as $subscribedEvent) {
-            if (!isset($eventCollection[$publishQueueName][$subscribedEvent])) {
-                $eventCollection[$publishQueueName][$subscribedEvent] = [];
-            }
             $eventCollection[$publishQueueName][$subscribedEvent][] = $publisherClassName;
         }
 
