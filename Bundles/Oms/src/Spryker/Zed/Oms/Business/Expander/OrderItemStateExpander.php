@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Oms\Business\Expander;
 
+use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Oms\Business\OrderStateMachine\FinderInterface;
 use Spryker\Zed\Oms\Business\Process\StateInterface;
@@ -65,9 +67,7 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
                 continue;
             }
 
-            $itemTransfer->getState()
-                ->setDisplayName($this->getDisplayName($state))
-                ->setName($state->getName());
+            $itemTransfer = $this->setItemState($itemTransfer, $state);
         }
 
         return $itemTransfers;
@@ -117,5 +117,24 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
         }
 
         return $this->omsConfig->getFallbackDisplayNamePrefix() . str_replace(' ', '-', mb_strtolower(trim($state->getName())));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Spryker\Zed\Oms\Business\Process\StateInterface $state
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function setItemState(ItemTransfer $itemTransfer, StateInterface $state): ItemTransfer
+    {
+        if (!$itemTransfer->getState()) {
+            $itemTransfer->setState(new ItemStateTransfer());
+        }
+
+        $itemTransfer->getState()
+            ->setDisplayName($this->getDisplayName($state))
+            ->setName($state->getName());
+
+        return $itemTransfer;
     }
 }
