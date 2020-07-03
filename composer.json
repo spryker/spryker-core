@@ -16,7 +16,7 @@
   },
   "autoload": {
     "files": [
-      "Bundles/Development/tests/dd.php"
+      "autoload.php"
     ]
   },
   "bin": [
@@ -25,11 +25,6 @@
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
-  },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
   },
   "replace": {
     "spryker/acl": "*",
@@ -396,6 +391,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
