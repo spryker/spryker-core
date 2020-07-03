@@ -106,6 +106,8 @@ class IndexController extends AbstractController
             ->getFactory()
             ->createDiscountFormTabs($discountForm, $voucherForm, $discountConfiguratorTransfer);
 
+        $discountVisibilityForm = $this->getFactory()->createDiscountVisibilityForm();
+
         return [
             'discountForm' => $discountForm->createView(),
             'idDiscount' => $idDiscount,
@@ -113,6 +115,7 @@ class IndexController extends AbstractController
             'voucherForm' => $voucherForm->createView(),
             'discountConfigurator' => $discountConfiguratorTransfer,
             'discountFormTabs' => $discountFormTabs->createView(),
+            'discountVisibilityForm' => $discountVisibilityForm->createView(),
         ];
     }
 

@@ -4,10 +4,25 @@
 
 {% block action %}
     {% if discountConfigurator.getDiscountGeneral.isActive %}
-        {{ removeActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'deactivate'}), 'Deactivate' | trans) }}
+        {% set visibility = 'deactivate' %}
+        {% set label = 'Deactivate' %}
+        {% set buttonClass = 'btn-remove' %}
+        {% set icon = 'fa-trash' %}
     {% else %}
-        {{ viewActionButton(url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'activate'}), 'Activate' | trans) }}
+        {% set visibility = 'activate' %}
+        {% set label = 'Activate' %}
+        {% set buttonClass = 'btn-view' %}
+        {% set icon = 'fa-caret-right' %}
     {% endif %}
+    {{ form_start(discountVisibilityForm, {
+        'action': url('/discount/index/toggle-discount-visibility', {'id-discount': idDiscount, 'visibility': 'deactivate'}),
+        'attr': {'class': 'form-inline'}
+    }) }}
+        <button type="submit" class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+            <i class="fa {{ icon }}"></i>
+            {{ label | trans }}
+        </button>
+    {{ form_end(discountVisibilityForm) }}
 
     {{ backActionButton('/discount/index/list', 'List of Discounts' | trans) }}
 {% endblock %}
