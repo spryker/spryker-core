@@ -16,6 +16,12 @@
         <property name="merchantStorage" type="MerchantStorage"/>
         <property name="productConcreteSku" type="string"/>
         <property name="isDefault" type="bool"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
+        <property name="price" type="CurrentProductPrice"/>
+    </transfer>
+
+    <transfer name="CurrentProductPrice">
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
@@ -31,6 +37,8 @@
     <transfer name="ProductOffer">
         <property name="idProductOffer" type="int"/>
         <property name="fkMerchant" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="idProductAbstract" type="int"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSku" type="string"/>
         <property name="merchantSku" type="string"/>
@@ -51,6 +59,7 @@
 
     <transfer name="ProductView">
         <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="selectedAttributes" type="array" singular="selectedAttribute"/>

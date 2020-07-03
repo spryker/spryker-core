@@ -24,4 +24,17 @@ interface MerchantProductFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant products by provided MerchantProductCriteria.idMerchantProductAbstract.
+     * - Returns MerchantProduct transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
+     */
+    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): array;
 }

@@ -1,0 +1,42 @@
+{
+  "name": "spryker/merchant-product-storage",
+  "description": "MerchantProductStorage module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/event-behavior": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant-product": "^0.1.0",
+    "spryker/product-storage": "^1.26.0",
+    "spryker/propel-orm": "^1.10.0",
+    "spryker/storage": "^3.15.0",
+    "spryker/synchronization": "^1.11.0",
+    "spryker/synchronization-behavior": "^1.4.0",
+    "spryker/synchronization-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/event": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "suggest": {
+    "spryker/event": "Required for using the Listeners"
+  }
+}

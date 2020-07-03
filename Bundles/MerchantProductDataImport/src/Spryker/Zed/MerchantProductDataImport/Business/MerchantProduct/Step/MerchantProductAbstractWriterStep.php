@@ -16,6 +16,11 @@ use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\Merch
 
 class MerchantProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
+
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProductDataSetInterface::FK_MERCHANT,
         MerchantProductDataSetInterface::FK_PRODUCT_ABSTRACT,
@@ -37,6 +42,8 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
 
         $merchantProductAbstractEntity->fromArray($dataSet->getArrayCopy());
         $merchantProductAbstractEntity->save();
+
+        $this->addPublishEvents(static::EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getIdMerchantProductAbstract());
     }
 
     /**

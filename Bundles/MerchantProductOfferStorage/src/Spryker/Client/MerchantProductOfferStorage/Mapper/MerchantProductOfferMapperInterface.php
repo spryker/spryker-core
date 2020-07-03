@@ -12,13 +12,13 @@ use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 interface MerchantProductOfferMapperInterface
 {
     /**
-     * @param array $data
+     * @param array<mixed> $merchantProductOfferStorageData
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
     public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
-        array $data,
+        array $merchantProductOfferStorageData,
         ProductOfferStorageTransfer $productOfferStorageTransfer
     ): ProductOfferStorageTransfer;
 }
