@@ -333,7 +333,7 @@ class CompanyUser implements CompanyUserInterface
 
             if ($customerResponseTransfer->getMessage()) {
                 $companyUserResponseTransfer->addMessage(
-                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getMessage())
+                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue())
                 );
             }
 
