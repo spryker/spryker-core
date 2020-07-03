@@ -54,6 +54,6 @@ class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
         $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
         $productOfferCriteriaFilterTransfer->setProductOfferIds($productOfferIds);
 
-        return $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
+        return $this->productOfferFacade->get($productOfferCriteriaFilterTransfer);
     }
 }

@@ -63,7 +63,7 @@ class ProductOfferFacadeTest extends Unit
         $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferCollectionTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaFilterTransfer);
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
     }

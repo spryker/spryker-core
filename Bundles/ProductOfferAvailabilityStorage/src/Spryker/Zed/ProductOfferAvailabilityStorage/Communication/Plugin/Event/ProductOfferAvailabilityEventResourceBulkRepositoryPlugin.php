@@ -56,7 +56,7 @@ class ProductOfferAvailabilityEventResourceBulkRepositoryPlugin extends Abstract
 
         $productOfferTransfers = $this->getFactory()
             ->getProductOfferFacade()
-            ->find($productOfferCriteriaFilterTransfer)
+            ->get($productOfferCriteriaFilterTransfer)
             ->getProductOffers()
             ->getArrayCopy();
 

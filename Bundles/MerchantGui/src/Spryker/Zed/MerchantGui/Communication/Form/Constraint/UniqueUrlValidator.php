@@ -36,10 +36,8 @@ class UniqueUrlValidator extends ConstraintValidator
         if (!$constraint instanceof UniqueUrl) {
             throw new UnexpectedTypeException($constraint, UniqueUrl::class);
         }
-        if (!$this->isUrlChanged($value, $constraint)) {
-            return;
-        }
-        if ($this->hasUrl($value->getUrl(), $constraint)) {
+
+        if ($this->hasUrl($value, $constraint)) {
             $this->context
                 ->buildViolation(sprintf('Provided URL "%s" is already taken.', $value->getUrl()))
                 ->atPath(MerchantUrlCollectionFormType::FIELD_URL)
@@ -53,47 +51,20 @@ class UniqueUrlValidator extends ConstraintValidator
      *
      * @return bool
      */
-    protected function isUrlChanged(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
+    protected function hasUrl(UrlTransfer $urlTransfer, UniqueUrl $constraint): bool
     {
-        $existingUrlTransfer = $this->findUrl($urlTransfer->getUrl(), $constraint);
+        $existingUrlTransfer = $constraint->getUrlFacade()->findUrlCaseInsensitive(
+            (new UrlTransfer())->setUrl($urlTransfer->getUrl())
+        );
+
         if (
-            $existingUrlTransfer
-            && $existingUrlTransfer->getFkResourceMerchant()
-            && (int)$existingUrlTransfer->getFkResourceMerchant() === (int)$urlTransfer->getFkResourceMerchant()
+            !$existingUrlTransfer ||
+            $existingUrlTransfer->getFkResourceMerchant() &&
+            (int)$existingUrlTransfer->getFkResourceMerchant() === (int)$urlTransfer->getFkResourceMerchant()
         ) {
             return false;
         }
 
         return true;
-    }
-
-    /**
-     * @param string $url
-     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl $constraint
-     *
-     * @return \Generated\Shared\Transfer\UrlTransfer|null
-     */
-    protected function findUrl(string $url, UniqueUrl $constraint): ?UrlTransfer
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
-        $urlTransfer = $constraint->getUrlFacade()
-            ->findUrlCaseInsensitive($urlTransfer);
-
-        return $urlTransfer;
-    }
-
-    /**
-     * @param string $url
-     * @param \Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl $constraint
-     *
-     * @return bool
-     */
-    protected function hasUrl(string $url, UniqueUrl $constraint): bool
-    {
-        $urlTransfer = new UrlTransfer();
-        $urlTransfer->setUrl($url);
-
-        return $constraint->getUrlFacade()->hasUrlCaseInsensitive($urlTransfer);
     }
 }

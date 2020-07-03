@@ -42,8 +42,8 @@ class MerchantProfileReader implements MerchantProfileReaderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    public function get(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
-        return $this->merchantProfileRepository->find($merchantProfileCriteriaFilterTransfer);
+        return $this->merchantProfileRepository->get($merchantProfileCriteriaFilterTransfer);
     }
 }

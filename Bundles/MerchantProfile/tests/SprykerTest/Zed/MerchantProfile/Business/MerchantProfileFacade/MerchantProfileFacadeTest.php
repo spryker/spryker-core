@@ -41,7 +41,7 @@ class MerchantProfileFacadeTest extends Unit
         // Act
         $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
         $merchantProfileCriteriaFilterTransfer->setMerchantProfileIds([$merchantProfileTransfer->getIdMerchantProfile()]);
-        $merchantProfileTransferCollection = $this->tester->getFacade()->find($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileTransferCollection = $this->tester->getFacade()->get($merchantProfileCriteriaFilterTransfer);
 
         // Assert
         $this->assertNotEmpty($merchantProfileTransferCollection->getMerchantProfiles());

@@ -16,6 +16,8 @@ use Spryker\Zed\MerchantStock\Persistence\MerchantStockEntityManagerInterface;
 
 class MerchantStockWriter implements MerchantStockWriterInterface
 {
+    use TransactionTrait;
+
     protected const ERROR_MERCHANT_STOCK_CREATE = 'Merchant stock can not be created.';
 
     /**
@@ -42,43 +44,28 @@ class MerchantStockWriter implements MerchantStockWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer
+    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): MerchantResponseTransfer
     {
-        $stockTransfer = (new StockTransfer())
-            ->setName($this->generateStockNameByMerchant($merchantTransfer))
-            ->setIsActive(true);
+        $merchantTransfer->requireIdMerchant();
 
-        $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($merchantTransfer, $stockTransfer) {
+            $stockTransfer = $this->stockFacade->createStock($stockTransfer)->getStock();
 
-        $merchantStockTransfer = (new MerchantStockTransfer())
-            ->setIdMerchant($merchantTransfer->getIdMerchant())
-            ->setIdStock($stockTransfer->getIdStock())
-            ->setIsDefault(true);
+            $merchantStockTransfer = (new MerchantStockTransfer())
+                ->setIdMerchant($merchantTransfer->getIdMerchant())
+                ->setIdStock($stockTransfer->getIdStock())
+                ->setIsDefault(true);
 
-        $this->merchantStockEntityManager->createMerchantStock($merchantStockTransfer);
-        $merchantTransfer->addStock($stockTransfer);
+            $this->merchantStockEntityManager->createMerchantStock($merchantStockTransfer);
+            $merchantTransfer->addStock($stockTransfer);
 
-        return (new MerchantResponseTransfer())
-            ->setIsSuccess(true)
-            ->setMerchant($merchantTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return string
-     */
-    protected function generateStockNameByMerchant(MerchantTransfer $merchantTransfer): string
-    {
-        return sprintf(
-            '%s %s %s %d',
-            $merchantTransfer->requireName()->getName(),
-            $merchantTransfer->requireMerchantReference()->getMerchantReference(),
-            'Warehouse',
-            $merchantTransfer->getStocks()->count() + 1
-        );
+            return (new MerchantResponseTransfer())
+                ->setIsSuccess(true)
+                ->setMerchant($merchantTransfer);
+        });
     }
 }

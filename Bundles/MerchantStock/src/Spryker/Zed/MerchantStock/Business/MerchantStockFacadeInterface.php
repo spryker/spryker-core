@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StockCollectionTransfer;
+use Generated\Shared\Transfer\StockTransfer;
 
 interface MerchantStockFacadeInterface
 {
@@ -22,10 +23,11 @@ interface MerchantStockFacadeInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
+     * @param \Generated\Shared\Transfer\StockTransfer $stockTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantResponseTransfer
      */
-    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer): MerchantResponseTransfer;
+    public function createDefaultMerchantStock(MerchantTransfer $merchantTransfer, StockTransfer $stockTransfer): MerchantResponseTransfer;
 
     /**
      * Specification:

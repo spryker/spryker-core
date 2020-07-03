@@ -30,8 +30,8 @@ class MerchantProductOfferToProductOfferFacadeBridge implements MerchantProductO
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
-        return $this->productOfferFacade->find($productOfferCriteriaFilter);
+        return $this->productOfferFacade->get($productOfferCriteriaFilter);
     }
 }

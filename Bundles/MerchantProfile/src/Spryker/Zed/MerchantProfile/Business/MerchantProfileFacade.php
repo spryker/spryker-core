@@ -76,10 +76,10 @@ class MerchantProfileFacade extends AbstractFacade implements MerchantProfileFac
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function find(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    public function get(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
     {
         return $this->getFactory()
             ->createMerchantProfileReader()
-            ->find($merchantProfileCriteriaFilterTransfer);
+            ->get($merchantProfileCriteriaFilterTransfer);
     }
 }

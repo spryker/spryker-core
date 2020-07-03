@@ -32,9 +32,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
-        return $this->getRepository()->find($productOfferCriteriaFilter);
+        return $this->getRepository()->get($productOfferCriteriaFilter);
     }
 
     /**
