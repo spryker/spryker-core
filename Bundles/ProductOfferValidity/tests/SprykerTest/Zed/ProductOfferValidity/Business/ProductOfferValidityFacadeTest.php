@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\ProductOfferValidity\Business;
 
 use Codeception\Test\Unit;
 use DateTime;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
@@ -77,13 +77,13 @@ class ProductOfferValidityFacadeTest extends Unit
         // Act
         $this->tester->getFacade()->updateProductOfferStatusByValidityDate();
 
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setIdProductOffer($productOfferValid->getIdProductOffer());
-        $productOfferValid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setIdProductOffer($productOfferValid->getIdProductOffer());
+        $productOfferValid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaTransfer);
 
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setIdProductOffer($productOfferInvalid->getIdProductOffer());
-        $productOfferInvalid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setIdProductOffer($productOfferInvalid->getIdProductOffer());
+        $productOfferInvalid = $this->getLocator()->productOffer()->facade()->findOne($productOfferCriteriaTransfer);
 
         // Assert
         $this->assertTrue($productOfferValid->getIsActive());

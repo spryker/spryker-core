@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\MerchantProfile\Business\MerchantProfileFacade;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 
 /**
  * Auto-generated group annotations
@@ -39,9 +39,9 @@ class MerchantProfileFacadeTest extends Unit
         $merchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
 
         // Act
-        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setMerchantProfileIds([$merchantProfileTransfer->getIdMerchantProfile()]);
-        $merchantProfileTransferCollection = $this->tester->getFacade()->get($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
+        $merchantProfileCriteriaTransfer->setMerchantProfileIds([$merchantProfileTransfer->getIdMerchantProfile()]);
+        $merchantProfileTransferCollection = $this->tester->getFacade()->get($merchantProfileCriteriaTransfer);
 
         // Assert
         $this->assertNotEmpty($merchantProfileTransferCollection->getMerchantProfiles());
@@ -139,9 +139,9 @@ class MerchantProfileFacadeTest extends Unit
         $expectedMerchantProfileTransfer = $this->tester->haveMerchantProfile($merchantTransfer);
 
         // Act
-        $merchantProfileCriteriaFilterTransfer = new MerchantProfileCriteriaFilterTransfer();
-        $merchantProfileCriteriaFilterTransfer->setFkMerchant($expectedMerchantProfileTransfer->getFkMerchant());
-        $merchantProfileTransfer = $this->tester->getFacade()->findOne($merchantProfileCriteriaFilterTransfer);
+        $merchantProfileCriteriaTransfer = new MerchantProfileCriteriaTransfer();
+        $merchantProfileCriteriaTransfer->setFkMerchant($expectedMerchantProfileTransfer->getFkMerchant());
+        $merchantProfileTransfer = $this->tester->getFacade()->findOne($merchantProfileCriteriaTransfer);
 
         // Assert
         $this->assertNotNull($merchantProfileTransfer);

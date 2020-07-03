@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
@@ -46,11 +46,11 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
     /**
      * @module Merchant
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function getProductOffersByFilterCriteria(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer): ProductOfferCollectionTransfer
+    public function getProductOffersByFilterCriteria(ProductOfferCriteriaTransfer $productOfferCriteriaTransfer): ProductOfferCollectionTransfer
     {
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferPropelQuery = $this->getFactory()
@@ -61,7 +61,7 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
                 ->joinWithSpyStore()
             ->endUse();
 
-        $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);
+        $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaTransfer);
 
         $productOfferEntities = $productOfferPropelQuery->find();
 
@@ -81,41 +81,41 @@ class MerchantProductOfferStorageRepository extends AbstractRepository implement
 
     /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
      *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function applyFilters(
         SpyProductOfferQuery $productOfferQuery,
-        ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilterTransfer
+        ProductOfferCriteriaTransfer $productOfferCriteriaTransfer
     ): SpyProductOfferQuery {
-        if ($productOfferCriteriaFilterTransfer->getProductOfferReferences()) {
-            $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilterTransfer->getProductOfferReferences());
+        if ($productOfferCriteriaTransfer->getProductOfferReferences()) {
+            $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaTransfer->getProductOfferReferences());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getIsActive() !== null) {
-            $productOfferQuery->filterByIsActive($productOfferCriteriaFilterTransfer->getIsActive());
+        if ($productOfferCriteriaTransfer->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaTransfer->getIsActive());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getApprovalStatuses()) {
-            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilterTransfer->getApprovalStatuses());
+        if ($productOfferCriteriaTransfer->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaTransfer->getApprovalStatuses());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getIsActiveMerchant() !== null) {
-            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaFilterTransfer->getIsActiveMerchant());
+        if ($productOfferCriteriaTransfer->getIsActiveMerchant() !== null) {
+            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaTransfer->getIsActiveMerchant());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct() !== null) {
+        if ($productOfferCriteriaTransfer->getIsActiveConcreteProduct() !== null) {
             $productOfferQuery->addJoin(
                 SpyProductOfferTableMap::COL_CONCRETE_SKU,
                 SpyProductTableMap::COL_SKU,
                 Criteria::INNER_JOIN
             );
-            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilterTransfer->getIsActiveConcreteProduct());
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaTransfer->getIsActiveConcreteProduct());
         }
 
-        if ($productOfferCriteriaFilterTransfer->getConcreteSkus()) {
-            $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilterTransfer->getConcreteSkus());
+        if ($productOfferCriteriaTransfer->getConcreteSkus()) {
+            $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaTransfer->getConcreteSkus());
         }
 
         return $productOfferQuery;

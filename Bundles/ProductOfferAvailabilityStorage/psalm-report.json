@@ -237,8 +237,8 @@
             "type": "PossiblyNullArgument",
             "message": "Argument 1 of Spryker\\Zed\\ProductOfferAvailabilityStorage\\Communication\\Plugin\\Event\\ProductOfferAvailabilityEventResourceBulkRepositoryPlugin::isOutOfPages cannot be null, possibly null value provided",
             "file_name": "vendor/spryker/spryker/Bundles/ProductOfferAvailabilityStorage/src/Spryker/Zed/ProductOfferAvailabilityStorage/Communication/Plugin/Event/ProductOfferAvailabilityEventResourceBulkRepositoryPlugin.php",
-            "snippet": "        if ($this->isOutOfPages($productOfferCriteriaFilterTransfer->getPagination())) {",
-            "selected_text": "$productOfferCriteriaFilterTransfer->getPagination()",
+            "snippet": "        if ($this->isOutOfPages($productOfferCriteriaTransfer->getPagination())) {",
+            "selected_text": "$productOfferCriteriaTransfer->getPagination()",
             "error_level": 3,
             "shortcode": 78
         },

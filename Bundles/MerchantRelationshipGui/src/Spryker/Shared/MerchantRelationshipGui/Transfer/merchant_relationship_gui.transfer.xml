@@ -43,7 +43,4 @@
     <transfer name="MerchantCriteria">
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
-    </transfer>
-
 </transfers>

@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOfferStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
@@ -124,8 +124,8 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     {
         $productConcreteSkus = array_unique($productConcreteSkus);
 
-        $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
-        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
+        $productOfferCriteriaTransfer = $this->createProductOfferCriteriaTransfer($productConcreteSkus);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaTransfer);
 
         $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);
 
@@ -180,11 +180,11 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     /**
      * @param string[] $productConcreteSkus
      *
-     * @return \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer
+     * @return \Generated\Shared\Transfer\ProductOfferCriteriaTransfer
      */
-    protected function createProductOfferCriteriaFilterTransfer(array $productConcreteSkus): ProductOfferCriteriaFilterTransfer
+    protected function createProductOfferCriteriaTransfer(array $productConcreteSkus): ProductOfferCriteriaTransfer
     {
-        return (new ProductOfferCriteriaFilterTransfer())
+        return (new ProductOfferCriteriaTransfer())
             ->setConcreteSkus($productConcreteSkus)
             ->setIsActive(true)
             ->setIsActiveMerchant(true)

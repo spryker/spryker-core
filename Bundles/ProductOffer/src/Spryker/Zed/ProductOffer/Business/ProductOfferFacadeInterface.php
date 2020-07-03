@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOffer\Business;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -25,24 +25,24 @@ interface ProductOfferFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer;
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer;
 
     /**
      * Specification:
-     * - Finds ProductOfferTransfer by provided ProductOfferCriteriaFilterTransfer.
+     * - Finds ProductOfferTransfer by provided ProductOfferCriteriaTransfer.
      * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
+    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteria): ?ProductOfferTransfer;
 
     /**
      * Specification:
@@ -50,11 +50,11 @@ interface ProductOfferFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
+    public function create(ProductOfferTransfer $productOfferCriteria): ProductOfferTransfer;
 
     /**
      * Specification:

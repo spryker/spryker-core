@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductOfferAvailabilityStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 
 class ProductOfferAvailabilityStorageToProductOfferFacadeBridge implements ProductOfferAvailabilityStorageToProductOfferFacadeInterface
 {
@@ -26,12 +26,12 @@ class ProductOfferAvailabilityStorageToProductOfferFacadeBridge implements Produ
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
     {
-        return $this->productOfferFacade->get($productOfferCriteriaFilter);
+        return $this->productOfferFacade->get($productOfferCriteria);
     }
 }

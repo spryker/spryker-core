@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStockDataImport\Business\Step;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
@@ -50,10 +50,10 @@ class ProductOfferReferenceToIdProductOfferStep implements DataImportStepInterfa
             ));
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReference($productOfferReference);
 
-        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaFilterTransfer);
+        $productOfferTransfer = $this->productOfferFacade->findOne($productOfferCriteriaTransfer);
 
         if ($productOfferTransfer === null) {
             throw new EntityNotFoundException(sprintf('Product offer not found for product offer reference %s', $productOfferReference));

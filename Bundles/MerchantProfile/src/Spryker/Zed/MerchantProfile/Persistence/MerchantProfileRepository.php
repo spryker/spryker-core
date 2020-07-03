@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProfile\Persistence;
 
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
-use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProfileCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -22,15 +22,15 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class MerchantProfileRepository extends AbstractRepository implements MerchantProfileRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileTransfer|null
      */
-    public function findOne(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): ?MerchantProfileTransfer
+    public function findOne(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): ?MerchantProfileTransfer
     {
         $merchantProfileEntity = $this->applyFilters(
             $this->getFactory()->createMerchantProfileQuery(),
-            $merchantProfileCriteriaFilterTransfer
+            $merchantProfileCriteriaTransfer
         )->findOne();
 
         if (!$merchantProfileEntity) {
@@ -43,11 +43,11 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProfileCollectionTransfer
      */
-    public function get(MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer): MerchantProfileCollectionTransfer
+    public function get(MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer): MerchantProfileCollectionTransfer
     {
         $merchantProfileCollectionTransfer = new MerchantProfileCollectionTransfer();
         $merchantProfileQuery = $this->getFactory()
@@ -57,8 +57,8 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
                 ->leftJoinWithSpyCountry()
             ->endUse();
 
-        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
-        $merchantProfileQuery = $this->buildQueryFromCriteria($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer->getFilter());
+        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaTransfer);
+        $merchantProfileQuery = $this->buildQueryFromCriteria($merchantProfileQuery, $merchantProfileCriteriaTransfer->getFilter());
         $merchantProfileEntityCollection = $merchantProfileQuery->find();
 
         foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {
@@ -88,34 +88,34 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
 
     /**
      * @param \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery $merchantProfileQuery
-     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
      *
      * @return \Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery
      */
     protected function applyFilters(
         SpyMerchantProfileQuery $merchantProfileQuery,
-        MerchantProfileCriteriaFilterTransfer $merchantProfileCriteriaFilterTransfer
+        MerchantProfileCriteriaTransfer $merchantProfileCriteriaTransfer
     ): SpyMerchantProfileQuery {
-        if ($merchantProfileCriteriaFilterTransfer->getFkMerchant() !== null) {
-            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaFilterTransfer->getFkMerchant());
+        if ($merchantProfileCriteriaTransfer->getFkMerchant() !== null) {
+            $merchantProfileQuery->filterByFkMerchant($merchantProfileCriteriaTransfer->getFkMerchant());
         }
 
-        if ($merchantProfileCriteriaFilterTransfer->getMerchantIds()) {
-            $merchantProfileQuery->filterByFkMerchant_In($merchantProfileCriteriaFilterTransfer->getMerchantIds());
+        if ($merchantProfileCriteriaTransfer->getMerchantIds()) {
+            $merchantProfileQuery->filterByFkMerchant_In($merchantProfileCriteriaTransfer->getMerchantIds());
         }
 
-        if ($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds()) {
-            $merchantProfileQuery->filterByIdMerchantProfile_In($merchantProfileCriteriaFilterTransfer->getMerchantProfileIds());
+        if ($merchantProfileCriteriaTransfer->getMerchantProfileIds()) {
+            $merchantProfileQuery->filterByIdMerchantProfile_In($merchantProfileCriteriaTransfer->getMerchantProfileIds());
         }
 
-        if ($merchantProfileCriteriaFilterTransfer->getMerchantReference()) {
+        if ($merchantProfileCriteriaTransfer->getMerchantReference()) {
             $merchantProfileQuery->useSpyMerchantQuery()
-                ->filterByMerchantReference($merchantProfileCriteriaFilterTransfer->getMerchantReference())
+                ->filterByMerchantReference($merchantProfileCriteriaTransfer->getMerchantReference())
                 ->endUse();
         }
 
-        if ($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile() !== null) {
-            $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile());
+        if ($merchantProfileCriteriaTransfer->getIdMerchantProfile() !== null) {
+            $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaTransfer->getIdMerchantProfile());
         }
 
         return $merchantProfileQuery;

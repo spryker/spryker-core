@@ -44,7 +44,7 @@
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="pagination" type="Pagination"/>
     </transfer>
 

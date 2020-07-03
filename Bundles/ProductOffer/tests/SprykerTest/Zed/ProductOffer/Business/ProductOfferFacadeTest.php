@@ -13,7 +13,7 @@ use Generated\Shared\DataBuilder\ProductOfferBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -59,11 +59,11 @@ class ProductOfferFacadeTest extends Unit
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
         ]);
-        $productOfferCriteriaFilterTransfer = new ProductOfferCriteriaFilterTransfer();
-        $productOfferCriteriaFilterTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+        $productOfferCriteriaTransfer = new ProductOfferCriteriaTransfer();
+        $productOfferCriteriaTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->tester->getFacade()->get($productOfferCriteriaTransfer);
         // Assert
         $this->assertNotEmpty($productOfferCollectionTransfer);
     }

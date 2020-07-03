@@ -128,7 +128,7 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantProfile\\Persistence\\MerchantProfileRepository::applyFilters expects Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfileQuery, possibly different type Orm\\Zed\\Country\\Persistence\\SpyCountryQuery|Orm\\Zed\\MerchantProfile\\Persistence\\SpyMerchantProfileQuery provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProfile/src/Spryker/Zed/MerchantProfile/Persistence/MerchantProfileRepository.php",
-            "snippet": "        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);",
+            "snippet": "        $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaTransfer);",
             "selected_text": "$merchantProfileQuery",
             "error_level": 3,
             "shortcode": 92

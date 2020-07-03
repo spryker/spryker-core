@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOffer\Business\Checker;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
@@ -56,12 +56,12 @@ class ItemProductOfferChecker implements ItemProductOfferCheckerInterface
             return $cartPreCheckResponseTransfer;
         }
 
-        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+        $productOfferCriteriaTransfer = (new ProductOfferCriteriaTransfer())
             ->setProductOfferReferences($productOfferReferences)
             ->setIsActive(true);
 
         $productOfferTransfers = $this->productOfferRepository
-            ->find($productOfferCriteriaFilterTransfer)
+            ->find($productOfferCriteriaTransfer)
             ->getProductOffers();
 
         if (!$productOfferTransfers->count()) {

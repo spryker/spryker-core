@@ -103,7 +103,7 @@
             "type": "UndefinedConstant",
             "message": "Constant Orm\\Zed\\Merchant\\Persistence\\Map\\SpyMerchantTableMap::COL_IS_ACTIVE is not defined",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferStorage/src/Spryker/Zed/MerchantProductOfferStorage/Persistence/MerchantProductOfferStorageRepository.php",
-            "snippet": "            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaFilterTransfer->getIsActiveMerchant());",
+            "snippet": "            $productOfferQuery->where(SpyMerchantTableMap::COL_IS_ACTIVE . ' = ?', $productOfferCriteriaTransfer->getIsActiveMerchant());",
             "selected_text": "SpyMerchantTableMap::COL_IS_ACTIVE",
             "error_level": -1,
             "shortcode": 20
@@ -393,7 +393,7 @@
             "type": "PossiblyInvalidArgument",
             "message": "Argument 1 of Spryker\\Zed\\MerchantProductOfferStorage\\Persistence\\MerchantProductOfferStorageRepository::applyFilters expects Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery, possibly different type Orm\\Zed\\ProductOffer\\Persistence\\SpyProductOfferQuery|Orm\\Zed\\Store\\Persistence\\SpyStoreQuery provided",
             "file_name": "vendor/spryker/spryker/Bundles/MerchantProductOfferStorage/src/Spryker/Zed/MerchantProductOfferStorage/Persistence/MerchantProductOfferStorageRepository.php",
-            "snippet": "        $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaFilterTransfer);",
+            "snippet": "        $productOfferPropelQuery = $this->applyFilters($productOfferPropelQuery, $productOfferCriteriaTransfer);",
             "selected_text": "$productOfferPropelQuery",
             "error_level": 3,
             "shortcode": 92

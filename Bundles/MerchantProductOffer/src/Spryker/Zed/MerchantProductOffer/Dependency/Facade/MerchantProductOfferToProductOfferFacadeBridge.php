@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantProductOffer\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 
 class MerchantProductOfferToProductOfferFacadeBridge implements MerchantProductOfferToProductOfferFacadeInterface
 {
@@ -26,12 +26,12 @@ class MerchantProductOfferToProductOfferFacadeBridge implements MerchantProductO
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferCollectionTransfer
      */
-    public function get(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
+    public function get(ProductOfferCriteriaTransfer $productOfferCriteria): ProductOfferCollectionTransfer
     {
-        return $this->productOfferFacade->get($productOfferCriteriaFilter);
+        return $this->productOfferFacade->get($productOfferCriteria);
     }
 }

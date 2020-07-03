@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferValidityDataImport\Dependency\Facade;
 
-use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 class ProductOfferValidityDataImportToProductOfferFacadeBridge implements ProductOfferValidityDataImportToProductOfferFacadeInterface
@@ -26,12 +26,12 @@ class ProductOfferValidityDataImportToProductOfferFacadeBridge implements Produc
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferCriteriaTransfer $productOfferCriteria
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
-    public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
+    public function findOne(ProductOfferCriteriaTransfer $productOfferCriteria): ?ProductOfferTransfer
     {
-        return $this->productOfferFacade->findOne($productOfferCriteriaFilter);
+        return $this->productOfferFacade->findOne($productOfferCriteria);
     }
 }

@@ -18,7 +18,7 @@
         <property name="isDefault" type="bool"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
         <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
         <property name="isActive" type="bool"/>

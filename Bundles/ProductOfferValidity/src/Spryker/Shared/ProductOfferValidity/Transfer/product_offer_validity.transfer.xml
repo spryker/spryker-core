@@ -13,7 +13,7 @@
         <property name="productOfferValidities" type="ProductOfferValidity[]" singular="productOfferValidity"/>
     </transfer>
 
-    <transfer name="ProductOfferCriteriaFilter">
+    <transfer name="ProductOfferCriteria">
         <property name="idProductOffer" type="int"/>
     </transfer>
 

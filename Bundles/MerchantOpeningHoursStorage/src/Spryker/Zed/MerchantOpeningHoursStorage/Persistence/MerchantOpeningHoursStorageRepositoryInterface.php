@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantOpeningHoursStorage\Persistence;
 
 use ArrayObject;
-use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer;
 
 interface MerchantOpeningHoursStorageRepositoryInterface
 {
@@ -31,11 +31,11 @@ interface MerchantOpeningHoursStorageRepositoryInterface
     public function getMerchantOpeningHoursDateScheduleByFkMerchant(int $fkMerchant): ArrayObject;
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
     public function getFilteredMerchantOpeningHoursStorageEntityTransfers(
-        MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+        MerchantOpeningHoursStorageCriteriaTransfer $merchantOpeningHoursStorageCriteriaTransfer
     ): array;
 }
