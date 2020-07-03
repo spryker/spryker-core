@@ -71,7 +71,7 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
     {
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         $ordersDashboardCardCounts = $this->salesMerchantPortalGuiRepository->getOrdersDashboardCardCounts($idMerchant);
-        $ordersDashboardCardCounts['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();
+        $ordersDashboardCardCounts['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold();
         $ordersDashboardCardCounts['ordersStoresCountData'] = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
             $idMerchant
         );

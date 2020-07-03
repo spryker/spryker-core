@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class OrdersController extends AbstractController
 {
     /**
-     * @return array
+     * @return array<mixed>
      */
     public function indexAction(): array
     {

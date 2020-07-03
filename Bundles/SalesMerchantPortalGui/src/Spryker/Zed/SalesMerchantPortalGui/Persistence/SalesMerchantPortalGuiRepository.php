@@ -59,7 +59,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     public function getOrdersDashboardCardCounts(int $idMerchant): array
     {
         $salesMerchantPortalGuiConfig = $this->getFactory()->getConfig();
-        $dashboardNewOrdersLimit = $salesMerchantPortalGuiConfig->getDashboardNewOrdersLimit();
+        $dashboardNewOrdersLimit = $salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold();
         $newOrdersDateTime = (new DateTime(sprintf('-%s Days', $dashboardNewOrdersLimit)))->format('Y-m-d H:i:s');
 
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
@@ -82,6 +82,9 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
     /**
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
      * @param int $idMerchant
+     *
+     * @phpstan-param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed> $merchantSalesOrderQuery
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */

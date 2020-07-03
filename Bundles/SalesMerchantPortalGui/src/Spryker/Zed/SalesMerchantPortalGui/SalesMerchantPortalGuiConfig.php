@@ -16,7 +16,7 @@ class SalesMerchantPortalGuiConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getDashboardNewOrdersLimit(): int
+    public function getDashboardNewOrdersDaysThreshold(): int
     {
         return 5;
     }
