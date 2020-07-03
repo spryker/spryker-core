@@ -75,6 +75,7 @@
                 <xsd:attribute type="xsd:string" name="onEnter" use="optional"/>
                 <xsd:attribute type="xsd:string" name="manual" use="optional"/>
                 <xsd:attribute type="xsd:string" name="command" use="optional"/>
+                <xsd:attribute type="xsd:string" name="timeoutProcessor" use="optional"/>
             </xsd:extension>
         </xsd:simpleContent>
     </xsd:complexType>

@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\StockTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantStockGui/src/Spryker/Zed/MerchantStockGui/Communication/Form/DataProvider/MerchantStockFormDataProvider.php",
+            "snippet": "        return $merchantTransfer->getStocks()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

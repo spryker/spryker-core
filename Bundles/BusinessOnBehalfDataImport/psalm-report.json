@@ -1,0 +1,199 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\BusinessUnitKeyToIdCompanyBusinessUnitStep::getIdBusinessUnit is incorrect, got 'Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit|int'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idBusinessUnitBuffer with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "        $this->idBusinessUnitBuffer[$businessUnitKey] = $idBusinessUnit;",
+            "selected_text": "$this->idBusinessUnitBuffer",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\CompanyBusinessUnit\\Persistence\\SpyCompanyBusinessUnit' does not match the declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\BusinessUnitKeyToIdCompanyBusinessUnitStep::getIdBusinessUnit",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "        return $this->idBusinessUnitBuffer[$businessUnitKey];",
+            "selected_text": "$this->idBusinessUnitBuffer[$businessUnitKey]",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\CompanyKeyToIdCompanyStep::getIdCompany is incorrect, got 'Orm\\Zed\\Company\\Persistence\\SpyCompany|int'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CompanyKeyToIdCompanyStep.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idCompanyBuffer with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Company\\Persistence\\SpyCompany|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CompanyKeyToIdCompanyStep.php",
+            "snippet": "        $this->idCompanyBuffer[$companyKey] = $idCompany;",
+            "selected_text": "$this->idCompanyBuffer",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\Company\\Persistence\\SpyCompany' does not match the declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\CompanyKeyToIdCompanyStep::getIdCompany",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CompanyKeyToIdCompanyStep.php",
+            "snippet": "        return $this->idCompanyBuffer[$companyKey];",
+            "selected_text": "$this->idCompanyBuffer[$companyKey]",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\CustomerReferenceToIdCustomerStep::getIdCustomer is incorrect, got 'Orm\\Zed\\Customer\\Persistence\\SpyCustomer|int'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CustomerReferenceToIdCustomerStep.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidPropertyAssignmentValue",
+            "message": "$this->idCustomerBuffer with declared type 'array<array-key, int>' cannot be assigned type 'non-empty-array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer|int>'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CustomerReferenceToIdCustomerStep.php",
+            "snippet": "        $this->idCustomerBuffer[$customerReference] = $idCustomer;",
+            "selected_text": "$this->idCustomerBuffer",
+            "error_level": 6,
+            "shortcode": 145
+        },
+        {
+            "severity": "error",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Orm\\Zed\\Customer\\Persistence\\SpyCustomer' does not match the declared return type 'int' for Spryker\\Zed\\BusinessOnBehalfDataImport\\Business\\Model\\Step\\CompanyUser\\CustomerReferenceToIdCustomerStep::getIdCustomer",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CustomerReferenceToIdCustomerStep.php",
+            "snippet": "        return $this->idCustomerBuffer[$customerReference];",
+            "selected_text": "$this->idCustomerBuffer[$customerReference]",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addstep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/BusinessOnBehalfDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createCompanyKeyToIdCompanyStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::adddatasetstepbroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/BusinessOnBehalfDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/BusinessOnBehalfDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/BusinessOnBehalfDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->getCompanyUserDataImport()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/BusinessUnitKeyToIdCompanyBusinessUnitStep.php",
+            "snippet": "            ->findOneByKey($businessUnitKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebykey does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CompanyKeyToIdCompanyStep.php",
+            "snippet": "            ->findOneByKey($companyKey);",
+            "selected_text": "findOneByKey",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::findonebycustomerreference does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfDataImport/src/Spryker/Zed/BusinessOnBehalfDataImport/Business/Model/Step/CompanyUser/CustomerReferenceToIdCustomerStep.php",
+            "snippet": "            ->findOneByCustomerReference($customerReference);",
+            "selected_text": "findOneByCustomerReference",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
