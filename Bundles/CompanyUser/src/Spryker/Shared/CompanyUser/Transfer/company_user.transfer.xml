@@ -75,6 +75,7 @@
         <property name="isSuccess" type="bool"/>
         <property name="customerTransfer" type="Customer"/>
         <property name="errors" type="CustomerError[]" singular="error"/>
+        <property name="message" type="Message"/>
     </transfer>
 
     <transfer name="CompanyResponse">
