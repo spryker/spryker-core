@@ -22,7 +22,7 @@ interface CmsConstants
     public const RESOURCE_TYPE_STATIC = 'static';
 
     /**
-     * @deprecated Please use `\Spryker\Zed\Cms\CmsConfig::getThemeName()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Cms\CmsConfig::getThemeName()} instead.
      */
     public const YVES_THEME = 'YVES_THEME';
 }
