@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantProductStorage\Business\Deleter;
 
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface;
 
 class MerchantProductStorageDeleter implements MerchantProductStorageDeleterInterface
 {
@@ -19,20 +19,20 @@ class MerchantProductStorageDeleter implements MerchantProductStorageDeleterInte
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface
+     * @var \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface
      */
-    protected $merchantProductStorageEntityManager;
+    protected $productStorageFacade;
 
     /**
      * @param \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface $merchantProductStorageEntityManager
+     * @param \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface $productStorageFacade
      */
     public function __construct(
         MerchantProductStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        MerchantProductStorageEntityManagerInterface $merchantProductStorageEntityManager
+        MerchantProductStorageToProductStorageFacadeInterface $productStorageFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->merchantProductStorageEntityManager = $merchantProductStorageEntityManager;
+        $this->productStorageFacade = $productStorageFacade;
     }
 
     /**
@@ -51,16 +51,6 @@ class MerchantProductStorageDeleter implements MerchantProductStorageDeleterInte
             return;
         }
 
-        $this->deleteByIdProductAbstracts($idProductAbstracts);
-    }
-
-    /**
-     * @param int[] $idProductAbstracts
-     *
-     * @return void
-     */
-    protected function deleteByIdProductAbstracts(array $idProductAbstracts): void
-    {
-        $this->merchantProductStorageEntityManager->deleteMerchantProductStorageEntitiesByIdProductAbstracts($idProductAbstracts);
+        $this->productStorageFacade->publishAbstractProducts($idProductAbstracts);
     }
 }

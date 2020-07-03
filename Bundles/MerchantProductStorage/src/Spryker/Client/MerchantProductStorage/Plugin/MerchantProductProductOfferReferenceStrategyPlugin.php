@@ -10,7 +10,7 @@ namespace Spryker\Client\MerchantProductStorage\Plugin;
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface;
 
-class MerchantProductStrategyPlugin implements ProductOfferReferenceStrategyPluginInterface
+class MerchantProductProductOfferReferenceStrategyPlugin implements ProductOfferReferenceStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -20,7 +20,7 @@ class MerchantProductStrategyPlugin implements ProductOfferReferenceStrategyPlug
      *
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
-     * @return string
+     * @return bool
      */
     public function isApplicable(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): bool
     {

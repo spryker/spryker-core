@@ -61,9 +61,9 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productConcreteDefaultProductOffer;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStorageExpanderPluginInterface[]
+     * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
      */
-    protected $priceProductOfferStorageExpanderPlugins;
+    protected $productOfferStorageExpanderPlugins;
 
     /**
      * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface
@@ -78,7 +78,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
      * @param \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer
      * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin
-     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStorageExpanderPluginInterface[] $priceProductOfferStorageExpanderPlugins
+     * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[] $productOfferStorageExpanderPlugins
      */
     public function __construct(
         MerchantProductOfferStorageToStorageClientInterface $storageClient,
@@ -88,7 +88,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator,
         ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer,
         ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin,
-        array $priceProductOfferStorageExpanderPlugins
+        array $productOfferStorageExpanderPlugins
     ) {
         $this->storageClient = $storageClient;
         $this->merchantProductOfferMapper = $merchantProductOfferMapper;
@@ -97,7 +97,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         $this->productOfferStorageKeyGenerator = $productOfferStorageKeyGenerator;
         $this->productConcreteDefaultProductOffer = $productConcreteDefaultProductOffer;
         $this->productOfferStorageCollectionSorterPlugin = $productOfferStorageCollectionSorterPlugin;
-        $this->priceProductOfferStorageExpanderPlugins = $priceProductOfferStorageExpanderPlugins;
+        $this->productOfferStorageExpanderPlugins = $productOfferStorageExpanderPlugins;
     }
 
     /**
@@ -276,8 +276,8 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected function expandProductOffersWithPrices(array $productOfferStorageTransfers): array
     {
         foreach ($productOfferStorageTransfers as $key => $productOfferStorageTransfer) {
-            foreach ($this->priceProductOfferStorageExpanderPlugins as $priceProductOfferStorageExpanderPlugin) {
-                $productOfferStorageTransfers[$key] = $priceProductOfferStorageExpanderPlugin->expand($productOfferStorageTransfer);
+            foreach ($this->productOfferStorageExpanderPlugins as $productOfferStorageExpanderPlugin) {
+                $productOfferStorageTransfers[$key] = $productOfferStorageExpanderPlugin->expand($productOfferStorageTransfer);
             }
         }
 

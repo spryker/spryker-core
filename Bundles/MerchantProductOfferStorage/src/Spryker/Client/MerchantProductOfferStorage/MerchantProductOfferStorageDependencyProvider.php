@@ -25,7 +25,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY = 'PLUGINS_PRODUCT_OFFER_REFERENCE_STRATEGY';
-    public const PLUGINS_PRISE_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_PRISE_PRODUCT_OFFER_STORAGE_EXPANDER';
+    public const PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER';
     public const PLUGIN_PRODUCT_OFFER_STORAGE_COLLECTION_SORTER = 'PLUGIN_PRODUCT_OFFER_STORAGE_COLLECTION_SORTER';
 
     /**
@@ -42,7 +42,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addServiceSynchronization($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addProductOfferReferenceStrategyPlugins($container);
-        $container = $this->addPriceProductOfferStorageExpanderPlugins($container);
+        $container = $this->addProductOfferStorageExpanderPlugins($container);
         $container = $this->addProductOfferStorageCollectionSorterPlugin($container);
         $container = $this->addMerchantStorageClient($container);
 
@@ -76,19 +76,19 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addPriceProductOfferStorageExpanderPlugins(Container $container): Container
+    protected function addProductOfferStorageExpanderPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRISE_PRODUCT_OFFER_STORAGE_EXPANDER, function () {
-            return $this->getPriceProductOfferStorageExpanderPlugins();
+        $container->set(static::PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER, function () {
+            return $this->getProductOfferStorageExpanderPlugins();
         });
 
         return $container;
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStorageExpanderPluginInterface[]
+     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
      */
-    protected function getPriceProductOfferStorageExpanderPlugins(): array
+    protected function getProductOfferStorageExpanderPlugins(): array
     {
         return [];
     }
@@ -116,8 +116,8 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     {
         throw new ProductOfferStorageCollectionSorterPluginException(
             sprintf(
-                'Missing instance of %s! You need to configure ProductOfferDefaultPlugin ' .
-                'in your own MerchantProductOfferStorageDependencyProvider::createProductOfferPlugin() ' .
+                'Missing instance of %s! You need to configure ProductOfferStorageCollectionSorterPlugin ' .
+                'in your own MerchantProductOfferStorageDependencyProvider::createProductOfferStorageCollectionSorterPlugin() ' .
                 'to be able to get default offer reference.',
                 ProductOfferStorageCollectionSorterPluginInterface::class
             )

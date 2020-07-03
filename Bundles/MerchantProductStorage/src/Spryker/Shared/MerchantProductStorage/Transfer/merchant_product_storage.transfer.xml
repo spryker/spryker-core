@@ -19,7 +19,7 @@
         <property name="merchantProducts" type="MerchantProduct[]" singular="merchantProduct"/>
     </transfer>
 
-    <transfer name="MerchantProduct" >
+    <transfer name="MerchantProduct">
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
         <property name="sku" type="string"/>
@@ -27,8 +27,8 @@
         <property name="isShared" type="bool"/>
     </transfer>
 
-    <transfer name="MerchantProductFilterCriteria" >
-        <property name="IdProductAbstractMerchantStorages" type="int[]" singular="IdProductAbstractMerchantStorages"/>
+    <transfer name="MerchantProductFilterCriteria">
+        <property name="idProductAbstractMerchantStorages" type="int[]" singular="idProductAbstractMerchantStorage"/>
         <property name="limit" type="int"/>
         <property name="offset" type="int"/>
     </transfer>

@@ -93,11 +93,11 @@ class MerchantProductDeletePublisherPluginTest extends Unit
         //Act
         $this->merchantProductDeletePublisherPlugin->handleBulk(
             $publishEventTransfers,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
         );
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $unpublishEventTransfers,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_UNPUBLISH
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_UNPUBLISH
         );
         $count = $this->tester->countMerchantProductAbstract($merchantProductTransfer->getIdProductAbstract());
 

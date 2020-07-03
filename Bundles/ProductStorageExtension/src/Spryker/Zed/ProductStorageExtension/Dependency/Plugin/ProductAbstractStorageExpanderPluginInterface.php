@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductStorageExtension\Dependency\Plugin;
+namespace Spryker\Zed\ProductStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductAbstractStorageTransfer;
 

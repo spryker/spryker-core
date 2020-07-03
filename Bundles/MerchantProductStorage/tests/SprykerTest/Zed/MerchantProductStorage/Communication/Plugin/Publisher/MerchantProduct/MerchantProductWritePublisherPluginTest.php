@@ -81,7 +81,7 @@ class MerchantProductWritePublisherPluginTest extends Unit
         //Act
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
         );
         $count = $this->tester->countMerchantProductAbstract($merchantProductTransfer->getIdProductAbstract());
 

@@ -25,9 +25,9 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
      *
      * @return void
      */
-    public function writeMerchantProductStorageCollectionByIdProductAbstractEvents(array $eventTransfers): void
+    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createMerchantProductStorageWriter()->writeCollectionByIdProductAbstractEvents($eventTransfers);
+        $this->getFactory()->createMerchantProductStorageWriter()->writeMerchantProductCollectionByIdProductAbstractMerchantEvents($eventTransfers);
     }
 
     /**

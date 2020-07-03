@@ -14,5 +14,5 @@ interface MerchantProductStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByIdProductAbstractEvents(array $eventTransfers): void;
+    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void;
 }

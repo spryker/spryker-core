@@ -8,8 +8,8 @@
 namespace Spryker\Zed\MerchantProductStorage\Business\Writer;
 
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface;
-use Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageRepositoryInterface;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface;
 
 class MerchantProductStorageWriter implements MerchantProductStorageWriterInterface
 {
@@ -19,28 +19,28 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface
+     * @var \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface
      */
-    protected $merchantProductStorageEntityManager;
+    protected $merchantProductFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageRepositoryInterface
+     * @var \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface
      */
-    protected $merchantProductStorageRepository;
+    protected $productStorageFacade;
 
     /**
      * @param \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManagerInterface $merchantProductStorageEntityManager
-     * @param \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageRepositoryInterface $merchantProductStorageRepository
+     * @param \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface $merchantProductFacade
+     * @param \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface $productStorageFacade
      */
     public function __construct(
         MerchantProductStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        MerchantProductStorageEntityManagerInterface $merchantProductStorageEntityManager,
-        MerchantProductStorageRepositoryInterface $merchantProductStorageRepository
+        MerchantProductStorageToMerchantProductFacadeInterface $merchantProductFacade,
+        MerchantProductStorageToProductStorageFacadeInterface $productStorageFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->merchantProductStorageEntityManager = $merchantProductStorageEntityManager;
-        $this->merchantProductStorageRepository = $merchantProductStorageRepository;
+        $this->merchantProductFacade = $merchantProductFacade;
+        $this->productStorageFacade = $productStorageFacade;
     }
 
     /**
@@ -48,29 +48,30 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      *
      * @return void
      */
-    public function writeCollectionByIdProductAbstractEvents(array $eventTransfers): void
+    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
     {
-        $merchantProductAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $idProductAbstractMerchants = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        if (!$merchantProductAbstractIds) {
+        if (!$idProductAbstractMerchants) {
             return;
         }
 
-        $this->writeByIdMerchantProductAbstracts($merchantProductAbstractIds);
-    }
+        $merchantProductTransfers = $this->merchantProductFacade->findMerchantProducts($idProductAbstractMerchants);
 
-    /**
-     * @param int[] $merchantProductAbstractIds
-     *
-     * @return void
-     */
-    protected function writeByIdMerchantProductAbstracts(array $merchantProductAbstractIds): void
-    {
-        $merchantProductsCollectionTransfer = $this->merchantProductStorageRepository
-            ->getMerchantProducts($merchantProductAbstractIds);
-
-        foreach ($merchantProductsCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
-            $this->merchantProductStorageEntityManager->saveMerchantProductStorage($merchantProductTransfer);
+        if (!$merchantProductTransfers) {
+            return;
         }
+
+        $productAbstractIds = [];
+
+        foreach ($merchantProductTransfers as $merchantProductTransfer) {
+            $productAbstractIds[] = $merchantProductTransfer->getIdProductAbstract();
+        }
+
+        if (!$productAbstractIds) {
+            return;
+        }
+
+        $this->productStorageFacade->publishAbstractProducts($productAbstractIds);
     }
 }

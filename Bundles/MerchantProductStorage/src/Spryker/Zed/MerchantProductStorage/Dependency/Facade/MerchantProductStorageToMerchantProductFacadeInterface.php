@@ -5,20 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProduct\Business;
+namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
-interface MerchantProductFacadeInterface
+interface MerchantProductStorageToMerchantProductFacadeInterface
 {
     /**
-     * Specification:
-     * - Finds merchant for the given abstract product id.
-     * - Returns found MerchantTransfer or null.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
@@ -26,12 +20,6 @@ interface MerchantProductFacadeInterface
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer;
 
     /**
-     * Specification:
-     * - Finds merchant products by provided $idProductAbstractMerchants.
-     * - Returns MerchantProduct transfers.
-     *
-     * @api
-     *
      * @param int[] $idProductAbstractMerchants
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer[]

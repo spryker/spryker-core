@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\MerchantProductStorage;
 
-use Generated\Shared\Transfer\MerchantProductStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,19 +14,4 @@ use Spryker\Client\Kernel\AbstractClient;
  */
 class MerchantProductStorageClient extends AbstractClient implements MerchantProductStorageClientInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer|null
-     */
-    public function findOne(int $idProductAbstract): ?MerchantProductStorageTransfer
-    {
-        return $this->getFactory()
-            ->createMerchantProductStorageReader()
-            ->findOne($idProductAbstract);
-    }
 }

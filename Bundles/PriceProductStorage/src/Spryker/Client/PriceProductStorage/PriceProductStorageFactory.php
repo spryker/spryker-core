@@ -10,8 +10,6 @@ namespace Spryker\Client\PriceProductStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductStorage\Expander\ProductViewPriceExpander;
-use Spryker\Client\PriceProductStorage\Sorter\PriceProductStorageSorter;
-use Spryker\Client\PriceProductStorage\Sorter\PriceProductStorageSorterInterface;
 use Spryker\Client\PriceProductStorage\Storage\PriceAbstractStorageReader;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolver;
 use Spryker\Client\PriceProductStorage\Storage\PriceConcreteResolverInterface;
@@ -87,14 +85,6 @@ class PriceProductStorageFactory extends AbstractFactory
         return new PriceProductItemValidator(
             $this->createPriceConcreteResolver()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\PriceProductStorage\Sorter\PriceProductStorageSorterInterface
-     */
-    public function createPriceProductStorageSorter(): PriceProductStorageSorterInterface
-    {
-        return new PriceProductStorageSorter();
     }
 
     /**

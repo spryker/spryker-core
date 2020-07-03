@@ -12,12 +12,20 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
 use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\MerchantProductDataSetInterface;
-use Spryker\Zed\Product\Dependency\ProductEvents;
 
 class MerchantProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
+
+    /**
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const EVENT_PRODUCT_ABSTRACT_PUBLISH = 'Product.product_abstract.publish';
+
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProductDataSetInterface::FK_MERCHANT,
         MerchantProductDataSetInterface::FK_PRODUCT_ABSTRACT,
@@ -40,8 +48,7 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
         $merchantProductAbstractEntity->fromArray($dataSet->getArrayCopy());
         $merchantProductAbstractEntity->save();
 
-        $this->addPublishEvents(MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH, $merchantProductAbstractEntity->getIdProductAbstractMerchant());
-        $this->addPublishEvents(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getFkProductAbstract());
+        $this->addPublishEvents(static::EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getIdProductAbstractMerchant());
     }
 
     /**

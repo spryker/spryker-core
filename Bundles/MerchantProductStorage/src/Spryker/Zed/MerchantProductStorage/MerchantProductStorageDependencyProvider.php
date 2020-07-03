@@ -7,10 +7,11 @@
 
 namespace Spryker\Zed\MerchantProductStorage;
 
-use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeBridge;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
@@ -18,7 +19,8 @@ use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageT
 class MerchantProductStorageDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const PROPEL_QUERY_MERCHANT_PRODUCT = 'PROPEL_QUERY_MERCHANT_PRODUCT';
+    public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+    public const FACADE_PRODUCT_STORAGE = 'FACADE_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,19 +29,11 @@ class MerchantProductStorageDependencyProvider extends AbstractBundleDependencyP
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addEventBehaviorFacade($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container): Container
-    {
-        $container = $this->addMerchantProductPropelQuery($container);
+        $container = $this->addMerchantProductFacade($container);
+        $container = $this->addProductStorageFacade($container);
 
         return $container;
     }
@@ -65,11 +59,29 @@ class MerchantProductStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantProductPropelQuery(Container $container): Container
+    protected function addMerchantProductFacade(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_MERCHANT_PRODUCT, $container->factory(function () {
-            return SpyMerchantProductAbstractQuery::create();
-        }));
+        $container->set(static::FACADE_MERCHANT_PRODUCT, function (Container $container) {
+            return new MerchantProductStorageToMerchantProductFacadeBridge(
+                $container->getLocator()->merchantProduct()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductStorageFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_STORAGE, function (Container $container) {
+            return new MerchantProductStorageToProductStorageFacadeBridge(
+                $container->getLocator()->productStorage()->facade()
+            );
+        });
 
         return $container;
     }

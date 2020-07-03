@@ -27,7 +27,7 @@ class MerchantProductStorageToStorageClientBridge implements MerchantProductStor
      *
      * @return mixed
      */
-    public function get(string $key)
+    public function get($key)
     {
         return $this->storageClient->get($key);
     }

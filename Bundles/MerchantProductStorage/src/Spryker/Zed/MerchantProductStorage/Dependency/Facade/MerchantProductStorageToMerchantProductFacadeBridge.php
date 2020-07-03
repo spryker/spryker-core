@@ -5,43 +5,43 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProduct\Business;
+namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-/**
- * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
- * @method \Spryker\Zed\MerchantProduct\Business\MerchantProductBusinessFactory getFactory()
- */
-class MerchantProductFacade extends AbstractFacade implements MerchantProductFacadeInterface
+class MerchantProductStorageToMerchantProductFacadeBridge implements MerchantProductStorageToMerchantProductFacadeInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface
+     */
+    protected $merchantProductFacade;
+
+    /**
+     * @param \Spryker\Zed\MerchantProduct\Business\MerchantProductFacadeInterface $merchantProductFacade
+     */
+    public function __construct($merchantProductFacade)
+    {
+        $this->merchantProductFacade = $merchantProductFacade;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer
     {
-        return $this->getRepository()->findMerchant($merchantProductCriteriaTransfer);
+        return $this->merchantProductFacade->findMerchant($merchantProductCriteriaTransfer);
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param int[] $idProductAbstractMerchants
      *
      * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
      */
     public function findMerchantProducts(array $idProductAbstractMerchants): array
     {
-        return $this->getRepository()->findMerchantProducts($idProductAbstractMerchants);
+        return $this->merchantProductFacade->findMerchantProducts($idProductAbstractMerchants);
     }
 }

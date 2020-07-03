@@ -43,8 +43,7 @@ class MerchantProductDeletePublisherPlugin extends AbstractPlugin implements Pub
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_UNPUBLISH,
-            MerchantProductEvents::ENTITY_SPY_MERCHANT_PRODUCT_ABSTRACT_DELETE,
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_UNPUBLISH,
         ];
     }
 }

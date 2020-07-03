@@ -45,9 +45,6 @@ class ProductOfferReferenceStrategyPlugin extends AbstractPlugin implements Prod
      */
     public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string
     {
-        $productOfferStorageCriteriaTransfer = clone $productOfferStorageCriteriaTransfer;
-        $productOfferStorageCriteriaTransfer->setMerchantReference(null);
-
         $productOfferStorageTransfers = $this->getFactory()
             ->createProductOfferStorageReader()
             ->getProductOffersBySkus($productOfferStorageCriteriaTransfer)
@@ -67,7 +64,7 @@ class ProductOfferReferenceStrategyPlugin extends AbstractPlugin implements Prod
 
         if (
             $productOfferStorageCriteriaTransfer->getProductOfferReference()
-            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences)
+            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences, true)
         ) {
             return $productOfferStorageCriteriaTransfer->getProductOfferReference();
         }

@@ -40,7 +40,7 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
             $this->createProductOfferStorageKeyGenerator(),
             $this->createProductConcreteDefaultProductOffer(),
             $this->getProductOfferStorageCollectionSorterPlugin(),
-            $this->getPriceProductOfferStorageExpanderPlugins()
+            $this->getProductOfferStorageExpanderPlugins()
         );
     }
 
@@ -104,11 +104,11 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStorageExpanderPluginInterface[]
+     * @return \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
      */
-    public function getPriceProductOfferStorageExpanderPlugins(): array
+    public function getProductOfferStorageExpanderPlugins(): array
     {
-        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::PLUGINS_PRISE_PRODUCT_OFFER_STORAGE_EXPANDER);
+        return $this->getProvidedDependency(MerchantProductOfferStorageDependencyProvider::PLUGINS_PRODUCT_OFFER_STORAGE_EXPANDER);
     }
 
     /**

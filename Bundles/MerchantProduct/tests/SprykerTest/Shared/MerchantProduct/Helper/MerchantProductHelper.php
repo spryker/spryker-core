@@ -10,9 +10,7 @@ namespace SprykerTest\Shared\MerchantProduct\Helper;
 use Codeception\Module;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstract;
-use SprykerTest\Shared\Product\Helper\ProductDataHelper;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
-use SprykerTest\Zed\Merchant\Helper\MerchantHelper;
 
 class MerchantProductHelper extends Module
 {
@@ -38,27 +36,5 @@ class MerchantProductHelper extends Module
             ->fromArray($merchantProductAbstractEntity->toArray(), true)
             ->setIdMerchant($merchantProductAbstractEntity->getFkMerchant())
             ->setIdProductAbstract($merchantProductAbstractEntity->getFkProductAbstract());
-    }
-
-    /**
-     * @return \SprykerTest\Zed\Merchant\Helper\MerchantHelper
-     */
-    protected function getMerchantHelper(): MerchantHelper
-    {
-        /** @var \SprykerTest\Zed\Merchant\Helper\MerchantHelper $merchantHelper */
-        $merchantHelper = $this->getModule('\\' . MerchantHelper::class);
-
-        return $merchantHelper;
-    }
-
-    /**
-     * @return \SprykerTest\Shared\Product\Helper\ProductDataHelper
-     */
-    protected function getProductDataHelper(): ProductDataHelper
-    {
-        /** @var \SprykerTest\Shared\Product\Helper\ProductDataHelper $productDataHelper */
-        $productDataHelper = $this->getModule('\\' . ProductDataHelper::class);
-
-        return $productDataHelper;
     }
 }

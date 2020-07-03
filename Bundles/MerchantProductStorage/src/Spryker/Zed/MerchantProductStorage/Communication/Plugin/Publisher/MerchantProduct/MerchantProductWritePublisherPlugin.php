@@ -30,7 +30,7 @@ class MerchantProductWritePublisherPlugin extends AbstractPlugin implements Publ
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeMerchantProductStorageCollectionByIdProductAbstractEvents($transfers);
+        $this->getFacade()->writeMerchantProductCollectionByIdProductAbstractMerchantEvents($transfers);
     }
 
     /**
@@ -43,9 +43,7 @@ class MerchantProductWritePublisherPlugin extends AbstractPlugin implements Publ
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantProductEvents::ENTITY_SPY_MERCHANT_PRODUCT_ABSTRACT_CREATE,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_KEY_PUBLISH,
-            MerchantProductEvents::ENTITY_SPY_MERCHANT_PRODUCT_ABSTRACT_UPDATE,
+            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH,
         ];
     }
 }

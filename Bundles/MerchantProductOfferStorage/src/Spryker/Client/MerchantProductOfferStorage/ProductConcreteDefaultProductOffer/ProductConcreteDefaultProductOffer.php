@@ -48,15 +48,6 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
 
         $defaultProductOffers = [];
         foreach ($groupedProductOfferReferences as $productConcreteSku => $productConcreteProductOffersReferences) {
-            if (
-                $productOfferStorageCriteriaTransfer->getProductOfferReference()
-                && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productConcreteProductOffersReferences)
-            ) {
-                $defaultProductOffers[$productConcreteSku] = $productOfferStorageCriteriaTransfer->getProductOfferReference();
-
-                continue;
-            }
-
             $defaultProductOffers[$productConcreteSku] = $this->defaultProductOfferReader
                 ->findProductOfferReference($productOfferStorageCriteriaTransfer);
         }

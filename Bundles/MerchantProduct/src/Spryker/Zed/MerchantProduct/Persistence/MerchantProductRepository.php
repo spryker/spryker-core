@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantProduct\Persistence;
 
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -38,6 +39,28 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
         return $this->getFactory()
             ->createMerchantMapper()
             ->mapMerchantEntityToMerchantTransfer($merchantProductEntity->getMerchant(), new MerchantTransfer());
+    }
+
+    /**
+     * @param int[] $idProductAbstractMerchants
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
+     */
+    public function findMerchantProducts(array $idProductAbstractMerchants): array
+    {
+        $merchantProductEntities = $this->getFactory()->getMerchantProductAbstractPropelQuery()
+            ->filterByIdProductAbstractMerchant_In($idProductAbstractMerchants)
+            ->find();
+
+        $merchantProductTransfers = [];
+        $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
+
+        foreach ($merchantProductEntities as $merchantProductEntity) {
+            $merchantProductTransfers = $merchantProductMapper
+                ->mapMerchantProductEntityToMerchantProductTransfer($merchantProductEntity, new MerchantProductTransfer());
+        }
+
+        return $merchantProductTransfers;
     }
 
     /**

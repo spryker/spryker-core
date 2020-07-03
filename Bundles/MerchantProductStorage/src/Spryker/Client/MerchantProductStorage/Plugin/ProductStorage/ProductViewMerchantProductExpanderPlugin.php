@@ -16,6 +16,8 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
  */
 class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements ProductViewExpanderPluginInterface
 {
+    protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
+
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array<mixed> $productData
@@ -23,21 +25,29 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewTransfer(ProductViewTransfer $productViewTransfer, array $productData, $localeName)
-    {
-        if (isset($productViewTransfer->getSelectedAttributes()['merchant_reference'])) {
-            $merchantProductStorageTransfer = $this->getFactory()
-                ->createMerchantProductStorageReader()
-                ->findOne($productViewTransfer->getIdProductAbstract());
+    public function expandProductViewTransfer(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        $localeName
+    ): ProductViewTransfer {
+        $productSelectedAttributes = $productViewTransfer->getSelectedAttributes();
 
-            if (
-                $merchantProductStorageTransfer &&
-                $merchantProductStorageTransfer->getMerchantReference() === $productViewTransfer->getSelectedAttributes()['merchant_reference']
-            ) {
-                $productViewTransfer->setMerchantReference($merchantProductStorageTransfer->getMerchantReference());
-            }
+        if (!isset($productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE])) {
+            return $productViewTransfer->setMerchantReference(null);
         }
 
-        return $productViewTransfer;
+        $merchantProductStorageTransfer = $this->getFactory()
+            ->createMerchantProductStorageReader()
+            ->findOne($productViewTransfer->getIdProductAbstract());
+
+        if (!$merchantProductStorageTransfer) {
+            return $productViewTransfer->setMerchantReference(null);
+        }
+
+        if ($merchantProductStorageTransfer->getMerchantReference() !== $productSelectedAttributes[static::SELECTED_ATTRIBUTE_MERCHANT_REFERENCE]) {
+            return $productViewTransfer->setMerchantReference(null);
+        }
+
+        return $productViewTransfer->setMerchantReference($merchantProductStorageTransfer->getMerchantReference());
     }
 }

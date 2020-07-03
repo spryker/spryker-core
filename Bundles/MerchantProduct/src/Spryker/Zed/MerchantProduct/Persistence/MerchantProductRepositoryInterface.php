@@ -18,4 +18,11 @@ interface MerchantProductRepositoryInterface
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
     public function findMerchant(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): ?MerchantTransfer;
+
+    /**
+     * @param int[] $idProductAbstractMerchants
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
+     */
+    public function findMerchantProducts(array $idProductAbstractMerchants): array;
 }

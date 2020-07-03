@@ -13,11 +13,11 @@ use Spryker\Zed\MerchantProductStorage\Business\Deleter\MerchantProductStorageDe
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriter;
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriterInterface;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface;
+use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface;
 use Spryker\Zed\MerchantProductStorage\MerchantProductStorageDependencyProvider;
 
 /**
- * @method \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageEntityManager getEntityManager()
- * @method \Spryker\Zed\MerchantProductStorage\Persistence\MerchantProductStorageRepository getRepository()
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
  */
 class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
@@ -29,8 +29,8 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductStorageWriter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getMerchantProductFacade(),
+            $this->getProductStorageFacade()
         );
     }
 
@@ -41,7 +41,7 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new MerchantProductStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager()
+            $this->getProductStorageFacade()
         );
     }
 
@@ -51,5 +51,21 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
     public function getEventBehaviorFacade(): MerchantProductStorageToEventBehaviorFacadeInterface
     {
         return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::FACADE_EVENT_BEHAVIOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToMerchantProductFacadeInterface
+     */
+    public function getMerchantProductFacade(): MerchantProductStorageToMerchantProductFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::FACADE_MERCHANT_PRODUCT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToProductStorageFacadeInterface
+     */
+    public function getProductStorageFacade(): MerchantProductStorageToProductStorageFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::FACADE_PRODUCT_STORAGE);
     }
 }

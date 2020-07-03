@@ -21,7 +21,6 @@
         <property name="metaDescription" type="string"/>
         <property name="superAttributesDefinition" type="array" singular="superAttributesDefinition"/>
         <property name="attributeMap" type="AttributeMapStorage"/>
-        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="ProductConcreteStorage">

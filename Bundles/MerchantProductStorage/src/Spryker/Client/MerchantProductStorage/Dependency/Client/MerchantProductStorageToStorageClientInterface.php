@@ -14,5 +14,5 @@ interface MerchantProductStorageToStorageClientInterface
      *
      * @return mixed
      */
-    public function get(string $key);
+    public function get($key);
 }

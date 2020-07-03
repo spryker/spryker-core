@@ -9,7 +9,7 @@ namespace Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
-interface PriceProductOfferStorageExpanderPluginInterface
+interface ProductOfferStorageExpanderPluginInterface
 {
     /**
      * Specification:

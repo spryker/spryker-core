@@ -59,7 +59,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
-     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     * @var \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
      */
     protected $productAbstractStorageExpanderPlugins = [];
 
@@ -69,7 +69,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
-     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[] $productAbstractStorageExpanderPlugins
+     * @param \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[] $productAbstractStorageExpanderPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
@@ -309,9 +309,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             $attributeMapBulk
         );
 
-        foreach ($this->productAbstractStorageExpanderPlugins as $productAbstractStorageExpanderPlugin) {
-            $productAbstractStorageTransfer = $productAbstractStorageExpanderPlugin->expand($productAbstractStorageTransfer);
-        }
+        $productAbstractStorageTransfer = $this->executeProductAbstractStorageExpanderPlugins($productAbstractStorageTransfer);
 
         $spyProductStorageEntity
             ->setFkProductAbstract($productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT])
@@ -476,5 +474,20 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         }
 
         return $mappedProductAbstractStorageEntities;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    protected function executeProductAbstractStorageExpanderPlugins(
+        ProductAbstractStorageTransfer $productAbstractStorageTransfer
+    ): ProductAbstractStorageTransfer {
+        foreach ($this->productAbstractStorageExpanderPlugins as $productAbstractStorageExpanderPlugin) {
+            $productAbstractStorageTransfer = $productAbstractStorageExpanderPlugin->expand($productAbstractStorageTransfer);
+        }
+
+        return $productAbstractStorageTransfer;
     }
 }

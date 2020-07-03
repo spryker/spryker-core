@@ -11,11 +11,10 @@ interface MerchantProductStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Gets idProductAbstracts from eventTransfers.
-     * - Queries all merchant product abstracts with the given idProductAbstracts.
-     * - Returns a list of merchant reference for idProductAbstract.
-     * - Stores data as json encoded to storage table.
-     * - Sends a copy of data to queue based on module config.
+     * - Gets idMerchantProducts from eventTransfers.
+     * - Finds merhant product by idMerchantProducts.
+     * - Extracts $idProductAbstracts from merchant products.
+     * - Runs product storage publisher with $idProductAbstracts.
      *
      * @api
      *
@@ -23,13 +22,12 @@ interface MerchantProductStorageFacadeInterface
      *
      * @return void
      */
-    public function writeMerchantProductStorageCollectionByIdProductAbstractEvents(array $eventTransfers): void;
+    public function writeMerchantProductCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void;
 
     /**
      * Specification:
      * - Gets idProductAbstracts from eventTransfers.
-     * - Finds and write merchant product abstract storage entities with the given idProductAbstracts.
-     * - Sends delete message to queue based on module config.
+     * - Runs product storage publisher with $idProductAbstracts.
      *
      * @api
      *

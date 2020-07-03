@@ -14,8 +14,8 @@ use Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStor
 
 class MerchantProductStorageDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_SYNCHRONIZATION = 'synchronization service';
-    public const CLIENT_STORAGE = 'storage client';
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -24,6 +24,8 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
 

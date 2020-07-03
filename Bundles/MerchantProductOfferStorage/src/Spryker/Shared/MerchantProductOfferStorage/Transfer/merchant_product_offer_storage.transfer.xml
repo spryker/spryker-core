@@ -32,8 +32,6 @@
         <property name="approvalStatuses" type="string[]" singular="approvalStatus"/>
         <property name="isActiveConcreteProduct" type="bool"/>
         <property name="productOfferReference" type="string"/>
-        <property name="idProductConcrete" type="int"/>
-        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductOffer">

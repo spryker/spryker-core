@@ -125,7 +125,7 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return array
+     * @return \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
      */
     protected function getProductAbstractStorageExpanderPlugins(): array
     {
