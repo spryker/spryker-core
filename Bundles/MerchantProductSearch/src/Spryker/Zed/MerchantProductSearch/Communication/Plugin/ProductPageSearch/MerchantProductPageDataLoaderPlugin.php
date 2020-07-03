@@ -86,7 +86,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      * @param \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer $productAbstractMerchantTransfer
      *
-     * @return array
+     * @return string[][]
      */
     protected function mergeMerchantNames(ProductPayloadTransfer $payloadTransfer, ProductAbstractMerchantTransfer $productAbstractMerchantTransfer): array
     {
