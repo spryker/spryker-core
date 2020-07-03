@@ -8,8 +8,8 @@
 namespace Spryker\Client\MerchantProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
-use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface;
-use Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapper;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface;
 use Spryker\Client\MerchantProductStorage\Reader\MerchantProductStorageReader;
@@ -23,8 +23,8 @@ class MerchantProductStorageFactory extends AbstractFactory
     public function createMerchantProductStorageReader(): MerchantProductStorageReaderInterface
     {
         return new MerchantProductStorageReader(
-            $this->getStorageClient(),
-            $this->getSynchronizationService(),
+            $this->getProductStorageClient(),
+            $this->getLocaleClient(),
             $this->createMerchantProductStorageMapper()
         );
     }
@@ -38,18 +38,18 @@ class MerchantProductStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface
+     * @return \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface
      */
-    public function getStorageClient(): MerchantProductStorageToStorageClientInterface
+    public function getProductStorageClient(): MerchantProductStorageToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::CLIENT_STORAGE);
+        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 
     /**
-     * @return \Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface
+     * @return \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface
      */
-    public function getSynchronizationService(): MerchantProductStorageToSynchronizationServiceInterface
+    public function getLocaleClient(): MerchantProductStorageToLocaleClientInterface
     {
-        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+        return $this->getProvidedDependency(MerchantProductStorageDependencyProvider::CLIENT_LOCALE);
     }
 }

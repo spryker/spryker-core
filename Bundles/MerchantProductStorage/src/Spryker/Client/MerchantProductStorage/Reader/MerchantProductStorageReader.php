@@ -8,23 +8,21 @@
 namespace Spryker\Client\MerchantProductStorage\Reader;
 
 use Generated\Shared\Transfer\MerchantProductStorageTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface;
-use Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface;
 use Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface;
-use Spryker\Shared\MerchantProductStorage\MerchantProductStorageConfig;
 
 class MerchantProductStorageReader implements MerchantProductStorageReaderInterface
 {
     /**
-     * @var \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface
+     * @var \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface
      */
-    protected $storageClient;
+    protected $productStorageClient;
 
     /**
-     * @var \Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface
+     * @var \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface
      */
-    protected $synchronizationService;
+    protected $localeClient;
 
     /**
      * @var \Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface
@@ -32,17 +30,17 @@ class MerchantProductStorageReader implements MerchantProductStorageReaderInterf
     protected $merchantProductStorageMapper;
 
     /**
-     * @param \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientInterface $storageClient
-     * @param \Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceInterface $synchronizationService
+     * @param \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientInterface $localeClient
      * @param \Spryker\Client\MerchantProductStorage\Mapper\MerchantProductStorageMapperInterface $merchantProductStorageMapper
      */
     public function __construct(
-        MerchantProductStorageToStorageClientInterface $storageClient,
-        MerchantProductStorageToSynchronizationServiceInterface $synchronizationService,
+        MerchantProductStorageToProductStorageClientInterface $productStorageClient,
+        MerchantProductStorageToLocaleClientInterface $localeClient,
         MerchantProductStorageMapperInterface $merchantProductStorageMapper
     ) {
-        $this->storageClient = $storageClient;
-        $this->synchronizationService = $synchronizationService;
+        $this->productStorageClient = $productStorageClient;
+        $this->localeClient = $localeClient;
         $this->merchantProductStorageMapper = $merchantProductStorageMapper;
     }
 
@@ -53,33 +51,16 @@ class MerchantProductStorageReader implements MerchantProductStorageReaderInterf
      */
     public function findOne(int $idProductAbstract): ?MerchantProductStorageTransfer
     {
-        $merchantProductKey = $this->generateKey((string)$idProductAbstract, MerchantProductStorageConfig::RESOURCE_MERCHANT_PRODUCT_ABSTRACT_NAME);
-        $merchantProductStorageData = $this->storageClient->get($merchantProductKey);
+        $productStorageData = $this->productStorageClient
+            ->getProductAbstractStorageData($idProductAbstract, $this->localeClient->getCurrentLocale());
 
-        if (!$merchantProductStorageData) {
+        if (!$productStorageData) {
             return null;
         }
-        unset($merchantProductStorageData['_timestamp']);
 
-        return $this->merchantProductStorageMapper->mapMerchantProductStorageDataToMerchantProductStorageTransfer(
-            $merchantProductStorageData,
+        return $this->merchantProductStorageMapper->mapProductStorageDataToMerchantProductStorageTransfer(
+            $productStorageData,
             new MerchantProductStorageTransfer()
         );
-    }
-
-    /**
-     * @param string $keyName
-     * @param string $resourceName
-     *
-     * @return string
-     */
-    protected function generateKey(string $keyName, string $resourceName): string
-    {
-        $synchronizationDataTransfer = new SynchronizationDataTransfer();
-        $synchronizationDataTransfer->setReference($keyName);
-
-        return $this->synchronizationService
-            ->getStorageKeyBuilder($resourceName)
-            ->generateKey($synchronizationDataTransfer);
     }
 }

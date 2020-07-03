@@ -9,13 +9,13 @@ namespace Spryker\Client\MerchantProductStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToStorageClientBridge;
-use Spryker\Client\MerchantProductStorage\Dependency\Service\MerchantProductStorageToSynchronizationServiceBridge;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToLocaleClientBridge;
+use Spryker\Client\MerchantProductStorage\Dependency\Client\MerchantProductStorageToProductStorageClientBridge;
 
 class MerchantProductStorageDependencyProvider extends AbstractDependencyProvider
 {
-    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
-    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -26,8 +26,8 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container = $this->addStorageClient($container);
-        $container = $this->addSynchronizationService($container);
+        $container = $this->addProductStorageClient($container);
+        $container = $this->addLocaleClient($container);
 
         return $container;
     }
@@ -37,11 +37,11 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addStorageClient(Container $container): Container
+    protected function addProductStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_STORAGE, function (Container $container) {
-            return new MerchantProductStorageToStorageClientBridge(
-                $container->getLocator()->storage()->client()
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new MerchantProductStorageToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
             );
         });
 
@@ -53,11 +53,11 @@ class MerchantProductStorageDependencyProvider extends AbstractDependencyProvide
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addSynchronizationService(Container $container): Container
+    protected function addLocaleClient(Container $container): Container
     {
-        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
-            return new MerchantProductStorageToSynchronizationServiceBridge(
-                $container->getLocator()->synchronization()->service()
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new MerchantProductStorageToLocaleClientBridge(
+                $container->getLocator()->locale()->client()
             );
         });
 

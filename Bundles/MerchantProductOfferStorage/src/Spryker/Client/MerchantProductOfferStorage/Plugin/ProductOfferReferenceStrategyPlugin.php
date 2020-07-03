@@ -35,7 +35,9 @@ class ProductOfferReferenceStrategyPlugin extends AbstractPlugin implements Prod
 
     /**
      * {@inheritDoc}
-     * - Returns first product offer reference from collection by provided ProductOfferStorageCriteria.
+     * - Finds product offer collection by ProductOfferStorageCriteria.concreteSkus.
+     * - Returns product offer reference from collection by ProductOfferStorageCriteria.productofferReference.
+     * - Returns null if ProductOfferStorageCriteria.productofferReference is not exists in collectiion.
      *
      * @api
      *

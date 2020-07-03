@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantProductStorage\Business\MerchantProductStorageBusinessFactory getFactory()
+ * @method \Spryker\Zed\MerchantProductStorage\Communication\MerchantProductStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantProductStorage\Business\MerchantProductStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\MerchantProductStorage\MerchantProductStorageConfig getConfig()
  */

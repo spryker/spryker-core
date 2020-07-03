@@ -40,15 +40,10 @@ class ProductConcreteDefaultProductOffer implements ProductConcreteDefaultProduc
             return [];
         }
 
-        $groupedProductOfferReferences = [];
-        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
-            $groupedProductOfferReferences[$productOfferStorageTransfer->getProductConcreteSku()][]
-                = $productOfferStorageTransfer->getProductOfferReference();
-        }
-
         $defaultProductOffers = [];
-        foreach ($groupedProductOfferReferences as $productConcreteSku => $productConcreteProductOffersReferences) {
-            $defaultProductOffers[$productConcreteSku] = $this->defaultProductOfferReader
+
+        foreach ($productOffersStorageTransfers as $productOfferStorageTransfer) {
+            $defaultProductOffers[$productOfferStorageTransfer->getProductConcreteSku()] = $this->defaultProductOfferReader
                 ->findProductOfferReference($productOfferStorageCriteriaTransfer);
         }
 

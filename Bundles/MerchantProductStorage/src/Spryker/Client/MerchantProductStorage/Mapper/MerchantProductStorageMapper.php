@@ -12,15 +12,15 @@ use Generated\Shared\Transfer\MerchantProductStorageTransfer;
 class MerchantProductStorageMapper implements MerchantProductStorageMapperInterface
 {
     /**
-     * @param array<mixed> $merchantProductStorageData
+     * @param array<mixed> $productStorageData
      * @param \Generated\Shared\Transfer\MerchantProductStorageTransfer $merchantProductStorageTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantProductStorageTransfer
      */
-    public function mapMerchantProductStorageDataToMerchantProductStorageTransfer(
-        array $merchantProductStorageData,
+    public function mapProductStorageDataToMerchantProductStorageTransfer(
+        array $productStorageData,
         MerchantProductStorageTransfer $merchantProductStorageTransfer
     ): MerchantProductStorageTransfer {
-        return $merchantProductStorageTransfer->fromArray($merchantProductStorageData, true);
+        return $merchantProductStorageTransfer->fromArray($productStorageData, true);
     }
 }

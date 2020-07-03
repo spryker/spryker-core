@@ -56,7 +56,7 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
         $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
 
         foreach ($merchantProductEntities as $merchantProductEntity) {
-            $merchantProductTransfers = $merchantProductMapper
+            $merchantProductTransfers[] = $merchantProductMapper
                 ->mapMerchantProductEntityToMerchantProductTransfer($merchantProductEntity, new MerchantProductTransfer());
         }
 
