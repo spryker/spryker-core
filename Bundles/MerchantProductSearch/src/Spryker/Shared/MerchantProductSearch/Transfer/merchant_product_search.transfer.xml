@@ -20,8 +20,12 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="StringFacetMap">
+    </transfer>
+
     <transfer name="PageMap">
         <property name="store" type="string"/>
+        <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
     </transfer>
 
     <transfer name="FacetConfig">
