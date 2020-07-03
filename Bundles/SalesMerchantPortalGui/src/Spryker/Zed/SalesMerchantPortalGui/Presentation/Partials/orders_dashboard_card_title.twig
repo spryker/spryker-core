@@ -1,6 +1,9 @@
+{#
+@var merchantOrderCounts \Generated\Shared\Transfer\MerchantOrderCountsTransfer
+#}
 <div class="mp-dashboard-card__heading-col">{{ 'Orders' | trans }}</div>
 
 <div class="mp-dashboard-card__heading-col">
-    <web-spy-chips color="grey">{{ ordersCountTotal }}</web-spy-chips>
+    <web-spy-chips color="grey">{{ merchantOrderCounts.total }}</web-spy-chips>
 </div>
 

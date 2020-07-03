@@ -7,7 +7,7 @@ Created,Created
 "Created to","Created to"
 "Create Offer","Create Offer"
 Denied,Denied
-"Expiring in %expiringOffersLimit% days","Expiring in %expiringOffersLimit% days"
+"Expiring in %daysNumber% days","Expiring in %daysNumber% days"
 "Has stock","Has stock"
 Image,Image
 Inactive,Inactive

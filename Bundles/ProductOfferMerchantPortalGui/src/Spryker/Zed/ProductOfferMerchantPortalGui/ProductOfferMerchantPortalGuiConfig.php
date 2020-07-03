@@ -56,7 +56,7 @@ class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
      *
      * @return int
      */
-    public function getDashboardExpiringOffersLimit(): int
+    public function getDashboardExpiringOffersDaysThreshold(): int
     {
         return 5;
     }

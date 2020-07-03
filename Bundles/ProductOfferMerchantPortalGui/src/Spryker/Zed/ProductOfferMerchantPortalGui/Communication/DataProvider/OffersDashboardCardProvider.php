@@ -69,20 +69,25 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
      */
     public function getDashboardCard(): DashboardCardTransfer
     {
-        $offersDashboardCardCounts = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
+        $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
         );
-        $offersDashboardCardCounts['expiringOffersLimit'] = $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersLimit();
-        $offersDashboardCardCounts['lowStockThreshold'] = $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
-        $offersDashboardCardCounts['offersCountInactive'] = $offersDashboardCardCounts['offersCountTotal'] - $offersDashboardCardCounts['offersCountActive'];
+        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
+        $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
 
         $title = $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',
-            $offersDashboardCardCounts
+            [
+                'merchantProductOfferCounts' => $merchantProductOfferCountsTransfer,
+            ]
         );
         $content = $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_content.twig',
-            $offersDashboardCardCounts
+            [
+                'merchantProductOfferCounts' => $merchantProductOfferCountsTransfer,
+                'expiringOffersDaysThreshold' => $this->productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersDaysThreshold(),
+                'lowStockThreshold' => $this->productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold(),
+            ]
         );
 
         return (new DashboardCardTransfer())

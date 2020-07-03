@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
 use DateTime;
+use Generated\Shared\Transfer\MerchantOrderCountsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
@@ -21,61 +22,47 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class SalesMerchantPortalGuiRepository extends AbstractRepository implements SalesMerchantPortalGuiRepositoryInterface
 {
-    protected const ORDERS_COUNT_TOTAL = 'ordersCountTotal';
-    protected const ORDERS_COUNT_NEW = 'ordersCountNew';
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return mixed[][]
-     */
-    public function getOrdersStoresCountData(int $idMerchant): array
-    {
-        $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
-        $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
-
-        return $merchantSalesOrderQuery->joinOrder()
-            ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
-            ->addAsColumn(static::ORDERS_COUNT_TOTAL, 'COUNT(*)')
-            ->useOrderQuery()
-                ->groupByStore()
-            ->endUse()
-            ->select([
-                OrderTransfer::STORE,
-                static::ORDERS_COUNT_TOTAL,
-            ])
-            ->find()
-        ->toArray();
-    }
-
     /**
      * @module Merchant
      * @module MerchantSalesOrder
      *
      * @param int $idMerchant
      *
-     * @return int[]
+     * @return \Generated\Shared\Transfer\MerchantOrderCountsTransfer
      */
-    public function getOrdersDashboardCardCounts(int $idMerchant): array
+    public function getMerchantOrderCounts(int $idMerchant): MerchantOrderCountsTransfer
     {
         $salesMerchantPortalGuiConfig = $this->getFactory()->getConfig();
-        $dashboardNewOrdersLimit = $salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold();
-        $newOrdersDateTime = (new DateTime(sprintf('-%s Days', $dashboardNewOrdersLimit)))->format('Y-m-d H:i:s');
+        $newOrdersDaysThreshold = $salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold();
+        $newOrdersDateTime = (new DateTime(sprintf('-%s Days', $newOrdersDaysThreshold)))->format('Y-m-d H:i:s');
 
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
 
-        return $merchantSalesOrderQuery
-            ->addAsColumn(static::ORDERS_COUNT_TOTAL, 'COUNT(*)')
+        $merchantOrderCounts = $merchantSalesOrderQuery
+            ->addAsColumn(MerchantOrderCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
-                static::ORDERS_COUNT_NEW,
+                MerchantOrderCountsTransfer::NEW,
                 "COUNT(CASE WHEN '$newOrdersDateTime' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)'
             )
             ->select([
-                static::ORDERS_COUNT_TOTAL,
-                static::ORDERS_COUNT_NEW,
+                MerchantOrderCountsTransfer::TOTAL,
+                MerchantOrderCountsTransfer::NEW,
             ])
             ->findOne();
+
+        $merchantOrderCountsTransfer = (new MerchantOrderCountsTransfer())
+            ->fromArray($merchantOrderCounts, true);
+
+        $totalsPerStore = $this->getOrderTotalsPerStore($idMerchant);
+        foreach ($totalsPerStore as $totalPerStore) {
+            $merchantOrderCountsTransfer->addTotalPerStore(
+                $totalPerStore[OrderTransfer::STORE],
+                $totalPerStore[MerchantOrderCountsTransfer::TOTAL_PER_STORE]
+            );
+        }
+
+        return $merchantOrderCountsTransfer;
     }
 
     /**
@@ -103,5 +90,29 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         );
 
         return $merchantSalesOrderQuery;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return mixed[][]
+     */
+    protected function getOrderTotalsPerStore(int $idMerchant): array
+    {
+        $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
+        $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
+
+        return $merchantSalesOrderQuery->joinOrder()
+            ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
+            ->addAsColumn(MerchantOrderCountsTransfer::TOTAL_PER_STORE, 'COUNT(*)')
+            ->useOrderQuery()
+                ->groupByStore()
+            ->endUse()
+            ->select([
+                OrderTransfer::STORE,
+                MerchantOrderCountsTransfer::TOTAL_PER_STORE,
+            ])
+            ->find()
+            ->toArray();
     }
 }

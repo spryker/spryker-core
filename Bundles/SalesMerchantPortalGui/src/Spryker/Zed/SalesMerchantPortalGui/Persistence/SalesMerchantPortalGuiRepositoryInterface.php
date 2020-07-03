@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
+use Generated\Shared\Transfer\MerchantOrderCountsTransfer;
+
 interface SalesMerchantPortalGuiRepositoryInterface
 {
     /**
      * @param int $idMerchant
      *
-     * @return int[][]
+     * @return \Generated\Shared\Transfer\MerchantOrderCountsTransfer
      */
-    public function getOrdersStoresCountData(int $idMerchant): array;
-
-    /**
-     * @param int $idMerchant
-     *
-     * @return int[]
-     */
-    public function getOrdersDashboardCardCounts(int $idMerchant): array;
+    public function getMerchantOrderCounts(int $idMerchant): MerchantOrderCountsTransfer;
 }

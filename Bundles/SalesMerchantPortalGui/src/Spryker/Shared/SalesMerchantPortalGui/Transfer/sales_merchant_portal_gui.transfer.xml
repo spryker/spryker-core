@@ -11,6 +11,12 @@
         <property name="idMerchant" type="int"/>
     </transfer>
 
+    <transfer name="MerchantOrderCounts">
+        <property name="new" type="int"/>
+        <property name="total" type="int"/>
+        <property name="totalPerStore" type="int[]" associative="true"/>
+    </transfer>
+
     <transfer name="DashboardCard">
         <property name="actionButtons" type="DashboardActionButton[]" singular="actionButton"/>
         <property name="title" type="string"/>

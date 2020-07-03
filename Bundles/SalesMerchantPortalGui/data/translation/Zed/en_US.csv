@@ -1,4 +1,4 @@
-"From the last %newOrdersLimit% days","From the last %newOrdersLimit% days"
+"From the last %daysNumber% days","From the last %daysNumber% days"
 "Manage Orders","Manage Orders"
 New,New
 Orders,Orders

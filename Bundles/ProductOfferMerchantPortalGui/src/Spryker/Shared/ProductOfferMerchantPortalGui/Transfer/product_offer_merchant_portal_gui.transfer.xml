@@ -196,6 +196,17 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="MerchantProductOfferCounts">
+        <property name="total" type="int"/>
+        <property name="active" type="int"/>
+        <property name="inactive" type="int"/>
+        <property name="withStock" type="int"/>
+        <property name="lowInStock" type="int"/>
+        <property name="withValidDates" type="int"/>
+        <property name="expiring" type="int"/>
+        <property name="visible" type="int"/>
+    </transfer>
+
     <transfer name="DashboardCard">
         <property name="actionButtons" type="DashboardActionButton[]" singular="actionButton"/>
         <property name="title" type="string"/>

@@ -70,19 +70,20 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
     public function getDashboardCard(): DashboardCardTransfer
     {
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
-        $ordersDashboardCardCounts = $this->salesMerchantPortalGuiRepository->getOrdersDashboardCardCounts($idMerchant);
-        $ordersDashboardCardCounts['newOrdersLimit'] = $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold();
-        $ordersDashboardCardCounts['ordersStoresCountData'] = $this->salesMerchantPortalGuiRepository->getOrdersStoresCountData(
-            $idMerchant
-        );
+        $merchantOrderCountsTransfer = $this->salesMerchantPortalGuiRepository->getMerchantOrderCounts($idMerchant);
 
         $title = $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_title.twig',
-            $ordersDashboardCardCounts
+            [
+                'merchantOrderCounts' => $merchantOrderCountsTransfer,
+            ]
         );
         $content = $this->twigEnvironment->render(
             '@SalesMerchantPortalGui/Partials/orders_dashboard_card_content.twig',
-            $ordersDashboardCardCounts
+            [
+                'merchantOrderCounts' => $merchantOrderCountsTransfer,
+                'newOrdersDaysThreshold' => $this->salesMerchantPortalGuiConfig->getDashboardNewOrdersDaysThreshold(),
+            ]
         );
 
         return (new DashboardCardTransfer())
