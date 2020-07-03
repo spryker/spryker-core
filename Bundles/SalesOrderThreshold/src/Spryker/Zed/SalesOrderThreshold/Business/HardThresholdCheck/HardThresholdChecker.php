@@ -75,7 +75,10 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
 
         $salesOrderThresholdValueTransfers = $this->filterSalesOrderThresholdsByThresholdGroup(
             $salesOrderThresholdValueTransfers,
-            SalesOrderThresholdConfig::GROUP_HARD
+            [
+                SalesOrderThresholdConfig::GROUP_HARD,
+                SalesOrderThresholdConfig::GROUP_HARD_MAX,
+            ]
         );
 
         if (empty($salesOrderThresholdValueTransfers)) {
@@ -162,14 +165,14 @@ class HardThresholdChecker implements HardThresholdCheckerInterface
 
     /**
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[] $salesOrderThresholdValueTransfers
-     * @param string $thresholdGroup
+     * @param string[] $thresholdGroups
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer[]
      */
-    protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, string $thresholdGroup): array
+    protected function filterSalesOrderThresholdsByThresholdGroup(array $salesOrderThresholdValueTransfers, array $thresholdGroups): array
     {
-        return array_filter($salesOrderThresholdValueTransfers, function (SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfers) use ($thresholdGroup) {
-            return $salesOrderThresholdValueTransfers->getSalesOrderThresholdType()->getThresholdGroup() === $thresholdGroup;
+        return array_filter($salesOrderThresholdValueTransfers, function (SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfers) use ($thresholdGroups) {
+            return in_array($salesOrderThresholdValueTransfers->getSalesOrderThresholdType()->getThresholdGroup(), $thresholdGroups);
         });
     }
 }

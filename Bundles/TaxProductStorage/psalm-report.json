@@ -1,0 +1,176 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\TaxProductStorage\\Persistence\\TaxProductStorageEntityManager::getIdsFromTransfers is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageEntityManager.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\TaxProductStorage\\Persistence\\TaxProductStorageEntityManager::getIdsFromTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageEntityManager.php",
+            "snippet": "        return $ids;",
+            "selected_text": "$ids",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Client/TaxProductStorage/TaxProductStorageDependencyProvider.php",
+            "snippet": "            return new TaxProductStorageToStorageClientBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Client/TaxProductStorage/TaxProductStorageDependencyProvider.php",
+            "snippet": "            return new TaxProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\TaxProductStorage\\Persistence\\SpyTaxProductStorage::setFkProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageEntityManager.php",
+            "snippet": "                    ->setFkProductAbstract($taxProductStorageTransfer->getIdProductAbstract());",
+            "selected_text": "$taxProductStorageTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\TaxProductStorage\\Persistence\\SpyTaxProductStorage::setSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageEntityManager.php",
+            "snippet": "                ->setSku($taxProductStorageTransfer->getSku())",
+            "selected_text": "$taxProductStorageTransfer->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\TaxProductStorage\\Persistence\\SpyTaxProductStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageEntityManager.php",
+            "snippet": "            ->toKeyIndex(static::COL_FK_PRODUCT_ABSTRACT);",
+            "selected_text": "toKeyIndex",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAbstract> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageRepository.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\TaxProductStorage\\Persistence\\SpyTaxProductStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageRepository.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\TaxProductStorage\\Persistence\\SpyTaxProductStorage> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Persistence/TaxProductStorageRepository.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/TaxProductStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Communication/Plugin/Event/Listener/TaxProductStoragePublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Communication/Plugin/Event/Listener/TaxProductStorageUnpublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/TaxProductStorage/src/Spryker/Zed/TaxProductStorage/Communication/Plugin/Synchronization/TaxProductSynchronizationDataPlugin.php",
+            "snippet": "class TaxProductSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
+            "selected_text": "TaxProductSynchronizationDataPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

@@ -22,11 +22,9 @@ class OffersController extends AbstractController
      */
     public function indexAction(): array
     {
-        $productOfferTable = $this->getFactory()->createProductOfferTable();
-
-        return $this->viewResponse(
-            $productOfferTable->getConfiguration()
-        );
+        return $this->viewResponse([
+            'productOfferTableConfiguration' => $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration(),
+        ]);
     }
 
     /**
@@ -36,10 +34,20 @@ class OffersController extends AbstractController
      */
     public function tableDataAction(Request $request): JsonResponse
     {
-        $productOfferTable = $this->getFactory()->createProductOfferTable();
+        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
+        $guiTableConfigurationTransfer = $this->getFactory()
+            ->createProductOfferGuiTableConfigurationProvider()
+            ->getConfiguration();
+        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
+            $request->query->all(),
+            $guiTableConfigurationTransfer
+        );
+        $guiTableDataResponseTransfer = $this->getFactory()
+            ->createProductOfferTableDataProvider()
+            ->getData($guiTableDataRequestTransfer);
 
-        return new JsonResponse(
-            $productOfferTable->getData($request)
+        return $this->jsonResponse(
+            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
         );
     }
 }
