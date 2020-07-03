@@ -112,6 +112,49 @@ class ObjectBuilder extends PropelObjectBuilder
     }
 
     /**
+     * Adds setter method for "normal" columns.
+     *
+     * @see parent::addColumnMutators()
+     *
+     * @param string &$script The script will be modified in this method.
+     * @param \Propel\Generator\Model\Column $col The current column.
+     *
+     * @return void
+     */
+    protected function addDefaultMutator(&$script, Column $col)
+    {
+        $clo = $col->getLowercasedName();
+
+        $this->addMutatorOpen($script, $col);
+
+        // Perform type-casting to ensure that we can use type-sensitive
+        // checking in mutators.
+        if ($col->isPhpPrimitiveType()) {
+            $script .= "
+        if (\$v !== null) {
+            \$v = (" . $col->getPhpType() . ") \$v;
+        }
+";
+        }
+
+        $hasDefaultValue = $col->getDefaultValue() !== null ? 'true' : 'false';
+
+        $script .= "
+        // When this is true we will not check for value equality as we need to be able to set a value for this field
+        // to it's initial value and have the column marked as modified. This is relevant for update cases when
+        // we create an instance of an entity manually.
+        // @see \Spryker\Zed\Kernel\Persistence\EntityManager\TransferToEntityMapper::mapEntity()
+        \$hasDefaultValue = $hasDefaultValue;
+
+        if (\$hasDefaultValue || \$this->$clo !== \$v) {
+            \$this->$clo = \$v;
+            \$this->modifiedColumns[" . $this->getColumnConstant($col) . "] = true;
+        }
+";
+        $this->addMutatorClose($script, $col);
+    }
+
+    /**
      * Boosts ActiveRecord::doInsert() by doing more calculations at build-time.
      *
      * @throws \Propel\Runtime\Exception\PropelException
