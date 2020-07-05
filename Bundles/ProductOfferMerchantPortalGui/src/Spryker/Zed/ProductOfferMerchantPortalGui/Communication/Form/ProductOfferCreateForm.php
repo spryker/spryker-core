@@ -36,7 +36,7 @@ class ProductOfferCreateForm extends AbstractType
     protected const FIELD_MERCHANT_SKU = 'merchantSku';
     protected const FIELD_STORES = 'stores';
     protected const FIELD_IS_ACTIVE = 'isActive';
-    protected const FIELD_PRODUCT_OFFER_STOCK = 'productOfferStock';
+    protected const FIELD_PRODUCT_OFFER_STOCKS = 'productOfferStocks';
     protected const FIELD_PRODUCT_OFFER_VALIDITY = 'productOfferValidity';
     protected const FIELD_PRICES = 'prices';
     protected const BUTTON_CREATE = 'create';
@@ -195,9 +195,12 @@ class ProductOfferCreateForm extends AbstractType
      */
     protected function addProductOfferStockSubform(FormBuilderInterface $builder)
     {
-        $builder->add(static::FIELD_PRODUCT_OFFER_STOCK, ProductOfferStockForm::class, [
+        $builder->add(static::FIELD_PRODUCT_OFFER_STOCKS, ProductOfferStockForm::class, [
             'label' => static::LABEL_PRODUCT_OFFER_STOCK,
         ]);
+
+        $builder->get(static::FIELD_PRODUCT_OFFER_STOCKS)
+            ->addModelTransformer($this->getFactory()->createProductOfferStockTransformer());
 
         return $this;
     }

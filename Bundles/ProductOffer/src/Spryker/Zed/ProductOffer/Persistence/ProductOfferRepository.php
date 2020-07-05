@@ -31,7 +31,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      */
     public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
-        $propelProductOfferMapper = $this->getFactory()->createPropelProductOfferMapper();
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
@@ -40,12 +40,12 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
         $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $propelProductOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+            $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
                 $productOfferEntity,
                 new ProductOfferTransfer()
             );
             $productOfferTransfer->setStores(new ArrayObject(
-                $propelProductOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
             ));
 
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
@@ -70,13 +70,13 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return null;
         }
 
-        $propelProductOfferMapper = $this->getFactory()->createPropelProductOfferMapper();
-        $productOfferTransfer = $propelProductOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
+        $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
             $productOfferEntity,
             new ProductOfferTransfer()
         );
         $productOfferTransfer->setStores(new ArrayObject(
-            $propelProductOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+            $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
         ));
 
         return $productOfferTransfer;
@@ -108,7 +108,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             ->find();
 
         return $this->getFactory()
-            ->createPropelProductOfferMapper()
+            ->createProductOfferMapper()
             ->mapProductOfferStoreEntitiesToStoreTransfers($productOfferStoreEntities);
     }
 
@@ -117,7 +117,7 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      *
      * @return bool
      */
-    public function hasProductOfferReference(string $productOfferReference): bool
+    public function isProductOfferReferenceUsed(string $productOfferReference): bool
     {
         return $this->getFactory()
             ->createProductOfferPropelQuery()

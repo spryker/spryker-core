@@ -53,7 +53,7 @@ interface ProductOfferStockFacadeInterface
 
     /**
      * Specification:
-     * - Expands provided ProductOfferTransfer with Product Offer Stock.
+     * - Expands provided ProductOfferTransfer with Product Offer Stock transfers.
      *
      * @api
      *
@@ -61,5 +61,5 @@ interface ProductOfferStockFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function expandProductOfferWithProductOfferStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function expandProductOfferWithProductOfferStockCollection(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

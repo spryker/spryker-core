@@ -40,7 +40,7 @@ class ProductOfferPersistenceFactory extends AbstractPersistenceFactory
     /**
      * @return \Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper
      */
-    public function createPropelProductOfferMapper(): ProductOfferMapper
+    public function createProductOfferMapper(): ProductOfferMapper
     {
         return new ProductOfferMapper();
     }

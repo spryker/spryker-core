@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
 interface ProductOfferMerchantPortalGuiToProductFacadeInterface
@@ -40,12 +38,4 @@ interface ProductOfferMerchantPortalGuiToProductFacadeInterface
      * @return array
      */
     public function combineRawProductAttributes(RawProductAttributesTransfer $rawProductAttributesTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    public function buildProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer): ?string;
 }

@@ -17,7 +17,7 @@ interface PriceProductOfferWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function persistProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+    public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer

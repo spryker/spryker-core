@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Communication\Plugin\ProductOffer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface;
@@ -30,22 +31,26 @@ class ProductOfferStockProductOfferPostUpdatePlugin extends AbstractPlugin imple
      */
     public function execute(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        $productOfferStockTransfer = $productOfferTransfer->getProductOfferStock();
-
-        if (!$productOfferStockTransfer) {
+        if (!$productOfferTransfer->getProductOfferStocks()->count()) {
             return $productOfferTransfer;
         }
 
-        $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $productOfferStockTransfers = new ArrayObject();
 
-        if (!$productOfferStockTransfer->getIdProductOfferStock()) {
-            $productOfferStockTransfer = $this->getFacade()->create($productOfferStockTransfer);
+        foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
+            $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
 
-            return $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+            if (!$productOfferStockTransfer->getIdProductOfferStock()) {
+                $productOfferStockTransfer = $this->getFacade()->create($productOfferStockTransfer);
+                $productOfferStockTransfers->append($productOfferStockTransfer);
+
+                continue;
+            }
+
+            $productOfferStockTransfer = $this->getFacade()->update($productOfferStockTransfer);
+            $productOfferStockTransfers->append($productOfferStockTransfer);
         }
 
-        $productOfferStockTransfer = $this->getFacade()->update($productOfferStockTransfer);
-
-        return $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        return $productOfferTransfer->setProductOfferStocks($productOfferStockTransfers);
     }
 }

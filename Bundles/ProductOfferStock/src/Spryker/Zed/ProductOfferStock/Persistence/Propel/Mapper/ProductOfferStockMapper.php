@@ -7,13 +7,34 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence\Propel\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock;
 use Orm\Zed\Stock\Persistence\SpyStock;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductOfferStockMapper
 {
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection $productOfferStockEntities
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
+        ObjectCollection $productOfferStockEntities,
+        ArrayObject $productOfferStockTransfers
+    ): ArrayObject {
+        foreach ($productOfferStockEntities as $productOfferStockEntity) {
+            $productOfferStockTransfers->append(
+                $this->mapProductOfferStockEntityToProductOfferStockTransfer($productOfferStockEntity, new ProductOfferStockTransfer())
+            );
+        }
+
+        return $productOfferStockTransfers;
+    }
+
     /**
      * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStock $productOfferStockEntity
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer

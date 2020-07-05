@@ -220,7 +220,7 @@ class ProductOfferTableDataMapper
         $productOfferStockTransfer = (new ProductOfferStockTransfer())
             ->setQuantity($productOfferTableRowDataArray[ProductOfferStockTransfer::QUANTITY]);
 
-        $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        $productOfferTransfer->addProductOfferStock($productOfferStockTransfer);
 
         return $productOfferTransfer;
     }

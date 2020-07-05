@@ -23,6 +23,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\Pr
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferCreateForm;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferUpdateForm;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
@@ -164,6 +165,14 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function createQuantityTransformer(): DataTransformerInterface
     {
         return new QuantityTransformer();
+    }
+
+    /**
+     * @return \Symfony\Component\Form\DataTransformerInterface
+     */
+    public function createProductOfferStockTransformer(): DataTransformerInterface
+    {
+        return new ProductOfferStockTransformer();
     }
 
     /**

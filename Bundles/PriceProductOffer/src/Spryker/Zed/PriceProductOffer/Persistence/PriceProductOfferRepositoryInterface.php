@@ -8,6 +8,7 @@
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface PriceProductOfferRepositoryInterface
@@ -18,9 +19,9 @@ interface PriceProductOfferRepositoryInterface
     public function createQueryCriteriaTransfer(): QueryCriteriaTransfer;
 
     /**
-     * @param int $idProductOffer
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function getPrices(int $idProductOffer): ArrayObject;
+    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject;
 }

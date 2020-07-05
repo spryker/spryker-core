@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvi
 
 use ArrayObject;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -17,6 +18,7 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\DefaultMerchantStockNotFoundException;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferCreateForm;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
@@ -190,18 +192,38 @@ abstract class AbstractProductOfferFormDataProvider
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
+     * @throws \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\DefaultMerchantStockNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    protected function setMerchantStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    protected function setDefaultMerchantStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        if ($productOfferTransfer->getProductOfferStock()) {
+        $merchantStockCriteriaTransfer = (new MerchantStockCriteriaTransfer())
+            ->setIsDefault(true)
+            ->setIdMerchant($productOfferTransfer->getFkMerchant());
+        $stockTransfers = $this->merchantStockFacade->get($merchantStockCriteriaTransfer)->getStocks();
+
+        if (!$stockTransfers->count()) {
+            throw new DefaultMerchantStockNotFoundException(sprintf(
+                'Default Merchant stock not found by Merchant ID `%s`',
+                $productOfferTransfer->getFkMerchant()
+            ));
+        }
+
+        if (!$productOfferTransfer->getProductOfferStocks()->count()) {
+            $productOfferStockTransfer = (new ProductOfferStockTransfer())->setStock($stockTransfers->offsetGet(0));
+            $productOfferTransfer->addProductOfferStock($productOfferStockTransfer);
+
             return $productOfferTransfer;
         }
 
-        $productOfferStockTransfer = (new ProductOfferStockTransfer())->setStock(
-            $this->merchantStockFacade->getDefaultMerchantStock($productOfferTransfer->getFkMerchant())
-        );
-        $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
+            if ($productOfferStockTransfer->getStock()->getIdStock() === $stockTransfers->offsetGet(0)->getIdStock()) {
+                $productOfferTransfer->setProductOfferStocks(new ArrayObject([$productOfferStockTransfer]));
+
+                break;
+            }
+        }
 
         return $productOfferTransfer;
     }

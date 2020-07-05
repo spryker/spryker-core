@@ -49,7 +49,7 @@ class ProductOfferReferenceGenerator implements ProductOfferReferenceGeneratorIn
             $productOfferReference = sprintf('%s%d', static::PREFIX_PRODUCT_OFFER_REFERENCE, $index);
             $index++;
             $attempt++;
-        } while ($this->productOfferRepository->hasProductOfferReference($productOfferReference));
+        } while ($this->productOfferRepository->isProductOfferReferenceUsed($productOfferReference));
 
         return $productOfferReference;
     }

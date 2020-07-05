@@ -145,11 +145,11 @@
             <web-spy-card title="{{ 'Stock' | trans }}">
                 <div class="mp-edit-offer__form-row">
                     <div class="mp-edit-offer__form-row-col">
-                        {{ form_row(form.children.productOfferStock.quantity, {row_attr: {'no-spaces': 'true'}}) }}
+                        {{ form_row(form.children.productOfferStocks.quantity, {row_attr: {'no-spaces': 'true'}}) }}
                     </div>
 
                     <div class="mp-edit-offer__form-row-col mp-edit-offer__form-row-col--checkbox">
-                        {{ form_row(form.children.productOfferStock.isNeverOutOfStock, {row_attr: {'no-spaces': 'true', 'no-label': 'true'}}) }}
+                        {{ form_row(form.children.productOfferStocks.isNeverOutOfStock, {row_attr: {'no-spaces': 'true', 'no-label': 'true'}}) }}
                     </div>
                 </div>
             </web-spy-card>

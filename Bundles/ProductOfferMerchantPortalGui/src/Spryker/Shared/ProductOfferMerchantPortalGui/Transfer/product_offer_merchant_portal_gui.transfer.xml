@@ -175,7 +175,7 @@
         <property name="productAttributes" type="array" singular="productAttribute"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
-        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="productOfferStocks" type="ProductOfferStock[]" singular="productOfferStock"/>
         <property name="productOfferValidity" type="ProductOfferValidity"/>
         <property name="concreteSku" type="string"/>
         <property name="merchantSku" type="string"/>
@@ -258,6 +258,7 @@
     </transfer>
 
     <transfer name="Stock">
+        <property name="idStock" type="int"/>
     </transfer>
 
     <transfer name="PriceProductDimension">
@@ -272,6 +273,11 @@
         <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
         <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
         <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
+    </transfer>
+
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="isDefault" type="bool"/>
     </transfer>
 
 </transfers>

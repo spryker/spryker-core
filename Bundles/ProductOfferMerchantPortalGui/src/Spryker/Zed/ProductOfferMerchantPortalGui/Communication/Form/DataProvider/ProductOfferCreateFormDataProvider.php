@@ -60,7 +60,7 @@ class ProductOfferCreateFormDataProvider extends AbstractProductOfferFormDataPro
         $productOfferTransfer->setConcreteSku($productConcreteTransfer->getSku());
         $productOfferTransfer->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete());
         $productOfferTransfer->setFkMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
-        $productOfferTransfer = $this->setMerchantStock($productOfferTransfer);
+        $productOfferTransfer = $this->setDefaultMerchantStock($productOfferTransfer);
 
         return $productOfferTransfer;
     }

@@ -31,7 +31,7 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function expandProductOfferWithProductOfferStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    public function expandProductOfferWithProductOfferStockCollection(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         $productOfferTransfer->requireProductOfferReference();
 
@@ -39,8 +39,8 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
             $productOfferTransfer->getProductOfferReference()
         );
 
-        $productOfferTransfer->setProductOfferStock(
-            $this->productOfferStockRepository->findOne($productOfferStockRequestTransfer)
+        $productOfferTransfer->setProductOfferStocks(
+            $this->productOfferStockRepository->find($productOfferStockRequestTransfer)
         );
 
         return $productOfferTransfer;

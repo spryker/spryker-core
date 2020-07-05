@@ -209,7 +209,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         }
 
         if ($productOfferTransfer->getApprovalStatus() === null) {
-            $productOfferTransfer->setApprovalStatus(ProductOfferConfig::STATUS_APPROVED);
+            $productOfferTransfer->setApprovalStatus($this->getDefaultApprovalStatus());
         }
 
         return $productOfferTransfer;
@@ -228,5 +228,13 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         }
 
         return $indexedStoreTransfers;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getDefaultApprovalStatus(): string
+    {
+        return ProductOfferConfig::STATUS_APPROVED;
     }
 }

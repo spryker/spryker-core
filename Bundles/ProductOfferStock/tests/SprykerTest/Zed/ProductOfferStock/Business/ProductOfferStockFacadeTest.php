@@ -196,7 +196,7 @@ class ProductOfferStockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductOfferWithProductOfferStockExpandsProductOffer(): void
+    public function testExpandProductOfferWithProductOfferStockCollectionExpandsProductOffer(): void
     {
         $productOfferStockTransfer = $this->tester->haveProductOfferStock();
         $productOfferTransfer = $productOfferStockTransfer->getProductOffer();
@@ -204,14 +204,14 @@ class ProductOfferStockFacadeTest extends Unit
             ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
 
         // Act
-        $productOfferStockTransfer = $this->tester->getFacade()->expandProductOfferWithProductOfferStock(
+        $productOfferStockTransfers = $this->tester->getFacade()->expandProductOfferWithProductOfferStockCollection(
             (new ProductOfferTransfer())->setProductOfferReference($productOfferTransfer->getProductOfferReference())
-        )->getProductOfferStock();
+        )->getProductOfferStocks();
         $productOfferStockTransferFromDb = $this->tester->getProductOfferStockRepository()->findOne($productOfferStockRequestTransfer);
 
         // Assert
-        $this->assertEquals($productOfferStockTransfer->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
-        $this->assertEquals($productOfferStockTransfer->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
-        $this->assertEquals($productOfferStockTransfer->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
+        $this->assertEquals($productOfferStockTransfers->offsetGet(0)->getIsNeverOutOfStock(), $productOfferStockTransferFromDb->getIsNeverOutOfStock());
+        $this->assertEquals($productOfferStockTransfer->offsetGet(0)->getQuantity()->toInt(), $productOfferStockTransferFromDb->getQuantity()->toInt());
+        $this->assertEquals($productOfferStockTransfer->offsetGet(0)->getStock()->getIdStock(), $productOfferStockTransferFromDb->getStock()->getIdStock());
     }
 }

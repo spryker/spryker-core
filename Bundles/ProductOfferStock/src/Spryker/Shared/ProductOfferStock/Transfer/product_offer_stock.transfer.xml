@@ -23,7 +23,7 @@
     </transfer>
 
     <transfer name="ProductOffer">
-        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="productOfferStocks" type="ProductOfferStock[]" singular="productOfferStock"/>
         <property name="productOfferReference" type="string"/>
         <property name="idProductOffer" type="int"/>
     </transfer>

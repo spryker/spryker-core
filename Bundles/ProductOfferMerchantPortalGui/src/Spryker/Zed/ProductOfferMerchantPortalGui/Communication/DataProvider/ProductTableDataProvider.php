@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
@@ -80,6 +81,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
+        $localeTransfer = (new LocaleTransfer())->setIdLocale($criteriaTransfer->getIdLocale());
         $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($criteriaTransfer);
         $productTableDataArray = [];
 
@@ -87,7 +89,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
             $productTableDataArray[] = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
-                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductName($productConcreteTransfer),
+                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STATUS => $this->getStatusColumnData($productConcreteTransfer),

@@ -1141,19 +1141,4 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     {
         return $this->getRepository()->getProductConcretesByCriteria($productCriteriaTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    public function buildProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer): ?string
-    {
-        return $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer);
-    }
 }

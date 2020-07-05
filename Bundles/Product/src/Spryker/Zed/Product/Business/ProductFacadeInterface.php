@@ -990,19 +990,4 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
      */
     public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array;
-
-    /**
-     * Specification:
-     * - Returns Product concrete name which consists of localized name and localized attributes.
-     * - Requires ProductConcreteTransfer.localizedAttributes and ProductConcreteTransfer.attributes to build the name.
-     * - Returns null if localized name is not set.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
-     *
-     * @return string|null
-     */
-    public function buildProductConcreteName(ProductConcreteTransfer $productConcreteTransfer, LocaleTransfer $localeTransfer): ?string;
 }

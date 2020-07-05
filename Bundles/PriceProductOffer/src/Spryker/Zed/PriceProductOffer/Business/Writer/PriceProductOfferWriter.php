@@ -53,7 +53,7 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function persistProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setPrices($this->getPriceProductTransfers($productOfferTransfer))

@@ -423,6 +423,13 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $productOfferQuery = $this->joinProductLocalizedAttributesToProductOfferQuery($productOfferQuery, $idLocale);
         $productOfferQuery->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
+            ->useProductOfferStockQuery(null, Criteria::LEFT_JOIN)
+                ->useStockQuery()
+                    ->useSpyMerchantStockQuery()
+                        ->filterByIsDefault(true)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
             ->addAsColumn(ProductOfferTransfer::ID_PRODUCT_OFFER, SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER)
             ->addAsColumn(ProductOfferTransfer::PRODUCT_OFFER_REFERENCE, SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE)
             ->addAsColumn(ProductOfferTransfer::MERCHANT_SKU, SpyProductOfferTableMap::COL_MERCHANT_SKU)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Communication\Plugin\ProductOffer;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface;
@@ -29,15 +30,18 @@ class ProductOfferStockProductOfferPostCreatePlugin extends AbstractPlugin imple
      */
     public function execute(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        $productOfferStockTransfer = $productOfferTransfer->getProductOfferStock();
-
-        if (!$productOfferStockTransfer) {
+        if (!$productOfferTransfer->getProductOfferStocks()->count()) {
             return $productOfferTransfer;
         }
 
-        $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
-        $productOfferStockTransfer = $this->getFacade()->create($productOfferStockTransfer);
+        $productOfferStockTransfers = new ArrayObject();
 
-        return $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        foreach ($productOfferTransfer->getProductOfferStocks() as $productOfferStockTransfer) {
+            $productOfferStockTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+            $productOfferStockTransfer = $this->getFacade()->create($productOfferStockTransfer);
+            $productOfferStockTransfers->append($productOfferStockTransfer);
+        }
+
+        return $productOfferTransfer->setProductOfferStocks($productOfferStockTransfers);
     }
 }

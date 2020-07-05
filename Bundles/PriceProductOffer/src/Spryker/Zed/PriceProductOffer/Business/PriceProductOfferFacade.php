@@ -27,9 +27,9 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function persistProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFactory()->createPriceProductOfferWriter()->persistProductOfferPrices($productOfferTransfer);
+        return $this->getFactory()->createPriceProductOfferWriter()->saveProductOfferPrices($productOfferTransfer);
     }
 
     /**

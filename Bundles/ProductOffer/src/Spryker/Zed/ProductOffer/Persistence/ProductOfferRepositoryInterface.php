@@ -44,5 +44,5 @@ interface ProductOfferRepositoryInterface
      *
      * @return bool
      */
-    public function hasProductOfferReference(string $productOfferReference): bool;
+    public function isProductOfferReferenceUsed(string $productOfferReference): bool;
 }

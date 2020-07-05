@@ -29,6 +29,6 @@ class ProductOfferStockProductOfferExpanderPlugin extends AbstractPlugin impleme
      */
     public function expand(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFacade()->expandProductOfferWithProductOfferStock($productOfferTransfer);
+        return $this->getFacade()->expandProductOfferWithProductOfferStockCollection($productOfferTransfer);
     }
 }

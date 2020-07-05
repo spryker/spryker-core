@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTableCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
@@ -81,6 +82,7 @@ class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
+        $localeTransfer = (new LocaleTransfer())->setIdLocale($criteriaTransfer->getIdLocale());
         $productOfferCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductOfferTableData($criteriaTransfer);
         $productTableDataArray = [];
 
@@ -91,7 +93,7 @@ class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_MERCHANT_SKU => $productOfferTransfer->getMerchantSku(),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_CONCRETE_SKU => $productOfferTransfer->getConcreteSku(),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productOfferTransfer),
-                ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer),
+                ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME => $this->getNameColumnData($productOfferTransfer, $localeTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK => $this->getStockColumnData($productOfferTransfer),
                 ProductOfferGuiTableConfigurationProvider::COL_KEY_VISIBILITY => $this->getVisibilityColumnData($productOfferTransfer),
@@ -112,16 +114,17 @@ class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    protected function getNameColumnData(ProductOfferTransfer $productOfferTransfer): ?string
+    protected function getNameColumnData(ProductOfferTransfer $productOfferTransfer, LocaleTransfer $localeTransfer): ?string
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setAttributes($productOfferTransfer->getProductAttributes())
             ->setLocalizedAttributes($productOfferTransfer->getProductLocalizedAttributes());
 
-        return $this->productNameBuilder->buildProductName($productConcreteTransfer);
+        return $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
 
     /**
@@ -148,11 +151,11 @@ class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function getStockColumnData(ProductOfferTransfer $productOfferTransfer)
     {
-        $productOfferStockTransfer = $productOfferTransfer->getProductOfferStock();
-
-        if (!$productOfferStockTransfer) {
+        if (!$productOfferTransfer->getProductOfferStocks()->count()) {
             return null;
         }
+
+        $productOfferStockTransfer = $productOfferTransfer->getProductOfferStocks()[0];
 
         $quantity = $productOfferStockTransfer->getQuantity();
 

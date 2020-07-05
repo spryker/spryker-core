@@ -74,10 +74,10 @@ class ProductOfferStockFacade extends AbstractFacade implements ProductOfferStoc
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function expandProductOfferWithProductOfferStock(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    public function expandProductOfferWithProductOfferStockCollection(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
         return $this->getFactory()
             ->createProductOfferExpander()
-            ->expandProductOfferWithProductOfferStock($productOfferTransfer);
+            ->expandProductOfferWithProductOfferStockCollection($productOfferTransfer);
     }
 }

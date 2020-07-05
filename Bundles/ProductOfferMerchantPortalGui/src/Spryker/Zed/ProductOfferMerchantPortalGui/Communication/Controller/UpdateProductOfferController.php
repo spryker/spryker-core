@@ -84,7 +84,7 @@ class UpdateProductOfferController extends AbstractProductOfferController
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
                 'form' => $productOfferUpdateForm->createView(),
                 'product' => $productConcreteTransfer,
-                'productName' => $this->getFactory()->getProductFacade()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
+                'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
                 'productOfferReference' => $productOfferResponseTransfer->getProductOffer()->getProductOfferReference(),
             ])->getContent(),

@@ -47,10 +47,10 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
+     * - Generates product offer reference and sets default approval status if they are not set.
      * - Creates a product offer.
      * - Creates relations between a product offer and stores.
      * - Executes ProductOfferPostCreatePluginInterface plugin stack.
-     * - Generates product offer reference and sets default approval status if they are not set.
      *
      * @api
      *

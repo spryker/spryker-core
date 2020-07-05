@@ -63,7 +63,7 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testPersistProductOfferPricesCallsPriceProductFacadeWithCorrectData(): void
+    public function testSaveProductOfferPricesCallsPriceProductFacadeWithCorrectData(): void
     {
         // Arrange
         $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
@@ -88,7 +88,7 @@ class PriceProductOfferFacadeTest extends Unit
         $this->tester->setDependency(PriceProductOfferDependencyProvider::FACADE_PRICE_PRODUCT, $priceProductFacadeMock);
 
         // Act
-        $this->tester->getFacade()->persistProductOfferPrices($productOfferTransfer);
+        $this->tester->getFacade()->saveProductOfferPrices($productOfferTransfer);
     }
 
     /**

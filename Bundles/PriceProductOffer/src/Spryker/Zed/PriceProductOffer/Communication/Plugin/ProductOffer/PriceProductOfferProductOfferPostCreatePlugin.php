@@ -31,6 +31,6 @@ class PriceProductOfferProductOfferPostCreatePlugin extends AbstractPlugin imple
      */
     public function execute(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getFacade()->persistProductOfferPrices($productOfferTransfer);
+        return $this->getFacade()->saveProductOfferPrices($productOfferTransfer);
     }
 }

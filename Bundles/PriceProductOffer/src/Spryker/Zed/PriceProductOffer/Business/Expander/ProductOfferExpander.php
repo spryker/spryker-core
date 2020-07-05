@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business\Expander;
 
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface;
 
@@ -35,7 +36,9 @@ class ProductOfferExpander implements ProductOfferExpanderInterface
         $productOfferTransfer->requireIdProductOffer();
 
         $productOfferTransfer->setPrices(
-            $this->priceProductOfferRepository->getPrices($productOfferTransfer->getIdProductOffer())
+            $this->priceProductOfferRepository->getProductOfferPrices(
+                (new PriceProductOfferCriteriaTransfer())->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+            )
         );
 
         return $productOfferTransfer;

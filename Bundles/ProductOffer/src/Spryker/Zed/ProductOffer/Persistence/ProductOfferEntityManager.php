@@ -29,12 +29,12 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
             ->findOneOrCreate();
 
         $productOfferEntity = $this->getFactory()
-            ->createPropelProductOfferMapper()
+            ->createProductOfferMapper()
             ->mapProductOfferTransferToProductOfferEntity($productOfferTransfer, $productOfferEntity);
         $productOfferEntity->save();
 
         return $this->getFactory()
-            ->createPropelProductOfferMapper()
+            ->createProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
     }
 
@@ -50,12 +50,12 @@ class ProductOfferEntityManager extends AbstractEntityManager implements Product
             ->findOneByIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         $productOfferEntity = $this->getFactory()
-            ->createPropelProductOfferMapper()
+            ->createProductOfferMapper()
             ->mapProductOfferTransferToProductOfferEntity($productOfferTransfer, $productOfferEntity);
         $productOfferEntity->save();
 
         return $this->getFactory()
-            ->createPropelProductOfferMapper()
+            ->createProductOfferMapper()
             ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, $productOfferTransfer);
     }
 

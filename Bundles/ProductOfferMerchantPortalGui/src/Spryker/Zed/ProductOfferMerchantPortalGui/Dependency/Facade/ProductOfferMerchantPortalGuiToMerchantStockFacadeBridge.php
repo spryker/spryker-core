@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\StockTransfer;
+use Generated\Shared\Transfer\MerchantStockCriteriaTransfer;
+use Generated\Shared\Transfer\StockCollectionTransfer;
 
 class ProductOfferMerchantPortalGuiToMerchantStockFacadeBridge implements ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface
 {
@@ -25,12 +26,12 @@ class ProductOfferMerchantPortalGuiToMerchantStockFacadeBridge implements Produc
     }
 
     /**
-     * @param int $idMerchant
+     * @param \Generated\Shared\Transfer\MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\StockTransfer
+     * @return \Generated\Shared\Transfer\StockCollectionTransfer
      */
-    public function getDefaultMerchantStock(int $idMerchant): StockTransfer
+    public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
-        return $this->merchantStockFacade->getDefaultMerchantStock($idMerchant);
+        return $this->merchantStockFacade->get($merchantStockCriteriaTransfer);
     }
 }

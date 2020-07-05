@@ -12,8 +12,6 @@ use Spryker\Zed\Product\Business\Attribute\AttributeEncoder;
 use Spryker\Zed\Product\Business\Attribute\AttributeKeyManager;
 use Spryker\Zed\Product\Business\Attribute\AttributeLoader;
 use Spryker\Zed\Product\Business\Attribute\AttributeMerger;
-use Spryker\Zed\Product\Business\Builder\ProductNameBuilder;
-use Spryker\Zed\Product\Business\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertion;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductConcreteAssertion;
 use Spryker\Zed\Product\Business\Product\NameGenerator\ProductAbstractNameGenerator;
@@ -566,13 +564,5 @@ class ProductBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getLocaleFacade()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\Product\Business\Builder\ProductNameBuilderInterface
-     */
-    public function createProductNameBuilder(): ProductNameBuilderInterface
-    {
-        return new ProductNameBuilder();
     }
 }
