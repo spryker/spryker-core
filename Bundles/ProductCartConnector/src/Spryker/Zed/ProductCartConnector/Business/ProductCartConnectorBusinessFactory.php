@@ -15,6 +15,7 @@ use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsF
 use Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter\InactiveItemsFilterInterface;
 use Spryker\Zed\ProductCartConnector\Business\Validator\ProductValidator;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface;
 use Spryker\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 
 /**
@@ -51,6 +52,7 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new InactiveItemsFilter(
             $this->getProductFacade(),
+            $this->getStoreFacade(),
             $this->getMessengerFacade()
         );
     }
@@ -77,6 +79,14 @@ class ProductCartConnectorBusinessFactory extends AbstractBusinessFactory
     public function getMessengerFacade(): ProductCartConnectorToMessengerFacadeInterface
     {
         return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_MESSENGER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductCartConnectorToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_STORE);
     }
 
     /**

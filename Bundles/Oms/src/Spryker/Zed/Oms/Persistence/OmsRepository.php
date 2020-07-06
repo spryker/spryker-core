@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateTableMap;
@@ -137,7 +140,7 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array
     {
         $salesOrderItemQuery = $this->getFactory()
-            ->getSalesOrderItemPropelQuery()
+            ->getSalesQueryContainer()->querySalesOrderItem()
             ->joinWithState()
             ->joinWithProcess();
 
@@ -165,6 +168,85 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
             $salesOrderItemQuery->filterByIdSalesOrderItem_In($orderItemFilterTransfer->getSalesOrderItemIds());
         }
 
+        if ($orderItemFilterTransfer->getSalesOrderIds()) {
+            $salesOrderItemQuery->filterByFkSalesOrder_In($orderItemFilterTransfer->getSalesOrderIds());
+        }
+
         return $salesOrderItemQuery;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsProductReservationTransfer|null
+     */
+    public function findProductReservation(ReservationRequestTransfer $reservationRequestTransfer): ?OmsProductReservationTransfer
+    {
+        $reservationRequestTransfer->requireSku()
+            ->requireStore()
+            ->getStore()
+                ->requireIdStore();
+
+        $omsProductReservationEntity = $this->getFactory()
+            ->createOmsProductReservationQuery()
+            ->filterBySku($reservationRequestTransfer->getSku())
+            ->filterByFkStore($reservationRequestTransfer->getStore()->getIdStore())
+            ->findOne();
+
+        if (!$omsProductReservationEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createOmsMapper()
+            ->mapOmsProductReservationEntityToOmsProductReservationTransfer(
+                $omsProductReservationEntity,
+                new OmsProductReservationTransfer()
+            );
+    }
+
+    /**
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function findProductReservationQuantity(string $sku, int $idStore): Decimal
+    {
+        $reservationEntity = $this->getFactory()->createOmsProductReservationQuery()
+            ->filterBySku($sku)
+            ->filterByFkStore($idStore)
+            ->findOne();
+
+        if ($reservationEntity) {
+            return new Decimal($reservationEntity->getReservationQuantity());
+        }
+
+        return new Decimal(0);
+    }
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer[]
+     */
+    public function findProductReservationStores(string $sku): array
+    {
+        $omsProductReservationStoreEntities = $this->getFactory()
+            ->createOmsProductReservationStoreQuery()
+            ->filterBySku($sku)
+            ->find();
+
+        $reservationResponseTransfers = [];
+        $omsMapper = $this->getFactory()->createOmsMapper();
+
+        foreach ($omsProductReservationStoreEntities as $omsProductReservationStoreEntity) {
+            $reservationResponseTransfers[] = $omsMapper->mapOmsProductReservationStoreEntityToReservationResponseTransfer(
+                $omsProductReservationStoreEntity,
+                new ReservationResponseTransfer()
+            );
+        }
+
+        return $reservationResponseTransfers;
     }
 }

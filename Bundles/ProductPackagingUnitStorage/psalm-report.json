@@ -1,0 +1,138 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProductConcrete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            (int)$itemTransfer->getProductConcrete()->getIdProductConcrete()",
+            "selected_text": "getIdProductConcrete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method multiply on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "selected_text": "multiply",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\DecimalObject\\Decimal::multiply cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "            $productPackagingUnitStorageTransfer->getDefaultAmount()->multiply($itemTransfer->getQuantity())",
+            "selected_text": "$itemTransfer->getQuantity()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireIdProductConcrete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/Expander/ItemTransferExpander.php",
+            "snippet": "                ->requireIdProductConcrete();",
+            "selected_text": "requireIdProductConcrete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
+            "snippet": "            return new ProductPackagingUnitStorageToStorageClientBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productMeasurementUnitStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Client/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
+            "snippet": "            return new ProductPackagingUnitStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdProduct on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/Mapper/ProductPackagingUnitStorageMapper.php",
+            "snippet": "            ->setIdLeadProduct($productPackagingUnitEntityTransfer->getLeadProduct()->getIdProduct())",
+            "selected_text": "getIdProduct",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/Persistence/Mapper/ProductPackagingUnitStorageMapper.php",
+            "snippet": "            ->setTypeName($productPackagingUnitEntityTransfer->getProductPackagingUnitType()->getName());",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 105,
+            "line_to": 105,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productPackagingUnit()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 121,
+            "line_to": 121,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductPackagingUnitStorage/src/Spryker/Zed/ProductPackagingUnitStorage/ProductPackagingUnitStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->eventBehavior()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

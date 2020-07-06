@@ -26,6 +26,11 @@
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
   },
+  "autoload": {
+    "files": [
+      "autoload.php"
+    ]
+  },
   "replace": {
     "spryker/acl": "*",
     "spryker/acl-extension": "*",
@@ -47,6 +52,7 @@
     "spryker/availability-data-feed": "*",
     "spryker/availability-extension": "*",
     "spryker/availability-gui": "*",
+    "spryker/availability-gui-extension": "*",
     "spryker/availability-notification": "*",
     "spryker/availability-offer-connector": "*",
     "spryker/availability-storage": "*",
@@ -300,6 +306,8 @@
     "spryker/graph": "*",
     "spryker/graphviz": "*",
     "spryker/gui": "*",
+    "spryker/gui-table": "*",
+    "spryker/gui-table-extension": "*",
     "spryker/guzzle": "*",
     "spryker/health-check": "*",
     "spryker/health-check-extension": "*",
@@ -333,6 +341,7 @@
     "spryker/merchant-opening-hours-storage": "*",
     "spryker/merchant-product": "*",
     "spryker/merchant-product-data-import": "*",
+    "spryker/merchant-product-gui": "*",
     "spryker/merchant-product-offer": "*",
     "spryker/merchant-product-offer-data-import": "*",
     "spryker/merchant-product-offer-search": "*",
@@ -400,6 +409,7 @@
     "spryker/oms": "*",
     "spryker/oms-discount-connector": "*",
     "spryker/oms-extension": "*",
+    "spryker/oms-product-offer-reservation": "*",
     "spryker/oms-rest-api": "*",
     "spryker/order-custom-reference": "*",
     "spryker/order-custom-reference-gui": "*",
@@ -506,9 +516,12 @@
     "spryker/product-measurement-units-rest-api": "*",
     "spryker/product-new": "*",
     "spryker/product-offer": "*",
+    "spryker/product-offer-availabilities-rest-api": "*",
     "spryker/product-offer-availability": "*",
     "spryker/product-offer-availability-storage": "*",
     "spryker/product-offer-merchant-portal-gui": "*",
+    "spryker/product-offer-packaging-unit": "*",
+    "spryker/product-offer-prices-rest-api": "*",
     "spryker/product-offer-sales": "*",
     "spryker/product-offer-stock": "*",
     "spryker/product-offer-stock-data-import": "*",
@@ -585,6 +598,8 @@
     "spryker/sales-configurable-bundle": "*",
     "spryker/sales-data-export": "*",
     "spryker/sales-extension": "*",
+    "spryker/sales-invoice": "*",
+    "spryker/sales-invoice-extension": "*",
     "spryker/sales-merchant-portal-gui": "*",
     "spryker/sales-oms": "*",
     "spryker/sales-order-threshold": "*",

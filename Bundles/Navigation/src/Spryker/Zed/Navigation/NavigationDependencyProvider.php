@@ -37,8 +37,8 @@ class NavigationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideTouchFacade(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new NavigationToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
     }
 }

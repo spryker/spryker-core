@@ -41,7 +41,7 @@ interface AvailabilityStorageClientInterface
      *
      * @api
      *
-     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
+     * @deprecated Use {@link findProductAbstractAvailability()} instead.
      *
      * @param int $idProductAbstract
      *

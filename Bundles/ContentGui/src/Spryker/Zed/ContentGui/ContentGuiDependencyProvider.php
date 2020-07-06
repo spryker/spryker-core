@@ -70,9 +70,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addContentPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CONTENT_ITEM] = function () {
+        $container->set(static::PLUGINS_CONTENT_ITEM, function () {
             return $this->getContentPlugins();
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacadeService(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ContentGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -106,9 +106,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelContentQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CONTENT] = function () {
+        $container->set(static::PROPEL_QUERY_CONTENT, $container->factory(function () {
             return SpyContentQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -120,11 +120,11 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addContentFacade(Container $container): Container
     {
-        $container[static::FACADE_CONTENT] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT, function (Container $container) {
             return new ContentGuiToContentFacadeBridge(
                 $container->getLocator()->content()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -136,9 +136,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncoding(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ContentGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -150,9 +150,9 @@ class ContentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addContentEditorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CONTENT_EDITOR] = function () {
+        $container->set(static::PLUGINS_CONTENT_EDITOR, function () {
             return $this->getContentEditorPlugins();
-        };
+        });
 
         return $container;
     }

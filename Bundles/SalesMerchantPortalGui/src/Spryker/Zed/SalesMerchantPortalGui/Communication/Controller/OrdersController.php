@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
@@ -16,10 +18,36 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 class OrdersController extends AbstractController
 {
     /**
-     * @return array<mixed>
+     * @return array
      */
     public function indexAction(): array
     {
-        return [];
+        return $this->viewResponse([
+            'merchantOrderTableConfiguration' => $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function tableDataAction(Request $request): JsonResponse
+    {
+        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
+        $guiTableConfigurationTransfer = $this->getFactory()
+            ->createMerchantOrderGuiTableConfigurationProvider()
+            ->getConfiguration();
+        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
+            $request->query->all(),
+            $guiTableConfigurationTransfer
+        );
+        $guiTableDataResponseTransfer = $this->getFactory()
+            ->createMerchantOrderTableDataProvider()
+            ->getData($guiTableDataRequestTransfer);
+
+        return $this->jsonResponse(
+            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
+        );
     }
 }

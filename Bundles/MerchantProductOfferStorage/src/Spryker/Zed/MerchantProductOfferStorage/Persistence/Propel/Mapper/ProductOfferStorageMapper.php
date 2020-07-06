@@ -30,6 +30,7 @@ class ProductOfferStorageMapper
         $productOfferStorageTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
         $productOfferStorageTransfer->setMerchantSku($productOfferTransfer->getMerchantSku());
         $productOfferStorageTransfer->setMerchantReference($productOfferTransfer->getMerchantReference());
+        $productOfferStorageTransfer->setProductConcreteSku($productOfferTransfer->getConcreteSku());
 
         return $productOfferStorageTransfer;
     }

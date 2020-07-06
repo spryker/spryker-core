@@ -67,9 +67,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductLabelGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -81,9 +81,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductLabelFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductLabelGuiToProductLabelBridge($container->getLocator()->productLabel()->facade());
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyFacade(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ProductLabelGuiToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -109,11 +109,11 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToProductQueryContainerBridge(
                 $container->getLocator()->product()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }
@@ -125,11 +125,11 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductFacade(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
-        };
+        });
 
         return $container;
     }

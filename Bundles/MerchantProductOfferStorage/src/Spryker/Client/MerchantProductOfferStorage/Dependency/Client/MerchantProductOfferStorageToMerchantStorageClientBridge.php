@@ -33,4 +33,14 @@ class MerchantProductOfferStorageToMerchantStorageClientBridge implements Mercha
     {
         return $this->merchantStorageClient->findOne($idMerchant);
     }
+
+    /**
+     * @param int[] $merchantIds
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer[]
+     */
+    public function get(array $merchantIds): array
+    {
+        return $this->merchantStorageClient->get($merchantIds);
+    }
 }

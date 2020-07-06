@@ -51,11 +51,11 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new BusinessOnBehalfGuiToCustomerFacadeBridge(
                 $container->getLocator()->customer()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -83,11 +83,11 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -99,11 +99,11 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new BusinessOnBehalfGuiToCompanyBusinessUnitFacadeBridge(
                 $container->getLocator()->companyBusinessUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -115,9 +115,9 @@ class BusinessOnBehalfGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerBusinessUnitAttachFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_CUSTOMER_BUSINESS_UNIT_ATTACH_FORM_EXPANDER, function (Container $container) {
             return $this->getCustomerBusinessUnitAttachFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }

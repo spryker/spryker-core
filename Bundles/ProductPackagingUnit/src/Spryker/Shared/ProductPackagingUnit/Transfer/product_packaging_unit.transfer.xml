@@ -153,4 +153,10 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
 </transfers>

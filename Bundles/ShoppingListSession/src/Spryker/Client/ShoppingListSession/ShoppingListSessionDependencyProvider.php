@@ -42,9 +42,9 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_SESSION_SESSION_CLIENT] = function (Container $container) {
+        $container->set(static::SHOPPING_LIST_SESSION_SESSION_CLIENT, function (Container $container) {
             return new ShoppingListSessionToSessionClientBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -56,9 +56,9 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListClient(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT] = function (Container $container) {
+        $container->set(static::SHOPPING_LIST_SESSION_SHOPPING_LIST_CLIENT, function (Container $container) {
             return new ShoppingListSessionToShoppingListClientBridge($container->getLocator()->shoppingList()->client());
-        };
+        });
 
         return $container;
     }
@@ -70,9 +70,9 @@ class ShoppingListSessionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addShoppingListCollectionOutdatedPlugins(Container $container): Container
     {
-        $container[static::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS] = function () {
+        $container->set(static::SHOPPING_LIST_SESSION_COLLECTION_OUTDATED_PLUGINS, function () {
             return $this->getShoppingListCollectionOutdatedPlugins();
-        };
+        });
 
         return $container;
     }

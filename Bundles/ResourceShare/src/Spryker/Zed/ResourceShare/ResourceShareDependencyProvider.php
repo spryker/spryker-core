@@ -52,11 +52,11 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ResourceShareToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ResourceShareDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addResourceShareActivatorStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY] = function () {
+        $container->set(static::PLUGINS_RESOURCE_SHARE_ACTIVATOR_STRATEGY, function () {
             return $this->getResourceShareActivatorStrategyPlugins();
-        };
+        });
 
         return $container;
     }

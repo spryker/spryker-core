@@ -35,6 +35,6 @@ class ProductManagementProductConcreteViewCest
         $i->clickDataTableViewButton();
         $i->clickDataTableViewButton(1, 'product-variant-table_wrapper');
 
-        $i->seeBreadcrumbNavigation('Products / Products / View Concrete Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / View Concrete Product');
     }
 }

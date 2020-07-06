@@ -54,9 +54,9 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function provideCollectorFacade(Container $container)
     {
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductRelationCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function providePriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductRelationCollectorToPriceProductBridgeProductFacade($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function provideDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }
@@ -96,9 +96,9 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function provideTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -110,11 +110,11 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function provideProductRelationQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_RELATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationCollectorToProductRelationBridge(
                 $container->getLocator()->productRelation()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }
@@ -126,11 +126,11 @@ class ProductRelationCollectorDependencyProvider extends AbstractBundleDependenc
      */
     protected function provideProductImageQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductRelationCollectorCollectorToProductImageBridge(
                 $container->getLocator()->productImage()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }

@@ -13,6 +13,7 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStoreClientBridge;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToSynchronizationServiceBridge;
+use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceBridge;
 use Spryker\Client\MerchantProductOfferStorage\Exception\ProductOfferProviderPluginException;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferProviderPluginInterface;
 
@@ -22,6 +23,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_MERCHANT_STORAGE = 'CLIENT_MERCHANT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const PLUGIN_PRODUCT_OFFER_PLUGIN = 'PLUGIN_PRODUCT_OFFER_PLUGIN';
 
     /**
@@ -36,6 +38,7 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addClientStorage($container);
         $container = $this->addClientStore($container);
         $container = $this->addServiceSynchronization($container);
+        $container = $this->addUtilEncodingService($container);
         $container = $this->addDefaultProductOfferPlugin($container);
         $container = $this->addMerchantStorageClient($container);
 
@@ -49,9 +52,9 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
      */
     protected function addDefaultProductOfferPlugin(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_OFFER_PLUGIN] = function () {
+        $container->set(static::PLUGIN_PRODUCT_OFFER_PLUGIN, function () {
             return $this->createProductOfferPlugin();
-        };
+        });
 
         return $container;
     }
@@ -99,6 +102,22 @@ class MerchantProductOfferStorageDependencyProvider extends AbstractDependencyPr
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new MerchantProductOfferStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new MerchantProductOfferStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
             );
         });
 

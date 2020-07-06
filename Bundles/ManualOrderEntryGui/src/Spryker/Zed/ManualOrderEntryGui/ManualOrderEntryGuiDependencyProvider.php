@@ -86,9 +86,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new ManualOrderEntryGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -100,9 +100,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ManualOrderEntryGuiToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -114,9 +114,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCartFacade(Container $container): Container
     {
-        $container[static::FACADE_CART] = function (Container $container) {
+        $container->set(static::FACADE_CART, function (Container $container) {
             return new ManualOrderEntryGuiToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -128,9 +128,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addDiscountFacade(Container $container): Container
     {
-        $container[static::FACADE_DISCOUNT] = function (Container $container) {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new ManualOrderEntryGuiToDiscountFacadeBridge($container->getLocator()->discount()->facade());
-        };
+        });
 
         return $container;
     }
@@ -142,9 +142,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ManualOrderEntryGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -156,9 +156,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ManualOrderEntryGuiToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -170,9 +170,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addShipmentFacade(Container $container): Container
     {
-        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new ManualOrderEntryGuiToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
-        };
+        });
 
         return $container;
     }
@@ -184,9 +184,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ManualOrderEntryGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -198,9 +198,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ManualOrderEntryGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -212,9 +212,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPaymentFacade(Container $container): Container
     {
-        $container[static::FACADE_PAYMENT] = function (Container $container) {
+        $container->set(static::FACADE_PAYMENT, function (Container $container) {
             return new ManualOrderEntryGuiToPaymentFacadeBridge($container->getLocator()->payment()->facade());
-        };
+        });
 
         return $container;
     }
@@ -226,9 +226,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCheckoutFacade(Container $container): Container
     {
-        $container[static::FACADE_CHECKOUT] = function (Container $container) {
+        $container->set(static::FACADE_CHECKOUT, function (Container $container) {
             return new ManualOrderEntryGuiToCheckoutFacadeBridge($container->getLocator()->checkout()->facade());
-        };
+        });
 
         return $container;
     }
@@ -240,9 +240,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCalculationFacade(Container $container): Container
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new ManualOrderEntryGuiToCalculationFacadeBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -254,9 +254,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addManualOrderEntryFacade(Container $container): Container
     {
-        $container[static::FACADE_MANUAL_ORDER_ENTRY] = function (Container $container) {
+        $container->set(static::FACADE_MANUAL_ORDER_ENTRY, function (Container $container) {
             return new ManualOrderEntryGuiToManualOrderEntryFacadeBridge($container->getLocator()->manualOrderEntry()->facade());
-        };
+        });
 
         return $container;
     }
@@ -268,9 +268,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPaymentSubFormPlugins(Container $container): Container
     {
-        $container[static::PAYMENT_SUB_FORMS] = function () {
+        $container->set(static::PAYMENT_SUB_FORMS, function () {
             return $this->getPaymentSubFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -290,9 +290,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCustomerQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new ManualOrderEntryGuiToCustomerQueryContainerBridge($container->getLocator()->customer()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -304,9 +304,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addManualOrderEntryFormPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_MANUAL_ORDER_ENTRY_FORM] = function (Container $container) {
+        $container->set(static::PLUGINS_MANUAL_ORDER_ENTRY_FORM, function (Container $container) {
             return $this->getManualOrderEntryFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -326,9 +326,9 @@ class ManualOrderEntryGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addQuoteExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_EXPANDER, function (Container $container) {
             return $this->getQuoteExpanderPlugins();
-        };
+        });
 
         return $container;
     }

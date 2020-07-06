@@ -34,13 +34,13 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::PLUGIN_VALIDATOR] = function () {
+        $container->set(static::PLUGIN_VALIDATOR, function () {
             return (new Pimple())->getApplication()['validator'];
-        };
+        });
 
         return $container;
     }
@@ -52,17 +52,17 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new GlossaryToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }

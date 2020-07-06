@@ -46,9 +46,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductAlternativeStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -60,11 +60,11 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductAlternativeStorageToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -76,11 +76,11 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductAlternativeStorageToSynchronizationServiceBridge(
                 $container->getLocator()->synchronization()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class ProductAlternativeStorageDependencyProvider extends AbstractDependencyProv
      */
     protected function addAlternativeProductApplicableCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK] = function (Container $container) {
+        $container->set(static::PLUGINS_ALTERNATIVE_PRODUCT_APPLICABLE_CHECK, function (Container $container) {
             return $this->getAlternativeProductApplicableCheckPlugins();
-        };
+        });
 
         return $container;
     }

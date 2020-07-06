@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\SalesMerchantPortalGui\Persistence\Propel\Mapper\SalesMerchantPortalGuiMapper;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 
 /**
@@ -17,6 +18,14 @@ use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
  */
 class SalesMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Persistence\Propel\Mapper\SalesMerchantPortalGuiMapper
+     */
+    public function createSalesMerchantPortalGuiMapper(): SalesMerchantPortalGuiMapper
+    {
+        return new SalesMerchantPortalGuiMapper();
+    }
+
     /**
      * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
      *

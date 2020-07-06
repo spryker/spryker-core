@@ -43,7 +43,7 @@ class CmsSlotStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addCmsSlotPublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsSlotEvents::CMS_SLOT_PUBLISH, new CmsSlotStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsSlotEvents::CMS_SLOT_PUBLISH, new CmsSlotStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -53,7 +53,7 @@ class CmsSlotStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addCmsSlotCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsSlotEvents::ENTITY_SPY_CMS_SLOT_CREATE, new CmsSlotStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsSlotEvents::ENTITY_SPY_CMS_SLOT_CREATE, new CmsSlotStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -63,6 +63,6 @@ class CmsSlotStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addCmsSlotUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsSlotEvents::ENTITY_SPY_CMS_SLOT_UPDATE, new CmsSlotStoragePublishListener());
+        $eventCollection->addListenerQueued(CmsSlotEvents::ENTITY_SPY_CMS_SLOT_UPDATE, new CmsSlotStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

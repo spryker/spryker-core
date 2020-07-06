@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraints\Type;
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class StockSubForm extends AbstractType
 {

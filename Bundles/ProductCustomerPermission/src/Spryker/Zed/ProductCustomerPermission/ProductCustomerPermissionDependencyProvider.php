@@ -43,9 +43,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductCustomerPermissionToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductCustomerPermissionToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductCustomerPermissionDependencyProvider extends AbstractBundleDependen
      */
     protected function addTouchFacade(Container $container): Container
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductCustomerPermissionToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }

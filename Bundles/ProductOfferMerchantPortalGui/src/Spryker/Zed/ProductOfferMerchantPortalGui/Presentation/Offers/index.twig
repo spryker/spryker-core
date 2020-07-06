@@ -5,24 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    {% set config = {
-        dataSource: {
-            type: 'http',
-            url: dataUrl,
-        },
-        columns: columns,
-        itemSelection: true,
-        syncStateUrl: true,
-        total: true,
-        rowActions: rowActions,
-        pagination: pagination,
-        search: search,
-        filters: filters,
-    } %}
 
     <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
 
-    <web-mp-offers-list cloak table-config="{{ config | json_encode() }}">
+    <web-mp-offers-list cloak table-config="{{ guiTableConfiguration(productOfferTableConfiguration) }}">
         <span title>{{ 'Offers' | trans }}</span>
 
         <web-spy-button-link action url="/product-offer-merchant-portal-gui/create-offer" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>

@@ -44,9 +44,9 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductLabelToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductLabelToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ProductLabelDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductLabelRelationUpdaterPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS] = function (Container $container) {
+        $container->set(static::PLUGIN_PRODUCT_LABEL_RELATION_UPDATERS, function (Container $container) {
             return $this->getProductLabelRelationUpdaterPlugins();
-        };
+        });
 
         return $container;
     }

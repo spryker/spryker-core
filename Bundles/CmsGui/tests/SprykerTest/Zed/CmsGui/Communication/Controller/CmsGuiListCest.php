@@ -31,6 +31,6 @@ class CmsGuiListCest
     public function breadcrumbIsVisible(CmsGuiCommunicationTester $i): void
     {
         $i->amOnPage(CmsGuiListPage::URL);
-        $i->seeBreadcrumbNavigation('Content Management / Pages');
+        $i->seeBreadcrumbNavigation('Content / Pages');
     }
 }
