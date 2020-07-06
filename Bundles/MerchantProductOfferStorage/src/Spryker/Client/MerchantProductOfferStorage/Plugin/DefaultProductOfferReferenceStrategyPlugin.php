@@ -46,7 +46,10 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
     {
         $productOfferStorageTransfers = $this->getFactory()
             ->createProductOfferStorageReader()
-            ->getProductOffersBySkus($productOfferStorageCriteriaTransfer)
+            ->getProductOffersBySkus(
+                (new ProductOfferStorageCriteriaTransfer())
+                    ->setProductConcreteSkus($productOfferStorageCriteriaTransfer->getProductConcreteSkus())
+            )
             ->getProductOffersStorage()
             ->getArrayCopy();
 
