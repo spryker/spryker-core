@@ -1,10 +1,12 @@
 "Add a Dataset","Datensatz hinzufügen"
 "Add Dataset","Datensatz hinzufügen"
 "Back to Dataset list","Zurück zu Datensatzliste"
-"Content file","Content file"
+"Content file",Inhaltsdatei
 Dataset,Datensatz
 "Dataset was activated successfully.","Datensatz wurde erfolgreich aktiviert."
 "Dataset was deactivated successfully.","Datensatz wurde erfolgreich deaktiviert."
 "Edit Dataset","Datensatz bearbeiten"
 Save,Speichern
 "Something wrong","Etwas ist fehlgeschlagen"
+"No file selected.","Keine Datei ausgewählt."
+"Datasets list","Datasets list"

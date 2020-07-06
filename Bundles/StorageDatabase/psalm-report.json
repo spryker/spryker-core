@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'PDOStatement' for Spryker\\Client\\StorageDatabase\\Storage\\Reader\\AbstractStorageReader::createPreparedStatement is incorrect, got 'PDOStatement|true'",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/Reader/AbstractStorageReader.php",
+            "snippet": "     * @return \\PDOStatement",
+            "selected_text": "\\PDOStatement",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'PDOStatement|true' does not match the declared return type 'PDOStatement' for Spryker\\Client\\StorageDatabase\\Storage\\Reader\\AbstractStorageReader::createPreparedStatement",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/Reader/AbstractStorageReader.php",
+            "snippet": "        return $statement;",
+            "selected_text": "$statement",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of array_merge expects array<array-key, mixed>, string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/Reader/MySqlStorageReader.php",
+            "snippet": "            foreach (array_merge(...$queryData) as $placeholder => $value) {",
+            "selected_text": "$queryData",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'Propel\\Runtime\\Connection\\ConnectionInterface' for Spryker\\Client\\StorageDatabase\\Connection\\ConnectionProvider::getConnection is not nullable, but 'Propel\\Runtime\\Connection\\ConnectionInterface|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Connection/ConnectionProvider.php",
+            "snippet": "     * @return \\Propel\\Runtime\\Connection\\ConnectionInterface",
+            "selected_text": "\\Propel\\Runtime\\Connection\\ConnectionInterface",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'Propel\\Runtime\\Connection\\ConnectionInterface' for Spryker\\Client\\StorageDatabase\\Connection\\ConnectionProvider::getConnection is not nullable, but the function returns 'Propel\\Runtime\\Connection\\ConnectionInterface|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Connection/ConnectionProvider.php",
+            "snippet": "        return static::$connection;",
+            "selected_text": "static::$connection",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 102,
+            "line_to": 102,
+            "type": "UndefinedInterfaceMethod",
+            "message": "Method Propel\\Runtime\\Connection\\ConnectionInterface::useDebug does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Connection/ConnectionProvider.php",
+            "snippet": "            static::$connection->useDebug(",
+            "selected_text": "useDebug",
+            "error_level": 5,
+            "shortcode": 181
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Client\\StorageDatabase\\Storage\\StorageDatabase::getMulti has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\StorageDatabase\\Storage\\StorageDatabaseInterface::getMulti",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/Storage/StorageDatabase.php",
+            "snippet": "    public function getMulti(array $keys): array",
+            "selected_text": "$keys",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/StorageDatabase/src/Spryker/Client/StorageDatabase/StorageDatabaseDependencyProvider.php",
+            "snippet": "            return new StorageDatabaseToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

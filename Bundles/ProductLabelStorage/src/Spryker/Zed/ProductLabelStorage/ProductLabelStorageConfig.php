@@ -42,4 +42,24 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductAbstractLabelEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductLabelDictionaryEventQueueName(): ?string
+    {
+        return null;
+    }
 }

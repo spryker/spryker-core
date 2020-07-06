@@ -14,7 +14,7 @@ use Spryker\DecimalObject\Decimal;
 interface ReservationInterface
 {
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\ReservationInterface::updateReservation()` instead.
+     * @deprecated Use {@link updateReservation()} instead.
      *
      * @param string $sku
      *

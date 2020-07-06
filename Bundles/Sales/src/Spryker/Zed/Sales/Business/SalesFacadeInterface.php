@@ -144,6 +144,7 @@ interface SalesFacadeInterface
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
+     *  - Executes SearchOrderExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -160,6 +161,7 @@ interface SalesFacadeInterface
      * - OrderListTransfer::$filters can contain offset-based pagination and ordering parameters.
      * - OrderListTransfer::$pagination can be used to apply page-based pagination strategy to the queried orders.
      * - Hydrates the resulting orders with related data.
+     * - Executes SearchOrderExpanderPluginInterface plugin stack.
      * - Aggregates order totals calls -> SalesAggregator.
      *
      * @api
@@ -177,6 +179,7 @@ interface SalesFacadeInterface
      * - Uses OrderListRequestTransfer::$filter to pull params for offset-based pagination strategy.
      * - OrderListRequestTransfer::customerReference must be set.
      * - Hydrates OrderTransfer with data from persistence by idSaleOrder.
+     * - Executes SearchOrderExpanderPluginInterface plugin stack.
      * - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api
@@ -192,6 +195,7 @@ interface SalesFacadeInterface
      *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result
+     *  - Executes SearchOrderExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -323,7 +327,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *

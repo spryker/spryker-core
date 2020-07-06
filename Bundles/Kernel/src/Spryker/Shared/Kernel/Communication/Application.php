@@ -15,7 +15,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Deprecated: Please use `\Spryker\Shared\Application\Application` instead.
+ * Deprecated: Use {@link \Spryker\Shared\Application\Application} instead.
  */
 class Application extends SilexApplication
 {

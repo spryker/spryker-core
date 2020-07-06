@@ -55,3 +55,17 @@ View,View
 "You are editing a <br>draft </b> page. To make your changes visible in Yves, publish the page. Publishing the page will create a new version for this page","You are editing a <b>draft </b> page. To make your changes visible in Storefront, publish the page. Publishing the page will create a new version for this page."
 "You are viewing a published page. It was published","You are viewing a published page. It was published"
 "You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version","You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version"
+"CMS Redirect","CMS Redirect"
+"Is searchable","Is searchable"
+"Page was not created.","Page was not created."
+"Page was created successfully.","Page was created successfully."
+"You are editing a <b>draft</b> page. To make your changes visible in the shop, publish the page. Publishing the page will create a new version for this page.","You are editing a <b>draft</b> page. To make your changes visible in the shop, publish the page. Publishing the page will create a new version for this page."
+"Store relation","Store Relation"
+Placeholders,Placeholders
+title,Title
+content,Content
+"View CMS Page","View CMS Page"
+"Draft data successfully discarded.","Draft data successfully discarded."
+"Page was deactivated successfully.","Page was deactivated successfully."
+"Page was activated successfully.","Page was activated successfully."
+"Edit Placeholders","Edit Placeholders"

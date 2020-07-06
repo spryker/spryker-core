@@ -6,8 +6,14 @@
     <transfer name="ItemState">
         <property name="idSalesOrder" type="int"/>
         <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+    </transfer>
+
+    <transfer name="AggregatedItemState">
+        <property name="name" type="string"/>
+        <property name="displayName" type="string"/>
     </transfer>
 
     <transfer name="Mail">
@@ -18,17 +24,18 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
         <property name="locale" type="Locale"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="billingAddress" type="Address"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="aggregatedItemStates" type="AggregatedItemState[]" singular="aggregatedItemState"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="email" type="string"/>
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="isCancellable" type="bool"/>
-        <property name="idSalesOrder" type="int"/>
     </transfer>
 
     <transfer name="OmsAvailabilityReservationRequest">
@@ -135,6 +142,7 @@
 
     <transfer name="OrderItemFilter">
         <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
         <property name="salesOrderIds" type="int[]" singular="salesOrderId"/>
     </transfer>
 
@@ -148,6 +156,16 @@
     <transfer name="ReservationResponse">
         <property name="reservationQuantity" type="decimal"/>
         <property name="storeName" type="string"/>
+    </transfer>
+
+    <transfer name="OmsCheckTimeoutsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OmsCheckConditionsQueryCriteria">
+        <property name="storeName" type="string"/>
+        <property name="limit" type="int"/>
     </transfer>
 
     <transfer name="OmsEvent">

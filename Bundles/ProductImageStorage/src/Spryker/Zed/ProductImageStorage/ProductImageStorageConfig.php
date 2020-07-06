@@ -32,4 +32,24 @@ class ProductImageStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductImageAbstractEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductImageConcreteEventQueueName(): ?string
+    {
+        return null;
+    }
 }

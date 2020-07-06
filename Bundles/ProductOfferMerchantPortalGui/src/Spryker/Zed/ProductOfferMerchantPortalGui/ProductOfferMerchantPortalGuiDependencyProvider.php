@@ -14,11 +14,10 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToGuiTableFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeBridge;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceBridge;
 
 /**
@@ -30,6 +29,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_GUI_TABLE = 'FACADE_GUI_TABLE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
@@ -40,8 +40,6 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
     public const PROPEL_QUERY_PRODUCT_OFFER_STORE = 'PROPEL_PRODUCT_OFFER_STORE';
 
-    public const PLUGINS_FILTER_VALUE_NORMALIZER = 'PLUGINS_FILTER_VALUE_NORMALIZER';
-
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -49,13 +47,10 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = $this->addLocaleFacade($container);
-        $container = $this->addUtilEncodingService($container);
-        $container = $this->addUtilDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
         $container = $this->addStoreFacade($container);
-        $container = $this->addFilterValueNormalizerPlugins($container);
+        $container = $this->addGuiTableFacade($container);
 
         return $container;
     }
@@ -82,43 +77,11 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new ProductOfferMerchantPortalGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUtilEncodingService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductOfferMerchantPortalGuiToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilDateTimeService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
-            return new ProductOfferMerchantPortalGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
             );
         });
 
@@ -167,6 +130,22 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductOfferMerchantPortalGuiToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GUI_TABLE, function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToGuiTableFacadeBridge(
+                $container->getLocator()->guiTable()->facade()
             );
         });
 
@@ -241,27 +220,5 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         }));
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addFilterValueNormalizerPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_FILTER_VALUE_NORMALIZER, function () {
-            return $this->getFilterValueNormalizerPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\GuiTableDataRequest\FilterValueNormalizerPluginInterface[]
-     */
-    protected function getFilterValueNormalizerPlugins(): array
-    {
-        return [];
     }
 }

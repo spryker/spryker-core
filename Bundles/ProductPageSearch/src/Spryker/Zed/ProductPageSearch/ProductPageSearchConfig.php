@@ -57,4 +57,24 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     {
         return static::PRODUCT_ABSTRACT_PAGE_PUBLISH_CHUNK_SIZE;
     }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductPageEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcretePageEventQueueName(): ?string
+    {
+        return null;
+    }
 }

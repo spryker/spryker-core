@@ -23,4 +23,9 @@ Name,Name
 Save,Speichern
 "Select a content item","Wählen Sie einen Inhalt aus"
 "Select a template","Wählen Sie eine Vorlage aus"
-Updated,Aktualisierte
+Updated,Aktualisiert
+"Content item has been successfully created.","Inhaltselement wurde erfolgreich erstellt."
+"Content item has been successfully updated.","Inhaltselement wurde erfolgreich aktualisiert."
+"Stock successfully updated","Lagerbestand erfolgreich aktualisiert."
+"Move Up","Nach oben"
+"Move Down","Nach unten"

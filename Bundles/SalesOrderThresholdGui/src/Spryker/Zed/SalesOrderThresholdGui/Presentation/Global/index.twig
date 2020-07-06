@@ -15,6 +15,7 @@
 {% endblock percent_widget %}
 
 {% set globalHardThresholdEnabled = globalThresholdForm.hardThreshold.strategy.vars.choices|length > 0 %}
+{% set globalHardMaxThresholdEnabled = globalThresholdForm.hardMaximumThreshold.strategy.vars.choices|length > 0 %}
 {% set globalSoftThresholdEnabled = globalThresholdForm.softThreshold.strategy.vars.choices|length > 0 %}
 
 {% block content %}
@@ -25,7 +26,7 @@
 
             {% if globalHardThresholdEnabled %}
                 <div class="panel panel-default">
-                    <div class="panel-heading">{{ 'Hard Threshold' | trans }}</div>
+                    <div class="panel-heading">{{ 'Minimum Hard Threshold' | trans }}</div>
                     <div class="panel-body">
                         {{ form_row(globalThresholdForm.hardThreshold.strategy) }}
                         {{ form_row(globalThresholdForm.hardThreshold.threshold) }}
@@ -54,6 +55,39 @@
                 </div>
             {% else %}
                 {% do globalThresholdForm.hardThreshold.setRendered %}
+            {% endif %}
+
+            {% if globalHardMaxThresholdEnabled %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'Maximum Hard Threshold' | trans }}</div>
+                    <div class="panel-body">
+                        {{ form_row(globalThresholdForm.hardMaximumThreshold.strategy) }}
+                        {{ form_row(globalThresholdForm.hardMaximumThreshold.threshold) }}
+                        {% for child in globalThresholdForm if child.vars.attr.threshold_key is defined %}
+                            <div class="threshold_group_hard threshold-key-{{ child.vars.attr.threshold_key }}">
+                                {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
+                            </div>
+                        {% endfor %}
+
+                        {% for localeTransfer in localeCollection %}
+                            {% if globalThresholdForm.hardMaximumThreshold[localeTransfer.localeName] is defined %}
+                                {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                                    {% block content %}
+                                        {% for input in globalThresholdForm.hardMaximumThreshold[localeTransfer.localeName] %}
+                                            <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                                {{ form_label(input) }}
+                                                {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                                {{ form_errors(input) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% do globalThresholdForm.hardMaximumThreshold.setRendered %}
             {% endif %}
 
             {% if globalSoftThresholdEnabled %}
@@ -92,7 +126,7 @@
             {{ form_widget(globalThresholdForm) }}
 
             <div class="well well-sm">
-                {{ 'You can use the the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>' | raw }}
+                {{ 'You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>'  | trans | raw }}
             </div>
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>

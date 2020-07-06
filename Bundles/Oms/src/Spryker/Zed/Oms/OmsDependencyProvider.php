@@ -51,6 +51,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_UTIL_NETWORK = 'SERVICE_UTIL_NETWORK';
 
+    /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::QUERY_CONTAINER_SALES} instead.
+     */
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
     /**
@@ -112,10 +115,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
-            return new PersistenceOmsToSalesBridge($container->getLocator()->sales()->queryContainer());
-        });
-
+        $container = $this->addSalesQueryContainer($container);
         $container = $this->addSalesOrderItemPropelQuery($container);
 
         return $container;
@@ -146,7 +146,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -158,7 +158,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Oms\OmsDependencyProvider::getOmsReservationAggregationStrategyPlugins().
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
      *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
@@ -310,6 +310,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::addSalesQueryContainer()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -352,6 +354,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
