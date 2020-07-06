@@ -962,7 +962,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\OrderStateMachine\OrderStateMachine::updateOmsReservation()` instead.
+     * @deprecated Use {@link updateOmsReservation()} instead.
      *
      * @param \Spryker\Zed\Oms\Business\Process\ProcessInterface $process
      * @param string $sourceStateId

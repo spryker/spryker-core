@@ -4,7 +4,7 @@
     {{ 'Scheduled Prices' | trans }}
 {% endblock %}
 
-{% set widget_title = "Scheduled Prices" %}
+{% set widget_title = "Scheduled Prices" | trans %}
 
 {% block section_title %}
     {{ widget_title }}
@@ -15,11 +15,11 @@
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with {
-        widget_title: "Are you sure about deleting the Scheduled prices \"%s\"?" | format(priceProductScheduleList.name) | trans,
+        widget_title: "Are you sure about deleting the Scheduled prices %s?" | trans | format(priceProductScheduleList.name),
     } %}
 
         {% block widget_content %}
-                {{ "You will delete %d prices for %d products. Is this what you want?"| format(
+                {{ "You will delete %d prices for %d products. Is this what you want?" | trans | format(
                     priceProductScheduleList.metaData.numberOfPrices,
                     priceProductScheduleList.metaData.numberOfProducts
                 ) }}

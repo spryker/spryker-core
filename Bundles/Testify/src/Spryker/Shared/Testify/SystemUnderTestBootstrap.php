@@ -21,7 +21,7 @@ use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 /**
- * @deprecated Please switch to `Spryker\Zed\Testify\Bootstrap\ZedBootstrap`.
+ * @deprecated Please switch to {@link \Spryker\Zed\Testify\Bootstrap\ZedBootstrap}.
  */
 class SystemUnderTestBootstrap
 {

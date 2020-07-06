@@ -42,3 +42,13 @@ URL,Url
 View,View
 Weight,Weight
 "Weight defines sorting order. Product Sets with higher numbers listed first.","Weight defines sorting order. Product Sets with higher numbers listed first."
+"Product Set Key","Product Set Key"
+"You need to select a minimum of 2 products.","You need to select a minimum of 2 products."
+Images,Images
+"View Product Set","View Product Set"
+"Product Set ""%s"" created successfully.","Product Set ""%s"" created successfully."
+"Product Set #%d activated successfully.","Product Set #%d activated successfully."
+"Product Set #%d deactivated successfully.","Product Set #%d deactivated successfully."
+"Product Set ""%s"" updated successfully.","Product Set ""%s"" updated successfully."
+"Product Set #%d deleted successfully.","Product Set #%d deleted successfully."
+"Number of Products","Number of Products"

@@ -478,7 +478,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Oms\Business\OmsBusinessFactory::getOmsReservationAggregationStrategyPlugins().
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
      *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */

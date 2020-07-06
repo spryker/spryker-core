@@ -14,3 +14,8 @@ Save,Save
 "Store and Currency","Store and Currency"
 "The Merchant Relationship Threshold is saved successfully.","The Merchant Relationship Threshold is saved successfully."
 Thresholds,Thresholds
+Soft,Soft
+Hard,Hard
+"The Merchant Relationship Thresholds is saved successfully.","The Merchant Relationship Thresholds is saved successfully."
+"You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>"
+"BU name","BU name"
