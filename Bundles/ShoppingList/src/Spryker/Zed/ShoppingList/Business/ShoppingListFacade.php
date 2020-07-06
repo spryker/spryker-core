@@ -135,6 +135,8 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
      *
      * @api
      *
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer

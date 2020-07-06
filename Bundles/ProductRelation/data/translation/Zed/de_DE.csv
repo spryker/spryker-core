@@ -23,7 +23,7 @@ related-products,"Ähnliche Produkte"
 "Relation type",Beziehungsart
 "Relation type:",Relationsart:
 Save,Speichern
-Select,select
+Select,Auswählen
 "Select product","Produkt auswählen"
 "Selected product","Ausgewähltes Produkt"
 "Selected product already has ""%s"" relation type.","Das ausgewählte Produkt hat bereits Beziehungsart ""%s""."

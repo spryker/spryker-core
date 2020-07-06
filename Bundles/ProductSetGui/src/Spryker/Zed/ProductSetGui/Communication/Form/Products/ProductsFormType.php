@@ -49,7 +49,7 @@ class ProductsFormType extends AbstractType
                 new Callback([
                     'callback' => function (array $productAbstractIds, ExecutionContextInterface $context) {
                         if (count($productAbstractIds) < 2) {
-                            $context->addViolation('You need to select minimum 2 products.');
+                            $context->addViolation('You need to select a minimum of 2 products.');
                         }
                     },
                 ]),

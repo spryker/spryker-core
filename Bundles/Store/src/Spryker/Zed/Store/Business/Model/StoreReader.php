@@ -22,7 +22,7 @@ class StoreReader implements StoreReaderInterface
     protected $store;
 
     /**
-     * @deprecated Use StoreReader::store instead.
+     * @deprecated Use {@link store} instead.
      *
      * @var \Spryker\Shared\Store\Dependency\Adapter\StoreToStoreInterface
      */

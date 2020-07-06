@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Development\Business\ArchitectureSniffer;
 
 /**
- * @deprecated Use `AllModuleFinderInterface` instead.
+ * @deprecated Use {@link AllModuleFinderInterface} instead.
  */
 interface AllBundleFinderInterface
 {

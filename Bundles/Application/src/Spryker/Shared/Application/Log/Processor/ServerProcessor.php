@@ -10,7 +10,7 @@ namespace Spryker\Shared\Application\Log\Processor;
 use Spryker\Service\UtilNetwork\Model\Host;
 
 /**
- * @deprecated Use `ServerProcessorPlugin` from Log module instead.
+ * @deprecated Use `ServerProcessorPlugin`s from Log module instead.
  */
 class ServerProcessor
 {
