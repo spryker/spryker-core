@@ -8,16 +8,14 @@
 namespace Spryker\Zed\ProductPageSearch\Communication\Plugin\Event\Listener;
 
 use Spryker\Zed\Event\Dependency\Plugin\EventBulkHandlerInterface;
-use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchRepositoryInterface getRepository()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
  */
 class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSearchListener implements EventBulkHandlerInterface
 {
-    use DatabaseTransactionHandlerTrait;
-
     /**
      * @uses \Orm\Zed\Availability\Persistence\Map\SpyAvailabilityTableMap::COL_SKU
      */
@@ -33,8 +31,6 @@ class ProductPageAvailabilityStockSearchListener extends AbstractProductPageSear
      */
     public function handleBulk(array $eventTransfers, $eventName)
     {
-        $this->preventTransaction();
-
         $productConcreteSkus = $this->getFactory()
             ->getEventBehaviorFacade()
             ->getEventTransfersAdditionalValues($eventTransfers, static::COL_SKU);
