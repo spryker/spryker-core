@@ -10,3 +10,10 @@ Save,Save
 "Threshold Settings","Threshold Settings"
 Threshold,Threshold
 "You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>","You can use the the placeholders <b>{{threshold}}</b> <b>{{fee}}</b>"
+"You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>"
+"The Global Thresholds is saved successfully.","The Global Thresholds is saved successfully."
+"Store and Currency","Store and Currency"
+"Enter threshold value","Enter threshold value"
+"Threshold settings","Threshold settings"
+Soft,Soft
+Hard,Hard

@@ -1,9 +1,7 @@
 <div class="well">
-    {% filter trans|raw %}
-        <h3>Discontinue</h3>
-        <p>You can discontinue product on this tab and add a note - why this product become discontinued.</p>
-        <p><i>Note: Discontinued product still will be visible in the shop and would have stock, but it will be impossible to buy it.</i></p>
-    {% endfilter %}
+    <h3>{{ 'Discontinue Product' | trans }}</h3>
+    <p>{{ 'You can discontinue a product on this tab and add a note - why this product is discontinued.' | trans }}</p>
+    <p><i>{{ 'Note: Discontinued products will still be visible in the shop and have stock, but it will not be possible to buy it.' | trans }}</i></p>
 </div>
 
 {% set discontinued = form.vars.data.productDiscontinued %}

@@ -19,3 +19,5 @@ Parent,Parent
 Save,Save
 "Select one","Select one"
 "You can not delete a business unit ""%s"" while it contains user","You can not delete a business unit ""%s"" while it contains user"
+Address,Address
+"Business Units","Business Units"
