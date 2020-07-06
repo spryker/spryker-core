@@ -37,6 +37,11 @@ abstract class AbstractController
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::SECURED_REDIRECT_IS_HANDLED
+     */
+    protected const SECURED_REDIRECT_IS_HANDLED = 'SECURED_REDIRECT_IS_HANDLED';
+
+    /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
@@ -121,7 +126,7 @@ abstract class AbstractController
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
-        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+        if (!$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
         }
 
@@ -303,6 +308,13 @@ abstract class AbstractController
      */
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
+        if (
+            $this->getApplication()->has(static::SECURED_REDIRECT_IS_HANDLED) &&
+            $this->getApplication()->get(static::SECURED_REDIRECT_IS_HANDLED)
+        ) {
+            return true;
+        }
+
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
         $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 

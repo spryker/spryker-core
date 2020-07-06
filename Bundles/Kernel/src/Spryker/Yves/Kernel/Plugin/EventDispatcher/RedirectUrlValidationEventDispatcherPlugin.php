@@ -20,6 +20,13 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
+     * @see \Spryker\Yves\Kernel\Controller\AbstractController::isUrlDomainWhitelisted()
+     * @see \Spryker\Zed\Kernel\Communication\Controller\AbstractController::isUrlDomainWhitelisted()
+     */
+    protected const SECURED_REDIRECT_IS_HANDLED = 'SECURED_REDIRECT_IS_HANDLED';
+    protected const SECURED_REDIRECT_IS_ENABLED = true;
+
+    /**
      * {@inheritDoc}
      * - Checks if redirect URL is in allowed list.
      * - Executed only for redirect responses.
@@ -33,6 +40,7 @@ class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implemen
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
+        $this->getApplication()->set(static::SECURED_REDIRECT_IS_HANDLED, static::SECURED_REDIRECT_IS_ENABLED);
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
             $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event);
         });
