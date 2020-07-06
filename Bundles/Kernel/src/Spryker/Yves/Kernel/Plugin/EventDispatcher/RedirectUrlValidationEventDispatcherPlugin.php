@@ -20,8 +20,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * @see \Spryker\Yves\Kernel\Controller\AbstractController::isUrlDomainWhitelisted()
-     * @see \Spryker\Zed\Kernel\Communication\Controller\AbstractController::isUrlDomainWhitelisted()
+     * @see \Spryker\Yves\Kernel\Controller\AbstractController::SECURED_REDIRECT_IS_HANDLED
      */
     protected const SECURED_REDIRECT_IS_HANDLED = 'SECURED_REDIRECT_IS_HANDLED';
 

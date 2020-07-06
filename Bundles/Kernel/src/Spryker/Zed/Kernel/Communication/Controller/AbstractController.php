@@ -32,11 +32,6 @@ abstract class AbstractController
     protected const SERVICE_MESSENGER = 'messenger';
 
     /**
-     * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::SECURED_REDIRECT_IS_HANDLED
-     */
-    protected const SECURED_REDIRECT_IS_HANDLED = 'SECURED_REDIRECT_IS_HANDLED';
-
-    /**
      * @var \Silex\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
@@ -330,10 +325,6 @@ abstract class AbstractController
      */
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
-        if ($this->getApplication()->has(static::SECURED_REDIRECT_IS_HANDLED)) {
-            return $this->getApplication()->get(static::SECURED_REDIRECT_IS_HANDLED);
-        }
-
         $whitelistedDomains = Config::get(KernelConstants::DOMAIN_WHITELIST, []);
         $isStrictDomainRedirect = Config::get(KernelConstants::STRICT_DOMAIN_REDIRECT, false);
 
