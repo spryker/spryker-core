@@ -20,13 +20,25 @@
 
     <transfer name="ProductAbstractStorage">
         <property name="merchantReference" type="string"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="ProductView">
         <property name="merchantReference" type="string"/>
+        <property name="selectedAttributes" type="array" singular="selectedAttribute"/>
+        <property name="idProductAbstract" type="int"/>
     </transfer>
 
     <transfer name="MerchantProductCriteria">
         <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductOfferStorageCriteria">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
     </transfer>
 </transfers>
