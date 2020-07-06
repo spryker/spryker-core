@@ -19,8 +19,10 @@ class ProductViewMerchantProductExpanderPlugin extends AbstractPlugin implements
     protected const SELECTED_ATTRIBUTE_MERCHANT_REFERENCE = 'merchant_reference';
 
     /**
+     * @phpstan-param array<mixed> $productData
+     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param array<mixed> $productData
+     * @param array $productData
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
