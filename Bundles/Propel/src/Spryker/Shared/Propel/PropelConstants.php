@@ -147,7 +147,7 @@ interface PropelConstants
      *     'port' => '5432'
      * ];
      *
-     * - If slave-database connections are not set the Propel uses singular master database that is responsible for all ready and write queries.
+     * - If slave-database connections are not set the Propel uses singular master database that is responsible for all read and write queries.
      *
      * Example:
      *
