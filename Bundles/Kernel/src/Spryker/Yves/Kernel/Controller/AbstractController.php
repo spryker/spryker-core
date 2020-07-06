@@ -308,11 +308,8 @@ abstract class AbstractController
      */
     protected function isUrlDomainWhitelisted(string $absoluteUrl): bool
     {
-        if (
-            $this->getApplication()->has(static::SECURED_REDIRECT_IS_HANDLED) &&
-            $this->getApplication()->get(static::SECURED_REDIRECT_IS_HANDLED)
-        ) {
-            return true;
+        if ($this->getApplication()->has(static::SECURED_REDIRECT_IS_HANDLED)) {
+            return $this->getApplication()->get(static::SECURED_REDIRECT_IS_HANDLED);
         }
 
         $whitelistedDomains = Config::getInstance()->get(KernelConstants::DOMAIN_WHITELIST, []);
