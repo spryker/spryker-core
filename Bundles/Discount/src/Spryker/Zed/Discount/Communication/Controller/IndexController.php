@@ -252,7 +252,7 @@ class IndexController extends AbstractController
         $idDiscount = $this->castId($request->query->get(self::URL_PARAM_ID_DISCOUNT));
 
         $form = $this->getFactory()->createDiscountVisibilityForm()->handleRequest($request);
-        $redirectUrl = $request->query->get(self::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
         if (!$redirectUrl) {
             $redirectUrl = $this->createEditRedirectUrl($idDiscount);
         }
@@ -263,7 +263,7 @@ class IndexController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $visibility = $request->query->get(self::URL_PARAM_VISIBILITY);
+        $visibility = $request->get(static::URL_PARAM_VISIBILITY);
 
         $isActive = mb_convert_case($visibility, MB_CASE_LOWER, 'UTF-8') == 'activate' ? true : false;
 

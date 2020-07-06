@@ -51,7 +51,7 @@ class DeleteController extends ProductListAbstractController
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->addErrorMessage('CSRF token is not valid');
 
-            $this->redirectResponse($redirectUrl);
+            return $this->redirectResponse($redirectUrl);
         }
 
         $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
