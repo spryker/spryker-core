@@ -14,6 +14,4 @@ class ProductOfferConfig extends AbstractSharedConfig
     public const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
     public const STATUS_APPROVED = 'approved';
     public const STATUS_DECLINED = 'declined';
-
-    public const STATUS_DEFAULT = self::STATUS_APPROVED;
 }

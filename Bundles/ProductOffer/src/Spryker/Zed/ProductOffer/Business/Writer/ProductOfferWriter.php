@@ -12,11 +12,11 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferErrorTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Shared\ProductOffer\ProductOfferConfig;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
+use Spryker\Zed\ProductOffer\ProductOfferConfig;
 
 class ProductOfferWriter implements ProductOfferWriterInterface
 {
@@ -40,6 +40,11 @@ class ProductOfferWriter implements ProductOfferWriterInterface
     protected $productOfferReferenceGenerator;
 
     /**
+     * @var \Spryker\Zed\ProductOffer\ProductOfferConfig
+     */
+    protected $productOfferConfig;
+
+    /**
      * @var array|\Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[]
      */
     protected $productOfferPostCreatePlugins;
@@ -53,6 +58,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface $productOfferRepository
      * @param \Spryker\Zed\ProductOffer\Persistence\ProductOfferEntityManagerInterface $productOfferEntityManager
      * @param \Spryker\Zed\ProductOffer\Business\Generator\ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator
+     * @param \Spryker\Zed\ProductOffer\ProductOfferConfig $productOfferConfig
      * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostCreatePluginInterface[] $productOfferPostCreatePlugins
      * @param \Spryker\Zed\ProductOfferExtension\Dependency\Plugin\ProductOfferPostUpdatePluginInterface[] $productOfferPostUpdatePlugins
      */
@@ -60,12 +66,14 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         ProductOfferRepositoryInterface $productOfferRepository,
         ProductOfferEntityManagerInterface $productOfferEntityManager,
         ProductOfferReferenceGeneratorInterface $productOfferReferenceGenerator,
+        ProductOfferConfig $productOfferConfig,
         array $productOfferPostCreatePlugins = [],
         array $productOfferPostUpdatePlugins = []
     ) {
         $this->productOfferRepository = $productOfferRepository;
         $this->productOfferEntityManager = $productOfferEntityManager;
         $this->productOfferReferenceGenerator = $productOfferReferenceGenerator;
+        $this->productOfferConfig = $productOfferConfig;
         $this->productOfferPostCreatePlugins = $productOfferPostCreatePlugins;
         $this->productOfferPostUpdatePlugins = $productOfferPostUpdatePlugins;
     }
@@ -209,7 +217,7 @@ class ProductOfferWriter implements ProductOfferWriterInterface
         }
 
         if ($productOfferTransfer->getApprovalStatus() === null) {
-            $productOfferTransfer->setApprovalStatus(ProductOfferConfig::STATUS_DEFAULT);
+            $productOfferTransfer->setApprovalStatus($this->productOfferConfig->getDefaultApprovalStatus());
         }
 
         return $productOfferTransfer;

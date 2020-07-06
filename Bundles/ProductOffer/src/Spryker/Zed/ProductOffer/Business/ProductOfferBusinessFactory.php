@@ -38,6 +38,7 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->createProductOfferReferenceGenerator(),
+            $this->getConfig(),
             $this->getProductOfferPostCreatePlugins(),
             $this->getProductOfferPostUpdatePlugins()
         );
