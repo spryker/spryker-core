@@ -25,7 +25,7 @@ class ProductPackagingUnitToOmsFacadeBridge implements ProductPackagingUnitToOms
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToOmsFacadeBridge::updateReservation()` instead.
+     * @deprecated Use {@link updateReservation()} instead.
      *
      * @param string $sku
      *

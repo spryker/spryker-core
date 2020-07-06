@@ -47,7 +47,7 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductAbstractGroupPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_PUBLISH, new ProductAbstractGroupPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_PUBLISH, new ProductAbstractGroupPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -57,7 +57,7 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductAbstractGroupUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_UNPUBLISH, new ProductAbstractGroupPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductGroupEvents::PRODUCT_GROUP_UNPUBLISH, new ProductAbstractGroupPublishStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -67,7 +67,7 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductAbstractGroupCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE, new ProductAbstractGroupStorageListener());
+        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_CREATE, new ProductAbstractGroupStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -77,7 +77,7 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductAbstractGroupUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE, new ProductAbstractGroupStorageListener());
+        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_UPDATE, new ProductAbstractGroupStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -87,6 +87,6 @@ class ProductGroupStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductAbstractGroupDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE, new ProductAbstractGroupStorageListener());
+        $eventCollection->addListenerQueued(ProductGroupEvents::ENTITY_SPY_PRODUCT_ABSTRACT_GROUP_DELETE, new ProductAbstractGroupStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

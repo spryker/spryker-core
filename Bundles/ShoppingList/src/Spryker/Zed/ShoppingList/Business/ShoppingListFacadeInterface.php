@@ -126,7 +126,7 @@ interface ShoppingListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ShoppingListFacadeInterface::addShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -238,7 +238,7 @@ interface ShoppingListFacadeInterface
      *
      * @api
      *
-     * @deprecated Use ShoppingListFacadeInterface::updateShoppingListItemById instead. Will be removed with next major release.
+     * @deprecated Use {@link updateShoppingListItemById()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

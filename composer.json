@@ -597,6 +597,8 @@
     "spryker/sales-configurable-bundle": "*",
     "spryker/sales-data-export": "*",
     "spryker/sales-extension": "*",
+    "spryker/sales-invoice": "*",
+    "spryker/sales-invoice-extension": "*",
     "spryker/sales-merchant-portal-gui": "*",
     "spryker/sales-oms": "*",
     "spryker/sales-order-threshold": "*",

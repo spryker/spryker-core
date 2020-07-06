@@ -80,7 +80,7 @@ class Reservation implements ReservationInterface
     }
 
     /**
-     * @deprecated @deprecated Use `\Spryker\Zed\Oms\Business\Util\Reservation::updateReservation()` instead.
+     * @deprecated Use {@link updateReservation()} instead.
      *
      * @param string $sku
      *

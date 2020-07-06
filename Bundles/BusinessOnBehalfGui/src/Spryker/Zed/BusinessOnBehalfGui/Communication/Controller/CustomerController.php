@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CustomerController extends AbstractController
 {
-    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been attached to business unit.';
+    protected const MESSAGE_SUCCESS_COMPANY_USER_CREATE = 'Customer has been assigned to business unit.';
     protected const MESSAGE_ERROR_COMPANY_USER_CREATE = 'Customer has not been attached to business unit.';
     protected const MESSAGE_COMPANY_NOT_FOUND = 'Company not found.';
     protected const MESSAGE_CUSTOMER_NOT_FOUND = 'Customer not found.';

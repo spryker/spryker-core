@@ -33,36 +33,36 @@ class MerchantProductOfferStorageEventSubscriber extends AbstractPlugin implemen
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new ProductConcreteOffersStorageMerchantPublishListener());
-        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new ProductConcreteOffersStorageMerchantPublishListener());
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new ProductConcreteOffersStorageMerchantPublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new ProductConcreteOffersStorageMerchantPublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH, new ProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE, new ProductOfferStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE, new ProductOfferStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE, new ProductOfferStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductOfferStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductOfferStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductOfferStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductOfferStorageUnpublishListener());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductOfferStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE, new ProductConcreteOffersStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_PUBLISH, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_CREATE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_UPDATE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_PUBLISH, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_CREATE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_UPDATE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductConcreteOffersStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductConcreteOffersStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductConcreteOffersStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductConcreteOffersStorageUnpublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductConcreteOffersStoragePublishListener());
-        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductConcreteOffersStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductConcreteOffersStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductConcreteOffersStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::MERCHANT_PRODUCT_OFFER_UNPUBLISH, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferEvents::ENTITY_SPY_PRODUCT_OFFER_DELETE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductConcreteOffersStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductConcreteOffersStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::MERCHANT_PRODUCT_OFFER_STORE_KEY_UNPUBLISH, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
+        $eventCollection->addListenerQueued(MerchantProductOfferStoreEvents::ENTITY_SPY_PRODUCT_OFFER_STORE_DELETE, new ProductConcreteOffersStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $eventCollection;
     }

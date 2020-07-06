@@ -298,7 +298,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
