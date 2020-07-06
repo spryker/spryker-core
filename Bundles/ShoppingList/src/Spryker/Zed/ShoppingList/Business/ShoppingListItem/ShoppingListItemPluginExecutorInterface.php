@@ -62,7 +62,7 @@ interface ShoppingListItemPluginExecutorInterface
     ): ShoppingListPreAddItemCheckResponseTransfer;
 
     /**
-     * @deprecated Use ShoppingListItemPluginExecutorInterface::executeAddShoppingListItemPreCheckPlugins instead. Will be removed with next major release.
+     * @deprecated Use {@link executeAddShoppingListItemPreCheckPlugins() instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

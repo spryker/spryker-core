@@ -93,7 +93,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `AvailabilityBusinessFactory::createProductAvailabilityReader()` instead.
+     * @deprecated Use {@link createProductAvailabilityReader()} instead.
      *
      * @return \Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface
      */

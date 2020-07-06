@@ -71,7 +71,7 @@ interface ShoppingListStubInterface
     ): ShoppingListItemResponseTransfer;
 
     /**
-     * @deprecated Use ShoppingListStubInterface::addShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

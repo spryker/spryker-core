@@ -44,7 +44,7 @@ class ContentStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addContentUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_UPDATE, new ContentStorageListener());
+        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_UPDATE, new ContentStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -54,7 +54,7 @@ class ContentStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addContentCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_CREATE, new ContentStorageListener());
+        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_CREATE, new ContentStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -64,7 +64,7 @@ class ContentStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addContentPublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ContentEvents::CONTENT_PUBLISH, new ContentStorageListener());
+        $eventCollection->addListenerQueued(ContentEvents::CONTENT_PUBLISH, new ContentStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -74,6 +74,6 @@ class ContentStorageEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     protected function addContentUnpublishListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_UNPUBLISH, new ContentStorageListener());
+        $eventCollection->addListenerQueued(ContentEvents::ENTITY_SPY_CONTENT_UNPUBLISH, new ContentStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

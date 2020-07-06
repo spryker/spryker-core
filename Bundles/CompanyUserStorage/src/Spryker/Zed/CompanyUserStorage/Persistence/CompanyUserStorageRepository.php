@@ -36,7 +36,7 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
-     * @deprecated Use `CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndCompanyUserIds()} instead.
      *
      * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
      *

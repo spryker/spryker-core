@@ -59,6 +59,26 @@ class ProductPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductPageEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcretePageEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
      * Specification:
      * - Controls if the "add_to_cart_sku" property is populated for product abstract search entity.
      *

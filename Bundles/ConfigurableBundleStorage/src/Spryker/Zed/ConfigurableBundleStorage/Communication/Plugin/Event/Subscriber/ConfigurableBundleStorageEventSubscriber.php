@@ -50,7 +50,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplatePublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_PUBLISH, new ConfigurableBundleTemplateStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -63,7 +63,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -76,7 +76,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -89,7 +89,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateStorageUnpublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateStorageUnpublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -102,7 +102,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateSlotCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE, new ConfigurableBundleTemplateSlotStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_CREATE, new ConfigurableBundleTemplateSlotStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -115,7 +115,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateSlotUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UPDATE, new ConfigurableBundleTemplateSlotStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_UPDATE, new ConfigurableBundleTemplateSlotStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
@@ -128,7 +128,7 @@ class ConfigurableBundleStorageEventSubscriber extends AbstractPlugin implements
     protected function addConfigurableBundleTemplateSlotDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_DELETE, new ConfigurableBundleTemplateSlotStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_SLOT_DELETE, new ConfigurableBundleTemplateSlotStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateEventQueueName());
 
         return $this;
     }
