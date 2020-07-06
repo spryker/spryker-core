@@ -9,13 +9,15 @@ namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Publisher\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\MerchantProductTransfer;
 use Orm\Zed\MerchantProduct\Persistence\Map\SpyMerchantProductAbstractTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\Kernel\Container as ZedContainer;
 use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductDeletePublisherPlugin;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
+use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
 /**
  * Auto-generated group annotations
@@ -60,6 +62,12 @@ class MerchantProductDeletePublisherPluginTest extends Unit
             ];
         });
 
+        $this->tester->setDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER, function (ZedContainer $container) {
+            return [
+                new MerchantProductAbstractStorageExpanderPlugin(),
+            ];
+        });
+
         $this->merchantProductDeletePublisherPlugin = new MerchantProductWritePublisherPlugin();
         $this->merchantProductWritePublisherPlugin = new MerchantProductDeletePublisherPlugin();
     }
@@ -67,41 +75,25 @@ class MerchantProductDeletePublisherPluginTest extends Unit
     /**
      * @return void
      */
-    public function testMerchantProductStorageUnpublishListener(): void
+    public function testMerchantProductDeletePublisherPlugin(): void
     {
         //Arrange
-        $merchant = $this->tester->haveMerchant();
-        $productAbstract = $this->tester->haveProductAbstract();
-
-        $merchantProductData = [
-            MerchantProductTransfer::ID_MERCHANT => $merchant->getIdMerchant(),
-            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstract->getIdProductAbstract(),
-        ];
-        $merchantProductTransfer = $this->tester->haveMerchantProduct($merchantProductData);
-
-        $expectedCount = 0;
-        $publishEventTransfers = [
-            (new EventEntityTransfer())->setId($merchantProductTransfer->getIdProductAbstract()),
-        ];
+        $productAbstract = $this->tester->haveFullProduct();
 
         $unpublishEventTransfers = [
             (new EventEntityTransfer())->setAdditionalValues([
-                SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $merchantProductTransfer->getIdProductAbstract(),
+                SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT => $productAbstract->getFkProductAbstract(),
             ]),
         ];
 
         //Act
-        $this->merchantProductDeletePublisherPlugin->handleBulk(
-            $publishEventTransfers,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
-        );
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $unpublishEventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_UNPUBLISH
         );
-        $count = $this->tester->countMerchantProductAbstract($merchantProductTransfer->getIdProductAbstract());
+        $productAbstractStorage = $this->tester->getAbstractProductStorageByIdProductAbstract($productAbstract->getFkProductAbstract());
 
         //Assert
-        $this->assertSame($expectedCount, $count);
+        $this->assertNull($productAbstractStorage->getData()['merchant_reference']);
     }
 }
