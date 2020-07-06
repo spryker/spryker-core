@@ -35,7 +35,7 @@ class BusinessHelper extends Module
     protected const ORDER_ITEM_TAX_RATE = 19;
 
     /**
-     * @deprecated Use `BusinessHelper::haveSalesOrderEntity` instead.
+     * @deprecated Use {@link haveSalesOrderEntity()} instead.
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */

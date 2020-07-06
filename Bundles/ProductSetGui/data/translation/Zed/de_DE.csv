@@ -42,3 +42,13 @@ URL,URL
 View,Ansicht
 Weight,Gewicht
 "Weight defines sorting order. Product Sets with higher numbers listed first.","Das Gewicht bestimmt die Anordnung. Produktsets mit höheren Nummern werden zuerst gelistet."
+"Product Set Key",Produktset-Schlüssel
+"You need to select a minimum of 2 products.","Sie müssen mindestens 2 Produkte auswählen."
+Images,Bilder
+"View Product Set","Produktset ansehen"
+"Product Set ""%s"" created successfully.","Produktset ""%s"" erfolgreich erstellt."
+"Product Set #%d activated successfully.","Produktset #%d erfolgreich aktiviert."
+"Product Set #%d deactivated successfully.","Produktset #%d erfolgreich deaktiviert."
+"Product Set ""%s"" updated successfully.","Produktset ""%s"" erfolgreich aktualisiert."
+"Product Set #%d deleted successfully.","Produktset #%d erfolgreich gelöscht."
+"Number of Products",Artikelanzahl

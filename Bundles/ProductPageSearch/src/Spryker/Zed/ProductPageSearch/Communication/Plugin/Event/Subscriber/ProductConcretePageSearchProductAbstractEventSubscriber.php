@@ -44,7 +44,7 @@ class ProductConcretePageSearchProductAbstractEventSubscriber extends AbstractPl
      */
     protected function addProductConcretePageProductAbstractCreateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductConcretePageSearchProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductConcretePageSearchProductAbstractListener(), 0, null, $this->getConfig()->getProductConcretePageEventQueueName());
     }
 
     /**
@@ -54,7 +54,7 @@ class ProductConcretePageSearchProductAbstractEventSubscriber extends AbstractPl
      */
     protected function addProductConcretePageProductAbstractUpdateListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductConcretePageSearchProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductConcretePageSearchProductAbstractListener(), 0, null, $this->getConfig()->getProductConcretePageEventQueueName());
     }
 
     /**
@@ -64,6 +64,6 @@ class ProductConcretePageSearchProductAbstractEventSubscriber extends AbstractPl
      */
     protected function addProductConcretePageProductAbstractDeleteListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductConcretePageSearchProductAbstractListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductConcretePageSearchProductAbstractListener(), 0, null, $this->getConfig()->getProductConcretePageEventQueueName());
     }
 }

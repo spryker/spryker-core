@@ -13,11 +13,12 @@ No,Nein
 Status,Status
 "Stock not found","Bestand nicht gefunden"
 "Store relation","Beziehung speichern"
+"Store Relation",Store-Beziehung
 "This name is already in use.","Dieser Name wird schon benutzt."
 View,Ansicht
 "View Warehouse: ","Lager anzeigen: "
 "Warehouse has been successfully saved","Lager wurde erfolgreich gespeichert"
 "Warehouse has been successfully updated","Lager wurde erfolgreich aktualisiert"
-"Warehouse ID","Warenhaus ID"
+"Warehouse ID","Lager ID"
 Warehouses,Warenhäuser
 Yes,Ja

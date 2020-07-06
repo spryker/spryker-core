@@ -20,7 +20,7 @@ class SetupHelper extends Module
     public const SPRYKER_DEPLOY = 'vendor/bin/install -r testing -q';
 
     /**
-     * @deprecated Please use the spryker/deploy module.
+     * @deprecated Use the spryker/deploy module.
      */
     public const TEST_ENV_SCRIPT = './setup_test';
 

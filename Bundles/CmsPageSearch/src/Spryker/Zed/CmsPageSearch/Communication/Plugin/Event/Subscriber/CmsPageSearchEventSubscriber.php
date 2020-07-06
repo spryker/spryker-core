@@ -57,7 +57,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPagePublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_PUBLISH, new CmsPageSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -67,7 +67,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageUnpublishSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::CMS_VERSION_UNPUBLISH, new CmsPageSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -77,7 +77,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_CREATE, new CmsPageSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -87,7 +87,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_UPDATE, new CmsPageSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -97,7 +97,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_PAGE_DELETE, new CmsPageSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -107,7 +107,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageVersionCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_VERSION_CREATE, new CmsPageVersionSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_VERSION_CREATE, new CmsPageVersionSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -117,7 +117,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageUrlCreateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlSearchListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new CmsPageUrlSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -127,7 +127,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageUrlUpdateSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlSearchListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new CmsPageUrlSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -137,7 +137,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageUrlDeleteSearchListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlSearchListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new CmsPageUrlSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -147,7 +147,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageStoreCreateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_CREATE, new CmsPageStoreSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -157,7 +157,7 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageStoreUpdateStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_UPDATE, new CmsPageStoreSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -167,6 +167,6 @@ class CmsPageSearchEventSubscriber extends AbstractPlugin implements EventSubscr
      */
     protected function addCmsPageStoreDeleteStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreSearchListener());
+        $eventCollection->addListenerQueued(CmsEvents::ENTITY_SPY_CMS_STORE_DELETE, new CmsPageStoreSearchListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

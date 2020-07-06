@@ -10,8 +10,10 @@
 "Company Unit Addresses","Company Unit Addresses"
 "Create Company Unit Address","Create Company Unit Address"
 "Edit Company Unit Address:","Edit Business Unit Address:"
+"Edit Company Unit Address","Edit Business Unit Address"
 "List of Company Unit Addresses","List of business unit addresses"
 Number,number
 "Overview of Company Unit Addresses","Overview of Business Unit Addresses"
 Save,Save
 Street,Street
+Zipcode,Zipcode

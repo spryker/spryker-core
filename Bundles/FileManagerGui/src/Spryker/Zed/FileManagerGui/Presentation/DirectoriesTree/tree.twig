@@ -2,7 +2,7 @@
     <li id="file-directory-tree-node-0"
         class="jstree-open"
         data-jstree='{"type":"navigation"}'>
-        File Directories Tree
+        {{ 'File Directories Tree' | trans }}
         {% include '@FileManagerGui/DirectoriesTree/_partials/nodes.twig' with {
             nodes: fileDirectoryTree.nodes
         } %}
