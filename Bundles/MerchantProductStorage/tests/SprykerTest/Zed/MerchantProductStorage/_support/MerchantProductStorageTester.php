@@ -31,11 +31,11 @@ class MerchantProductStorageTester extends Actor
     use _generated\MerchantProductStorageTesterActions;
 
     /**
-     * @param $idAbstractProduct
+     * @param int $idAbstractProduct
      *
      * @return int
      */
-    public function countMerchantProductAbstract($idAbstractProduct)
+    public function countMerchantProductAbstract(int $idAbstractProduct)
     {
         return SpyMerchantProductAbstractStorageQuery::create()->filterByFkProductAbstract($idAbstractProduct)->find()->count();
     }
