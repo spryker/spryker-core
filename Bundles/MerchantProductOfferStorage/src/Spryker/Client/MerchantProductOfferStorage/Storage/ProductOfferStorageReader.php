@@ -228,7 +228,7 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     ): array {
         $filteredProductOfferStorageTransfers = [];
         foreach ($productOfferStorageTransfers as $productOfferStorageTransfer) {
-            if ($productOfferStorageTransfer->getMerchantReference() === $merchantReference) {
+            if ($productOfferStorageTransfer->getMerchantReference() !== $merchantReference) {
                 continue;
             }
 
