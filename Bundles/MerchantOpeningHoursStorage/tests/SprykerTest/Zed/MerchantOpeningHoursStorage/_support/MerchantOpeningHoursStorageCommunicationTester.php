@@ -112,7 +112,7 @@ class MerchantOpeningHoursStorageCommunicationTester extends Actor
             ->setDate($dateScheduleTransfer->getDate())
             ->setTimeFrom($dateScheduleTransfer->getTimeFrom())
             ->setTimeTo($dateScheduleTransfer->getTimeTo())
-            ->setNote($dateScheduleTransfer->getNote());
+            ->setNoteGlossaryKey($dateScheduleTransfer->getNoteGlossaryKey());
 
         $dateScheduleEntity->save();
 
