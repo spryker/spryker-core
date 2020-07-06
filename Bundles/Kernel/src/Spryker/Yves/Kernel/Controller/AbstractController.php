@@ -302,6 +302,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $absoluteUrl
      *
      * @return bool
