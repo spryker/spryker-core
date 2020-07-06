@@ -15,8 +15,6 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProduc
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapper;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOffer;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface;
 use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferReader;
 use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferReaderInterface;
 use Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGenerator;
@@ -38,18 +36,9 @@ class MerchantProductOfferStorageFactory extends AbstractFactory
             $this->getMerchantStorageClient(),
             $this->getUtilEncodingService(),
             $this->createProductOfferStorageKeyGenerator(),
-            $this->createProductConcreteDefaultProductOffer(),
             $this->getProductOfferStorageCollectionSorterPlugin(),
             $this->getProductOfferStorageExpanderPlugins()
         );
-    }
-
-    /**
-     * @return \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface
-     */
-    public function createProductConcreteDefaultProductOffer(): ProductConcreteDefaultProductOfferInterface
-    {
-        return new ProductConcreteDefaultProductOffer($this->createProductConcreteDefaultProductOfferReader());
     }
 
     /**

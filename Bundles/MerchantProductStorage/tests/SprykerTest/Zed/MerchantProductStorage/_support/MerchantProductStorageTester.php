@@ -8,7 +8,8 @@
 namespace SprykerTest\Zed\MerchantProductStorage;
 
 use Codeception\Actor;
-use Orm\Zed\MerchantProductStorage\Persistence\SpyMerchantProductAbstractStorageQuery;
+use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
+use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 
 /**
  * Inherited Methods
@@ -31,12 +32,14 @@ class MerchantProductStorageTester extends Actor
     use _generated\MerchantProductStorageTesterActions;
 
     /**
-     * @param int $idAbstractProduct
+     * @param int $idProductAbstract
      *
-     * @return int
+     * @return \Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage
      */
-    public function countMerchantProductAbstract(int $idAbstractProduct)
+    public function getAbstractProductStorageByIdProductAbstract(int $idProductAbstract): SpyProductAbstractStorage
     {
-        return SpyMerchantProductAbstractStorageQuery::create()->filterByFkProductAbstract($idAbstractProduct)->find()->count();
+        return SpyProductAbstractStorageQuery::create()
+            ->filterByFkProductAbstract($idProductAbstract)
+            ->findOne();
     }
 }

@@ -20,10 +20,12 @@
     <transfer name="PriceProductFilter">
         <property name="productOfferReference" type="string"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="idProduct" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
         <property name="priceDimension" type="PriceProductDimension"/>
+        <property name="price" type="int"/>
     </transfer>
 
     <transfer name="ProductView">
