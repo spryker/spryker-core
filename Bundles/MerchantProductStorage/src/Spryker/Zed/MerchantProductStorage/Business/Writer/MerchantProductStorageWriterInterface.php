@@ -15,4 +15,11 @@ interface MerchantProductStorageWriterInterface
      * @return void
      */
     public function writeCollectionByIdMerchantProductAbstractEvents(array $eventTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByIdMerchantEvents(array $eventTransfers): void;
 }

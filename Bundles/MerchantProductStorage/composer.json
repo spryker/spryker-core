@@ -24,7 +24,8 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "Required for using the Listeners"
+    "spryker/event": "Required for using the Listeners",
+    "spryker/merchant": "If you want to use MerchantUpdatePublisherPlugin"
   },
   "autoload": {
     "psr-4": {

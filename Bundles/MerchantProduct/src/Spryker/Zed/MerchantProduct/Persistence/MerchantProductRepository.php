@@ -83,6 +83,10 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
             $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In($merchantProductCriteriaTransfer->getMerchantProductAbstractIds());
         }
 
+        if ($merchantProductCriteriaTransfer->getMerchantIds()) {
+            $merchantProductAbstractQuery->filterByFkMerchant_In($merchantProductCriteriaTransfer->getMerchantIds());
+        }
+
         return $merchantProductAbstractQuery;
     }
 }

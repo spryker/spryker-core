@@ -43,4 +43,18 @@ class MerchantProductStorageFacade extends AbstractFacade implements MerchantPro
     {
         $this->getFactory()->createMerchantProductStorageDeleter()->deleteCollectionByIdProductAbstractEvents($eventTransfers);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByIdMerchantEvents(array $eventTransfers): void
+    {
+        $this->getFactory()->createMerchantProductStorageWriter()->writeCollectionByIdMerchantEvents($eventTransfers);
+    }
 }

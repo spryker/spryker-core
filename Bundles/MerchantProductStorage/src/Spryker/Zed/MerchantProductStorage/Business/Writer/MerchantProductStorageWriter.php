@@ -60,6 +60,35 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
         $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
             ->setMerchantProductAbstractIds($merchantProductAbstractIds);
 
+        $this->publishAbstractProductsByMerchantProductCriteria($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByIdMerchantEvents(array $eventTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        if (!$merchantIds) {
+            return;
+        }
+
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->setMerchantIds($merchantIds);
+
+        $this->publishAbstractProductsByMerchantProductCriteria($merchantProductCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return void
+     */
+    protected function publishAbstractProductsByMerchantProductCriteria(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): void
+    {
         $merchantProductTransfers = $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
 
         if (!$merchantProductTransfers) {
