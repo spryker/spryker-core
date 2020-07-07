@@ -35,6 +35,7 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantCollection">
@@ -47,6 +48,7 @@
     </transfer>
 
     <transfer name="MerchantCriteria">
+        <property name="merchantIds" type="array" singular="merchantId"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
