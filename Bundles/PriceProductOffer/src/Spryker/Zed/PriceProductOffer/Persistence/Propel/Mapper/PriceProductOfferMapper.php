@@ -34,13 +34,13 @@ class PriceProductOfferMapper
         SpyPriceProductOffer $priceProductOfferEntity
     ): SpyPriceProductOffer {
         $priceProductOfferEntity->setFkProductOffer($priceProductTransfer->getPriceDimension()->getIdProductOffer());
-        $priceProductOfferEntity->setFkPriceProductStore($priceProductTransfer->getMoneyValue()->getIdEntity());
+        $priceProductOfferEntity->setFkPriceProductStore((string)$priceProductTransfer->getMoneyValue()->getIdEntity());
 
         return $priceProductOfferEntity;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer[] $priceProductOfferEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection $priceProductOfferEntities
      * @param \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
@@ -77,7 +77,7 @@ class PriceProductOfferMapper
         $priceProductTransfer->setPriceDimension(
             (new PriceProductDimensionTransfer())
                 ->setIdProductOffer($priceProductOfferEntity->getFkProductOffer())
-                ->setIdPriceProductOffer($priceProductOfferEntity->getIdPriceProductOffer())
+                ->setIdPriceProductOffer((int)$priceProductOfferEntity->getIdPriceProductOffer())
         );
 
         return $priceProductTransfer;

@@ -19,6 +19,8 @@ use Spryker\Zed\ProductOfferValidity\Persistence\Propel\Mapper\ProductOfferValid
 class ProductOfferValidityPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
+     * @phpstan-return \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery<mixed>
+     *
      * @return \Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery
      */
     public function createProductOfferValidityPropelQuery(): SpyProductOfferValidityQuery

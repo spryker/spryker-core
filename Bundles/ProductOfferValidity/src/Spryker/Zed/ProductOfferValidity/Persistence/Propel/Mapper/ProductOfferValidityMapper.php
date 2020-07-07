@@ -15,6 +15,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductOfferValidityMapper
 {
     /**
+     * @phpstan-param \Propel\Runtime\Collection\ObjectCollection<mixed> $productOfferValidityEntities
+     *
      * @param \Propel\Runtime\Collection\ObjectCollection $productOfferValidityEntities
      * @param \Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer $productOfferValidityCollectionTransfer
      *
