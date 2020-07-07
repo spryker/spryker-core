@@ -8,11 +8,8 @@
 
     <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
 
-    <web-mp-product-offer
-        cloak
-        title="{{ 'Create Offer' | trans }}"
-        table-config='{{ guiTableConfiguration(productTableConfiguration) }}'
-    >
+    <web-mp-product-offer cloak table-config="{{ guiTableConfiguration(productTableConfiguration) }}">
+        <span title>{{ 'Create Offer' | trans }}</span>
     </web-mp-product-offer>
 
 {% endblock %}
