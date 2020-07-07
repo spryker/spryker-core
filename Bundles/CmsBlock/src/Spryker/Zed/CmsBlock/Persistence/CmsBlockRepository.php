@@ -58,4 +58,55 @@ class CmsBlockRepository extends AbstractRepository implements CmsBlockRepositor
             ->filterByKey($key)
             ->exists();
     }
+
+    /**
+     * @module Glossary
+     * @module Locale
+     * @module Store
+     *
+     * @param string $cmsBlockName
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
+     */
+    public function findCmsBlockWithGlossary(
+        string $cmsBlockName,
+        string $storeName,
+        string $localeName
+    ): ?CmsBlockTransfer {
+        $cmsBlockStorageQuery = $this->getFactory()->createCmsBlockQuery()
+            ->filterByName($cmsBlockName)
+            ->joinWithCmsBlockTemplate()
+            ->joinWithSpyCmsBlockGlossaryKeyMapping()
+            ->useSpyCmsBlockGlossaryKeyMappingQuery()
+                ->joinWithGlossaryKey()
+                ->useGlossaryKeyQuery()
+                    ->joinWithSpyGlossaryTranslation()
+                    ->useSpyGlossaryTranslationQuery()
+                        ->useLocaleQuery()
+                            ->filterByLocaleName($localeName)
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->useSpyCmsBlockStoreQuery()
+                ->useSpyStoreQuery()
+                    ->filterByName($storeName)
+                ->endUse()
+            ->endUse();
+
+        $cmsBlockEntities = $cmsBlockStorageQuery->find();
+
+        if (!$cmsBlockEntities->count()) {
+            return null;
+        }
+
+        /** @var \Orm\Zed\CmsBlock\Persistence\SpyCmsBlock $cmsBlockEntity */
+        $cmsBlockEntity = $cmsBlockEntities->getFirst();
+
+        return $this->getFactory()
+            ->createCmsBlockMapper()
+            ->mapCmsBlockEntityWithRelatedEntitiesToCmsBlockTransfer($cmsBlockEntity);
+    }
 }
