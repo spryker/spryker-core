@@ -127,7 +127,7 @@
     <transfer name="MerchantOrderCounts">
         <property name="new" type="int"/>
         <property name="total" type="int"/>
-        <property name="totalPerStore" type="int[]" associative="true"/>
+        <property name="totalPerStore" type="int[]" associative="true" singular="totalPerStore"/>
     </transfer>
 
     <transfer name="DashboardCard">
