@@ -74,4 +74,8 @@
     <transfer name="ProductAvailabilityCriteria">
     </transfer>
 
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

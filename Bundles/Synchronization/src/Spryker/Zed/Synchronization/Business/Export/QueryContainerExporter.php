@@ -118,6 +118,10 @@ class QueryContainerExporter implements ExporterInterface
                 ->setParams($plugin->getParams());
 
             $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
+
+            if (method_exists($synchronizationEntity, 'syncPublishedMessageForMappings')) {
+                $synchronizationEntity->syncPublishedMessageForMappings();
+            }
         }
 
         $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);

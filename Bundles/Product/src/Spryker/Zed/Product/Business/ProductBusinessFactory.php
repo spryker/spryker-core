@@ -87,8 +87,14 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
 
         $productAbstractManager->setEventFacade($this->getEventFacade());
+        $productAbstractManager->attachBeforeCreateObserver($this->createProductAbstractBeforeCreateObserverPluginManager());
+        $productAbstractManager->attachAfterCreateObserver($this->createProductAbstractAfterCreateObserverPluginManager());
+        $productAbstractManager->attachBeforeUpdateObserver($this->createProductAbstractBeforeUpdateObserverPluginManager());
+        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateObserverPluginManager());
+        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateUrlObserver());
+        $productAbstractManager->attachReadObserver($this->createProductAbstractReadObserverPluginManager());
 
-        return $this->attachProductAbstractManagerObservers($productAbstractManager);
+        return $productAbstractManager;
     }
 
     /**
@@ -108,8 +114,13 @@ class ProductBusinessFactory extends AbstractBusinessFactory
         );
 
         $productConcreteManager->setEventFacade($this->getEventFacade());
+        $productConcreteManager->attachBeforeCreateObserver($this->createProductConcreteBeforeCreateObserverPluginManager());
+        $productConcreteManager->attachAfterCreateObserver($this->createProductConcreteAfterCreateObserverPluginManager());
+        $productConcreteManager->attachBeforeUpdateObserver($this->createProductConcreteBeforeUpdateObserverPluginManager());
+        $productConcreteManager->attachAfterUpdateObserver($this->createProductConcreteAfterUpdateObserverPluginManager());
+        $productConcreteManager->attachReadObserver($this->createProductConcreteReadObserverPluginManager());
 
-        return $this->attachProductConcreteManagerObservers($productConcreteManager);
+        return $productConcreteManager;
     }
 
     /**
@@ -448,23 +459,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductAbstractManager $productAbstractManager
-     *
-     * @return \Spryker\Zed\Product\Business\Product\ProductAbstractManager
-     */
-    protected function attachProductAbstractManagerObservers(ProductAbstractManager $productAbstractManager)
-    {
-        $productAbstractManager->attachBeforeCreateObserver($this->createProductAbstractBeforeCreateObserverPluginManager());
-        $productAbstractManager->attachAfterCreateObserver($this->createProductAbstractAfterCreateObserverPluginManager());
-        $productAbstractManager->attachBeforeUpdateObserver($this->createProductAbstractBeforeUpdateObserverPluginManager());
-        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateObserverPluginManager());
-        $productAbstractManager->attachAfterUpdateObserver($this->createProductAbstractAfterUpdateUrlObserver());
-        $productAbstractManager->attachReadObserver($this->createProductAbstractReadObserverPluginManager());
-
-        return $productAbstractManager;
-    }
-
-    /**
      * @return \Spryker\Zed\Product\Business\Product\Observer\ProductAbstractCreateObserverInterface
      */
     protected function createProductAbstractBeforeCreateObserverPluginManager()
@@ -510,22 +504,6 @@ class ProductBusinessFactory extends AbstractBusinessFactory
     protected function createProductAbstractReadObserverPluginManager()
     {
         return new ProductAbstractReadObserverPluginManager($this->getProductAbstractReadPlugins());
-    }
-
-    /**
-     * @param \Spryker\Zed\Product\Business\Product\ProductConcreteManager $productConcreteManager
-     *
-     * @return \Spryker\Zed\Product\Business\Product\ProductConcreteManager
-     */
-    protected function attachProductConcreteManagerObservers(ProductConcreteManager $productConcreteManager)
-    {
-        $productConcreteManager->attachBeforeCreateObserver($this->createProductConcreteBeforeCreateObserverPluginManager());
-        $productConcreteManager->attachAfterCreateObserver($this->createProductConcreteAfterCreateObserverPluginManager());
-        $productConcreteManager->attachBeforeUpdateObserver($this->createProductConcreteBeforeUpdateObserverPluginManager());
-        $productConcreteManager->attachAfterUpdateObserver($this->createProductConcreteAfterUpdateObserverPluginManager());
-        $productConcreteManager->attachReadObserver($this->createProductConcreteReadObserverPluginManager());
-
-        return $productConcreteManager;
     }
 
     /**

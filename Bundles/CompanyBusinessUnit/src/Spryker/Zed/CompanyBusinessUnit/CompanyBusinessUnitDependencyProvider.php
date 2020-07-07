@@ -41,9 +41,9 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyBusinessUnitPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_BUSINESS_UNIT_POST_SAVE, function (Container $container) {
             return $this->getCompanyBusinessUnitPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyBusinessUnitExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_BUSINESS_UNIT_EXPANDER, function (Container $container) {
             return $this->getCompanyBusinessUnitExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -69,9 +69,9 @@ class CompanyBusinessUnitDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyBusinessUnitPreDeletePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_BUSINESS_UNIT_PRE_DELETE, function (Container $container) {
             return $this->getCompanyBusinessUnitPreDeletePlugins();
-        };
+        });
 
         return $container;
     }

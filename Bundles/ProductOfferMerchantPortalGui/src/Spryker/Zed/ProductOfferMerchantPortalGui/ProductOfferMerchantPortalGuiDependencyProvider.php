@@ -10,20 +10,26 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToGuiTableFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeBridge;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMerchantPortalGuiToUtilEncodingServiceBridge;
 
+/**
+ * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
+ */
 class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
+    public const FACADE_STORE = 'FACADE_STORE';
+    public const FACADE_GUI_TABLE = 'FACADE_GUI_TABLE';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
@@ -32,6 +38,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
     public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
     public const PROPEL_QUERY_STORE = 'PROPEL_QUERY_STORE';
+    public const PROPEL_QUERY_PRODUCT_OFFER_STORE = 'PROPEL_PRODUCT_OFFER_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -40,11 +47,10 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container = $this->addLocaleFacade($container);
-        $container = $this->addUtilEncodingService($container);
-        $container = $this->addUtilDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addTranslatorFacade($container);
+        $container = $this->addStoreFacade($container);
+        $container = $this->addGuiTableFacade($container);
 
         return $container;
     }
@@ -60,23 +66,8 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addProductImagePropelQuery($container);
         $container = $this->addProductOfferPropelQuery($container);
         $container = $this->addStorePropelQuery($container);
+        $container = $this->addProductOfferStorePropelQuery($container);
         $container = $this->addUtilEncodingService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new ProductOfferMerchantPortalGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
-            );
-        });
 
         return $container;
     }
@@ -91,22 +82,6 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductOfferMerchantPortalGuiToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addUtilDateTimeService(Container $container): Container
-    {
-        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
-            return new ProductOfferMerchantPortalGuiToUtilDateTimeServiceBridge(
-                $container->getLocator()->utilDateTime()->service()
             );
         });
 
@@ -139,6 +114,38 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
             return new ProductOfferMerchantPortalGuiToTranslatorFacadeBridge(
                 $container->getLocator()->translator()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToStoreFacadeBridge(
+                $container->getLocator()->store()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_GUI_TABLE, function (Container $container) {
+            return new ProductOfferMerchantPortalGuiToGuiTableFacadeBridge(
+                $container->getLocator()->guiTable()->facade()
             );
         });
 
@@ -196,6 +203,20 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::PROPEL_QUERY_STORE, $container->factory(function () {
             return SpyStoreQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferStorePropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER_STORE, $container->factory(function () {
+            return SpyProductOfferStoreQuery::create();
         }));
 
         return $container;

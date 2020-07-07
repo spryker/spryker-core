@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'array<array-key, array<array-key, mixed>>' for Twig\\Extension\\ExtensionInterface::getOperators is more specific than the implemented return type for Spryker\\Zed\\Twig\\Communication\\Plugin\\AbstractTwigExtensionPlugin::getoperators 'array<array-key, mixed>'",
+            "file_name": "vendor/spryker/spryker/Bundles/Twig/src/Spryker/Zed/Twig/Communication/Plugin/AbstractTwigExtensionPlugin.php",
+            "snippet": "     * @return array An array of operators",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Zed/ZedUi/ZedUiDependencyProvider.php",
+            "snippet": "            return new ZedUiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ZedUi/src/Spryker/Zed/ZedUi/ZedUiDependencyProvider.php",
+            "snippet": "            return new ZedUiToTranslatorFacadeBridge($container->getLocator()->translator()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

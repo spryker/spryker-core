@@ -3,7 +3,7 @@ Activate,Aktivieren
 "Add a Cms page","CMS-Seite hinzufügen"
 "Add CMS Block","CMS-Block hinzufügen"
 "Add CMS Page","CMS-Seite hinzufügen"
-"Add CMS Redirect","CMS-Redirect hinzufügen"
+"Add CMS Redirect","CMS-Weiterleitung hinzufügen"
 "Back to CMS","Zurück zu CMS"
 "CMS blocks",CMS-Blöcke
 Deactivate,Deaktivieren
@@ -25,3 +25,6 @@ Save,Speichern
 "To Url","An URL"
 "URL is already used.","URL wird bereits verwendet."
 "URL must start with a slash","URL muss mit einem Schrägstrich beginnen"
+"Create new CMS Redirect","Neue CMS-Weiterleitung erstellen"
+"Please select","Bitte auswählen"
+"Edit CMS Redirect","CMS-Weiterleitung bearbeiten"

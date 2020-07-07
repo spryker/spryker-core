@@ -75,7 +75,7 @@ class DetailController extends AbstractController
 
         return [
             'return' => $returnTransfer,
-            'customer' => $this->getFactory()->createCustomerReader()->findCustomerFromReturn($returnTransfer),
+            'customer' => $this->getFactory()->createCustomerReader()->getCustomerFromReturn($returnTransfer),
             'uniqueOrderReferences' => $returnExtractor->extractUniqueOrderReferencesFromReturn($returnTransfer),
             'uniqueItemStateLabels' => $returnExtractor->extractUniqueItemStateLabelsFromReturn($returnTransfer),
             'orderItemManualEvents' => $orderItemManualEvents,

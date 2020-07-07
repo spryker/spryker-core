@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 
 interface SetupFrontendFacadeInterface
@@ -48,14 +49,16 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Yves frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildYvesFrontend(LoggerInterface $logger);
+    public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:
@@ -98,14 +101,16 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Zed frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildZedFrontend(LoggerInterface $logger);
+    public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null);
 
     /**
      * Specification:
@@ -134,12 +139,14 @@ interface SetupFrontendFacadeInterface
     /**
      * Specification:
      * - Runs Merchant Portal frontend builder.
+     * - For forward compatibility with next major version `SetupFrontendConfigurationTransfer` is used to configure build process.
      *
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildMerchantPortalFrontend(LoggerInterface $logger): bool;
+    public function buildMerchantPortalFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool;
 }

@@ -40,9 +40,9 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductQueryContainer(Container $container): void
     {
-        $container[static::PROPEL_QUERY_PRODUCT_SET] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_SET, $container->factory(function () {
             return SpyProductSetQuery::create();
-        };
+        }));
     }
 
     /**
@@ -52,8 +52,8 @@ class ContentProductSetGuiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addLocaleFacade(Container $container): void
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ContentProductSetGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 }

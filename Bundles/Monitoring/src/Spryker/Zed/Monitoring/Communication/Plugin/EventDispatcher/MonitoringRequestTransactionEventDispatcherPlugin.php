@@ -13,6 +13,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */

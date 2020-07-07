@@ -62,7 +62,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_PUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());
     }
 
     /**
@@ -72,7 +72,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_PRODUCT_ABSTRACT_UNPUBLISH, new ProductLabelPublishStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());
     }
 
     /**
@@ -82,7 +82,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_CREATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());
     }
 
     /**
@@ -92,7 +92,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_UPDATE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_PRODUCT_ABSTRACT_DELETE, new ProductLabelStorageListener(), 0, null, $this->getConfig()->getProductAbstractLabelEventQueueName());
     }
 
     /**
@@ -112,7 +112,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -122,7 +122,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -132,7 +132,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -142,7 +142,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_PUBLISH, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -152,7 +152,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::PRODUCT_LABEL_DICTIONARY_UNPUBLISH, new ProductLabelDictionaryStorageUnpublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -162,7 +162,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryLocalizedCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_CREATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -172,7 +172,7 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryLocalizedUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_UPDATE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 
     /**
@@ -182,6 +182,6 @@ class ProductLabelStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductLabelDictionaryLocalizedDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener());
+        $eventCollection->addListenerQueued(ProductLabelEvents::ENTITY_SPY_PRODUCT_LABEL_LOCALIZED_ATTRIBUTE_DELETE, new ProductLabelDictionaryStoragePublishListener(), 0, null, $this->getConfig()->getProductLabelDictionaryEventQueueName());
     }
 }

@@ -10,8 +10,6 @@ namespace Spryker\Client\SalesReturn;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\SalesReturn\Zed\SalesReturnStubInterface;
@@ -21,20 +19,6 @@ use Spryker\Client\SalesReturn\Zed\SalesReturnStubInterface;
  */
 class SalesReturnClient extends AbstractClient implements SalesReturnClientInterface
 {
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
-     */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
-    {
-        return $this->getZedStub()->getReturnReasons($returnReasonFilterTransfer);
-    }
-
     /**
      * {@inheritDoc}
      *

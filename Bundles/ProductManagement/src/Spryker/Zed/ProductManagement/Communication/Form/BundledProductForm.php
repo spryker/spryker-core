@@ -19,6 +19,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class BundledProductForm extends AbstractType
 {

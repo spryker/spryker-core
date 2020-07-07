@@ -12,6 +12,7 @@ Count,Anzahl
 "Declared in composer.json","Declared in composer.json"
 "Declared in composer.json (dev)","Declared in composer.json (dev)"
 Dependency,Abhängigkeit
+Dependencies,Abhängigkeiten
 "Dependency graphs of all core modules","Abhängigkeitsgraph aller Core Module"
 detailed,detailliert
 "Dev only dependencies","Dev only dependencies"
@@ -24,11 +25,11 @@ From,Von
 in,in
 "in src","in src"
 "in tests","in Tests"
-Incoming,Incoming
+Incoming,Eingehend
 "Incoming dependencies of the","Eingehende Abhängigkeiten der"
-"Indirect Incoming","Indirect Incoming"
-"Indirect Outgoing","Indirect Outgoing"
-"Indirect Stability","Indirect Stability"
+"Indirect Incoming","Indirekt Eingehend"
+"Indirect Outgoing","Indirect Ausgehend"
+"Indirect Stability","Indirekte Stabilität"
 "List all used plugins","Alle verwendeten Plug-ins auflisten"
 module,Modul
 Module,Modul
@@ -38,7 +39,7 @@ Namespace,Namespace
 "No architecture violations detected","Keine Architekturverstöße erkannt"
 "No plugins used in this Module","In diesem Modul werden keine Plug-ins verwendet"
 out,out
-Outgoing,Outgoing
+Outgoing,Ausgehend
 "Outgoing dependencies of the","Ausgehende Abhängigkeiten der"
 "Plugins used in Projects DependencyProvider","Im DependencyProvider des Projekts verwendete Plug-ins"
 Priority:,Priorität:
@@ -50,11 +51,11 @@ require-dev,require-dev
 "Simple Dependency Graph","Simple Dependency-Graph"
 "Spryker Stability","Spryker Stabilität"
 Stability,Stabilität
-"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)"
+"Stability is calculated by ""incoming dependencies / ( incoming dependencies + outgoing dependencies )"" the result will be between 0 (stable) and 1 (unstable)","Stabilität wird wie folgt berechnet: ""eingehende Abhängigkeiten + ausgehende Abhängigkeiten)"". Das Ergebnis liegt zwischen 0 (stabil) und 1 (instabil)."
 "Stability of all core modules","Stabilität aller Kernmodule"
 "Suggested dependencies","Empfohlene Abhängigkeiten"
 SUM,SUM
 To,An
-"Used Plugins","Verwendete Plug-ins"
+"Used Plugins","Verwendete Plugins"
 "You must specify a bundle for which the graph should be build","Sie müssen ein Bundle bestimmen, für das der Graph erstellt werden soll"
 "You need to run ""vendor/bin/console dev:dependency:build-tree"" to calculate stability for all bundles.","Sie müssen ""vendor/bin/console dev:dependency:build-tree"" ausführen, um die Stabilität aller Bundle zu berechnen."

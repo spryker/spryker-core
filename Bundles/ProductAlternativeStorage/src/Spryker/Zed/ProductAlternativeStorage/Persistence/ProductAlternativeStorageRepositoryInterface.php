@@ -99,7 +99,7 @@ interface ProductAlternativeStorageRepositoryInterface
     public function getReplacementsByConcreteProductId(int $idProductConcrete): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()} instead.
      *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
@@ -108,7 +108,7 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findAllProductAlternativeStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()} instead.
      *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
      *
@@ -119,7 +119,7 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findProductAlternativeStorageEntitiesByIds(array $productAlternativeStorageIds): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()} instead.
      *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *
@@ -128,7 +128,7 @@ interface ProductAlternativeStorageRepositoryInterface
     public function findAllProductReplacementForStorageEntities(): array;
 
     /**
-     * @deprecated Use `ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()} instead.
      *
      * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
      *

@@ -39,9 +39,9 @@ class PriceDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new PriceToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class PriceDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceModePostUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRICE_MODE_POST_UPDATE] = function (Container $container) {
+        $container->set(static::PLUGINS_PRICE_MODE_POST_UPDATE, function (Container $container) {
             return $this->getPriceModePostUpdatePlugins();
-        };
+        });
 
         return $container;
     }

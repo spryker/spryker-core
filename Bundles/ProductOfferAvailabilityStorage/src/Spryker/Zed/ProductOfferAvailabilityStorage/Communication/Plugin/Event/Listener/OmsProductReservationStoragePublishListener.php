@@ -31,6 +31,6 @@ class OmsProductReservationStoragePublishListener extends AbstractPlugin impleme
     public function handleBulk(array $eventTransfers, $eventName): void
     {
         $this->getFacade()
-            ->writeCollectionByOmsProductReservationIdEvents($eventTransfers);
+            ->writeCollectionByOmsProductOfferReservationIdEvents($eventTransfers);
     }
 }

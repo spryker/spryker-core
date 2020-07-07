@@ -68,6 +68,8 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\ViewFunctionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapper;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParser;
@@ -613,8 +615,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new Manager(
             $this->createModuleDependencyParser(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createDependencyModuleMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface
+     */
+    protected function createDependencyModuleMapper(): DependencyModuleMapperInterface
+    {
+        return new DependencyModuleMapper();
     }
 
     /**

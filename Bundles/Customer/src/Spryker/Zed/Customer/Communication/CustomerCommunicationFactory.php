@@ -131,7 +131,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Please use `getLocaleFacadePublic()` instead.
+     * @deprecated Use {@link getLocaleFacadePublic()} instead.
      *
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */

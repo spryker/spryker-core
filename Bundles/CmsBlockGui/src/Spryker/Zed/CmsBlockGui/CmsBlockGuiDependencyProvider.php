@@ -63,9 +63,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigEnvironment(Container $container)
     {
-        $container[static::TWIG_ENVIRONMENT] = function (Container $container) {
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
             return $this->getTwigEnvironment();
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_BLOCK] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_BLOCK, function (Container $container) {
             return new CmsBlockGuiToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockFacade(Container $container)
     {
-        $container[static::FACADE_CMS_BLOCK] = function (Container $container) {
+        $container->set(static::FACADE_CMS_BLOCK, function (Container $container) {
             return new CmsBlockGuiToCmsBlockBridge($container->getLocator()->cmsBlock()->facade());
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsBlockGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -119,9 +119,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockFormPlugins(Container $container)
     {
-        $container[static::PLUGINS_CMS_BLOCK_FORM] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_BLOCK_FORM, function (Container $container) {
             return $this->getCmsBlockFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -141,9 +141,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockViewPlugins(Container $container)
     {
-        $container[static::PLUGINS_CMS_BLOCK_VIEW] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_BLOCK_VIEW, function (Container $container) {
             return $this->getCmsBlockViewPlugins();
-        };
+        });
 
         return $container;
     }
@@ -173,9 +173,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
-        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return $this->getStoreRelationFormTypePlugin();
-        };
+        });
 
         return $container;
     }

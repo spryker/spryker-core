@@ -14,6 +14,7 @@ use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataBulkReposit
 use Spryker\Zed\Synchronization\Business\Iterator\SynchronizationDataRepositoryPluginIterator;
 use Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface;
 use Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface;
+use Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataRepositoryPluginInterface;
@@ -41,18 +42,26 @@ class RepositoryExporter implements ExporterInterface
     protected $chunkSize;
 
     /**
+     * @var \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface $queueClient
      * @param \Spryker\Zed\Synchronization\Business\Message\QueueMessageCreatorInterface $synchronizationQueueMessageCreator
+     * @param \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface $utilEncodingService
      * @param int $chunkSize
      */
     public function __construct(
         SynchronizationToQueueClientInterface $queueClient,
         QueueMessageCreatorInterface $synchronizationQueueMessageCreator,
+        SynchronizationToUtilEncodingServiceInterface $utilEncodingService,
         $chunkSize = 100
     ) {
         $this->queueClient = $queueClient;
         $this->queueMessageCreator = $synchronizationQueueMessageCreator;
         $this->chunkSize = $chunkSize;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -132,19 +141,21 @@ class RepositoryExporter implements ExporterInterface
      */
     protected function syncData(SynchronizationDataPluginInterface $plugin, array $synchronizationEntities): void
     {
-        $queueSendTransfers = [];
-        foreach ($synchronizationEntities as $synchronizedEntity) {
-            $store = $this->getStore($plugin->hasStore(), $synchronizedEntity);
-            $syncQueueMessage = (new SynchronizationQueueMessageTransfer())
-                ->setKey($synchronizedEntity->getKey())
-                ->setValue($synchronizedEntity->getData())
-                ->setResource($plugin->getResourceName())
-                ->setParams($plugin->getParams());
+        $queueSendMessageTransfers = [];
+        foreach ($synchronizationEntities as $synchronizationEntity) {
+            $store = $this->getStore($plugin->hasStore(), $synchronizationEntity);
+            $synchronizationQueueMessageTransfers = $this->createSynchronizationQueueMessageTransfers($plugin, $synchronizationEntity);
 
-            $queueSendTransfers[] = $this->queueMessageCreator->createQueueMessage($syncQueueMessage, $plugin, $store);
+            foreach ($synchronizationQueueMessageTransfers as $synchronizationQueueMessageTransfer) {
+                $queueSendMessageTransfers[] = $this->queueMessageCreator->createQueueMessage(
+                    $synchronizationQueueMessageTransfer,
+                    $plugin,
+                    $store
+                );
+            }
         }
 
-        $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendTransfers);
+        $this->queueClient->sendMessages($plugin->getQueueName(), $queueSendMessageTransfers);
     }
 
     /**
@@ -160,5 +171,65 @@ class RepositoryExporter implements ExporterInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer[]
+     */
+    protected function createSynchronizationQueueMessageTransfers(
+        SynchronizationDataPluginInterface $plugin,
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): array {
+        /** @var array $data */
+        $data = $synchronizationDataTransfer->getData();
+        $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer(
+            $plugin,
+            $synchronizationDataTransfer->getKey(),
+            $data
+        );
+
+        foreach ($this->getSynchronizationMappings($synchronizationDataTransfer) as $mappingKey => $mappingData) {
+            $synchronizationQueueMessageTransfers[] = $this->createSynchronizationQueueMessageTransfer($plugin, $mappingKey, $mappingData);
+        }
+
+        return $synchronizationQueueMessageTransfers;
+    }
+
+    /**
+     * @param \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface $plugin
+     * @param string $synchronizationKey
+     * @param array $data
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationQueueMessageTransfer
+     */
+    protected function createSynchronizationQueueMessageTransfer(
+        SynchronizationDataPluginInterface $plugin,
+        string $synchronizationKey,
+        array $data
+    ): SynchronizationQueueMessageTransfer {
+        return (new SynchronizationQueueMessageTransfer())
+            ->setKey($synchronizationKey)
+            ->setValue($data)
+            ->setResource($plugin->getResourceName())
+            ->setParams($plugin->getParams());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     *
+     * @return array
+     */
+    protected function getSynchronizationMappings(SynchronizationDataTransfer $synchronizationDataTransfer): array
+    {
+        $synchronizationMappings = [];
+
+        if ($synchronizationDataTransfer->getAliasKeys()) {
+            $synchronizationMappings = $this->utilEncodingService->decodeJson($synchronizationDataTransfer->getAliasKeys(), true);
+        }
+
+        return $synchronizationMappings;
     }
 }

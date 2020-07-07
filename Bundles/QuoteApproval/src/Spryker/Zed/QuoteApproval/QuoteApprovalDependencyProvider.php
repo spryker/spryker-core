@@ -52,9 +52,9 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new QuoteApprovalToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -66,11 +66,11 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new QuoteApprovalToCompanyUserFacadeBridge(
                 $container->getLocator()->companyUser()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -82,11 +82,11 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyRoleFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_ROLE, function (Container $container) {
             return new QuoteApprovalToCompanyRoleFacadeBridge(
                 $container->getLocator()->companyRole()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -98,11 +98,11 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSharedCartFacade(Container $container): Container
     {
-        $container[static::FACADE_SHARED_CART] = function (Container $container) {
+        $container->set(static::FACADE_SHARED_CART, function (Container $container) {
             return new QuoteApprovalToSharedCartFacadeBridge(
                 $container->getLocator()->sharedCart()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -114,11 +114,11 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new QuoteApprovalToCustomerFacadeBridge(
                 $container->getLocator()->customer()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -130,9 +130,9 @@ class QuoteApprovalDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteApprovalUnlockPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_APPROVAL_UNLOCK_PRE_CHECK, function (Container $container) {
             return $this->getQuoteApprovalUnlockPreCheckPlugins();
-        };
+        });
 
         return $container;
     }

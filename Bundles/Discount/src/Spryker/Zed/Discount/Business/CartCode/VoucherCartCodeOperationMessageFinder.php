@@ -15,7 +15,14 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
 
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**

@@ -77,3 +77,31 @@ Type,Type
 Variants,Variants
 "View Product Abstract","View Product Abstract"
 "View Product Concrete","View Product Concrete"
+Product,Product
+Products,Products
+Availability,Availability
+"New from","New from"
+"New to","New to"
+"At least one price should be specified","At least one price should be specified"
+"Please enter at least an SKU and a Name of the product in every locale in the General section","Please enter at least an SKU and a Name of the product in every locale in the General section"
+"The product [%s] was added successfully.","The product [%s] was added successfully."
+Images,Images
+"Add Product Volume Price","Add Product Volume Price"
+"Is bundle","Is bundle"
+"View Concrete Product","View Concrete Product"
+"Edit Concrete Product","Edit Concrete Product"
+"Super attributes","Super attributes"
+"Valid from","Valid from"
+"Valid to","Valid to"
+Searchable,Searchable
+Stock,Stock
+"Sort order","Sort order"
+"Assign bundled products","Assign bundled products"
+"Valid From (GMT)","Valid From (GMT)"
+"Valid To (GMT)","Valid To (GMT)"
+Remove,Remove
+quantity,Quantity
+Price,Price
+"id product","Product ID"
+select,select
+"Product name","Product name"

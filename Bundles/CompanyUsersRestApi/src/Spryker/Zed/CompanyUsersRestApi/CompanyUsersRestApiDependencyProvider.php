@@ -41,9 +41,9 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyUserPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_USER] = function () {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function () {
             return SpyCompanyUserQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -55,9 +55,9 @@ class CompanyUsersRestApiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addCompanyRolePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_ROLE] = function () {
+        $container->set(static::PROPEL_QUERY_COMPANY_ROLE, $container->factory(function () {
             return SpyCompanyRoleQuery::create();
-        };
+        }));
 
         return $container;
     }

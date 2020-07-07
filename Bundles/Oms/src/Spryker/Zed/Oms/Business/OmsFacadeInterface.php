@@ -8,9 +8,13 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -168,31 +172,37 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads all transitions without event.
-     *  - Reads from database items with those transitions
-     *  - Executes each transition
-     *  - Returns number of affected items
+     *  - Reads from database items with those transitions.
+     *  - Executes each transition.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = []);
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
-     *  - Reads all expired timeout events
-     *  - Execute events
-     *  - Returns number of affected items
+     *  - Reads all expired timeout events.
+     *  - Execute events.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = []);
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
@@ -602,11 +612,31 @@ interface OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link updateReservation()} instead.
+     *
      * @param string $sku
      *
      * @return void
      */
     public function updateReservationQuantity(string $sku): void;
+
+    /**
+     * Specification:
+     *  - Updates reservation quantity for different entities from a given ReservationRequest.
+     *  - Calculates total current reservation for given ReservationRequestTransfer by executing the OmsReservationAggregationPluginInterface plugin stack and adding their sum amount.
+     *  - Uses original reservation aggregation if no plugin returns an aggregation of reservations.
+     *  - Uses `OmsReservationWriterStrategyPluginInterface` stack to save reservation entity.
+     *  - Checks if reservation for ReservationRequest already exists, if so it updates it with new values, otherwise creates a new reservation entity.
+     *  - Does the same writing procedure for stores with shared persistence based on configuration.
+     *  - Runs a stack of ReservationPostSaveTerminationAwareStrategyPluginInterface plugins after saving reservation which terminates the execution of remaining plugins if one plugin returns isTerminated to be true.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void;
 
     /**
      * Specification:
@@ -659,4 +689,61 @@ interface OmsFacadeInterface
      * @return string[][]
      */
     public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Returns reserved quantity for provided ReservationRequest.
+     * - Runs a stack of `OmsReservationReaderStrategyPluginInterface` plugins to get reservation quantity.
+     * - Gets original reservation quantity if no one plugin is applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands order items with item state.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithItemState(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands orders with aggregated item states.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array;
+
+    /**
+     * Specification:
+     * - Checks for cancellable flag for each order item.
+     * - If all items are applicable for cancel, sets `Order::isCancellable=true`, false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function setOrderIsCancellableByItemState(array $orderTransfers): array;
 }

@@ -40,9 +40,9 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductCategoryFilterToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
+        });
     }
 
     /**
@@ -52,8 +52,8 @@ class ProductCategoryFilterDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductCategoryFilterToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
     }
 }

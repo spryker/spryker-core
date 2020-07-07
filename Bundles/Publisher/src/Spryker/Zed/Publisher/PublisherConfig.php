@@ -11,4 +11,13 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class PublisherConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPublishQueueName(): ?string
+    {
+        return null;
+    }
 }

@@ -26,13 +26,13 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::PLUGIN_PROPEL_CONNECTION] = function () {
+        $container->set(static::PLUGIN_PROPEL_CONNECTION, function () {
             return Propel::getConnection();
-        };
+        });
 
-        $container[static::SERVICE_DATA] = function (Container $container) {
+        $container->set(static::SERVICE_DATA, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
         return $container;
     }

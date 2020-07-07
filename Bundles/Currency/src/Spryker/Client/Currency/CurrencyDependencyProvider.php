@@ -51,9 +51,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new CurrencyToSessionBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -65,9 +65,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -79,13 +79,13 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addInternationalization(Container $container)
     {
-        $container[static::INTERNATIONALIZATION] = function () {
+        $container->set(static::INTERNATIONALIZATION, function () {
             $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
                 Intl::getCurrencyBundle()
             );
 
             return $currencyToInternationalizationBridge;
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CurrencyToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new CurrencyToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class CurrencyDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyPostChangePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CURRENCY_POST_CHANGE] = function () {
+        $container->set(static::PLUGINS_CURRENCY_POST_CHANGE, function () {
             return $this->getCurrencyPostChangePlugins();
-        };
+        });
 
         return $container;
     }

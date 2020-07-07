@@ -34,9 +34,9 @@ class ProductCategoryFilterDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductCategoryFilterToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }

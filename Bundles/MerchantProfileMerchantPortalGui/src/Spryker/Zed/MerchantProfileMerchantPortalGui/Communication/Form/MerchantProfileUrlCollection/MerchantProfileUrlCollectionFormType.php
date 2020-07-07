@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\MerchantProfileUrlCollection;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -50,8 +49,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUrlField($builder)
-            ->addFkLocaleField($builder);
+        $this->addUrlField($builder);
     }
 
     /**
@@ -81,18 +79,6 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
                 ]),
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addFkLocaleField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }

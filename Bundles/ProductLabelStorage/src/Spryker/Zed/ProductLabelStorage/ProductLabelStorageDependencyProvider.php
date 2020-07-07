@@ -110,9 +110,9 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductLabelPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_LABEL, function (): SpyProductLabelQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LABEL, $container->factory(function (): SpyProductLabelQuery {
             return SpyProductLabelQuery::create();
-        });
+        }));
 
         return $container;
     }

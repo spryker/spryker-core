@@ -62,9 +62,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentFormFilterPlugins(Container $container)
     {
-        $container[static::PLUGIN_PAYMENT_FILTERS] = function () {
+        $container->set(static::PLUGIN_PAYMENT_FILTERS, function () {
             return $this->getPaymentFormFilterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentMethodHandler(Container $container)
     {
-        $container[static::PAYMENT_METHOD_HANDLER] = function () {
+        $container->set(static::PAYMENT_METHOD_HANDLER, function () {
             return new StepHandlerPluginCollection();
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentSubForms(Container $container)
     {
-        $container[static::PAYMENT_SUB_FORMS] = function () {
+        $container->set(static::PAYMENT_SUB_FORMS, function () {
             return new SubFormPluginCollection();
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideClients(Container $container)
     {
-        $container[static::CLIENT_QUOTE] = function () use ($container) {
+        $container->set(static::CLIENT_QUOTE, function () use ($container) {
             return new CheckoutToQuoteBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }

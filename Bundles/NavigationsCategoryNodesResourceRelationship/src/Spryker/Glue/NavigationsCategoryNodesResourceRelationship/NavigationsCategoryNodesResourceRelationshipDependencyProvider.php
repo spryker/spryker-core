@@ -38,11 +38,11 @@ class NavigationsCategoryNodesResourceRelationshipDependencyProvider extends Abs
      */
     protected function addCategoriesRestApiResource(Container $container): Container
     {
-        $container[static::RESOURCE_CATEGORIES_REST_API] = function (Container $container) {
+        $container->set(static::RESOURCE_CATEGORIES_REST_API, function (Container $container) {
             return new NavigationsCategoryNodesResourceRelationshipToCategoriesRestApiResourceBridge(
                 $container->getLocator()->categoriesRestApi()->resource()
             );
-        };
+        });
 
         return $container;
     }

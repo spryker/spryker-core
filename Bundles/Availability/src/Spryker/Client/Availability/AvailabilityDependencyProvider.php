@@ -41,9 +41,9 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::KV_STORAGE] = function (Container $container) {
+        $container->set(static::KV_STORAGE, function (Container $container) {
             return new AvailabilityToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container)
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new AvailabilityToLocaleBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -69,9 +69,9 @@ class AvailabilityDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new AvailabilityToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }

@@ -59,9 +59,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryImageToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryImagePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE, $container->factory(function () {
             return SpyCategoryImageQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -87,9 +87,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryImageSetPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET, $container->factory(function () {
             return SpyCategoryImageSetQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -101,9 +101,9 @@ class CategoryImageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryImageSetToCategoryImagePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_CATEGORY_IMAGE_SET_TO_CATEGORY_IMAGE, $container->factory(function () {
             return SpyCategoryImageSetToCategoryImageQuery::create();
-        };
+        }));
 
         return $container;
     }
