@@ -21,6 +21,8 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
     protected const ALL_PARENTS = 'all-parents';
     protected const DIRECT_PARENTS = 'direct-parents';
 
+    protected const KEY_ADD_TO_CART_SKU = 'add_to_cart_sku';
+
     /**
      * @var \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface
      */
@@ -108,6 +110,12 @@ class ProductAbstractSearchDataMapper extends AbstractProductSearchDataMapper
             ->addSuggestionTerms($pageMapTransfer, $data['name'])
             ->addCompletionTerms($pageMapTransfer, $data['name'])
             ->addStringSort($pageMapTransfer, 'name', $data['name']);
+
+        $addToCartSku = $data[static::KEY_ADD_TO_CART_SKU] ?? null;
+
+        if ($addToCartSku) {
+            $this->pageMapBuilder->addSearchResultData($pageMapTransfer, static::KEY_ADD_TO_CART_SKU, $addToCartSku);
+        }
 
         $this->expandProductPageMap($pageMapTransfer, $data, $localeTransfer);
 

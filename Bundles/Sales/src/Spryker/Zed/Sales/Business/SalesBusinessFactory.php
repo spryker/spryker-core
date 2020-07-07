@@ -78,6 +78,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
+            $this->getSearchOrderExpanderPlugins(),
             $this->getOmsFacade()
         );
     }
@@ -90,6 +91,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
+            $this->getSearchOrderExpanderPlugins(),
             $this->getOmsFacade()
         );
     }
@@ -102,7 +104,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OffsetPaginatedCustomerOrderListReader(
             $this->getRepository(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 

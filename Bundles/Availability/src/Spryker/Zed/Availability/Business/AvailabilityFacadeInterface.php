@@ -234,4 +234,17 @@ interface AvailabilityFacadeInterface
      * @return \Generated\Shared\Transfer\StoreTransfer[]
      */
     public function getStoresWhereProductAvailabilityIsDefined(string $concreteSku): array;
+
+    /**
+     * Specification:
+     * - Filters out products which are not available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterAvailableProducts(array $productConcreteTransfers): array;
 }
