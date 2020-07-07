@@ -78,4 +78,8 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+    </transfer>
+
 </transfers>
