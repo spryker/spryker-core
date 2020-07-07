@@ -82,7 +82,8 @@ class MailBuilderTest extends Unit
     protected function createMailBuilder(): MailBuilderInterface
     {
         return new MailBuilder(
-            $this->createAuthMailConnectorConfig()
+            $this->createAuthMailConnectorConfig(),
+            []
         );
     }
 
