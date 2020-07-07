@@ -11,7 +11,7 @@ import { OffersListComponent } from './offers-list/offers-list.component';
 import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
 import { EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
-import { TableModule } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
 import {
     TableColumnTextComponent,
     TableColumnTextModule,
@@ -30,6 +30,12 @@ import {
     TableFilterDateRangeModule,
 } from '@spryker/table/filters';
 import { TableDatasourceHttpService } from '@spryker/table/datasources';
+
+class TableDefaultConfigData implements Partial<TableConfig> {
+    total = {
+        enabled: true,
+    };
+}
 
 @NgModule({
     imports: [
@@ -72,7 +78,12 @@ import { TableDatasourceHttpService } from '@spryker/table/datasources';
             http: TableDatasourceHttpService,
         }),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: TableDefaultConfig,
+            useClass: TableDefaultConfigData,
+        },
+    ],
 })
 export class AppModule extends CustomElementModule {
     protected components = [
