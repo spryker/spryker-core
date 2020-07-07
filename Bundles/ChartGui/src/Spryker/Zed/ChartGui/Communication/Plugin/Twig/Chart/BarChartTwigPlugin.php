@@ -10,12 +10,10 @@ namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 namespace Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\BarChartTwigPlugin} instead.
- *
  * @method \Spryker\Zed\ChartGui\ChartGuiConfig getConfig()
  * @method \Spryker\Zed\ChartGui\Business\ChartGuiFacadeInterface getFacade()
  */
-class BartChartTwigPlugin extends AbstractChartTwigPlugin
+class BarChartTwigPlugin extends AbstractChartTwigPlugin
 {
     public const TWIG_FUNCTION_NAME = 'barChart';
 
