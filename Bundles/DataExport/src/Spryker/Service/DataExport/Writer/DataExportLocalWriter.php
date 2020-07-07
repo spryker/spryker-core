@@ -86,6 +86,12 @@ class DataExportLocalWriter implements DataExportWriterInterface
         }
 
         $file = fopen($filePath, $dataExportBatchTransfer->getOffset() === 0 ? static::ACCESS_MODE_TYPE_OVERWRITE : static::ACCESS_MODE_TYPE_APPEND);
+        if (!$file) {
+            return $dataExportWriteResponseTransfer
+                ->setIsSuccessful(false)
+                ->addMessage($this->createWriteFailErrorMessage($filePath));
+        }
+
         $result = fwrite($file, $dataFormatResponseTransfer->getDataFormatted());
         if ($result === false) {
             return $dataExportWriteResponseTransfer
