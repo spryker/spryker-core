@@ -29,4 +29,17 @@ interface CmsBlockRepositoryInterface
      * @return bool
      */
     public function hasKey(string $key): bool;
+
+    /**
+     * @param string $cmsBlockName
+     * @param string $storeName
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer|null
+     */
+    public function findCmsBlockWithGlossary(
+        string $cmsBlockName,
+        string $storeName,
+        string $localeName
+    ): ?CmsBlockTransfer;
 }
