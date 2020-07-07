@@ -301,30 +301,13 @@ trait ActiveRecordBatchProcessorTrait
 
         foreach ($entities as $entity) {
             $entity = $this->updateDateTimes($entity);
-            $valuesForInsert = [];
-
-            $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
-
-            foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
-                $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
-                if ($columnMap->isPrimaryKey() && !$requiresPrimaryKeyValue) {
-                    continue;
-                }
-
-                if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
-                    $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
-                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
-
-                    continue;
-                }
-
-                $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
-                $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
-
-                if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
-                }
-            }
+            $valuesForInsert = $this->prepareValuesForInsert(
+                $columnMapCollection,
+                $tableMapClass,
+                $tableMapClassName,
+                $entity,
+                $requiresPrimaryKeyValue
+            );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
                 if ($columnDetails['columnMap']->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
@@ -348,6 +331,50 @@ trait ActiveRecordBatchProcessorTrait
         $statement = $this->bindInsertValues($statement, $values);
 
         return $statement;
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap[] $columnMapCollection
+     * @param \Propel\Runtime\Map\TableMap $tableMapClass
+     * @param string $tableMapClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param bool $requiresPrimaryKeyValue
+     *
+     * @return array
+     */
+    protected function prepareValuesForInsert(
+        array $columnMapCollection,
+        TableMap $tableMapClass,
+        string $tableMapClassName,
+        ActiveRecordInterface $entity,
+        bool $requiresPrimaryKeyValue
+    ): array {
+        $valuesForInsert = [];
+
+        $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
+
+        foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+            if ($columnMap->isPrimaryKey() && !$requiresPrimaryKeyValue) {
+                continue;
+            }
+
+            $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
+            if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
+                $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
+
+                continue;
+            }
+
+            $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
+            $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
+
+            if ($entity->isColumnModified($fullyQualifiedColumnName)) {
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
+            }
+        }
+
+        return $valuesForInsert;
     }
 
     /**
