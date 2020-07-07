@@ -5,12 +5,10 @@
 {% endblock %}
 
 {% block content %}
+    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
 
-    <web-mp-offer-orders
-        cloak
-        title="{{ 'Orders' | trans }}"
-        table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'
-    >
+    <web-mp-offer-orders cloak table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
+        <span title>{{ 'Orders' | trans }}</span>
     </web-mp-offer-orders>
 
 {% endblock %}
