@@ -392,27 +392,27 @@ interface ApplicationConstants
     public const BASE_URL_SSL_STATIC_MEDIA = 'APPLICATION:BASE_URL_SSL_STATIC_MEDIA';
 
     /**
-     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
 
     /**
-     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_API = 'HOST_ZED_API';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
      */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
      */
     public const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_YVES instead.
      */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
 
@@ -427,12 +427,12 @@ interface ApplicationConstants
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
      */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
      */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 

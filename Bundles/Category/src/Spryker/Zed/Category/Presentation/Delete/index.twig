@@ -63,14 +63,14 @@
                 {% import _self as tree %}
 
                 <div class="col-md-4">
-                    <b>Sub-Trees to be moved</b>
+                    <b>{{ 'Sub-Trees to be moved' | trans }}</b>
                     <br />
                     {% if subTrees | length > 0 %}
                         {% for subTree in subTrees %}
                             <br />
                             <p>
-                                {% if subTree.isMain %} Main {% else %} Extra parent {% endif %}
-                                category will be moved to <em>{{ subTree.parentCategory.name }}</em>
+                                {% if subTree.isMain %} {{ 'Main' | trans }} {% else %} {{ 'Extra parent' | trans }} {% endif %}
+                                {{ 'category will be moved to' | trans }} <em>{{ subTree.parentCategory.name }}</em>
                             </p>
                             <ol class="dd-list">
                                 <li class="dd-item">
@@ -80,12 +80,12 @@
                             </ol>
                         {% endfor %}
                     {% else %}
-                        <p>This category does not have any sub-trees</p>
+                        <p>{{ 'This category does not have any sub-trees' | trans }}</p>
                     {% endif %}
                 </div>
 
                 <div class="col-md-4">
-                    <b>Urls to be deleted</b>
+                    <b>{{ 'Urls to be deleted' | trans }}</b>
                     <br />
                     <ul class="nodes">
                         {% for url in urls %}
@@ -101,7 +101,7 @@
                     {% endif %}
 
                     <div class="col-md-4">
-                        <b>{{ relation.name }} to be de-assigned</b>
+                        <b>{{ relation.name | trans }} {{ 'to be de-assigned' | trans }}</b>
                         {% if relation.list | length > 0 %}
                             <ul class="nodes">
                                 {% for item in relation.list %}
@@ -109,7 +109,7 @@
                                 {% endfor %}
                             </ul>
                         {% else %}
-                            <p>This category has no relations</p>
+                            <p>{{ 'This category has no relations' | trans }}</p>
                         {% endif %}
                     </div>
                 {% endfor %}

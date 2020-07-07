@@ -3,7 +3,7 @@ Return,Rückgabe
 Items,Artikel
 Actions,Aktionen
 View,Anzeigen
-"Return ID","Retour ID"
+"Return ID","Retoure ID"
 "Order Reference",Bestellreferenz
 "Returned Items","Retournierte Artikel"
 "Return Date","Retoure Datum"
@@ -55,3 +55,4 @@ Total,Gesamt
 "selected items","ausgewählte Artikel"
 of,von
 "Item selected for return is not eligible for return anymore.","Der für die Rücksendung ausgewählte Artikel kann nicht mehr zurückgegeben werden."
+"Returned Products","Retournierte Artikel"

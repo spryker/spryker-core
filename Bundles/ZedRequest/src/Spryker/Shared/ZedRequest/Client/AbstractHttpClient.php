@@ -136,7 +136,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @deprecated Please use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
+     * @deprecated Use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
      *
      * @param int $timeoutInSeconds
      *

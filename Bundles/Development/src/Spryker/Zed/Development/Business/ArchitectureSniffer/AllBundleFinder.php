@@ -12,7 +12,7 @@ use Symfony\Component\Finder\Finder;
 use Zend\Filter\FilterInterface;
 
 /**
- * @deprecated Use `AllModuleFinder` instead.
+ * @deprecated Use {@link AllModuleFinder} instead.
  */
 class AllBundleFinder implements AllBundleFinderInterface
 {

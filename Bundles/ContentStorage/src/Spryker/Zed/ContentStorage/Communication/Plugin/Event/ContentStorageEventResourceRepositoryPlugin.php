@@ -14,8 +14,7 @@ use Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourceRepositoryPluginInt
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `ContentStorageEventResourceBulkRepositoryPlugin` instead.
- * @see \Spryker\Zed\ContentStorage\Communication\Plugin\Event\ContentStorageEventResourceBulkRepositoryPlugin
+ * @deprecated Use {@link \Spryker\Zed\ContentStorage\Communication\Plugin\Event\ContentStorageEventResourceBulkRepositoryPlugin} instead.
  *
  * @method \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentStorage\Communication\ContentStorageCommunicationFactory getFactory()
