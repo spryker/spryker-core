@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
-use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
+use Spryker\Shared\MerchantProductSearch\MerchantProductSearchConfig;
 use Spryker\Zed\MerchantProductSearch\Communication\Plugin\Publisher\MerchantProduct\MerchantProductSearchWritePublisherPlugin;
 
 /**
@@ -70,7 +70,7 @@ class MerchantProductSearchWritePublisherPluginTest extends Unit
         ];
 
         // Act
-        $merchantProductSearchWritePublisher->handleBulk($eventTransfers, MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH);
+        $merchantProductSearchWritePublisher->handleBulk($eventTransfers, MerchantProductSearchConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH);
         $afterCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         // Assert
