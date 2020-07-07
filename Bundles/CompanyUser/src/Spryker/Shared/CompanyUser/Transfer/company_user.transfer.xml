@@ -78,6 +78,10 @@
         <property name="message" type="Message"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="CompanyResponse">
         <property name="companyTransfer" type="Company"/>
         <property name="isSuccessful" type="bool"/>
