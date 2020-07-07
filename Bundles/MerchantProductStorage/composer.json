@@ -8,7 +8,7 @@
     "spryker/event-behavior": "^1.17.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.5.0",
-    "spryker/merchant-product": "^0.1.0",
+    "spryker/merchant-product": "^0.2.0",
     "spryker/merchant-product-offer-storage-extension": "^0.2.0",
     "spryker/product-storage": "^1.26.0",
     "spryker/product-storage-extension": "^1.5.0",
