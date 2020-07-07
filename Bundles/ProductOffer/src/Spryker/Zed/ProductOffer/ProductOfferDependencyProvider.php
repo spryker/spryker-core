@@ -47,6 +47,8 @@ class ProductOfferDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
+        $container = parent::provideBusinessLayerDependencies($container);
+
         $container = $this->addMessengerFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addProductOfferPostCreatePlugins($container);
