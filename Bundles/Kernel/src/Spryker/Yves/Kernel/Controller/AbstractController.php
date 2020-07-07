@@ -112,7 +112,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin}
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
      *
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
@@ -309,7 +309,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Validator\RedirectUrlValidator} instead.
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
      *
      * @param string $absoluteUrl
      *
@@ -334,7 +334,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Validator\RedirectUrlValidator} instead.
+     * @deprecated Will be removed without replacement.
      *
      * @param string $url
      *
