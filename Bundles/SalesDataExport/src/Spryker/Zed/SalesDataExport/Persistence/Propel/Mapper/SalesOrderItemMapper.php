@@ -16,6 +16,7 @@ class SalesOrderItemMapper
      */
     protected $fieldMapping = [
         'order_reference' => 'Order.OrderReference',
+        'order_item_reference' => 'SpySalesOrderItem.OrderItemReference',
         'product_name' => 'SpySalesOrderItem.Name',
         'product_sku' => 'SpySalesOrderItem.Sku',
         'canceled_amount' => 'SpySalesOrderItem.CanceledAmount',

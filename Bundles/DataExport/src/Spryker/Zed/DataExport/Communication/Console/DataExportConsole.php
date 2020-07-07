@@ -33,7 +33,7 @@ class DataExportConsole extends Console
     protected function configure(): void
     {
         $this->setName(static::COMMAND_NAME)
-            ->setDescription('This command executes your exporters (data export). Use the --config <export_configuration_file.yml> indicating your configuration YAML file for data export, located in data/export/config folder.')
+            ->setDescription('This command executes your exporters (data export). Use the --config <export_configuration_file.yml> indicating your configuration YAML file for data export, located in /data/export/config folder.')
             ->addOption(static::OPTION_CONFIG, static::OPTION_SHORTCUT_CONFIG, InputOption::VALUE_OPTIONAL, 'Define configuration file');
 
         parent::configure();
