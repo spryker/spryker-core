@@ -20,9 +20,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
     /**
-     * @see \Spryker\Yves\Kernel\Controller\AbstractController::SECURED_REDIRECT_IS_HANDLED
+     * @see \Spryker\Yves\Kernel\Controller\AbstractController::BC_REDIRECT_URL_VALIDATION_HANDLED
      */
-    protected const SECURED_REDIRECT_IS_HANDLED = 'SECURED_REDIRECT_IS_HANDLED';
+    protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
 
     /**
      * {@inheritDoc}
@@ -38,7 +38,7 @@ class RedirectUrlValidationEventDispatcherPlugin extends AbstractPlugin implemen
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $this->getApplication()->set(static::SECURED_REDIRECT_IS_HANDLED, true);
+        $container->set(static::BC_REDIRECT_URL_VALIDATION_HANDLED, true);
         $eventDispatcher->addListener(KernelEvents::RESPONSE, function (FilterResponseEvent $event) {
             $this->getFactory()->createRedirectUrlValidator()->validateRedirectUrl($event);
         });
