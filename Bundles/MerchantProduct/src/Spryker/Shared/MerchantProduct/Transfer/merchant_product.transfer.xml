@@ -12,7 +12,7 @@
     </transfer>
 
     <transfer name="MerchantProduct">
-        <property name="idProductAbstractMerchant" type="int"/>
+        <property name="idMerchantProductAbstract" type="int"/>
         <property name="idProductAbstract" type="int"/>
         <property name="idMerchant" type="int"/>
     </transfer>

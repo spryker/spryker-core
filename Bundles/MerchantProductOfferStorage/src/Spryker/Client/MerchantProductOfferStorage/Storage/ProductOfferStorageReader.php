@@ -15,7 +15,6 @@ use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProduct
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToStorageClientInterface;
 use Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface;
 use Spryker\Client\MerchantProductOfferStorage\Mapper\MerchantProductOfferMapperInterface;
-use Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface;
 
 class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
@@ -56,11 +55,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
     protected $productOfferStorageKeyGenerator;
 
     /**
-     * @var \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface
-     */
-    protected $productConcreteDefaultProductOffer;
-
-    /**
      * @var \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[]
      */
     protected $productOfferStorageExpanderPlugins;
@@ -76,7 +70,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Client\MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient
      * @param \Spryker\Client\MerchantProductOfferStorage\Dependency\Service\MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService
      * @param \Spryker\Client\MerchantProductOfferStorage\Storage\ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator
-     * @param \Spryker\Client\MerchantProductOfferStorage\ProductConcreteDefaultProductOffer\ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer
      * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin
      * @param \Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferStorageExpanderPluginInterface[] $productOfferStorageExpanderPlugins
      */
@@ -86,7 +79,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         MerchantProductOfferStorageToMerchantStorageClientInterface $merchantStorageClient,
         MerchantProductOfferStorageToUtilEncodingServiceInterface $utilEncodingService,
         ProductOfferStorageKeyGeneratorInterface $productOfferStorageKeyGenerator,
-        ProductConcreteDefaultProductOfferInterface $productConcreteDefaultProductOffer,
         ProductOfferStorageCollectionSorterPluginInterface $productOfferStorageCollectionSorterPlugin,
         array $productOfferStorageExpanderPlugins
     ) {
@@ -95,7 +87,6 @@ class ProductOfferStorageReader implements ProductOfferStorageReaderInterface
         $this->merchantStorageClient = $merchantStorageClient;
         $this->utilEncodingService = $utilEncodingService;
         $this->productOfferStorageKeyGenerator = $productOfferStorageKeyGenerator;
-        $this->productConcreteDefaultProductOffer = $productConcreteDefaultProductOffer;
         $this->productOfferStorageCollectionSorterPlugin = $productOfferStorageCollectionSorterPlugin;
         $this->productOfferStorageExpanderPlugins = $productOfferStorageExpanderPlugins;
     }
