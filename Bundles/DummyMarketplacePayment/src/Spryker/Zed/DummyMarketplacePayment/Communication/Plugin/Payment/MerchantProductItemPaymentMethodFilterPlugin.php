@@ -16,7 +16,7 @@ use Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInter
  * @method \Spryker\Zed\DummyMarketplacePayment\Business\DummyMarketplacePaymentFacadeInterface getFacade()
  * @method \Spryker\Zed\DummyMarketplacePayment\DummyMarketplacePaymentConfig getConfig()
  */
-class MerchantProductOfferPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
+class MerchantProductItemPaymentMethodFilterPlugin extends AbstractPlugin implements PaymentMethodFilterPluginInterface
 {
     /**
      * {@inheritDoc}
