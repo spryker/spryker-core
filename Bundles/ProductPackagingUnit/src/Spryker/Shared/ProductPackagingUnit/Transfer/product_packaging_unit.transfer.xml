@@ -101,6 +101,7 @@
     <transfer name="ProductConcrete">
         <property name="sku" type="string"/>
         <property name="fkProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="Message">

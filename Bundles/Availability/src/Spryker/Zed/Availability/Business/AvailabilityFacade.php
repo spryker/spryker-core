@@ -276,4 +276,20 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
         return $this->getRepository()
             ->getStoresWhereProductAvailabilityIsDefined($concreteSku);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterAvailableProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createAvailabilityReader()
+            ->filterAvailableProducts($productConcreteTransfers);
+    }
 }
