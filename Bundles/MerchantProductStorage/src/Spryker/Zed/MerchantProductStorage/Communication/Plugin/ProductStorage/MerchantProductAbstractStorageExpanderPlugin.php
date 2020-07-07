@@ -40,7 +40,7 @@ class MerchantProductAbstractStorageExpanderPlugin extends AbstractPlugin implem
             ->getMerchantProductFacade()
             ->findMerchant($merchantProductCriteriaTransfer);
 
-        if (!$merchantTransfer) {
+        if (!$merchantTransfer || !$merchantTransfer->getIsActive()) {
             return $productAbstractStorageTransfer;
         }
 
