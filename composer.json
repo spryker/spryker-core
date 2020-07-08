@@ -44,6 +44,7 @@
     "spryker/assertion": "*",
     "spryker/auth": "*",
     "spryker/auth-mail-connector": "*",
+    "spryker/auth-mail-connector-extension": "*",
     "spryker/auth-rest-api": "*",
     "spryker/auth-rest-api-extension": "*",
     "spryker/authentication-merchant-portal-gui": "*",

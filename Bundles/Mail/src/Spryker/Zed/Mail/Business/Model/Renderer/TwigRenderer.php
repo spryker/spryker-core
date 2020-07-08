@@ -50,24 +50,21 @@ class TwigRenderer implements RendererInterface
      */
     protected function setupTranslation(MailTransfer $mailTransfer)
     {
-        $localeTransfer = $this->getLocaleTransfer($mailTransfer);
-        $this->renderer->setLocaleTransfer($localeTransfer);
+        if (!$mailTransfer->getLocale()) {
+            $localeTransfer = $this->getCurrentLocaleTransfer();
+            $mailTransfer->setLocale($localeTransfer);
+        }
+
+        $this->renderer->setLocaleTransfer($mailTransfer->getLocale());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
-     *
      * @return \Generated\Shared\Transfer\LocaleTransfer
      */
-    protected function getLocaleTransfer(MailTransfer $mailTransfer)
+    protected function getCurrentLocaleTransfer()
     {
-        $localeTransfer = $mailTransfer->getLocale();
-        if (!$localeTransfer) {
-            $localeTransfer = new LocaleTransfer();
-            $localeTransfer->setLocaleName(Store::getInstance()->getCurrentLocale());
-        }
-
-        return $localeTransfer;
+        return (new LocaleTransfer())
+            ->setLocaleName(Store::getInstance()->getCurrentLocale());
     }
 
     /**
