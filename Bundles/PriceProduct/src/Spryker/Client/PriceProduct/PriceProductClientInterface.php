@@ -56,7 +56,7 @@ interface PriceProductClientInterface
      *
      * @api
      *
-     * @deprecated Please use resolveProductPriceTransfer() instead.
+     * @deprecated Use resolveProductPriceTransfer() instead.
      *
      * @param array $priceMap
      *

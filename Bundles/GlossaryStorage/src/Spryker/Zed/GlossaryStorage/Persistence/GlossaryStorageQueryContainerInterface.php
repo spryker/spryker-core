@@ -10,7 +10,7 @@ namespace Spryker\Zed\GlossaryStorage\Persistence;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 
 /**
- * @deprecated `\Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface` instead
+ * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepositoryInterface} instead
  */
 interface GlossaryStorageQueryContainerInterface
 {

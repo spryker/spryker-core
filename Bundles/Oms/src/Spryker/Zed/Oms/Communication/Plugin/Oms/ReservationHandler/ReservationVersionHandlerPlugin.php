@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Oms\Dependency\Plugin\ReservationHandlerPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler\ReservationVersionHandlerTerminationAwareStrategyPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler\ReservationVersionPostSaveTerminationAwareStrategyPlugin} instead.
  *
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  * @method \Spryker\Zed\Oms\Communication\OmsCommunicationFactory getFactory()

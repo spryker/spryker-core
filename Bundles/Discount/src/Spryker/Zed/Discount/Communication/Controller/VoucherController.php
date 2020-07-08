@@ -47,10 +47,8 @@ class VoucherController extends AbstractController
 
         if ($affectedRows > 0) {
             $this->addSuccessMessage(
-                sprintf(
-                    'Successfully deleted "%d" vouchers.',
-                    $affectedRows
-                )
+                'Successfully deleted "%d" vouchers.',
+                ['%d' => $affectedRows]
             );
         } else {
             $this->addErrorMessage('No voucher codes were deleted.');

@@ -97,4 +97,34 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getMerchantRelationEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPriceProductConcreteMerchantRelationEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPriceProductAbstractMerchantRelationEventQueueName(): ?string
+    {
+        return null;
+    }
 }

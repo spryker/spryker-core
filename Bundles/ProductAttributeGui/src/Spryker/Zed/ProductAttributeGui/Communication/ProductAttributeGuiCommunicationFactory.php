@@ -150,7 +150,7 @@ class ProductAttributeGuiCommunicationFactory extends AbstractCommunicationFacto
     }
 
     /**
-     * @deprecated Use `getAttributeTranslationFormCollection` instead.
+     * @deprecated Use {@link getAttributeTranslationFormCollection()} instead.
      *
      * @param array $data
      * @param array $options

@@ -52,7 +52,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityStoragePublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_PUBLISH, new AvailabilityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -62,7 +62,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractUnPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageUnpublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::AVAILABILITY_ABSTRACT_UNPUBLISH, new AvailabilityStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -72,7 +72,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityStoragePublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_CREATE, new AvailabilityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -82,7 +82,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityStoragePublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -92,7 +92,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityAbstractDeleteListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageUnpublishListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_DELETE, new AvailabilityStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -102,7 +102,7 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addProductUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener());
+        $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_UPDATE, new AvailabilityProductStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -112,6 +112,6 @@ class AvailabilityStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addAvailabilityStockUpdateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new AvailabilityStockStorageListener());
+        $eventCollection->addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_UPDATE, new AvailabilityStockStorageListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

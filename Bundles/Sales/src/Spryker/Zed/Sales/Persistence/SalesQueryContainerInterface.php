@@ -147,7 +147,7 @@ interface SalesQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *

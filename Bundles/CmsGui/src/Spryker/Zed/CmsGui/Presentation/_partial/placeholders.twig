@@ -3,7 +3,7 @@
     <tr>
     {% for translation in glossaryAttribute.translations %}
         {% if translation.localeName == localeName %}
-            <td class="placeholder-title"><strong>{{ glossaryAttribute.placeholder }}:</strong></td>
+            <td class="placeholder-title"><strong>{{ glossaryAttribute.placeholder | trans }}:</strong></td>
             {%  if hasTemplateDiff == true %}
                 <td class="{{ prettyDiffClass }}">{{ translation.translation | trim | raw }}</td>
             {% else %}

@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 interface ShoppingListItemOperationInterface
 {
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::addShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -60,7 +60,7 @@ interface ShoppingListItemOperationInterface
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::updateShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link updateShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

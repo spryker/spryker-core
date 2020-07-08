@@ -25,11 +25,20 @@ class MailBuilder implements MailBuilderInterface
     protected $config;
 
     /**
-     * @param \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig $config
+     * @var \Spryker\Zed\AuthMailConnectorExtension\Dependency\Plugin\AuthMailExpanderPluginInterface[]
      */
-    public function __construct(AuthMailConnectorConfig $config)
-    {
+    protected $authMailExpanderPlugins;
+
+    /**
+     * @param \Spryker\Zed\AuthMailConnector\AuthMailConnectorConfig $config
+     * @param \Spryker\Zed\AuthMailConnectorExtension\Dependency\Plugin\AuthMailExpanderPluginInterface[] $authMailExpanderPlugins
+     */
+    public function __construct(
+        AuthMailConnectorConfig $config,
+        array $authMailExpanderPlugins
+    ) {
         $this->config = $config;
+        $this->authMailExpanderPlugins = $authMailExpanderPlugins;
     }
 
     /**
@@ -44,6 +53,22 @@ class MailBuilder implements MailBuilderInterface
         $mailTransfer->setType(RestorePasswordMailTypePlugin::MAIL_TYPE);
         $mailTransfer->addRecipient($this->createMailRecipientTransfer($email));
         $mailTransfer->setResetPasswordLink($this->generateResetPasswordLink($token));
+
+        $mailTransfer = $this->executeAuthMailExpanderPlugins($mailTransfer);
+
+        return $mailTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function executeAuthMailExpanderPlugins(MailTransfer $mailTransfer): MailTransfer
+    {
+        foreach ($this->authMailExpanderPlugins as $authMailExpanderPlugin) {
+            $mailTransfer = $authMailExpanderPlugin->expand($mailTransfer);
+        }
 
         return $mailTransfer;
     }

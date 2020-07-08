@@ -47,7 +47,13 @@ class SearchPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->setRawColumns([
+            static::COL_FULL_TEXT,
+            static::COL_FULL_TEXT_BOOSTED,
+            static::COL_SUGGESTION_TERMS,
+            static::COL_COMPLETION_TERMS,
+            static::ACTIONS,
+        ]);
 
         return $config;
     }
@@ -139,7 +145,10 @@ class SearchPreferencesTable extends AbstractTable
      */
     protected function boolToString($boolValue)
     {
-        return $boolValue ? 'yes' : 'no';
+        return $this->generateLabel(
+            $boolValue ? 'yes' : 'no',
+            null
+        );
     }
 
     /**
