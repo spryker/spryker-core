@@ -56,9 +56,9 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     public function rebuildRelations(): void
     {
         $isInstancePoolingDisabledSuccessfully = Propel::disableInstancePooling();
-        $productRelationsCount = $this->productRelationRepository->getActiveProductRelationCount();
+        $productRelationCount = $this->productRelationRepository->getActiveProductRelationCount();
 
-        if (!$productRelationsCount) {
+        if (!$productRelationCount) {
             return;
         }
 
@@ -66,7 +66,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
         $productRelationCriteriaFilterTransfer = (new ProductRelationCriteriaFilterTransfer())
             ->setLimit($productRelationUpdateChunkSize);
 
-        for ($offset = 0; $offset <= $productRelationsCount; $offset += $productRelationUpdateChunkSize) {
+        for ($offset = 0; $offset <= $productRelationCount; $offset += $productRelationUpdateChunkSize) {
             $this->rebuildProductRelationsBatch(
                 $productRelationCriteriaFilterTransfer->setOffset($offset)
             );
