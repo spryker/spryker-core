@@ -65,7 +65,7 @@ interface LogConstants
      * - Absolute path to the log file which should be used be the stream handler. E.g. /var/www/data/logs/spryker.log
      * - If set logs will be written to the specified file.
      *
-     * @deprecated Please use the application specific constants. E.g. LOG_FILE_PATH_YVES
+     * @deprecated Use the application specific constants. E.g. LOG_FILE_PATH_YVES
      *
      * @api
      */
@@ -101,7 +101,7 @@ interface LogConstants
      * Specification:
      * - Absolute path to the log file which should be used be the stream handler for exceptions. E.g. /var/www/data/logs/spryker.log
      *
-     * @deprecated Please use the application specific constants. E.g. EXCEPTION_LOG_FILE_PATH_YVES
+     * @deprecated Use the application specific constants. E.g. EXCEPTION_LOG_FILE_PATH_YVES
      *
      * @api
      */

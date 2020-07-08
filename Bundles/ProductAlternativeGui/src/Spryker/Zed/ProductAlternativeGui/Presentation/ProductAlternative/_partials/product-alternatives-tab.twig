@@ -1,11 +1,9 @@
 {% set productAlternatives = form.vars.data.productAlternatives %}
 
 <div class="well">
-    {% filter trans|raw %}
-        <h3>Product Alternatives</h3>
-        <p>This is a list of alternative products that current Concrete Product has.</p>
-        <p><i>Note: You can add new product alternative using text field below.</i></p>
-    {% endfilter %}
+    <h3>{{ 'Product Alternatives' | trans }}</h3>
+    <p>{{ 'This is a list of alternative products that the current Concrete Product has.' | trans }}</p>
+    <p><i>{{ 'Note: You can add a new product alternative using the text field below.' | trans }}</i></p>
 </div>
 
 <div class="form-group">

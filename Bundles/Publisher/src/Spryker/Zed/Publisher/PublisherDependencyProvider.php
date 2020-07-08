@@ -91,7 +91,7 @@ class PublisherDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface[]
+     * @return array
      */
     protected function getPublisherPlugins(): array
     {

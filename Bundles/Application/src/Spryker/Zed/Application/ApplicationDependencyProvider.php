@@ -173,7 +173,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -189,7 +189,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -201,7 +201,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -217,7 +217,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *

@@ -176,7 +176,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Please use `createPriceTransformer()` instead.
+     * @deprecated Use {@link createPriceTransformer()} instead.
      *
      * @return \Symfony\Component\Form\DataTransformerInterface
      */

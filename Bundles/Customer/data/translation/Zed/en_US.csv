@@ -10,7 +10,7 @@ Back,Back
 City,City
 Company,Company
 Country,Country
-Customers,Customer
+Customers,Customers
 "Customer deletion confirmation","Customer deletion confirmation"
 "Customer does not exist","Customer does not exist"
 "Customer Reference","Customer Reference"
@@ -43,3 +43,11 @@ View,View
 "View Customer","View Customer"
 "Zed Account Reference","Zed Account Reference"
 ZipCode,ZipCode
+"Registration Date",Registrierungsdatum
+"Billing Address","Billing Address"
+"Shipping Address","Shipping Address"
+"Attach to company","Attach to company"
+"Add a customer","Add a customer"
+"Comment successfully added","Comment successfully added."
+"Address (2nd line)","Address (2nd line)"
+"Address (3rd line)","Address (3rd line)"

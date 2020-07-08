@@ -156,6 +156,7 @@ class SalesDataHelper extends Module
     protected function createQuoteTransfer(array $override = []): QuoteTransfer
     {
         return (new QuoteBuilder())
+            ->withStore($override)
             ->withItem($override)
             ->withCustomer()
             ->withTotals()

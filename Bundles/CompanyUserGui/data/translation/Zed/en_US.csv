@@ -10,3 +10,15 @@ E-Mail,E-Mail
 "List of Company Users","List of Company Users"
 "Overview of Company Users","Overview of Company Users"
 "User ID","User ID"
+"Business Unit name","Business Unit name"
+"Attach ""%customer%""","Attach ""%customer%"""
+Disable,Disable
+"Company user successfully disabled","Company user successfully disabled"
+"Company user successfully enabled","Company user successfully enabled"
+Disabled,Disabled
+Enabled,Enabled
+Enable,Enable
+"User Name","User Name"
+"Attach to BU","Attach to BU"
+"Company user has been created.","Company user has been created."
+"Company User Name","Company User Name"

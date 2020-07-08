@@ -105,6 +105,7 @@ class DiscountsTable extends AbstractTable
         $config->addRawColumn(static::TABLE_COL_ACTIONS);
         $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
         $config->addRawColumn(static::TABLE_COL_STORE);
+        $config->addRawColumn(SpyDiscountTableMap::COL_IS_ACTIVE);
 
         return $config;
     }
@@ -194,7 +195,10 @@ class DiscountsTable extends AbstractTable
      */
     protected function getStatus(SpyDiscount $discountEntity)
     {
-         return $discountEntity->getIsActive() ? 'Active' : 'Inactive';
+         return $this->generateLabel(
+             $discountEntity->getIsActive() ? 'Active' : 'Inactive',
+             $discountEntity->getIsActive() ? 'label-info' : 'label-danger'
+         );
     }
 
     /**

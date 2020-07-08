@@ -11,7 +11,7 @@ use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 
 /**
- * @deprecated Use `EntityProcessorPlugin` from Propel module instead.
+ * @deprecated Use {@link \Spryker\Zed\Propel\Communication\Plugin\Log\EntityProcessorPlugin} instead.
  */
 class EntitySanitizerProcessor
 {

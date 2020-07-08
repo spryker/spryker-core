@@ -12,6 +12,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/mail": "^4.0.0",
     "spryker/oms-extension": "^1.3.0",
+    "spryker/propel": "^3.22.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^10.0.0 || ^11.0.0",
     "spryker/sales-extension": "^1.7.0",
@@ -28,7 +29,6 @@
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/customer": "*",
-    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {

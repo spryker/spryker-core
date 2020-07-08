@@ -400,7 +400,7 @@ class ProductFormAdd extends AbstractType
                     'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
                         $selectedAttributes = array_filter(array_values($dataToValidate));
                         if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                            $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
+                            $context->addViolation('Please enter at least an SKU and a Name of the product in every locale in the General section');
                             GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                         }
                     },

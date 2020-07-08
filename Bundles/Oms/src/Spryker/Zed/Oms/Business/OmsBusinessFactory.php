@@ -10,8 +10,12 @@ namespace Spryker\Zed\Oms\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oms\Business\Checker\FlagChecker;
 use Spryker\Zed\Oms\Business\Checker\FlagCheckerInterface;
+use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\OrderExpander;
 use Spryker\Zed\Oms\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateExpander;
+use Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpander;
 use Spryker\Zed\Oms\Business\Expander\StateHistoryExpanderInterface;
 use Spryker\Zed\Oms\Business\Lock\TriggerLocker;
@@ -82,7 +86,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
             $this->createUtilReadOnlyArrayObject($this->getConfig()->getActiveProcesses()),
             $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS),
             $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
-            $this->createUtilReservation()
+            $this->createUtilReservation(),
+            $this->getConfig()
         );
     }
 
@@ -147,7 +152,8 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     {
         return new Timeout(
             $this->getQueryContainer(),
-            $this->createTimeoutProcessorCollection()
+            $this->createTimeoutProcessorCollection(),
+            $this->getConfig()
         );
     }
 
@@ -397,6 +403,17 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderAggregatedItemStateExpanderInterface
+     */
+    public function createOrderAggregatedItemStateExpander(): OrderAggregatedItemStateExpanderInterface
+    {
+        return new OrderAggregatedItemStateExpander(
+            $this->createOrderItemStateExpander(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Oms\Business\Reader\StateMachineReaderInterface
      */
     public function createStateMachineReader(): StateMachineReaderInterface
@@ -404,6 +421,18 @@ class OmsBusinessFactory extends AbstractBusinessFactory
         return new StateMachineReader(
             $this->getRepository(),
             $this->createOrderStateMachineBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Oms\Business\Expander\OrderItemStateExpanderInterface
+     */
+    public function createOrderItemStateExpander(): OrderItemStateExpanderInterface
+    {
+        return new OrderItemStateExpander(
+            $this->createOrderStateMachineFinder(),
+            $this->getRepository(),
+            $this->getConfig()
         );
     }
 
@@ -476,7 +505,7 @@ class OmsBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Oms\Business\OmsBusinessFactory::getOmsReservationAggregationStrategyPlugins().
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
      *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */

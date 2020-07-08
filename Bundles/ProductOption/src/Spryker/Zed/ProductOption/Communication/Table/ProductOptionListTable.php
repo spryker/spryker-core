@@ -301,10 +301,10 @@ class ProductOptionListTable extends AbstractTable
     protected function getStatus(SpyProductOptionGroup $productOptionGroupEntity)
     {
         if ($productOptionGroupEntity->getActive()) {
-            return '<p class="text-success">Active</p>';
+            return $this->generateLabel('Active', 'label-info');
         }
 
-        return '<p class="text-danger">Inactive</p>';
+        return $this->generateLabel('Inactive', 'label-danger');
     }
 
     /**

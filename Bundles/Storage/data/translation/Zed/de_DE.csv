@@ -5,3 +5,5 @@ Key,Key
 Storage,Speicher
 "Storage keys",Speicherschlüssel
 "Storage overview",Speicherübersicht
+"Drop storage timestamps","Speicherungszeitstempel verwerfen"
+"No droppable timestamps found.","Es wurden keine Zeitstempel gefunden die verworfen werden können."

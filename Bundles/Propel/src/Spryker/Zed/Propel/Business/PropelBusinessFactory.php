@@ -183,7 +183,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabaseInterface
      */
@@ -195,7 +195,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
@@ -210,7 +210,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
@@ -220,7 +220,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */

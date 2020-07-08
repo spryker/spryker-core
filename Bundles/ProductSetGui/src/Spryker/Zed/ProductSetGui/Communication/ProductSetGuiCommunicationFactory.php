@@ -223,7 +223,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getReorderProductSetsForm` instead.
+     * @deprecated Use {@link getReorderProductSetsForm()} instead.
      *
      * @param array $data
      * @param array $options
