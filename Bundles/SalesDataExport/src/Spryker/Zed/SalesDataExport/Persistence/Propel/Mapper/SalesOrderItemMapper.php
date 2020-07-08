@@ -12,6 +12,8 @@ class SalesOrderItemMapper
     /**
      * @phpstan-var array<string, string>
      *
+     * @module SalesOms
+     *
      * @var string[]
      */
     protected $fieldMapping = [
