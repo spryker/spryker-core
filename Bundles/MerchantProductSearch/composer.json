@@ -1,23 +1,36 @@
 {
-  "name": "spryker/merchant-product",
+  "name": "spryker/merchant-product-search",
   "type": "library",
-  "description": "MerchantProduct module",
+  "description": "MerchantProductSearch module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/event-behavior": "^1.8.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",
-    "spryker/product": "^6.0.0"
+    "spryker/merchant-product": "^0.1.2",
+    "spryker/product-page-search": "^3.2.0",
+    "spryker/product-page-search-extension": "^1.2.0",
+    "spryker/publisher-extension": "^1.0.0",
+    "spryker/search-extension": "^1.0.0",
+    "spryker/store": "^1.0.0"
   },
   "require-dev": {
+    "spryker/category": "*",
     "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/product-attribute": "*",
     "spryker/propel": "*",
+    "spryker/queue": "*",
+    "spryker/search": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/search": "If you want to use Search plugins."
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Zed\\MerchantProduct\\Helper\\": "tests/SprykerTest/Zed/MerchantProduct/_support/Helper/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

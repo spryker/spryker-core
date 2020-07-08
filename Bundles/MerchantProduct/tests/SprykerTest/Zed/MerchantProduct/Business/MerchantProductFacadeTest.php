@@ -35,10 +35,9 @@ class MerchantProductFacadeTest extends Unit
     public function testFindMerchantReturnsMerchant(): void
     {
         // Arrange
-        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $expectedMerchantTransfer = $this->tester->haveMerchant();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $this->tester->saveMerchantProduct($expectedMerchantTransfer, $productConcreteTransfer);
+        $this->tester->addMerchantProductRelation($expectedMerchantTransfer->getIdMerchant(), $productConcreteTransfer->getFkProductAbstract());
 
         // Act
         $merchantTransfer = $this->tester->getFacade()->findMerchant(
