@@ -13,12 +13,15 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelation;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstract;
 use Orm\Zed\ProductRelation\Persistence\SpyProductRelationStore;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 /**
  * @method \Spryker\Zed\ProductRelation\Persistence\ProductRelationPersistenceFactory getFactory()
  */
 class ProductRelationEntityManager extends AbstractEntityManager implements ProductRelationEntityManagerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @param \Generated\Shared\Transfer\ProductRelationTransfer $productRelationTransfer
      *
@@ -56,8 +59,11 @@ class ProductRelationEntityManager extends AbstractEntityManager implements Prod
             $productRelationProductAbstractEntity->setFkProductRelation($idProductRelation);
             $productRelationProductAbstractEntity->setFkProductAbstract($id);
             $productRelationProductAbstractEntity->setOrder($index + 1);
-            $productRelationProductAbstractEntity->save();
+
+            $this->persist($productRelationProductAbstractEntity);
         }
+
+        $this->commit();
     }
 
     /**

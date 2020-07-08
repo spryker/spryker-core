@@ -8,10 +8,13 @@
 namespace Spryker\Zed\ProductRelation\Business\Builder;
 
 use Exception;
+use Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductRelationTransfer;
+use Propel\Runtime\Propel;
 use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface;
 use Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface;
+use Spryker\Zed\ProductRelation\ProductRelationConfig;
 
 class ProductRelationBuilder implements ProductRelationBuilderInterface
 {
@@ -28,15 +31,23 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     protected $productRelationRepository;
 
     /**
+     * @var \Spryker\Zed\ProductRelation\ProductRelationConfig
+     */
+    protected $productRelationConfig;
+
+    /**
      * @param \Spryker\Zed\ProductRelation\Business\Relation\Updater\ProductRelationUpdaterInterface $productRelationUpdater
      * @param \Spryker\Zed\ProductRelation\Persistence\ProductRelationRepositoryInterface $productRelationRepository
+     * @param \Spryker\Zed\ProductRelation\ProductRelationConfig $productRelationConfig
      */
     public function __construct(
         ProductRelationUpdaterInterface $productRelationUpdater,
-        ProductRelationRepositoryInterface $productRelationRepository
+        ProductRelationRepositoryInterface $productRelationRepository,
+        ProductRelationConfig $productRelationConfig
     ) {
         $this->productRelationUpdater = $productRelationUpdater;
         $this->productRelationRepository = $productRelationRepository;
+        $this->productRelationConfig = $productRelationConfig;
     }
 
     /**
@@ -44,8 +55,40 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
      */
     public function rebuildRelations(): void
     {
-        $activeProductRelations = $this->productRelationRepository->getActiveProductRelations();
-        foreach ($activeProductRelations as $productRelationTransfer) {
+        $isInstancePoolingDisabledSuccessfully = Propel::disableInstancePooling();
+        $productRelationsCount = $this->productRelationRepository->getActiveProductRelationsCount();
+
+        if (!$productRelationsCount) {
+            return;
+        }
+
+        $productRelationUpdateChunkSize = $this->productRelationConfig->getProductRelationUpdateChunkSize();
+        $productRelationCriteriaFilterTransfer = (new ProductRelationCriteriaFilterTransfer())
+            ->setLimit($productRelationUpdateChunkSize);
+
+        for ($offset = 0; $offset <= $productRelationsCount; $offset += $productRelationUpdateChunkSize) {
+            $this->rebuildProductRelationsBatch(
+                $productRelationCriteriaFilterTransfer->setOffset($offset)
+            );
+        }
+
+        if ($isInstancePoolingDisabledSuccessfully) {
+            Propel::enableInstancePooling();
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
+     * @return void
+     */
+    protected function rebuildProductRelationsBatch(
+        ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+    ): void {
+        $productRelationTransfers = $this->productRelationRepository
+            ->getActiveProductRelations($productRelationCriteriaFilterTransfer);
+
+        foreach ($productRelationTransfers as $productRelationTransfer) {
             $this->processRebuildRelations($productRelationTransfer);
         }
     }

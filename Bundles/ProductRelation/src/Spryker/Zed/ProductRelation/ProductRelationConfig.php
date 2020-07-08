@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductRelationConfig extends AbstractBundleConfig
 {
+    protected const PRODUCT_RELATION_READ_CHUNK_SIZE = 1000;
     protected const PRODUCT_RELATION_UPDATE_CHUNK_SIZE = 1000;
 
     /**
@@ -20,6 +21,16 @@ class ProductRelationConfig extends AbstractBundleConfig
      * @return int
      */
     public function getRelatedProductsReadChunkSize(): int
+    {
+        return static::PRODUCT_RELATION_READ_CHUNK_SIZE;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getProductRelationUpdateChunkSize(): int
     {
         return static::PRODUCT_RELATION_UPDATE_CHUNK_SIZE;
     }

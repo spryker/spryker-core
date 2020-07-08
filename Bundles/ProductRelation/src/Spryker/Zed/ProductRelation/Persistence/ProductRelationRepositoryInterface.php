@@ -64,9 +64,18 @@ interface ProductRelationRepositoryInterface
     public function getStoreRelationByIdProductRelation(int $idProductRelation): StoreRelationTransfer;
 
     /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getActiveProductRelations(): array;
+    public function getActiveProductRelations(
+        ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+    ): array;
+
+    /**
+     * @return int
+     */
+    public function getActiveProductRelationsCount(): int;
 
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]

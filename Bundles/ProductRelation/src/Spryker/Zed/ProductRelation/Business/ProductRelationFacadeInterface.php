@@ -110,7 +110,8 @@ interface ProductRelationFacadeInterface
 
     /**
      * Specification:
-     * - Rebuilds all active relations with selected is_rebuild_scheduled = true, reruns stored query.
+     * - Finds all the active relations with selected is_rebuild_scheduled = true in batches.
+     * - Rebuilds the found relations and reruns stored query.
      *
      * @api
      *

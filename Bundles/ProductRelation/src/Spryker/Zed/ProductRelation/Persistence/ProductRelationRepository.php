@@ -171,13 +171,18 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+     *
      * @return \Generated\Shared\Transfer\ProductRelationTransfer[]
      */
-    public function getActiveProductRelations(): array
-    {
+    public function getActiveProductRelations(
+        ProductRelationCriteriaFilterTransfer $productRelationCriteriaFilterTransfer
+    ): array {
         $productRelationEntities = $this->getFactory()
             ->getProductRelationQueryContainer()
             ->queryActiveAndScheduledRelations()
+            ->limit($productRelationCriteriaFilterTransfer->getLimit())
+            ->offset($productRelationCriteriaFilterTransfer->getOffset())
             ->find();
 
         if (!$productRelationEntities->getData()) {
@@ -187,6 +192,17 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
         return $this->getFactory()
             ->createProductRelationMapper()
             ->mapProductRelationEntitiesToProductRelationTransfers($productRelationEntities, []);
+    }
+
+    /**
+     * @return int
+     */
+    public function getActiveProductRelationsCount(): int
+    {
+        return $this->getFactory()
+            ->getProductRelationQueryContainer()
+            ->queryActiveAndScheduledRelations()
+            ->count();
     }
 
     /**
