@@ -331,6 +331,12 @@ class CompanyUser implements CompanyUserInterface
                     ->getIdCustomer()
             );
 
+            if ($customerResponseTransfer->getMessage()) {
+                $companyUserResponseTransfer->addMessage(
+                    (new ResponseMessageTransfer())->setText($customerResponseTransfer->getMessage()->getValue())
+                );
+            }
+
             return $companyUserResponseTransfer;
         }
 
