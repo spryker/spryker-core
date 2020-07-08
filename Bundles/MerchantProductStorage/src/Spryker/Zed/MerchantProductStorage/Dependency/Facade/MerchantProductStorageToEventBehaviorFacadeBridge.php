@@ -23,6 +23,8 @@ class MerchantProductStorageToEventBehaviorFacadeBridge implements MerchantProdu
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $columnName
      *
@@ -34,6 +36,8 @@ class MerchantProductStorageToEventBehaviorFacadeBridge implements MerchantProdu
     }
 
     /**
+     * @phpstan-return array<int>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array

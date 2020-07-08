@@ -10,6 +10,8 @@ namespace Spryker\Zed\MerchantProductStorage\Dependency\Facade;
 interface MerchantProductStorageToEventBehaviorFacadeInterface
 {
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $columnName
      *
@@ -18,6 +20,8 @@ interface MerchantProductStorageToEventBehaviorFacadeInterface
     public function getEventTransfersAdditionalValues(array $eventTransfers, string $columnName): array;
 
     /**
+     * @phpstan-return array<int>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array

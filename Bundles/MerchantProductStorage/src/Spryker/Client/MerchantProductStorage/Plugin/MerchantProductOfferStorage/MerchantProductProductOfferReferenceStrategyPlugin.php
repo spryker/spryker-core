@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductStorage\Plugin;
+namespace Spryker\Client\MerchantProductStorage\Plugin\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface;

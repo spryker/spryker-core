@@ -89,15 +89,15 @@ class MerchantProductStorageWriter implements MerchantProductStorageWriterInterf
      */
     protected function publishAbstractProductsByMerchantProductCriteria(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): void
     {
-        $merchantProductTransfers = $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
+        $merchantProductCollectionTransfer = $this->merchantProductFacade->get($merchantProductCriteriaTransfer);
 
-        if (!$merchantProductTransfers) {
+        if (!$merchantProductCollectionTransfer->getMerchantProducts()->count()) {
             return;
         }
 
         $productAbstractIds = [];
 
-        foreach ($merchantProductTransfers as $merchantProductTransfer) {
+        foreach ($merchantProductCollectionTransfer->getMerchantProducts() as $merchantProductTransfer) {
             $productAbstractIds[] = $merchantProductTransfer->getIdProductAbstract();
         }
 

@@ -23,6 +23,8 @@ class MerchantProductStorageToProductStorageClientBridge implements MerchantProd
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param int $idProductAbstract
      * @param string $localeName
      *

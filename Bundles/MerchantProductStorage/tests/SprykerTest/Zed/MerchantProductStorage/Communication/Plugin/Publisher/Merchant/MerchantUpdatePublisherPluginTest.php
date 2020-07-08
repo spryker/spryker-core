@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct;
+namespace SprykerTest\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -13,8 +13,10 @@ use Generated\Shared\Transfer\MerchantProductTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\Kernel\Container as ZedContainer;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
+use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant\MerchantUpdatePublisherPlugin;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
 
@@ -27,12 +29,17 @@ use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
  * @group Communication
  * @group Plugin
  * @group Publisher
- * @group MerchantProduct
- * @group MerchantProductWritePublisherPluginTest
+ * @group Merchant
+ * @group MerchantUpdatePublisherPluginTest
  * Add your own group annotations below this line
  */
-class MerchantProductWritePublisherPluginTest extends Unit
+class MerchantUpdatePublisherPluginTest extends Unit
 {
+    /**
+     * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\Merchant\MerchantUpdatePublisherPlugin
+     */
+    protected $merchantUpdatePublisherPlugin;
+
     /**
      * @var \Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin
      */
@@ -62,13 +69,14 @@ class MerchantProductWritePublisherPluginTest extends Unit
             ];
         });
 
+        $this->merchantUpdatePublisherPlugin = new MerchantUpdatePublisherPlugin();
         $this->merchantProductWritePublisherPlugin = new MerchantProductWritePublisherPlugin();
     }
 
     /**
      * @return void
      */
-    public function testMerchantProductWritePublisherPlugin(): void
+    public function testMerchantUpdatePublisherPlugin(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -90,9 +98,21 @@ class MerchantProductWritePublisherPluginTest extends Unit
             $eventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
         );
-        $productAbstractStorageEntity = $this->tester->getAbstractProductStorageByIdProductAbstract($merchantProductTransfer->getIdProductAbstract());
+
+        $merchantTransfer->setIsActive(false);
+        $this->tester->updateMerchant($merchantTransfer);
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
+        ];
+        $this->merchantUpdatePublisherPlugin->handleBulk(
+            $eventTransfers,
+            MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE
+        );
+        $productAbstractStorageEntityWithoutMerchant = $this->tester->getAbstractProductStorageByIdProductAbstract(
+            $merchantProductTransfer->getIdProductAbstract()
+        );
 
         // Assert
-        $this->assertSame($productAbstractStorageEntity->getData()['merchant_reference'], $merchantTransfer->getMerchantReference());
+        $this->assertNull($productAbstractStorageEntityWithoutMerchant->getData()['merchant_reference']);
     }
 }

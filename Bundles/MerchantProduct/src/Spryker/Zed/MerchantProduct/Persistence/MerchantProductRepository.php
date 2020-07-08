@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProduct\Persistence;
 
+use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
@@ -44,25 +45,29 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     /**
      * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\MerchantProductTransfer[]
+     * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
      */
-    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): array
+    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
     {
         $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
 
-        $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
+        $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
 
         $merchantProductAbstractEntities = $merchantProductAbstractQuery->find();
 
-        $merchantProductTransfers = [];
+        $merchantProductCollectionTransfer = new MerchantProductCollectionTransfer();
         $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
 
         foreach ($merchantProductAbstractEntities as $merchantProductAbstractEntity) {
-            $merchantProductTransfers[] = $merchantProductMapper
-                ->mapMerchantProductEntityToMerchantProductTransfer($merchantProductAbstractEntity, new MerchantProductTransfer());
+            $merchantProductCollectionTransfer->addMerchantProduct(
+                $merchantProductMapper->mapMerchantProductEntityToMerchantProductTransfer(
+                    $merchantProductAbstractEntity,
+                    new MerchantProductTransfer()
+                )
+            );
         }
 
-        return $merchantProductTransfers;
+        return $merchantProductCollectionTransfer;
     }
 
     /**

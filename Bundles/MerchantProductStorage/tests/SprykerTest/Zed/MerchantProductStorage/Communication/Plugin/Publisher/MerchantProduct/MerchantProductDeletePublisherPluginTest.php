@@ -77,7 +77,7 @@ class MerchantProductDeletePublisherPluginTest extends Unit
      */
     public function testMerchantProductDeletePublisherPlugin(): void
     {
-        //Arrange
+        // Arrange
         $productAbstract = $this->tester->haveFullProduct();
 
         $unpublishEventTransfers = [
@@ -86,14 +86,14 @@ class MerchantProductDeletePublisherPluginTest extends Unit
             ]),
         ];
 
-        //Act
+        // Act
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $unpublishEventTransfers,
             MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_UNPUBLISH
         );
         $productAbstractStorage = $this->tester->getAbstractProductStorageByIdProductAbstract($productAbstract->getFkProductAbstract());
 
-        //Assert
+        // Assert
         $this->assertNull($productAbstractStorage->getData()['merchant_reference']);
     }
 }
