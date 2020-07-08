@@ -102,7 +102,7 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
     {
         $propelConfig = $this->getConfig()->getPropelConfig();
 
-        return $propelConfig['database']['connections']['default']['slaves'] ?: null;
+        return $propelConfig['database']['connections']['default']['slaves'] ?? null;
     }
 
     /**
