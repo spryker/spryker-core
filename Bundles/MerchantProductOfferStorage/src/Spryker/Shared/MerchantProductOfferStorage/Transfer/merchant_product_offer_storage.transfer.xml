@@ -18,7 +18,6 @@
         <property name="isDefault" type="bool"/>
         <property name="idProductConcrete" type="int"/>
         <property name="idProductAbstract" type="int"/>
-        <property name="price" type="CurrentProductPrice"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">
