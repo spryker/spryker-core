@@ -249,4 +249,18 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkItemProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters out products which have measurement unit available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     * - Requires ProductConcreteTransfer::fkProductAbstract to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array;
 }

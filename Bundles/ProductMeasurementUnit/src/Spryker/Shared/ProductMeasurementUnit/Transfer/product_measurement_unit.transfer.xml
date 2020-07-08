@@ -92,4 +92,9 @@
         <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+    </transfer>
+
 </transfers>
