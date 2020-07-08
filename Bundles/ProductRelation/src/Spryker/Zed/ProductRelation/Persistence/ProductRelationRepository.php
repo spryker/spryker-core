@@ -197,7 +197,7 @@ class ProductRelationRepository extends AbstractRepository implements ProductRel
     /**
      * @return int
      */
-    public function getActiveProductRelationsCount(): int
+    public function getActiveProductRelationCount(): int
     {
         return $this->getFactory()
             ->getProductRelationQueryContainer()

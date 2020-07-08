@@ -75,7 +75,7 @@ interface ProductRelationRepositoryInterface
     /**
      * @return int
      */
-    public function getActiveProductRelationsCount(): int;
+    public function getActiveProductRelationCount(): int;
 
     /**
      * @return \Generated\Shared\Transfer\ProductRelationTypeTransfer[]

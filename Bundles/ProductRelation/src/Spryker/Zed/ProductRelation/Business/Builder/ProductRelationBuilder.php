@@ -56,7 +56,7 @@ class ProductRelationBuilder implements ProductRelationBuilderInterface
     public function rebuildRelations(): void
     {
         $isInstancePoolingDisabledSuccessfully = Propel::disableInstancePooling();
-        $productRelationsCount = $this->productRelationRepository->getActiveProductRelationsCount();
+        $productRelationsCount = $this->productRelationRepository->getActiveProductRelationCount();
 
         if (!$productRelationsCount) {
             return;
