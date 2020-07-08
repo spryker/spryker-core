@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\MerchantProductStorage;
 use Codeception\Actor;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorage;
 use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
+use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 /**
  * Inherited Methods
@@ -41,5 +42,13 @@ class MerchantProductStorageTester extends Actor
         return SpyProductAbstractStorageQuery::create()
             ->filterByFkProductAbstract($idProductAbstract)
             ->findOne();
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\MerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantFacadeInterface
+    {
+        return $this->getLocator()->merchant()->facade();
     }
 }

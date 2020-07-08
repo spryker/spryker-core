@@ -49,26 +49,6 @@ class MerchantHelper extends Module
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantTransfer
-     */
-    public function updateMerchant(MerchantTransfer $merchantTransfer): MerchantTransfer
-    {
-        $merchantResponseTransfer = $this->getLocator()
-            ->merchant()
-            ->facade()
-            ->updateMerchant($merchantTransfer);
-        $merchantTransfer = $merchantResponseTransfer->getMerchant();
-
-        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
-            $this->getMerchantQuery()->filterByIdMerchant($merchantTransfer->getIdMerchant())->delete();
-        });
-
-        return $merchantTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer
      * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer

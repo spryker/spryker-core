@@ -100,7 +100,7 @@ class MerchantUpdatePublisherPluginTest extends Unit
         );
 
         $merchantTransfer->setIsActive(false);
-        $this->tester->updateMerchant($merchantTransfer);
+        $this->tester->getMerchantFacade()->updateMerchant($merchantTransfer);
         $eventTransfers = [
             (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
         ];
