@@ -32,6 +32,7 @@
     <transfer name="MerchantProductCriteria">
         <property name="merchantProductAbstractIds" type="int[]" singular="merchantProductAbstractId"/>
         <property name="idProductAbstract" type="int"/>
+        <property name="merchantIds" type="int[]" singular="idMerchant"/>
     </transfer>
 
     <transfer name="ProductOfferStorageCriteria">
@@ -40,5 +41,10 @@
 
     <transfer name="Merchant">
         <property name="merchantReference" type="string"/>
+        <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantProductCollection">
+        <property name="merchantProducts" type="MerchantProduct[]" singular="merchantProduct"/>
     </transfer>
 </transfers>
