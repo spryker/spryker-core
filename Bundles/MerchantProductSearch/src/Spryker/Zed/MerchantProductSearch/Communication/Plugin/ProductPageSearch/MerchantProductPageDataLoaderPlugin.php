@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader;
+namespace Spryker\Zed\MerchantProductSearch\Communication\Plugin\ProductPageSearch;
 
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
@@ -14,9 +14,9 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoaderPluginInterface;
 
 /**
- * @method \Spryker\Zed\MerchantProductOfferSearch\Persistence\MerchantProductOfferSearchRepositoryInterface getRepository()
- * @method \Spryker\Zed\MerchantProductOfferSearch\Business\MerchantProductOfferSearchFacadeInterface getFacade()
- * @method \Spryker\Zed\MerchantProductOfferSearch\MerchantProductOfferSearchConfig getConfig()
+ * @method \Spryker\Zed\MerchantProductSearch\Persistence\MerchantProductSearchRepositoryInterface getRepository()
+ * @method \Spryker\Zed\MerchantProductSearch\Business\MerchantProductSearchFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantProductSearch\MerchantProductSearchConfig getConfig()
  */
 class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
@@ -31,12 +31,12 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
      *
      * @return \Generated\Shared\Transfer\ProductPageLoadTransfer
      */
-    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer)
+    public function expandProductPageDataTransfer(ProductPageLoadTransfer $productPageLoadTransfer): ProductPageLoadTransfer
     {
         $productAbstractIds = $productPageLoadTransfer->getProductAbstractIds();
 
         $productAbstractMerchantData = $this->getFacade()
-            ->getProductAbstractMerchantDataByProductAbstractIds($productAbstractIds);
+            ->getMerchantDataByProductAbstractIds($productAbstractIds);
 
         return $this->setMerchantDataToPayloadTransfers($productPageLoadTransfer, $productAbstractMerchantData);
     }
@@ -76,8 +76,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
             }
 
             $merchantNames = $this->mergeMerchantNames($payloadTransfer, $productAbstractMerchantTransfer);
-            $payloadTransfer->setMerchantNames($merchantNames)
-                ->setMerchantReferences($productAbstractMerchantTransfer->getMerchantReferences());
+            $payloadTransfer->setMerchantNames($merchantNames);
         }
 
         return $payloadTransfer;
