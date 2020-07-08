@@ -70,21 +70,43 @@ trait ActiveRecordBatchProcessorTrait
      */
     public function persist(ActiveRecordInterface $entity): void
     {
-        $className = get_class($entity);
-
         if (!$entity->isModified()) {
             return;
         }
 
         if ($entity->isNew()) {
-            if (!isset($this->entitiesToInsert[$className])) {
-                $this->entitiesToInsert[$className] = [];
-            }
-
-            $this->entitiesToInsert[$className][] = $entity;
+            $this->addEntityToInsert($entity);
 
             return;
         }
+
+        $this->addEntityToUpdate($entity);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @return void
+     */
+    protected function addEntityToInsert(ActiveRecordInterface $entity): void
+    {
+        $className = get_class($entity);
+
+        if (!isset($this->entitiesToInsert[$className])) {
+            $this->entitiesToInsert[$className] = [];
+        }
+
+        $this->entitiesToInsert[$className][] = $entity;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @return void
+     */
+    protected function addEntityToUpdate(ActiveRecordInterface $entity): void
+    {
+        $className = get_class($entity);
 
         if (!isset($this->entitiesToUpdate[$className])) {
             $this->entitiesToUpdate[$className] = [];
@@ -456,25 +478,12 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entities as $entity) {
             $entity = $this->updateDateTimes($entity);
 
-            $valuesForUpdate = [];
-            $idColumnValuesAndTypes = [];
-
-            $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
-
-            foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
-                if ($columnMap->isPrimaryKey()) {
-                    $idColumnValuesAndTypes[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
-
-                    continue;
-                }
-
-                $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
-                $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
-
-                if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForUpdate[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
-                }
-            }
+            [$valuesForUpdate, $idColumnValuesAndTypes] = $this->prepareValuesForUpdate(
+                $columnMapCollection,
+                $tableMapClass,
+                $tableMapClassName,
+                $entity
+            );
 
             $columnNamesForUpdateWithPdoPlaceholder = array_map(function ($columnName) use (&$keyIndex, $tableMapClass) {
                 return sprintf('%s=:p%d', $this->quote($columnName, $tableMapClass), $keyIndex++);
@@ -500,6 +509,42 @@ trait ActiveRecordBatchProcessorTrait
         $statement = $this->bindUpdateValues($statement, $values);
 
         return $statement;
+    }
+
+    /**
+     * @param array $columnMapCollection
+     * @param \Propel\Runtime\Map\TableMap $tableMapClass
+     * @param string $tableMapClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @return array
+     */
+    protected function prepareValuesForUpdate(
+        array $columnMapCollection,
+        TableMap $tableMapClass,
+        string $tableMapClassName,
+        ActiveRecordInterface $entity
+    ): array {
+        $valuesForUpdate = [];
+        $idColumnValuesAndTypes = [];
+        $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
+
+        foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+            if ($columnMap->isPrimaryKey()) {
+                $idColumnValuesAndTypes[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
+
+                continue;
+            }
+
+            $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
+            $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
+
+            if ($entity->isColumnModified($fullyQualifiedColumnName)) {
+                $valuesForUpdate[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
+            }
+        }
+
+        return [$valuesForUpdate, $idColumnValuesAndTypes];
     }
 
     /**
