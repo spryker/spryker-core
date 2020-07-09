@@ -57,9 +57,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueueClient(Container $container)
     {
-        $container[self::CLIENT_QUEUE] = function () use ($container) {
+        $container->set(static::CLIENT_QUEUE, function () use ($container) {
             return $container->getLocator()->queue()->client();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFilesystem(Container $container)
     {
-        $container[static::FILESYSTEM] = function () {
+        $container->set(static::FILESYSTEM, function () {
             return new Filesystem();
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLogListener(Container $container)
     {
-        $container[static::LOG_LISTENERS] = function () {
+        $container->set(static::LOG_LISTENERS, function () {
             return $this->getLogListeners();
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLogHandlers(Container $container)
     {
-        $container[static::LOG_HANDLERS] = function () {
+        $container->set(static::LOG_HANDLERS, function () {
             return $this->getLogHandlers();
-        };
+        });
 
         return $container;
     }
@@ -129,9 +129,9 @@ class LogDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProcessors(Container $container)
     {
-        $container[static::LOG_PROCESSORS] = function () {
+        $container->set(static::LOG_PROCESSORS, function () {
             return $this->getLogProcessors();
-        };
+        });
 
         return $container;
     }

@@ -74,6 +74,8 @@ class CheckTimeoutConsole extends Console
         if ($output->isVerbose()) {
             $output->writeln('Affected: ' . $affected);
         }
+
+        return static::CODE_SUCCESS;
     }
 
     /**

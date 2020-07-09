@@ -28,17 +28,19 @@ class ProductViewExpander implements ProductViewExpanderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
-     * @param string $locale
+     * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expand(ProductViewTransfer $productViewTransfer, string $locale): ProductViewTransfer
+    public function expand(ProductViewTransfer $productViewTransfer, string $localeName, string $storeName): ProductViewTransfer
     {
         $productViewTransfer->requireIdProductAbstract();
 
         $productLabelDictionaryItems = $this->productAbstractLabelReader->findLabelsByIdProductAbstract(
             $productViewTransfer->getIdProductAbstract(),
-            $locale
+            $localeName,
+            $storeName
         );
 
         return $productViewTransfer->setLabels(new ArrayObject($productLabelDictionaryItems));

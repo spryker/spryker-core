@@ -214,6 +214,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      */
     protected function checkPriceProductOnFilter(PriceProductTransfer $priceProductTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
+        if ($priceProductTransfer->getSkuProduct() !== $priceProductFilterTransfer->getSku()) {
+            return false;
+        }
+
         if ($priceProductFilterTransfer->getPriceDimension() !== null) {
             $priceProductTransfer->requirePriceDimension();
 

@@ -39,7 +39,7 @@ class QueueMessageHelperTest extends Unit
     protected $tester;
 
     /**
-     * @var \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface;
+     * @var \Spryker\Zed\DataImport\Business\DataImporter\Queue\QueueMessageHelperInterface
      */
     protected $queueMessageHelper;
 

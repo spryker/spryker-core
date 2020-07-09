@@ -15,7 +15,7 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
      */
@@ -24,7 +24,7 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -33,7 +33,7 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
@@ -45,7 +45,7 @@ interface ProductOptionStorageQueryContainerInterface extends QueryContainerInte
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */

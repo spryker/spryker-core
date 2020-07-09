@@ -22,7 +22,7 @@ class ContentStorageListener extends AbstractPlugin implements EventBulkHandlerI
     /**
      * @api
      *
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @throws \Propel\Runtime\Exception\PropelException

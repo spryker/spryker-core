@@ -15,7 +15,7 @@ use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
 /**
- * Deprecated: Please use `\Spryker\Shared\Application\Application` instead.
+ * Deprecated: Use {@link \Spryker\Shared\Application\Application} instead.
  */
 class Application extends SilexApplication
 {
@@ -39,8 +39,8 @@ class Application extends SilexApplication
     public const REQUEST_STACK = 'request_stack';
 
     /**
-     * @deprecated Use `\Spryker\Zed\Router\RouterDependencyProvider::getRouterPlugins()` instead.
-     * @deprecated Use `\Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Router\RouterDependencyProvider::getRouterPlugins()} instead.
+     * @deprecated Use {@link \Spryker\Yves\Router\RouterDependencyProvider::getRouterPlugins()} instead.
      *
      * @param \Symfony\Component\Routing\RouterInterface $router The router
      * @param int $priority The priority of the router

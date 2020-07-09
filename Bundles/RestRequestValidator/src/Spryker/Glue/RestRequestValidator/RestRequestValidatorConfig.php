@@ -47,11 +47,23 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use getValidationCodeBucketCacheFilenamePattern instead.
+     *
      * @return string
      */
     public function getValidationCacheFilenamePattern(): string
     {
         return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::VALIDATION_CACHE_FILENAME_PATTERN;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getValidationCodeBucketCacheFilenamePattern(): string
+    {
+        return APPLICATION_SOURCE_DIR . RestRequestValidatorConfigShared::CODE_BUCKET_VALIDATION_CACHE_FILENAME_PATTERN;
     }
 
     /**

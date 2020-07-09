@@ -29,9 +29,9 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsBlockCategoryStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -43,9 +43,9 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new CmsBlockCategoryStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class CmsBlockCategoryStorageDependencyProvider extends AbstractBundleDependency
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_BLOCK_CATEGORY_CONNECTOR, function (Container $container) {
             return new CmsBlockCategoryStorageToCmsBlockCategoryConnectorQueryContainerBridge($container->getLocator()->cmsBlockCategoryConnector()->queryContainer());
-        };
+        });
 
         return $container;
     }

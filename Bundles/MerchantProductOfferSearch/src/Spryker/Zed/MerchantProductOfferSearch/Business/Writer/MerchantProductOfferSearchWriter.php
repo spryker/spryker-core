@@ -62,20 +62,6 @@ class MerchantProductOfferSearchWriter implements MerchantProductOfferSearchWrit
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProfileEvents(array $eventTransfers): void
-    {
-        $merchantProfileIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-
-        $productAbstractIds = $this->merchantProductOfferSearchRepository->getProductAbstractIdsByMerchantProfileIds($merchantProfileIds);
-
-        $this->pageSearchFacade->refresh($productAbstractIds);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
     public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void
     {
         $productOfferIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);

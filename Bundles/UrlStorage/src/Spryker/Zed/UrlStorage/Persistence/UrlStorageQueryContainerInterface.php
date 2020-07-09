@@ -42,7 +42,7 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */
@@ -51,7 +51,7 @@ interface UrlStorageQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery
      */

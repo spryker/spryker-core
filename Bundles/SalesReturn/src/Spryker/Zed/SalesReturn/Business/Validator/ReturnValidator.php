@@ -17,6 +17,7 @@ use Spryker\Zed\SalesReturn\SalesReturnConfig;
 class ReturnValidator implements ReturnValidatorInterface
 {
     protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR = 'return.create_return.validation.items_error';
+    protected const GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR = 'return.create_return.validation.items_currency_error';
     protected const GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR = 'return.create_return.validation.returnable_items_error';
     protected const GLOSSARY_KEY_CREATE_RETURN_STORE_ERROR = 'return.create_return.validation.store_error';
 
@@ -56,6 +57,10 @@ class ReturnValidator implements ReturnValidatorInterface
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_ERROR);
         }
 
+        if (!$this->checkOrderItemCurrencies($itemTransfers)) {
+            return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_ITEM_CURRENCY_ERROR);
+        }
+
         if (!$this->isOrderItemsReturnable($itemTransfers)) {
             return $this->createErrorReturnResponse(static::GLOSSARY_KEY_CREATE_RETURN_RETURNABLE_ITEM_ERROR);
         }
@@ -77,6 +82,24 @@ class ReturnValidator implements ReturnValidatorInterface
     {
         foreach ($itemTransfers as $itemTransfer) {
             if (!$itemTransfer->getIsReturnable()) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return bool
+     */
+    protected function checkOrderItemCurrencies(ArrayObject $itemTransfers): bool
+    {
+        $currencyIsoCode = $itemTransfers->getIterator()->current()->getCurrencyIsoCode();
+
+        foreach ($itemTransfers as $itemTransfer) {
+            if ($itemTransfer->getCurrencyIsoCode() !== $currencyIsoCode) {
                 return false;
             }
         }

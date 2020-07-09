@@ -44,6 +44,8 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
+     * @deprecated Use {@link saveCacheForCodeBucket()} instead.
+     *
      * @param array $validatorConfig
      * @param string $storeName
      *
@@ -58,6 +60,28 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     }
 
     /**
+     * @param array $validatorConfig
+     * @param string $codeBucket
+     *
+     * @return void
+     */
+    public function saveCacheForCodeBucket(array $validatorConfig, string $codeBucket): void
+    {
+        $outdatedConfigFiles = glob($this->getCodeBucketCacheFilePath($codeBucket));
+
+        if (!empty($outdatedConfigFiles)) {
+            $this->filesystem->remove($outdatedConfigFiles);
+        }
+
+        $this->filesystem->dumpFile(
+            $this->getCodeBucketCacheFilePath($codeBucket),
+            $this->yaml->dump($validatorConfig)
+        );
+    }
+
+    /**
+     * @deprecated Use {@link getCodeBucketCacheFilePath()} instead.
+     *
      * @param string $storeName
      *
      * @return string
@@ -65,5 +89,15 @@ class RestRequestValidatorCacheSaver implements RestRequestValidatorCacheSaverIn
     protected function getStoreCacheFilePath(string $storeName): string
     {
         return sprintf($this->config->getCacheFilePathPattern(), $storeName);
+    }
+
+    /**
+     * @param string $codeBucket
+     *
+     * @return string
+     */
+    protected function getCodeBucketCacheFilePath(string $codeBucket): string
+    {
+        return sprintf($this->config->getCodeBucketCacheFilePathPattern(), $codeBucket);
     }
 }

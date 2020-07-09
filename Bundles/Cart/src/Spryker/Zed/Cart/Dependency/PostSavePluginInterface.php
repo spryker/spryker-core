@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cart\Dependency;
 use Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface as SprykerCartOperationPostSavePluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationPostSavePluginInterface} instead.
  */
 interface PostSavePluginInterface extends SprykerCartOperationPostSavePluginInterface
 {

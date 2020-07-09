@@ -63,11 +63,12 @@ class ProductLabelStorageCommunicationTester extends Actor
     }
 
     /**
+     * @param string $storeName
      * @param string $localeName
      *
      * @return int
      */
-    public function getProductLabelsCountByLocaleName(string $localeName): int
+    public function getProductLabelsCountByStoreNameAndLocaleName(string $storeName, string $localeName): int
     {
         return SpyProductLabelQuery::create()
             ->filterByValidTo(null)
@@ -76,6 +77,11 @@ class ProductLabelStorageCommunicationTester extends Actor
             ->useSpyProductLabelLocalizedAttributesQuery()
                 ->useSpyLocaleQuery()
                     ->filterByLocaleName($localeName)
+                ->endUse()
+            ->endUse()
+            ->useProductLabelStoreQuery()
+                ->useStoreQuery()
+                    ->filterByName($storeName)
                 ->endUse()
             ->endUse()
             ->count();

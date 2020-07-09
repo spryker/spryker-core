@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ConfigurableBundleStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\ConfigurableBundleStorage\Persistence\Map\SpyConfigurableBundleTemplateStorageTableMap;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -59,21 +58,10 @@ class ConfigurableBundleTemplateSynchronizationDataBulkPlugin extends AbstractPl
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        $synchronizationDataTransfers = [];
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
-
-        $configurableBundleTemplateStorageEntities = $this->getRepository()
-            ->getFilteredConfigurableBundleTemplateStorageEntities($filterTransfer, $ids);
-
-        foreach ($configurableBundleTemplateStorageEntities as $configurableBundleTemplateStorageEntity) {
-            $synchronizationDataTransfer = new SynchronizationDataTransfer();
-            $synchronizationDataTransfer->setData($configurableBundleTemplateStorageEntity->getData());
-            $synchronizationDataTransfer->setKey($configurableBundleTemplateStorageEntity->getKey());
-
-            $synchronizationDataTransfers[] = $synchronizationDataTransfer;
-        }
-
-        return $synchronizationDataTransfers;
+        return $this->getRepository()->getFilteredConfigurableBundleTemplateStorageDataTransfers(
+            $this->createFilterTransfer($offset, $limit),
+            $ids
+        );
     }
 
     /**

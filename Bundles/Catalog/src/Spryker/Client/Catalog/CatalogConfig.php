@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CatalogConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     * @deprecated Use {@link \Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */
@@ -35,7 +35,7 @@ class CatalogConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()` instead.
+     * @deprecated Use {@link \Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()} instead.
      *
      * @return int
      */

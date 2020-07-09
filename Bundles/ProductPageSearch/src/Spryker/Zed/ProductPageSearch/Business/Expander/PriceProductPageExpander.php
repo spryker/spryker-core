@@ -56,7 +56,7 @@ class PriceProductPageExpander implements PriceProductPageExpanderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[][][]
      */

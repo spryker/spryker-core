@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\StringFacetAggregation;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetExtractor` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\FacetExtractor} instead.
  */
 class FacetExtractor extends AbstractAggregationExtractor implements AggregationExtractorInterface
 {

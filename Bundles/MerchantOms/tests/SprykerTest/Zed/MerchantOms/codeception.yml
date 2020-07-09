@@ -11,6 +11,23 @@ coverage:
         include:
             - '../../../../src/*'
 suites:
+    Communication:
+        path: Communication
+        class_name: MerchantOmsCommunicationTester
+        modules:
+            enabled:
+                - Asserts
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+                - \SprykerTest\Zed\MerchantSalesOrder\Helper\MerchantSalesHelper
+                - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
+
     Business:
         path: Business
         class_name: MerchantOmsBusinessTester
@@ -20,9 +37,12 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\Environment
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
                 - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
                 - \SprykerTest\Zed\MerchantSalesOrder\Helper\MerchantSalesHelper
                 - \SprykerTest\Zed\StateMachine\Helper\StateMachineHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper

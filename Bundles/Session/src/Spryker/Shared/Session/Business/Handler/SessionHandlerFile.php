@@ -11,7 +11,7 @@ use SessionHandlerInterface;
 use Spryker\Shared\Session\Dependency\Service\SessionToMonitoringServiceInterface;
 
 /**
- * @deprecated Use `Spryker\Shared\SessionFile\Handler\SessionHandlerFile` instead.
+ * @deprecated Use {@link \Spryker\Shared\SessionFile\Handler\SessionHandlerFile} instead.
  */
 class SessionHandlerFile implements SessionHandlerInterface
 {

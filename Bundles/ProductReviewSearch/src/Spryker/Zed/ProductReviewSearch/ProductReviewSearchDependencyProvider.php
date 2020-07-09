@@ -35,13 +35,13 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductReviewSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
-        $container[static::FACADE_PRODUCT_PAGE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_PAGE_SEARCH, function (Container $container) {
             return new ProductReviewSearchToProductPageSearchFacadeBridge($container->getLocator()->productPageSearch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -53,13 +53,13 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductReviewSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewSearchToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());
-        };
+        });
 
         $container = $this->addPropelProductReviewQuery($container);
 
@@ -87,9 +87,9 @@ class ProductReviewSearchDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductReviewQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_REVIEW] = function (): SpyProductReviewQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_REVIEW, $container->factory(function (): SpyProductReviewQuery {
             return SpyProductReviewQuery::create();
-        };
+        }));
 
         return $container;
     }

@@ -42,5 +42,7 @@ class ExportReservationConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->exportReservation();
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -8,7 +8,7 @@
 namespace Spryker\Client\MerchantSearch\Zed;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Client\MerchantSearch\Dependency\Client\MerchantSearchToZedRequestClientInterface;
 
 class MerchantSearchStub implements MerchantSearchStubInterface
@@ -27,16 +27,16 @@ class MerchantSearchStub implements MerchantSearchStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\MerchantSearch\Communication\Controller\GatewayController::getActiveMerchantsAction()
+     * @uses \Spryker\Zed\MerchantSearch\Communication\Controller\GatewayController::getAction()
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function getActiveMerchants(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer
     {
         /** @var \Generated\Shared\Transfer\MerchantCollectionTransfer $merchantCollectionTransfer */
-        $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get-active-merchants', $merchantCriteriaFilterTransfer);
+        $merchantCollectionTransfer = $this->zedRequestClient->call('/merchant-search/gateway/get', $merchantCriteriaTransfer);
 
         return $merchantCollectionTransfer;
     }

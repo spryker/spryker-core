@@ -65,6 +65,8 @@ class WebProfilerServiceProvider extends AbstractPlugin implements ServiceProvid
                 }
             }
         }
+
+        return null;
     }
 
     /**

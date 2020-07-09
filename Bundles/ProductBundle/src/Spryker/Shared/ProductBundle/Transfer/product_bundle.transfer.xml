@@ -63,6 +63,9 @@
         <property name="sumGrossPrice" type="int"/>
         <property name="name" type="string"/>
         <property name="idSalesOrderItem" type="int"/>
+        <property name="productBundle" type="Item"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -102,6 +105,7 @@
         <property name="abstractSku" type="string"/>
         <property name="stocks" type="StockProduct[]" singular="stock"/>
         <property name="isActive" type="bool"/>
+        <property name="attributes" type="array" singular="attribute"/>
     </transfer>
 
     <transfer name="ProductBundleGroup">
@@ -188,6 +192,19 @@
     <transfer name="CalculableObject">
         <property name="items" type="Item[]" singular="item"/>
         <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="orderItem" type="Item"/>
+        <property name="reason" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
     </transfer>
 
 </transfers>

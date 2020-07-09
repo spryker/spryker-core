@@ -39,6 +39,7 @@ class SessionConfig extends AbstractBundleConfig
             'cookie_domain' => $this->getSessionCookieDomain(),
             'cookie_path' => $this->getSessionCookiePath(),
             'cookie_httponly' => true,
+            'cookie_samesite' => $this->get(SessionConstants::YVES_SESSION_COOKIE_SAMESITE, ''),
         ];
 
         return $sessionStorageOptions;
@@ -102,7 +103,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return array|string
      */
@@ -120,7 +121,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return string
      */
@@ -138,7 +139,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return array
      */
@@ -148,7 +149,7 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param string $protocol
      * @param string $host
@@ -182,7 +183,7 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param string $protocol
      *
@@ -194,7 +195,7 @@ class SessionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @param string $protocol
      *
@@ -208,7 +209,7 @@ class SessionConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface} instead.
      *
      * @return string
      */

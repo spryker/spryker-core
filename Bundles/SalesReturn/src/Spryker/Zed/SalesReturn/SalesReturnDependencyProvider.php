@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeBridge;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeBridge;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeBridge;
+use Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceBridge;
 
 /**
  * @method \Spryker\Zed\SalesReturn\SalesReturnConfig getConfig()
@@ -22,6 +23,8 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_OMS = 'FACADE_OMS';
+
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     public const PROPEL_QUERY_SALES_ORDER_ITEM = 'PROPEL_QUERY_SALES_ORDER_ITEM';
 
@@ -37,6 +40,7 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addStoreFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addOmsFacade($container);
+        $container = $this->addUtilDateTimeService($container);
 
         return $container;
     }
@@ -109,6 +113,22 @@ class SalesReturnDependencyProvider extends AbstractBundleDependencyProvider
         $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
         }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addUtilDateTimeService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
+            return new SalesReturnToUtilDateTimeServiceBridge(
+                $container->getLocator()->utilDateTime()->service()
+            );
+        });
 
         return $container;
     }

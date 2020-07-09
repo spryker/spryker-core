@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantSearchEventListener;
@@ -53,8 +53,7 @@ class MerchantSearchEventListenerTest extends Unit
         $beforeCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
         $productConcreteTransfer = $this->tester->haveProduct();
-        $merchantTransfer = $this->tester->haveMerchant();
-        $this->tester->haveMerchantProfile($merchantTransfer, [MerchantProfileTransfer::IS_ACTIVE => true]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true]);
         $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),

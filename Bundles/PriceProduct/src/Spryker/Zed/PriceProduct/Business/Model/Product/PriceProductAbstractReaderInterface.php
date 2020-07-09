@@ -88,7 +88,7 @@ interface PriceProductAbstractReaderInterface
     ): array;
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -116,7 +116,7 @@ interface PriceProductAbstractReaderInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
 }

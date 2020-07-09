@@ -23,7 +23,7 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceProductQueryContainer;
 
@@ -245,7 +245,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
      * @param string[] $skus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -254,7 +254,7 @@ class PriceProductConcreteReader implements PriceProductConcreteReaderInterface
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductConcrete($priceProductTransfers);
 
-        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
+        return $priceProductTransfers;
     }
 
     /**

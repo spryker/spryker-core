@@ -1,0 +1,43 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Nopayment\\Persistence\\SpyNopaymentPaid> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Business/Nopayment/Paid.php",
+            "snippet": "        return ($this->queryContainer->queryOrderItem($orderItem)->count() > 0);",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPriceToPay on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Zed/Nopayment/Communication/Plugin/Checkout/NopaymentPreCheckPlugin.php",
+            "snippet": "        if ($quoteTransfer->getTotals()->getPriceToPay() > 0) {",
+            "selected_text": "getPriceToPay",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Nopayment/src/Spryker/Yves/Nopayment/Handler/NopaymentHandler.php",
+            "snippet": "        $quoteTransfer->setPayment($paymentTransfer);",
+            "selected_text": "setPayment",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

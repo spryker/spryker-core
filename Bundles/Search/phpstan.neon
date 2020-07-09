@@ -3,10 +3,10 @@ parameters:
         - "#Parameter \\#2 \\$callback of function array_filter expects callable\\(mixed, mixed\\): bool, 'strlen' given.#"
         -
             message: '#Call to an undefined method .+QueryInterface::.+\(\).#'
-            path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php'
         -
             message: '#If condition is always false.#'
-            path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php'
         -
             message: '#If condition is always false.#'
-            path: 'vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php'

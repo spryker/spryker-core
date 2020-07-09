@@ -14,7 +14,7 @@ class NavigationStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
@@ -29,6 +29,16 @@ class NavigationStorageConfig extends AbstractBundleConfig
      * @return string|null
      */
     public function getNavigationSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

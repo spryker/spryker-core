@@ -34,9 +34,9 @@ class MessengerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new MessengerToSessionClientBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }

@@ -44,6 +44,15 @@
         <property name="idProductLabel" type="int"/>
     </transfer>
 
+    <transfer name="ProductLabelResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
     <transfer name="Money">
     </transfer>
 

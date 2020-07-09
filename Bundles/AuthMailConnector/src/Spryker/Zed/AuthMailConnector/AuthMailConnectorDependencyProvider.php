@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Container;
 class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MAIL = 'mail facade';
+    public const PLUGINS_AUTH_MAIL_EXPANDER = 'PLUGINS_AUTH_MAIL_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,6 +28,7 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
     {
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addMailFacade($container);
+        $container = $this->addAuthMailExpanderPlugins($container);
 
         return $container;
     }
@@ -38,10 +40,32 @@ class AuthMailConnectorDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new AuthMailConnectorToMailBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addAuthMailExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_AUTH_MAIL_EXPANDER, function () {
+            return $this->getAuthMailExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\AuthMailConnectorExtension\Dependency\Plugin\AuthMailExpanderPluginInterface[]
+     */
+    protected function getAuthMailExpanderPlugins(): array
+    {
+        return [];
     }
 }

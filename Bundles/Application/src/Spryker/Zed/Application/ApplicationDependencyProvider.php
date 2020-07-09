@@ -73,9 +73,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_ENCODING, function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addServiceProviders(Container $container)
     {
-        $container[self::SERVICE_PROVIDER] = function (Container $container) {
+        $container->set(static::SERVICE_PROVIDER, function (Container $container) {
             return $this->getServiceProviders($container);
-        };
+        });
 
         return $container;
     }
@@ -137,7 +137,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use getServiceProviders() instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -155,9 +155,9 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApiServiceProviders(Container $container)
     {
-        $container[self::SERVICE_PROVIDER_API] = function (Container $container) {
+        $container->set(static::SERVICE_PROVIDER_API, function (Container $container) {
             return $this->getApiServiceProviders($container);
-        };
+        });
 
         return $container;
     }
@@ -173,7 +173,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -181,15 +181,15 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addInternalCallServiceProviders(Container $container)
     {
-        $container[self::INTERNAL_CALL_SERVICE_PROVIDER] = function (Container $container) {
+        $container->set(static::INTERNAL_CALL_SERVICE_PROVIDER, function (Container $container) {
             return $this->getInternalCallServiceProviders($container);
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -201,7 +201,7 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::addServiceProviders()` instead.
+     * @deprecated Use {@link addServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -209,15 +209,15 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addInternalCallServiceProvidersWithAuthentication(Container $container)
     {
-        $container[self::INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION] = function (Container $container) {
+        $container->set(static::INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION, function (Container $container) {
             return $this->getInternalCallServiceProvidersWithAuthentication($container);
-        };
+        });
 
         return $container;
     }
 
     /**
-     * @deprecated Use `ApplicationDependencyProvider::getServiceProviders()` instead.
+     * @deprecated Use {@link getServiceProviders()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *

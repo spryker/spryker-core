@@ -539,7 +539,7 @@
         "items": {
             "oneOf": {
                 "0": {
-                    "$ref": "#\/components\/schemas\/RestTestAnnotationResourceRelationshipAttributes"
+                    "$ref": "#\/components\/schemas\/RestTestAnnotationResourceRelationshipResponseData"
                 }
             }
         },

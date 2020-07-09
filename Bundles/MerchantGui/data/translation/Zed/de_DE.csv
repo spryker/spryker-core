@@ -28,3 +28,14 @@ Name,Name
 "Overview of Merchants","Übersicht der Händler"
 "Registration number",Registrierungsnummer
 Save,Speichern
+"Is Active","Ist Aktiv"
+active,Aktiv
+inactive,Inaktiv
+Activate,Aktivieren
+Deactivate,Deaktivieren
+merchant.activated,"Händlerprofil erfolgreich aktiviert."
+merchant.deactivated,"Händlerprofil erfolgreich deaktiviert."
+Stores,Stores
+"Merchant Reference","Händler Referenz"
+"Merchant URL",Händler-URL
+"Create Merchant","Händler Erstellen"

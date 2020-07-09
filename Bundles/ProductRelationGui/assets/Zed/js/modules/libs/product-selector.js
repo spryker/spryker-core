@@ -58,14 +58,10 @@ ProductSelector.prototype.findSelectedProduct = function()
 ProductSelector.prototype.addClickEventToCheckbox = function(element)
 {
     var self = this;
-    $(element).on('click', function(event) {
-
-        var selectedProduct = $.parseJSON($(event.target).attr('data-row'));
-
-        self.updateSelectedProduct(selectedProduct);
-
-        self.selectProductNotice.hide();
-        self.idProductAbstractElement.val(selectedProduct['spy_product_abstract.id_product_abstract']);
+    $(element).on('click', function (event) {
+        $.get(self.selectProductUrl + $(event.target).data('select-product')).done(function (selectedProduct) {
+            self.updateSelectedProduct(selectedProduct);
+        })
     });
 };
 
@@ -75,6 +71,7 @@ ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
     var description = selectedProduct['spy_product_abstract_localized_attributes.description'];
     var categories = selectedProduct.assigned_categories;
     var imageUrl = selectedProduct['spy_product_image.external_url_small'];
+    var idProductAbstract = selectedProduct['spy_product_abstract.id_product_abstract'];
 
     this.selectProductNotice.hide();
 
@@ -83,6 +80,7 @@ ProductSelector.prototype.updateSelectedProduct = function (selectedProduct)
     this.selectedProductContainer.find('.product-name').text(name);
     this.selectedProductContainer.find('#product-description').text(description);
     this.selectedProductContainer.find('#product-category').text(categories);
+    this.idProductAbstractElement.val(idProductAbstract);
 };
 
 module.exports = ProductSelector;

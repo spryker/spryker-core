@@ -1,0 +1,58 @@
+Return,Rückgabe
+"Return Reference",Retourenreferenz
+Items,Artikel
+Actions,Aktionen
+View,Anzeigen
+"Return ID","Retoure ID"
+"Order Reference",Bestellreferenz
+"Returned Items","Retournierte Artikel"
+"Return Date","Retoure Datum"
+"Print Slip","Beleg drucken"
+"List of Returns","Alle Retouren"
+Returns,Retouren
+"Return Ref",Retourenref.
+Barcode,Barcode
+"Product SKU","Product SKU"
+"Product Name",Productname
+"Default Price",Standardpreis
+Qty,Anz
+"Total Price",Gesamtpreis
+"Return Reason",Rücksendegrund
+Reason,Grund
+"Order Ref",Orderref.
+"Return with id ""%id%"" was not found.","Retoure mit id ""%id%"" wurde nicht gefunden."
+"Items to Return","Artikeln zum Zurückgeben"
+"Remuneration Total",Rückerstattungsbetrag
+"Remuneration total",Rückerstattungsbetrag
+"Custom reason","Benutzerdefinierter Grund"
+"Select reason","Grund auswählen"
+"Return has not been created.","Rückgabe wurde nicht erstellt."
+"Order with id ""%id%"" was not found.","Bestellung mit ID ""%id%"" wurde nicht gefunden."
+"Return was successfully created.","Rückgabe wurde erfolgreich erstellt."
+"Create Return","Rückgabe erstellen"
+"Back to Order","Zurück zur Bestellung"
+"General information","Allgemeine Information"
+"Order reference",Bestellnummer
+"Select Items to Return","Artikeln zum Zurückgeben auswählen"
+Product,Produkt
+Quantity,Anzahl
+Price,Preis
+"Item total","Artikel Insgesamt"
+"Return Policy",Rücknahmegarantie
+State,Zustand
+"Create return","Rückgabe erstellen"
+"Requested return with ID ""%id%"" was not found.","Gewünschte Retoure mit ID ""%id%"" wurde nicht gefunden."
+"Customer reference",Kundennummer
+Customer,Kunde
+Name,Name
+Email,E-Mail
+"Retured Items","Retournierte Artikel"
+"Trigger all matching states","Alle passenden Stati anstoßen"
+Total,Gesamt
+"Back to Returns","Zurück zu Retouren"
+"Print Return Slip","Retourenbeleg drucken"
+"Overview of Return","Übersicht der Retoure"
+"selected items","ausgewählte Artikel"
+of,von
+"Item selected for return is not eligible for return anymore.","Der für die Rücksendung ausgewählte Artikel kann nicht mehr zurückgegeben werden."
+"Returned Products","Retournierte Artikel"

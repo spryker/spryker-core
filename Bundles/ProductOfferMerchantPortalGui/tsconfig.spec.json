@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/spec",
+    "types": [
+      "jasmine",
+      "node"
+    ]
+  },
+  "files": [
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/test.ts",
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/polyfills.ts"
+  ],
+  "include": [
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/**/*.spec.ts",
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/**/*.d.ts"
+  ]
+}

@@ -14,7 +14,7 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
@@ -39,6 +39,26 @@ class ProductLabelStorageConfig extends AbstractBundleConfig
      * @return string|null
      */
     public function getProductLabelDictionarySynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductAbstractLabelEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductLabelDictionaryEventQueueName(): ?string
     {
         return null;
     }

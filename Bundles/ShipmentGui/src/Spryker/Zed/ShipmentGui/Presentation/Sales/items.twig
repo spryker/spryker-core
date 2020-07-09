@@ -17,7 +17,7 @@
         {% for shipmentOrderItems in groupedOrderItemsByShipment %}
             <div class="row">
                 <div class="col-sm-9">
-                    <h3>Shipment {{ loop.index }} of {{ loop.length }}</h3>
+                    <h3>{{ 'Shipment' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
                 </div>
                 <div class="col-sm-3 text-right">
                     {% include '@ShipmentGui/Edit/_partials/edit-shipment-link.twig' %}
@@ -72,6 +72,8 @@
                 <tbody>
                     {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
                         {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order, items: shipmentOrderItems.items} %}
+                    {% else %}
+                        {% include '@Sales/Detail/boxes/configured-bundle-general.twig' with {order: order, items: shipmentOrderItems.items} %}
                     {% endif %}
 
                     {% if itemGroups[shipmentOrderItems.hash] is defined and itemGroups[shipmentOrderItems.hash] | length > 0 %}

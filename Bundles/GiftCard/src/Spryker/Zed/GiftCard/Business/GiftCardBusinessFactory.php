@@ -278,7 +278,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentGroupMethodFilter() instead.
+     * @deprecated Use {@link createShipmentGroupMethodFilter()} instead.
      *
      * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilterInterface
      */

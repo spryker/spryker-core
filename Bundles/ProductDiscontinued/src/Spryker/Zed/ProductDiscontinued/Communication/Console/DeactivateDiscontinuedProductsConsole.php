@@ -40,5 +40,7 @@ class DeactivateDiscontinuedProductsConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->deactivateDiscontinuedProducts($this->getMessenger());
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -21,12 +21,5 @@ interface MerchantProductOfferSearchWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByIdMerchantProfileEvents(array $eventTransfers): void;
-
-    /**
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
     public function writeCollectionByIdProductOfferEvents(array $eventTransfers): void;
 }

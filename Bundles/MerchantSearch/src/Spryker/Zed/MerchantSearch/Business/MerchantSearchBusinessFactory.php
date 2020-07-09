@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantSearch\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantSearch\Business\MerchantReader\MerchantReader;
-use Spryker\Zed\MerchantSearch\Business\MerchantReader\MerchantReaderInterface;
 use Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface;
 use Spryker\Zed\MerchantSearch\MerchantSearchDependencyProvider;
 
@@ -20,16 +18,6 @@ use Spryker\Zed\MerchantSearch\MerchantSearchDependencyProvider;
  */
 class MerchantSearchBusinessFactory extends AbstractBusinessFactory
 {
-    /**
-     * @return \Spryker\Zed\MerchantSearch\Business\MerchantReader\MerchantReaderInterface
-     */
-    public function createMerchantReader(): MerchantReaderInterface
-    {
-        return new MerchantReader(
-            $this->getMerchantFacade()
-        );
-    }
-
     /**
      * @return \Spryker\Zed\MerchantSearch\Dependency\Facade\MerchantSearchToMerchantFacadeInterface
      */

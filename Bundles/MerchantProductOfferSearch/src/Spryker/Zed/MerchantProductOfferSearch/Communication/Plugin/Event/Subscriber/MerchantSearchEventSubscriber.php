@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Subscriber;
 
-use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Zed\Event\Dependency\EventCollectionInterface;
 use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantSearchEventListener;
 
@@ -30,8 +30,8 @@ class MerchantSearchEventSubscriber extends AbstractPlugin implements EventSubsc
      */
     public function getSubscribedEvents(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantSearchEventListener());
-        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantSearchEventListener());
+        $eventCollection->addListenerQueued(MerchantEvents::MERCHANT_PUBLISH, new MerchantSearchEventListener(), 0, null, $this->getConfig()->getMerchantEventQueueName());
+        $eventCollection->addListenerQueued(MerchantEvents::ENTITY_SPY_MERCHANT_UPDATE, new MerchantSearchEventListener(), 0, null, $this->getConfig()->getMerchantEventQueueName());
 
         return $eventCollection;
     }

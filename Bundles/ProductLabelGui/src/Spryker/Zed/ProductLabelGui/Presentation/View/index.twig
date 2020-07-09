@@ -1,53 +1,30 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'View Product Label' | trans ~ ': "' ~ productLabelTransfer.getName() ~ '"' %}
+{% set widget_title = 'View Product Label' | trans ~ ': "' ~ productLabelTransfer.name ~ '"' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {% if (productLabelTransfer.getIsActive()) %}
-        {{ removeActionButton(
-            url(
-                '/product-label-gui/set-status/inactive',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/view',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Deactivate' | trans,
-            {'icon': ''}
-        ) }}
-    {% else %}
-        {{ viewActionButton(
-            url(
-                '/product-label-gui/set-status/active',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/view',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Activate' | trans,
-            {'icon': ''}
-        ) }}
-    {% endif %}
+    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
     {{ editActionButton(
         url(
             '/product-label-gui/edit',
-            {'id-product-label': productLabelTransfer.getIdProductLabel()}
+            { 'id-product-label': productLabelTransfer.idProductLabel }
         ),
         'Edit' | trans
     ) }}
-    {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
 {% endblock %}
 
 {% block content %}
 
-    {% include '@ProductLabelGui/View/_partials/general-information.twig' with {
+    {% include '@ProductLabelGui/View/_partials/general.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/behavior.twig' with {
+        productLabelTransfer: productLabelTransfer
+    } %}
+
+    {% include '@ProductLabelGui/View/_partials/store-relation.twig' with {
         productLabelTransfer: productLabelTransfer
     } %}
 

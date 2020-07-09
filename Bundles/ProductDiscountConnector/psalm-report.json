@@ -1,0 +1,139 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKey> variable $attributeMetaData",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Attribute/AttributeProvider.php",
+            "snippet": "        return $attributeMetaData->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductDiscountConnector\\Business\\Collector\\ProductAttributeCollector::createDiscountableItemTransfer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Collector/ProductAttributeCollector.php",
+            "snippet": "                $discountableItems[] = $this->createDiscountableItemTransfer($itemTransfer, $quoteTransfer->getPriceMode());",
+            "selected_text": "$quoteTransfer->getPriceMode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'int' for Spryker\\Zed\\ProductDiscountConnector\\Business\\Collector\\ProductAttributeCollector::getPrice is not nullable, but 'int|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Collector/ProductAttributeCollector.php",
+            "snippet": "     * @return int",
+            "selected_text": "int",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\ProductDiscountConnector\\Business\\Collector\\ProductAttributeCollector::getPrice is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Collector/ProductAttributeCollector.php",
+            "snippet": "            return $itemTransfer->getUnitNetPrice();",
+            "selected_text": "$itemTransfer->getUnitNetPrice()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Zed\\ProductDiscountConnector\\Business\\Collector\\ProductAttributeCollector::getPrice is not nullable, but the function returns 'int|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Collector/ProductAttributeCollector.php",
+            "snippet": "            return $itemTransfer->getUnitGrossPrice();",
+            "selected_text": "$itemTransfer->getUnitGrossPrice()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery' for Spryker\\Zed\\ProductDiscountConnector\\Persistence\\ProductDiscountConnectorQueryContainer::queryProductAttributeKeys is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Persistence/ProductDiscountConnectorQueryContainer.php",
+            "snippet": "     * @return \\Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery",
+            "selected_text": "\\Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 29,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery&static|Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\Product\\Persistence\\SpyProductAttributeKeyQuery' for Spryker\\Zed\\ProductDiscountConnector\\Persistence\\ProductDiscountConnectorQueryContainer::queryProductAttributeKeys",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Persistence/ProductDiscountConnectorQueryContainer.php",
+            "snippet": "        return $this->getFactory()\n            ->createProductAttributesKeyQuery()\n            ->select(SpyProductAttributeKeyTableMap::COL_KEY);",
+            "selected_text": "$this->getFactory()\n            ->createProductAttributesKeyQuery()\n            ->select(SpyProductAttributeKeyTableMap::COL_KEY)",
+            "error_level": 3,
+            "shortcode": 129
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
+            "snippet": "            return new ProductDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
+            "snippet": "            return new ProductDiscountConnectorToLocaleBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/ProductDiscountConnectorDependencyProvider.php",
+            "snippet": "            return new ProductDiscountConnectorToProductBridge($container->getLocator()->product()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\DiscountableItemTransfer::setUnitGrossPrice has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductDiscountConnector/src/Spryker/Zed/ProductDiscountConnector/Business/Collector/ProductAttributeCollector.php",
+            "snippet": "        $discountableItemTransfer->setUnitGrossPrice($price);",
+            "selected_text": "setUnitGrossPrice",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

@@ -52,9 +52,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container)
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new CartToQuoteBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -66,9 +66,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new CartToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
+        });
 
         return $container;
     }
@@ -80,9 +80,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         return $container;
     }
@@ -94,9 +94,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addItemCountPlugin(Container $container)
     {
-        $container[static::PLUGIN_ITEM_COUNT] = function () {
+        $container->set(static::PLUGIN_ITEM_COUNT, function () {
             return $this->getItemCountPlugin();
-        };
+        });
 
         return $container;
     }
@@ -108,9 +108,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteStorageStrategyPlugins(Container $container)
     {
-        $container[static::PLUGINS_QUOTE_STORAGE_STRATEGY] = function () {
+        $container->set(static::PLUGINS_QUOTE_STORAGE_STRATEGY, function () {
             return $this->getQuoteStorageStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -122,9 +122,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteItemFinderPlugin(Container $container)
     {
-        $container[static::PLUGIN_QUOTE_ITEM_FINDER] = function () {
+        $container->set(static::PLUGIN_QUOTE_ITEM_FINDER, function () {
             return $this->getQuoteItemFinderPlugin();
-        };
+        });
 
         return $container;
     }
@@ -136,9 +136,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAddItemsRequestExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER] = function () {
+        $container->set(static::PLUGINS_ADD_ITEMS_REQUEST_EXPANDER, function () {
             return $this->getAddItemsRequestExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -150,9 +150,9 @@ class CartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addRemoveItemsRequestExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER] = function () {
+        $container->set(static::PLUGINS_REMOVE_ITEMS_REQUEST_EXPANDER, function () {
             return $this->getRemoveItemsRequestExpanderPlugins();
-        };
+        });
 
         return $container;
     }

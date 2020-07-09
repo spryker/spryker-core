@@ -91,7 +91,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      *
      * @return void
      */
@@ -143,7 +143,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerInvalidException
@@ -164,7 +164,7 @@ class EventDispatcher implements EventDispatcherInterface
     /**
      * @param string $listenerName
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      *
      * @throws \Spryker\Zed\Event\Business\Exception\EventListenerNotFoundException
      *
@@ -272,7 +272,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @return void
@@ -301,7 +301,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @return void
@@ -318,7 +318,7 @@ class EventDispatcher implements EventDispatcherInterface
 
     /**
      * @param string $eventName
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface $transfer
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfer
      * @param \Spryker\Zed\Event\Business\Dispatcher\EventListenerContextInterface $eventListener
      *
      * @return void

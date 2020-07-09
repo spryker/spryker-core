@@ -11,6 +11,9 @@ use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToF
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 use Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Remover\RestRequestValidatorCodeBucketCacheRemover} instead.
+ */
 class RestRequestValidatorCacheRemover implements RestRequestValidatorCacheRemoverInterface
 {
     /**

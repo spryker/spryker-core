@@ -48,4 +48,13 @@ interface OmsTriggerFormFactoryInterface
      * @return \Symfony\Component\Form\FormInterface
      */
     public function createOmsTriggerForm($data = null, array $options = []): FormInterface;
+
+    /**
+     * @param string $redirectUrl
+     * @param string $event
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getOrderItemsOmsTriggerForm(string $redirectUrl, string $event, array $salesOrderItemIds): FormInterface;
 }

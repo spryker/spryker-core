@@ -36,9 +36,9 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new BusinessOnBehalfToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -50,9 +50,9 @@ class BusinessOnBehalfDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCompanyUserChangeAllowedCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK] = function () {
+        $container->set(static::PLUGINS_COMPANY_USER_CHANGE_ALLOWED_CHECK, function () {
             return $this->getCompanyUserChangeAllowedCheckPlugins();
-        };
+        });
 
         return $container;
     }

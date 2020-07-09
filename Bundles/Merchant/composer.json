@@ -5,9 +5,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/cart-extension": "^4.0.0",
+    "spryker/checkout-extension": "^1.2.0",
+    "spryker/event": "^2.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-extension": "^1.1.0",
     "spryker/propel-orm": "^1.0.0",
+    "spryker/store": "^1.1.0",
+    "spryker/url": "^3.0.0",
     "spryker/util-text": "^1.0.0"
   },
   "require-dev": {
@@ -34,7 +39,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

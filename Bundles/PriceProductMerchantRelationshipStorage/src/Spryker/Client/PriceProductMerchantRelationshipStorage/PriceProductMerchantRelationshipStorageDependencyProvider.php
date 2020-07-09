@@ -51,9 +51,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -65,9 +65,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new PriceProductMerchantRelationshipToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -79,9 +79,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addPriceProductService(Container $container): Container
     {
-        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
-        };
+        });
 
         return $container;
     }

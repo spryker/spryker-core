@@ -13,6 +13,7 @@ use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyBusinessUnitFor
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\CompanyUserBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyBusinessUnitFormDataProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DataProvider\CompanyUserBusinessUnitFormDataProvider;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DeleteCompanyBusinessUnitForm;
 use Spryker\Zed\CompanyBusinessUnitGui\Communication\Table\CompanyBusinessUnitTable;
 use Spryker\Zed\CompanyBusinessUnitGui\CompanyBusinessUnitGuiDependencyProvider;
 use Spryker\Zed\CompanyBusinessUnitGui\Dependency\Facade\CompanyBusinessUnitGuiToCompanyBusinessUnitFacadeInterface;
@@ -84,6 +85,16 @@ class CompanyBusinessUnitGuiCommunicationFactory extends AbstractCommunicationFa
     public function createCompanyUserBusinessUnitFormDataProvider(): CompanyUserBusinessUnitFormDataProvider
     {
         return new CompanyUserBusinessUnitFormDataProvider($this->getCompanyBusinessUnitFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteCompanyBusinessUnitForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteCompanyBusinessUnitForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

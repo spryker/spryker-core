@@ -40,9 +40,9 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return $container->getLocator()->search()->client();
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListResultFormatterPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS] = function (Container $container) {
+        $container->set(static::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS, function (Container $container) {
             return $this->getProductSetListResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListQueryExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS] = function (Container $container) {
+        $container->set(static::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS, function (Container $container) {
             return $this->getProductSetListQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class ProductSetPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetStorageClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_SET_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_SET_STORAGE, function (Container $container) {
             return new ProductSetPageSearchToProductSetStorageClientBridge($container->getLocator()->productSetStorage()->client());
-        };
+        });
 
         return $container;
     }

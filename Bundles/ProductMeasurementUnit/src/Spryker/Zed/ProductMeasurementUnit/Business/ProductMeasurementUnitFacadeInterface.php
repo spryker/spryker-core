@@ -151,11 +151,25 @@ interface ProductMeasurementUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link ProductMeasurementUnitFacade::expandOrderItemsWithQuantitySalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithQuantitySalesUnit(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with quantity sales unit if applicable.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithQuantitySalesUnit(array $itemTransfers): array;
 
     /**
      * Specification:
@@ -235,4 +249,18 @@ interface ProductMeasurementUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkItemProductMeasurementSalesUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters out products which have measurement unit available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     * - Requires ProductConcreteTransfer::fkProductAbstract to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array;
 }

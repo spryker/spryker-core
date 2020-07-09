@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Product' %}
+{% set widget_title = 'Product' | trans %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
@@ -10,7 +10,9 @@
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' } %}
+    {% include '@ProductManagement/_partials/filters.twig' %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Products' | trans } %}
 
         {% block widget_content %}
             {{ productTable | raw }}

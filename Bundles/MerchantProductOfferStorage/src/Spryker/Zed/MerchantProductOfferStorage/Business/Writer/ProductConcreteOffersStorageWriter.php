@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface;
-use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface;
 use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface;
+use Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface;
 
 class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorageWriterInterface
 {
@@ -34,14 +34,14 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface
-     */
-    protected $productOfferFacade;
-
-    /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface
      */
     protected $merchantProductOfferStorageEntityManager;
+
+    /**
+     * @var \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface
+     */
+    protected $merchantProductOfferStorageRepository;
 
     /**
      * @var \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface
@@ -60,21 +60,21 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
 
     /**
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
-     * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager
+     * @param \Spryker\Zed\MerchantProductOfferStorage\Persistence\MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository
      * @param \Spryker\Zed\MerchantProductOfferStorage\Business\Deleter\ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter
      * @param \Spryker\Zed\MerchantProductOfferStorage\Dependency\Facade\MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         MerchantProductOfferStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        MerchantProductOfferStorageToProductOfferFacadeInterface $productOfferFacade,
         MerchantProductOfferStorageEntityManagerInterface $merchantProductOfferStorageEntityManager,
+        MerchantProductOfferStorageRepositoryInterface $merchantProductOfferStorageRepository,
         ProductConcreteOffersStorageDeleterInterface $productConcreteOffersStorageDeleter,
         MerchantProductOfferStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->productOfferFacade = $productOfferFacade;
         $this->merchantProductOfferStorageEntityManager = $merchantProductOfferStorageEntityManager;
+        $this->merchantProductOfferStorageRepository = $merchantProductOfferStorageRepository;
         $this->productConcreteOffersStorageDeleter = $productConcreteOffersStorageDeleter;
         $this->storeFacade = $storeFacade;
     }
@@ -84,8 +84,28 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
      *
      * @return void
      */
+    public function writeCollectionByMerchantEvents(array $eventTransfers): void
+    {
+        $merchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+
+        if (!$merchantIds) {
+            return;
+        }
+        $productSkus = $this->merchantProductOfferStorageRepository->getProductConcreteSkusByMerchantIds($merchantIds);
+
+        $this->writeCollectionByProductSkus($productSkus);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
     public function writeCollectionByProductSkuEvents(array $eventTransfers): void
     {
+        /**
+         * @var string[] $productSkus
+         */
         $productSkus = $this->eventBehaviorFacade->getEventTransfersAdditionalValues($eventTransfers, SpyProductOfferTableMap::COL_CONCRETE_SKU);
 
         if (!$productSkus) {
@@ -105,32 +125,45 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         $productConcreteSkus = array_unique($productConcreteSkus);
 
         $productOfferCriteriaFilterTransfer = $this->createProductOfferCriteriaFilterTransfer($productConcreteSkus);
-        $productOfferCollectionTransfer = $this->productOfferFacade->find($productOfferCriteriaFilterTransfer);
+        $productOfferCollectionTransfer = $this->merchantProductOfferStorageRepository->getProductOffersByFilterCriteria($productOfferCriteriaFilterTransfer);
 
-        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productOfferCollectionTransfer);
+        $productOfferReferencesGroupedByConcreteSku = $this->groupProductOfferReferencesByConcreteSku($productConcreteSkus, $productOfferCollectionTransfer);
 
         foreach ($productOfferReferencesGroupedByConcreteSku as $concreteSku => $productOfferReferencesGroupedByStore) {
-            $storeNamesToRemove = $this->getStoreNamesList();
-            $productOfferReferenceList = [];
+            $storeNamesToRemove = [];
+
             foreach ($productOfferReferencesGroupedByStore as $storeName => $productOfferReferenceList) {
+                if (!$productOfferReferenceList) {
+                    $storeNamesToRemove[] = $storeName;
+
+                    continue;
+                }
                 $this->merchantProductOfferStorageEntityManager->saveProductConcreteProductOffersStorage($concreteSku, $productOfferReferenceList, $storeName);
-                $storeNamesToRemove = array_diff($storeNamesToRemove, [$storeName]);
             }
 
-            if ($storeNamesToRemove && $productOfferReferenceList) {
+            if ($storeNamesToRemove) {
                 $this->deleteProductConcreteProductOffersStorage($storeNamesToRemove, $concreteSku);
             }
         }
     }
 
     /**
+     * @param string[] $productConcreteSkus
      * @param \Generated\Shared\Transfer\ProductOfferCollectionTransfer $productOfferCollectionTransfer
      *
      * @return array
      */
-    protected function groupProductOfferReferencesByConcreteSku(ProductOfferCollectionTransfer $productOfferCollectionTransfer): array
-    {
+    protected function groupProductOfferReferencesByConcreteSku(
+        array $productConcreteSkus,
+        ProductOfferCollectionTransfer $productOfferCollectionTransfer
+    ): array {
         $productOfferReferencesGroupedByConcreteSku = [];
+        foreach ($productConcreteSkus as $productConcreteSku) {
+            foreach ($this->getStoreNamesList() as $storeName) {
+                $productOfferReferencesGroupedByConcreteSku[$productConcreteSku][$storeName] = [];
+            }
+        }
+
         foreach ($productOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
             if (!isset($productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()])) {
                 $productOfferReferencesGroupedByConcreteSku[$productOfferTransfer->getConcreteSku()] = [];
@@ -154,6 +187,7 @@ class ProductConcreteOffersStorageWriter implements ProductConcreteOffersStorage
         return (new ProductOfferCriteriaFilterTransfer())
             ->setConcreteSkus($productConcreteSkus)
             ->setIsActive(true)
+            ->setIsActiveMerchant(true)
             ->setIsActiveConcreteProduct(true)
             ->addApprovalStatus(static::STATUS_APPROVED);
     }

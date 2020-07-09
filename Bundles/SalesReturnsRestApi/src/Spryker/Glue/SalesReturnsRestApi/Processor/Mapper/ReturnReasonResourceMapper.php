@@ -9,64 +9,32 @@ namespace Spryker\Glue\SalesReturnsRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer;
-use Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface;
 
 class ReturnReasonResourceMapper implements ReturnReasonResourceMapperInterface
 {
     /**
-     * @var \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface
-     */
-    protected $glossaryStorageClient;
-
-    /**
-     * @param \Spryker\Glue\SalesReturnsRestApi\Dependency\Client\SalesReturnsRestApiToGlossaryStorageClientInterface $glossaryStorageClient
-     */
-    public function __construct(SalesReturnsRestApiToGlossaryStorageClientInterface $glossaryStorageClient)
-    {
-        $this->glossaryStorageClient = $glossaryStorageClient;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonSearchTransfer[] $returnReasonSearchTransfers
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestReturnReasonsAttributesTransfer[]
      */
-    public function mapReturnReasonTransfersToRestReturnReasonsAttributesTransfers(
-        ArrayObject $returnReasonTransfers,
+    public function mapReturnReasonSearchTransfersToRestReturnReasonsAttributesTransfers(
+        ArrayObject $returnReasonSearchTransfers,
         string $localeName
     ): array {
         $restReturnReasonsAttributesTransfers = [];
-        $translatedReturnReasons = $this->translateReturnReasons($returnReasonTransfers, $localeName);
 
-        foreach ($returnReasonTransfers as $returnReasonTransfer) {
+        foreach ($returnReasonSearchTransfers as $returnReasonSearchTransfer) {
             $restReturnReasonsAttributesTransfer = (new RestReturnReasonsAttributesTransfer())
-                ->fromArray($returnReasonTransfer->toArray(), true);
+                ->fromArray($returnReasonSearchTransfer->toArray(), true);
 
             $restReturnReasonsAttributesTransfer->setReason(
-                $translatedReturnReasons[$returnReasonTransfer->getGlossaryKeyReason()] ?? null
+                $returnReasonSearchTransfer->getName()
             );
 
             $restReturnReasonsAttributesTransfers[] = $restReturnReasonsAttributesTransfer;
         }
 
         return $restReturnReasonsAttributesTransfers;
-    }
-
-    /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
-     * @param string $localeName
-     *
-     * @return string[]
-     */
-    protected function translateReturnReasons(ArrayObject $returnReasonTransfers, string $localeName): array
-    {
-        $glossaryKeyReasons = [];
-
-        foreach ($returnReasonTransfers as $returnReasonTransfer) {
-            $glossaryKeyReasons[] = $returnReasonTransfer->getGlossaryKeyReason();
-        }
-
-        return $this->glossaryStorageClient->translateBulk($glossaryKeyReasons, $localeName);
     }
 }

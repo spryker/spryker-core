@@ -45,6 +45,20 @@ class UtilDateTimeService extends AbstractService implements UtilDateTimeService
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \DateTime|string $dateTime
+     *
+     * @return string
+     */
+    public function formatDateTimeToIso8601($dateTime): string
+    {
+        return $this->getFactory()->createDateFormatter()->formatDateTimeToIso8601($dateTime);
+    }
+
+    /**
      * Specification:
      * - Formats a given datetime string into a configured time
      *

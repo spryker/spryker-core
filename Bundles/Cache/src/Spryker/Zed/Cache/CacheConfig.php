@@ -17,6 +17,8 @@ class CacheConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link getCodeBucketCachePath()} instead.
+     *
      * @return string
      */
     public function getCachePath()
@@ -26,6 +28,28 @@ class CacheConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @return string
+     */
+    public function getCodeBucketCachePath(): string
+    {
+        return sprintf(APPLICATION_ROOT_DIR . '/data/cache/codeBucket%s', APPLICATION_CODE_BUCKET);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultCodeBucketCachePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/data/cache/codeBucket';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

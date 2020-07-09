@@ -44,4 +44,10 @@
     <transfer name="CheckoutError">
     </transfer>
 
+    <transfer name="ProductConcrete">
+        <property name="idProductConcrete" type="int"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
+    </transfer>
+
 </transfers>

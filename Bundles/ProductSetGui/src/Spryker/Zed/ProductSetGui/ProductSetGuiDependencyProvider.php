@@ -75,9 +75,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductSetFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_SET] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_SET, function (Container $container) {
             return new ProductSetGuiToProductSetBridge($container->getLocator()->productSet()->facade());
-        };
+        });
     }
 
     /**
@@ -87,9 +87,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductSetGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -99,9 +99,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideUrlFacade(Container $container)
     {
-        $container[static::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new ProductSetGuiToUrlBridge($container->getLocator()->url()->facade());
-        };
+        });
     }
 
     /**
@@ -111,9 +111,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductImageFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductSetGuiToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
     }
 
     /**
@@ -123,9 +123,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function providePriceProductFacade(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductSetGuiToPriceProductBridgeProductFacade($container->getLocator()->priceProduct()->facade());
-        };
+        });
     }
 
     /**
@@ -135,9 +135,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideMoneyFacade(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ProductSetGuiToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
     }
 
     /**
@@ -147,9 +147,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductSetQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_SET] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_SET, function (Container $container) {
             return new ProductSetGuiToProductSetQueryContainerBridge($container->getLocator()->productSet()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -159,9 +159,9 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductSetGuiToProductBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -171,8 +171,8 @@ class ProductSetGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductSetGuiToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
     }
 }

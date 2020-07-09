@@ -15,6 +15,7 @@ Edit,Bearbeiten
 "Edit Search Preferences","Suchpräferenzen bearbeiten"
 "Filter name",Filtername
 "Filter position",Filterposition
+"Filter Preferences",Filtereinstellungen
 "Filter preference was created successfully.","Filterpräferenz wurde erfolgreich erstellt."
 "Filter preference was updated successfully.","Filterpräferenz wurde erfolgreich aktualisiert."
 "Filter preferences synchronization was successful.","Filterpräferenzen wurden erfolgreich synchronisiert."
@@ -23,7 +24,7 @@ Edit,Bearbeiten
 "Full text",Volltext
 "Full text boosted","Volltext boosted"
 "General Information","Allgemeine Informationen"
-"Include for completion","In Autovervollständigung eingebunde"
+"Include for completion","In Autovervollständigung eingebunden"
 "Include for full text","In Volltextsuche eingebunden"
 "Include for full text boosted","In boosted Volltextsuche eingebunden"
 "Include for suggestion","In Suchvorschläge eingebunden"
@@ -45,3 +46,6 @@ single-select,Einfachauswahl
 Translations,Übersetzungen
 "Type first three letters of an existing attribute key for suggestions.","Geben Sie die ersten drei Buchstaben eines bestehenden Attributschlüssels ein, um Vorschläge zu erhalten."
 "View Filter","Filter ansehen"
+"Deactivate all","Alle deaktivieren"
+"Create Filter","Filter Erstellen"
+"Edit filter","Filter Bearbeiten"

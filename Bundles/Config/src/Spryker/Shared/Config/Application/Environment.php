@@ -8,6 +8,7 @@
 namespace Spryker\Shared\Config\Application;
 
 use Exception;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
 use Spryker\Shared\Kernel\Store;
 
 class Environment
@@ -21,6 +22,7 @@ class Environment
 
         static::defineEnvironment();
         static::defineStore();
+        static::defineCodeBucket();
         static::defineApplication();
         static::defineApplicationRootDir();
         static::defineApplicationSourceDir();
@@ -57,10 +59,16 @@ class Environment
     }
 
     /**
+     * @deprecated Dynamic stores are based on the Channel context.
+     *
      * @return void
      */
     protected static function defineStore()
     {
+        if (Store::isDynamicStoreMode()) {
+            return;
+        }
+
         if (!defined('APPLICATION_STORE')) {
             $store = getenv('APPLICATION_STORE', true) ?: getenv('APPLICATION_STORE');
             if (!$store) {
@@ -73,6 +81,18 @@ class Environment
                 exit(1);
             }
             define('APPLICATION_STORE', $store);
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected static function defineCodeBucket(): void
+    {
+        if (!defined('APPLICATION_CODE_BUCKET')) {
+            $currentCodeBucket = (new CodeBucketConfig())->getCurrentCodeBucket();
+
+            define('APPLICATION_CODE_BUCKET', $currentCodeBucket);
         }
     }
 

@@ -59,5 +59,7 @@ class PostgresqlCompatibilityConsole extends Console
             $this->getFacade()->adjustCorePropelSchemaFilesForPostgresql();
             $this->getFacade()->adjustCorePostgresqlFunctions();
         }
+
+        return static::CODE_SUCCESS;
     }
 }

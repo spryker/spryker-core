@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
+use Spryker\Zed\ProductSearch\Communication\Form\CleanSearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesTable extends AbstractTable
@@ -47,7 +48,13 @@ class SearchPreferencesTable extends AbstractTable
         $config->setSearchable($this->getSearchableFields());
         $config->setSortable($this->getSortableFields());
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->setRawColumns([
+            static::COL_FULL_TEXT,
+            static::COL_FULL_TEXT_BOOSTED,
+            static::COL_SUGGESTION_TERMS,
+            static::COL_COMPLETION_TERMS,
+            static::ACTIONS,
+        ]);
 
         return $config;
     }
@@ -139,7 +146,10 @@ class SearchPreferencesTable extends AbstractTable
      */
     protected function boolToString($boolValue)
     {
-        return $boolValue ? 'yes' : 'no';
+        return $this->generateLabel(
+            $boolValue ? 'yes' : 'no',
+            null
+        );
     }
 
     /**
@@ -164,7 +174,9 @@ class SearchPreferencesTable extends AbstractTable
                     SearchPreferencesController::PARAM_ID,
                     $productAttributeKeyEntity->getIdProductAttributeKey()
                 ),
-                'Deactivate all'
+                'Deactivate all',
+                [],
+                CleanSearchPreferencesForm::class
             ),
         ];
 

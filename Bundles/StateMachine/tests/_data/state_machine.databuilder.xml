@@ -10,4 +10,9 @@
         <property name="stateMachineName" dataBuilderRule="unique()->sentence(5)"/>
     </transfer>
 
+    <transfer name="StateMachineItemState">
+        <property name="name" dataBuilderRule="word"/>
+        <property name="fkStateMachineProcess" dataBuilderRule="="/>
+    </transfer>
+
 </transfers>

@@ -9,6 +9,9 @@
     <transfer name="ShoppingListItem">
     </transfer>
 
+    <transfer name="ShoppingListItemCollection">
+    </transfer>
+
     <transfer name="ShoppingListPreAddItemCheckResponse">
     </transfer>
 

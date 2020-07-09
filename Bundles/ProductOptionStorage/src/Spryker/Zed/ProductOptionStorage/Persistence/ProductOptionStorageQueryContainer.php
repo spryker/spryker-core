@@ -25,7 +25,7 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
      */
@@ -42,7 +42,7 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -60,7 +60,7 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
@@ -82,7 +82,7 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */

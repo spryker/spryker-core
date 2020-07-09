@@ -30,6 +30,7 @@ class JenkinsApi implements JenkinsApiInterface
     protected const REQUEST_POST_METHOD = 'POST';
 
     protected const AUTH_KEY = 'auth';
+    protected const HEADER_COOKIE = 'Cookie';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Business\Api\Builder\RequestBuilderInterface
@@ -189,6 +190,9 @@ class JenkinsApi implements JenkinsApiInterface
         if ($configurationProvider->isJenkinsCsrfProtectionEnabled()) {
             $crumbIssuer = $this->getCrumbIssuer($configurationProvider);
             $request = $request->withHeader($crumbIssuer['crumbRequestField'], $crumbIssuer['crumb']);
+            if ($crumbIssuer['cookie']) {
+                $request = $request->withHeader(static::HEADER_COOKIE, $crumbIssuer['cookie']);
+            }
         }
 
         return $request;
@@ -217,6 +221,7 @@ class JenkinsApi implements JenkinsApiInterface
         }
 
         $crumbIssuer = $this->utilEncodingService->decodeJson($payload, true);
+        $crumbIssuer['cookie'] = $responseTransfer->getCookie();
 
         return $crumbIssuer;
     }

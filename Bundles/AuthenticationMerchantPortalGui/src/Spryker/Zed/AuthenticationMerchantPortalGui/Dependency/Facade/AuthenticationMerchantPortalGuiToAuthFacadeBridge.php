@@ -34,6 +34,14 @@ class AuthenticationMerchantPortalGuiToAuthFacadeBridge implements Authenticatio
     }
 
     /**
+     * @return void
+     */
+    public function logout()
+    {
+        $this->authFacade->logout();
+    }
+
+    /**
      * @param string $token
      *
      * @return bool

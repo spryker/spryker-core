@@ -29,9 +29,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container[static::SERVICE_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_ENCODING, function (Container $container) {
             return $container->getLocator()->utilEncoding()->service();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideApiPlugins(Container $container)
     {
-        $container[static::PLUGINS_API] = function (Container $container) {
+        $container->set(static::PLUGINS_API, function (Container $container) {
             return $this->getApiResourcePluginCollection();
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideApiValidatorPlugins(Container $container)
     {
-        $container[static::PLUGINS_API_VALIDATOR] = function (Container $container) {
+        $container->set(static::PLUGINS_API_VALIDATOR, function (Container $container) {
             return $this->getApiValidatorPluginCollection();
-        };
+        });
 
         return $container;
     }
@@ -118,9 +118,9 @@ class ApiDependencyProvider extends AbstractBundleDependencyProvider
         /**
          * @return \Spryker\Zed\Api\Communication\Plugin\ApiRequestTransferFilterPluginInterface[]
          */
-        $container[static::PLUGINS_API_REQUEST_TRANSFER_FILTER] = function (Container $container): array {
+        $container->set(static::PLUGINS_API_REQUEST_TRANSFER_FILTER, function (Container $container): array {
             return $this->getApiRequestTransferFilterPluginCollection();
-        };
+        });
 
         return $container;
     }

@@ -34,9 +34,9 @@ class CollectorSearchConnectorDependencyProvider extends AbstractBundleDependenc
      */
     private function addCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CollectorSearchConnectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }

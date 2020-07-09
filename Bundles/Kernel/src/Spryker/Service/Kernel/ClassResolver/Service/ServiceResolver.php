@@ -22,8 +22,7 @@ class ServiceResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        /** @var \Spryker\Service\Kernel\AbstractService $resolved */
-        $resolved = parent::doResolve($callerClass);
+        $resolved = $this->doResolve($callerClass);
 
         if ($resolved !== null) {
             return $resolved;

@@ -27,27 +27,27 @@ class ModuleNameResolverTest extends Unit
      */
     public function testResolveShouldRemoveStoreName(): void
     {
-        $moduleNameResolver = $this->getModuleNameResolver('DE');
-        $resolvedModuleName = $moduleNameResolver->resolve('CartDE');
+        $moduleNameResolver = $this->getModuleNameResolver('TEST');
+        $resolvedModuleName = $moduleNameResolver->resolve('CartTEST');
 
         $this->assertSame('Cart', $resolvedModuleName);
     }
 
     /**
-     * @param string $storeName
+     * @param string $codeBucket
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getModuleNameResolver(string $storeName): ModuleNameResolver
+    protected function getModuleNameResolver(string $codeBucket): ModuleNameResolver
     {
         $mock = $this
             ->getMockBuilder(ModuleNameResolver::class)
-            ->onlyMethods(['getStoreName'])
+            ->onlyMethods(['getCodeBucket'])
             ->getMock();
 
         $mock
-            ->method('getStoreName')
-            ->will($this->returnValue($storeName));
+            ->method('getCodeBucket')
+            ->will($this->returnValue($codeBucket));
 
         return $mock;
     }

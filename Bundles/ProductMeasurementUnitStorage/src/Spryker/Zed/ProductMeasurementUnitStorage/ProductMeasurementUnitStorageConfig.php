@@ -14,7 +14,7 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
@@ -39,6 +39,26 @@ class ProductMeasurementUnitStorageConfig extends AbstractBundleConfig
      * @return string|null
      */
     public function getProductConcreteMeasurementUnitSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductMeasurementUnitEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductConcreteMeasurementUnitEventQueueName(): ?string
     {
         return null;
     }

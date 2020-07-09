@@ -2,8 +2,11 @@
 "Add Dataset","Add Dataset"
 "Back to Dataset list","Back to Dataset list"
 "Content file","Content file"
+Dataset,Dataset
 "Dataset was activated successfully.","Dataset was activated successfully."
 "Dataset was deactivated successfully.","Dataset was deactivated successfully."
 "Edit Dataset","Edit Dataset"
 Save,Save
 "Something wrong","Something wrong"
+"No file selected.","No file selected."
+"Datasets list","Datasets list"

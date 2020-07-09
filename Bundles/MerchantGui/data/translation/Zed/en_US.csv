@@ -28,3 +28,14 @@ Name,Name
 "Overview of Merchants","Overview of Merchants"
 "Registration number","Registration Number"
 Save,Save
+"Is Active","Is Active"
+active,Active
+inactive,Inactive
+Activate,Activate
+Deactivate,Deactivate
+merchant.activated,"Merchant Profile successfully activated."
+merchant.deactivated,"Merchant Profile successfully deactivated."
+Stores,Stores
+"Merchant Reference","Merchant Reference"
+"Merchant URL","Merchant URL"
+"Create Merchant","Create Merchant"

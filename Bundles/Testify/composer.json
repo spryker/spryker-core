@@ -12,9 +12,8 @@
     "spryker/config": "^3.0.0",
     "spryker/container": "^1.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.45.0",
+    "spryker/kernel": "^3.49.0",
     "spryker/propel": "^3.0.4",
-    "spryker/propel-orm": "^1.0.0",
     "spryker/silex": "^2.0.0",
     "spryker/symfony": "^3.0.0"
   },
@@ -24,6 +23,7 @@
     "spryker/http": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
+    "spryker/propel-orm": "*",
     "spryker/twig": "^3.0.0"
   },
   "suggest": {

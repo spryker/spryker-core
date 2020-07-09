@@ -12,9 +12,15 @@ use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
 interface ProductConcreteDefaultProductOfferInterface
 {
     /**
+     * @phpstan-return array<string, string>
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer[] $productOffersStorageTransfers
      * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
-     * @return string|null
+     * @return string[]
      */
-    public function findProductOfferReference(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): ?string;
+    public function getProductOfferReferences(
+        array $productOffersStorageTransfers,
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): array;
 }

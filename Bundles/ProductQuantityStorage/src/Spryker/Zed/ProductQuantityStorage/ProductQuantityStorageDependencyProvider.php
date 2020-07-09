@@ -57,9 +57,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductQuantityStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductQuantityFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_QUANTITY] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_QUANTITY, function (Container $container) {
             return new ProductQuantityStorageToProductQuantityFacadeBridge($container->getLocator()->productQuantity()->facade());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractBundleDependencyP
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container->set(static::PROPEL_QUERY_PRODUCT_QUANTITY, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_QUANTITY, $container->factory(function () {
             return SpyProductQuantityQuery::create();
-        });
+        }));
 
         return $container;
     }

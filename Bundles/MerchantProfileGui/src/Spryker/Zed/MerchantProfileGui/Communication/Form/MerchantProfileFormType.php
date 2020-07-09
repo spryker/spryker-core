@@ -8,12 +8,8 @@
 namespace Spryker\Zed\MerchantProfileGui\Communication\Form;
 
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileGlossary\MerchantProfileLocalizedGlossaryAttributesFormType;
-use Spryker\Zed\MerchantProfileGui\Communication\Form\MerchantProfileUrlCollection\MerchantProfileUrlCollectionFormType;
-use Spryker\Zed\MerchantProfileGui\Communication\Form\Transformer\MerchantProfileUrlCollectionDataTransformer;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -24,7 +20,6 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileGui\MerchantProfileGuiConfig getConfig()
@@ -44,8 +39,6 @@ class MerchantProfileFormType extends AbstractType
     protected const FIELD_PUBLIC_EMAIL = 'public_email';
     protected const FIELD_PUBLIC_PHONE = 'public_phone';
     protected const FIELD_MERCHANT_PROFILE_LOCALIZED_GLOSSARY_ATTRIBUTES = 'merchantProfileLocalizedGlossaryAttributes';
-    protected const FIELD_IS_ACTIVE = 'is_active';
-    protected const FIELD_URL_COLLECTION = 'urlCollection';
     protected const FIELD_DESCRIPTION_GLOSSARY_KEY = 'description_glossary_key';
     protected const FIELD_BANNER_URL_GLOSSARY_KEY = 'banner_url_glossary_key';
     protected const FIELD_DELIVERY_TIME_GLOSSARY_KEY = 'delivery_time_glossary_key';
@@ -63,10 +56,8 @@ class MerchantProfileFormType extends AbstractType
     protected const LABEL_CONTACT_PERSON_LAST_NAME = 'Last Name';
     protected const LABEL_CONTACT_PERSON_PHONE = 'Phone';
     protected const LABEL_LOGO_URL = 'Logo URL';
-    protected const LABEL_URL = 'Profile URL';
     protected const LABEL_PUBLIC_EMAIL = 'Public Email';
     protected const LABEL_PUBLIC_PHONE = 'Public Phone';
-    protected const LABEL_IS_ACTIVE = 'Is Active';
     protected const LABEL_LATITUDE = 'Latitude';
     protected const LABEL_LONGITUDE = 'Longitude';
     protected const LABEL_FAX_NUMBER = 'Fax number';
@@ -106,8 +97,6 @@ class MerchantProfileFormType extends AbstractType
             ->addPublicEmailField($builder)
             ->addPublicPhoneField($builder)
             ->addLogoUrlField($builder)
-            ->addIsActiveField($builder)
-            ->addUrlCollectionField($builder)
             ->addDescriptionGlossaryKeyField($builder)
             ->addBannerUrlGlossaryKeyField($builder)
             ->addDeliveryTimeGlossaryKeyField($builder)
@@ -120,47 +109,6 @@ class MerchantProfileFormType extends AbstractType
             ->addLatitudeField($builder)
             ->addLongitudeField($builder)
             ->addAddressCollectionSubform($builder);
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addUrlCollectionField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_URL_COLLECTION, CollectionType::class, [
-            'entry_type' => MerchantProfileUrlCollectionFormType::class,
-            'allow_add' => true,
-            'label' => static::LABEL_URL,
-            'required' => true,
-            'allow_delete' => true,
-            'entry_options' => [
-                'label' => false,
-                'data_class' => UrlTransfer::class,
-            ],
-        ]);
-
-        $builder->get(static::FIELD_URL_COLLECTION)
-            ->addModelTransformer(new MerchantProfileUrlCollectionDataTransformer());
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIsActiveField(FormBuilderInterface $builder)
-    {
-        $builder
-            ->add(static::FIELD_IS_ACTIVE, CheckboxType::class, [
-                'label' => static::LABEL_IS_ACTIVE,
-                'required' => false,
-            ]);
-
-        return $this;
     }
 
     /**
@@ -443,7 +391,6 @@ class MerchantProfileFormType extends AbstractType
     {
         return [
             new NotBlank(),
-            new Required(),
             new Length(['max' => 255]),
         ];
     }

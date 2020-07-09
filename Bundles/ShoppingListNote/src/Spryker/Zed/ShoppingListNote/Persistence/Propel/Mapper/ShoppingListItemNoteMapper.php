@@ -7,8 +7,11 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
 {
@@ -40,5 +43,63 @@ class ShoppingListItemNoteMapper implements ShoppingListItemNoteMapperInterface
         $shoppingListItemNoteEntity->fromArray($shoppingListItemNoteTransfer->modifiedToArray());
 
         return $shoppingListItemNoteEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[]|\Propel\Runtime\Collection\ObjectCollection $shoppingListItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     */
+    public function mapShoppingListItemEntityCollectionToTransferCollection(ObjectCollection $shoppingListItemEntityCollection): ArrayObject
+    {
+        $shoppingListItemNoteTransfers = new ArrayObject();
+
+        foreach ($shoppingListItemEntityCollection as $shoppingListItemNoteEntity) {
+            $shoppingListItemNoteTransfer = $this
+                ->mapShoppingListItemNoteTransfer($shoppingListItemNoteEntity, new ShoppingListItemNoteTransfer());
+
+            $shoppingListItemNoteTransfers->append($shoppingListItemNoteTransfer);
+        }
+
+        return $shoppingListItemNoteTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote[] $shoppingListItemNoteEntityCollection
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function mapShoppingListItemNoteEntityCollectionToShoppingListItemCollectionTransfer(
+        ObjectCollection $shoppingListItemNoteEntityCollection,
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        $shoppingListItemNoteTransfers = $this->mapShoppingListItemEntityCollectionToTransferCollection($shoppingListItemNoteEntityCollection);
+        $indexedShoppingListItemNoteTransfers = $this->indexShoppingListItemNoteTransfersByFkShoppingListItem($shoppingListItemNoteTransfers);
+
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemNoteTransfer = $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? null;
+
+            if ($shoppingListItemNoteTransfer) {
+                $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
+            }
+        }
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemNoteTransfer[] $shoppingListItemNoteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
+     */
+    protected function indexShoppingListItemNoteTransfersByFkShoppingListItem(ArrayObject $shoppingListItemNoteTransfers): array
+    {
+        $indexedShoppingListItemNoteTransfers = [];
+        foreach ($shoppingListItemNoteTransfers as $shoppingListItemNoteTransfer) {
+            $indexedShoppingListItemNoteTransfers[$shoppingListItemNoteTransfer->getFkShoppingListItem()] = $shoppingListItemNoteTransfer;
+        }
+
+        return $indexedShoppingListItemNoteTransfers;
     }
 }

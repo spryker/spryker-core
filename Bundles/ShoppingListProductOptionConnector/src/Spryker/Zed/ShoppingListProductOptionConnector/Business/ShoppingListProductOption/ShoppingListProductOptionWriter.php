@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListProductOption;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorEntityManagerInterface;
@@ -44,6 +46,21 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemProductOptionsInBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer {
+        return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer) {
+            $this->executeSaveShoppingListItemProductOptionsTransactionInBulk($shoppingListItemCollectionTransfer);
+
+            return $shoppingListItemCollectionTransfer;
+        });
+    }
+
+    /**
      * @param int $idShoppingListItem
      *
      * @return void
@@ -72,5 +89,36 @@ class ShoppingListProductOptionWriter implements ShoppingListProductOptionWriter
                     $productOptionTransfer->getIdProductOptionValue()
                 );
         }
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return void
+     */
+    protected function removeShoppingListItemProductOptionsInBulk(ArrayObject $shoppingListItemTransfers): void
+    {
+        $shoppingListItemIds = [];
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            $shoppingListItemIds[] = $shoppingListItemTransfer
+                ->requireIdShoppingListItem()
+                ->getIdShoppingListItem();
+        }
+
+        $this->shoppingListProductOptionEntityManager
+            ->removeShoppingListItemProductOptionsByShoppingListItemIds($shoppingListItemIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return void
+     */
+    protected function executeSaveShoppingListItemProductOptionsTransactionInBulk(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): void
+    {
+        $this->removeShoppingListItemProductOptionsInBulk($shoppingListItemCollectionTransfer->getItems());
+
+        $this->shoppingListProductOptionEntityManager
+            ->saveShoppingListItemProductOptionInBulk($shoppingListItemCollectionTransfer->getItems());
     }
 }

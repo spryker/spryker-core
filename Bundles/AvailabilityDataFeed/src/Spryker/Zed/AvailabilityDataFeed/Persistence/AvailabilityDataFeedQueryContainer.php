@@ -33,6 +33,7 @@ class AvailabilityDataFeedQueryContainer extends AbstractQueryContainer implemen
      */
     public function queryAvailabilityDataFeed(AvailabilityDataFeedTransfer $availabilityDataFeedTransfer)
     {
+        /** @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery $availabilityProductQuery */
         $availabilityProductQuery = $this->getFactory()
             ->getAvailabilityQueryContainer()
             ->queryAvailabilityWithStockByIdLocale($availabilityDataFeedTransfer->getIdLocale());

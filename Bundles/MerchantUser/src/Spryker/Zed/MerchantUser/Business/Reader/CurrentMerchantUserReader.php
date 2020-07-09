@@ -15,8 +15,6 @@ use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
 class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
 {
-    protected const EXCEPTION_MESSAGE_CURRENT_MERCHANT_USER_NOT_FOUND = 'Current merchant user was not found';
-
     /**
      * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface
      */
@@ -54,10 +52,9 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
         $merchantUserTransfers = $this->merchantUserRepository->getMerchantUsers($merchantUserCriteriaFilterTransfer);
 
         if (count($merchantUserTransfers) === 0) {
-            throw new CurrentMerchantUserNotFoundException(sprintf(
-                static::EXCEPTION_MESSAGE_CURRENT_MERCHANT_USER_NOT_FOUND,
-                $userTransfer->getIdUser()
-            ));
+            throw new CurrentMerchantUserNotFoundException(
+                'Current merchant user was not found'
+            );
         }
 
         return $merchantUserTransfers[0];

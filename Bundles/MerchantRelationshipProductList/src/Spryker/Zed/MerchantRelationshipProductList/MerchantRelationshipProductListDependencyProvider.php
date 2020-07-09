@@ -57,9 +57,9 @@ class MerchantRelationshipProductListDependencyProvider extends AbstractBundleDe
      */
     protected function addProductListPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_LIST] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, $container->factory(function () {
             return SpyProductListQuery::create();
-        };
+        }));
 
         return $container;
     }

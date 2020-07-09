@@ -20,4 +20,9 @@ interface ProductToSalesProductConnectorQueryContainerInterface
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
      */
     public function queryProductAttributeKey();
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProduct();
 }

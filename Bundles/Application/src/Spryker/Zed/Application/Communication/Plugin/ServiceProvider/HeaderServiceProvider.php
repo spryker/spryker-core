@@ -15,7 +15,7 @@ use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * @deprecated Use `Spryker\Zed\Http\Communication\Plugin\EventDispatcher\HeaderEventDispatcherPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\Plugin\EventDispatcher\HeaderEventDispatcherPlugin} instead.
  *
  * @method \Spryker\Zed\Application\Business\ApplicationFacadeInterface getFacade()
  * @method \Spryker\Zed\Application\Communication\ApplicationCommunicationFactory getFactory()
@@ -58,6 +58,7 @@ class HeaderServiceProvider extends AbstractPlugin implements ServiceProviderInt
         $store = Store::getInstance();
 
         $event->getResponse()->headers->set('X-Store', $store->getStoreName());
+        $event->getResponse()->headers->set('X-CodeBucket', APPLICATION_CODE_BUCKET);
         $event->getResponse()->headers->set('X-Env', APPLICATION_ENV);
         $event->getResponse()->headers->set('X-Locale', $store->getCurrentLocale());
 

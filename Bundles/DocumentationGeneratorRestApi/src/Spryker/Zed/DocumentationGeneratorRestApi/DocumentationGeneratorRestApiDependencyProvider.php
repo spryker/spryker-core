@@ -56,11 +56,11 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new DocumentationGeneratorRestApiToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addYamlDumper(Container $container): Container
     {
-        $container[static::YAML_DUMPER] = function () {
+        $container->set(static::YAML_DUMPER, function () {
             return new DocumentationGeneratorRestApiToSymfonyYamlAdapter();
-        };
+        });
 
         return $container;
     }
@@ -86,9 +86,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addFilesystem(Container $container): Container
     {
-        $container[static::FILESYSTEM] = function () {
+        $container->set(static::FILESYSTEM, function () {
             return new DocumentationGeneratorRestApiToSymfonyFilesystemAdapter();
-        };
+        });
 
         return $container;
     }
@@ -100,9 +100,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addFinder(Container $container): Container
     {
-        $container[static::FINDER] = function () {
+        $container->set(static::FINDER, function () {
             return new DocumentationGeneratorRestApiToSymfonyFinderAdapter();
-        };
+        });
 
         return $container;
     }
@@ -114,9 +114,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addTextInflector(Container $container): Container
     {
-        $container[static::TEXT_INFLECTOR] = function () {
+        $container->set(static::TEXT_INFLECTOR, function () {
             return new DocumentationGeneratorRestApiToDoctrineInflectorAdapter();
-        };
+        });
 
         return $container;
     }
@@ -128,9 +128,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addResourceRoutePluginProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS] = function () {
+        $container->set(static::PLUGIN_RESOURCE_ROUTE_PLUGIN_PROVIDERS, function () {
             return $this->getResourceRoutePluginProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -142,9 +142,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addResourceRouteCollection(Container $container): Container
     {
-        $container[static::COLLECTION_RESOURCE_ROUTE] = function () {
+        $container->set(static::COLLECTION_RESOURCE_ROUTE, function () {
             return new ResourceRouteCollection();
-        };
+        });
 
         return $container;
     }
@@ -164,9 +164,9 @@ class DocumentationGeneratorRestApiDependencyProvider extends AbstractBundleDepe
      */
     protected function addResourceRelationshipCollectionProviderPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER] = function () {
+        $container->set(static::PLUGIN_RESOURCE_RELATIONSHIP_COLLECTION_PROVIDER, function () {
             return $this->getResourceRelationshipCollectionProviderPlugins();
-        };
+        });
 
         return $container;
     }

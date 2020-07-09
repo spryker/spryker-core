@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./out-tsc/app",
+    "types": []
+  },
+  "files": [
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/main.ts"
+  ],
+  "include": [
+    "src/Spryker/Zed/ProductOfferMerchantPortalGui/Presentation/Components/**/*.d.ts"
+  ]
+}

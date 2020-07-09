@@ -149,10 +149,6 @@ abstract class AbstractTouchUpdater implements TouchUpdaterInterface
         }
 
         $data = $touchData['data'];
-        if ($data === null) {
-            return null;
-        }
-
         if (!isset($data[$this->touchKeyColumnName])) {
             return null;
         }

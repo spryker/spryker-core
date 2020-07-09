@@ -61,6 +61,8 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
 
         $this->addGlossaryTranslateQuery($container);
         $this->addGlossaryKeyQuery($container);
+
+        return $container;
     }
 
     /**
@@ -82,9 +84,9 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryTranslateQuery(Container $container): void
     {
-        $container->set(static::PROPEL_QUERY_GLOSSARY_TRANSLATION, function (): SpyGlossaryTranslationQuery {
+        $container->set(static::PROPEL_QUERY_GLOSSARY_TRANSLATION, $container->factory(function (): SpyGlossaryTranslationQuery {
             return SpyGlossaryTranslationQuery::create();
-        });
+        }));
     }
 
     /**
@@ -94,8 +96,8 @@ class GlossaryStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryKeyQuery(Container $container): void
     {
-        $container->set(static::PROPEL_QUERY_GLOSSARY_KEY, function (): SpyGlossaryKeyQuery {
+        $container->set(static::PROPEL_QUERY_GLOSSARY_KEY, $container->factory(function (): SpyGlossaryKeyQuery {
             return SpyGlossaryKeyQuery::create();
-        });
+        }));
     }
 }

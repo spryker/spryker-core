@@ -1,4 +1,4 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \#1 \$limit of method DataImporterReaderConfigurationTransfer::setLimit\(\) expects int|null, array<string>|bool|string|null given.#'
-        - '#Call to an undefined method Spryker\\Zed\\Kernel\\AbstractBundleConfig::getDefaultYamlConfigPath#'
+        - '#Parameter \#1 \$limit of method .+DataImporterReaderConfigurationTransfer::setLimit\(\) expects int\|null, array<string>\|bool\|string\|null given.#'
+        - '#Parameter \#1 \$offset of method .+DataImporterReaderConfigurationTransfer::setOffset\(\) expects int\|null, array<string>\|bool\|string\|null given.#'

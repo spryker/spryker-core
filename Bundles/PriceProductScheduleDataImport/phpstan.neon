@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::import\(\).#'
+        - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Call to an undefined method .+DataSetStepBrokerAwareInterface::import\(\).#'

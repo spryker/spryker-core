@@ -27,7 +27,7 @@ use Spryker\Zed\Search\Business\SearchFacadeInterface;
  * @group SearchFacadeBCTest
  * Add your own group annotations below this line
  *
- * @deprecated Use `\SprykerTest\Zed\Search\Business\SearchFacadeTest` instead.
+ * @deprecated Only for BC check.
  */
 class SearchFacadeBCTest extends Unit
 {
@@ -138,8 +138,6 @@ class SearchFacadeBCTest extends Unit
      */
     public function testDeleteDeletesAnIndex(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $index = $this->tester->haveIndex(static::INDEX_NAME);
 

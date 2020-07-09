@@ -37,8 +37,8 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductGroupToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
     }
 }

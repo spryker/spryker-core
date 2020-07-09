@@ -61,6 +61,13 @@ interface ProductMeasurementUnitRepositoryInterface
     public function querySalesOrderItemsByIdSalesOrder($idSalesOrder): array;
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
+
+    /**
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
      */
     public function findAllProductMeasurementUnitTransfers(): array;
@@ -96,4 +103,18 @@ interface ProductMeasurementUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
      */
     public function findFilteredProductMeasurementSalesUnitTransfers(FilterTransfer $filterTransfer): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductMeasurementSalesUnitCountByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getProductMeasurementBaseUnitCountByProductAbstractIds(array $productAbstractIds): array;
 }

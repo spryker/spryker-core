@@ -23,7 +23,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabelStorage\Persistence\SpyProductAbstractLabelStorageQuery
      */
@@ -53,57 +53,16 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
      *
      * @api
      *
-     * @param array $productAbstractIds
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
-     */
-    public function queryProductAbstractLocalizedByIds(array $productAbstractIds)
-    {
-        return $this->getFactory()
-            ->getProductQueryContainer()
-            ->queryAllProductAbstractLocalizedAttributes()
-            ->joinWithLocale()
-            ->joinWithSpyProductAbstract()
-            ->filterByFkProductAbstract_In($productAbstractIds);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
      */
     public function queryProductLabelProductAbstractByProductAbstractIds(array $productAbstractIds)
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByFkProductAbstract_In($productAbstractIds)
-            ->joinWithSpyProductLabel()
-            ->orderBy(SpyProductLabelTableMap::COL_POSITION)
-            ->setFormatter(ModelCriteria::FORMAT_ARRAY);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @deprecated Will be removed in the next major.
-     *
-     * @param int[] $productLabelProductAbstractIds
-     *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
-     */
-    public function queryProductLabelProductAbstractByIds(array $productLabelProductAbstractIds)
-    {
-        return $this->getFactory()
-            ->getProductLabelQuery()
-            ->queryAllProductLabelProductAbstractRelations()
-            ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds)
             ->joinWithSpyProductLabel()
             ->orderBy(SpyProductLabelTableMap::COL_POSITION)
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
@@ -121,7 +80,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstractByPrimaryIds(array $productLabelProductAbstractIds): SpyProductLabelProductAbstractQuery
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations()
             ->filterByIdProductLabelProductAbstract_In($productLabelProductAbstractIds);
     }
@@ -136,7 +95,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelProductAbstract()
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllProductLabelProductAbstractRelations();
     }
 
@@ -150,7 +109,7 @@ class ProductLabelStorageQueryContainer extends AbstractQueryContainer implement
     public function queryProductLabelLocalizedAttributes()
     {
         return $this->getFactory()
-            ->getProductLabelQuery()
+            ->getProductLabelQueryContainer()
             ->queryAllLocalizedAttributesLabels()
             ->joinWithSpyLocale()
             ->joinWithSpyProductLabel()

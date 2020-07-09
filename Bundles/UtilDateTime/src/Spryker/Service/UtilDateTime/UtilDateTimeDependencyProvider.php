@@ -34,9 +34,9 @@ class UtilDateTimeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addConfig(Container $container)
     {
-        $container[self::CONFIG] = function () {
+        $container->set(static::CONFIG, function () {
             return Config::getInstance();
-        };
+        });
 
         return $container;
     }

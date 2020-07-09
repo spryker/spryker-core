@@ -18,6 +18,7 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
@@ -46,7 +47,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
     protected $utilNetworkService;
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $ignorableTransactions;
 
@@ -55,7 +56,7 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Facade\MonitoringToLocaleFacadeInterface $localeFacade
      * @param \Spryker\Zed\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
-     * @param array $ignorableTransactions
+     * @param string[] $ignorableTransactions
      */
     public function __construct(
         MonitoringServiceInterface $monitoringService,

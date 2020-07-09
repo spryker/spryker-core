@@ -37,9 +37,9 @@ class StoreDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return new StoreToKernelStoreAdapter(Store::getInstance());
-        };
+        });
 
         return $container;
     }

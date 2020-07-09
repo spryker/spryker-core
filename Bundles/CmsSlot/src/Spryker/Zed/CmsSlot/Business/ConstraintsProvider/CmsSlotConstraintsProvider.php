@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsSlotTransfer;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Type;
 
 class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
@@ -36,7 +35,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     protected function getKeyConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
             new Regex([
@@ -51,7 +49,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     protected function getContentProviderTypeConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 64]),
         ];
@@ -63,7 +60,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     protected function getNameConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 255]),
         ];
@@ -75,7 +71,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     protected function getDescriptionConstraints(): array
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 1024]),
         ];
@@ -87,7 +82,6 @@ class CmsSlotConstraintsProvider implements ConstraintsProviderInterface
     protected function getIsActiveConstraints(): array
     {
         return [
-            new Required(),
             new Type([
                 'type' => 'boolean',
             ]),

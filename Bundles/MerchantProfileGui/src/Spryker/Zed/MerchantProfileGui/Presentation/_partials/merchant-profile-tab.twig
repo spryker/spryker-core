@@ -1,32 +1,10 @@
 <div class="col-md-6">
-    {{ form_row(merchantForm.merchantProfile.is_active) }}
     {{ form_row(merchantForm.merchantProfile.description_glossary_key) }}
     {{ form_row(merchantForm.merchantProfile.delivery_time_glossary_key) }}
     {{ form_row(merchantForm.merchantProfile.public_email) }}
     {{ form_row(merchantForm.merchantProfile.public_phone) }}
     {{ form_row(merchantForm.merchantProfile.fax_number) }}
     {{ form_row(merchantForm.merchantProfile.logo_url) }}
-
-    {{ form_label(merchantForm.merchantProfile.urlCollection) }}
-
-    {% for localizedUrl in merchantForm.merchantProfile.urlCollection %}
-        <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}" >
-            {% if localizedUrl.vars.data.urlPrefix %}
-                <div class="input-group m-b">
-                    <span class="input-group-addon">
-                        {{ localizedUrl.vars.data.urlPrefix }}
-                    </span>
-                    {{ form_widget(localizedUrl.url) }}
-                </div>
-            {% else %}
-                {{ form_widget(localizedUrl.url) }}
-            {% endif %}
-            {{ form_widget(localizedUrl.url) }}
-            {{ form_widget(localizedUrl.fkLocale) }}
-        </div>
-    {% endfor %}
-
-    {% do merchantForm.merchantProfile.urlCollection.setRendered %}
 
     {% for localizedAttributes in merchantForm.merchantProfile.merchantProfileLocalizedGlossaryAttributes %}
     {% set localeName = localizedAttributes.locale.vars.value.localeName %}

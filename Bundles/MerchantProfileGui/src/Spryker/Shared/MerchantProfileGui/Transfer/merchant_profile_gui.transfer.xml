@@ -9,8 +9,6 @@
 
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
-        <property name="isActive" type="bool"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="fkMerchant" type="int"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
@@ -84,14 +82,6 @@
     <transfer name="Translation">
         <property name="value" type="string"/>
         <property name="isActive" type="bool"/>
-    </transfer>
-
-    <transfer name="Url">
-        <property name="urlPrefix" type="string"/>
-        <property name="fkResourceMerchantProfile" type="int"/>
-        <property name="idUrl" type="int"/>
-        <property name="url" type="string"/>
-        <property name="fkLocale" type="int"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">

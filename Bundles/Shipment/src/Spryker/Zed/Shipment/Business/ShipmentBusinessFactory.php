@@ -257,7 +257,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutMultiShipmentOrderSaver() instead.
+     * @deprecated Use {@link createCheckoutMultiShipmentOrderSaver()} instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Checkout\ShipmentOrderSaverInterface
      */
@@ -285,7 +285,7 @@ class ShipmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentTaxCalculatorWithItemShipmentTaxRate() instead.
+     * @deprecated Use {@link createShipmentTaxCalculatorWithItemShipmentTaxRate()} instead.
      *
      * @return \Spryker\Zed\Shipment\Business\Model\ShipmentTaxRateCalculator
      */

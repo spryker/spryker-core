@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote;
 
+use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
+use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 
 class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
@@ -14,28 +17,71 @@ class ShoppingListItemExpander implements ShoppingListItemExpanderInterface
     /**
      * @var \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface
      */
-    protected $shoppingLisItemNoteReader;
+    protected $shoppingListItemNoteReader;
 
     /**
-     * @param \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface $shoppingLisItemNoteReader
+     * @param \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemNoteReaderInterface $shoppingListItemNoteReader
      */
-    public function __construct(ShoppingListItemNoteReaderInterface $shoppingLisItemNoteReader)
+    public function __construct(ShoppingListItemNoteReaderInterface $shoppingListItemNoteReader)
     {
-        $this->shoppingLisItemNoteReader = $shoppingLisItemNoteReader;
+        $this->shoppingListItemNoteReader = $shoppingListItemNoteReader;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ShoppingListNote\Business\ShoppingListItemNote\ShoppingListItemExpander::expandItemCollection()} instead.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function expandItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
     {
-        $shoppingListItemNoteTransfer = $this->shoppingLisItemNoteReader
+        $shoppingListItemNoteTransfer = $this->shoppingListItemNoteReader
             ->getShoppingListItemNoteByIdShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
         $shoppingListItemTransfer->setShoppingListItemNote($shoppingListItemNoteTransfer);
 
         return $shoppingListItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function expandItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemNoteTransfers = $this->shoppingListItemNoteReader
+            ->getShoppingListItemNoteTransfersByShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        $indexedShoppingListItemNoteTransfers = $this
+            ->indexShoppingListItemNoteTransfersByShoppingListItemIds($shoppingListItemNoteTransfers);
+
+        $expandedShoppingListItemTransfers = new ArrayObject();
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemTransfer->setShoppingListItemNote(
+                $indexedShoppingListItemNoteTransfers[$shoppingListItemTransfer->getIdShoppingListItem()] ?? new ShoppingListItemNoteTransfer()
+            );
+            $expandedShoppingListItemTransfers->append($shoppingListItemTransfer);
+        }
+
+        $shoppingListItemCollectionTransfer->setItems($expandedShoppingListItemTransfers);
+
+        return $shoppingListItemCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject $shoppingListItemNoteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]
+     */
+    protected function indexShoppingListItemNoteTransfersByShoppingListItemIds(ArrayObject $shoppingListItemNoteTransfers): array
+    {
+        $indexedShoppingListItemNoteTransfers = [];
+        foreach ($shoppingListItemNoteTransfers as $shoppingListItemNoteTransfer) {
+            $indexedShoppingListItemNoteTransfers[$shoppingListItemNoteTransfer->getFkShoppingListItem()] = $shoppingListItemNoteTransfer;
+        }
+
+        return $indexedShoppingListItemNoteTransfers;
     }
 }

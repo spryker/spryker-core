@@ -32,6 +32,6 @@ class CmsBlockGuiCreateCest
     {
         $i->registerCmsBlockStoreRelationFormTypePlugin();
         $i->amOnPage(CmsBlockGuiCreatePage::URL);
-        $i->seeBreadcrumbNavigation('Content Management / Blocks / Create new CMS Block');
+        $i->seeBreadcrumbNavigation('Content / Blocks / Create new CMS Block');
     }
 }

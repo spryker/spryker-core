@@ -7,22 +7,22 @@
 
 namespace Spryker\Glue\SalesReturnsRestApi\Processor\Builder;
 
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
+use Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer;
+use Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface RestReturnReasonResponseBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     * @param \Generated\Shared\Transfer\ReturnReasonCollectionTransfer $returnReasonCollectionTransfer
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createReturnReasonListRestResponse(
-        ReturnReasonFilterTransfer $returnReasonFilterTransfer,
-        ReturnReasonCollectionTransfer $returnReasonCollectionTransfer,
+        ReturnReasonSearchRequestTransfer $returnReasonSearchRequestTransfer,
+        ReturnReasonSearchCollectionTransfer $returnReasonSearchCollectionTransfer,
         string $localeName
     ): RestResponseInterface;
 }

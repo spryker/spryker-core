@@ -30,6 +30,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="isCancellable" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
@@ -74,6 +75,7 @@
 
     <transfer name="OrderListRequest">
         <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]"  singular="orderReference"/>
         <property name="filter" type="Filter"/>
     </transfer>
 
@@ -184,6 +186,7 @@
         <property name="orderReference" type="string"/>
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -380,6 +383,21 @@
         <property name="comparison" type="string"/>
         <property name="mergeWithCondition" type="string"/>
         <property name="mergeOperator" type="string"/>
+    </transfer>
+
+    <transfer name="OrderCancelRequest">
+        <property name="idSalesOrder" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="OrderCancelResponse">
+        <property name="order" type="Order"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

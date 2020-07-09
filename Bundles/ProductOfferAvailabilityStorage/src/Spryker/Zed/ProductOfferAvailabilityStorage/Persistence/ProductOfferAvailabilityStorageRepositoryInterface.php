@@ -27,11 +27,11 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
     public function getProductOfferAvailabilityRequestsByProductOfferIds(array $productOfferStockIds): array;
 
     /**
-     * @param array $omsProductReservationIds
+     * @param array $omsProductOfferReservationIds
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */
-    public function getProductOfferAvailabilityRequestsByOmsReservationIds(array $omsProductReservationIds): array;
+    public function getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds(array $omsProductOfferReservationIds): array;
 
     /**
      * @param string $offerReference

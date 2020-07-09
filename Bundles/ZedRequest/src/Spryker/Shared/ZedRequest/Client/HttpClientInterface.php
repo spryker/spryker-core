@@ -12,7 +12,7 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 interface HttpClientInterface
 {
     /**
-     * @deprecated Please use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
+     * @deprecated Use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
      *
      * @param int $timeoutInSeconds
      *

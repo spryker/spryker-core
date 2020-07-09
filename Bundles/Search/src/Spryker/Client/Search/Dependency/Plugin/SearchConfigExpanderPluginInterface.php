@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface as SearchExtensionSearchConfigExpanderPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface} instead.
  */
 interface SearchConfigExpanderPluginInterface extends SearchExtensionSearchConfigExpanderPluginInterface
 {

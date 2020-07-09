@@ -39,9 +39,9 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductClient(Container $container)
     {
-        $container[static::PRODUCT_CLIENT] = function (Container $container) {
+        $container->set(static::PRODUCT_CLIENT, function (Container $container) {
             return new DiscountPromotionToProductBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class DiscountPromotionDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductMapperPlugin(Container $container)
     {
-        $container[static::PRODUCT_MAPPER_PLUGIN] = function (Container $container) {
+        $container->set(static::PRODUCT_MAPPER_PLUGIN, function (Container $container) {
             return $this->getProductMapperPlugin($container);
-        };
+        });
 
         return $container;
     }

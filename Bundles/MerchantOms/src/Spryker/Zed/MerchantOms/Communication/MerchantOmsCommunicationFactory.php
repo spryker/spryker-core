@@ -8,7 +8,12 @@
 namespace Spryker\Zed\MerchantOms\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantOms\Communication\FilePathResolver\FilePathResolver;
+use Spryker\Zed\MerchantOms\Communication\FilePathResolver\FilePathResolverInterface;
+use Spryker\Zed\MerchantOms\Communication\HeaderValidator\HeaderValidator;
+use Spryker\Zed\MerchantOms\Communication\HeaderValidator\HeaderValidatorInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantSalesOrderFacadeInterface;
+use Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
 
 /**
@@ -40,5 +45,29 @@ class MerchantOmsCommunicationFactory extends AbstractCommunicationFactory
     public function getStateMachineCommandPlugins(): array
     {
         return $this->getProvidedDependency(MerchantOmsDependencyProvider::PLUGINS_PLUGINS_STATE_MACHINE_COMMAND);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Dependency\Service\MerchantOmsToUtilDataReaderServiceInterface
+     */
+    public function getUtilDataReaderService(): MerchantOmsToUtilDataReaderServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantOmsDependencyProvider::SERVICE_UTIL_DATA_READER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Communication\HeaderValidator\HeaderValidatorInterface
+     */
+    public function createHeaderValidator(): HeaderValidatorInterface
+    {
+        return new HeaderValidator();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Communication\FilePathResolver\FilePathResolverInterface
+     */
+    public function createFilePathResolver(): FilePathResolverInterface
+    {
+        return new FilePathResolver();
     }
 }

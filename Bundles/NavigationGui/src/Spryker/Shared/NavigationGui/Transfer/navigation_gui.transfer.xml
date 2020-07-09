@@ -5,7 +5,25 @@
 
     <transfer name="Navigation">
         <property name="idNavigation" type="int"/>
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
         <property name="isActive" type="bool"/>
+    </transfer>
+
+    <transfer name="DuplicateNavigation">
+        <property name="idBaseNavigation" type="int"/>
+        <property name="key" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="NavigationResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="navigation" type="Navigation"/>
+        <property name="errors" type="NavigationError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="NavigationError">
+        <property name="message" type="string"/>
     </transfer>
 
     <transfer name="NavigationNode">
@@ -36,6 +54,10 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="NavigationCriteria">
+        <property name="idNavigation" type="int"/>
     </transfer>
 
 </transfers>

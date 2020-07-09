@@ -56,6 +56,8 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->filterByLastName_Like($queryPattern)
             ->_or()
             ->filterByFirstName_Like($queryPattern)
+            ->_or()
+            ->filterByCustomerReference($query)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,

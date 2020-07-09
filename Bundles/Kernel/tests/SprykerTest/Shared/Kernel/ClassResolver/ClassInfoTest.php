@@ -28,19 +28,19 @@ class ClassInfoTest extends Unit
      */
     public function testGetBundleStripsStoreNameFromModuleName(): void
     {
-        $classInfo = $this->getClassInfo('DE');
+        $classInfo = $this->getClassInfo('TEST');
 
-        $classInfo->setClass('\\ProjectNamespace\\Zed\CartDE\\Business\\CartFacade');
+        $classInfo->setClass('\\ProjectNamespace\\Zed\CartTEST\\Business\\CartFacade');
 
         $this->assertSame('Cart', $classInfo->getModule());
     }
 
     /**
-     * @param string $storeName
+     * @param string $codeBucket
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ClassInfo
      */
-    protected function getClassInfo(string $storeName): ClassInfo
+    protected function getClassInfo(string $codeBucket): ClassInfo
     {
         $mock = $this
             ->getMockBuilder(ClassInfo::class)
@@ -49,26 +49,26 @@ class ClassInfoTest extends Unit
 
         $mock
             ->method('getModuleNameResolver')
-            ->will($this->returnValue($this->getModuleNameResolverMock($storeName)));
+            ->will($this->returnValue($this->getModuleNameResolverMock($codeBucket)));
 
         return $mock;
     }
 
     /**
-     * @param string $storeName
+     * @param string $codeBucket
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getModuleNameResolverMock(string $storeName): ModuleNameResolver
+    protected function getModuleNameResolverMock(string $codeBucket): ModuleNameResolver
     {
         $mock = $this
             ->getMockBuilder(ModuleNameResolver::class)
-            ->setMethods(['getStoreName'])
+            ->setMethods(['getCodeBucket'])
             ->getMock();
 
         $mock
-            ->method('getStoreName')
-            ->will($this->returnValue($storeName));
+            ->method('getCodeBucket')
+            ->will($this->returnValue($codeBucket));
 
         return $mock;
     }

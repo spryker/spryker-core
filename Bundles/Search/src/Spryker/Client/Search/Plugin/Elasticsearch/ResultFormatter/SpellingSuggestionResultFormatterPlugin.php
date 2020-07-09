@@ -11,7 +11,7 @@ use Elastica\ResultSet;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\SpellingSuggestionQueryExpanderPlugin;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\ResultFormatter\SpellingSuggestionResultFormatterPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

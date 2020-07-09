@@ -1,0 +1,3 @@
+parameters:
+    ignoreErrors:
+        - '#Parameter \#2 \$sales.+ of method .+SalesDataExportRepository::applyFilterCriteriaTo.+Query\(\) expects .+Spy.+Query, Propel\\Runtime\\ActiveQuery\\ModelCriteria given.#'

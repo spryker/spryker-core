@@ -77,7 +77,7 @@ interface PriceProductConcreteReaderInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductConcretePricesByConcreteSkusAndCriteria(
         array $concreteSkus,

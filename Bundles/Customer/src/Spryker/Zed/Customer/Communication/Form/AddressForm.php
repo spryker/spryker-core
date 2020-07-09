@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\Customer\Business\CustomerFacadeInterface getFacade()
@@ -326,7 +325,6 @@ class AddressForm extends AbstractType
     protected function getTextFieldConstraints()
     {
         return [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 100]),
         ];
@@ -341,7 +339,7 @@ class AddressForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

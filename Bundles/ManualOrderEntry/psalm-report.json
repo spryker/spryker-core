@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ManualOrderEntry\\Persistence\\ManualOrderEntryRepositoryInterface::getOrderSourceById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntry/src/Spryker/Zed/ManualOrderEntry/Communication/Controller/SalesController.php",
+            "snippet": "                ->getOrderSourceById($orderTransfer->getFkOrderSource());",
+            "selected_text": "$orderTransfer->getFkOrderSource()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ManualOrderEntry\\Communication\\Controller\\SalesController::getOrderSourceName is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntry/src/Spryker/Zed/ManualOrderEntry/Communication/Controller/SalesController.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 64,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\ManualOrderEntry\\Communication\\Controller\\SalesController::getOrderSourceName is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/ManualOrderEntry/src/Spryker/Zed/ManualOrderEntry/Communication/Controller/SalesController.php",
+            "snippet": "        return $orderSourceTransfer->getName() !== null ?\n            $orderSourceTransfer->getName() : '-';",
+            "selected_text": "$orderSourceTransfer->getName() !== null ?\n            $orderSourceTransfer->getName() : '-'",
+            "error_level": 5,
+            "shortcode": 139
+        }
+    ],
+    "deprecation": []
+}

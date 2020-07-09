@@ -17,7 +17,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\CompanyUnitAddressGui\Communication\CompanyUnitAddressGuiCommunicationFactory getFactory()
@@ -121,7 +120,6 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'City',
             'required' => true,
             'constraints' => [
-                new Required(),
                 new NotBlank(),
                 new Length(['max' => 255]),
             ],
@@ -141,7 +139,6 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'Zip Code',
             'required' => true,
             'constraints' => [
-                new Required(),
                 new NotBlank(),
                 new Length(['max' => 10]),
             ],
@@ -161,7 +158,6 @@ class CompanyUnitAddressForm extends AbstractType
             'label' => 'Street',
             'required' => true,
             'constraints' => [
-                new Required(),
                 new NotBlank(),
                 new Length(['max' => 255]),
             ],

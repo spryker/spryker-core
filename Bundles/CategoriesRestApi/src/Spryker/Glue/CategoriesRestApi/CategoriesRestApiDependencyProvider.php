@@ -37,11 +37,11 @@ class CategoriesRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCategoryStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CATEGORY_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CATEGORY_STORAGE, function (Container $container) {
             return new CategoriesRestApiToCategoryStorageClientBridge(
                 $container->getLocator()->categoryStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

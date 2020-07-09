@@ -38,11 +38,11 @@ class EntityTagsRestApiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addEntityTagClient(Container $container): Container
     {
-        $container[static::CLIENT_ENTITY_TAG] = function (Container $container) {
+        $container->set(static::CLIENT_ENTITY_TAG, function (Container $container) {
             return new EntityTagsRestApiToEntityTagClientBridge(
                 $container->getLocator()->entityTag()->client()
             );
-        };
+        });
 
         return $container;
     }
