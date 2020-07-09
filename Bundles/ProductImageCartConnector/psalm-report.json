@@ -1,0 +1,68 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductImageCartConnector\\Dependency\\Facade\\ProductImageCartConnectorToProductImageInterface::getProductImagesByProductIdsAndProductImageSetName expects array<array-key, int>, array<array-key, int|null> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/Business/Expander/ProductImageExpander.php",
+            "snippet": "        $productImages = $this->productImageFacade->getProductImagesByProductIdsAndProductImageSetName($productIds, ProductImageCartConnectorConfig::DEFAULT_IMAGE_SET_NAME);",
+            "selected_text": "$productIds",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/Business/Expander/ProductImageExpander.php",
+            "snippet": "        }, $cartChangeTransfer->getItems()->getArrayCopy());",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productImages using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/Business/Expander/ProductImageExpander.php",
+            "snippet": "        $itemTransfer->setImages(new ArrayObject($productImages[$itemTransfer->getId()]));",
+            "selected_text": "$productImages",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/ProductImageCartConnectorDependencyProvider.php",
+            "snippet": "            return new ProductImageCartConnectorToProductImageBridge($container->getLocator()->productImage()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 19,
+            "line_to": 19,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\Cart\\Dependency\\ItemExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductImageCartConnector/src/Spryker/Zed/ProductImageCartConnector/Communication/Plugin/ProductImageCartPlugin.php",
+            "snippet": "class ProductImageCartPlugin extends AbstractPlugin implements ItemExpanderPluginInterface",
+            "selected_text": "ProductImageCartPlugin",
+            "error_level": 2,
+            "shortcode": 152
+        }
+    ]
+}

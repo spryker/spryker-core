@@ -5,8 +5,8 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/gui-table": "^0.1.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/locale": "^3.0.0",
     "spryker/merchant-product-offer": "^0.5.0",
     "spryker/merchant-user": "^0.5.0",
     "spryker/product": "^5.0.0 || ^6.0.0",
@@ -20,7 +20,6 @@
     "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.18.0",
     "spryker/translator": "^1.1.0",
-    "spryker/util-date-time": "^1.2.0",
     "spryker/util-encoding": "^2.0.0",
     "spryker/zed-ui": "^0.2.4"
   },

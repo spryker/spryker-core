@@ -26,8 +26,6 @@ class SalesOrderItemGrouper implements SalesOrderItemGrouperInterface
     }
 
     /**
-     * @deprecated Use `SalesOrderItemGrouper::getUniqueItemsFromOrder() instead`.
-     *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]

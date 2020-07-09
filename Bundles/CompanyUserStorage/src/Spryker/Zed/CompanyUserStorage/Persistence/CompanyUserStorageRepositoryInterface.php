@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 interface CompanyUserStorageRepositoryInterface
 {
     /**
-     * @deprecated Use `CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndCompanyUserIds()} instead.
      *
      * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
      *
@@ -23,7 +23,7 @@ interface CompanyUserStorageRepositoryInterface
     public function findCompanyUserStorageEntities(array $companyUserIds): array;
 
     /**
-     * @deprecated Use `CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()` instead.
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndCompanyUserIds()} instead.
      *
      * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
      *

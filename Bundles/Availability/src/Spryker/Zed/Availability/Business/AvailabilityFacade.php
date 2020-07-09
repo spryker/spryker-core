@@ -137,7 +137,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -156,7 +156,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -176,7 +176,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore()} instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore()} instead.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -275,5 +275,21 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     {
         return $this->getRepository()
             ->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterAvailableProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createAvailabilityReader()
+            ->filterAvailableProducts($productConcreteTransfers);
     }
 }

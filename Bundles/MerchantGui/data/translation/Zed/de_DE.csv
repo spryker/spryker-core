@@ -36,3 +36,6 @@ Deactivate,Deaktivieren
 merchant.activated,"Händlerprofil erfolgreich aktiviert."
 merchant.deactivated,"Händlerprofil erfolgreich deaktiviert."
 Stores,Stores
+"Merchant Reference","Händler Referenz"
+"Merchant URL",Händler-URL
+"Create Merchant","Händler Erstellen"

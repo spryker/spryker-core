@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->company()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 72,
+            "line_to": 72,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->customer()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->companyUser()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/BusinessOnBehalfGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->companyBusinessUnit()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getFkCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
+            "snippet": "            static::PARAM_ID_CUSTOMER => $companyUserTransfer->getFkCustomer(),",
+            "selected_text": "getFkCustomer",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $errorMessageTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ResponseMessageTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[] $errorMessageTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ResponseMessageTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 111,
+            "line_to": 111,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\BusinessOnBehalfGui\\Communication\\Controller\\CustomerController::addErrorMessage cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Controller/CustomerController.php",
+            "snippet": "            $this->addErrorMessage($errorMessageTransfer->getText());",
+            "selected_text": "$errorMessageTransfer->getText()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Form/DataProvider/CustomerBusinessUnitAttachFormDataProvider.php",
+            "snippet": "            $companyBusinessUnitTransfer->getName(),",
+            "selected_text": "$companyBusinessUnitTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/BusinessOnBehalfGui/src/Spryker/Zed/BusinessOnBehalfGui/Communication/Form/DataProvider/CustomerBusinessUnitAttachFormDataProvider.php",
+            "snippet": "            $companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
+            "selected_text": "$companyBusinessUnitTransfer->getIdCompanyBusinessUnit()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

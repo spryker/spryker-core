@@ -36,3 +36,6 @@ Deactivate,Deactivate
 merchant.activated,"Merchant Profile successfully activated."
 merchant.deactivated,"Merchant Profile successfully deactivated."
 Stores,Stores
+"Merchant Reference","Merchant Reference"
+"Merchant URL","Merchant URL"
+"Create Merchant","Create Merchant"

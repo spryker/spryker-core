@@ -68,8 +68,6 @@ class PriceProductScheduleApplyTest extends Unit
     }
 
     /**
-     * @param array $priceProductScheduleTestData
-     *
      * @return void
      */
     public function testPriceProductScheduleWithDifferentConcreteProductsPriceTypesAndCurrenciesShouldApply(): void
@@ -149,8 +147,6 @@ class PriceProductScheduleApplyTest extends Unit
     }
 
     /**
-     * @param array $priceProductScheduleTestData
-     *
      * @return void
      */
     public function testPriceProductScheduleWithBiggerPricesAndLowerDateRangeShouldApply(): void

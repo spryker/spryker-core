@@ -26,7 +26,7 @@ interface AvailabilityStorageReaderInterface
     public function findAbstractProductAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer;
 
     /**
-     * @deprecated Use `AvailabilityStorageClientInterface::findProductAbstractAvailability()` instead.
+     * @deprecated Use {@link \Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface::findProductAbstractAvailability()} instead.
      *
      * @param int $idProductAbstract
      *

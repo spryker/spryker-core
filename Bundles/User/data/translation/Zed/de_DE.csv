@@ -2,9 +2,23 @@
 "Add User","Benutzer hinzufügen"
 "Assign Customers","Kunden zuweisen"
 Create,Erstellen
-"Edit User",Benutzer
+"Edit User","Benutzer bearbeiten"
 "General Information","Allgemeine Informationen"
 "List Users","Liste der Benutzer"
 "Repeat Password","Passwort wiederholen"
 Save,Speichern
-Update,Update
+Update,Aktualisieren
+"Last Login","Letzte Anmeldung"
+"User entity was not created.","Benutzer wurde nicht erstellt."
+"User entity was not updated.","Benutzer wurde nicht aktualisiert."
+"User was not activated.","Benutzer wurde nicht aktiviert."
+"User was not deactivated.","Benutzer wurde nicht deaktiviert."
+"User was not deleted.","Benutzer wurde nicht gelöscht."
+User,Benutzer
+"Create new User","Neuen Benutzer erstellen"
+"Create user","Benutzer erstellen"
+Warning,Warnung
+"Delete User","Benutzer löschen"
+"You are trying to delete user","Sie versuchen einen Benutzer zu löschen"
+"Root group",Stammgruppe
+E-mail,E-Mail

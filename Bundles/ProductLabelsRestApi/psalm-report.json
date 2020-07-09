@@ -1,0 +1,91 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductLabelsRestApi\\Processor\\Reader\\ProductLabelReaderInterface::getProductLabelsByProductConcreteSkus expects array<array-key, string>, array<array-key, null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/Processor/Expander/ProductLabelByProductConcreteSkuExpander.php",
+            "snippet": "            $productConcreteSkus,",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 4
+        },
+        {
+            "severity": "error",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface>' for Spryker\\Glue\\ProductLabelsRestApi\\Processor\\Expander\\ProductLabelByProductConcreteSkuExpander::addProductLabelsResourceRelationships is incorrect, got 'array<array-key, null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/Processor/Expander/ProductLabelByProductConcreteSkuExpander.php",
+            "snippet": "     * @return \\Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface[]",
+            "selected_text": "\\Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 57,
+            "line_to": 65,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'array<array-key, null>' does not match the declared return type 'array<array-key, Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface>' for Spryker\\Glue\\ProductLabelsRestApi\\Processor\\Expander\\ProductLabelByProductConcreteSkuExpander::addProductLabelsResourceRelationships",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/Processor/Expander/ProductLabelByProductConcreteSkuExpander.php",
+            "snippet": "        return array_map(function (RestResourceInterface $restResource) use ($productLabelResources) {\n            if (empty($productLabelResources[$restResource->getId()])) {\n                return;\n            }\n\n            foreach ($productLabelResources[$restResource->getId()] as $productLabelResource) {\n                $restResource->addRelationship($productLabelResource);\n            }\n        }, $restResources);",
+            "selected_text": "array_map(function (RestResourceInterface $restResource) use ($productLabelResources) {\n            if (empty($productLabelResources[$restResource->getId()])) {\n                return;\n            }\n\n            foreach ($productLabelResources[$restResource->getId()] as $productLabelResource) {\n                $restResource->addRelationship($productLabelResource);\n            }\n        }, $restResources)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productLabelResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/Processor/Expander/ProductLabelByProductConcreteSkuExpander.php",
+            "snippet": "            foreach ($productLabelResources[$restResource->getId()] as $productLabelResource) {",
+            "selected_text": "$productLabelResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductLabelsRestApi\\Processor\\Reader\\ProductLabelReaderInterface::getProductLabelsByAbstractSku cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/Processor/Expander/ProductLabelResourceRelationshipExpander.php",
+            "snippet": "                $abstractSku,",
+            "selected_text": "$abstractSku",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/ProductLabelsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductLabelsRestApi/src/Spryker/Glue/ProductLabelsRestApi/ProductLabelsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productLabelStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}
