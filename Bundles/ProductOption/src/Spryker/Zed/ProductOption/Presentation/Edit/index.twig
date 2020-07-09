@@ -5,10 +5,27 @@
 {% block action %}
     {% set redirectUrl = url('/product-option/edit/index/', {'id-product-option-group' :productOptionGroup.idProductOptionGroup }) %}
     {% if productOptionGroup.active == true  %}
-        {{ removeActionButton(url('/product-option/index/toggle-active', {'id-product-option-group' : productOptionGroup.idProductOptionGroup, 'active': '0', 'redirect-url': redirectUrl}), 'Deactivate' | trans) }}
+        {% set activeValue = '0' %}
+        {% set formLabel = 'Deactivate' %}
+        {% set iconClass = 'fa-trash' %}
+        {% set buttonClass = 'btn-remove' %}
     {% else %}
-        {{ viewActionButton(url('/product-option/index/toggle-active', {'id-product-option-group' : productOptionGroup.idProductOptionGroup, 'active': '1', 'redirect-url': redirectUrl}), 'Activate' | trans) }}
+        {% set activeValue = '1' %}
+        {% set formLabel = 'Activate' %}
+        {% set iconClass = 'fa-caret-right' %}
+        {% set buttonClass = 'btn-view' %}
     {% endif %}
+    {{ form_start(toggleActiveForm,{
+        'action': url('/product-option/index/toggle-active', {'id-product-option-group' : productOptionGroup.idProductOptionGroup}),
+        'attr': {'class': 'form-inline'}
+    }) }}
+        <input type="hidden" name="active" value="{{ activeValue }}">
+        <input type="hidden" name="redirect-url" value="{{ redirectUrl }}">
+        <button type="submit" class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+            <i class="fa {{ iconClass }}"></i>
+            {{ formLabel | trans }}
+        </button>
+    {{ form_end(toggleActiveForm) }}
 
     {{ backActionButton('/product-option/list/index', 'List of product options' | trans) }}
 

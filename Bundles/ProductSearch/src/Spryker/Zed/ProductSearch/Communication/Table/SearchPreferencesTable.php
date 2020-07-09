@@ -12,6 +12,7 @@ use Orm\Zed\Product\Persistence\SpyProductAttributeKey;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductSearch\Communication\Controller\SearchPreferencesController;
+use Spryker\Zed\ProductSearch\Communication\Form\CleanSearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class SearchPreferencesTable extends AbstractTable
@@ -173,7 +174,9 @@ class SearchPreferencesTable extends AbstractTable
                     SearchPreferencesController::PARAM_ID,
                     $productAttributeKeyEntity->getIdProductAttributeKey()
                 ),
-                'Deactivate all'
+                'Deactivate all',
+                [],
+                CleanSearchPreferencesForm::class
             ),
         ];
 
