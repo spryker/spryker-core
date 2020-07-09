@@ -67,7 +67,9 @@ class ProductOfferStoragePublishListenerTest extends Unit
         $expectedAvailability = $stockQuantity;
 
         $storeTransfer = $this->tester->haveStore();
-        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
@@ -82,7 +84,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
         $productOfferStoragePublishListener->setFacade($this->tester->getFacade());
 
         $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($productOfferStockTransfer->getProductOffer()->getIdProductOffer()),
+            (new EventEntityTransfer())->setId($productOfferTransfer->getIdProductOffer()),
         ];
 
         // Act
@@ -91,7 +93,7 @@ class ProductOfferStoragePublishListenerTest extends Unit
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
             $storeTransfer->getName(),
-            $productOfferStockTransfer->getProductOffer()->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference()
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());

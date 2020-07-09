@@ -71,6 +71,84 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testFindAddsStoresToProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $storeTransfer1 = $this->tester->haveStore();
+        $storeTransfer2 = $this->tester->haveStore();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->find($productOfferCriteriaFilterTransfer)->getProductOffers()[0];
+
+        // Assert
+        $this->assertCount(2, $productOfferTransfer->getStores());
+        $this->assertEquals($productOfferTransfer->getStores(), new ArrayObject([$storeTransfer1, $storeTransfer2]));
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOneFindsProductOfferByProductOfferReference(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($productOfferTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOneFindsProductOfferByProductOfferId(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertNotEmpty($productOfferTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOneAddsStoresToProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $storeTransfer1 = $this->tester->haveStore();
+        $storeTransfer2 = $this->tester->haveStore();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setProductOfferReference($productOfferTransfer->getProductOfferReference());
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->findOne($productOfferCriteriaFilterTransfer);
+
+        // Assert
+        $this->assertCount(2, $productOfferTransfer->getStores());
+        $this->assertEquals($productOfferTransfer->getStores(), new ArrayObject([$storeTransfer1, $storeTransfer2]));
+    }
+
+    /**
+     * @return void
+     */
     public function testCreate(): void
     {
         // Arrange
@@ -90,6 +168,31 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testCreateCreatesRelationsBetweenProductOffersAndStores(): void
+    {
+        // Arrange
+        $productOfferTransfer = (new ProductOfferBuilder([
+            ProductOfferTransfer::FK_MERCHANT => $this->tester->haveMerchant()->getIdMerchant(),
+            ProductOfferTransfer::ID_PRODUCT_OFFER => null,
+        ]))->build();
+        $productOfferTransfer->addStore($this->tester->haveStore());
+        $productOfferTransfer->addStore($this->tester->haveStore());
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Act
+        $productOfferTransfer = $this->tester->getFacade()->create($productOfferTransfer);
+        $storeTransfers = $this->tester->getProductOfferRepository()
+            ->findOne($productOfferCriteriaFilterTransfer)
+            ->getStores();
+
+        // Assert
+        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
+    }
+
+    /**
+     * @return void
+     */
     public function testActivateProductOfferById(): void
     {
         // Arrange
@@ -104,7 +207,7 @@ class ProductOfferFacadeTest extends Unit
         $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
 
         // Assert
-        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccessful());
         $this->assertTrue($productOfferResponseTransfer->getProductOffer()->getIsActive());
     }
 
@@ -125,7 +228,7 @@ class ProductOfferFacadeTest extends Unit
         $productOfferResponseTransfer = $this->tester->getFacade()->update($productOfferTransfer);
 
         // Assert
-        $this->assertTrue($productOfferResponseTransfer->getIsSuccess());
+        $this->assertTrue($productOfferResponseTransfer->getIsSuccessful());
         $this->assertFalse($productOfferResponseTransfer->getProductOffer()->getIsActive());
     }
 
@@ -150,7 +253,7 @@ class ProductOfferFacadeTest extends Unit
         );
 
         $productOfferRepositoryMock = $this->getMockBuilder(ProductOfferRepositoryInterface::class)
-            ->onlyMethods(['find', 'findOne'])
+            ->onlyMethods(['find', 'findOne', 'getProductOfferStores', 'getMaxIdProductOffer', 'isProductOfferReferenceUsed'])
             ->getMock();
         $productOfferRepositoryMock
             ->method('find')
@@ -246,5 +349,57 @@ class ProductOfferFacadeTest extends Unit
         // Assert
         $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
         $this->assertNotEmpty($cartPreCheckResponseTransfer->getMessages());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateAddsRelationsBetweenProductOffersAndStores(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $storeTransfer = $this->tester->haveStore();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer);
+        $productOfferTransfer->addStore($storeTransfer);
+        $productOfferTransfer->addStore($this->tester->haveStore());
+        $productOfferTransfer->addStore($this->tester->haveStore());
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Act
+        $this->tester->getFacade()->update($productOfferTransfer);
+        $storeTransfers = $this->tester->getProductOfferRepository()
+            ->findOne($productOfferCriteriaFilterTransfer)
+            ->getStores();
+
+        // Assert
+        $this->assertCount(3, $storeTransfers);
+        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateDeletesRelationsBetweenProductOffersAndStores(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $storeTransfer1 = $this->tester->haveStore();
+        $storeTransfer2 = $this->tester->haveStore();
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer1);
+        $this->tester->haveProductOfferStore($productOfferTransfer, $storeTransfer2);
+        $productOfferTransfer->addStore($storeTransfer1);
+        $productOfferCriteriaFilterTransfer = (new ProductOfferCriteriaFilterTransfer())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Act
+        $this->tester->getFacade()->update($productOfferTransfer);
+        $storeTransfers = $this->tester->getProductOfferRepository()
+            ->findOne($productOfferCriteriaFilterTransfer)
+            ->getStores();
+
+        // Assert
+        $this->assertCount(1, $storeTransfers);
+        $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
     }
 }

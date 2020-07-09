@@ -34,7 +34,7 @@ class ProductOfferStockDataHelper extends Module
         $productOfferStockEntity = (new SpyProductOfferStock());
         $productOfferStockEntity->fromArray($productOfferStockTransfer->toArray());
         $productOfferStockEntity->setFkStock($productOfferStockTransfer->getStock()->getIdStock());
-        $productOfferStockEntity->setFkProductOffer($productOfferStockTransfer->getProductOffer()->getIdProductOffer());
+        $productOfferStockEntity->setFkProductOffer($productOfferStockTransfer->getIdProductOffer());
         $productOfferStockEntity->save();
 
         $productOfferStockTransfer->fromArray($productOfferStockEntity->toArray(), true);
@@ -56,10 +56,6 @@ class ProductOfferStockDataHelper extends Module
     {
         $productOfferStockTransfer->setStock(
             $this->getStockDataHelper()->haveStock($seed[ProductOfferStockTransfer::STOCK] ?? [])
-        );
-
-        $productOfferStockTransfer->setProductOffer(
-            $this->getProductOfferHelper()->haveProductOffer($seed[ProductOfferStockTransfer::PRODUCT_OFFER] ?? [])
         );
 
         return $productOfferStockTransfer;
