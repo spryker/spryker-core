@@ -5,16 +5,22 @@ Approved,Genehmigt
 Created,Erstellt
 "Created from","Erstellt von"
 "Created to","Erstellt bis"
+"At least one store must be selected.","At least one store must be selected."
 "Create Offer","Angebot erstellen"
 Denied,Verweigert
 "Expiring in %daysNumber% days","Expiring in %daysNumber% days"
+From,Von
 "Has stock","Has stock"
 Image,Bild
 Inactive,Inaktiv
 "Low on Stock","Low on Stock"
 "Manage Offers","Manage Offers"
+"Manage Offer","Manage Offer"
 "Merchant SKU",Händler-SKU
 Name,Name
+"Never out of stock","Immer auf Lager"
+"Offer is online","Angebot ist online"
+"Offer is offline","Angebot ist offline"
 Offers,Angeboten
 Offline,Offline
 "On Marketplace","On Marketplace"
@@ -22,6 +28,10 @@ Online,Online
 "Out of stock",Ausverkauft
 Pending,Ausstehend
 Reference,ID
+Search,Suche
+"Offer reference",Angebot-Referenz
+Price,Preis
+Quantity,Menge
 "Search by SKU, Name","Suche nach SKU, Name"
 Sku,SKU
 Status,Status
@@ -30,6 +40,8 @@ Stores,Stores
 Updated,Aktualisiert
 "Updated from","Aktualisiert von"
 "Updated to","Aktualisiert bis"
+"The Offer is saved.","Angebot ist gespeichert."
+"The Offer is not saved.","Angebot ist nicht gespeichert."
 Valid,Gültig
 "Valid From","Gültig Von"
 "Valid, online & with Stock","Valid, online & with Stock"
@@ -38,3 +50,21 @@ Visibility,Sichtbarkeit
 "With Offers","Mit Angeboten"
 "With Stock","With Stock"
 "Without Offers","Ohne Angeboten"
+"Details & Description","Details & Description"
+"The first date cannot be later than the second one.","The first date cannot be later than the second one."
+"The first date is the same as the second one.","The first date is the same as the second one."
+"The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
+"This means that the offer does not appear online and noone can see it.","This means that the offer does not appear online and noone can see it."
+To,Bis
+"GROSS DEFAULT","GROSS DEFAULT"
+"GROSS ORIGINAL","GROSS ORIGINAL"
+"NET DEFAULT","NET DEFAULT"
+"NET ORIGINAL","NET ORIGINAL"
+Offer,Angebot
+Save,Speichern
+Create,Erstellen
+"Validity Dates",Gültigkeitsdatum
+"Offer visibility","Offer visibility"
+select.default.placeholder,Auswählen
+"Enter SKU","Enter SKU"
+"Enter quantity","Enter quantity"

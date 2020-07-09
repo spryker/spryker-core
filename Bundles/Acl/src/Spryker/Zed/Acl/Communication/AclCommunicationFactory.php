@@ -11,6 +11,7 @@ use Spryker\Zed\Acl\AclDependencyProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclGroupFormDataProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRoleFormDataProvider;
 use Spryker\Zed\Acl\Communication\Form\DataProvider\AclRuleFormDataProvider;
+use Spryker\Zed\Acl\Communication\Form\DeleteRoleForm;
 use Spryker\Zed\Acl\Communication\Form\GroupForm;
 use Spryker\Zed\Acl\Communication\Form\RoleForm;
 use Spryker\Zed\Acl\Communication\Form\RuleForm;
@@ -19,6 +20,7 @@ use Spryker\Zed\Acl\Communication\Table\GroupUsersTable;
 use Spryker\Zed\Acl\Communication\Table\RoleTable;
 use Spryker\Zed\Acl\Communication\Table\RulesetTable;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -161,5 +163,15 @@ class AclCommunicationFactory extends AbstractCommunicationFactory
     public function createRulesetTable($idAclRole)
     {
         return new RulesetTable($this->getQueryContainer(), $idAclRole);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteRoleForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteRoleForm::class, [], [
+            'fields' => [],
+        ]);
     }
 }

@@ -786,6 +786,38 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemStateExpander()
+            ->expandOrderItemsWithItemState($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderAggregatedItemStateExpander()
+            ->expandOrdersWithAggregatedItemStates($orderTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
      *
      * @return \Generated\Shared\Transfer\OrderTransfer[]

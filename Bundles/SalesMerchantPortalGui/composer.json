@@ -22,7 +22,7 @@
     "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.8.0",
     "spryker/twig": "^3.0.0",
-    "spryker/zed-ui": "^0.2.6"
+    "spryker/zed-ui": "^0.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

@@ -218,10 +218,9 @@ class ProductOfferTableDataMapper
         ProductOfferTransfer $productOfferTransfer
     ): ProductOfferTransfer {
         $productOfferStockTransfer = (new ProductOfferStockTransfer())
-            ->setIsNeverOutOfStock($productOfferTableRowDataArray[ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK])
             ->setQuantity($productOfferTableRowDataArray[ProductOfferStockTransfer::QUANTITY]);
 
-        $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        $productOfferTransfer->addProductOfferStock($productOfferStockTransfer);
 
         return $productOfferTransfer;
     }

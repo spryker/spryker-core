@@ -7,6 +7,7 @@ Addresses,Addresses
 "Cart Notes","Cart Notes"
 Comments,Comments
 "Customer Full Name ","Customer Full Name"
+"Customer Full Name","Customer Full Name"
 "Customer successfully updated.","Customer successfully updated."
 Discount,Discount
 "GRAND TOTAL","Grand Total"
@@ -51,3 +52,43 @@ Totals,Totals
 "View Order","View Order"
 "View Order:","View Order:"
 "Remuneration total","Remuneration total"
+"Trigger all matching states inside this order","Trigger all matching states inside this order"
+"Previous orders count","Previous orders count"
+Name,Name
+E-mail,E-mail
+"Order date","Order date"
+Refunds,Refunds
+"Discounts & Vouchers","Discounts & Vouchers"
+"Order Items","Order Items"
+Reference,Reference
+"Order Overview","Order Overview"
+"Total taxes","Total taxes"
+Reclamations,Reclamations
+Claim,Claim
+"payment pending","Payment pending"
+exported,Exported
+shipped,Shipped
+delivered,Delivered
+refunded,Refunded
+closed,Closed
+pay,Pay
+ship,Ship
+stock-update,"Stock update"
+close,Close
+refund,Refund
+execute-return,"Execute return"
+cancel-return,"Cancel return"
+ship-return,"Send return back to customer"
+delivery-return,"Deliver return back to customer"
+cancel,Cancel
+"skip timeout","Skip timeout"
+"Cancelled amount","Cancelled amount"
+"Comment successfully added","Comment successfully added."
+"Address Details","Address Details"
+"Middle name","Middle name"
+"Po box","Po box"
+"Zip code","Zip code"
+Address1,"Address 1"
+Address2,"Address 2"
+"Cell phone","Cell Phone"
+"Edit Address for Order: %idSalesOrder%","Edit Address for Order: %idSalesOrder%"

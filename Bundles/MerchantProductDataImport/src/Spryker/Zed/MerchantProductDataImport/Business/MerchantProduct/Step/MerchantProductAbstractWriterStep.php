@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\Step;
 
-use Orm\Zed\MerchantProduct\Persistence\Base\SpyMerchantProductAbstractQuery;
+use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -16,6 +16,11 @@ use Spryker\Zed\MerchantProductDataImport\Business\MerchantProduct\DataSet\Merch
 
 class MerchantProductAbstractWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\MerchantProductSearch\MerchantProductSearchConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+     */
+    protected const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProduct.merchant_product_abstract.publish';
+
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantProductDataSetInterface::FK_MERCHANT,
         MerchantProductDataSetInterface::FK_PRODUCT_ABSTRACT,
@@ -37,6 +42,8 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
 
         $merchantProductAbstractEntity->fromArray($dataSet->getArrayCopy());
         $merchantProductAbstractEntity->save();
+
+        $this->addPublishEvents(static::MERCHANT_PRODUCT_ABSTRACT_PUBLISH, $merchantProductAbstractEntity->getIdProductAbstractMerchant());
     }
 
     /**
@@ -56,7 +63,7 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
     }
 
     /**
-     * @return \Orm\Zed\MerchantProduct\Persistence\Base\SpyMerchantProductAbstractQuery
+     * @return \Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery
      */
     protected function createMerchantProductAbstractPropelQuery(): SpyMerchantProductAbstractQuery
     {

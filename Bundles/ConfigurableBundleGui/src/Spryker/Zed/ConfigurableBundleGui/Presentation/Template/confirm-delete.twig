@@ -17,10 +17,14 @@
             <p>{{ 'Are you sure you want to delete template' | trans }}: <b>{{ configurableBundleTemplateTransfer.translations[0].name }}</b>?</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
-                <a href="{{ url(
-                    '/configurable-bundle-gui/template/delete',
-                    {'id-configurable-bundle-template': configurableBundleTemplateTransfer.idConfigurableBundleTemplate}
-                )}}" class="btn btn-danger safe-submit">{{ 'Delete Template' | trans }}</a>
+                {{ form_start(deleteForm, {
+                    'action': url(
+                        '/configurable-bundle-gui/template/delete',
+                        {'id-configurable-bundle-template': configurableBundleTemplateTransfer.idConfigurableBundleTemplate}
+                    )
+                }) }}
+                <button class="btn btn-danger safe-submit"> {{ 'Delete Template' | trans }} </button>
+                {{ form_end(deleteForm) }}
             </div>
         {% endblock %}
 

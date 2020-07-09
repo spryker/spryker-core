@@ -16,11 +16,13 @@ use Spryker\Zed\CmsBlockGui\Communication\Form\DataProvider\CmsBlockGlossaryForm
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderForm;
 use Spryker\Zed\CmsBlockGui\Communication\Form\Glossary\CmsBlockGlossaryPlaceholderTranslationForm;
+use Spryker\Zed\CmsBlockGui\Communication\Form\ToggleActiveCmsBlockForm;
 use Spryker\Zed\CmsBlockGui\Communication\Table\CmsBlockTable;
 use Spryker\Zed\CmsBlockGui\Communication\Tabs\CmsBlockGlossaryTabs;
 use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdater;
 use Spryker\Zed\CmsBlockGui\Communication\Updater\CmsBlockGlossaryUpdaterInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\CmsBlockGui\CmsBlockGuiConfig getConfig()
@@ -198,6 +200,14 @@ class CmsBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCmsBlockGlossaryAfterFindPlugins(),
             $this->getCmsBlockGlossaryBeforeSavePlugins()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActiveCmsBlockForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveCmsBlockForm::class);
     }
 
     /**

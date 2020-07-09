@@ -11,4 +11,15 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferConfig extends AbstractBundleConfig
 {
+    protected const DEFAULT_APPROVAL_STATUS = 'approved';
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultApprovalStatus(): string
+    {
+        return static::DEFAULT_APPROVAL_STATUS;
+    }
 }
