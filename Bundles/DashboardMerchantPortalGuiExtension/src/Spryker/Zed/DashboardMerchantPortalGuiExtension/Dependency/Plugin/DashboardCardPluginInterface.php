@@ -13,7 +13,7 @@ interface DashboardCardPluginInterface
 {
     /**
      * Specification:
-     * - Returns the data for displaying the dashboard card.
+     * - Returns data for displaying a dashboard card.
      *
      * @api
      *

@@ -72,8 +72,6 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
         $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
         );
-        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
-        $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
 
         $title = $this->twigEnvironment->render(
             '@ProductOfferMerchantPortalGui/Partials/offers_dashboard_card_title.twig',

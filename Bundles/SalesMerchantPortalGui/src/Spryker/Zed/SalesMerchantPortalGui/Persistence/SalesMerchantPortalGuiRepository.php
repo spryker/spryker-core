@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCountsTransfer;
 use Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer;
@@ -27,7 +28,6 @@ use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\SalesMerchantPortalGui\Persistence\Propel\Mapper\SalesMerchantPortalGuiMapper;
-use DateTime;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiPersistenceFactory getFactory()
@@ -87,7 +87,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->addAsColumn(MerchantOrderCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(
                 MerchantOrderCountsTransfer::NEW,
-                "COUNT(CASE WHEN '$newOrdersDateTime' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)'
+                "COUNT(CASE WHEN '" . $newOrdersDateTime . "' < " . SpyMerchantSalesOrderTableMap::COL_CREATED_AT . ' THEN 1 END)'
             )
             ->select([
                 MerchantOrderCountsTransfer::TOTAL,

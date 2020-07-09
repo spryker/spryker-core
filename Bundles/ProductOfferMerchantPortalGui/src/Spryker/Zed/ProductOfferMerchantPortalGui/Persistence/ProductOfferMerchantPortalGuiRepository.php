@@ -856,24 +856,24 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
-                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . " < $dashboardLowStockThreshold THEN 1 END)"
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' < ' . $dashboardLowStockThreshold . ' THEN 1 END)'
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
-                "COUNT(CASE WHEN '$currentDateTime' BETWEEN " .
+                "COUNT(CASE WHEN '" . $currentDateTime . "' BETWEEN " .
                     SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
                     ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::EXPIRING,
-                "COUNT(CASE WHEN '$currentDateTime' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
-                . " AND '$expiringOffersDateTime' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
+                "COUNT(CASE WHEN '" . $currentDateTime . "' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
+                . " AND '" . $expiringOffersDateTime . "' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::VISIBLE,
                 'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . " IS TRUE
                     AND " . SpyProductOfferStockTableMap::COL_QUANTITY . " > 0 AND (
-                    '$currentDateTime' BETWEEN " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
+                    '" . $currentDateTime . "' BETWEEN " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
                         ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
                     ) THEN 1 END)"
             )
@@ -888,6 +888,10 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ])
             ->findOne();
 
-        return (new MerchantProductOfferCountsTransfer())->fromArray($merchantProductOfferCounts, true);
+        $merchantProductOfferCountsTransfer = (new MerchantProductOfferCountsTransfer())->fromArray($merchantProductOfferCounts, true);
+        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
+        $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
+
+        return $merchantProductOfferCountsTransfer;
     }
 }
