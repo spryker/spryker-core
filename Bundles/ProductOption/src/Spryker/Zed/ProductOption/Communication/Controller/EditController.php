@@ -58,6 +58,8 @@ class EditController extends BaseOptionController
 
         $optionTabs = $this->getFactory()->createOptionTabs($productOptionGroupForm);
 
+        $toggleActiveForm = $this->getFactory()->createToggleActiveProductOptionForm();
+
         return [
             'productOptionsTable' => $productOptionsTable->render(),
             'productsTable' => $productTable->render(),
@@ -65,6 +67,7 @@ class EditController extends BaseOptionController
             'generalForm' => $productOptionGroupForm->createView(),
             'availableLocales' => $availableLocales,
             'optionTabs' => $optionTabs->createView(),
+            'toggleActiveForm' => $toggleActiveForm->createView(),
         ];
     }
 }
