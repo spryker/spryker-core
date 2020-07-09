@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
 
 @Component({
     selector: 'mp-manage-order-stats-block',
@@ -11,4 +11,6 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation } from '@angular/
     },
 })
 export class ManageOrderStatsBlockComponent {
+    @Input() name: string;
+    @Input() info: string;
 }

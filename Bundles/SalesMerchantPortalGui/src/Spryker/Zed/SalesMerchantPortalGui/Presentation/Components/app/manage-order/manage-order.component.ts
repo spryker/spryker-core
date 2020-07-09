@@ -18,5 +18,9 @@ export interface OrderDetails {
     },
 })
 export class ManageOrderComponent {
-    @Input() @ToJson() orderDetails: OrderDetails;
+    @Input() @ToJson() orderDetails: OrderDetails = {
+        title: 'Order DE — 1',
+        reference: 'Mer - DE —134353',
+        referenceTitle: 'Merchant Reference',
+    };
 }

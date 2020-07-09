@@ -18,24 +18,24 @@ describe('DashboardStatsComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render @Input(count) in the `.mp-dashboard-stats-block__text--count` element', () => {
-        const mockCount = 'count';
-
-        component.count = mockCount;
-        fixture.detectChanges();
-
-        const countContentElement = fixture.debugElement.query(By.css('.mp-dashboard-stats-block__text--count'));
-
-        expect(countContentElement.nativeElement.textContent).toContain(mockCount);
-    });
-
-    it('should render @Input(name) in the `.mp-dashboard-stats-block__text:last-child` element', () => {
+    it('should render @Input(count) in the `.mp-manage-order-stats-block__text--name` element', () => {
         const mockName = 'name';
 
         component.name = mockName;
         fixture.detectChanges();
 
-        const nameContentElement = fixture.debugElement.query(By.css('.mp-dashboard-stats-block__text:last-child'));
+        const countContentElement = fixture.debugElement.query(By.css('.mp-manage-order-stats-block__text--name'));
+
+        expect(countContentElement.nativeElement.textContent).toContain(mockName);
+    });
+
+    it('should render @Input(name) in the `.mp-manage-order-stats-block__text:last-child` element', () => {
+        const mockName = 'name';
+
+        component.name = mockName;
+        fixture.detectChanges();
+
+        const nameContentElement = fixture.debugElement.query(By.css('.mp-manage-order-stats-block__text:last-child'));
 
         expect(nameContentElement.nativeElement.textContent).toContain(mockName);
     });

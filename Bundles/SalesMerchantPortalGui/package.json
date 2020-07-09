@@ -33,6 +33,7 @@
     "@spryker/select": "^0.1.0-next.28",
     "@spryker/styles": "^0.1.0-next.67",
     "@spryker/table": "^0.1.0-next.54",
+    "@spryker/tabs": "^0.1.0-next.4",
     "@spryker/utils": "^0.1.0-next.17",
     "@spryker/web-components": "^0.2.0-next.2",
     "rxjs": "^6.5.4",

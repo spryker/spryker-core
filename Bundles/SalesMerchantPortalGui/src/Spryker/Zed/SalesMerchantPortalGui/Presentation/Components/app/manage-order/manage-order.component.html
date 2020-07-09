@@ -9,16 +9,13 @@
         </div>
         
         <div class="mp-manage-order__heading-col">
-            <div class="mp-manage-order__transitions">
-                <ng-content select="[state-transitions]"></ng-content>
-            </div>
+            <ng-content select="[state-transitions]"></ng-content>
+            
             <ng-content select="[state-transitions-meessage]"></ng-content>
         </div>
     </div>
     
-    <div class="mp-manage-order__states">
-        <ng-content select="[items-states]"></ng-content>
-    </div>
+    <ng-content select="[items-states]"></ng-content>
 </div>
 
 <ng-content></ng-content>
