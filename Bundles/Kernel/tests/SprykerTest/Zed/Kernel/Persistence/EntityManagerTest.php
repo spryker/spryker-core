@@ -28,20 +28,21 @@ class EntityManagerTest extends Test
      */
     public function testTestAbstractEntityManager(): void
     {
+        // Arrange
         $entityManager = new AbstractEntityManagerMock();
+        $testEntityTransfer = (new SpyTestEntityTransfer())->setTest(rand(1, 100));
 
-        $testTransfer = (new SpyTestEntityTransfer())
-            ->setTest(rand(1, 100));
+        // Act
+        /**
+         * @var \Generated\Shared\Transfer\SpyTestEntityTransfer $result
+         */
+        $testEntityTransfer = $entityManager->save($testEntityTransfer);
+        $testEntityTransfer->setTest(0);
 
-        $result = $entityManager->save($testTransfer);
+        $testEntityTransfer = $entityManager->save($testEntityTransfer);
+        $testEntityTransfer = SpyTestQuery::create()->findOneByIdTest($testEntityTransfer->getIdTest());
 
-        $testTransfer = (new SpyTestEntityTransfer())
-            ->setIdTest($result->getIdTest())
-            ->setTest(0);
-
-        $newResult = $entityManager->save($testTransfer);
-
-        $testEntity = SpyTestQuery::create()->findOneByIdTest($newResult->getIdTest());
-        $this->assertEquals(0, $testEntity->getTest());
+        // Assert
+        $this->assertSame(0, $testEntityTransfer->getTest());
     }
 }
