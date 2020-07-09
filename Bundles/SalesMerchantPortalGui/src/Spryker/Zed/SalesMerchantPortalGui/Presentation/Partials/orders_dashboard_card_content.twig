@@ -5,7 +5,7 @@
     <span title>{{ 'Per Store' | trans }}</span>
 
     <div class="mp-dashboard-grid mp-dashboard-grid--stats">
-        {% for store,total in merchantOrderCounts.total %}
+        {% for store,total in merchantOrderCounts.totalPerStore %}
             <web-mp-dashboard-stats-block
                 name="{{ store }}"
                 count="{{ total }}"
