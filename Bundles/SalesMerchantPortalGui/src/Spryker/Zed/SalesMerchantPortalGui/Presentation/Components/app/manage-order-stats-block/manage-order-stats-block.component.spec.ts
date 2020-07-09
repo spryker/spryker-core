@@ -1,9 +1,10 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { CardModule } from '@spryker/card';
 
 import { ManageOrderStatsBlockComponent } from './manage-order-stats-block.component';
 
-describe('DashboardStatsComponent', () => {
+describe('ManageOrderStatsBlockComponent', () => {
     let component: ManageOrderStatsBlockComponent;
     let fixture: ComponentFixture<ManageOrderStatsBlockComponent>;
 
@@ -18,7 +19,7 @@ describe('DashboardStatsComponent', () => {
         component = fixture.componentInstance;
     });
 
-    it('should render @Input(count) in the `.mp-manage-order-stats-block__text--name` element', () => {
+    it('should render @Input(name) in the `.mp-manage-order-stats-block__text--name` element', () => {
         const mockName = 'name';
 
         component.name = mockName;
@@ -29,14 +30,14 @@ describe('DashboardStatsComponent', () => {
         expect(countContentElement.nativeElement.textContent).toContain(mockName);
     });
 
-    it('should render @Input(name) in the `.mp-manage-order-stats-block__text:last-child` element', () => {
-        const mockName = 'name';
+    it('should render @Input(info) in the `.mp-manage-order-stats-block__text:last-child` element', () => {
+        const mockInfo = 'info';
 
-        component.name = mockName;
+        component.info = mockInfo;
         fixture.detectChanges();
 
         const nameContentElement = fixture.debugElement.query(By.css('.mp-manage-order-stats-block__text:last-child'));
 
-        expect(nameContentElement.nativeElement.textContent).toContain(mockName);
+        expect(nameContentElement.nativeElement.textContent).toContain(mockInfo);
     });
 });
