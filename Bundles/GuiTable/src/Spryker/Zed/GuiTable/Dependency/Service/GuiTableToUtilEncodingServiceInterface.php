@@ -16,7 +16,7 @@ interface GuiTableToUtilEncodingServiceInterface
      *
      * @return string|null
      */
-    public function encodeJson(array $value, ?int $options = null, ?int $depth = null);
+    public function encodeJson($value, $options = null, $depth = null);
 
     /**
      * @param string $jsonValue
@@ -26,5 +26,5 @@ interface GuiTableToUtilEncodingServiceInterface
      *
      * @return mixed|null
      */
-    public function decodeJson(string $jsonValue, bool $assoc = false, ?int $depth = null, ?int $options = null);
+    public function decodeJson($jsonValue, $assoc = false, $depth = null, $options = null);
 }

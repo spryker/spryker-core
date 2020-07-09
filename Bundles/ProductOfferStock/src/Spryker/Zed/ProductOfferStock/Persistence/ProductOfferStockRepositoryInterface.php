@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
@@ -18,4 +19,11 @@ interface ProductOfferStockRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
      */
     public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 }

@@ -7,14 +7,19 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 interface ProductNameBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    public function buildProductName(ProductConcreteTransfer $productConcreteTransfer): ?string;
+    public function buildProductConcreteName(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ?string;
 }
