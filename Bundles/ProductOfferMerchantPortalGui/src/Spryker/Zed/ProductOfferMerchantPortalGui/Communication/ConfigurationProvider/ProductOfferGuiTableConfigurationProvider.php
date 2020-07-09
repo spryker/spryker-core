@@ -11,6 +11,10 @@ use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
@@ -66,6 +70,8 @@ class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigur
         $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addPaginationToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataSource(
             (new GuiTableDataSourceConfigurationTransfer())->setUrl(static::DATA_URL)
@@ -163,5 +169,47 @@ class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigur
         }
 
         return $storeOptions;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
+            ->setId('update-offer')
+            ->setTitle('Manage Offer')
+            ->setType('form-overlay')
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/product-offer-merchant-portal-gui/update-product-offer?product-offer-id=${row.%s}',
+                    ProductOfferTransfer::ID_PRODUCT_OFFER
+                )
+            );
+
+        $guiTableConfigurationTransfer->setRowActions(
+            (new GuiTableRowActionsConfigurationTransfer())
+                ->addAction($guiTableRowActionTransfer)
+                ->setClick('update-offer')
+        );
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addPaginationToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableConfigurationTransfer->setPagination(
+            (new GuiTablePaginationConfigurationTransfer())->setDefaultSize(25)
+        );
+
+        return $guiTableConfigurationTransfer;
     }
 }

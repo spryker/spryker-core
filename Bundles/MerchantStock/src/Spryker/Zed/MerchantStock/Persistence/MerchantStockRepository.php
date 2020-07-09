@@ -26,11 +26,16 @@ class MerchantStockRepository extends AbstractRepository implements MerchantStoc
      */
     public function get(MerchantStockCriteriaTransfer $merchantStockCriteriaTransfer): StockCollectionTransfer
     {
-        $merchantStocksEntities = $this->getFactory()
+        $merchantStockQuery = $this->getFactory()
             ->createMerchantStockPropelQuery()
             ->leftJoinWithSpyStock()
-            ->filterByFkMerchant($merchantStockCriteriaTransfer->requireIdMerchant()->getIdMerchant())
-            ->find();
+            ->filterByFkMerchant($merchantStockCriteriaTransfer->requireIdMerchant()->getIdMerchant());
+
+        if ($merchantStockCriteriaTransfer->getIsDefault()) {
+            $merchantStockQuery->filterByIsDefault(true);
+        }
+
+        $merchantStocksEntities = $merchantStockQuery->find();
 
         $stockCollectionTransfer = new StockCollectionTransfer();
         $merchantStockMapper = $this->getFactory()->createMerchantStockMapper();

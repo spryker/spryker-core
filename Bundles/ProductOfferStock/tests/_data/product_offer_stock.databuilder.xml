@@ -6,7 +6,6 @@
 >
     <transfer name="ProductOfferStock">
         <property name="quantity" dataBuilderRule="randomNumber(5)"/>
-        <property name="productOffer" dataBuilderRule="ProductOffer"/>
         <property name="stock" dataBuilderRule="Stock"/>
         <property name="isNeverOutOfStock" dataBuilderRule="boolean(0)"/>
     </transfer>
