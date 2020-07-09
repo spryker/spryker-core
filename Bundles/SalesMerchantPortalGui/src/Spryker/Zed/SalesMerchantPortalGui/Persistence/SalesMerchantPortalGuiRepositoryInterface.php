@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
-use Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderCountsTransfer;
+use Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer;
 
 interface SalesMerchantPortalGuiRepositoryInterface
 {

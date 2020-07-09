@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 
-
-
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
 use Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface;
