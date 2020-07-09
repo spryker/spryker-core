@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Customer\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\AddressCriteriaFilterTransfer;
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
@@ -15,6 +17,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Formatter\ArrayFormatter;
@@ -211,6 +214,65 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         );
 
         return $customerCollectionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findAddressByCriteria(AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer): ?AddressTransfer
+    {
+        $addressQuery = $this->buildAddressConditionsByCriteria($addressCriteriaFilterTransfer);
+        $addressEntity = $addressQuery->findOne();
+
+        if (!$addressEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerAddressEntityToAddressTransfer($addressEntity, new AddressTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressesTransfer
+     */
+    public function getAddressesByCriteria(AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer): AddressesTransfer
+    {
+        $addressQuery = $this->buildAddressConditionsByCriteria($addressCriteriaFilterTransfer);
+        $addressEntities = $addressQuery->find();
+
+        $addressTransfers = [];
+        $customerMapper = $this->getFactory()
+            ->createCustomerMapper();
+        foreach ($addressEntities as $addressEntity) {
+            $addressTransfers[] = $customerMapper->mapCustomerAddressEntityToAddressTransfer($addressEntity, new AddressTransfer());
+        }
+
+        return (new AddressesTransfer())->setAddresses(new ArrayObject($addressTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer
+     *
+     * @return \Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery
+     */
+    protected function buildAddressConditionsByCriteria(
+        AddressCriteriaFilterTransfer $addressCriteriaFilterTransfer
+    ): SpyCustomerAddressQuery {
+        $addressQuery = $this->getFactory()->createSpyCustomerAddressQuery()->joinWithCountry();
+        if ($addressCriteriaFilterTransfer->getIdCustomerAddress()) {
+            $addressQuery->filterByIdCustomerAddress($addressCriteriaFilterTransfer->getIdCustomerAddress());
+        }
+
+        if ($addressCriteriaFilterTransfer->getFkCustomer()) {
+            $addressQuery->filterByFkCustomer($addressCriteriaFilterTransfer->getFkCustomer());
+        }
+
+        return $addressQuery;
     }
 
     /**

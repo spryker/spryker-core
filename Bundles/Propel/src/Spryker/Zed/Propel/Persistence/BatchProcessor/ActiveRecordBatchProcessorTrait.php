@@ -74,45 +74,15 @@ trait ActiveRecordBatchProcessorTrait
             return;
         }
 
-        if ($entity->isNew()) {
-            $this->addEntityToInsert($entity);
+        $storageName = $entity->isNew() ? 'entitiesToInsert' : 'entitiesToUpdate';
 
-            return;
-        }
-
-        $this->addEntityToUpdate($entity);
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    protected function addEntityToInsert(ActiveRecordInterface $entity): void
-    {
         $className = get_class($entity);
 
-        if (!isset($this->entitiesToInsert[$className])) {
-            $this->entitiesToInsert[$className] = [];
+        if (!isset($this->{$storageName}[$className])) {
+            $this->{$storageName}[$className] = [];
         }
 
-        $this->entitiesToInsert[$className][] = $entity;
-    }
-
-    /**
-     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
-     *
-     * @return void
-     */
-    protected function addEntityToUpdate(ActiveRecordInterface $entity): void
-    {
-        $className = get_class($entity);
-
-        if (!isset($this->entitiesToUpdate[$className])) {
-            $this->entitiesToUpdate[$className] = [];
-        }
-
-        $this->entitiesToUpdate[$className][] = $entity;
+        $this->{$storageName}[$className][] = $entity;
     }
 
     /**
@@ -376,12 +346,12 @@ trait ActiveRecordBatchProcessorTrait
         $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
 
         foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
-            if ($columnMap->isPrimaryKey() && !$requiresPrimaryKeyValue) {
-                continue;
-            }
-
             $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
-            if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
+            if ($columnMap->isPrimaryKey()) {
+                if (!$requiresPrimaryKeyValue || $tableMapClass->getPrimaryKeyMethodInfo() === null) {
+                    continue;
+                }
+
                 $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
                 $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
 
