@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOffer\Persistence;
 
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 use Orm\Zed\Store\Persistence\SpyStoreQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper;
@@ -29,9 +30,17 @@ class ProductOfferPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery
+     */
+    public function createProductOfferStoreQuery(): SpyProductOfferStoreQuery
+    {
+        return SpyProductOfferStoreQuery::create();
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOffer\Persistence\Propel\Mapper\ProductOfferMapper
      */
-    public function createPropelProductOfferMapper(): ProductOfferMapper
+    public function createProductOfferMapper(): ProductOfferMapper
     {
         return new ProductOfferMapper();
     }

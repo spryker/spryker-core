@@ -521,6 +521,7 @@
     "spryker/product-offer-availabilities-rest-api": "*",
     "spryker/product-offer-availability": "*",
     "spryker/product-offer-availability-storage": "*",
+    "spryker/product-offer-extension": "*",
     "spryker/product-offer-merchant-portal-gui": "*",
     "spryker/product-offer-packaging-unit": "*",
     "spryker/product-offer-prices-rest-api": "*",

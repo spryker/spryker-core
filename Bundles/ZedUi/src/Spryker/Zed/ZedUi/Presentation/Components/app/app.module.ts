@@ -47,23 +47,23 @@ export class AppModule extends CustomElementModule {
 		    component: LayoutMainComponent,
 	    },
 	    {
-		    selector: 'mp-merchant-layout-centered',
+		    selector: 'web-mp-merchant-layout-centered',
 		    component: MerchantLayoutCenteredComponent,
 	    },
 	    {
-		    selector: 'mp-merchant-layout-main',
+		    selector: 'web-mp-merchant-layout-main',
 		    component: MerchantLayoutMainComponent,
 	    },
         {
-            selector: 'mp-header',
+            selector: 'web-mp-header',
             component: HeaderComponent,
         },
         {
-            selector: 'spy-notification',
+            selector: 'web-spy-notification',
             component: NotificationComponent,
         },
         {
-            selector: 'spy-locale-switcher',
+            selector: 'web-spy-locale-switcher',
             component: LocaleSwitcherComponent,
         },
     ];

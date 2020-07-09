@@ -22,6 +22,7 @@ class GuiTableConfigurationFunction extends TwigFunction
     protected const CONFIG_PAGINATION = 'pagination';
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
+    protected const CONFIG_ROW_ACTIONS_CLICK = 'click';
     protected const CONFIG_SEARCH = 'search';
     protected const CONFIG_ITEM_SELECTION = 'itemselection';
     protected const CONFIG_SYNC_STATE_URL = 'syncStateUrl';
@@ -177,6 +178,7 @@ class GuiTableConfigurationFunction extends TwigFunction
 
         return [
             static::CONFIG_ENABLED => $guiTableRowActionsConfigurationTransfer->getIsEnabled(),
+            static::CONFIG_ROW_ACTIONS_CLICK => $guiTableRowActionsConfigurationTransfer->getClick(),
             static::CONFIG_ACTIONS => $actions,
         ];
     }
