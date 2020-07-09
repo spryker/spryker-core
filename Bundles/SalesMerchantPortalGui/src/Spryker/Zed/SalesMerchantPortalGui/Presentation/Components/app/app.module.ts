@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
-import { LocaleModule } from '@spryker/locale';
-import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
+import { LocaleModule, LocaleSwitcherComponent} from '@spryker/locale';
+import { EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -22,7 +22,7 @@ import { ManageOrderModule } from './manage-order/manage-order.module';
         BrowserModule,
         HttpClientModule,
         BrowserAnimationsModule,
-        LocaleModule.forRoot({defaultLocale: EN_LOCALE}),
+        LocaleModule.forRoot(),
         EnLocaleModule,
         DeLocaleModule,
         OfferOrdersModule,
@@ -67,6 +67,10 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-tabs',
             component: TabsComponent,
+        },
+        {
+            selector: 'web-spy-locale-switcher',
+            component: LocaleSwitcherComponent,
         },
     ];
 }
