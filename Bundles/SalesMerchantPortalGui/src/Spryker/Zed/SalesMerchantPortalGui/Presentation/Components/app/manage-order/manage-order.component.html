@@ -1,0 +1,24 @@
+<div class="mp-manage-order__information">
+    <div class="mp-manage-order__heading">
+        <div class="mp-manage-order__heading-col">
+            <span class="mp-manage-order__title">{{ orderDetails.title }}</span>
+            <span class="mp-manage-order__reference">
+                <span class="mp-manage-order__reference-title">{{ orderDetails.referenceTitle }}</span>
+                {{ orderDetails.reference }}
+            </span>
+        </div>
+        
+        <div class="mp-manage-order__heading-col">
+            <div class="mp-manage-order__transitions">
+                <ng-content select="[state-transitions]"></ng-content>
+            </div>
+            <ng-content select="[state-transitions-meessage]"></ng-content>
+        </div>
+    </div>
+    
+    <div class="mp-manage-order__states">
+        <ng-content select="[items-states]"></ng-content>
+    </div>
+</div>
+
+<ng-content></ng-content>

@@ -20,7 +20,7 @@
             "outputPath": "dist",
             "index": "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/index.html",
             "main": "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/main.ts",
-            "polyfills": "",
+            "polyfills": "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
             "singleBundle": true,

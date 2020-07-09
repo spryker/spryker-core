@@ -5,7 +5,8 @@
     "types": []
   },
   "files": [
-    "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/main.ts"
+    "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/main.ts",
+    "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/polyfills.ts"
   ],
   "include": [
     "src/Spryker/Zed/SalesMerchantPortalGui/Presentation/Components/**/*.d.ts"
