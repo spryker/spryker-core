@@ -12,7 +12,10 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -73,6 +76,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addPaginationToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataSource(
@@ -127,6 +131,34 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         ]);
         $guiTableConfigurationTransfer->setFilters(
             (new GuiTableFiltersConfigurationTransfer())->setItems($filters)
+        );
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
+            ->setId('merchant-order-detail')
+            ->setTitle('Details')
+            ->setType('html-overlay')
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/sales-merchant-portal-gui/detail?id-merchant-order=${row.%s}',
+                    MerchantOrderTransfer::ID_MERCHANT_ORDER
+                )
+            );
+
+        $guiTableConfigurationTransfer->setRowActions(
+            (new GuiTableRowActionsConfigurationTransfer())
+                ->addAction($guiTableRowActionTransfer)
+                ->setClick('merchant-order-detail')
         );
 
         return $guiTableConfigurationTransfer;
