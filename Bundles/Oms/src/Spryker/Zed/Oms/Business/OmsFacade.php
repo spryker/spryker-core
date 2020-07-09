@@ -676,7 +676,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacade::updateReservation()` instead.
+     * @deprecated Use {@link updateReservation()} instead.
      *
      * @param string $sku
      *
@@ -779,6 +779,38 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
     {
         return $this->getFactory()->createReservationReader()->getOmsReservedProductQuantity($reservationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemStateExpander()
+            ->expandOrderItemsWithItemState($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderAggregatedItemStateExpander()
+            ->expandOrdersWithAggregatedItemStates($orderTransfers);
     }
 
     /**

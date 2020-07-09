@@ -59,7 +59,7 @@ interface ReservationReaderInterface
     public function sumReservedProductQuantities(ReservationRequestTransfer $reservationRequestTransfer): Decimal;
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\Business\Util\ReservationInterface::sumReservedProductQuantities()` instead.
+     * @deprecated Use {@link sumReservedProductQuantities()} instead.
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer|null $storeTransfer

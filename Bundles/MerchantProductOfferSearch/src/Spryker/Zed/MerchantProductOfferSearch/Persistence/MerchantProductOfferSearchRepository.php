@@ -91,7 +91,6 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
 
         return $productAbstractPropelQuery
             ->where(SpyProductOfferTableMap::COL_IS_ACTIVE, true)
-            ->where(SpyMerchantTableMap::COL_IS_ACTIVE, true)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()
             ->getData();
@@ -112,7 +111,6 @@ class MerchantProductOfferSearchRepository extends AbstractRepository implements
             ->addAnd($productAbstractPropelQuery->getNewCriterion(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, $productOfferIds, Criteria::IN));
 
         return $productAbstractPropelQuery
-            ->where(SpyProductOfferTableMap::COL_IS_ACTIVE, true)
             ->where(SpyMerchantTableMap::COL_IS_ACTIVE, true)
             ->select([SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT])
             ->find()

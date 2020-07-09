@@ -146,7 +146,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Oms\OmsDependencyProvider::getReservationPostSaveTerminationAwareStrategyPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -158,7 +158,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\Oms\OmsDependencyProvider::getOmsReservationAggregationStrategyPlugins().
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
      *
      * @return \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationAggregationStrategyPluginInterface[]
      */
@@ -354,6 +354,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link getOmsReservationAggregationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container

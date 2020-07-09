@@ -126,6 +126,7 @@ class AvailabilityTable extends AbstractTable
         $config->setDefaultSortColumnIndex(0);
         $config->addRawColumn(static::TABLE_COL_ACTION);
         $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
+        $config->addRawColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -153,8 +154,8 @@ class AvailabilityTable extends AbstractTable
                 AvailabilityHelperInterface::CONCRETE_AVAILABILITY => $isNeverOutOfStock ? static::NOT_APPLICABLE : (new Decimal($productItem[AvailabilityHelperInterface::CONCRETE_AVAILABILITY] ?? 0))->trim(),
                 AvailabilityHelperInterface::STOCK_QUANTITY => (new Decimal($productItem[AvailabilityHelperInterface::STOCK_QUANTITY] ?? 0))->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => $isBundleProduct ? static::NOT_APPLICABLE : $this->calculateReservation($productItem)->trim(),
-                static::IS_BUNDLE_PRODUCT => ($isBundleProduct) ? 'Yes' : 'No',
-                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $isNeverOutOfStock ? 'Yes' : 'No',
+                static::IS_BUNDLE_PRODUCT => $this->generateLabel($isBundleProduct ? 'Yes' : 'No', null),
+                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', null),
                 static::TABLE_COL_ACTION => $this->createButtons($productItem, $isBundleProduct),
             ];
         }

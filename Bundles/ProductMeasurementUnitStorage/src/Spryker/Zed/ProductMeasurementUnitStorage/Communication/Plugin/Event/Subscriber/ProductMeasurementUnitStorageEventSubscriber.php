@@ -31,8 +31,8 @@ class ProductMeasurementUnitStorageEventSubscriber extends AbstractPlugin implem
     public function getSubscribedEvents(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH, new ProductMeasurementUnitStorageListener())
-            ->addListenerQueued(ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH, new ProductConcreteMeasurementUnitStorageListener());
+            ->addListenerQueued(ProductMeasurementUnitEvents::PRODUCT_MEASUREMENT_UNIT_PUBLISH, new ProductMeasurementUnitStorageListener(), 0, null, $this->getConfig()->getProductMeasurementUnitEventQueueName())
+            ->addListenerQueued(ProductMeasurementUnitEvents::PRODUCT_CONCRETE_MEASUREMENT_UNIT_PUBLISH, new ProductConcreteMeasurementUnitStorageListener(), 0, null, $this->getConfig()->getProductConcreteMeasurementUnitEventQueueName());
 
         return $eventCollection;
     }

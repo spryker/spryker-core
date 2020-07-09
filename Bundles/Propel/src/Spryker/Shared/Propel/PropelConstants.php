@@ -135,4 +135,25 @@ interface PropelConstants
      * @api
      */
     public const LOG_FILE_PATH = 'PROPEL:LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Defines database connections to improve the performance of web applications by dispatching the database-load to multiple database-servers.
+     *
+     * Example:
+     *
+     * $config[PropelConstants::ZED_DB_REPLICAS][] = [
+     *     'host' => 'replica-1',
+     *     'port' => '5432'
+     * ];
+     *
+     * - If slave-database connections are not set the Propel uses singular master database that is responsible for all read and write queries.
+     *
+     * Example:
+     *
+     * $config[PropelConstants::ZED_DB_REPLICAS] = [];
+     *
+     * @api
+     */
+    public const ZED_DB_REPLICAS = 'PROPEL:ZED_DB_REPLICAS';
 }

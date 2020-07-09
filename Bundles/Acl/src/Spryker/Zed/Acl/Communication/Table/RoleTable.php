@@ -11,6 +11,7 @@ use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\Acl\AclConstants;
+use Spryker\Zed\Acl\Communication\Form\DeleteRoleForm;
 use Spryker\Zed\Acl\Persistence\AclQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -101,14 +102,14 @@ class RoleTable extends AbstractTable
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
-            Url::generate(self::UPDATE_ROLE_URL, [self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
+            Url::generate(static::UPDATE_ROLE_URL, [static::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]]),
             'Edit'
         );
 
         if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConstants::ROOT_ROLE) {
-            $buttons[] = $this->generateRemoveButton(self::DELETE_ROLE_URL, 'Delete', [
-                self::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE],
-            ]);
+            $buttons[] = $this->generateRemoveButton(static::DELETE_ROLE_URL, 'Delete', [
+                static::PARAM_ID_ROLE => $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE],
+            ], DeleteRoleForm::class);
         }
 
         return $buttons;

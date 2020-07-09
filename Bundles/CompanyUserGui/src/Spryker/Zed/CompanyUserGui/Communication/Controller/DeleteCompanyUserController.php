@@ -41,8 +41,11 @@ class DeleteCompanyUserController extends AbstractController
             ->requireCustomer()
             ->requireCompany();
 
+        $deleteForm = $this->getFactory()->createDeleteCompanyUserForm()->createView();
+
         return $this->viewResponse([
             'companyUser' => $companyUserTransfer,
+            'deleteForm' => $deleteForm,
         ]);
     }
 
@@ -53,6 +56,14 @@ class DeleteCompanyUserController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
+        $deleteForm = $this->getFactory()->createDeleteCompanyUserForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
         $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DELETE);

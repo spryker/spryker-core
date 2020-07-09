@@ -124,4 +124,11 @@ interface ProductPackagingUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array;
 }

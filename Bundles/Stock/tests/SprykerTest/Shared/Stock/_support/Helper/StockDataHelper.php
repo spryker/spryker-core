@@ -28,7 +28,7 @@ class StockDataHelper extends Module
     use DataCleanupHelperTrait;
 
     /**
-     * @deprecated Use StockDataHelper::haveProductInStockForStore() instead.
+     * @deprecated Use {@link haveProductInStockForStore()} instead.
      *
      * @param array $seedData
      *

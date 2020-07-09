@@ -1,1 +1,6 @@
 Reclamations,Reclamations
+"Create Reclamation","Create Reclamation"
+"Reclamation id:%s for order %s successfully created","Reclamation id:%s for order %s successfully created."
+Open,Open
+Closed,Closed
+"Reclamation with id %id% closed","Reclamation with id %id% closed."

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductNameBuilder implements ProductNameBuilderInterface
 {
-    protected const ATTRIBUTE_KEY_COLOR = 'color';
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
