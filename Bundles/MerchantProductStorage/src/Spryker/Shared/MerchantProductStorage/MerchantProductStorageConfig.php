@@ -18,4 +18,12 @@ class MerchantProductStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
+
+    /**
+     * Specification
+     * - This events will be used for spy_merchant entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_MERCHANT_UPDATE = 'Entity.spy_merchant.update';
 }
