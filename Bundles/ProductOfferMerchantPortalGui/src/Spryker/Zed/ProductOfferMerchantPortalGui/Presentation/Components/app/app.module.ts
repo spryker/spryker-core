@@ -143,7 +143,7 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-locale-switcher',
             component: LocaleSwitcherComponent,
-        }
+        },
         {
             selector: 'web-mp-edit-offer',
             component: EditOfferComponent,
