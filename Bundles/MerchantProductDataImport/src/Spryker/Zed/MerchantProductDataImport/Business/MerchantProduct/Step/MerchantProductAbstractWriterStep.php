@@ -22,7 +22,7 @@ class MerchantProductAbstractWriterStep extends PublishAwareStep implements Data
     protected const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProduct.merchant_product_abstract.publish';
 
     /**
-     * @uses \Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+     * @uses \Spryker\Shared\MerchantProductStorage\MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
      */
     protected const EVENT_MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
 

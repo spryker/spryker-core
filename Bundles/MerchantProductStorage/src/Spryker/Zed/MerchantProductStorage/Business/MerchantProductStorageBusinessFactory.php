@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantProductStorage\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantProductStorage\Business\Deleter\MerchantProductStorageDeleter;
-use Spryker\Zed\MerchantProductStorage\Business\Deleter\MerchantProductStorageDeleterInterface;
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriter;
 use Spryker\Zed\MerchantProductStorage\Business\Writer\MerchantProductStorageWriterInterface;
 use Spryker\Zed\MerchantProductStorage\Dependency\Facade\MerchantProductStorageToEventBehaviorFacadeInterface;
@@ -30,17 +28,6 @@ class MerchantProductStorageBusinessFactory extends AbstractBusinessFactory
         return new MerchantProductStorageWriter(
             $this->getEventBehaviorFacade(),
             $this->getMerchantProductFacade(),
-            $this->getProductStorageFacade()
-        );
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantProductStorage\Business\Deleter\MerchantProductStorageDeleterInterface
-     */
-    public function createMerchantProductStorageDeleter(): MerchantProductStorageDeleterInterface
-    {
-        return new MerchantProductStorageDeleter(
-            $this->getEventBehaviorFacade(),
             $this->getProductStorageFacade()
         );
     }

@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\MerchantProductTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Shared\MerchantProductStorage\MerchantProductStorageConfig;
 use Spryker\Zed\Kernel\Container as ZedContainer;
-use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\ProductStorage\MerchantProductAbstractStorageExpanderPlugin;
 use Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct\MerchantProductWritePublisherPlugin;
 use Spryker\Zed\ProductStorage\ProductStorageDependencyProvider;
@@ -88,7 +88,7 @@ class MerchantProductWritePublisherPluginTest extends Unit
         // Act
         $this->merchantProductWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
+            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH
         );
         $productAbstractStorageEntity = $this->tester->getAbstractProductStorageByIdProductAbstract($merchantProductTransfer->getIdProductAbstract());
 

@@ -5,9 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantProduct\Dependency;
+namespace Spryker\Shared\MerchantProductStorage;
 
-interface MerchantProductEvents
+use Spryker\Shared\Kernel\AbstractBundleConfig;
+
+class MerchantProductStorageConfig extends AbstractBundleConfig
 {
     /**
      * Specification
@@ -16,12 +18,4 @@ interface MerchantProductEvents
      * @api
      */
     public const MERCHANT_PRODUCT_ABSTRACT_PUBLISH = 'MerchantProductAbstract.publish';
-
-    /**
-     * Specification
-     * - This event will be used for merchant product abstract un-publishing.
-     *
-     * @api
-     */
-    public const MERCHANT_PRODUCT_ABSTRACT_UNPUBLISH = 'MerchantProductAbstract.unpublish';
 }

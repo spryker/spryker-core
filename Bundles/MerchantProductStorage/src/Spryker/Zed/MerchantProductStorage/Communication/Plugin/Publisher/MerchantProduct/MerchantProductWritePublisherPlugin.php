@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductStorage\Communication\Plugin\Publisher\MerchantProduct;
 
+use Spryker\Shared\MerchantProductStorage\MerchantProductStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\MerchantProduct\Dependency\MerchantProductEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
@@ -43,7 +43,7 @@ class MerchantProductWritePublisherPlugin extends AbstractPlugin implements Publ
     public function getSubscribedEvents(): array
     {
         return [
-            MerchantProductEvents::MERCHANT_PRODUCT_ABSTRACT_PUBLISH,
+            MerchantProductStorageConfig::MERCHANT_PRODUCT_ABSTRACT_PUBLISH,
         ];
     }
 }

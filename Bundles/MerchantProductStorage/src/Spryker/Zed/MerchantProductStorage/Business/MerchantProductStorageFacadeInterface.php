@@ -26,19 +26,6 @@ interface MerchantProductStorageFacadeInterface
 
     /**
      * Specification:
-     * - Gets product abstract ids from eventTransfers.
-     * - Runs product storage publisher with found product abstract ids.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
-     *
-     * @return void
-     */
-    public function deleteCollectionByIdProductAbstractEvents(array $eventTransfers): void;
-
-    /**
-     * Specification:
      * - Gets merchant ids from eventTransfers.
      * - Finds product abstract ids by merchant ids.
      * - Runs product storage publisher with found product abstract ids.
