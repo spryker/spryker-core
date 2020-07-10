@@ -23,17 +23,17 @@
 
         <div class="mp-manage-order__states-col">
             <div items-states class="mp-manage-order__states">
-                <web-spy-chips class="mp-manage-order__states-col">Delivered</web-spy-chips>
+                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Delivered</web-spy-chips>
 
-                <web-spy-chips class="mp-manage-order__states-col">Payment Pending</web-spy-chips>
+                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Payment Pending</web-spy-chips>
 
-                <web-spy-chips class="mp-manage-order__states-col">Exported</web-spy-chips>
+                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Exported</web-spy-chips>
             </div>
         </div>
     </div>
 
     <web-spy-tabs class="mp-manage-order__content">
-        <web-spy-tab title="Details" class="mp-manage-order__card">
+        <web-spy-tab title="Details">
             {% set overviewItems = [
                 {
                     name: 'Order date',
@@ -53,12 +53,12 @@
                 },
             ] %}
 
-            <web-spy-card title="Overview">
+            <web-spy-card title="Overview" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for overviewItem in overviewItems %}
                         <web-mp-manage-order-stats-block
                             name="{{ overviewItem.name }}"
-                            info="{{ overviewItem.value }}">
+                            info="{{ overviewItem.info }}">
                         </web-mp-manage-order-stats-block>
                     {% endfor %}
                 </div>
@@ -83,7 +83,7 @@
                 ] %}
 
                 <web-mp-manage-order-totals
-                    orderTotals="{{ subtotalOrderTotals | json_encode() }}"
+                    order-totals="{{ subtotalOrderTotals | json_encode() }}"
                     class="mp-manage-order__card-column-item">
                 </web-mp-manage-order-totals>
 
@@ -100,7 +100,7 @@
                 ] %}
 
                 <web-mp-manage-order-totals
-                    orderTotals="{{ grandTotalOrderTotals | json_encode() }}"
+                    order-totals="{{ grandTotalOrderTotals | json_encode() }}"
                     class="mp-manage-order__card-column-item">
                 </web-mp-manage-order-totals>
             </web-spy-card>
@@ -120,12 +120,12 @@
                 },
             ] %}
 
-            <web-spy-card title="Customer">
+            <web-spy-card title="Customer" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for customerItem in customerItems %}
                         <web-mp-manage-order-stats-block
                             name="{{ customerItem.name }}"
-                            info="{{ customerItem.value }}">
+                            info="{{ customerItem.info }}">
                         </web-mp-manage-order-stats-block>
                     {% endfor %}
                 </div>

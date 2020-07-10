@@ -52,7 +52,7 @@ class DetailController extends AbstractController
         }
 
         $responseData = [
-            'form' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
+            'html' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
                 'merchantOrder' => $merchantOrderTransfer,
                 'customerMerchantOrderNumber' => $customerMerchantOrderNumber,
             ])->getContent(),

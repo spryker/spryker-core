@@ -14,14 +14,6 @@
 
 @manage-order-card-column-item-padding-bottom: 20px;
 
-.@{ajax-form-prefix-cls}-container {
-    overflow-y: auto;
-
-    &--loading {
-        overflow: hidden;
-    }
-}
-
 .mp-manage-order {
     display: block;
     height: 100%;
@@ -30,6 +22,7 @@
     font: @font-weight-medium @font-size-base @font-family;
     letter-spacing: @letter-spacing-base;
     color: @ink;
+    overflow-y: auto;
 
     &-grid {
         display: flex;
