@@ -10,6 +10,9 @@ namespace Spryker\Zed\DashboardMerchantPortalGui\Communication\Controller;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \Spryker\Zed\DashboardMerchantPortalGui\Communication\DashboardMerchantPortalGuiCommunicationFactory getFactory()
+ */
 class DashboardController extends AbstractController
 {
     /**
@@ -19,6 +22,13 @@ class DashboardController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        return [];
+        $merchantDashboardCardTransfers = [];
+        foreach ($this->getFactory()->getDashboardCardPlugins() as $cardPlugin) {
+            $merchantDashboardCardTransfers[] = $cardPlugin->getDashboardCard();
+        }
+
+        return [
+            'dashboardCards' => $merchantDashboardCardTransfers,
+        ];
     }
 }
