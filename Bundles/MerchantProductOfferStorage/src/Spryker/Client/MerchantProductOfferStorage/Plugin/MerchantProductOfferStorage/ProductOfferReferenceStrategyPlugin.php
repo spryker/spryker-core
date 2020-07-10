@@ -5,9 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOfferStorage\Plugin;
+namespace Spryker\Client\MerchantProductOfferStorage\Plugin\MerchantProductOfferStorage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\ProductOfferReferenceStrategyPluginInterface;
 
@@ -15,11 +16,11 @@ use Spryker\Client\MerchantProductOfferStorageExtension\Dependency\Plugin\Produc
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageClientInterface getClient()
  * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageFactory getFactory()
  */
-class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implements ProductOfferReferenceStrategyPluginInterface
+class ProductOfferReferenceStrategyPlugin extends AbstractPlugin implements ProductOfferReferenceStrategyPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Returns true if ProductOfferStorageCriteria.productOfferReference is null.
+     * - Returns true if ProductOfferStorageCriteria.productOfferReference is not null.
      *
      * @api
      *
@@ -29,12 +30,14 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
      */
     public function isApplicable(ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer): bool
     {
-        return !$productOfferStorageCriteriaTransfer->getProductOfferReference();
+        return (bool)$productOfferStorageCriteriaTransfer->getProductOfferReference();
     }
 
     /**
      * {@inheritDoc}
-     * - Returns first product offer reference from collection by provided ProductOfferStorageCriteria.
+     * - Finds product offer collection by ProductOfferStorageCriteria.concreteSkus.
+     * - Returns product offer reference from collection by ProductOfferStorageCriteria.productofferReference.
+     * - Returns null if ProductOfferStorageCriteria.productofferReference is not exists in collectiion.
      *
      * @api
      *
@@ -57,6 +60,20 @@ class DefaultProductOfferReferenceStrategyPlugin extends AbstractPlugin implemen
             return null;
         }
 
-        return $productOfferStorageTransfers[0] ? $productOfferStorageTransfers[0]->getProductOfferReference() : null;
+        $productOfferReferences = array_map(
+            function (ProductOfferStorageTransfer $productOfferStorageTransfer) {
+                return $productOfferStorageTransfer->getProductOfferReference();
+            },
+            $productOfferStorageTransfers
+        );
+
+        if (
+            $productOfferStorageCriteriaTransfer->getProductOfferReference()
+            && in_array($productOfferStorageCriteriaTransfer->getProductOfferReference(), $productOfferReferences, true)
+        ) {
+            return $productOfferStorageCriteriaTransfer->getProductOfferReference();
+        }
+
+        return null;
     }
 }
