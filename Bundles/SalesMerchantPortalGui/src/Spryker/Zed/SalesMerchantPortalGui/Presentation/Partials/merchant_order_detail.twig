@@ -1,1 +1,138 @@
-Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium aliquam aperiam commodi, culpa cum dignissimos eaque eveniet illo impedit molestias officia optio placeat praesentium quasi quia sed temporibus, vero voluptatem.
+{% set orderDetails = {
+    title: 'Order DE — 1',
+    reference: 'Mer - DE —134353',
+    referenceTitle: 'Merchant Reference',
+} %}
+
+<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
+    <!--TODO: state-machine story -->
+    <div state-transitions-meessage class="mp-manage-order__transitions">
+        <web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>
+        <web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>
+        <web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>
+    </div>
+
+    <!--TODO: state-machine story -->
+    <span state-transitions-meessage>
+      Have to change button type in the app.module.
+    </span>
+
+    <!--TODO: state-machine story -->
+    <div items-states class="mp-manage-order__states">
+        <div class="mp-manage-order__states-col mp-manage-order__states-col--title">Order’s Items state</div>
+
+        <div class="mp-manage-order__states-col">
+            <div items-states class="mp-manage-order__states">
+                <web-spy-chips class="mp-manage-order__states-col">Delivered</web-spy-chips>
+
+                <web-spy-chips class="mp-manage-order__states-col">Payment Pending</web-spy-chips>
+
+                <web-spy-chips class="mp-manage-order__states-col">Exported</web-spy-chips>
+            </div>
+        </div>
+    </div>
+
+    <web-spy-tabs class="mp-manage-order__content">
+        <web-spy-tab title="Details" class="mp-manage-order__card">
+            {% set overviewItems = [
+                {
+                    name: 'Order date',
+                    info: '14.04.2020, 10:09',
+                },
+                {
+                    name: 'NUMBER OF PRODUCTS',
+                    info: '1',
+                },
+                {
+                    name: 'ITEMs',
+                    info: '10',
+                },
+                {
+                    name: 'SHIPMENTs',
+                    info: '2',
+                },
+            ] %}
+
+            <web-spy-card title="Overview">
+                <div class="mp-manage-order-grid">
+                    {% for overviewItem in overviewItems %}
+                        <web-mp-manage-order-stats-block
+                            name="{{ overviewItem.name }}"
+                            info="{{ overviewItem.value }}">
+                        </web-mp-manage-order-stats-block>
+                    {% endfor %}
+                </div>
+            </web-spy-card>
+
+            <web-spy-card title="Overview" class="mp-manage-order__card">
+                <!--TODO: state-machine story -->
+                <web-spy-collapsible title="10 ITEMS" class="mp-manage-order__card-column-item">
+                    <div>Collapse Content</div>
+                </web-spy-collapsible>
+
+                {% set subtotalOrderTotals = [
+                    {
+                        title: 'Subtotal',
+                        value: '€ 972.51',
+                        isTitle: true,
+                    },
+                    {
+                        title: 'Shipment Hermes Express',
+                        value: '€ 10.00',
+                    },
+                ] %}
+
+                <web-mp-manage-order-totals
+                    orderTotals="{{ subtotalOrderTotals | json_encode() }}"
+                    class="mp-manage-order__card-column-item">
+                </web-mp-manage-order-totals>
+
+                {% set grandTotalOrderTotals = [
+                    {
+                        title: 'Grand Total',
+                        value: '€ 972.51',
+                        isTitle: true,
+                    },
+                    {
+                        title: 'Included Tax Amount',
+                        value: '€ 180.09',
+                    },
+                ] %}
+
+                <web-mp-manage-order-totals
+                    orderTotals="{{ grandTotalOrderTotals | json_encode() }}"
+                    class="mp-manage-order__card-column-item">
+                </web-mp-manage-order-totals>
+            </web-spy-card>
+
+            {% set customerItems = [
+                {
+                    name: 'CLIENT NAME',
+                    info: 'Sonia Wagner, Mrs',
+                },
+                {
+                    name: 'CLIENT EMAIL',
+                    info: 'sonia.wagner@gmail.com',
+                },
+                {
+                    name: 'PREVIOUS ORDERS',
+                    info: '3',
+                },
+            ] %}
+
+            <web-spy-card title="Customer">
+                <div class="mp-manage-order-grid">
+                    {% for customerItem in customerItems %}
+                        <web-mp-manage-order-stats-block
+                            name="{{ customerItem.name }}"
+                            info="{{ customerItem.value }}">
+                        </web-mp-manage-order-stats-block>
+                    {% endfor %}
+                </div>
+            </web-spy-card>
+        </web-spy-tab>
+
+        <!--TODO: items tab story -->
+        <web-spy-tab title="Items"></web-spy-tab>
+    </web-spy-tabs>
+</web-mp-manage-order>

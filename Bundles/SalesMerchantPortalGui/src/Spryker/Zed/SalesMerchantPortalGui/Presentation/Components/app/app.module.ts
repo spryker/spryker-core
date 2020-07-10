@@ -9,12 +9,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ButtonComponent, ButtonModule } from '@spryker/button';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { CardModule, CardComponent } from '@spryker/card';
+import { CollapsibleComponent, CollapsibleModule } from '@spryker/collapsible';
 import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
 
 import { OfferOrdersComponent } from './offer-orders/offer-orders.component';
 import { OfferOrdersModule } from './offer-orders/offer-orders.module';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageOrderStatsBlockComponent } from './manage-order-stats-block/manage-order-stats-block.component';
+import { ManageOrderTotalsComponent } from './manage-order-totals/manage-order-totals.component';
 import { ManageOrderModule } from './manage-order/manage-order.module';
 
 @NgModule({
@@ -31,6 +33,7 @@ import { ManageOrderModule } from './manage-order/manage-order.module';
         ChipsModule,
         CardModule,
         TabsModule,
+        CollapsibleModule,
     ],
     providers: [],
 })
@@ -71,6 +74,14 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-locale-switcher',
             component: LocaleSwitcherComponent,
+        },
+        {
+            selector: 'web-mp-manage-order-totals',
+            component: ManageOrderTotalsComponent,
+        },
+        {
+            selector: 'web-spy-collapsible',
+            component: CollapsibleComponent,
         },
     ];
 }

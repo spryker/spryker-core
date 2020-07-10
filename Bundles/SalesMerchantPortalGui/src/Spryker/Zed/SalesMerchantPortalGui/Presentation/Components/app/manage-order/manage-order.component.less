@@ -12,6 +12,8 @@
 @manage-order-states-title-margin-right: 13px;
 @manage-order-transitions-padding-bottom: 10px;
 
+@manage-order-card-column-item-padding-bottom: 20px;
+
 .@{ajax-form-prefix-cls}-container {
     overflow-y: auto;
 
@@ -48,12 +50,18 @@
 
     &__heading {
         display: flex;
+        flex-flow: row-reverse wrap;
         justify-content: space-between;
-        margin: 0 -@manage-order-grid-default-padding;
+        margin: -@manage-order-grid-default-padding;
         padding-bottom: @manage-order-heading-padding-bottom;
 
         &-col {
-            padding: 0 @manage-order-grid-default-padding;
+            padding: @manage-order-grid-default-padding;
+            flex-grow: 1;
+
+            &--actions {
+                text-align: right;
+            }
         }
     }
 
@@ -113,7 +121,18 @@
         padding-top: @manage-order-default-spacing-top;
     }
 
-    &__card:first-child {
-        padding-top: 0;
+    &__card {
+        &-column-item {
+            display: block;
+            padding-bottom: @manage-order-card-column-item-padding-bottom;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+
+        &:first-child {
+            padding-top: 0;
+        }
     }
 }

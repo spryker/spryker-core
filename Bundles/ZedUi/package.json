@@ -25,7 +25,7 @@
         "@angular/router": "^9.0.1",
         "@spryker/header": "^0.1.0-next.9",
         "@spryker/icon": "^0.1.0-next.16",
-        "@spryker/locale": "^0.1.0-next.7",
+        "@spryker/layout": "^0.1.0-next.8",
         "@spryker/logo": "^0.1.0-next.7",
         "@spryker/navigation": "^0.1.0-next.10",
         "@spryker/notification": "^0.1.0-next.10",

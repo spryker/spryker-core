@@ -1,0 +1,30 @@
+@import '../manage-order/manage-order.component.less';
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+
+.mp-manage-order-totals {
+    display: flex;
+    flex-direction: column;
+    margin: -@manage-order-grid-default-padding;
+
+    &:empty {
+        display: none;
+    }
+
+    &:last-child {
+        padding-bottom: 0;
+    }
+
+    &__item {
+        display: flex;
+        justify-content: space-between;
+        color: @gray-darker;
+        padding: @manage-order-grid-default-padding;
+
+        &--title {
+            font-size: @font-size-lg;
+            font-weight: @font-weight-semi-bold;
+            color: @ink;
+            order: -1;
+        }
+    }
+}
