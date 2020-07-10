@@ -9,4 +9,7 @@
         <property name="content" type="string"/>
     </transfer>
 
+    <transfer name="MerchantDashboardActionButton">
+    </transfer>
+
 </transfers>
