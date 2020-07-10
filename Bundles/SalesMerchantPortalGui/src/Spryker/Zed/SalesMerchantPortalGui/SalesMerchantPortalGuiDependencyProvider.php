@@ -19,6 +19,9 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeBridge;
 
+/**
+ * @method \Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiConfig getConfig()
+ */
 class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
