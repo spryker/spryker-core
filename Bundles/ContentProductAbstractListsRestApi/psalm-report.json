@@ -1,0 +1,32 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ContentProductAbstractListsRestApi\\Dependency\\Client\\ContentProductAbstractListsRestApiToContentProductClientInterface::executeProductAbstractListTypeByKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/ContentProductAbstractListReader.php",
+            "snippet": "                $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResponseInterface::addResource cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProductAbstractListsRestApi/src/Spryker/Glue/ContentProductAbstractListsRestApi/Processor/ContentProductAbstractListReader.php",
+            "snippet": "            $restResponse->addResource($abstractProductResource);",
+            "selected_text": "$abstractProductResource",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}
