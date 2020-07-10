@@ -40,15 +40,15 @@ class MerchantProductSearchRepository extends AbstractRepository implements Merc
     }
 
     /**
-     * @param int[] $productAbstractMerchantIds
+     * @param int[] $merchantProductAbstractIds
      *
      * @return int[]
      */
-    public function getProductAbstractIdsByProductAbstractMerchantIds(array $productAbstractMerchantIds): array
+    public function getProductAbstractIdsByMerchantProductAbstractIds(array $merchantProductAbstractIds): array
     {
         $merchantProductAbstractPropelQuery = $this->getFactory()
             ->getMerchantProductAbstractPropelQuery()
-            ->filterByIdProductAbstractMerchant_In($productAbstractMerchantIds);
+            ->filterByIdMerchantProductAbstract_In($merchantProductAbstractIds);
 
         return $merchantProductAbstractPropelQuery
             ->select([SpyMerchantProductAbstractTableMap::COL_FK_PRODUCT_ABSTRACT])

@@ -21,6 +21,8 @@
     </transfer>
 
     <transfer name="StringFacetMap">
+        <property name="name" type="string"/>
+        <property name="value" type="array" singular="value"/>
     </transfer>
 
     <transfer name="PageMap">

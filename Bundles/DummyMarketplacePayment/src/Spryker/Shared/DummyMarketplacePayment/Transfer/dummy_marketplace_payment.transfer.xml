@@ -33,7 +33,7 @@
     </transfer>
 
     <transfer name="Item">
-        <property name="productOfferReference" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="PaymentProvider">

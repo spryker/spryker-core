@@ -32,7 +32,7 @@ class MerchantProductSearchWritePublisherPlugin extends AbstractPlugin implement
      */
     public function handleBulk(array $transfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByIdProductAbstractMerchantEvents($transfers);
+        $this->getFacade()->writeCollectionByIdMerchantProductAbstractEvents($transfers);
     }
 
     /**

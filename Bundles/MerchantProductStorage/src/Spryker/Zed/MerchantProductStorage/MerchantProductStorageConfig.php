@@ -5,10 +5,10 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\MerchantProductOfferStorage\Exception;
+namespace Spryker\Zed\MerchantProductStorage;
 
-use Exception;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class ProductOfferProviderPluginException extends Exception
+class MerchantProductStorageConfig extends AbstractBundleConfig
 {
 }
