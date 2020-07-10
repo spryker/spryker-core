@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider;
 
 use ArrayObject;
-use Generated\Shared\Transfer\DashboardActionButtonTransfer;
-use Generated\Shared\Transfer\DashboardCardTransfer;
+use Generated\Shared\Transfer\MerchantDashboardActionButtonTransfer;
+use Generated\Shared\Transfer\MerchantDashboardCardTransfer;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface;
@@ -65,9 +65,9 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\DashboardCardTransfer
+     * @return \Generated\Shared\Transfer\MerchantDashboardCardTransfer
      */
-    public function getDashboardCard(): DashboardCardTransfer
+    public function getDashboardCard(): MerchantDashboardCardTransfer
     {
         $idMerchant = $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant();
         $merchantOrderCountsTransfer = $this->salesMerchantPortalGuiRepository->getMerchantOrderCounts($idMerchant);
@@ -86,11 +86,11 @@ class OrdersDashboardCardProvider implements OrdersDashboardCardProviderInterfac
             ]
         );
 
-        return (new DashboardCardTransfer())
+        return (new MerchantDashboardCardTransfer())
             ->setTitle($title)
             ->setContent($content)
             ->setActionButtons(new ArrayObject([
-                (new DashboardActionButtonTransfer())
+                (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Manage Orders')
                     ->setUrl($this->routerFacade->getRouter()->generate('sales-merchant-portal-gui:orders')),
             ]));

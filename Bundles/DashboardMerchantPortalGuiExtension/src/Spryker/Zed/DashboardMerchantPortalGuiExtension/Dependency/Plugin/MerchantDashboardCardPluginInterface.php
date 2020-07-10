@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin;
 
-use Generated\Shared\Transfer\DashboardCardTransfer;
+use Generated\Shared\Transfer\MerchantDashboardCardTransfer;
 
 /**
  * Use this plugin when a new merchant dashboard card needs to be added.
  */
-interface DashboardCardPluginInterface
+interface MerchantDashboardCardPluginInterface
 {
     /**
      * Specification:
@@ -20,7 +20,7 @@ interface DashboardCardPluginInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\DashboardCardTransfer
+     * @return \Generated\Shared\Transfer\MerchantDashboardCardTransfer
      */
-    public function getDashboardCard(): DashboardCardTransfer;
+    public function getDashboardCard(): MerchantDashboardCardTransfer;
 }

@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
-use Generated\Shared\Transfer\DashboardCardTransfer;
+use Generated\Shared\Transfer\MerchantDashboardCardTransfer;
 
 interface OffersDashboardCardProviderInterface
 {
     /**
-     * @return \Generated\Shared\Transfer\DashboardCardTransfer
+     * @return \Generated\Shared\Transfer\MerchantDashboardCardTransfer
      */
-    public function getDashboardCard(): DashboardCardTransfer;
+    public function getDashboardCard(): MerchantDashboardCardTransfer;
 }

@@ -291,13 +291,13 @@
         <property name="visible" type="int"/>
     </transfer>
 
-    <transfer name="DashboardCard">
-        <property name="actionButtons" type="DashboardActionButton[]" singular="actionButton"/>
+    <transfer name="MerchantDashboardCard">
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
         <property name="title" type="string"/>
         <property name="content" type="string"/>
     </transfer>
 
-    <transfer name="DashboardActionButton">
+    <transfer name="MerchantDashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
     </transfer>

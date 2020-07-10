@@ -22,13 +22,13 @@ class DashboardController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $dashboardCardTransfers = [];
+        $merchantDashboardCardTransfers = [];
         foreach ($this->getFactory()->getDashboardCardPlugins() as $cardPlugin) {
-            $dashboardCardTransfers[] = $cardPlugin->getDashboardCard();
+            $merchantDashboardCardTransfers[] = $cardPlugin->getDashboardCard();
         }
 
         return [
-            'dashboardCards' => $dashboardCardTransfers,
+            'dashboardCards' => $merchantDashboardCardTransfers,
         ];
     }
 }

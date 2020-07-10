@@ -7,15 +7,15 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Plugin\DashboardMerchantPortalGui;
 
-use Generated\Shared\Transfer\DashboardCardTransfer;
-use Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\DashboardCardPluginInterface;
+use Generated\Shared\Transfer\MerchantDashboardCardTransfer;
+use Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\MerchantDashboardCardPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiConfig getConfig()
  */
-class OffersDashboardCardPlugin extends AbstractPlugin implements DashboardCardPluginInterface
+class OffersMerchantDashboardCardPlugin extends AbstractPlugin implements MerchantDashboardCardPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -23,9 +23,9 @@ class OffersDashboardCardPlugin extends AbstractPlugin implements DashboardCardP
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\DashboardCardTransfer
+     * @return \Generated\Shared\Transfer\MerchantDashboardCardTransfer
      */
-    public function getDashboardCard(): DashboardCardTransfer
+    public function getDashboardCard(): MerchantDashboardCardTransfer
     {
         return $this->getFactory()->createOffersDashboardCardProvider()->getDashboardCard();
     }

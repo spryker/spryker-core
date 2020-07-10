@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class DashboardMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\DashboardCardPluginInterface[]
+     * @return \Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\MerchantDashboardCardPluginInterface[]
      */
     public function getDashboardCardPlugins(): array
     {

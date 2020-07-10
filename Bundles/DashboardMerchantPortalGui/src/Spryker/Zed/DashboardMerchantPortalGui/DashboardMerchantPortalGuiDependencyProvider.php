@@ -41,7 +41,7 @@ class DashboardMerchantPortalGuiDependencyProvider extends AbstractBundleDepende
     }
 
     /**
-     * @return \Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\DashboardCardPluginInterface[]
+     * @return \Spryker\Zed\DashboardMerchantPortalGuiExtension\Dependency\Plugin\MerchantDashboardCardPluginInterface[]
      */
     protected function getDashboardCardPlugins(): array
     {

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
 use ArrayObject;
-use Generated\Shared\Transfer\DashboardActionButtonTransfer;
-use Generated\Shared\Transfer\DashboardCardTransfer;
+use Generated\Shared\Transfer\MerchantDashboardActionButtonTransfer;
+use Generated\Shared\Transfer\MerchantDashboardCardTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
@@ -65,9 +65,9 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
     }
 
     /**
-     * @return \Generated\Shared\Transfer\DashboardCardTransfer
+     * @return \Generated\Shared\Transfer\MerchantDashboardCardTransfer
      */
-    public function getDashboardCard(): DashboardCardTransfer
+    public function getDashboardCard(): MerchantDashboardCardTransfer
     {
         $merchantProductOfferCountsTransfer = $this->productOfferMerchantPortalGuiRepository->getOffersDashboardCardCounts(
             $this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant()
@@ -88,14 +88,14 @@ class OffersDashboardCardProvider implements OffersDashboardCardProviderInterfac
             ]
         );
 
-        return (new DashboardCardTransfer())
+        return (new MerchantDashboardCardTransfer())
             ->setTitle($title)
             ->setContent($content)
             ->setActionButtons(new ArrayObject([
-                (new DashboardActionButtonTransfer())
+                (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Manage Offers')
                     ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:offers')),
-                (new DashboardActionButtonTransfer())
+                (new MerchantDashboardActionButtonTransfer())
                     ->setTitle('Add Offer')
                     ->setUrl($this->routerFacade->getRouter()->generate('product-offer-merchant-portal-gui:create-offer')),
             ]));
