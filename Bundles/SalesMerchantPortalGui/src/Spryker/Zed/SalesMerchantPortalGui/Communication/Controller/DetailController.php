@@ -40,7 +40,7 @@ class DetailController extends AbstractController
 
         $customerMerchantOrderNumber = 0;
 
-        if ($merchantOrderTransfer) {
+        if ($merchantOrderTransfer && $merchantOrderTransfer->getOrder()) {
             $merchantOrderCollectionTransfer = $this->getFactory()
                 ->getMerchantSalesOrderFacade()
                 ->getMerchantOrderCollection(
