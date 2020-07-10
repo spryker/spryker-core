@@ -41,12 +41,12 @@ class NumberOfChildren extends AbstractRule implements ClassAware
     /**
      * @param \PHPMD\AbstractNode $node
      *
-     * @return int
+     * @return bool
      */
     private function isIgnorable(AbstractNode $node)
     {
         $fullyQualifiedClassName = $node->getFullQualifiedName();
 
-        return preg_match('/Zed\\\\Importer\\\\Business\\\\(Importer|Installer)\\\\Abstract(Importer|Installer)/', $fullyQualifiedClassName);
+        return (bool)preg_match('/Zed\\\\Importer\\\\Business\\\\(Importer|Installer)\\\\Abstract(Importer|Installer)/', $fullyQualifiedClassName);
     }
 }
