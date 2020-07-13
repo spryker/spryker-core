@@ -130,6 +130,6 @@ class PackageFinder implements PackageFinderInterface
         $composerJsonAsArray = $this->getComposerJsonAsArray($packageTransfer->getPath());
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/\smodule$/', $description);
+        return (bool)preg_match('/\smodule$/', $description);
     }
 }

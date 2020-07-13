@@ -1,0 +1,99 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Country\\Persistence\\CountryRepositoryInterface::findCountriesByIso2Codes expects array<array-key, string>, list<mixed|null|string> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Country/CountryReader.php",
+            "snippet": "        return $this->countryRepository->findCountriesByIso2Codes($iso2Codes);",
+            "selected_text": "$iso2Codes",
+            "error_level": 6,
+            "shortcode": 4,
+            "taint_trace": null
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Country\\Business\\CountryManager::createCountry cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/CountryManager.php",
+            "snippet": "        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());",
+            "selected_text": "$countryTransfer->getIso2Code()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIso2Code on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        $billingAddressCountryIso2Code = $checkoutDataTransfer->getBillingAddress()->getIso2Code();",
+            "selected_text": "getIso2Code",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Country\\Business\\CountryManagerInterface::hasCountry cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        if (!$this->countryManager->hasCountry($billingAddressCountryIso2Code)) {",
+            "selected_text": "$billingAddressCountryIso2Code",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIso2Code on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        $shippingAddressCountryIso2Code = $checkoutDataTransfer->getShippingAddress()->getIso2Code();",
+            "selected_text": "getIso2Code",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 60,
+            "line_to": 60,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Country\\Business\\CountryManagerInterface::hasCountry cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/Validator/CountryCheckoutDataValidator.php",
+            "snippet": "        if (!$this->countryManager->hasCountry($shippingAddressCountryIso2Code)) {",
+            "selected_text": "$shippingAddressCountryIso2Code",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\Country\\Business\\CountryManager::createCountry has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Country/src/Spryker/Zed/Country/Business/CountryManager.php",
+            "snippet": "        return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());",
+            "selected_text": "createCountry",
+            "error_level": 2,
+            "shortcode": 1,
+            "taint_trace": null
+        }
+    ]
+}

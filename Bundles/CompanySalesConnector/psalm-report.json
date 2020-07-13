@@ -1,0 +1,110 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCompany on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "        if ($orderTransfer->getCompanyUuid() !== $customerTransfer->getCompanyUserTransfer()->getCompany()->getUuid()) {",
+            "selected_text": "getCompany",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "        if ($orderTransfer->getCompanyUuid() !== $customerTransfer->getCompanyUserTransfer()->getCompany()->getUuid()) {",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CompanySalesConnector\\Business\\Checker\\PermissionChecker::can cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "        return $this->can('SeeCompanyOrdersPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
+            "selected_text": "$customerTransfer->getCompanyUserTransfer()->getIdCompanyUser()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCompanyUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Checker/PermissionChecker.php",
+            "snippet": "        return $this->can('SeeCompanyOrdersPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser());",
+            "selected_text": "getIdCompanyUser",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanySalesConnector\\Business\\Expander\\OrderSearchQueryExpander::createCompanyFilterQueryJoin cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Expander/OrderSearchQueryExpander.php",
+            "snippet": "            $this->createCompanyFilterQueryJoin($filterFieldTransfer->getValue())",
+            "selected_text": "$filterFieldTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 101,
+            "line_to": 101,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanySalesConnector\\Business\\Expander\\OrderSearchQueryExpander::createCustomerFilterQueryJoin cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Expander/OrderSearchQueryExpander.php",
+            "snippet": "            $this->createCustomerFilterQueryJoin($filterFieldTransfer->getValue())",
+            "selected_text": "$filterFieldTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of explode cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Expander/OrderSearchQueryExpander.php",
+            "snippet": "        [$orderColumn, $orderDirection] = explode(static::DELIMITER_ORDER_BY, $filterFieldTransfer->getValue());",
+            "selected_text": "$filterFieldTransfer->getValue()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanySalesConnector\\Persistence\\CompanySalesConnectorEntityManagerInterface::updateOrderCompanyUuid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanySalesConnector/src/Spryker/Zed/CompanySalesConnector/Business/Writer/OrderWriter.php",
+            "snippet": "            $saveOrderTransfer->getIdSalesOrder(),",
+            "selected_text": "$saveOrderTransfer->getIdSalesOrder()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

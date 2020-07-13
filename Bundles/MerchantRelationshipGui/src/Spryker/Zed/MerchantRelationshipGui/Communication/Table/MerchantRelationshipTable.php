@@ -156,7 +156,7 @@ class MerchantRelationshipTable extends AbstractTable
             ->innerJoinCompanyBusinessUnit()
             ->useSpyMerchantRelationshipToCompanyBusinessUnitQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinCompanyBusinessUnit('assignedBusinessUnits')
-                ->withColumn("STRING_AGG( DISTINCT assignedBusinessUnits.name, '; ')", MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS)
+                ->withColumn('GROUP_CONCAT(DISTINCT assignedBusinessUnits.name)', MerchantRelationshipTableConstants::COL_ASSIGNED_BUSINESS_UNITS)
             ->endUse()
             ->withColumn(SpyMerchantTableMap::COL_ID_MERCHANT, MerchantRelationshipTableConstants::COL_MERCHANT_ID)
             ->withColumn(SpyMerchantTableMap::COL_NAME, MerchantRelationshipTableConstants::COL_MERCHANT_NAME)

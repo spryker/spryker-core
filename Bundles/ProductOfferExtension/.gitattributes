@@ -17,7 +17,6 @@
 *.mo binary
 *.pdf binary
 *.xsd binary
-*.ts binary
 *.exe binary
 
 # Remove files for archives generated using `git archive`
