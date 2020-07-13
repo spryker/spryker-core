@@ -24,8 +24,6 @@ use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface;
  */
 class ProductReservationReader implements ProductReservationReaderInterface
 {
-    protected const PRODUCT_ABSTRACT_AVAILABILITY_NOT_FOUND_EXCEPTION_MESSAGE = 'The product abstract availability was not found with this product abstract ID: %d';
-
     /**
      * @var \Spryker\Zed\Availability\Persistence\AvailabilityQueryContainerInterface
      */
@@ -81,7 +79,7 @@ class ProductReservationReader implements ProductReservationReaderInterface
 
         if (!$productAbstractEntity) {
             throw new ProductAbstractAvailabilityNotFoundException(
-                sprintf(static::PRODUCT_ABSTRACT_AVAILABILITY_NOT_FOUND_EXCEPTION_MESSAGE, $idProductAbstract)
+                sprintf('The product abstract availability was not found with this product abstract ID: %d', $idProductAbstract)
             );
         }
 
