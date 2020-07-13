@@ -1,0 +1,58 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsUserConnector\\Dependency\\Facade\\CmsUserConnectorToUserInterface::getUserById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserExpander.php",
+            "snippet": "        $userTransfer = $this->userFacade->getUserById($cmsVersionTransfer->getFkUser());",
+            "selected_text": "$cmsVersionTransfer->getFkUser()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 48,
+            "line_to": 48,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\CmsUserConnector\\Business\\Version\\CmsVersionUserUpdater::updateCmsVersionUserId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserUpdater.php",
+            "snippet": "        $cmsVersionEntity = $this->updateCmsVersionUserId($cmsVersionTransfer, $idUser);",
+            "selected_text": "$idUser",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsUserConnector\\Dependency\\QueryContainer\\CmsUserConnectorToCmsQueryContainerInterface::queryCmsVersionById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserUpdater.php",
+            "snippet": "            ->queryCmsVersionById($cmsVersionTransfer->getIdCmsVersion())",
+            "selected_text": "$cmsVersionTransfer->getIdCmsVersion()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method setFkUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsUserConnector/src/Spryker/Zed/CmsUserConnector/Business/Version/CmsVersionUserUpdater.php",
+            "snippet": "        $cmsVersionEntity->setFkUser($idUser);",
+            "selected_text": "setFkUser",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

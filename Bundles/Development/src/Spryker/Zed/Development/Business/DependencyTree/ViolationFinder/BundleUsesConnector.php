@@ -21,6 +21,6 @@ class BundleUsesConnector implements ViolationFinderInterface
      */
     public function isViolation(array $dependency)
     {
-        return (preg_match('/Connector/', $dependency[DependencyTree::META_FOREIGN_BUNDLE]));
+        return (bool)preg_match('/Connector/', $dependency[DependencyTree::META_FOREIGN_BUNDLE]);
     }
 }

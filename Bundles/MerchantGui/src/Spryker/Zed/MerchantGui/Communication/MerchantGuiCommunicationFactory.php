@@ -17,7 +17,9 @@ use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpanderInter
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
+use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface;
@@ -110,6 +112,22 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getRequest(),
             $this->getMerchantFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActiveMerchantForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveMerchantForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createMerchantStatusForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantStatusForm::class);
     }
 
     /**

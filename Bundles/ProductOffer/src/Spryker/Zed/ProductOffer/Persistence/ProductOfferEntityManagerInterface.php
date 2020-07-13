@@ -24,4 +24,19 @@ interface ProductOfferEntityManagerInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function updateProductOffer(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function createProductOfferStores(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * @param int $idProductOffer
+     * @param array $storeIds
+     *
+     * @return void
+     */
+    public function deleteProductOfferStores(int $idProductOffer, array $storeIds): void;
 }

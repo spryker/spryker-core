@@ -11,6 +11,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -301,10 +302,18 @@ class DiscountsTable extends AbstractTable
     protected function generateStatusButton(Url $viewDiscountUrl, $visibility)
     {
         if ($visibility === static::BUTTON_ACTIVATE) {
-            return $this->generateViewButton($viewDiscountUrl, $visibility);
+            return $this->generateFormButton($viewDiscountUrl, $visibility, DiscountVisibilityForm::class);
         }
 
-        return $this->generateRemoveButton($viewDiscountUrl, $visibility);
+        return $this->generateFormButton(
+            $viewDiscountUrl,
+            $visibility,
+            DiscountVisibilityForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-danger safe-submit',
+                static::BUTTON_ICON => 'fa-trash',
+            ]
+        );
     }
 
     /**

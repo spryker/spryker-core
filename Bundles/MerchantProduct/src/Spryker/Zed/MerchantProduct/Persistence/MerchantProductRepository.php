@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantProduct\Persistence;
 
+use Generated\Shared\Transfer\MerchantProductCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -28,16 +30,44 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
             ->getMerchantProductAbstractPropelQuery()
             ->joinWithMerchant();
 
-        $merchantProductEntity = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer)
+        $merchantProductAbstractEntity = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer)
             ->findOne();
 
-        if (!$merchantProductEntity) {
+        if (!$merchantProductAbstractEntity) {
             return null;
         }
 
         return $this->getFactory()
             ->createMerchantMapper()
-            ->mapMerchantEntityToMerchantTransfer($merchantProductEntity->getMerchant(), new MerchantTransfer());
+            ->mapMerchantEntityToMerchantTransfer($merchantProductAbstractEntity->getMerchant(), new MerchantTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductCollectionTransfer
+     */
+    public function get(MerchantProductCriteriaTransfer $merchantProductCriteriaTransfer): MerchantProductCollectionTransfer
+    {
+        $merchantProductAbstractQuery = $this->getFactory()->getMerchantProductAbstractPropelQuery();
+
+        $merchantProductAbstractQuery = $this->applyFilters($merchantProductAbstractQuery, $merchantProductCriteriaTransfer);
+
+        $merchantProductAbstractEntities = $merchantProductAbstractQuery->find();
+
+        $merchantProductCollectionTransfer = new MerchantProductCollectionTransfer();
+        $merchantProductMapper = $this->getFactory()->createMerchantProductMapper();
+
+        foreach ($merchantProductAbstractEntities as $merchantProductAbstractEntity) {
+            $merchantProductCollectionTransfer->addMerchantProduct(
+                $merchantProductMapper->mapMerchantProductEntityToMerchantProductTransfer(
+                    $merchantProductAbstractEntity,
+                    new MerchantProductTransfer()
+                )
+            );
+        }
+
+        return $merchantProductCollectionTransfer;
     }
 
     /**
@@ -52,6 +82,14 @@ class MerchantProductRepository extends AbstractRepository implements MerchantPr
     ): SpyMerchantProductAbstractQuery {
         if ($merchantProductCriteriaTransfer->getIdProductAbstract()) {
             $merchantProductAbstractQuery->filterByFkProductAbstract($merchantProductCriteriaTransfer->getIdProductAbstract());
+        }
+
+        if ($merchantProductCriteriaTransfer->getMerchantProductAbstractIds()) {
+            $merchantProductAbstractQuery->filterByIdMerchantProductAbstract_In($merchantProductCriteriaTransfer->getMerchantProductAbstractIds());
+        }
+
+        if ($merchantProductCriteriaTransfer->getMerchantIds()) {
+            $merchantProductAbstractQuery->filterByFkMerchant_In($merchantProductCriteriaTransfer->getMerchantIds());
         }
 
         return $merchantProductAbstractQuery;

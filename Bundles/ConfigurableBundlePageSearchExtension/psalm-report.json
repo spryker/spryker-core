@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedClass",
+            "message": "Class Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface is marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlePageSearchExtension/src/Spryker/Zed/ConfigurableBundlePageSearchExtension/Dependency/Plugin/ConfigurableBundleTemplatePageMapExpanderPluginInterface.php",
+            "snippet": "     * @param \\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface $pageMapBuilder",
+            "selected_text": "\\Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\DataMapper\\PageMapBuilderInterface",
+            "error_level": 2,
+            "shortcode": 98,
+            "taint_trace": null
+        }
+    ]
+}

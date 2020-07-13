@@ -36,6 +36,8 @@ class ProductOfferValidityHelper extends Module
             $productOfferValidityEntity->delete();
         });
 
+        $productOfferValidityTransfer->setIdProductOfferValidity($productOfferValidityEntity->getIdProductOfferValidity());
+
         return $productOfferValidityTransfer;
     }
 

@@ -15,7 +15,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 export class AppModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'mp-dashboard',
+            selector: 'web-mp-dashboard',
             component: DashboardComponent
         },
     ];

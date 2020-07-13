@@ -19,12 +19,16 @@ use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsE
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListButtonsExpanderInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableExpander;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Expander\ProductListUsedByTableExpanderInterface;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ActivateConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotCreateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ConfigurableBundleTemplateSlotEditForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotCreateFormDataProvider;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DataProvider\ConfigurableBundleTemplateSlotEditFormDataProvider;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeactivateConfigurableBundleTemplateForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeleteConfigurableBundleSlotForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeleteConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandler;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Handler\ConfigurableBundleTemplateSlotEditFormFileUploadHandlerInterface;
 use Spryker\Zed\ConfigurableBundleGui\Communication\Mapper\ProductListUsedByTableMapper;
@@ -266,6 +270,40 @@ class ConfigurableBundleGuiCommunicationFactory extends AbstractCommunicationFac
     public function createProductConcreteRelationTablesProvider(): ProductConcreteRelationTablesProviderInterface
     {
         return new ProductConcreteRelationTablesProvider($this->getConfigurableBundleTemplateSlotEditTablesProviderPlugins());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createActivateConfigurableBundleTemplateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ActivateConfigurableBundleTemplateForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeactivateConfigurableBundleTemplateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeactivateConfigurableBundleTemplateForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteConfigurableBundleSlotForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteConfigurableBundleSlotForm::class, [], [
+            'fields' => [],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteConfigurableBundleTemplateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteConfigurableBundleTemplateForm::class);
     }
 
     /**

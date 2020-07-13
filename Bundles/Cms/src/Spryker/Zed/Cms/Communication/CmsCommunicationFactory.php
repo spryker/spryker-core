@@ -12,6 +12,7 @@ use Spryker\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use Spryker\Zed\Cms\Communication\Form\CmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsGlossaryFormDataProvider;
 use Spryker\Zed\Cms\Communication\Form\DataProvider\CmsRedirectFormDataProvider;
+use Spryker\Zed\Cms\Communication\Form\DeleteCmsRedirectForm;
 use Spryker\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use Spryker\Zed\Cms\Communication\Table\CmsRedirectTable;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeInterface;
@@ -92,6 +93,16 @@ class CmsCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryFormDataProvider(): CmsGlossaryFormDataProvider
     {
         return new CmsGlossaryFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteCmsRedirectForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteCmsRedirectForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

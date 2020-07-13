@@ -21,7 +21,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion;
+use Propel\Runtime\ActiveQuery\Criterion\LikeCriterion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -157,8 +157,6 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $orderFirstNameSearchCriteria->addOr($orderLastNameSearchCriteria);
         $orderLastNameSearchCriteria->addOr($orderEmailSearchCriteria);
 
-        $merchantSalesOrderQuery->setIgnoreCase(true);
-
         return $merchantSalesOrderQuery->add($orderReferenceSearchCriteria);
     }
 
@@ -166,75 +164,90 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getOrderReferenceSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getOrderReferenceSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_ORDER_REFERENCE,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getMerchantOrderReferenceSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getMerchantOrderReferenceSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getOrderFirstNameSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getOrderFirstNameSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_FIRST_NAME,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getOrderLastNameSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getOrderLastNameSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_LAST_NAME,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**
      * @param \Propel\Runtime\ActiveQuery\Criteria $criteria
      * @param string $searchTerm
      *
-     * @return \Propel\Runtime\ActiveQuery\Criterion\AbstractCriterion
+     * @return \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion
      */
-    protected function getOrderEmailSearchCriteria(Criteria $criteria, string $searchTerm): AbstractCriterion
+    protected function getOrderEmailSearchCriteria(Criteria $criteria, string $searchTerm): LikeCriterion
     {
-        return $criteria->getNewCriterion(
+        /** @var \Propel\Runtime\ActiveQuery\Criterion\LikeCriterion $likeCriterion */
+        $likeCriterion = $criteria->getNewCriterion(
             SpySalesOrderTableMap::COL_EMAIL,
             '%' . $searchTerm . '%',
             Criteria::LIKE
         );
+
+        return $likeCriterion->setIgnoreCase(true);
     }
 
     /**

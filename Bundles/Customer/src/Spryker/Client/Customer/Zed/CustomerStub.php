@@ -67,6 +67,8 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Client\Customer\Zed\CustomerStub::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
@@ -77,6 +79,19 @@ class CustomerStub implements CustomerStubInterface
         $customerTransfer = $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
 
         return $customerTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\CustomerResponseTransfer $customerResponseTransfer */
+        $customerResponseTransfer = $this->zedStub->call('/customer/gateway/confirm-customer-registration', $customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**

@@ -23,9 +23,11 @@ class DeleteController extends ProductListAbstractController
     public function indexAction(Request $request)
     {
         $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
+        $deleteForm = $this->getFactory()->createDeleteProductListForm();
 
         return $this->viewResponse([
             'idProductList' => $idProductList,
+            'deleteForm' => $deleteForm->createView(),
         ]);
     }
 
@@ -44,6 +46,13 @@ class DeleteController extends ProductListAbstractController
             static::URL_PARAM_REDIRECT_URL,
             $defaultRedirectUrl
         );
+
+        $deleteForm = $this->getFactory()->createDeleteProductListForm()->handleRequest($request);
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $idProductList = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_LIST));
         $productListTransfer = (new ProductListTransfer())->setIdProductList($idProductList);
