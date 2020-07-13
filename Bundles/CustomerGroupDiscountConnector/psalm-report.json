@@ -1,0 +1,45 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerGroupDiscountConnector\\Dependency\\Facade\\CustomerGroupDiscountConnectorToCustomerGroupFacadeInterface::getCustomerGroupCollectionByIdCustomer cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php",
+            "snippet": "            ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());",
+            "selected_text": "$customerTransfer->getIdCustomer()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdCustomer on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php",
+            "snippet": "            ->getCustomerGroupCollectionByIdCustomer($customerTransfer->getIdCustomer());",
+            "selected_text": "getIdCustomer",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of mb_strtolower cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerGroupDiscountConnector/src/Spryker/Zed/CustomerGroupDiscountConnector/Business/DecisionRule/CustomerGroupDecisionRule.php",
+            "snippet": "            $lowerCustomerGroupName = mb_strtolower($customerGroup->getName());",
+            "selected_text": "$customerGroup->getName()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}
