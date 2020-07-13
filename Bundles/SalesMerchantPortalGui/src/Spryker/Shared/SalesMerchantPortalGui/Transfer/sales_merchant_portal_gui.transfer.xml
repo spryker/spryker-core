@@ -21,12 +21,26 @@
     </transfer>
 
     <transfer name="MerchantOrder">
+        <property name="idMerchantOrder" type="int"/>
         <property name="createdAt" type="string"/>
         <property name="merchantOrderItemCount" type="int"/>
         <property name="order" type="Order"/>
         <property name="totals" type="Totals"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="merchantOrderReference" type="string"/>
+        <property name="uniqueProductQuantity" type="int"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="fkStateMachineItemState" type="int"/>
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="state" type="string"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="product" type="ProductConcrete"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
     </transfer>
 
     <transfer name="Order">
@@ -37,6 +51,7 @@
         <property name="store" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -71,6 +86,12 @@
         <property name="search" type="GuiTableSearchConfiguration"/>
         <property name="pagination" type="GuiTablePaginationConfiguration"/>
         <property name="defaultSortColumn" type="string"/>
+        <property name="rowActions" type="GuiTableRowActionsConfiguration"/>
+    </transfer>
+
+    <transfer name="GuiTableRowActionsConfiguration">
+        <property name="actions" type="GuiTableRowAction[]" singular="action"/>
+        <property name="click" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -123,6 +144,16 @@
     </transfer>
 
     <transfer name="GuiTableFilter">
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="withOrder" type="bool"/>
+        <property name="withUniqueProductCount" type="bool"/>
+        <property name="withItems" type="bool"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>

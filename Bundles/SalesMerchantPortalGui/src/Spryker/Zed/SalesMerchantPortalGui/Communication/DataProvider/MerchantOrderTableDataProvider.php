@@ -88,6 +88,7 @@ class MerchantOrderTableDataProvider extends AbstractGuiTableDataProvider
             $orderTransfer = $merchantOrderTransfer->getOrder();
 
             $merchantOrderTableDataArray[] = [
+                MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE => $orderTransfer->getOrderReference(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_MERCHANT_REFERENCE => $merchantOrderTransfer->getMerchantOrderReference(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_CREATED => $merchantOrderTransfer->getCreatedAt(),
