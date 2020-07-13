@@ -70,6 +70,7 @@
         <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
         <property name="search" type="GuiTableSearchConfiguration"/>
         <property name="pagination" type="GuiTablePaginationConfiguration"/>
+        <property name="defaultSortColumn" type="string"/>
     </transfer>
 
     <transfer name="Store">

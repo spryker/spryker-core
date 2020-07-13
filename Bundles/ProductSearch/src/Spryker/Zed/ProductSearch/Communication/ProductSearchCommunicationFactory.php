@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductSearch\Communication;
 
 use Spryker\Shared\ProductSearch\Code\KeyBuilder\FilterGlossaryKeyBuilder;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductSearch\Communication\Form\CleanSearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\FilterPreferencesDataProvider;
 use Spryker\Zed\ProductSearch\Communication\Form\DataProvider\SearchPreferencesDataProvider;
+use Spryker\Zed\ProductSearch\Communication\Form\DeleteFilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\FilterPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Form\SearchPreferencesForm;
 use Spryker\Zed\ProductSearch\Communication\Table\FilterPreferencesTable;
@@ -18,6 +20,7 @@ use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 use Spryker\Zed\ProductSearch\Communication\Transfer\AttributeFormTransferMapper;
 use Spryker\Zed\ProductSearch\Communication\Transfer\SortedProductSearchTransferListMapper;
 use Spryker\Zed\ProductSearch\ProductSearchDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface getQueryContainer()
@@ -62,6 +65,26 @@ class ProductSearchCommunicationFactory extends AbstractCommunicationFactory
     public function createFilterPreferencesForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(FilterPreferencesForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCleanSearchPreferencesForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CleanSearchPreferencesForm::class, [], [
+            'fields' => [],
+        ]);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteFilterPreferencesForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteFilterPreferencesForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

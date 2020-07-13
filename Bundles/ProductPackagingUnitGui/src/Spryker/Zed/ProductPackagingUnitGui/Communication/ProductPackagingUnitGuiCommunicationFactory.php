@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\Constraint\UniqueProductPackagingUnitTypeNameConstraint;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProvider;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DataProvider\ProductPackagingUnitTypeDataProviderInterface;
+use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DeleteProductPackagingUnitForm;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\ProductPackagingUnitTypeFormType;
 use Spryker\Zed\ProductPackagingUnitGui\Communication\Table\ProductPackagingUnitTypeTable;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
@@ -81,6 +82,16 @@ class ProductPackagingUnitGuiCommunicationFactory extends AbstractCommunicationF
     public function getProductPackagingUnitTypeForm(?ProductPackagingUnitTypeTransfer $data = null, array $options = []): FormInterface
     {
         return $this->getFormFactory()->create(ProductPackagingUnitTypeFormType::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteProductPackagingUnitForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteProductPackagingUnitForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

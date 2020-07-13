@@ -18,6 +18,6 @@ class UseForeignConstants implements ViolationFinderInterface
      */
     public function isViolation(array $dependency)
     {
-        return (preg_match('/Spryker\\\\Shared\\\\(.*?)Constants/', $dependency[DependencyTree::META_FOREIGN_CLASS_NAME]));
+        return (bool)preg_match('/Spryker\\\\Shared\\\\(.*?)Constants/', $dependency[DependencyTree::META_FOREIGN_CLASS_NAME]);
     }
 }

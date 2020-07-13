@@ -40,6 +40,14 @@ class DeleteCompanyBusinessUnitController extends AbstractController
     {
         $redirectUrl = Url::generate(static::URL_BUSINESS_UNIT_LIST)->build();
 
+        $deleteForm = $this->getFactory()->createDeleteCompanyBusinessUnitForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $idCompanyBusinessUnit = $this->castId(
             $request->query->get(static::PARAM_ID_COMPANY_BUSINESS_UNIT)
         );

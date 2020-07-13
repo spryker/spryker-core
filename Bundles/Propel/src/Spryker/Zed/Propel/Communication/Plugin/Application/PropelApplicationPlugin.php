@@ -100,9 +100,9 @@ class PropelApplicationPlugin extends AbstractPlugin implements ApplicationPlugi
      */
     private function getPropelReadConfiguration(): ?array
     {
-        $propelConfig = $this->getConfig()->getPropelConfig();
+        $propelDefaultConnectionsConfig = $this->getConfig()->getPropelConfig()['database']['connections']['default'];
 
-        return $propelConfig['database']['connections']['default']['slaves'] ?: null;
+        return !empty($propelDefaultConnectionsConfig['slaves']) ? $propelDefaultConnectionsConfig['slaves'] : null;
     }
 
     /**

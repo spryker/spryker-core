@@ -1,0 +1,59 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 70,
+            "line_to": 70,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\CustomerAccessPermission\\CustomerAccessPermissionConfig::hasPluginToSeeContentType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessPermission/src/Spryker/Client/CustomerAccessPermission/CustomerAccess/CustomerAccess.php",
+            "snippet": "            if ($this->customerAccessConfig->hasPluginToSeeContentType($contentTypeAccess->getContentType())) {",
+            "selected_text": "$contentTypeAccess->getContentType()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\CustomerAccessPermission\\CustomerAccessPermissionConfig::getPluginNameToSeeContentType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessPermission/src/Spryker/Client/CustomerAccessPermission/CustomerAccess/CustomerAccess.php",
+            "snippet": "                    $this->customerAccessConfig->getPluginNameToSeeContentType($contentTypeAccess->getContentType())",
+            "selected_text": "$contentTypeAccess->getContentType()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 106,
+            "line_to": 106,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Client\\CustomerAccessPermission\\CustomerAccessPermissionConfig::getCustomerAccessByContentType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessPermission/src/Spryker/Client/CustomerAccessPermission/CustomerAccess/CustomerAccess.php",
+            "snippet": "            $customerSecuredPatternRoute = $this->customerAccessConfig->getCustomerAccessByContentType($contentTypeAccess->getContentType());",
+            "selected_text": "$contentTypeAccess->getContentType()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Client\\CustomerAccessPermission\\CustomerAccessPermissionConfig::getCustomerSecuredPattern has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessPermission/src/Spryker/Client/CustomerAccessPermission/CustomerAccess/CustomerAccess.php",
+            "snippet": "        $customerSecuredPattern = $this->customerAccessConfig->getCustomerSecuredPattern();",
+            "selected_text": "getCustomerSecuredPattern",
+            "error_level": 2,
+            "shortcode": 1,
+            "taint_trace": null
+        }
+    ]
+}
