@@ -74,6 +74,10 @@ class ProductReservationReader implements ProductReservationReaderInterface
             )
             ->findOne();
 
+        if (!$productAbstractEntity) {
+            return new ProductAbstractAvailabilityTransfer();
+        }
+
         return $this->mapAbstractProductAvailabilityEntityToTransfer($productAbstractEntity);
     }
 
