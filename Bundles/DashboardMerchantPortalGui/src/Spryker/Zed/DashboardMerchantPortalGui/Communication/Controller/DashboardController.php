@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Request;
 class DashboardController extends AbstractController
 {
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return array
