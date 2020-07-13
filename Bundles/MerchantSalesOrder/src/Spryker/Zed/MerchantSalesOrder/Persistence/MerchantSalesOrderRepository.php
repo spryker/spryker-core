@@ -8,11 +8,13 @@
 namespace Spryker\Zed\MerchantSalesOrder\Persistence;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
@@ -20,6 +22,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrder;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -139,13 +142,77 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return null;
         }
 
+        $uniqueProductQuantity = 0;
         if ($merchantOrderCriteriaTransfer->getWithItems()) {
-            $merchantSalesOrderEntity->getMerchantSalesOrderItems();
+            $merchantSalesOrderItemEntities = $merchantSalesOrderEntity->getMerchantSalesOrderItems();
+
+            if ($merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+                $itemSkus = [];
+                foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
+                    $itemSkus[] = $merchantSalesOrderItemEntity->getSalesOrderItem()->getSku();
+                }
+
+                $uniqueProductQuantity = count(array_unique($itemSkus));
+            }
         }
 
-        return $this->getFactory()
+        $merchantOrderTransfer = $this->getFactory()
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderEntityToMerchantOrderTransfer($merchantSalesOrderEntity, new MerchantOrderTransfer());
+
+        $merchantOrderTransfer->setUniqueProductQuantity($uniqueProductQuantity);
+
+        if ($merchantOrderCriteriaTransfer->getWithOrder()) {
+            $merchantOrderTransfer = $this->addOrder($merchantOrderTransfer, $merchantSalesOrderEntity->getOrder());
+            $merchantOrderTransfer = $this->addExpenses($merchantOrderTransfer, $merchantSalesOrderEntity->getOrder());
+        }
+
+        return $this->executeMerchantOrderExpanderPlugins($merchantOrderTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function executeMerchantOrderExpanderPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        foreach ($this->getFactory()->getMerchantOrderExpanderPlugins() as $merchantOrderExpanderPlugin) {
+            $merchantOrderTransfer = $merchantOrderExpanderPlugin->expand($merchantOrderTransfer);
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function addOrder(MerchantOrderTransfer $merchantOrderTransfer, SpySalesOrder $salesOrderEntity): MerchantOrderTransfer
+    {
+        return $merchantOrderTransfer->setOrder(
+            (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Orm\Zed\Sales\Persistence\Base\SpySalesOrder $salesOrderEntity
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function addExpenses(MerchantOrderTransfer $merchantOrderTransfer, SpySalesOrder $salesOrderEntity): MerchantOrderTransfer
+    {
+        $expenses = new ArrayObject();
+        foreach ($salesOrderEntity->getExpenses() as $salesExpenseEntity) {
+            $expenses->append(
+                (new ExpenseTransfer())->fromArray($salesExpenseEntity->toArray(), true)
+            );
+        }
+
+        return $merchantOrderTransfer->setExpenses($expenses);
     }
 
     /**
@@ -213,6 +280,12 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
                 SpyMerchantTableMap::COL_ID_MERCHANT,
                 $merchantOrderCriteriaTransfer->getIdMerchant()
             );
+        }
+
+        if ($merchantOrderCriteriaTransfer->getCustomerReference()) {
+            $merchantSalesOrderQuery->useOrderQuery()
+                    ->filterByCustomerReference($merchantOrderCriteriaTransfer->getCustomerReference())
+                ->endUse();
         }
 
         return $merchantSalesOrderQuery;

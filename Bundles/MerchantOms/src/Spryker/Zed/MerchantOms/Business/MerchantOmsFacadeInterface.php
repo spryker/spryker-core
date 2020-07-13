@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantOms\Business;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface MerchantOmsFacadeInterface
@@ -92,4 +93,16 @@ interface MerchantOmsFacadeInterface
     public function getMerchantOmsProcessByMerchant(
         MerchantCriteriaTransfer $merchantCriteriaTransfer
     ): StateMachineProcessTransfer;
+
+    /**
+     * Specification:
+     * - Expands MerchantOrderTransfer with MerchantOMS item states.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 }
