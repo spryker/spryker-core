@@ -48,12 +48,12 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDat
 class ProductOfferMerchantPortalGuiRepository extends AbstractRepository implements ProductOfferMerchantPortalGuiRepositoryInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable::COL_KEY_OFFER_REFERENCE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTable::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
 
@@ -860,8 +860,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             )
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
-                "COUNT(CASE WHEN '" . $currentDateTime . "' BETWEEN " .
-                    SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
+                'COUNT(CASE WHEN (' .
+                    SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                    ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
                     ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
             )
             ->addAsColumn(
@@ -872,8 +875,11 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
             ->addAsColumn(
                 MerchantProductOfferCountsTransfer::VISIBLE,
                 'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . " IS TRUE
-                    AND " . SpyProductOfferStockTableMap::COL_QUANTITY . " > 0 AND (
-                    '" . $currentDateTime . "' BETWEEN " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' AND ' . SpyProductOfferValidityTableMap::COL_VALID_TO .
+                    AND " . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 AND ((' .
+                        SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                        ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
                         ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
                     ) THEN 1 END)"
             )

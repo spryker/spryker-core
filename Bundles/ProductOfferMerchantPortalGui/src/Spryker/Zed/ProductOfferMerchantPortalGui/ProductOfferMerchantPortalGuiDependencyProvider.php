@@ -271,9 +271,9 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     }
 
     /**
-     * @param \Spryker\Yves\Kernel\Container $container
+     * @param \Spryker\Zed\Kernel\Container $container
      *
-     * @return \Spryker\Yves\Kernel\Container
+     * @return \Spryker\Zed\Kernel\Container
      */
     protected function addTwigEnvironment(Container $container): Container
     {
