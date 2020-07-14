@@ -18,6 +18,8 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageOrderStatsBlockComponent } from './manage-order-stats-block/manage-order-stats-block.component';
 import { ManageOrderTotalsComponent } from './manage-order-totals/manage-order-totals.component';
 import { ManageOrderModule } from './manage-order/manage-order.module';
+import { HtmlRendererUrlModule } from './html-renderer-url/html-renderer-url.module';
+import { HtmlRendererUrlComponent } from './html-renderer-url/html-renderer-url.component';
 
 @NgModule({
     imports: [
@@ -34,6 +36,7 @@ import { ManageOrderModule } from './manage-order/manage-order.module';
         CardModule,
         TabsModule,
         CollapsibleModule,
+        HtmlRendererUrlModule,
     ],
     providers: [],
 })
@@ -82,6 +85,10 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-collapsible',
             component: CollapsibleComponent,
+        },
+        {
+            selector: 'mp-html-renderer-url',
+            component: HtmlRendererUrlComponent,
         },
     ];
 }

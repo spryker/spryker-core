@@ -3,7 +3,14 @@
         <div class="mp-manage-order__heading-col mp-manage-order__heading-col--actions">
             <ng-content select="[state-transitions]"></ng-content>
             
-            <ng-content select="[state-transitions-meessage]"></ng-content>
+            <div class="mp-manage-order__transitions-message">
+                <spy-icon
+                    [name]="transitionMaessgaeIcon"
+                    class="mp-manage-order__transitions-icon"
+                ></spy-icon>
+                
+                <ng-content select="[state-transitions-meessage]"></ng-content>
+            </div>
         </div>
     
         <div class="mp-manage-order__heading-col">

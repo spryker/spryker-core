@@ -11,8 +11,19 @@
 @manage-order-reference-title-padding-right: 8px;
 @manage-order-states-title-margin-right: 13px;
 @manage-order-transitions-padding-bottom: 10px;
+@manage-order-transitions-icon-padding-right: 5px;
 
 @manage-order-card-column-item-padding-bottom: 20px;
+
+@{table-html-overlay-action-handler-prefix-cls} {
+    display: block;
+    height: 100%;
+    position: relative;
+
+    .@{table-html-overlay-action-handler-prefix-cls}-empty-state {
+        position: absolute;
+    }
+}
 
 .mp-manage-order {
     display: block;
@@ -87,6 +98,21 @@
 
         &-col {
             padding: @manage-order-grid-default-padding;
+        }
+
+        &-message {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: @font-size-sm;
+            line-height: 1;
+            color: @blue;
+            font-weight: @font-weight-default;
+        }
+
+        &-icon {
+            font-size: @font-size-lg;
+            padding-right: @manage-order-transitions-icon-padding-right;
         }
     }
 
