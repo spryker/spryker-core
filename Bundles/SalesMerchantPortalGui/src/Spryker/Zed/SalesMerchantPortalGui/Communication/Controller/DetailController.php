@@ -40,12 +40,17 @@ class DetailController extends AbstractController
 
         $customerMerchantOrderNumber = 0;
 
-        if ($merchantOrderTransfer && $merchantOrderTransfer->getOrder()) {
+        if (
+            $merchantOrderTransfer
+            && $merchantOrderTransfer->getOrder()
+            && $merchantOrderTransfer->getOrder()->getCustomerReference()
+        ) {
             $merchantOrderCollectionTransfer = $this->getFactory()
                 ->getMerchantSalesOrderFacade()
                 ->getMerchantOrderCollection(
                     (new MerchantOrderCriteriaTransfer())
                         ->setCustomerReference($merchantOrderTransfer->getOrder()->getCustomerReference())
+                        ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
                 );
 
             $customerMerchantOrderNumber = $merchantOrderCollectionTransfer->getMerchantOrders()->count();

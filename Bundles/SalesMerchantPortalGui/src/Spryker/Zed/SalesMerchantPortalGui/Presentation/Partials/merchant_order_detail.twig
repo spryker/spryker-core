@@ -37,11 +37,11 @@
             {% set overviewItems = [
                 {
                     name: 'Order date',
-                    info: '14.04.2020, 10:09',
+                    info: merchantOrder.createdAt,
                 },
                 {
                     name: 'NUMBER OF PRODUCTS',
-                    info: '1',
+                    info: merchantOrder.uniqueProductQuantity,
                 },
                 {
                     name: 'ITEMs',
@@ -108,15 +108,15 @@
             {% set customerItems = [
                 {
                     name: 'CLIENT NAME',
-                    info: 'Sonia Wagner, Mrs',
+                    info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
                 },
                 {
                     name: 'CLIENT EMAIL',
-                    info: 'sonia.wagner@gmail.com',
+                    info: merchantOrder.order.email,
                 },
                 {
                     name: 'PREVIOUS ORDERS',
-                    info: '3',
+                    info: customerMerchantOrderNumber,
                 },
             ] %}
 

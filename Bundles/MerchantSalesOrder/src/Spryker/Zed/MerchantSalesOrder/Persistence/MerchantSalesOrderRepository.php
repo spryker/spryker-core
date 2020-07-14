@@ -144,16 +144,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
 
         $uniqueProductQuantity = 0;
         if ($merchantOrderCriteriaTransfer->getWithItems()) {
-            $merchantSalesOrderItemEntities = $merchantSalesOrderEntity->getMerchantSalesOrderItems();
-
-            if ($merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
-                $itemSkus = [];
-                foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
-                    $itemSkus[] = $merchantSalesOrderItemEntity->getSalesOrderItem()->getSku();
-                }
-
-                $uniqueProductQuantity = count(array_unique($itemSkus));
-            }
+            $merchantSalesOrderItemEntities = $merchantSalesOrderEntity->getMerchantSalesOrderItemsJoinSalesOrderItem();
+            $uniqueProductQuantity = $this->getUniqueProductQuantity($merchantSalesOrderItemEntities);
         }
 
         $merchantOrderTransfer = $this->getFactory()
@@ -182,6 +174,21 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         }
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemEntities
+     *
+     * @return int
+     */
+    protected function getUniqueProductQuantity(ObjectCollection $merchantSalesOrderItemEntities): int
+    {
+        $itemSkus = [];
+        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
+            $itemSkus[] = $merchantSalesOrderItemEntity->getSalesOrderItem()->getSku();
+        }
+
+        return count(array_unique($itemSkus));
     }
 
     /**
