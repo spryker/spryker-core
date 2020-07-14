@@ -1,9 +1,13 @@
 {
   "name": "spryker/shipment-gui-extension",
+  "type": "library",
   "description": "ShipmentGuiExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -13,8 +17,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
