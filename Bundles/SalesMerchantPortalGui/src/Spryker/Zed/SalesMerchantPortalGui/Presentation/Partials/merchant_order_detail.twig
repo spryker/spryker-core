@@ -6,16 +6,16 @@
 
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
     <!--TODO: state-machine story -->
-    <div state-transitions-meessage class="mp-manage-order__transitions">
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>
-    </div>
+    {#<div state-transitions-meessage class="mp-manage-order__transitions">#}
+        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>#}
+        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>#}
+        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>#}
+    {#</div>#}
 
     <!--TODO: state-machine story -->
-    <span state-transitions-meessage>
-      Have to change button type in the app.module.
-    </span>
+    {#<span state-transitions-meessage>#}
+      {#Have to change button type in the app.module.#}
+    {#</span>#}
 
     <!--TODO: state-machine story -->
     <div items-states class="mp-manage-order__states">
@@ -37,11 +37,11 @@
             {% set overviewItems = [
                 {
                     name: 'Order date',
-                    info: '14.04.2020, 10:09',
+                    info: merchantOrder.createdAt,
                 },
                 {
                     name: 'NUMBER OF PRODUCTS',
-                    info: '1',
+                    info: merchantOrder.uniqueProductQuantity,
                 },
                 {
                     name: 'ITEMs',
@@ -108,15 +108,15 @@
             {% set customerItems = [
                 {
                     name: 'CLIENT NAME',
-                    info: 'Sonia Wagner, Mrs',
+                    info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
                 },
                 {
                     name: 'CLIENT EMAIL',
-                    info: 'sonia.wagner@gmail.com',
+                    info: merchantOrder.order.email,
                 },
                 {
                     name: 'PREVIOUS ORDERS',
-                    info: '3',
+                    info: customerMerchantOrderNumber,
                 },
             ] %}
 

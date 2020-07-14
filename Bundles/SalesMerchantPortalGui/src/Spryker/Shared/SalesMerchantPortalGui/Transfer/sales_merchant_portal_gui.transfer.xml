@@ -30,6 +30,7 @@
         <property name="merchantOrderReference" type="string"/>
         <property name="uniqueProductQuantity" type="int"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">
@@ -154,6 +155,10 @@
         <property name="withUniqueProductCount" type="bool"/>
         <property name="withItems" type="bool"/>
         <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableRowAction">
+        <property name="id" type="string"/>
     </transfer>
 
 </transfers>

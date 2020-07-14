@@ -12,9 +12,7 @@ import {
     TableColumnChipModule,
 } from '@spryker/table/columns';
 import { OfferOrdersTableComponent } from './offer-orders-table.component';
-import {
-    TableFiltersFeatureModule,
-} from '@spryker/table/features';
+import { TableFiltersFeatureModule } from '@spryker/table/features';
 import {
     TableFilterDateRangeComponent,
     TableFilterDateRangeModule,
@@ -33,6 +31,7 @@ import {
     TableHtmlOverlayActionHandlerModule,
     TableHtmlOverlayActionHandlerService
 } from '@spryker/table/action-handlers';
+import { DefaultContextSerializationModule } from '@spryker/utils';
 
 class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
@@ -82,6 +81,7 @@ class TableDefaultConfigData implements Partial<TableConfig> {
             refresh_table: AjaxPostActionRefreshTableService,
         }),
         TableHtmlOverlayActionHandlerModule,
+        DefaultContextSerializationModule,
     ],
     providers: [
         {
