@@ -16,8 +16,4 @@ export interface OrderTotals {
 })
 export class ManageOrderTotalsComponent {
     @Input() @ToJson() orderTotals: OrderTotals[];
-
-    ngOnInit() {
-        console.log(this.orderTotals)
-    }
 }
