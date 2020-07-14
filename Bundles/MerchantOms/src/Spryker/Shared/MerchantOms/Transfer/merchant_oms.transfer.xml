@@ -6,6 +6,7 @@
     <transfer name="MerchantOrder">
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -27,6 +28,7 @@
     <transfer name="StateMachineItem">
         <property name="idItemState" type="int"/>
         <property name="identifier" type="int"/>
+        <property name="stateName" type="string"/>
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
