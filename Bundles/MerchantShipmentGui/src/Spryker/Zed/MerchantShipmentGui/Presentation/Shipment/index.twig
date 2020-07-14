@@ -30,7 +30,7 @@
             {% if merchantOrderReference is not empty %}
                 <div class="row">
                     <div class="col-sm-9">
-                        <h3>Merchant Order {{ loop.index }} of {{ loop.length }}</h3>
+                        <h3>{{ 'Merchant Order' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
                         <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ additionalInformation['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
                         <p><b>{{ 'Order Reference' | trans }}:</b> {{ merchantOrderReference }}</p>
                         <hr>
