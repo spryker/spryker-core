@@ -37,7 +37,7 @@
             {% set overviewItems = [
                 {
                     name: 'Order date',
-                    info: merchantOrder.createdAt,
+                    info: merchantOrder.createdAt | formatDateTime,
                 },
                 {
                     name: 'NUMBER OF PRODUCTS',
@@ -45,11 +45,11 @@
                 },
                 {
                     name: 'ITEMs',
-                    info: '10',
+                    info: merchantOrder.merchantOrderItems.count(),
                 },
                 {
                     name: 'SHIPMENTs',
-                    info: '2',
+                    info: shipmentsNumber,
                 },
             ] %}
 
@@ -66,21 +66,26 @@
 
             <web-spy-card title="Overview" class="mp-manage-order__card">
                 <!--TODO: state-machine story -->
-                <web-spy-collapsible title="10 ITEMS" class="mp-manage-order__card-column-item">
+                <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} ITEMS" class="mp-manage-order__card-column-item">
                     <div>Collapse Content</div>
                 </web-spy-collapsible>
 
-                {% set subtotalOrderTotals = [
+                {% set subtotalTitleOrderTotals = [
                     {
                         title: 'Subtotal',
-                        value: '€ 972.51',
+                        value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
-                    {
-                        title: 'Shipment Hermes Express',
-                        value: '€ 10.00',
-                    },
                 ] %}
+
+                {% set subtotalExpensesOrderTotals = merchantOrder.expenses | reduce((accumulator, expense) => (
+                    accumulator | merge([{
+                        title: 'Shipment' | trans ~ ' ' ~ expense.shipment.method.carrierName ?? '' ~ ' ' ~ expense.name,
+                        value: expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode),
+                    }])
+                ), []) %}
+
+                {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
 
                 <web-mp-manage-order-totals
                     order-totals="{{ subtotalOrderTotals | json_encode() }}"
@@ -90,12 +95,12 @@
                 {% set grandTotalOrderTotals = [
                     {
                         title: 'Grand Total',
-                        value: '€ 972.51',
+                        value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
                     {
                         title: 'Included Tax Amount',
-                        value: '€ 180.09',
+                        value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
                     },
                 ] %}
 

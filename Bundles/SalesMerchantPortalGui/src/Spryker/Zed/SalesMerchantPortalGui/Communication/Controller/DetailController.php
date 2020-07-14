@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,9 +61,31 @@ class DetailController extends AbstractController
             'html' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
                 'merchantOrder' => $merchantOrderTransfer,
                 'customerMerchantOrderNumber' => $customerMerchantOrderNumber,
+                'shipmentsNumber' => $this->getShipmentsNumber($merchantOrderTransfer),
             ])->getContent(),
         ];
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return int
+     */
+    protected function getShipmentsNumber(MerchantOrderTransfer $merchantOrderTransfer): int
+    {
+        $shipmentsNumber = 0;
+        foreach ($merchantOrderTransfer->getExpenses() as $expenseTransfer) {
+            if (
+                !$expenseTransfer->getShipment()
+                || $expenseTransfer->getShipment()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()
+            ) {
+                continue;
+            }
+            $shipmentsNumber++;
+        }
+
+        return $shipmentsNumber;
     }
 }
