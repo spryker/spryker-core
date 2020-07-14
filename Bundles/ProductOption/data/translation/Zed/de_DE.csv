@@ -42,3 +42,7 @@ Translation,Übersetzung
 "Translation key",Übersetzungs-Key
 "Updated at","Aktualisiert am"
 "View product option","Produktoption anzeigen"
+Active,Aktiv
+Inactive,Inaktiv
+"product.option.group.name.(your key)","product.option.group.name.(ihr schlüssel)"
+"product.option.(your key)","product.option.(ihr schlüssel)"

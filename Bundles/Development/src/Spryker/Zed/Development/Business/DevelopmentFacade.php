@@ -175,7 +175,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @deprecated Please use `getModules()` instead.
+     * @deprecated Use {@link getModules()} instead.
      *
      * @return array
      */
@@ -501,7 +501,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @deprecated Use `listAllModules` instead.
+     * @deprecated Use {@link listAllModules()} instead.
      *
      * @return array
      */

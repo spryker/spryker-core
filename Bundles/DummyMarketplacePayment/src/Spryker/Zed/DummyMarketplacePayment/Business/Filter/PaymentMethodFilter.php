@@ -25,7 +25,7 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
         PaymentMethodsTransfer $paymentMethodsTransfer,
         QuoteTransfer $quoteTransfer
     ): PaymentMethodsTransfer {
-        if ($this->hasItemsProductOfferReference($quoteTransfer)) {
+        if ($this->hasMerchantItems($quoteTransfer)) {
             return $paymentMethodsTransfer;
         }
 
@@ -57,10 +57,10 @@ class PaymentMethodFilter implements PaymentMethodFilterInterface
      *
      * @return bool
      */
-    protected function hasItemsProductOfferReference(QuoteTransfer $quoteTransfer): bool
+    protected function hasMerchantItems(QuoteTransfer $quoteTransfer): bool
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getProductOfferReference()) {
+            if ($itemTransfer->getMerchantReference()) {
                 return true;
             }
         }

@@ -11,6 +11,7 @@ use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\Discount\Communication\Form\DiscountVisibilityForm;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -104,6 +105,7 @@ class DiscountsTable extends AbstractTable
         $config->addRawColumn(static::TABLE_COL_ACTIONS);
         $config->addRawColumn(SpyDiscountTableMap::COL_AMOUNT);
         $config->addRawColumn(static::TABLE_COL_STORE);
+        $config->addRawColumn(SpyDiscountTableMap::COL_IS_ACTIVE);
 
         return $config;
     }
@@ -193,7 +195,10 @@ class DiscountsTable extends AbstractTable
      */
     protected function getStatus(SpyDiscount $discountEntity)
     {
-         return $discountEntity->getIsActive() ? 'Active' : 'Inactive';
+         return $this->generateLabel(
+             $discountEntity->getIsActive() ? 'Active' : 'Inactive',
+             $discountEntity->getIsActive() ? 'label-info' : 'label-danger'
+         );
     }
 
     /**
@@ -297,10 +302,18 @@ class DiscountsTable extends AbstractTable
     protected function generateStatusButton(Url $viewDiscountUrl, $visibility)
     {
         if ($visibility === static::BUTTON_ACTIVATE) {
-            return $this->generateViewButton($viewDiscountUrl, $visibility);
+            return $this->generateFormButton($viewDiscountUrl, $visibility, DiscountVisibilityForm::class);
         }
 
-        return $this->generateRemoveButton($viewDiscountUrl, $visibility);
+        return $this->generateFormButton(
+            $viewDiscountUrl,
+            $visibility,
+            DiscountVisibilityForm::class,
+            [
+                static::BUTTON_CLASS => 'btn-danger safe-submit',
+                static::BUTTON_ICON => 'fa-trash',
+            ]
+        );
     }
 
     /**

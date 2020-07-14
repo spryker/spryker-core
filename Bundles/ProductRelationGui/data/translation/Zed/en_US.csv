@@ -38,7 +38,7 @@ related-products,"Related products"
 "Relation type","Relation type"
 "Relation type:","Relation type:"
 Save,Save
-Select,select
+Select,Select
 "Select product","Select product"
 "Select Stores","Select Stores"
 "Selected product","Selected product"
@@ -53,3 +53,15 @@ up-selling,Upselling
 "View in Shop","View in Shop"
 "View Product Relation: %s","View Product Relation: %s"
 "View relations","View relations"
+"Product Relation Key","Product Relation Key"
+"Abstract SKU","Abstract SKU"
+"Select a relation type","Select a relation type"
+select,select
+"Add rule","Add rule"
+"Add group","Add group"
+Delete,Delete
+"Edit Product Relation","Edit Product Relation"
+"Is active","Is active"
+"Yes, delete this product relation","Yes, delete this product relation"
+"Number of Products","Number of products"
+Store,Store

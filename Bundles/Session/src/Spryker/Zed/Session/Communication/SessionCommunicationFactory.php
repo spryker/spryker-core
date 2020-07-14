@@ -107,7 +107,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated User `Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()} instead.
      *
      * @return \Spryker\Zed\Session\Communication\SessionHandlerFactory
      */

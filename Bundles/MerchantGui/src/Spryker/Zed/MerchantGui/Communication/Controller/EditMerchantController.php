@@ -124,6 +124,14 @@ class EditMerchantController extends AbstractController
      */
     protected function updateMerchantActivityStatus(Request $request, bool $isActive, string $successMessage): RedirectResponse
     {
+        $form = $this->getFactory()->createToggleActiveMerchantForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($request->headers->get('referer'));
+        }
+
         $idMerchant = $this->castId($request->query->get(static::REQUEST_ID_MERCHANT));
 
         $merchantFacade = $this->getFactory()

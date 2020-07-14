@@ -12,6 +12,7 @@ use Orm\Zed\ProductPackagingUnit\Persistence\SpyProductPackagingUnitTypeQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductPackagingUnitGui\Communication\Form\DeleteProductPackagingUnitForm;
 use Spryker\Zed\ProductPackagingUnitGui\Dependency\Facade\ProductPackagingUnitGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductPackagingUnitGui\ProductPackagingUnitGuiConfig;
 
@@ -192,7 +193,9 @@ class ProductPackagingUnitTypeTable extends AbstractTable
                     ProductPackagingUnitGuiConfig::REQUEST_PARAM_REDIRECT_URL => ProductPackagingUnitGuiConfig::URL_PRODUCT_PACKAGING_UNIT_TYPE_LIST,
                 ]
             ),
-            'Delete'
+            'Delete',
+            [],
+            DeleteProductPackagingUnitForm::class
         );
     }
 }

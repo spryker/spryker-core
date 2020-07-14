@@ -99,7 +99,7 @@ abstract class AbstractGlueBootstrap
     }
 
     /**
-     * @deprecated Use `\Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface`'s instead.
+     * @deprecated Use {@link \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface}'s instead.
      *
      * @return void
      */

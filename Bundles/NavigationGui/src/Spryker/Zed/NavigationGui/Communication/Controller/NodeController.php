@@ -124,12 +124,15 @@ class NodeController extends AbstractController
             return $this->redirectResponse(Url::generate('/navigation-gui/node/update', $queryParams)->build());
         }
 
+        $deleteNodeForm = $this->getFactory()->createDeleteNavigationNodeForm();
+
         return $this->viewResponse([
             'idNavigation' => $idNavigation,
             'idNavigationNode' => $idNavigationNode,
             'idSelectedTreeNode' => $idSelectedTreeNode,
             'navigationNodeForm' => $navigationNodeForm->createView(),
             'localeCollection' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
+            'deleteNavigationNodeForm' => $deleteNodeForm->createView(),
         ]);
     }
 
@@ -140,8 +143,22 @@ class NodeController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        $idNavigation = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION));
-        $idNavigationNode = $this->castId($request->query->getInt(static::PARAM_ID_NAVIGATION_NODE));
+        $idNavigation = $this->castId($request->request->getInt(static::PARAM_ID_NAVIGATION));
+        $idNavigationNode = $this->castId($request->request->getInt(static::PARAM_ID_NAVIGATION_NODE));
+
+        $queryParams = [
+            static::PARAM_ID_NAVIGATION => $idNavigation,
+            static::PARAM_ID_NAVIGATION_NODE => null,
+            static::PARAM_ID_SELECTED_TREE_NODE => 0,
+        ];
+
+        $form = $this->getFactory()->createDeleteNavigationNodeForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
+        }
 
         $navigationNodeTransfer = new NavigationNodeTransfer();
         $navigationNodeTransfer->setIdNavigationNode($idNavigationNode);
@@ -156,12 +173,6 @@ class NodeController extends AbstractController
         $this->addSuccessMessage('Navigation node "%s" was deleted successfully.', [
             '%s' => $navigationNodeTransfer->getNavigationNodeLocalizedAttributes()->getArrayCopy()[0]->getTitle(),
         ]);
-
-        $queryParams = [
-            static::PARAM_ID_NAVIGATION => $idNavigation,
-            static::PARAM_ID_NAVIGATION_NODE => null,
-            static::PARAM_ID_SELECTED_TREE_NODE => 0,
-        ];
 
         return $this->redirectResponse(Url::generate('/navigation-gui/node/create', $queryParams)->build());
     }
