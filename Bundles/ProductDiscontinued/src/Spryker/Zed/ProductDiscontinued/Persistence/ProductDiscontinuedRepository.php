@@ -12,14 +12,16 @@ use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductDiscontinuedTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 
 /**
  * @method \Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedPersistenceFactory getFactory()
  */
 class ProductDiscontinuedRepository extends AbstractRepository implements ProductDiscontinuedRepositoryInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @uses Product
      *
@@ -79,9 +81,9 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
      */
     public function findProductsToDeactivate(int $batchSize = 1000): ProductDiscontinuedCollectionTransfer
     {
-        $isPoolingEnabled = Propel::isInstancePoolingEnabled();
+        $isPoolingEnabled = $this->isInstancePoolingEnabled();
         if ($isPoolingEnabled) {
-            Propel::disableInstancePooling();
+            $this->disableInstancePooling();
         }
 
         $productDiscontinuedEntityCollection = $this->getFactory()
@@ -98,7 +100,7 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
         }
 
         if ($isPoolingEnabled) {
-            Propel::enableInstancePooling();
+            $this->enableInstancePooling();
         }
 
         return new ProductDiscontinuedCollectionTransfer();

@@ -49,6 +49,6 @@ class LocaleCache implements LocaleCacheInterface
     public function set(LocaleTransfer $localeTransfer): void
     {
         static::$localeCache[$localeTransfer->getLocaleName()] = $localeTransfer;
-        static::$localeCache[$localeTransfer->getIdLocale()] = $localeTransfer;
+        static::$localeCacheById[$localeTransfer->getIdLocale()] = &static::$localeCache[$localeTransfer->getLocaleName()];
     }
 }

@@ -132,7 +132,7 @@ class ProductDiscontinuedDeactivator implements ProductDiscontinuedDeactivatorIn
             $productDiscontinuedIds[] = $productDiscontinuedTransfer->getIdProductDiscontinued();
         }
 
-        return $productDiscontinuedIds;
+        return array_unique($productDiscontinuedIds);
     }
 
     /**

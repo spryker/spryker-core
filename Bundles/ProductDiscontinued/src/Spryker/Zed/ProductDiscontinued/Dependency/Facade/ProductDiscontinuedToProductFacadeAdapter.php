@@ -41,7 +41,7 @@ class ProductDiscontinuedToProductFacadeAdapter implements ProductDiscontinuedTo
     {
         //Added for BC reason
         if (method_exists($this->productFacade, 'deactivateProductConcretesByConcreteSkus')) {
-            $this->deactivateProductConcretesByConcreteIdsFromSkus($productConcreteSkus);
+            $this->deactivateProductConcretesByProductConcretes($productConcreteSkus);
 
             return;
         }
@@ -56,7 +56,7 @@ class ProductDiscontinuedToProductFacadeAdapter implements ProductDiscontinuedTo
      *
      * @return void
      */
-    protected function deactivateProductConcretesByConcreteIdsFromSkus(array $productConcreteSkus): void
+    protected function deactivateProductConcretesByProductConcretes(array $productConcreteSkus): void
     {
         foreach ($productConcreteSkus as $productConcreteSku) {
             $productConcreteTransfer = $this->productFacade->getProductConcrete($productConcreteSku);
