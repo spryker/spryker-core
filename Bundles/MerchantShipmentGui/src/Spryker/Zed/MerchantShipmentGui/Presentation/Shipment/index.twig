@@ -1,0 +1,49 @@
+{% set groupedOrderItemsByMerchant = [] %}
+{% set merchantOrderReference = null %}
+{% for key, groupedOrderItemShipment in groupedOrderItemsByShipment %}
+    {% set merchantOrderReference = groupedOrderItemShipment.items[0].merchantOrderReference %}
+    {% if groupedOrderItemsByMerchant[(merchantOrderReference)] is not defined %}
+        {% set groupedOrderItemsByMerchant = groupedOrderItemsByMerchant|merge({(merchantOrderReference): []}) %}
+    {% endif %}
+    {% set groupedOrderItemsByMerchant = groupedOrderItemsByMerchant
+        | merge({
+        (merchantOrderReference): groupedOrderItemsByMerchant[merchantOrderReference]|merge([groupedOrderItemShipment])
+    }) %}
+{% endfor %}
+
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant orders' } %}
+        {% block widget_title -%}
+            <div class="row">
+                <div class="col-sm-9">
+                    <h5>{{ widget_title | trans }}</h5>
+                </div>
+
+                {% if order.items | length > 1 and merchantOrderReference is empty %}
+                    <div class="col-sm-3 text-right">
+                        {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' %}
+                    </div>
+                {% endif %}
+            </div>
+        {% endblock %}
+    {% block widget_content %}
+        {% for merchantOrderReference,groupedOrderItemsByShipment in groupedOrderItemsByMerchant %}
+            {% if merchantOrderReference is not empty %}
+                <div class="row">
+                    <div class="col-sm-9">
+                        <h3>Merchant Order {{ loop.index }} of {{ loop.length }}</h3>
+                        <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ additionalInformation['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
+                        <p><b>{{ 'Order Reference' | trans }}:</b> {{ merchantOrderReference }}</p>
+                        <hr>
+                    </div>
+                </div>
+            {% endif %}
+            {% embed '@ShipmentGui/Sales/boxes/order-items.twig' %}
+                    {% block edit_shipment_link %}
+                        {% if merchantOrderReference is empty %}
+                            {{ parent() }}
+                        {% endif %}
+                    {% endblock %}
+            {% endembed %}
+        {% endfor %}
+    {% endblock %}
+{% endembed %}
