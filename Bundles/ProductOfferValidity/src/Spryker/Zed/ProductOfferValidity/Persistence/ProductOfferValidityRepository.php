@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferValidity\Persistence;
 
 use Generated\Shared\Transfer\ProductOfferValidityCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferValidityTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -52,6 +53,30 @@ class ProductOfferValidityRepository extends AbstractRepository implements Produ
             ->productOfferValidityEntitiesToProductOfferValidityCollectionTransfer(
                 $productOfferValidityEntities,
                 new ProductOfferValidityCollectionTransfer()
+            );
+    }
+
+    /**
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferValidityTransfer|null
+     */
+    public function findProductOfferValidityByIdProductOffer(int $idProductOffer): ?ProductOfferValidityTransfer
+    {
+        $productOfferValidityEntity = $this->getFactory()
+            ->createProductOfferValidityPropelQuery()
+            ->filterByFkProductOffer($idProductOffer)
+            ->findOne();
+
+        if (!$productOfferValidityEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createProductOfferValidityMapper()
+            ->productOfferValidityEntityToProductOfferValidityTransfer(
+                $productOfferValidityEntity,
+                new ProductOfferValidityTransfer()
             );
     }
 }

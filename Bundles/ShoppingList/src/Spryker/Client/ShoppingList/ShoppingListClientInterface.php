@@ -93,7 +93,7 @@ interface ShoppingListClientInterface
      *
      * @api
      *
-     * @deprecated Use ShoppingListClientInterface::addShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
@@ -261,7 +261,7 @@ interface ShoppingListClientInterface
      *
      * @api
      *
-     * @deprecated Use ShoppingListClientInterface::updateShoppingListItemById instead. Will be removed with next major release.
+     * @deprecated Use {@link updateShoppingListItemById()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *

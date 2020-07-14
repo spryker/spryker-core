@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\MerchantOms\Business;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 
 interface MerchantOmsFacadeInterface
@@ -74,6 +76,23 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array;
+
+    /**
+     * Specification:
+     * - Returns StateMachineProcess transfer based on criteria.
+     * - Returns default StateMachineProcess transfer if process not found.
+     * - Fills StateMachineProcess transfer by process state names.
+     * - Calls StateMachine facade methods to get the data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function getMerchantOmsProcessByMerchant(
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
+    ): StateMachineProcessTransfer;
 
     /**
      * Specification:

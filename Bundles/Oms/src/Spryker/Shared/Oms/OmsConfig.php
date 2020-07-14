@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Oms;
 
-class OmsConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class OmsConfig extends AbstractSharedConfig
 {
     /**
      * Predefined enumerated state flag list as defined in oms.xsd file.

@@ -43,51 +43,51 @@ import { IconUnitedStatesModule, IconGermanyModule } from '../icons';
 export class AppModule extends CustomElementModule {
 	protected components = [
 		{
-			selector: 'mp-profile',
+			selector: 'web-mp-profile',
 			component: ProfileComponent
 		},
 		{
-			selector: 'spy-button',
+			selector: 'web-spy-button',
 			component: ButtonComponent
 		},
 		{
-			selector: 'spy-form-item',
+			selector: 'web-spy-form-item',
 			component: FormItemComponent
 		},
 		{
-			selector: 'spy-input',
+			selector: 'web-spy-input',
 			component: InputComponent
 		},
 		{
-			selector: 'spy-textarea',
+			selector: 'web-spy-textarea',
 			component: TextareaComponent
 		},
 		{
-			selector: 'spy-card',
+			selector: 'web-spy-card',
 			component: CardComponent
 		},
 		{
-			selector: 'spy-collapsible',
+			selector: 'web-spy-collapsible',
 			component: CollapsibleComponent
 		},
 		{
-			selector: 'spy-toggle',
+			selector: 'web-spy-toggle',
 			component: ToggleComponent
 		},
 		{
-			selector: 'spy-select',
+			selector: 'web-spy-select',
 			component: SelectComponent
 		},
 		{
-			selector: 'spy-label',
+			selector: 'web-spy-label',
 			component: LabelComponent
 		},
 		{
-			selector: 'spy-tabs',
+			selector: 'web-spy-tabs',
 			component: TabsComponent
 		},
 		{
-			selector: 'spy-tab',
+			selector: 'web-spy-tab',
 			component: TabComponent
 		}
 	];

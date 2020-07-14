@@ -28,4 +28,22 @@ interface PriceProductScheduleDataExtractorInterface
     public function extractTimezoneTextFromPriceProductScheduledTransfer(
         PriceProductScheduleTransfer $priceProductScheduleTransfer
     ): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return string
+     */
+    public function extractTimezoneFromPriceProductScheduledTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): string;
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductScheduleTransfer $priceProductScheduleTransfer
+     *
+     * @return array
+     */
+    public function extractTitleAndIdProductFromPriceProductScheduleTransfer(
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): array;
 }

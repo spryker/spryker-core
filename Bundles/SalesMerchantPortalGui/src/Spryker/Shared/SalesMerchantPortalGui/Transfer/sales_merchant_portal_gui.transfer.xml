@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="MerchantOrderTableCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+        <property name="searchTerm" type="string"/>
+        <property name="filterStores" type="string[]" singular="store"/>
+        <property name="filterOrderItemStates" type="string[]" singular="filterOrderItemState"/>
+        <property name="filterCreated" type="CriteriaRangeFilter"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCollection">
+        <property name="merchantOrders" type="MerchantOrder[]" singular="merchantOrder"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="MerchantOrder">
+        <property name="createdAt" type="string"/>
+        <property name="merchantOrderItemCount" type="int"/>
+        <property name="order" type="Order"/>
+        <property name="totals" type="Totals"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="merchantOrderReference" type="string"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="email" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="store" type="string"/>
+        <property name="orderReference" type="string"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="grandTotal" type="int"/>
+    </transfer>
+
+    <transfer name="CriteriaRangeFilter">
+        <property name="from" type="string"/>
+        <property name="to" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableConfiguration">
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
+        <property name="filters" type="GuiTableFiltersConfiguration"/>
+        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
+        <property name="search" type="GuiTableSearchConfiguration"/>
+        <property name="pagination" type="GuiTablePaginationConfiguration"/>
+        <property name="defaultSortColumn" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="StateMachineProcess">
+        <property name="stateNames" type="string[]" singular="stateName"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="data" type="array" singular="data"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="total" type="int"/>
+    </transfer>
+
+    <transfer name="Money">
+        <property name="amount" type="string"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
+    <transfer name="GuiTableDataRequest">
+    </transfer>
+
+    <transfer name="GuiTableDataSourceConfiguration">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableFiltersConfiguration">
+        <property name="items" type="GuiTableFilter[]" singular="item"/>
+    </transfer>
+
+    <transfer name="GuiTableSearchConfiguration">
+        <property name="search" type="array" associative="true" singular="searchOption"/>
+    </transfer>
+
+    <transfer name="GuiTableColumnConfiguration">
+    </transfer>
+
+    <transfer name="GuiTablePaginationConfiguration">
+        <property name="defaultSize" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="GuiTableFilter">
+    </transfer>
+
+</transfers>

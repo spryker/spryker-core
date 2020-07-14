@@ -28,6 +28,14 @@ class DeleteDirectoryController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $deleteForm = $this->getFactory()->createDeleteDirectoryForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(Url::generate('/file-manager-gui/directories-tree')->build());
+        }
+
         $idFileDirectory = $request->get(static::URL_PARAM_ID_DIRECTORY);
 
         if (!$idFileDirectory) {

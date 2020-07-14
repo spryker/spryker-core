@@ -12,6 +12,7 @@ use Orm\Zed\ProductReview\Persistence\SpyProductReview;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilDateTimeInterface;
 use Spryker\Zed\ProductReviewGui\Dependency\Service\ProductReviewGuiToUtilSanitizeInterface;
 use Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface;
@@ -73,7 +74,7 @@ class ProductReviewTable extends AbstractTable
             ProductReviewTableConstants::COL_CREATED => 'Date',
             ProductReviewTableConstants::COL_CUSTOMER_NAME => 'Customer',
             ProductReviewTableConstants::COL_NICK_NAME => 'Nickname',
-            ProductReviewTableConstants::COL_PRODUCT_NAME => 'Product Name',
+            ProductReviewTableConstants::COL_PRODUCT_NAME => 'Product name',
             ProductReviewTableConstants::COL_RATING => 'Rating',
             ProductReviewTableConstants::COL_STATUS => 'Status',
             ProductReviewTableConstants::COL_ACTIONS => 'Actions',
@@ -194,7 +195,9 @@ class ProductReviewTable extends AbstractTable
             Url::generate('/product-review-gui/delete', [
                 ProductReviewTableConstants::PARAM_ID => $productReviewEntity->getIdProductReview(),
             ]),
-            'Delete'
+            'Delete',
+            [],
+            DeleteProductReviewForm::class
         );
 
         return implode(' ', $actions);
@@ -227,7 +230,7 @@ class ProductReviewTable extends AbstractTable
 
         return $this->generateButtonGroup(
             $buttonGroupItems,
-            'Change status ',
+            'Change status',
             [
                 'icon' => '',
             ]

@@ -31,7 +31,7 @@ class ProductRelationTable extends AbstractTable
     protected const HEADER_ABSTRACT_PRODUCT_NAME = 'Abstract product name';
     protected const HEADER_RELATION_TYPE = 'Relation type';
     protected const HEADER_STATUS = 'Status';
-    protected const HEADER_NUMBER_OF_PRODUCTS = '# of Products';
+    protected const HEADER_NUMBER_OF_PRODUCTS = 'Number of Products';
     protected const HEADER_PRODUCT_RELATION_KEY = 'Product Relation Key';
     protected const COL_ACTIONS = 'Actions';
     protected const COL_NUMBER_OF_RELATED_PRODUCTS = 'numberOfRelatedProducts';

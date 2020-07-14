@@ -1,0 +1,211 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Client\\ProductCategoryFilter\\FacetUpdater\\FacetUpdaterByProductCategoryFilters::updateFromTransfer has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\FacetSearchResultTransfer|Generated\\Shared\\Transfer\\RangeSearchResultTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\ProductCategoryFilter\\FacetUpdater\\FacetUpdaterInterface::updateFromTransfer",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/FacetUpdater/FacetUpdaterByProductCategoryFilters.php",
+            "snippet": "    public function updateFromTransfer(array $facets, ProductCategoryFilterTransfer $productCategoryFilterTransfer)",
+            "selected_text": "$facets",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $newFacets[null|string] using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/FacetUpdater/FacetUpdaterByProductCategoryFilters.php",
+            "snippet": "                $newFacets[$productCategoryFilterItemTransfer->getKey()] = $facets[$productCategoryFilterItemTransfer->getKey()];",
+            "selected_text": "$newFacets",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $facets using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/FacetUpdater/FacetUpdaterByProductCategoryFilters.php",
+            "snippet": "                $newFacets[$productCategoryFilterItemTransfer->getKey()] = $facets[$productCategoryFilterItemTransfer->getKey()];",
+            "selected_text": "$facets",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Client\\ProductCategoryFilter\\ProductCategoryFilterClient::updateFacetsByCategory has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\FacetSearchResultTransfer|Generated\\Shared\\Transfer\\RangeSearchResultTransfer>', expecting 'array<array-key, mixed>' as defined by Spryker\\Client\\ProductCategoryFilter\\ProductCategoryFilterClientInterface::updateFacetsByCategory",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/ProductCategoryFilterClient.php",
+            "snippet": "    public function updateFacetsByCategory(array $facets, array $productCategoryFilters)",
+            "selected_text": "$facets",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Client/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
+            "snippet": "            return new ProductCategoryFilterToStorageClientBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method delete on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterDeleter.php",
+            "snippet": "        $productCategoryFilterEntity->delete();",
+            "selected_text": "delete",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\ProductCategoryFilter\\Persistence\\SpyProductCategoryFilter> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterReader.php",
+            "snippet": "        $productCategoryFilters = $this->productCategoryFilterQueryContainer->queryProductCategoryFilter()->find()->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 36,
+            "line_to": 36,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCategoryFilter\\Dependency\\Facade\\ProductCategoryFilterToTouchFacadeInterface::touchActive cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterTouch.php",
+            "snippet": "        return $this->touchFacade->touchActive(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getFkCategory());",
+            "selected_text": "$productCategoryFilterTransfer->getFkCategory()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\ProductCategoryFilter\\Dependency\\Facade\\ProductCategoryFilterToTouchFacadeInterface::touchDeleted cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterTouch.php",
+            "snippet": "        return $this->touchFacade->touchDeleted(ProductCategoryFilterConfig::RESOURCE_TYPE_PRODUCT_CATEGORY_FILTER, $productCategoryFilterTransfer->getFkCategory());",
+            "selected_text": "$productCategoryFilterTransfer->getFkCategory()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductCategoryFilter\\Business\\Model\\ProductCategoryFilterUpdater::getProductCategoryFilterEntityByCategoryId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterUpdater.php",
+            "snippet": "        $productCategoryFilterEntity = $this->getProductCategoryFilterEntityByCategoryId($productCategoryFilterTransfer->getFkCategory());",
+            "selected_text": "$productCategoryFilterTransfer->getFkCategory()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method fromArray on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterUpdater.php",
+            "snippet": "        $productCategoryFilterEntity->fromArray($productCategoryFilterTransfer->modifiedToArray());",
+            "selected_text": "fromArray",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Zed\\ProductCategoryFilter\\Dependency\\Service\\ProductCategoryFilterToUtilEncodingServiceBridge::decodeJson is not nullable, but the function returns 'mixed|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Dependency/Service/ProductCategoryFilterToUtilEncodingServiceBridge.php",
+            "snippet": "        return $this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options);",
+            "selected_text": "$this->utilEncodingService->decodeJson($jsonString, $assoc, $depth, $options)",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
+            "snippet": "            return new ProductCategoryFilterToTouchFacadeBridge($container->getLocator()->touch()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/ProductCategoryFilterDependencyProvider.php",
+            "snippet": "            return new ProductCategoryFilterToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterCreator.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterDeleter.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductCategoryFilter/src/Spryker/Zed/ProductCategoryFilter/Business/Model/ProductCategoryFilterUpdater.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

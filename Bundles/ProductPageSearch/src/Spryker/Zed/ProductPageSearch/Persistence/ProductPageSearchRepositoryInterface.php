@@ -19,6 +19,13 @@ interface ProductPageSearchRepositoryInterface
     public function getProductConcretePageSearchTransfers(array $productIds): array;
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array;
+
+    /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -50,4 +57,25 @@ interface ProductPageSearchRepositoryInterface
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
     public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array;
 }

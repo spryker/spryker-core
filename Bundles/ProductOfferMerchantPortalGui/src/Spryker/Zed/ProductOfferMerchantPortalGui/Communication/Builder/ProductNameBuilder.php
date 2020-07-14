@@ -7,21 +7,23 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 
 class ProductNameBuilder implements ProductNameBuilderInterface
 {
-    protected const ATTRIBUTE_KEY_COLOR = 'color';
-
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string|null
      */
-    public function buildProductName(ProductConcreteTransfer $productConcreteTransfer): ?string
-    {
-        $concreteLocalizedAttributesTransfer = $this->getConcreteLocalizedAttributesTransfer($productConcreteTransfer);
+    public function buildProductConcreteName(
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
+    ): ?string {
+        $concreteLocalizedAttributesTransfer = $this->getConcreteLocalizedAttributesTransfer($productConcreteTransfer, $localeTransfer);
 
         $productConcreteName = $concreteLocalizedAttributesTransfer->getName();
 
@@ -48,12 +50,26 @@ class ProductNameBuilder implements ProductNameBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\LocalizedAttributesTransfer
      */
     protected function getConcreteLocalizedAttributesTransfer(
-        ProductConcreteTransfer $productConcreteTransfer
+        ProductConcreteTransfer $productConcreteTransfer,
+        LocaleTransfer $localeTransfer
     ): LocalizedAttributesTransfer {
-        return $productConcreteTransfer->getLocalizedAttributes()->offsetGet(0);
+        $localizedAttributeTransfers = $productConcreteTransfer->getLocalizedAttributes();
+
+        foreach ($localizedAttributeTransfers as $localizedAttributesTransfer) {
+            if (!$localizedAttributesTransfer->getLocale()) {
+                continue;
+            }
+
+            if ($localizedAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {
+                return $localizedAttributesTransfer;
+            }
+        }
+
+        return $localizedAttributeTransfers->offsetGet(0);
     }
 }

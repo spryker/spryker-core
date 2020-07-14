@@ -1,5 +1,5 @@
 Actions,Aktionen
-"Are you sure about deleting this delivery method?","Möchtest Du dieses Zahlungsmittel wirklich löschen?"
+"Are you sure about deleting this delivery method?","Möchten Sie diese Versandart wirklich löschen?"
 "Availability plugin","Verfügbarkeit Plugin"
 "Available in Store","Verfügbarkeit im Store"
 Carrier,Versendanbieter
@@ -40,10 +40,39 @@ Save,Speichern
 "Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
 Status,Status
 "Store relation",Store-Beziehung
+"Store Relation",Store-Beziehung
 "Tax set",Steuer-Set
 "This name is already in use.","Dieser Name wird schon benutzt."
 "This shipment method key is already in use.","Diese Versandart ID wird schon verwendet."
-View,Aussicht
+View,Ansicht
 "View Delivery Method: %s","Versandart anzeigen: %s"
 "Yes, delete this delivery method","Ja, diese Versandart löschen"
+"Trigger all matching states of order inside this shipment","Alle übereinstimmenden Status innerhalb dieser Bestellung auslösen"
+Shipment,Lieferung
+of,von
+"Delivery Address",Lieferadresse
+"Delivery Method",Lieferart
+"Request delivery date","Angefragtes Lieferdatum"
+"Shipping Method",Versandart
+Shipments,Liefermethoden
+"Available in the following store(s)","Verfügbar in den folgenden Stores"
+"Is active","Ist aktiv"
+"Add Carrier Company","Versandanbieter hinzufügen"
+"Create Shipment","Sendung Erstellen"
+"Edit Shipment","Sendung Bearbeiten"
+"New Shipment for Order: %idSalesOrder%","Neue Sendung für Bestellung: %idSalesOrder%"
+"Address 1","Adresse 1"
+"Address 2","Adresse 2"
+"ZIP code",Postleitzahl
+Cellphone,Mobiltelefon
+"Shipment method",Versandmethode
+"Requested delivery date",Wunschlieferdatum
+"Order items inside this shipment","Artikel in dieser Sendung"
+"Current shipment","Aktuelle Sendung"
+"Please fill out this field.","Füllen Sie bitte dieses Feld aus."
+"Please select an item in the list.","Wählen Sie bitte ein Element aus der Liste aus."
+-select-,-auswählen-
+"Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
+"Edit Shipment for Order: N%idSalesOrder%","Sendung für Bestellung N%idSalesOrder% bearbeiten"
+"Shipment has been successfully edited.","Sendung wurde erfolgreich bearbeitet."
 "Item total",Gesamt

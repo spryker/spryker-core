@@ -69,7 +69,9 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $expectedAvailability = $stockQuantity - $reservedQuantity;
 
         $storeTransfer = $this->tester->haveStore();
-        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
@@ -83,7 +85,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $omsProductOfferReservationTransfer = $this->tester->haveOmsProductOfferReservation([
             OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
             OmsProductOfferReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,
-            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferStockTransfer->getProductOffer()->getProductOfferReference(),
+            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
         ]);
 
         $omsProductReservationStoragePublishListener = new OmsProductReservationStoragePublishListener();
@@ -99,7 +101,7 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
             $storeTransfer->getName(),
-            $productOfferStockTransfer->getProductOffer()->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference()
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());

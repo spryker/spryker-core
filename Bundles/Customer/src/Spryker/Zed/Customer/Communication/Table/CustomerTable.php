@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Customer\Communication\Table;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -21,14 +20,12 @@ class CustomerTable extends AbstractTable
 {
     public const ACTIONS = 'Actions';
 
-    public const COL_ZIP_CODE = 'zip_code';
-    public const COL_CITY = 'city';
-    public const COL_FK_COUNTRY = 'country';
     public const COL_CREATED_AT = 'created_at';
     public const COL_ID_CUSTOMER = 'id_customer';
     public const COL_EMAIL = 'email';
     public const COL_FIRST_NAME = 'first_name';
     public const COL_LAST_NAME = 'last_name';
+    public const COL_STATUS = 'registered';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -68,27 +65,25 @@ class CustomerTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            self::COL_ID_CUSTOMER => '#',
-            self::COL_CREATED_AT => 'Registration Date',
-            self::COL_EMAIL => 'Email',
-            self::COL_LAST_NAME => 'Last Name',
-            self::COL_FIRST_NAME => 'First Name',
-            self::COL_ZIP_CODE => 'Zip Code',
-            self::COL_CITY => 'City',
-            self::COL_FK_COUNTRY => 'Country',
-            self::ACTIONS => self::ACTIONS,
+            static::COL_ID_CUSTOMER => '#',
+            static::COL_CREATED_AT => 'Registration Date',
+            static::COL_EMAIL => 'Email',
+            static::COL_LAST_NAME => 'Last Name',
+            static::COL_FIRST_NAME => 'First Name',
+            static::COL_STATUS => 'Status',
+            static::ACTIONS => static::ACTIONS,
         ]);
 
-        $config->addRawColumn(self::ACTIONS);
+        $config->addRawColumn(static::ACTIONS);
+        $config->addRawColumn(static::COL_STATUS);
 
         $config->setSortable([
-            self::COL_ID_CUSTOMER,
-            self::COL_CREATED_AT,
-            self::COL_EMAIL,
-            self::COL_LAST_NAME,
-            self::COL_FIRST_NAME,
-            self::COL_ZIP_CODE,
-            self::COL_CITY,
+            static::COL_ID_CUSTOMER,
+            static::COL_CREATED_AT,
+            static::COL_EMAIL,
+            static::COL_LAST_NAME,
+            static::COL_FIRST_NAME,
+            static::COL_STATUS,
         ]);
 
         $config->setUrl('table');
@@ -99,8 +94,6 @@ class CustomerTable extends AbstractTable
             SpyCustomerTableMap::COL_CREATED_AT,
             SpyCustomerTableMap::COL_FIRST_NAME,
             SpyCustomerTableMap::COL_LAST_NAME,
-            SpyCustomerAddressTableMap::COL_ZIP_CODE,
-            SpyCustomerAddressTableMap::COL_CITY,
         ]);
 
         return $config;
@@ -169,33 +162,13 @@ class CustomerTable extends AbstractTable
     {
         $customerRow = $customer->toArray();
 
-        $customerRow[self::COL_FK_COUNTRY] = $this->getCountryNameByCustomer($customer);
-        $customerRow[self::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($customer->getCreatedAt());
-        $customerRow[self::ACTIONS] = $this->buildLinks($customer);
+        $customerRow[static::COL_CREATED_AT] = $this->utilDateTimeService->formatDateTime($customer->getCreatedAt());
+        $customerRow[static::ACTIONS] = $this->buildLinks($customer);
+        $customerRow[static::COL_STATUS] = $customer->getRegistered()
+            ? $this->generateLabel('Verified', 'label-info')
+            : $this->generateLabel('Unverified', 'label-danger');
 
         return $customerRow;
-    }
-
-    /**
-     * @param \Orm\Zed\Customer\Persistence\SpyCustomer $customer
-     *
-     * @return string
-     */
-    protected function getCountryNameByCustomer(SpyCustomer $customer)
-    {
-        $countryName = '';
-        if ($customer->getAddresses()->count() === 0) {
-            return $countryName;
-        }
-
-        $addresses = $customer->getAddresses();
-        foreach ($addresses as $address) {
-            if ($address->getFkCountry() === $customer->getVirtualColumn(self::COL_FK_COUNTRY)) {
-                return $address->getCountry()->getName();
-            }
-        }
-
-        return $countryName;
     }
 
     /**
@@ -204,12 +177,7 @@ class CustomerTable extends AbstractTable
     protected function prepareQuery()
     {
         $query = $this->customerQueryContainer
-            ->queryCustomers()
-            ->leftJoinBillingAddress();
-
-        $query->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
-            ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
-            ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY);
+            ->queryCustomers();
 
         return $query;
     }

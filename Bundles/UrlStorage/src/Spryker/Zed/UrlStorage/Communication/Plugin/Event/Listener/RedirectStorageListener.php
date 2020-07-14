@@ -13,7 +13,8 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStoragePublishListener} and `\Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStoragePublishListener}
+ *   and {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\RedirectStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()

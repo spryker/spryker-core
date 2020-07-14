@@ -40,10 +40,39 @@ Save,Save
 "Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
 Status,Status
 "Store relation","Store relation"
+"Store Relation","Store Relation"
 "Tax set","Tax set"
 "This name is already in use.","This name is already in use."
 "This shipment method key is already in use.","This shipment method key is already in use."
 View,View
 "View Delivery Method: %s","View Delivery Method: %s"
 "Yes, delete this delivery method","Yes, delete this delivery method"
+"Trigger all matching states of order inside this shipment","Trigger all matching states of order inside this shipment"
+Shipment,Shipment
+of,of
+"Delivery Address","Delivery Address"
+"Delivery Method","Delivery Method"
+"Request delivery date","Request delivery date"
+"Shipping Method","Shipping Method"
+Shipments,Shipments
+"Available in the following store(s)","Available in the following store(s)"
+"Is active","Is active"
+"Add Carrier Company","Add Carrier Company"
+"Create Shipment","Create Shipment"
+"Edit Shipment","Edit Shipment"
+"New Shipment for Order: %idSalesOrder%","New Shipment for Order: %idSalesOrder%"
+"Address 1","Address 1"
+"Address 2","Address 2"
+"ZIP code","ZIP code"
+Cellphone,"Cell Phone"
+"Shipment method","Shipment method"
+"Requested delivery date","Requested delivery date"
+"Order items inside this shipment","Order items inside this shipment"
+"Current shipment","Current shipment"
+"Please fill out this field.","Please fill out this field."
+"Please select an item in the list.","Please select an item in the list."
+-select-,-select-
+"Shipment has been successfully created.","Shipment has been successfully created."
+"Edit Shipment for Order: N%idSalesOrder%","Edit Shipment for Order: N%idSalesOrder%"
+"Shipment has been successfully edited.","Shipment has been successfully edited."
 "Item total",Total

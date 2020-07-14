@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 169,
+            "line_to": 169,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Symfony\\Component\\Form\\FormFactoryInterface::create expects string, possibly different type Symfony\\Component\\Form\\FormTypeInterface|string provided",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Form/FormCollectionHandler.php",
+            "snippet": "        return $this->formFactory->create($formType, null, $formOptions);",
+            "selected_text": "$formType",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 134,
+            "line_to": 134,
+            "type": "InvalidOperand",
+            "message": "Cannot perform a numeric operation with a non-numeric type string",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "                $nextStep = $this->steps[$position + 1];",
+            "selected_text": "$position",
+            "error_level": 4,
+            "shortcode": 58
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "InvalidOperand",
+            "message": "Cannot perform a numeric operation with a non-numeric type array-key",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "                $previousStep = $this->steps[$position - 1];",
+            "selected_text": "$position",
+            "error_level": 4,
+            "shortcode": 58
+        },
+        {
+            "severity": "info",
+            "line_from": 214,
+            "line_to": 214,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Yves\\StepEngine\\Process\\StepCollection::getNextStepRoute is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 225,
+            "line_to": 225,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Yves\\StepEngine\\Process\\StepCollection::getNextStepRoute is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepCollection.php",
+            "snippet": "            return $currentStep->getPostConditionErrorRoute();",
+            "selected_text": "$currentStep->getPostConditionErrorRoute()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 112,
+            "line_to": 112,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method isSubmitted on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/StepEngine/src/Spryker/Yves/StepEngine/Process/StepEngine.php",
+            "snippet": "            if ($form->isSubmitted() && $form->isValid()) {",
+            "selected_text": "isSubmitted",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

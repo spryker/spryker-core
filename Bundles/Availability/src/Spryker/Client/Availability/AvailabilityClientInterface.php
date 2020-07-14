@@ -20,7 +20,7 @@ interface AvailabilityClientInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface::getProductAvailabilityByIdProductAbstract() instead`.
+     * @deprecated Use {@link getProductAvailabilityByIdProductAbstract()} instead.
      *
      * @param int $idProductAbstract
      *

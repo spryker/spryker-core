@@ -8,7 +8,7 @@
 namespace Spryker\Shared\Application\Log\Processor;
 
 /**
- * @deprecated Use `ResponseProcessorPlugin` from Log module instead.
+ * @deprecated Use `ResponseProcessorPlugin`s from Log module instead.
  */
 class ResponseProcessor
 {

@@ -23,62 +23,62 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 class ProductOfferTableDataMapper
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_OFFER_REFERENCE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_MERCHANT_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_MERCHANT_SKU
      */
     protected const COL_KEY_MERCHANT_SKU = 'merchantSku';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_CONCRETE_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CONCRETE_SKU
      */
     protected const COL_KEY_CONCRETE_SKU = 'concreteSku';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_IMAGE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_IMAGE
      */
     protected const COL_KEY_IMAGE = 'image';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_PRODUCT_NAME
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_PRODUCT_NAME
      */
     protected const COL_KEY_PRODUCT_NAME = 'productName';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_STORES
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STORES
      */
     protected const COL_KEY_STORES = 'stores';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_STOCK
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_STOCK
      */
     protected const COL_KEY_STOCK = 'stock';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_VISIBILITY
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VISIBILITY
      */
     protected const COL_KEY_VISIBILITY = 'visibility';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_VALID_FROM
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_FROM
      */
     protected const COL_KEY_VALID_FROM = 'validFrom';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_VALID_TO
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_VALID_TO
      */
     protected const COL_KEY_VALID_TO = 'validTo';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_CREATED_AT
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_CREATED_AT
      */
     protected const COL_KEY_CREATED_AT = 'createdAt';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductTable::COL_KEY_UPDATED_AT
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_UPDATED_AT
      */
     protected const COL_KEY_UPDATED_AT = 'updatedAt';
 
@@ -218,10 +218,9 @@ class ProductOfferTableDataMapper
         ProductOfferTransfer $productOfferTransfer
     ): ProductOfferTransfer {
         $productOfferStockTransfer = (new ProductOfferStockTransfer())
-            ->setIsNeverOutOfStock($productOfferTableRowDataArray[ProductOfferStockTransfer::IS_NEVER_OUT_OF_STOCK])
             ->setQuantity($productOfferTableRowDataArray[ProductOfferStockTransfer::QUANTITY]);
 
-        $productOfferTransfer->setProductOfferStock($productOfferStockTransfer);
+        $productOfferTransfer->addProductOfferStock($productOfferStockTransfer);
 
         return $productOfferTransfer;
     }

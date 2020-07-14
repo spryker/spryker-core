@@ -1,0 +1,30 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, mixed>|string' for Spryker\\Service\\UtilSanitize\\Model\\Html::escape is incorrect, got 'array<array-key, array<array-key, mixed>|string>|bool|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilSanitize/src/Spryker/Service/UtilSanitize/Model/Html.php",
+            "snippet": "     * @return string|array Wrapped text.",
+            "selected_text": "string|array",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'bool' does not match the declared return type 'array<array-key, mixed>|string' for Spryker\\Service\\UtilSanitize\\Model\\Html::escape",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilSanitize/src/Spryker/Service/UtilSanitize/Model/Html.php",
+            "snippet": "            return $text;",
+            "selected_text": "$text",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [],
+    "deprecation": []
+}
