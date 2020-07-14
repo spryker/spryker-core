@@ -4,11 +4,9 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant": "^3.0.0",
+    "spryker/shipment-gui-extension": "^0.1.0"
   },
   "autoload": {
     "psr-4": {
