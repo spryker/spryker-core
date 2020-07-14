@@ -129,6 +129,7 @@
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
     </transfer>
 
     <transfer name="ItemMetadata">

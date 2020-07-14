@@ -51,6 +51,8 @@ class ProductBundleFacadeTest extends Unit
     public const ID_STORE = 1;
     protected const STORE_NAME_DE = 'DE';
 
+    protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
+
     /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
@@ -142,6 +144,45 @@ class ProductBundleFacadeTest extends Unit
             $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
             $this->assertSame($bundleProduct->getFkProduct(), $productBundleTransfer->getIdProductConcreteBundle());
         }
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterWithProductConcreteIdFilter(): void
+    {
+        //Assign
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_1);
+
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
+
+        //Act
+        $productBundleTransfers = $this->getProductBundleFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertCount(2, $productBundleTransfers);
+        $this->assertEquals($productBundleTransfers->offsetGet(0), $productBundleTransfers->offsetGet(1));
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterWithFakeProductConcreteIdFilter(): void
+    {
+        //Assign
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->addIdProductConcrete(static::FAKE_ID_PRODUCT_CONCRETE);
+
+        //Act
+        $productBundleTransfers = $this->getProductBundleFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertEmpty($productBundleTransfers);
     }
 
     /**
