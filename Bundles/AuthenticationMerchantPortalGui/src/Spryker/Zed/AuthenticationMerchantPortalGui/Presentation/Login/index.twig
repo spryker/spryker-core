@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <mp-login cloak>
+    <web-mp-login cloak>
         {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
 
         {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
@@ -16,7 +16,7 @@
             {{ form_row(form.password) }}
             {{ form_row(form.login, {attr: {class: 'login__submit'}}) }}
         {{ form_end(form) }}
-    </mp-login>
+    </web-mp-login>
 {% endblock %}
 
 {% block footerJs %}
