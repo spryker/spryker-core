@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\MerchantShipmentGui\Communication\ShipmentGui;
@@ -22,7 +22,6 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     *  - Returns `MerchantShipmentGui/Shipment/index.twig` template.
      *
      * @api
      *
@@ -35,13 +34,15 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     *  - Returns addition data for merchant name.
+     *  - Returns merchant name data.
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return array
+     * @return mixed[]
      */
     public function getAdditionData(ArrayObject $itemTransfers): array
     {
@@ -49,8 +50,7 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
 
         $merchantReferences = array_map(function (ItemTransfer $itemTransfer) {
                 $itemTransfer->getMerchantReference();
-        },
-            $itemTransfers->getArrayCopy());
+        }, $itemTransfers->getArrayCopy());
         $merchantReferences = array_unique(array_filter($merchantReferences));
 
         $merchantCollectionTransfer = $this->getFactory()->getMerchantFacade()->get(

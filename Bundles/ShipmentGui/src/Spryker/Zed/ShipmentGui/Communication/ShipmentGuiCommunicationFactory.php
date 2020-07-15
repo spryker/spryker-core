@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemTemplateExtractor;
-use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemTemplateExtractorInterface;
+use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProvider;
+use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentMethodFormDataProvider;
@@ -216,11 +216,11 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemTemplateExtractorInterface
+     * @return \Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProviderInterface
      */
-    public function createShipmentOrderItemTemplateExtractor(): ShipmentOrderItemTemplateExtractorInterface
+    public function createShipmentOrderItemAlternativeTemplateProvider(): ShipmentOrderItemAlternativeTemplateProviderInterface
     {
-        return new ShipmentOrderItemTemplateExtractor($this->getShipmentOrderItemTemplatePlugins());
+        return new ShipmentOrderItemAlternativeTemplateProvider($this->getShipmentOrderItemTemplatePlugins());
     }
 
     /**

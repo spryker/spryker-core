@@ -1,6 +1,6 @@
-{% if additionalData  %}
-    {% for includePath, additionalInformation in additionalData %}
-        {% include includePath %}
+{% if alternativeTemplates  %}
+    {% for templatePath, additionalData in alternativeTemplates %}
+        {% include templatePath with {additionalData: additionalData} %}
     {% endfor %}
 {% else %}
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Items' } %}

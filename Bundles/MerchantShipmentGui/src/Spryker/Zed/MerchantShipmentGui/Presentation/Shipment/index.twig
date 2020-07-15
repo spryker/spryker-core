@@ -18,7 +18,7 @@
                     <h5>{{ widget_title | trans }}</h5>
                 </div>
 
-                {% if order.items | length > 1 and merchantOrderReference is empty %}
+                {% if order.items | length > 1 and not merchantOrderReference %}
                     <div class="col-sm-3 text-right">
                         {% include '@ShipmentGui/Create/_partials/create-shipment-link.twig' %}
                     </div>
@@ -27,22 +27,22 @@
         {% endblock %}
     {% block widget_content %}
         {% for merchantOrderReference,groupedOrderItemsByShipment in groupedOrderItemsByMerchant %}
-            {% if merchantOrderReference is not empty %}
+            {% if merchantOrderReference %}
                 <div class="row">
                     <div class="col-sm-9">
                         <h3>{{ 'Merchant Order' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
-                        <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ additionalInformation['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
+                        <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ additionalData['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
                         <p><b>{{ 'Order Reference' | trans }}:</b> {{ merchantOrderReference }}</p>
                         <hr>
                     </div>
                 </div>
             {% endif %}
             {% embed '@ShipmentGui/Sales/boxes/order-items.twig' %}
-                    {% block edit_shipment_link %}
-                        {% if merchantOrderReference is empty %}
-                            {{ parent() }}
-                        {% endif %}
-                    {% endblock %}
+                {% block edit_shipment_link %}
+                    {% if merchantOrderReference is empty %}
+                        {{ parent() }}
+                    {% endif %}
+                {% endblock %}
             {% endembed %}
         {% endfor %}
     {% endblock %}

@@ -9,7 +9,7 @@ namespace Spryker\Zed\ShipmentGui\Communication\Extractor;
 
 use ArrayObject;
 
-class ShipmentOrderItemTemplateExtractor implements ShipmentOrderItemTemplateExtractorInterface
+class ShipmentOrderItemAlternativeTemplateProvider implements ShipmentOrderItemAlternativeTemplateProviderInterface
 {
     /**
      * @var \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[]
@@ -27,16 +27,16 @@ class ShipmentOrderItemTemplateExtractor implements ShipmentOrderItemTemplateExt
     /**
      * @phpstan-return array<string, mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return array
      */
-    public function getAdditionalData(ArrayObject $items): array
+    public function provide(ArrayObject $itemTransfers): array
     {
         $additionalData = [];
 
         foreach ($this->shipmentOrderItemTemplatePlugins as $additionalMerchantPlugin) {
-            $additionalData[$additionalMerchantPlugin->getTemplatePath()] = $additionalMerchantPlugin->getAdditionData($items);
+            $additionalData[$additionalMerchantPlugin->getTemplatePath()] = $additionalMerchantPlugin->getAdditionData($itemTransfers);
         }
 
         return $additionalData;

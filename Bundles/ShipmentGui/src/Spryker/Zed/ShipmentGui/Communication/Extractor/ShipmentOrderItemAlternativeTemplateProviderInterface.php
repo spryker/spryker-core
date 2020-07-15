@@ -9,14 +9,14 @@ namespace Spryker\Zed\ShipmentGui\Communication\Extractor;
 
 use ArrayObject;
 
-interface ShipmentOrderItemTemplateExtractorInterface
+interface ShipmentOrderItemAlternativeTemplateProviderInterface
 {
     /**
      * @phpstan-return array<string, mixed>
      *
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
      * @return array
      */
-    public function getAdditionalData(ArrayObject $items): array;
+    public function provide(ArrayObject $itemTransfers): array;
 }

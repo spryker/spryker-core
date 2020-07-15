@@ -16,6 +16,7 @@
     </transfer>
 
     <transfer name="Merchant">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

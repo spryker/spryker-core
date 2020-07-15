@@ -23,13 +23,15 @@ interface ShipmentOrderItemTemplatePluginInterface
 
     /**
      * Specification:
-     *  - Returns addition data for template.
+     *  - Returns additional data for template.
      *
      * @api
      *
+     * @phpstan-param \ArrayObject<int,\Generated\Shared\Transfer\ItemTransfer> $itemTransfers
+     *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return array
+     * @return mixed[]
      */
     public function getAdditionData(ArrayObject $itemTransfers): array;
 }
