@@ -13,3 +13,13 @@ Store,Store
 Stores,Stores
 Details,Details
 Order,Order
+"Order date","Order date"
+"Number of products","Number of products"
+Items,Items
+Shipments,Shipments
+Subtotal,Subtotal
+Shipment,Shipment
+"Included Tax Amount","Included Tax Amount"
+"CLIENT NAME","CLIENT NAME"
+"CLIENT EMAIL","CLIENT EMAIL"
+"PREVIOUS ORDERS","PREVIOUS ORDERS"
