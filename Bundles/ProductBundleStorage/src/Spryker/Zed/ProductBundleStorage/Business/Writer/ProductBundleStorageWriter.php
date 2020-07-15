@@ -7,10 +7,13 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Business\Writer;
 
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductBundleStorageTransfer;
+use Generated\Shared\Transfer\ProductBundleTransfer;
+use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToProductBundleFacadeInterface;
 use Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageEntityManagerInterface;
-use Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageRepositoryInterface;
 
 class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 {
@@ -30,26 +33,18 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     protected $productBundleStorageEntityManager;
 
     /**
-     * @var \Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageRepositoryInterface
-     */
-    protected $productBundleStorageRepository;
-
-    /**
      * @param \Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToProductBundleFacadeInterface $productBundleFacade
      * @param \Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageEntityManagerInterface $productBundleStorageEntityManager
-     * @param \Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageRepositoryInterface $productBundleStorageRepository
      */
     public function __construct(
         ProductBundleStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductBundleStorageToProductBundleFacadeInterface $productBundleFacade,
-        ProductBundleStorageEntityManagerInterface $productBundleStorageEntityManager,
-        ProductBundleStorageRepositoryInterface $productBundleStorageRepository
+        ProductBundleStorageEntityManagerInterface $productBundleStorageEntityManager
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->productBundleFacade = $productBundleFacade;
         $this->productBundleStorageEntityManager = $productBundleStorageEntityManager;
-        $this->productBundleStorageRepository = $productBundleStorageRepository;
     }
 
     /**
@@ -57,10 +52,59 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByProductBundleEvents(array $eventTransfers): void
+    public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void
     {
-        // TODO
+        $productConcreteIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductBundleTableMap::COL_FK_PRODUCT);
 
-        return;
+        $productConcreteIds = array_unique(array_filter($productConcreteIds));
+
+        if (!$productConcreteIds) {
+            return;
+        }
+
+        $this->writeCollection($productConcreteIds);
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    protected function writeCollection(array $productConcreteIds): void
+    {
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setProductConcreteIds($productConcreteIds);
+
+        $productBundleCollectionTransfer = $this->productBundleFacade
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
+
+        // TODO: should group it?
+
+        foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
+            $productBundleStorageTransfer = $this->mapProductBundleTransferToStorageTransfer(
+                $productBundleTransfer,
+                new ProductBundleStorageTransfer()
+            );
+
+            $this->productBundleStorageEntityManager->saveProductBundleStorage($productBundleStorageTransfer);
+        }
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
+     * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer
+     */
+    protected function mapProductBundleTransferToStorageTransfer(
+        ProductBundleTransfer $productBundleTransfer,
+        ProductBundleStorageTransfer $productBundleStorageTransfer
+    ): ProductBundleStorageTransfer {
+        $productBundleStorageTransfer = $productBundleStorageTransfer->fromArray($productBundleTransfer->modifiedToArray(), true);
+
+        // TODO: ensure that mapping is correct.
+
+        return $productBundleStorageTransfer;
     }
 }

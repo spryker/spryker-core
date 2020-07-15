@@ -7,32 +7,30 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle;
 
+use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\ProductBundle\Dependency\ProductBundleEvents;
 use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
 
 /**
- * @method \Spryker\Zed\ProductBundleStorage\Business\ProductBundleStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleStorage\ProductBundleStorageConfig getConfig()
+ * @method \Spryker\Zed\ProductBundleStorage\Business\ProductBundleStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleStorage\Communication\ProductBundleStorageCommunicationFactory getFactory()
  */
-class ProductBundleStoragePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class ProductBundleWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Gets ProductBundleIds from event transfers.
-     * - Publish product bundle data to storage table.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $eventName
      *
      * @return void
      */
-    public function handleBulk(array $transfers, $eventName): void
+    public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductBundleEvents($transfers);
+        $this->getFacade()->writeCollectionByProductConcreteBundleIdsEvents($eventTransfers);
     }
 
     /**
@@ -40,13 +38,15 @@ class ProductBundleStoragePublisherPlugin extends AbstractPlugin implements Publ
      *
      * @api
      *
-     * @return string[]
+     * @return array
      */
     public function getSubscribedEvents(): array
     {
         return [
-            ProductBundleEvents::PRODUCT_BUNDLE_PUBLISH,
-            ProductBundleEvents::ENTITY_SPY_PRODUCT_BUNDLE_UPDATE,
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_CREATE,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_UPDATE,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_DELETE,
         ];
     }
 }

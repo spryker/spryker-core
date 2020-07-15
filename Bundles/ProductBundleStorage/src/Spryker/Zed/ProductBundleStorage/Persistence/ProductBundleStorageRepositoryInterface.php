@@ -7,6 +7,18 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
+
 interface ProductBundleStorageRepositoryInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $concreteProductIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getFilteredProductBundleStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $concreteProductIds
+    ): array;
 }

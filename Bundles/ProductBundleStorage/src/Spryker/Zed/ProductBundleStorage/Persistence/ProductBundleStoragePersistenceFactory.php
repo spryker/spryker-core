@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Persistence;
 
+use Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -16,4 +17,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
  */
 class ProductBundleStoragePersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery
+     */
+    public function getProductBundleStoragePropelQuery(): SpyProductBundleStorageQuery
+    {
+        return SpyProductBundleStorageQuery::create();
+    }
 }

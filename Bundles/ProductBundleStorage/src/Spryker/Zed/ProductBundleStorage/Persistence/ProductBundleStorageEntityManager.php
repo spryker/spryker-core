@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Persistence;
 
+use Generated\Shared\Transfer\ProductBundleStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +15,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class ProductBundleStorageEntityManager extends AbstractEntityManager implements ProductBundleStorageEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
+     *
+     * @return void
+     */
+    public function saveProductBundleStorage(ProductBundleStorageTransfer $productBundleStorageTransfer): void
+    {
+        $productBundleStorageEntity = $this->getFactory()
+            ->getProductBundleStoragePropelQuery()
+            ->filterByFkProduct($productBundleStorageTransfer->getIdProductConcreteBundle())
+            ->findOneOrCreate();
+
+        $productBundleStorageEntity
+            ->setData($productBundleStorageTransfer->toArray())
+            ->save();
+    }
 }

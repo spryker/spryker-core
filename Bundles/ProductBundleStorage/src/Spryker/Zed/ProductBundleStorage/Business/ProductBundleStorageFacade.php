@@ -25,10 +25,10 @@ class ProductBundleStorageFacade extends AbstractFacade implements ProductBundle
      *
      * @return void
      */
-    public function writeCollectionByProductBundleEvents(array $eventTransfers): void
+    public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductBundleStorageWriter()
-            ->writeCollectionByProductBundleEvents($eventTransfers);
+            ->writeCollectionByProductConcreteBundleIdsEvents($eventTransfers);
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -56,6 +57,15 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         if ($productBundleCriteriaFilterTransfer->getProductConcreteIds()) {
             $productBundleQuery->filterByFkProduct_In($productBundleCriteriaFilterTransfer->getProductConcreteIds());
+        }
+
+        if ($productBundleCriteriaFilterTransfer->getFilter()) {
+            $productBundleQuery = $this->buildQueryFromCriteria(
+                $productBundleQuery,
+                $productBundleCriteriaFilterTransfer->getFilter()
+            );
+
+            $productBundleQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         }
 
         $productBundleEntities = $productBundleQuery->find();

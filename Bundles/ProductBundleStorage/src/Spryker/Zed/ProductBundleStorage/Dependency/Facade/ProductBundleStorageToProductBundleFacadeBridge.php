@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductBundleStorage\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
+use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
+
 class ProductBundleStorageToProductBundleFacadeBridge implements ProductBundleStorageToProductBundleFacadeInterface
 {
     /**
@@ -20,5 +23,16 @@ class ProductBundleStorageToProductBundleFacadeBridge implements ProductBundleSt
     public function __construct($productBundleFacade)
     {
         $this->productBundleFacade = $productBundleFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function getProductBundleCollectionByCriteriaFilter(
+        ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+    ): ProductBundleCollectionTransfer {
+        return $this->productBundleFacade->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
     }
 }

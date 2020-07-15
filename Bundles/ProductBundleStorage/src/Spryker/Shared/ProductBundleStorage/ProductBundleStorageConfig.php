@@ -32,4 +32,36 @@ class ProductBundleStorageConfig
      * @api
      */
     public const PRODUCT_BUNDLE_RESOURCE_NAME = 'product_bundle';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_bundle publishing.
+     *
+     * @api
+     */
+    public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish';
+
+    /**
+     * Specification
+     * - This event is used for spy_product_bundle entity creation.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_BUNDLE_CREATE = 'Entity.spy_product_bundle.create';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product_bundle entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_BUNDLE_UPDATE = 'Entity.spy_product_bundle.update';
+
+    /**
+     * Specification:
+     * - This event is used for spy_product_bundle entity deletion.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_BUNDLE_DELETE = 'Entity.spy_product_bundle.delete';
 }

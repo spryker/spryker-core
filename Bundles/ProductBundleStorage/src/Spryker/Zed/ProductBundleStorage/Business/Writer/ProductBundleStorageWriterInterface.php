@@ -14,5 +14,5 @@ interface ProductBundleStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByProductBundleEvents(array $eventTransfers): void;
+    public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void;
 }

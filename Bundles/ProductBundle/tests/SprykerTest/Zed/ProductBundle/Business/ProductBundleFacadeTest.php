@@ -12,6 +12,7 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -183,6 +184,24 @@ class ProductBundleFacadeTest extends Unit
 
         //Assert
         $this->assertEmpty($productBundleTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterWithLimit(): void
+    {
+        //Assign
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->setFilter((new FilterTransfer())->setLimit(1));
+
+        //Act
+        $productBundleTransfers = $this->getProductBundleFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertCount(1, $productBundleTransfers);
     }
 
     /**

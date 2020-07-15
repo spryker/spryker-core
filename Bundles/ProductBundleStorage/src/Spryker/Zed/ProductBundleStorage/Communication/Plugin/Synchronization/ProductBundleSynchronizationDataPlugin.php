@@ -8,8 +8,7 @@
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\SynchronizationDataTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
+use Orm\Zed\ProductBundleStorage\Persistence\Map\SpyProductBundleStorageTableMap;
 use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -22,11 +21,6 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
  */
 class ProductBundleSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
-    /**
-     * @uses \Propel\Runtime\ActiveQuery\Criteria::ASC
-     */
-    protected const ORDER_DIRECTION = 'ASC';
-
     /**
      * {@inheritDoc}
      *
@@ -64,9 +58,10 @@ class ProductBundleSynchronizationDataPlugin extends AbstractPlugin implements S
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        // TODO
-
-        return [];
+        return $this->getRepository()->getFilteredProductBundleStorageDataTransfers(
+            $this->createFilterTransfer($offset, $limit),
+            $ids
+        );
     }
 
     /**
@@ -114,24 +109,8 @@ class ProductBundleSynchronizationDataPlugin extends AbstractPlugin implements S
     protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
     {
         return (new FilterTransfer())
+            ->setOrderBy(SpyProductBundleStorageTableMap::COL_ID_PRODUCT_BUNDLE_STORAGE)
             ->setOffset($offset)
             ->setLimit($limit);
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productBundleStorageEntities
-     *
-     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
-     */
-    protected function mapProductBundleStorageEntitiesToSynchronizationDataTransfers(ObjectCollection $productBundleStorageEntities): array
-    {
-        $synchronizationDataTransfers = [];
-
-        foreach ($productBundleStorageEntities as $productBundleStorageEntity) {
-            $synchronizationDataTransfers[] = (new SynchronizationDataTransfer())
-                ->fromArray($productBundleStorageEntity->toArray(), true);
-        }
-
-        return $synchronizationDataTransfers ?? [];
     }
 }
