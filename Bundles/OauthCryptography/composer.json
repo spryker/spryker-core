@@ -9,7 +9,9 @@
     "spryker/oauth-extension": "^1.4.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/guzzle": "*",
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {

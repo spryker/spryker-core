@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\OauthCryptography\Validator;
 
+use League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface;
 use League\OAuth2\Server\AuthorizationValidators\BearerTokenValidator;
 use League\OAuth2\Server\Exception\OAuthServerException;
 use League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface;
@@ -28,7 +29,7 @@ class BearerTokenAuthorizationValidator implements BearerTokenAuthorizationValid
         array $publicKeys,
         AccessTokenRepositoryInterface $accessTokenRepository
     ): ServerRequestInterface {
-        $bearerTokenValidator = new BearerTokenValidator($accessTokenRepository);
+        $bearerTokenValidator = $this->createBearerTokenValidator($accessTokenRepository);
         $verifiedRequest = null;
 
         foreach ($publicKeys as $publicKey) {
@@ -45,5 +46,15 @@ class BearerTokenAuthorizationValidator implements BearerTokenAuthorizationValid
         }
 
         return $verifiedRequest;
+    }
+
+    /**
+     * @param \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface $accessTokenRepository
+     *
+     * @return \League\OAuth2\Server\AuthorizationValidators\AuthorizationValidatorInterface
+     */
+    protected function createBearerTokenValidator(AccessTokenRepositoryInterface $accessTokenRepository): AuthorizationValidatorInterface
+    {
+        return new BearerTokenValidator($accessTokenRepository);
     }
 }
