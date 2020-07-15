@@ -123,18 +123,19 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function getProductAbstractsBySkus(array $skus, RestRequestInterface $restRequest): array
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
         $abstractProductCollection = $this->productStorageClient
             ->findBulkProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $skus,
-                $restRequest->getMetadata()->getLocale()
+                $localeName
             );
 
         if (!$abstractProductCollection) {
             return [];
         }
 
-        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $restRequest);
+        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $localeName);
     }
 
     /**
@@ -145,18 +146,19 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractBySku(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
         $productAbstractData = $this->productStorageClient
             ->findProductAbstractStorageDataByMapping(
                 static::PRODUCT_ABSTRACT_MAPPING_TYPE,
                 $sku,
-                $restRequest->getMetadata()->getLocale()
+                $localeName
             );
 
         if (!$productAbstractData) {
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $restRequest);
+        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $localeName);
     }
 
     /**
@@ -167,33 +169,57 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
      */
     public function findProductAbstractById(int $idProductAbstract, RestRequestInterface $restRequest): ?RestResourceInterface
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
         $productAbstractData = $this->productStorageClient
-            ->findProductAbstractStorageData($idProductAbstract, $restRequest->getMetadata()->getLocale());
+            ->findProductAbstractStorageData($idProductAbstract, $localeName);
 
         if (!$productAbstractData) {
             return null;
         }
 
-        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $restRequest);
+        return $this->createRestResourceFromAbstractProductStorageData($productAbstractData, $localeName);
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     * @param string $storeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function getProductAbstractsByIds(array $productAbstractIds, string $localeName, string $storeName): array
+    {
+        $abstractProductCollection = $this->productStorageClient
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+                $productAbstractIds,
+                $localeName,
+                $storeName
+            );
+
+        if (!$abstractProductCollection) {
+            return [];
+        }
+
+        return $this->createRestResourcesFromAbstractProductStorageData($abstractProductCollection, $localeName);
     }
 
     /**
      * @param array $productAbstractData
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createRestResourceFromAbstractProductStorageData(array $productAbstractData, RestRequestInterface $restRequest): RestResourceInterface
+    protected function createRestResourceFromAbstractProductStorageData(array $productAbstractData, string $localeName): RestResourceInterface
     {
         $restAbstractProductsAttributesTransfer = $this->abstractProductsResourceMapper
             ->mapAbstractProductsDataToAbstractProductsRestAttributes($productAbstractData);
         $restAbstractProductsAttributesTransfer = $this->expandRestAbstractProductsAttributesTransfer(
             $restAbstractProductsAttributesTransfer,
             $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT],
-            $restRequest->getMetadata()->getLocale()
+            $localeName
         );
         $restAbstractProductsAttributesTransfer = $this->abstractProductAttributeTranslationExpander
-            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $restRequest->getMetadata()->getLocale());
+            ->addProductAttributeTranslation($restAbstractProductsAttributesTransfer, $localeName);
 
         return $this->restResourceBuilder->createRestResource(
             ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
@@ -227,17 +253,17 @@ class AbstractProductsReader implements AbstractProductsReaderInterface
 
     /**
      * @param array $abstractProductData
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function createRestResourcesFromAbstractProductStorageData(array $abstractProductData, RestRequestInterface $restRequest): array
+    protected function createRestResourcesFromAbstractProductStorageData(array $abstractProductData, string $localeName): array
     {
         $restResources = [];
 
         foreach ($abstractProductData as $abstractProductDataItem) {
             $restResources[$abstractProductDataItem[static::KEY_SKU]] =
-                $this->createRestResourceFromAbstractProductStorageData($abstractProductDataItem, $restRequest);
+                $this->createRestResourceFromAbstractProductStorageData($abstractProductDataItem, $localeName);
         }
 
         return $restResources;
