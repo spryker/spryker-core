@@ -48,9 +48,12 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
     {
         $merchantAdditoinalData[static::MERCHANT_NAME] = [];
 
-        $merchantReferences = array_map(function (ItemTransfer $itemTransfer) {
-                $itemTransfer->getMerchantReference();
-        }, $itemTransfers->getArrayCopy());
+        $merchantReferences = array_map(
+            function (ItemTransfer $itemTransfer) {
+                return $itemTransfer->getMerchantReference();
+            },
+            $itemTransfers->getArrayCopy()
+        );
         $merchantReferences = array_unique(array_filter($merchantReferences));
 
         $merchantCollectionTransfer = $this->getFactory()->getMerchantFacade()->get(
