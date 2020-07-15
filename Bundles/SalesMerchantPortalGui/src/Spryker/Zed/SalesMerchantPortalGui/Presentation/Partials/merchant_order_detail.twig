@@ -33,22 +33,16 @@
         {% endfor %}
     </div>
 
-    <span state-transitions-meessage>
-      Only matching states items will be updated.
-    </span>
+    <span state-transitions-meessage>Only matching states items will be updated.</span>
+
+    <span items-states-title>Order’s Items state</span>
 
     <div items-states class="mp-manage-order__states">
-        <div class="mp-manage-order__states-col mp-manage-order__states-col--title">Order’s Items state</div>
+        {% set statesList = ['Delivered', 'Payment', 'Exported'] %}
 
-        <div class="mp-manage-order__states-col">
-            <div items-states class="mp-manage-order__states">
-                {% set statesList = ['Delivered', 'Payment', 'Exported'] %}
-
-                {% for state in statesList %}
-                    <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
-                {% endfor %}
-            </div>
-        </div>
+        {% for state in statesList %}
+            <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
+        {% endfor %}
     </div>
 
     <web-spy-tabs class="mp-manage-order__content">

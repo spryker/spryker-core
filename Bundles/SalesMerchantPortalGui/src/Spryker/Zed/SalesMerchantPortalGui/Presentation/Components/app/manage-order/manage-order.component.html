@@ -22,7 +22,15 @@
         </div>
     </div>
     
-    <ng-content select="[items-states]"></ng-content>
+    <div class="mp-manage-order__states">
+        <div class="mp-manage-order__states-col mp-manage-order__states-col--title">
+            <ng-content select="[items-states-title]"></ng-content>
+        </div>
+    
+        <div class="mp-manage-order__states-col">
+            <ng-content select="[items-states]"></ng-content>
+        </div>
+    </div>
 </div>
 
 <ng-content></ng-content>
