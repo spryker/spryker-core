@@ -6,7 +6,7 @@ import { EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ButtonComponent, ButtonModule } from '@spryker/button';
+import { ButtonAjaxComponent, ButtonAjaxModule } from '@spryker/button';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { CardModule, CardComponent } from '@spryker/card';
 import { CollapsibleComponent, CollapsibleModule } from '@spryker/collapsible';
@@ -31,7 +31,7 @@ import { HtmlRendererUrlComponent } from './html-renderer-url/html-renderer-url.
         DeLocaleModule,
         OfferOrdersModule,
         ManageOrderModule,
-        ButtonModule,  // TODO: CHANGE BUTTON TYPE
+        ButtonAjaxModule,
         ChipsModule,
         CardModule,
         TabsModule,
@@ -56,7 +56,7 @@ export class AppModule extends CustomElementModule {
         },
         {
             selector: 'web-spy-ajax-button',
-            component: ButtonComponent, // TODO: CHANGE BUTTON TYPE
+            component: ButtonAjaxComponent,
         },
         {
             selector: 'web-spy-chips',

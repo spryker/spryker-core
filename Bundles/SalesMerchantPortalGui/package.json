@@ -24,7 +24,7 @@
     "@spryker/ajax-action": "^0.1.0-next.5",
     "@spryker/ajax-form": "^0.1.0-next.7",
     "@spryker/ajax-post-actions": "^0.1.0-next.0",
-    "@spryker/button": "^0.1.0-next.15",
+    "@spryker/button": "^0.1.0-next.16",
     "@spryker/checkbox": "^0.1.0-next.8",
     "@spryker/chips": "0.1.0-next.3",
     "@spryker/collapsible": "^0.1.0-next.5",

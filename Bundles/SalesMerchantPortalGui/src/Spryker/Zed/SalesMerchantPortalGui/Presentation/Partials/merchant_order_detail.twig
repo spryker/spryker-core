@@ -5,29 +5,48 @@
 } %}
 
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
-    <!--TODO: state-machine story -->
+    {% set butttonsList = [
+        {
+            title: 'Ship',
+            url: 'some/url',
+            method: 'GET',
+        },
+        {
+            title: 'Return',
+            url: 'some/url',
+            method: 'POST',
+        },
+        {
+            title: 'Close',
+            url: 'some/url',
+            method: 'GET',
+        },
+    ] %}
+
     <div state-transitions class="mp-manage-order__transitions">
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>
-        <web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>
+        {% for button in butttonsList %}
+            <web-spy-ajax-button
+                method="{{ button.method }}"
+                url="{{ button.url }}"
+                class="mp-manage-order__transitions-col"
+            >{{ button.title }}</web-spy-ajax-button>
+        {% endfor %}
     </div>
 
-    <!--TODO: state-machine story -->
     <span state-transitions-meessage>
       Only matching states items will be updated.
     </span>
 
-    <!--TODO: state-machine story -->
     <div items-states class="mp-manage-order__states">
         <div class="mp-manage-order__states-col mp-manage-order__states-col--title">Order’s Items state</div>
 
         <div class="mp-manage-order__states-col">
             <div items-states class="mp-manage-order__states">
-                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Delivered</web-spy-chips>
+                {% set statesList = ['Delivered', 'Payment', 'Exported'] %}
 
-                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Payment Pending</web-spy-chips>
-
-                <web-spy-chips max-width="none" class="mp-manage-order__states-col">Exported</web-spy-chips>
+                {% for state in statesList %}
+                    <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
+                {% endfor %}
             </div>
         </div>
     </div>
