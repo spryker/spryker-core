@@ -36,7 +36,6 @@ class DetailController extends AbstractController
                     ->setIdMerchantOrder($idMerchantOrder)
                     ->setWithItems(true)
                     ->setWithOrder(true)
-                    ->setWithUniqueProductCount(true)
             );
 
         $customerMerchantOrderNumber = 0;

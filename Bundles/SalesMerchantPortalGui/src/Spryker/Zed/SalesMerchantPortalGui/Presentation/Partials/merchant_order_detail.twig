@@ -1,7 +1,7 @@
 {% set orderDetails = {
-    title: 'Order DE — 1',
-    reference: 'Mer - DE —134353',
-    referenceTitle: 'Merchant Reference',
+    title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
+    reference: merchantOrder.merchantReference,
+    referenceTitle: 'Merchant Reference' | trans,
 } %}
 
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
@@ -36,19 +36,19 @@
         <web-spy-tab title="Details">
             {% set overviewItems = [
                 {
-                    name: 'Order date',
+                    name: 'Order date' | trans,
                     info: merchantOrder.createdAt | formatDateTime,
                 },
                 {
-                    name: 'NUMBER OF PRODUCTS',
+                    name: 'Number of products' | trans,
                     info: merchantOrder.uniqueProductQuantity,
                 },
                 {
-                    name: 'ITEMs',
+                    name: 'Items' | trans,
                     info: merchantOrder.merchantOrderItems.count(),
                 },
                 {
-                    name: 'SHIPMENTs',
+                    name: 'Shipments' | trans,
                     info: shipmentsNumber,
                 },
             ] %}
@@ -72,7 +72,7 @@
 
                 {% set subtotalTitleOrderTotals = [
                     {
-                        title: 'Subtotal',
+                        title: 'Subtotal' | trans,
                         value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
@@ -94,12 +94,12 @@
 
                 {% set grandTotalOrderTotals = [
                     {
-                        title: 'Grand Total',
+                        title: 'Grand Total' | trans,
                         value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
                     {
-                        title: 'Included Tax Amount',
+                        title: 'Included Tax Amount' | trans,
                         value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
                     },
                 ] %}
@@ -112,15 +112,15 @@
 
             {% set customerItems = [
                 {
-                    name: 'CLIENT NAME',
+                    name: 'CLIENT NAME' | trans,
                     info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
                 },
                 {
-                    name: 'CLIENT EMAIL',
+                    name: 'CLIENT EMAIL' | trans,
                     info: merchantOrder.order.email,
                 },
                 {
-                    name: 'PREVIOUS ORDERS',
+                    name: 'PREVIOUS ORDERS' | trans,
                     info: customerMerchantOrderNumber,
                 },
             ] %}
