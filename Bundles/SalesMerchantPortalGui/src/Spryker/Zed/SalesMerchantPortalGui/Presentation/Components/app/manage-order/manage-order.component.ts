@@ -18,5 +18,5 @@ export interface OrderDetails {
     },
 })
 export class ManageOrderComponent {
-    @Input() @ToJson() orderDetails;
+    @Input() @ToJson() orderDetails?: OrderDetails;
 }

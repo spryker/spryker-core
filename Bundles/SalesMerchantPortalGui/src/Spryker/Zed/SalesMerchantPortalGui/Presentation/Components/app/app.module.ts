@@ -15,8 +15,8 @@ import { TabsModule, TabsComponent, TabComponent } from '@spryker/tabs';
 import { OfferOrdersComponent } from './offer-orders/offer-orders.component';
 import { OfferOrdersModule } from './offer-orders/offer-orders.module';
 import { ManageOrderComponent } from './manage-order/manage-order.component';
-import { ManageOrderStatsBlockComponent } from './manage-order-stats-block/manage-order-stats-block.component';
-import { ManageOrderTotalsComponent } from './manage-order-totals/manage-order-totals.component';
+import { ManageOrderStatsBlockComponent } from './manage-order/manage-order-stats-block/manage-order-stats-block.component';
+import { ManageOrderTotalsComponent } from './manage-order/manage-order-totals/manage-order-totals.component';
 import { ManageOrderModule } from './manage-order/manage-order.module';
 
 @NgModule({

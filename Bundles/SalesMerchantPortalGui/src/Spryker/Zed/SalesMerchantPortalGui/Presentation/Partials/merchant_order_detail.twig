@@ -33,7 +33,7 @@
     </div>
 
     <web-spy-tabs class="mp-manage-order__content">
-        <web-spy-tab title="Details">
+        <web-spy-tab title="{{ 'Details' | trans }}">
             {% set overviewItems = [
                 {
                     name: 'Order date' | trans,
@@ -53,7 +53,7 @@
                 },
             ] %}
 
-            <web-spy-card title="Overview" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for overviewItem in overviewItems %}
                         <web-mp-manage-order-stats-block
@@ -64,7 +64,7 @@
                 </div>
             </web-spy-card>
 
-            <web-spy-card title="Overview" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
                 <!--TODO: state-machine story -->
                 <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} ITEMS" class="mp-manage-order__card-column-item">
                     <div>Collapse Content</div>
@@ -125,7 +125,7 @@
                 },
             ] %}
 
-            <web-spy-card title="Customer" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for customerItem in customerItems %}
                         <web-mp-manage-order-stats-block
@@ -138,6 +138,6 @@
         </web-spy-tab>
 
         <!--TODO: items tab story -->
-        <web-spy-tab title="Items"></web-spy-tab>
+        <web-spy-tab title="{{ 'Items' | trans }}"></web-spy-tab>
     </web-spy-tabs>
 </web-mp-manage-order>
