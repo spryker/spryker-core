@@ -103,6 +103,8 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder());
+
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
@@ -110,6 +112,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
+            MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => $orderTransfer->getCustomerReference(),
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -180,12 +183,14 @@ class MerchantSalesOrderFacadeTest extends Unit
      *
      * @param array $merchantOrderCriteriaDataKeys
      * @param int $merchantOrderItemsCount
+     * @param bool $withOrder
      *
      * @return void
      */
     public function testFindMerchantOrderReturnsTransferWithCorrectCriteria(
         array $merchantOrderCriteriaDataKeys,
-        int $merchantOrderItemsCount
+        int $merchantOrderItemsCount,
+        bool $withOrder = false
     ): void {
         //Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -204,6 +209,12 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        if ($withOrder) {
+            $merchantOrderTransfer->setOrder(
+                $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder())
+            );
+        }
+
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
@@ -211,6 +222,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
+            MerchantOrderCriteriaTransfer::WITH_ORDER => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -230,6 +242,15 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderTransfer->getIdMerchantOrder(),
             $foundMerchantOrderTransfer->getIdMerchantOrder()
         );
+
+        if ($withOrder) {
+            $this->assertSame(
+                $merchantOrderTransfer->getOrder()->getIdSalesOrder(),
+                $foundMerchantOrderTransfer->getOrder()->getIdSalesOrder()
+            );
+        }
+
+        $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
         $this->assertInstanceOf(TotalsTransfer::class, $foundMerchantOrderTransfer->getTotals());
     }
@@ -504,6 +525,21 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
                 'merchantOrderItemsCount' => 1,
             ],
+            'by customer reference' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_ORDER,
+                    MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE,
+                ],
+                'merchantOrderItemsCount' => 0,
+            ],
+            'with order' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaTransfer::WITH_ORDER,
+                ],
+                'merchantOrderItemsCount' => 0,
+                'withOrder' => true,
+            ],
         ];
     }
 
@@ -533,6 +569,11 @@ class MerchantSalesOrderFacadeTest extends Unit
             'by merchant order reference' => [
                 'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => 'wrong_merchant_sales_order_reference',
+                ],
+            ],
+            'by customer reference' => [
+                'merchantOrderCriteriaData' => [
+                    MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => 'wrong_customer_reference',
                 ],
             ],
         ];
