@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -108,5 +109,15 @@ class MerchantSalesOrderBusinessTester extends Actor
         $merchantOrderTransfer->setTotals($merchantOrderTotalsTransfer);
 
         return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function getOrderTransferByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    {
+        return $this->getLocator()->sales()->facade()->getOrderByIdSalesOrder($idSalesOrder);
     }
 }
