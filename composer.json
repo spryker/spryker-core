@@ -264,6 +264,7 @@
     "spryker/customers-rest-api-extension": "*",
     "spryker/dashboard": "*",
     "spryker/dashboard-merchant-portal-gui": "*",
+    "spryker/dashboard-merchant-portal-gui-extension": "*",
     "spryker/data-export": "*",
     "spryker/data-export-extension": "*",
     "spryker/data-import": "*",
