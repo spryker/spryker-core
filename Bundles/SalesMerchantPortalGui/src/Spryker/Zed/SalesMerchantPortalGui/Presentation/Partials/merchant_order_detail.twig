@@ -1,7 +1,7 @@
 {% set orderDetails = {
-    title: 'Order DE — 1',
-    reference: 'Mer - DE —134353',
-    referenceTitle: 'Merchant Reference',
+    title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
+    reference: merchantOrder.merchantReference,
+    referenceTitle: 'Merchant Reference' | trans,
 } %}
 
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
@@ -52,27 +52,27 @@
     </div>
 
     <web-spy-tabs class="mp-manage-order__content">
-        <web-spy-tab title="Details">
+        <web-spy-tab title="{{ 'Details' | trans }}">
             {% set overviewItems = [
                 {
-                    name: 'Order date',
+                    name: 'Order date' | trans,
                     info: merchantOrder.createdAt | formatDateTime,
                 },
                 {
-                    name: 'NUMBER OF PRODUCTS',
+                    name: 'Number of products' | trans,
                     info: merchantOrder.uniqueProductQuantity,
                 },
                 {
-                    name: 'ITEMs',
+                    name: 'Items' | trans,
                     info: merchantOrder.merchantOrderItems.count(),
                 },
                 {
-                    name: 'SHIPMENTs',
+                    name: 'Shipments' | trans,
                     info: shipmentsNumber,
                 },
             ] %}
 
-            <web-spy-card title="Overview" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for overviewItem in overviewItems %}
                         <web-mp-manage-order-stats-block
@@ -83,14 +83,14 @@
                 </div>
             </web-spy-card>
 
-            <web-spy-card title="Overview" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
                 <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} ITEMS" class="mp-manage-order__card-column-item">
                     <mp-html-renderer-url url="www.google.com"></mp-html-renderer-url>
                 </web-spy-collapsible>
 
                 {% set subtotalTitleOrderTotals = [
                     {
-                        title: 'Subtotal',
+                        title: 'Subtotal' | trans,
                         value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
@@ -112,12 +112,12 @@
 
                 {% set grandTotalOrderTotals = [
                     {
-                        title: 'Grand Total',
+                        title: 'Grand Total' | trans,
                         value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
                         isTitle: true,
                     },
                     {
-                        title: 'Included Tax Amount',
+                        title: 'Included Tax Amount' | trans,
                         value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
                     },
                 ] %}
@@ -130,20 +130,20 @@
 
             {% set customerItems = [
                 {
-                    name: 'CLIENT NAME',
+                    name: 'CLIENT NAME' | trans,
                     info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
                 },
                 {
-                    name: 'CLIENT EMAIL',
+                    name: 'CLIENT EMAIL' | trans,
                     info: merchantOrder.order.email,
                 },
                 {
-                    name: 'PREVIOUS ORDERS',
+                    name: 'PREVIOUS ORDERS' | trans,
                     info: customerMerchantOrderNumber,
                 },
             ] %}
 
-            <web-spy-card title="Customer" class="mp-manage-order__card">
+            <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
                 <div class="mp-manage-order-grid">
                     {% for customerItem in customerItems %}
                         <web-mp-manage-order-stats-block
@@ -156,6 +156,6 @@
         </web-spy-tab>
 
         <!--TODO: items tab story -->
-        <web-spy-tab title="Items"></web-spy-tab>
+        <web-spy-tab title="{{ 'Items' | trans }}"></web-spy-tab>
     </web-spy-tabs>
 </web-mp-manage-order>

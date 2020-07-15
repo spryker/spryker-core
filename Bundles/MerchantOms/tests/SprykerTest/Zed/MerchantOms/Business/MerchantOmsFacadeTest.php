@@ -104,6 +104,40 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandMerchantOrderWithStatesReturnsCorrectData(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $expectedMerchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
+
+        $processEntity = $this->tester->haveStateMachineProcess();
+
+        $stateEntity = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $processEntity->getIdStateMachineProcess(),
+        ]);
+
+        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateEntity->getIdStateMachineItemState(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $expectedMerchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+        ]);
+        $expectedMerchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
+
+        // Act
+        $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderWithStates($expectedMerchantOrderTransfer);
+
+        // Assert
+        $this->assertSame($expectedMerchantOrderTransfer->getItemStates(), $merchantOrderTransfer->getItemStates());
+    }
+
+    /**
+     * @return void
+     */
     public function testTriggerEventForMerchantOrderItemReturnsSuccess(): void
     {
         // Arrange
@@ -215,7 +249,7 @@ class MerchantOmsFacadeTest extends Unit
      * @param string[] $stateNames
      * @param \Generated\Shared\Transfer\StateMachineProcessTransfer|null $stateMachineProcessTransfer
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
+     * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
      */
     protected function setStateMachineFacadeMockDependency(
         array $stateNames,
@@ -235,7 +269,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer|null $merchantTransfer
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface
+     * @return \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface
      */
     protected function setMerchantFacadeMockDependency(?MerchantTransfer $merchantTransfer): MerchantOmsToMerchantFacadeInterface
     {
