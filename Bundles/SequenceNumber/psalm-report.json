@@ -1,0 +1,139 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "        return $this->sequenceNumberSettings->getPrefix() . $number;",
+            "selected_text": "$this->sequenceNumberSettings->getPrefix()",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of findOneByName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "            ->findOneByName($this->sequenceNumberSettings->getName());",
+            "selected_text": "$this->sequenceNumberSettings->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 129,
+            "line_to": 129,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\SequenceNumber\\Persistence\\SpySequenceNumber::setName cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "            $sequence->setName($this->sequenceNumberSettings->getName());",
+            "selected_text": "$this->sequenceNumberSettings->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 130,
+            "line_to": 130,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\SequenceNumber\\Persistence\\SpySequenceNumber::setCurrentId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "            $sequence->setCurrentId($offset);",
+            "selected_text": "$offset",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "PossiblyNullOperand",
+            "message": "Left operand cannot be nullable, got int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "        $expectedCurrentValue = $offset - 1;",
+            "selected_text": "$offset",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 158,
+            "line_to": 158,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $this->limitList using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "        if ($idCurrent > $this->limitList[$this->sequenceNumberSettings->getName()]) {",
+            "selected_text": "$this->limitList",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 161,
+            "line_to": 161,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "                $this->sequenceNumberSettings->getName()",
+            "selected_text": "$this->sequenceNumberSettings->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\SequenceNumber\\Business\\SequenceNumberBusinessFactory::createRandomNumberGenerator cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/SequenceNumberBusinessFactory.php",
+            "snippet": "        $generator = $this->createRandomNumberGenerator($settings->getIncrementMinimum(), $settings->getIncrementMaximum());",
+            "selected_text": "$settings->getIncrementMinimum()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 45,
+            "line_to": 45,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\SequenceNumber\\Business\\SequenceNumberBusinessFactory::createRandomNumberGenerator cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/SequenceNumberBusinessFactory.php",
+            "snippet": "        $generator = $this->createRandomNumberGenerator($settings->getIncrementMinimum(), $settings->getIncrementMaximum());",
+            "selected_text": "$settings->getIncrementMaximum()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Orm\\Zed\\SequenceNumber\\Persistence\\SpySequenceNumberQuery::filterbyfksalesorder does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Persistence/SequenceNumberQueryContainer.php",
+            "snippet": "        $query->filterByFkSalesOrder($idSalesOrder);",
+            "selected_text": "filterByFkSalesOrder",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/SequenceNumber/src/Spryker/Zed/SequenceNumber/Business/Model/SequenceNumber.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

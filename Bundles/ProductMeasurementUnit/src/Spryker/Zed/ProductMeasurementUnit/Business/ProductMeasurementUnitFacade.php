@@ -321,4 +321,20 @@ class ProductMeasurementUnitFacade extends AbstractFacade implements ProductMeas
             ->createItemProductMeasurementSalesUnitChecker()
             ->checkItemProductMeasurementSalesUnit($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutMeasurementUnit(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductMeasurementUnitReader()
+            ->filterProductsWithoutMeasurementUnit($productConcreteTransfers);
+    }
 }

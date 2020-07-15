@@ -52,7 +52,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateImagePublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH, new ConfigurableBundleTemplateImageStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_PUBLISH, new ConfigurableBundleTemplateImageStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -65,7 +65,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateImageUnPublishListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_UNPUBLISH, new ConfigurableBundleTemplateImageStorageUnpublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_UNPUBLISH, new ConfigurableBundleTemplateImageStorageUnpublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -78,7 +78,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateImageProductImageSetCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
+            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_CREATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -91,7 +91,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateImageProductImageSetUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
+            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_UPDATE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -104,7 +104,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateImageProductImageSetDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
+            ->addListenerQueued(ProductImageEvents::ENTITY_SPY_PRODUCT_IMAGE_SET_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -117,7 +117,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateCreateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateImageStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_CREATE, new ConfigurableBundleTemplateImageStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -130,7 +130,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateUpdateListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateImageStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_UPDATE, new ConfigurableBundleTemplateImageStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }
@@ -143,7 +143,7 @@ class ConfigurableBundleTemplateImageStorageEventSubscriber extends AbstractPlug
     protected function addConfigurableBundleTemplateDeleteListener(EventCollectionInterface $eventCollection)
     {
         $eventCollection
-            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener());
+            ->addListenerQueued(ConfigurableBundleEvents::ENTITY_SPY_CONFIGURABLE_BUNDLE_TEMPLATE_DELETE, new ConfigurableBundleTemplateImageProductImageSetStoragePublishListener(), 0, null, $this->getConfig()->getConfigurableBundleTemplateImageEventQueueName());
 
         return $this;
     }

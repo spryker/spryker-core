@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -170,31 +172,37 @@ interface OmsFacadeInterface
     /**
      * Specification:
      *  - Reads all transitions without event.
-     *  - Reads from database items with those transitions
-     *  - Executes each transition
-     *  - Returns number of affected items
+     *  - Reads from database items with those transitions.
+     *  - Executes each transition.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = []);
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
-     *  - Reads all expired timeout events
-     *  - Execute events
-     *  - Returns number of affected items
+     *  - Reads all expired timeout events.
+     *  - Execute events.
+     *  - Returns number of affected items.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$storeName parameter filters the order items by the given store name.
+     *  - OmsCheckConditionsQueryCriteriaTransfer::$limit parameter filters the number of order items to be processed by the given limit of orders.
      *
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = []);
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null);
 
     /**
      * Specification:
@@ -604,7 +612,7 @@ interface OmsFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Oms\Business\OmsFacadeInterface::updateReservation()` instead.
+     * @deprecated Use {@link updateReservation()} instead.
      *
      * @param string $sku
      *
@@ -695,6 +703,36 @@ interface OmsFacadeInterface
      * @return \Generated\Shared\Transfer\ReservationResponseTransfer
      */
     public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands order items with item state.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithItemState(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Reads order items from persistence.
+     * - Gets the current state machine process for each order item.
+     * - Reads state display name from XML definition.
+     * - Expands orders with aggregated item states.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array;
 
     /**
      * Specification:

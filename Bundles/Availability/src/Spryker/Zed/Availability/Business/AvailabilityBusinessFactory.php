@@ -20,6 +20,8 @@ use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditio
 use Spryker\Zed\Availability\Business\Model\ProductsAvailableCheckoutPreConditionInterface;
 use Spryker\Zed\Availability\Business\Model\Sellable;
 use Spryker\Zed\Availability\Business\Model\SellableInterface;
+use Spryker\Zed\Availability\Business\Reader\AvailabilityReader;
+use Spryker\Zed\Availability\Business\Reader\AvailabilityReaderInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToProductFacadeInterface;
@@ -91,7 +93,7 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `AvailabilityBusinessFactory::createProductAvailabilityReader()` instead.
+     * @deprecated Use {@link createProductAvailabilityReader()} instead.
      *
      * @return \Spryker\Zed\Availability\Business\Model\ProductReservationReaderInterface
      */
@@ -100,6 +102,17 @@ class AvailabilityBusinessFactory extends AbstractBusinessFactory
         return new ProductReservationReader(
             $this->getQueryContainer(),
             $this->getStockFacade(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Availability\Business\Reader\AvailabilityReaderInterface
+     */
+    public function createAvailabilityReader(): AvailabilityReaderInterface
+    {
+        return new AvailabilityReader(
+            $this->getRepository(),
             $this->getStoreFacade()
         );
     }

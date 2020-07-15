@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker/availability-gui-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-product": "^0.1.1",
+    "spryker/merchant-product": "^0.2.0",
     "spryker/product-management-extension": "^1.4.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0"

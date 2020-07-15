@@ -22,12 +22,20 @@ $(document).ready(function () {
         thresholdStrategyToggle('hard');
     });
 
+    $('input[name="merchant-relationship-threshold[hardMaximumThreshold][strategy]"]').click(function () {
+        thresholdStrategyToggle('hard');
+    });
+
     $('input[name="merchant-relationship-threshold[softThreshold][strategy]"]').click(function() {
         thresholdStrategyToggle('soft');
     });
 
     if ($('input[name="merchant-relationship-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
         $('input[name="merchant-relationship-threshold[hardThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    if ($('input[name="merchant-relationship-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="merchant-relationship-threshold[hardMaximumThreshold][strategy]"]').parents('.form-group').addClass('hidden');
     }
 
     if ($('input[name="merchant-relationship-threshold[softThreshold][strategy]"][value!=""]').length === 1) {

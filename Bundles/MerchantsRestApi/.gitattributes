@@ -17,7 +17,6 @@
 *.mo binary
 *.pdf binary
 *.xsd binary
-*.ts binary
 *.exe binary
 
 # Remove files for archives generated using `git archive`
@@ -25,6 +24,7 @@ codeception.yml export-ignore
 dependency.json export-ignore
 phpstan.json export-ignore
 phpstan.neon export-ignore
+psalm-report.json export-ignore linguist-generated=true
 tooling.yml export-ignore
 .coveralls.yml export-ignore
 .travis.yml export-ignore

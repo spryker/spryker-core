@@ -5,20 +5,33 @@ Approved,Approved
 Created,Created
 "Created from","Created from"
 "Created to","Created to"
+"At least one store must be selected.","At least one store must be selected."
 "Create Offer","Create Offer"
 Denied,Denied
+"Expiring in %daysNumber% days","Expiring in %daysNumber% days"
+From,From
 "Has stock","Has stock"
 Image,Image
 Inactive,Inactive
+"Low on Stock","Low on Stock"
+"Manage Offers","Manage Offers"
+"Manage Offer","Manage Offer"
 "Merchant SKU","Merchant SKU"
 Name,Name
+"Never out of stock","Never out of stock"
+"Offer is online","Offer is online"
+"Offer is offline","Offer is offline"
 Offers,Offers
 Offline,Offline
+"On Marketplace","On Marketplace"
 Online,Online
 "Out of stock","Out of stock"
 Pending,Pending
 Reference,Reference
 Search,Search
+"Offer reference","Offer reference"
+Price,Price
+Quantity,Quantity
 "Search by SKU, Name","Search by SKU, Name"
 Sku,SKU
 Status,Status
@@ -27,8 +40,31 @@ Stores,Stores
 Updated,Updated
 "Updated from","Updated from"
 "Updated to","Updated to"
+"The Offer is saved.","The Offer is saved."
+"The Offer is not saved.","The Offer is not saved."
+Valid,Valid
 "Valid From","Valid From"
+"Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Valid To"
 Visibility,Visibility
 "With Offers","With Offers"
+"With Stock","With Stock"
 "Without Offers","Without Offers"
+"Details & Description","Details & Description"
+"The first date cannot be later than the second one.","The first date cannot be later than the second one."
+"The first date is the same as the second one.","The first date is the same as the second one."
+"The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
+"This means that the offer does not appear online and noone can see it.","This means that the offer does not appear online and noone can see it."
+To,To
+"GROSS DEFAULT","GROSS DEFAULT"
+"GROSS ORIGINAL","GROSS ORIGINAL"
+"NET DEFAULT","NET DEFAULT"
+"NET ORIGINAL","NET ORIGINAL"
+Offer,Offer
+Save,Save
+Create,Create
+"Validity Dates","Validity Dates"
+"Offer visibility","Offer visibility"
+select.default.placeholder,Select
+"Enter SKU","Enter SKU"
+"Enter quantity","Enter quantity"

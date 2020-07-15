@@ -16,6 +16,8 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
+use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
@@ -271,12 +273,13 @@ class MerchantTable extends AbstractTable
         $availableStatusButtons = [];
         $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[SpyMerchantTableMap::COL_STATUS]);
         foreach ($availableStatuses as $availableStatus) {
-            $availableStatusButtons[] = $this->generateButton(
+            $availableStatusButtons[] = $this->generateFormButton(
                 Url::generate(
                     MerchantGuiConfig::URL_MERCHANT_STATUS,
                     [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT], 'status' => $availableStatus]
                 ),
                 $availableStatus . '_button',
+                MerchantStatusForm::class,
                 ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
             );
         }
@@ -291,12 +294,13 @@ class MerchantTable extends AbstractTable
      */
     protected function createActivateButton(int $idMerchant): string
     {
-        return $this->generateButton(
+        return $this->generateFormButton(
             Url::generate(
                 MerchantGuiConfig::URL_MERCHANT_ACTIVATE,
                 [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
             ),
             'Activate',
+            ToggleActiveMerchantForm::class,
             [
                 'class' => 'btn-view',
                 'icon' => 'fa fa-caret-right',
@@ -311,12 +315,13 @@ class MerchantTable extends AbstractTable
      */
     protected function createDeactivateButton(int $idMerchant): string
     {
-        return $this->generateButton(
+        return $this->generateFormButton(
             Url::generate(
                 MerchantGuiConfig::URL_MERCHANT_DEACTIVATE,
                 [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
             ),
             'Deactivate',
+            ToggleActiveMerchantForm::class,
             [
                     'class' => 'btn-remove',
                     'icon' => 'fa fa-trash',

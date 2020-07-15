@@ -8,8 +8,13 @@ import { SidebarModule } from '@spryker/sidebar';
 import { ApplyContextsModule } from '@spryker/utils';
 import { CustomElementBoundaryModule } from '@spryker/web-components';
 
-import { IconDashboardModule, IconOffersModule, IconProfileModule } from '../../icons';
 import { LayoutMainComponent } from './layout-main.component';
+import {
+    IconDashboardModule,
+    IconProfileModule,
+    IconOffersModule,
+    IconOrdersModule,
+} from '../../icons';
 
 @NgModule({
     imports: [
@@ -22,7 +27,8 @@ import { LayoutMainComponent } from './layout-main.component';
         ApplyContextsModule,
         CustomElementBoundaryModule,
         IconDashboardModule,
-        IconProfileModule,
+	    IconProfileModule,
+        IconOrdersModule,
         IconOffersModule,
     ],
     declarations: [LayoutMainComponent],

@@ -22,6 +22,8 @@ class DeleteRateController extends AbstractController
     protected const PARAM_REQUEST_ID_TAX_RATE = 'id-tax-rate';
     protected const PARAM_TEMPLATE_ID_TAX_RATE = 'idTaxRate';
 
+    protected const DELETE_FORM = 'deleteForm';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -30,9 +32,11 @@ class DeleteRateController extends AbstractController
     public function indexAction(Request $request)
     {
         $idTaxRate = $this->castId($request->query->get(static::PARAM_REQUEST_ID_TAX_RATE));
+        $form = $this->getFactory()->createDeleteTaxRateForm()->createView();
 
         return $this->viewResponse([
             static::PARAM_TEMPLATE_ID_TAX_RATE => $idTaxRate,
+            static::DELETE_FORM => $form,
         ]);
     }
 
@@ -43,6 +47,14 @@ class DeleteRateController extends AbstractController
      */
     public function confirmAction(Request $request)
     {
+        $form = $this->getFactory()->createDeleteTaxRateForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(Url::generate('/tax/rate/list')->build());
+        }
+
         $idTaxRate = $this->castId($request->query->getInt(static::PARAM_REQUEST_ID_TAX_RATE));
 
         $this->getFacade()->deleteTaxRate($idTaxRate);

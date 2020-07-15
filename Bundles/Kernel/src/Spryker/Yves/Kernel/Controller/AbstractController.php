@@ -37,6 +37,11 @@ abstract class AbstractController
     protected const SERVICE_TWIG = 'twig';
 
     /**
+     * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::BC_REDIRECT_URL_VALIDATION_HANDLED
+     */
+    protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
+
+    /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     private $application;
@@ -107,7 +112,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin}
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
      *
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
@@ -121,6 +126,13 @@ abstract class AbstractController
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
+        if (
+            $this->getApplication()->has(static::BC_REDIRECT_URL_VALIDATION_HANDLED) &&
+            $this->getApplication()->get(static::BC_REDIRECT_URL_VALIDATION_HANDLED)
+        ) {
+            return new RedirectResponse($absoluteUrl, $code);
+        }
+
         if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
         }
@@ -297,6 +309,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
+     *
      * @param string $absoluteUrl
      *
      * @return bool
@@ -320,6 +334,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $url
      *
      * @return string

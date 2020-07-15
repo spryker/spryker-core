@@ -19,6 +19,7 @@ Date,date
 "File List",Dateiliste
 "File Manager",Dateimanager
 "File name",Dateiname
+"File Tree",Dateistruktur
 "File type",Dateityp
 "File type is not allowed for uploading","Hochladen des Dateityps ist nicht zulässig."
 "File upload","Datei hochladen"
@@ -39,3 +40,7 @@ Save,Speichern
 "Upload a file or specify a new file name","Eine Datei hochladen oder einen neuen Dateinamen angeben"
 "Use file name","Dateinamen benutzen"
 "View file","Datei anzeigen"
+"Is allowed","Ist zulässig"
+"Add File","Datei hinzufügen"
+"File Directories Tree",Dateiverzeichnis
+"Overview of File Tree","Übersicht der Dateistruktur"

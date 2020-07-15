@@ -43,27 +43,21 @@ describe("ProfileComponent", () => {
         expect(component).toBeTruthy();
     });
 
-    describe("Profile header", () => {
-        it("should render page header", () => {
-            const headerElem = fixture.debugElement.query(
-                By.css(".mp-profile__header")
-            );
+	describe('Profile header', () => {
+		it('should render page header',  () => {
+			const headerElem = fixture.debugElement.query(By.css('spy-headline'));
 
             expect(headerElem).toBeTruthy();
         });
 
-        it("should render projected title inside header", () => {
-            const titleElem = fixture.debugElement.query(
-                By.css(".mp-profile__header .test-title")
-            );
+		it('should render projected title inside header',  () => {
+			const titleElem = fixture.debugElement.query(By.css('spy-headline .test-title'));
 
             expect(titleElem).toBeTruthy();
         });
 
-        it("should render projected action inside header", () => {
-            const actionElem = fixture.debugElement.query(
-                By.css(".mp-profile__header .test-action")
-            );
+		it('should render projected action inside header',  () => {
+			const actionElem = fixture.debugElement.query(By.css('spy-headline .test-action'));
 
             expect(actionElem).toBeTruthy();
         });

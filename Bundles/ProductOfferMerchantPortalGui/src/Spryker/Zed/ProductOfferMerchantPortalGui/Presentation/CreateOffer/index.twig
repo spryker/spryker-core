@@ -5,22 +5,11 @@
 {% endblock %}
 
 {% block content %}
-    {% set config = {
-        dataSource: {
-            type: 'http',
-            url: dataUrl,
-        },
-        columns: columns,
-        itemSelection: true,
-        syncStateUrl: true,
-        total: true,
-        rowActions: rowActions,
-        pagination: pagination,
-        search: search,
-        filters: filters,
-    } %}
+    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
 
-    <web-mp-product-offer cloak title="{{ 'Create Offer' | trans }}" table-config="{{ config | json_encode() }}"></web-mp-product-offer>
+    <web-mp-product-offer cloak table-config='{{ guiTableConfiguration(productTableConfiguration) }}'>
+        <span title>{{ 'Create Offer' | trans }}</span>
+    </web-mp-product-offer>
 {% endblock %}
 
 {% block footerJs %}

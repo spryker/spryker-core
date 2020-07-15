@@ -1,0 +1,151 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getMethods on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "        foreach ($restCheckoutDataTransfer->getAvailablePaymentMethods()->getMethods() as $paymentMethodTransfer) {",
+            "selected_text": "getMethods",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $restPaymentMethodsAttributesTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "            $restPaymentMethodsAttributesTransfers[$paymentMethodTransfer->getIdPaymentMethod()] = $restPaymentMethod;",
+            "selected_text": "$restPaymentMethodsAttributesTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestPaymentTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "        if (!$restCheckoutRequestAttributesTransfer->getPayments()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPaymentProviders on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "        $paymentProviders = $restCheckoutDataTransfer->getPaymentProviders()->getPaymentProviders();",
+            "selected_text": "getPaymentProviders",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName())",
+            "selected_text": "$paymentProviderTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderTransfer->getName(), $paymentMethodTransfer->getName())",
+            "selected_text": "$paymentMethodTransfer->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 192,
+            "line_to": 192,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getPaymentProviderKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "        $paymentProviderKey = $paymentMethodTransfer->getPaymentProvider()->getPaymentProviderKey();",
+            "selected_text": "getPaymentProviderKey",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 199,
+            "line_to": 199,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)",
+            "selected_text": "$paymentProviderKey",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 199,
+            "line_to": 199,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\PaymentsRestApi\\PaymentsRestApiConfig::getRequiredRequestDataForPaymentMethod cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Glue/PaymentsRestApi/Processor/Mapper/PaymentMethodMapper.php",
+            "snippet": "                $this->config->getRequiredRequestDataForPaymentMethod($paymentProviderKey, $paymentMethodKey)",
+            "selected_text": "$paymentMethodKey",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestPaymentTransfer> variable $restPaymentTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Zed/PaymentsRestApi/Business/Quote/PaymentQuoteMapper.php",
+            "snippet": "        if (!$restPaymentTransfers->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\RestPaymentTransfer> variable $restPaymentTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Zed/PaymentsRestApi/Business/Quote/PaymentQuoteMapper.php",
+            "snippet": "        $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfers->offsetGet(0)));",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "DeprecatedMethod",
+            "message": "The method Generated\\Shared\\Transfer\\QuoteTransfer::setPayment has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/PaymentsRestApi/src/Spryker/Zed/PaymentsRestApi/Business/Quote/PaymentQuoteMapper.php",
+            "snippet": "        $quoteTransfer->setPayment($this->preparePaymentTransfer($restPaymentTransfers->offsetGet(0)));",
+            "selected_text": "setPayment",
+            "error_level": 2,
+            "shortcode": 1
+        }
+    ]
+}

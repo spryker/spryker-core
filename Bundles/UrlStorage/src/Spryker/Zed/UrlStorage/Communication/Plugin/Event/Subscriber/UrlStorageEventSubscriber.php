@@ -53,7 +53,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStoragePublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::URL_PUBLISH, new UrlStoragePublishListener(), 0, null, $this->getConfig()->getUrlEventQueueName());
     }
 
     /**
@@ -63,7 +63,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageUnpublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::URL_UNPUBLISH, new UrlStorageUnpublishListener(), 0, null, $this->getConfig()->getUrlEventQueueName());
     }
 
     /**
@@ -73,7 +73,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStoragePublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStoragePublishListener(), 0, null, $this->getConfig()->getUrlEventQueueName());
     }
 
     /**
@@ -83,7 +83,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStoragePublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_UPDATE, new UrlStoragePublishListener(), 0, null, $this->getConfig()->getUrlEventQueueName());
     }
 
     /**
@@ -93,7 +93,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addUrlDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageUnpublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_DELETE, new UrlStorageUnpublishListener(), 0, null, $this->getConfig()->getUrlEventQueueName());
     }
 
     /**
@@ -103,7 +103,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStoragePublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_CREATE, new RedirectStoragePublishListener(), 0, null, $this->getConfig()->getUrlRedirectEventQueueName());
     }
 
     /**
@@ -113,7 +113,7 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStoragePublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_UPDATE, new RedirectStoragePublishListener(), 0, null, $this->getConfig()->getUrlRedirectEventQueueName());
     }
 
     /**
@@ -123,6 +123,6 @@ class UrlStorageEventSubscriber extends AbstractPlugin implements EventSubscribe
      */
     protected function addRedirectDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageUnpublishListener());
+        $eventCollection->addListenerQueued(UrlEvents::ENTITY_SPY_URL_REDIRECT_DELETE, new RedirectStorageUnpublishListener(), 0, null, $this->getConfig()->getUrlRedirectEventQueueName());
     }
 }

@@ -2,6 +2,7 @@
 "Assigned customers","Zugeordnete Kunden"
 "Available customers","Verfügbare Kunden"
 "Back to Customer Groups","Zurück zu Kundengruppen"
+"Customer Groups",Kundengruppen
 "Customer group was created successfully.","Kundengruppe wurde erfolgreich erstellt."
 "Customer group was updated successfully.","Kundengruppe wurde erfolgreich aktualisiert."
 "De-select all","Alle Markierungen aufheben"
@@ -14,3 +15,6 @@ Save,Speichern
 "Selected customers to assign","Ausgewählte Kunden, die zugeordnet werden sollen"
 "Selected customers to de-assign","Ausgewählte Kunden, deren Zuordnung rückgängig gemacht werden soll"
 "View Customer Group","Kundengruppe anzeigen"
+"Customer groups",Kundengruppen
+"Add a customer group","Kundengruppe hinzufügen"
+Select,Auswählen

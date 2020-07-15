@@ -25,6 +25,17 @@ interface AvailabilityRepositoryInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
+     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    public function getMappedProductConcreteAvailabilitiesByProductConcreteIds(
+        array $productConcreteIds,
+        StoreTransfer $storeTransfer
+    ): array;
+
+    /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *

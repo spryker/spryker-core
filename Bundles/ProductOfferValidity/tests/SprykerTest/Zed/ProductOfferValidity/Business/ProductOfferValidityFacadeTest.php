@@ -12,6 +12,7 @@ use DateTime;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\ProductOfferValidityTransfer;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
@@ -28,6 +29,7 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class ProductOfferValidityFacadeTest extends Unit
 {
     use LocatorHelperTrait;
+    use DataCleanupHelperTrait;
 
     /**
      * @var \SprykerTest\Zed\ProductOfferValidity\ProductOfferValidityBusinessTester
@@ -42,6 +44,19 @@ class ProductOfferValidityFacadeTest extends Unit
         parent::setUp();
 
         $this->tester->truncateProductOfferValidities();
+        $this->tester->ensureProductOfferValidityTableIsEmpty();
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
+            $this->tester->ensureProductOfferValidityTableIsEmpty();
+        });
     }
 
     /**
@@ -88,5 +103,70 @@ class ProductOfferValidityFacadeTest extends Unit
         // Assert
         $this->assertTrue($productOfferValid->getIsActive());
         $this->assertFalse($productOfferInvalid->getIsActive());
+    }
+
+    /**
+     * @return void
+     */
+    public function testCreatePersistsNewEntityToDatabase(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferValidityTransfer = (new ProductOfferValidityTransfer())
+            ->setIdProductOffer($productOfferTransfer->getIdProductOffer())
+            ->setValidFrom((new DateTime())->format('Y-m-d H:i:s'))
+            ->setValidTo((new DateTime('+1 days'))->format('Y-m-d H:i:s'));
+
+        // Act
+        $this->tester->getFacade()->create($productOfferValidityTransfer);
+        $productOfferValidityTransferFromDb = $this->tester->getProductOfferValidityRepository()
+            ->findProductOfferValidityByIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Assert
+        $this->assertEquals($productOfferValidityTransfer, $productOfferValidityTransferFromDb);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateUpdatesProductOfferValidity(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $productOfferValidityTransfer = $this->tester->haveProductOfferValidity([
+            ProductOfferValidityTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+        ]);
+        $productOfferValidityTransfer->setValidFrom((new DateTime('+1 days'))->format('Y-m-d H:i:s'));
+        $productOfferValidityTransfer->setValidTo((new DateTime('+2 days'))->format('Y-m-d H:i:s'));
+
+        // Act
+        $this->tester->getFacade()->update($productOfferValidityTransfer);
+        $productOfferValidityTransferFromDb = $this->tester->getProductOfferValidityRepository()
+            ->findProductOfferValidityByIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Assert
+        $this->assertEquals($productOfferValidityTransfer, $productOfferValidityTransferFromDb);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductOfferWithProductOfferValidityExpandsProductOffer(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferValidity([
+            ProductOfferValidityTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
+        ]);
+
+        // Act
+        $productOfferValidityTransfer = $this->tester->getFacade()->expandProductOfferWithProductOfferValidity(
+            $productOfferTransfer
+        )->getProductOfferValidity();
+        $productOfferValidityTransferFromDb = $this->tester->getProductOfferValidityRepository()
+            ->findProductOfferValidityByIdProductOffer($productOfferTransfer->getIdProductOffer());
+
+        // Assert
+        $this->assertEquals($productOfferValidityTransfer->toArray(), $productOfferValidityTransferFromDb->toArray());
     }
 }

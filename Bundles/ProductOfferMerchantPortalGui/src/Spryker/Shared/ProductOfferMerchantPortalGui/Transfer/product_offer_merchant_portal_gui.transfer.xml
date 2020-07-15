@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
-    <transfer name="GuiTableData">
+    <transfer name="GuiTableDataResponse">
         <property name="data" type="array" singular="data"/>
         <property name="total" type="int"/>
         <property name="page" type="int"/>
@@ -12,20 +12,34 @@
 
     <transfer name="GuiTableConfiguration">
         <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
-        <property name="dataUrl" type="string"/>
-        <property name="availablePageSizes" type="int[]" singular="availablePageSize"/>
-        <property name="filters" type="GuiTableFilter[]" singular="filter"/>
+        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
+        <property name="rowActions" type="GuiTableRowActionsConfiguration"/>
+        <property name="pagination" type="GuiTablePaginationConfiguration"/>
+        <property name="search" type="GuiTableSearchConfiguration"/>
+        <property name="filters" type="GuiTableFiltersConfiguration"/>
         <property name="defaultSortColumn" type="string"/>
         <property name="defaultSortDirection" type="string"/>
-        <property name="rowActions" type="GuiTableRowAction[]" singular="rowAction"/>
+    </transfer>
+
+    <transfer name="GuiTableDataSourceConfiguration">
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableRowActionsConfiguration">
+        <property name="actions" type="GuiTableRowAction[]" singular="action"/>
+        <property name="click" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTablePaginationConfiguration">
+        <property name="defaultSize" type="int"/>
+    </transfer>
+
+    <transfer name="GuiTableSearchConfiguration">
         <property name="search" type="array" associative="true" singular="searchOption"/>
-        <property name="isPaginationEnabled" type="bool"/>
-        <property name="isFiltersEnabled" type="bool"/>
-        <property name="isRowActionsEnabled" type="bool"/>
-        <property name="isSearchEnabled" type="bool"/>
-        <property name="isColumnConfiguratorEnabled" type="bool"/>
-        <property name="isItemSelectionEnabled" type="bool"/>
-        <property name="isSyncStateUrlEnabled" type="bool"/>
+    </transfer>
+
+    <transfer name="GuiTableFiltersConfiguration">
+        <property name="items" type="GuiTableFilter[]" singular="item"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">
@@ -36,24 +50,9 @@
     </transfer>
 
     <transfer name="GuiTableColumnConfiguration">
-        <property name="id" type="string"/>
-        <property name="title" type="string"/>
-        <property name="width" type="string"/>
-        <property name="sortable" type="bool"/>
-        <property name="hideable" type="bool"/>
-        <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-        <property name="typeOptionsMappings" type="array" singular="typeOptionMapping" associative="true"/>
     </transfer>
 
     <transfer name="GuiTableDataRequest">
-        <property name="searchTerm" type="string"/>
-        <property name="orderBy" type="string"/>
-        <property name="orderDirection" type="string"/>
-        <property name="page" type="int"/>
-        <property name="pageSize" type="int"/>
-        <property name="filters" type="array" singular="filter" associative="true"/>
-        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="ProductTableCriteria">
@@ -139,6 +138,7 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -156,11 +156,16 @@
         <property name="isActive" type="bool"/>
         <property name="validTo" type="string"/>
         <property name="validFrom" type="string"/>
+        <property name="fkProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="LocalizedAttributes">
         <property name="attributes" type="array" singular="attribute"/>
         <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -170,17 +175,22 @@
         <property name="productAttributes" type="array" singular="productAttribute"/>
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
-        <property name="productOfferStock" type="ProductOfferStock"/>
+        <property name="productOfferStocks" type="ProductOfferStock[]" singular="productOfferStock"/>
         <property name="productOfferValidity" type="ProductOfferValidity"/>
         <property name="concreteSku" type="string"/>
         <property name="merchantSku" type="string"/>
         <property name="stores" type="Store[]" singular="store"/>
         <property name="isActive" type="bool"/>
+        <property name="fkMerchant" type="int"/>
+        <property name="idProductOffer" type="int"/>
+        <property name="idProductConcrete" type="int"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
     </transfer>
 
     <transfer name="ProductOfferStock">
         <property name="quantity" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
+        <property name="stock" type="Stock"/>
     </transfer>
 
     <transfer name="ProductOfferValidity">
@@ -190,10 +200,106 @@
 
     <transfer name="ProductImageSet">
         <property name="productImages" type="ProductImage[]" singular="productImage"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ProductImage">
         <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="StockCollection">
+        <property name="stocks" type="Stock[]" singular="stock"/>
+    </transfer>
+
+    <transfer name="ProductOfferCriteriaFilter">
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
+    <transfer name="StoreWithCurrency">
+        <property name="currencies" type="Currency[]" singular="currency"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="idPriceType" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="fkStore" type="int"/>
+        <property name="fkCurrency" type="int"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="idCurrency" type="int"/>
+        <property name="symbol" type="string"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="moneyValue" type="MoneyValue"/>
+        <property name="priceType" type="PriceType"/>
+        <property name="fkPriceType" type="int"/>
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="ProductOfferResponse">
+        <property name="errors" type="ProductOfferError[]" singular="error"/>
+        <property name="productOffer" type="ProductOffer"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+    </transfer>
+
+    <transfer name="ProductOfferError">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="RawProductAttributes">
+        <property name="abstractAttributes" type="array" singular="abstractAttribute"/>
+        <property name="abstractLocalizedAttributes" type="array" singular="abstractLocalizedAttribute"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="concreteLocalizedAttributes" type="array" singular="concreteLocalizedAttribute"/>
+    </transfer>
+
+    <transfer name="MerchantStockCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="isDefault" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantProductOfferCounts">
+        <property name="total" type="int"/>
+        <property name="active" type="int"/>
+        <property name="inactive" type="int"/>
+        <property name="withStock" type="int"/>
+        <property name="lowInStock" type="int"/>
+        <property name="withValidDates" type="int"/>
+        <property name="expiring" type="int"/>
+        <property name="visible" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardCard">
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
+        <property name="title" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardActionButton">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

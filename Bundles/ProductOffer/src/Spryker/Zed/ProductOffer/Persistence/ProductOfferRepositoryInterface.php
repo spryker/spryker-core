@@ -26,4 +26,23 @@ interface ProductOfferRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer|null
      */
     public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer;
+
+    /**
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getProductOfferStores(int $idProductOffer): array;
+
+    /**
+     * @return int
+     */
+    public function getMaxIdProductOffer(): int;
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return bool
+     */
+    public function isProductOfferReferenceUsed(string $productOfferReference): bool;
 }

@@ -19,19 +19,19 @@ import { LoginModule } from './login/login.module';
 export class ComponentsModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'spy-button',
+            selector: 'web-spy-button',
             component: ButtonComponent
         },
         {
-            selector: 'mp-login',
+            selector: 'web-mp-login',
             component: LoginComponent
         },
         {
-            selector: 'spy-form-item',
+            selector: 'web-spy-form-item',
             component: FormItemComponent
         },
         {
-            selector: 'spy-input',
+            selector: 'web-spy-input',
             component: InputComponent
         }
     ];

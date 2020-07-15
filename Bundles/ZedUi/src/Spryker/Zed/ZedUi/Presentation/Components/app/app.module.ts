@@ -1,14 +1,21 @@
-import { HttpClientModule } from "@angular/common/http";
-import { Compiler, Injector, NgModule } from "@angular/core";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { LocaleModule } from "@spryker/locale";
-import { DeLocaleModule } from "@spryker/locale/locales/de";
-import { EN_LOCALE, EnLocaleModule } from "@spryker/locale/locales/en";
-import { WebComponentsModule } from "@spryker/web-components";
+import { HttpClientModule } from '@angular/common/http';
+import { Compiler, Injector, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AjaxActionModule } from '@spryker/ajax-action';
+import {
+    AjaxPostActionCloseService,
+    AjaxPostActionRedirectService,
+    AjaxPostActionRefreshTableService,
+} from '@spryker/ajax-post-actions';
+import { LocaleModule } from '@spryker/locale';
+import { DeLocaleModule } from '@spryker/locale/locales/de';
+import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
+import { NotificationModule } from '@spryker/notification';
+import { WebComponentsModule } from '@spryker/web-components';
 
-import { _getNgModules, ComponentsNgModule } from "./registry";
-import { TableRootModule } from "./table/table-root.module";
+import { _getNgModules, ComponentsNgModule } from './registry';
+import { TableRootModule } from './table/table-root.module';
 
 @NgModule({
     imports: [
@@ -20,6 +27,12 @@ import { TableRootModule } from "./table/table-root.module";
         DeLocaleModule,
         TableRootModule,
         WebComponentsModule.forRoot(),
+        NotificationModule.forRoot(),
+        AjaxActionModule.withActions({
+            close_overlay: AjaxPostActionCloseService,
+            redirect: AjaxPostActionRedirectService,
+            refresh_table: AjaxPostActionRefreshTableService,
+        }),
     ],
     providers: [],
 })

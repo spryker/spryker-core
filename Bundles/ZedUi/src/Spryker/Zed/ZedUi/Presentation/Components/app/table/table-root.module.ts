@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
-import { TableModule } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
+import {
+    TableFormOverlayActionHandlerModule,
+    TableFormOverlayActionHandlerService,
+} from '@spryker/table/action-handlers';
 import {
     TableColumnChipComponent,
     TableColumnChipModule,
@@ -19,15 +23,15 @@ import {
     TableFilterSelectModule,
 } from '@spryker/table/filters';
 
+export class TableDefaultConfigData implements Partial<TableConfig> {
+    total = {
+        enabled: true,
+    };
+}
+
 @NgModule({
     imports: [
         TableModule.forRoot(),
-        TableColumnChipModule,
-        TableColumnTextModule,
-        TableColumnImageModule,
-        TableColumnDateModule,
-        TableFilterSelectModule,
-        TableFilterDateRangeModule,
         TableModule.withFeatures({
             filters: () =>
                 import('@spryker/table/features').then(
@@ -71,6 +75,26 @@ import {
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
         }),
+        TableModule.withActions({
+            'form-overlay': TableFormOverlayActionHandlerService,
+        }),
+
+        // Table Column Type Modules
+        TableColumnChipModule,
+        TableColumnTextModule,
+        TableColumnImageModule,
+        TableColumnDateModule,
+        TableFilterSelectModule,
+        TableFilterDateRangeModule,
+
+        // Table Action Handler Modules
+        TableFormOverlayActionHandlerModule,
+    ],
+    providers: [
+        {
+            provide: TableDefaultConfig,
+            useClass: TableDefaultConfigData,
+        },
     ],
 })
 export class TableRootModule {}

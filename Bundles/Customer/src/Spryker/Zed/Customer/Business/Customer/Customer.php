@@ -26,7 +26,6 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
-use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestoredPasswordConfirmationMailTypePlugin;
 use Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRestorePasswordMailTypePlugin;
 use Spryker\Zed\Customer\CustomerConfig;
@@ -44,6 +43,9 @@ class Customer implements CustomerInterface
     protected const GLOSSARY_PARAM_VALIDATION_LENGTH = '{{ limit }}';
     protected const GLOSSARY_KEY_MIN_LENGTH_ERROR = 'customer.password.error.min_length';
     protected const GLOSSARY_KEY_MAX_LENGTH_ERROR = 'customer.password.error.max_length';
+    protected const GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED = 'customer.error.confirm_email_link.invalid_or_used';
+    protected const GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS = 'customer.authorization.validate_email_address';
+    protected const GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS = 'customer.registration.success';
 
     /**
      * @var \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface
@@ -242,6 +244,15 @@ class Customer implements CustomerInterface
             $this->sendPasswordRestoreMail($customerTransfer);
         }
 
+        $message = static::GLOSSARY_KEY_CUSTOMER_REGISTRATION_SUCCESS;
+        if ($this->customerConfig->isDoubleOptInEnabled()) {
+            $message = static::GLOSSARY_KEY_CUSTOMER_AUTHORIZATION_VALIDATE_EMAIL_ADDRESS;
+        }
+        $messageTransfer = (new MessageTransfer())
+            ->setValue($message);
+
+        $customerResponseTransfer->setMessage($messageTransfer);
+
         return $customerResponseTransfer;
     }
 
@@ -322,8 +333,12 @@ class Customer implements CustomerInterface
 
         $customerTransfer->setConfirmationLink($confirmationLink);
 
+        $mailType = $this->customerConfig->isDoubleOptInEnabled()
+            ? CustomerConfig::CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE
+            : CustomerConfig::CUSTOMER_REGISTRATION_MAIL_TYPE;
+
         $mailTransfer = new MailTransfer();
-        $mailTransfer->setType(CustomerRegistrationMailTypePlugin::MAIL_TYPE);
+        $mailTransfer->setType($mailType);
         $mailTransfer->setCustomer($customerTransfer);
         $mailTransfer->setLocale($customerTransfer->getLocale());
 
@@ -350,6 +365,8 @@ class Customer implements CustomerInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Customer\Business\Customer\Customer::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @throws \Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException
@@ -358,19 +375,40 @@ class Customer implements CustomerInterface
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
-        $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
-            ->findOne();
-        if ($customerEntity === null) {
+        $customerResponseTransfer = $this->confirmCustomerRegistration($customerTransfer);
+        if (!$customerResponseTransfer->getIsSuccess()) {
             throw new CustomerNotFoundException(sprintf('Customer for registration key `%s` not found', $customerTransfer->getRegistrationKey()));
+        }
+
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer
+    {
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setCustomerTransfer($customerTransfer)
+            ->setIsSuccess(true);
+
+        $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())->findOne();
+
+        if (!$customerEntity) {
+            return $customerResponseTransfer
+                ->setIsSuccess(false)
+                ->addError((new CustomerErrorTransfer())->setMessage(static::GLOSSARY_KEY_CONFIRM_EMAIL_LINK_INVALID_OR_USED));
         }
 
         $customerEntity->setRegistered(new DateTime());
         $customerEntity->setRegistrationKey(null);
-
         $customerEntity->save();
-        $customerTransfer->fromArray($customerEntity->toArray(), true);
 
-        return $customerTransfer;
+        $customerTransfer = $customerTransfer->fromArray($customerEntity->toArray(), true);
+
+        return $customerResponseTransfer->setCustomerTransfer($customerTransfer);
     }
 
     /**
@@ -744,16 +782,22 @@ class Customer implements CustomerInterface
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
     {
-        $result = false;
-
         $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
             ->findOne();
 
-        if ($customerEntity !== null) {
-            $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());
+        if (!$customerEntity) {
+            return false;
         }
 
-        return $result;
+        if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {
+            return false;
+        }
+
+        if ($this->customerConfig->isDoubleOptInEnabled() && !$customerEntity->getRegistered()) {
+            return false;
+        }
+
+        return true;
     }
 
     /**

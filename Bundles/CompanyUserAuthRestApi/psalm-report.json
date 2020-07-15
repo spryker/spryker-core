@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNaturalIdentifier on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserAuthRestApi/src/Spryker/Glue/CompanyUserAuthRestApi/Processor/CompanyUserAccessToken/CompanyUserAccessTokenReader.php",
+            "snippet": "            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())",
+            "selected_text": "getNaturalIdentifier",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

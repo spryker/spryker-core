@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/PriceDataFeed/src/Spryker/Zed/PriceDataFeed/PriceDataFeedDependencyProvider.php",
+            "snippet": "                ->queryContainer();",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

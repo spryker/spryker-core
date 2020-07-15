@@ -360,7 +360,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function isVerboseModeEnabled(): bool
     {
-        return $this->input->getOption(static::OPTION_VERBOSE);
+        return (bool)$this->input->getOption(static::OPTION_VERBOSE);
     }
 
     /**

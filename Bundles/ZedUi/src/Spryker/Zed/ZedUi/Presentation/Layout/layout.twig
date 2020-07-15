@@ -17,6 +17,10 @@
         {% endblock %}
     </head>
     <body>
+        {% block globalBody %}
+            <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+        {% endblock %}
+
         {% block body %}{% endblock %}
 
         {% block polyfillsJs %}
