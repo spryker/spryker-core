@@ -14,7 +14,6 @@ use Spryker\Client\Oauth\ResourceServer\AccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\AccessTokenValidatorInterface;
 use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoader;
 use Spryker\Client\Oauth\ResourceServer\KeyLoader\KeyLoaderInterface;
-use Spryker\Client\Oauth\ResourceServer\OauthAccessTokenValidator;
 use Spryker\Client\Oauth\ResourceServer\Repository\AccessTokenRepository;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilder;
 use Spryker\Client\Oauth\ResourceServer\ResourceServerBuilderInterface;
@@ -61,7 +60,7 @@ class OauthFactory extends AbstractFactory
      */
     public function createOauthAccessTokenValidator(): AccessTokenValidatorInterface
     {
-        return new OauthAccessTokenValidator($this->createResourceServerCreator()->create());
+        return new AccessTokenValidator($this->createResourceServerCreator()->create());
     }
 
     /**
