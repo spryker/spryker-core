@@ -33,12 +33,12 @@ class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProv
      */
     public function provide(ArrayObject $itemTransfers): array
     {
-        $additionalData = [];
+        $templateData = [];
 
         foreach ($this->shipmentOrderItemTemplatePlugins as $shipmentOrderItemTemplatePlugin) {
-            $additionalData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getTemplateData($itemTransfers);
+            $templateData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getTemplateData($itemTransfers);
         }
 
-        return $additionalData;
+        return $templateData;
     }
 }

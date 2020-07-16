@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-sm-9">
                         <h3>{{ 'Merchant Order' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
-                        <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ additionalData['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
+                        <p><b>{{ 'Fulfilled by Merchant' | trans }}:</b> {{ templateData['merchantName'][groupedOrderItemsByShipment[0].items[0].merchantReference] }}</p>
                         <p><b>{{ 'Order Reference' | trans }}:</b> {{ merchantOrderReference }}</p>
                         <hr>
                     </div>
