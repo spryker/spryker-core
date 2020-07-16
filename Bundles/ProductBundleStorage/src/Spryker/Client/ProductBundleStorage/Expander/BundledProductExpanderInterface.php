@@ -5,18 +5,13 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductBundleStorage;
+namespace Spryker\Client\ProductBundleStorage\Expander;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductBundleStorageClientInterface
+interface BundledProductExpanderInterface
 {
     /**
-     * Specification:
-     * - Expands ProductView transfer object with bundled products.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param string $localeName
      *

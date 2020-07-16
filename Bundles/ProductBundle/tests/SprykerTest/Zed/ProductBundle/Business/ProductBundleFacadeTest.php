@@ -12,7 +12,6 @@ use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\PriceProductTransfer;
@@ -51,8 +50,6 @@ class ProductBundleFacadeTest extends Unit
     public const BUNDLED_PRODUCT_PRICE_2 = 100;
     public const ID_STORE = 1;
     protected const STORE_NAME_DE = 'DE';
-
-    protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
     /**
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
@@ -145,85 +142,6 @@ class ProductBundleFacadeTest extends Unit
             $this->assertSame(1, $productBundleCollection->getProductBundles()->count());
             $this->assertSame($bundleProduct->getFkProduct(), $productBundleTransfer->getIdProductConcreteBundle());
         }
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductBundleCollectionByCriteriaFilterWithProductConcreteIdFilter(): void
-    {
-        //Assign
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_1);
-
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
-
-        //Act
-        $productBundleTransfers = $this->getProductBundleFacade()
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
-            ->getProductBundles();
-
-        //Assert
-        $this->assertCount(2, $productBundleTransfers);
-        $this->assertEquals($productBundleTransfers->offsetGet(0), $productBundleTransfers->offsetGet(1));
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductBundleCollectionByCriteriaFilterWithFakeProductConcreteIdFilter(): void
-    {
-        //Assign
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->addIdProductConcrete(static::FAKE_ID_PRODUCT_CONCRETE);
-
-        //Act
-        $productBundleTransfers = $this->getProductBundleFacade()
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
-            ->getProductBundles();
-
-        //Assert
-        $this->assertEmpty($productBundleTransfers);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductBundleCollectionByCriteriaFilterWithLimit(): void
-    {
-        //Assign
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setFilter((new FilterTransfer())->setLimit(1));
-
-        //Act
-        $productBundleTransfers = $this->getProductBundleFacade()
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
-            ->getProductBundles();
-
-        //Assert
-        $this->assertCount(1, $productBundleTransfers);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductBundleCollectionByCriteriaFilterWithGroupedFilter(): void
-    {
-        //Assign
-        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_1);
-
-        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete())
-            ->setIsGrouped(true);
-
-        //Act
-        $productBundleTransfers = $this->getProductBundleFacade()
-            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
-            ->getProductBundles();
-
-        //Assert
-        $this->assertCount(1, $productBundleTransfers);
-        $this->assertCount(2, $productBundleTransfers->offsetGet(0)->getBundledProducts());
     }
 
     /**

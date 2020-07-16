@@ -51,10 +51,24 @@ class ProductBundleStorageListenerTest extends Unit
     public function testProductBundlePublishStorageListenerStoreData(): void
     {
         // Arrange
+        $merchantTransfer = $this->tester->haveMerchant([
+            MerchantTransfer::IS_ACTIVE => true,
+            MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray(),
+        ]);
 
         // Act
+        $merchantStoragePublisherPlugin = new MerchantStoragePublisherPlugin();
+        $eventTransfers = [
+            (new EventEntityTransfer())->setId($merchantTransfer->getIdMerchant()),
+        ];
+
+        $merchantStoragePublisherPlugin->handleBulk($eventTransfers, MerchantEvents::MERCHANT_PUBLISH);
 
         // Assert
+        $merchantStorageEntity = $this->tester->findMerchantStorageEntityByIdMerchant($merchantTransfer->getIdMerchant());
+
+        $this->assertNotNull($merchantStorageEntity);
+        $this->assertArrayHasKey('id_merchant', $merchantStorageEntity->getData());
     }
 
     /**

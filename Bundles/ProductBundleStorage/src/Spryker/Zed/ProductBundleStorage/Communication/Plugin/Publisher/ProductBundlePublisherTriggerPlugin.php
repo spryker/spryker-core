@@ -20,6 +20,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
  */
 class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
+    // TODO: discuss it!
     protected const ID_PRODUCT_CONCRETE_BUNDLE = 'spy_product_bundle.id_product_concrete_bundle';
 
     /**

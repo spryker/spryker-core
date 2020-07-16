@@ -14,4 +14,9 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="bundledProducts" type="ProductView[]" singular="bundledProduct"/>
+    </transfer>
+
 </transfers>

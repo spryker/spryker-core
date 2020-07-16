@@ -9,15 +9,16 @@ namespace Spryker\Client\ProductBundleStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToProductStorageClientBridge;
 use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToStorageClientBridge;
 use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToSynchronizationServiceBridge;
-use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToUtilEncodingServiceBridge;
 
 class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -30,7 +31,7 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
 
         $container = $this->addSynchronizationService($container);
         $container = $this->addStorageClient($container);
-        $container = $this->addUtilEncodingService($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
@@ -68,10 +69,10 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addUtilEncodingService(Container $container): Container
+    protected function addProductStorageClient(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
-            return new ProductBundleStorageToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ProductBundleStorageToProductStorageClientBridge($container->getLocator()->productStorage()->client());
         });
 
         return $container;

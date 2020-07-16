@@ -8,20 +8,24 @@
 namespace Spryker\Client\ProductBundleStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToProductStorageClientInterface;
 use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToStorageClientInterface;
 use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToSynchronizationServiceInterface;
-use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToUtilEncodingServiceInterface;
-use Spryker\Client\ProductBundleStorage\Mapper\ProductBundleStorageMapper;
-use Spryker\Client\ProductBundleStorage\Mapper\ProductBundleStorageMapperInterface;
+use Spryker\Client\ProductBundleStorage\Expander\BundledProductExpander;
+use Spryker\Client\ProductBundleStorage\Expander\BundledProductExpanderInterface;
 
 class ProductBundleStorageFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductBundleStorage\Mapper\ProductBundleStorageMapperInterface
+     * @return \Spryker\Client\ProductBundleStorage\Expander\BundledProductExpanderInterface
      */
-    public function createProductBundleStorageMapper(): ProductBundleStorageMapperInterface
+    public function createBundledProductExpander(): BundledProductExpanderInterface
     {
-        return new ProductBundleStorageMapper();
+        return new BundledProductExpander(
+            $this->getStorageClient(),
+            $this->getSynchronizationService(),
+            $this->getProductStorageClient()
+        );
     }
 
     /**
@@ -41,10 +45,10 @@ class ProductBundleStorageFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToUtilEncodingServiceInterface
+     * @return \Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToProductStorageClientInterface
      */
-    public function getUtilEncodingService(): ProductBundleStorageToUtilEncodingServiceInterface
+    public function getProductStorageClient(): ProductBundleStorageToProductStorageClientInterface
     {
-        return $this->getProvidedDependency(ProductBundleStorageDependencyProvider::SERVICE_UTIL_ENCODING);
+        return $this->getProvidedDependency(ProductBundleStorageDependencyProvider::CLIENT_PRODUCT_STORAGE);
     }
 }
