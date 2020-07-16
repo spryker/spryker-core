@@ -51,7 +51,7 @@ class SalesController extends AbstractController
             'itemGroups' => $itemGroups,
             'tableColumnHeaders' => $request->attributes->get('tableColumnHeaders'),
             'tableColumnCellsContent' => $request->attributes->get('tableColumnCellsContent'),
-            'alternativeTemplates' => $this->getFactory()->createShipmentOrderItemAlternativeTemplateProvider()->provide($orderTransfer->getItems()),
+            'templates' => $this->getFactory()->createShipmentOrderItemTemplateProvider()->provide($orderTransfer->getItems()),
         ]);
     }
 

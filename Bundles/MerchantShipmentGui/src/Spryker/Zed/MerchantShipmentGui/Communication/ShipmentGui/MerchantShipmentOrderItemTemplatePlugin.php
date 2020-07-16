@@ -46,7 +46,7 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
      */
     public function getAdditionData(ArrayObject $itemTransfers): array
     {
-        $merchantAdditoinalData[static::MERCHANT_NAME] = [];
+        $merchantAdditionalData[static::MERCHANT_NAME] = [];
 
         $merchantReferences = array_map(
             function (ItemTransfer $itemTransfer) {
@@ -61,9 +61,9 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
         );
 
         foreach ($merchantCollectionTransfer->getMerchants() as $merchantTransfer) {
-            $merchantAdditoinalData[static::MERCHANT_NAME][$merchantTransfer->getMerchantReference()] = $merchantTransfer->getName();
+            $merchantAdditionalData[static::MERCHANT_NAME][$merchantTransfer->getMerchantReference()] = $merchantTransfer->getName();
         }
 
-        return $merchantAdditoinalData;
+        return $merchantAdditionalData;
     }
 }

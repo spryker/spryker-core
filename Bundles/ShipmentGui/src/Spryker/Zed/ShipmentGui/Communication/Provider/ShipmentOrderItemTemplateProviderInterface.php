@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentGui\Communication\Extractor;
+namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 
 use ArrayObject;
 
-interface ShipmentOrderItemAlternativeTemplateProviderInterface
+interface ShipmentOrderItemTemplateProviderInterface
 {
     /**
      * @phpstan-return array<string, mixed>

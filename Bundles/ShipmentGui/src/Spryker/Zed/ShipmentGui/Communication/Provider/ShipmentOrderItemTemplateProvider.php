@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ShipmentGui\Communication\Extractor;
+namespace Spryker\Zed\ShipmentGui\Communication\Provider;
 
 use ArrayObject;
 
-class ShipmentOrderItemAlternativeTemplateProvider implements ShipmentOrderItemAlternativeTemplateProviderInterface
+class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProviderInterface
 {
     /**
      * @var \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[]
@@ -35,8 +35,8 @@ class ShipmentOrderItemAlternativeTemplateProvider implements ShipmentOrderItemA
     {
         $additionalData = [];
 
-        foreach ($this->shipmentOrderItemTemplatePlugins as $additionalMerchantPlugin) {
-            $additionalData[$additionalMerchantPlugin->getTemplatePath()] = $additionalMerchantPlugin->getAdditionData($itemTransfers);
+        foreach ($this->shipmentOrderItemTemplatePlugins as $shipmentOrderItemTemplatePlugin) {
+            $additionalData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getAdditionData($itemTransfers);
         }
 
         return $additionalData;

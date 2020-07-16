@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProvider;
-use Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentCarrierFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentFormDataProvider;
 use Spryker\Zed\ShipmentGui\Communication\Form\DataProvider\ShipmentMethodFormDataProvider;
@@ -29,6 +27,8 @@ use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransfo
 use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouper;
 use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
+use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProvider;
+use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
@@ -216,11 +216,11 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\ShipmentGui\Communication\Extractor\ShipmentOrderItemAlternativeTemplateProviderInterface
+     * @return \Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProviderInterface
      */
-    public function createShipmentOrderItemAlternativeTemplateProvider(): ShipmentOrderItemAlternativeTemplateProviderInterface
+    public function createShipmentOrderItemTemplateProvider(): ShipmentOrderItemTemplateProviderInterface
     {
-        return new ShipmentOrderItemAlternativeTemplateProvider($this->getShipmentOrderItemTemplatePlugins());
+        return new ShipmentOrderItemTemplateProvider($this->getShipmentOrderItemTemplatePlugins());
     }
 
     /**
