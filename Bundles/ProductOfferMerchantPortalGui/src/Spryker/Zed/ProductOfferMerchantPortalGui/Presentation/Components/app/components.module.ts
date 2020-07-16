@@ -1,6 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CustomElementModule } from '@spryker/web-components';
-import { ButtonModule, ButtonComponent, ButtonLinkModule, ButtonLinkComponent } from '@spryker/button';
+import {
+    ButtonModule,
+    ButtonComponent,
+    ButtonLinkModule,
+    ButtonLinkComponent,
+} from '@spryker/button';
 
 import { OffersListComponent } from './offers-list/offers-list.component';
 import { OffersListModule } from './offers-list/offers-list.module';
@@ -14,7 +19,10 @@ import { CardModule, CardComponent } from '@spryker/card';
 import { SelectModule, SelectComponent } from '@spryker/select';
 import { InputModule, InputComponent } from '@spryker/input';
 import { CheckboxModule, CheckboxComponent } from '@spryker/checkbox';
-import { DateRangePickerModule, DateRangePickerComponent } from '@spryker/date-picker';
+import {
+    DateRangePickerModule,
+    DateRangePickerComponent,
+} from '@spryker/date-picker';
 import { CollapsibleModule, CollapsibleComponent } from '@spryker/collapsible';
 import { FormItemModule, FormItemComponent } from '@spryker/form-item';
 
@@ -35,7 +43,6 @@ import { FormItemModule, FormItemComponent } from '@spryker/form-item';
         ChipsModule,
         EditOfferModule,
     ],
-    providers: [],
 })
 export class ComponentsModule extends CustomElementModule {
     protected components = [
@@ -48,51 +55,51 @@ export class ComponentsModule extends CustomElementModule {
             component: ProductOfferComponent,
         },
         {
-            selector: 'web-spy-button-link',
+            selector: 'spy-button-link',
             component: ButtonLinkComponent,
         },
         {
-            selector: 'web-mp-edit-offer',
+            selector: 'mp-edit-offer',
             component: EditOfferComponent,
         },
         {
-            selector: 'web-spy-button',
+            selector: 'spy-button',
             component: ButtonComponent,
         },
         {
-            selector: 'web-spy-chips',
+            selector: 'spy-chips',
             component: ChipsComponent,
         },
         {
-            selector: 'web-spy-toggle',
+            selector: 'spy-toggle',
             component: ToggleComponent,
         },
         {
-            selector: 'web-spy-input',
+            selector: 'spy-input',
             component: InputComponent,
         },
         {
-            selector: 'web-spy-select',
+            selector: 'spy-select',
             component: SelectComponent,
         },
         {
-            selector: 'web-spy-card',
+            selector: 'spy-card',
             component: CardComponent,
         },
         {
-            selector: 'web-spy-date-range-picker',
+            selector: 'spy-date-range-picker',
             component: DateRangePickerComponent,
         },
         {
-            selector: 'web-spy-checkbox',
+            selector: 'spy-checkbox',
             component: CheckboxComponent,
         },
         {
-            selector: 'web-spy-collapsible',
+            selector: 'spy-collapsible',
             component: CollapsibleComponent,
         },
         {
-            selector: 'web-spy-form-item',
+            selector: 'spy-form-item',
             component: FormItemComponent,
         },
     ];

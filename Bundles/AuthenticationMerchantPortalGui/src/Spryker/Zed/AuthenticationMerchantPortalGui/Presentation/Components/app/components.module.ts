@@ -8,31 +8,26 @@ import { LoginComponent } from './login/login.component';
 import { LoginModule } from './login/login.module';
 
 @NgModule({
-    imports: [
-        ButtonModule,
-        FormItemModule,
-        InputModule,
-        LoginModule,
-    ],
+    imports: [ButtonModule, FormItemModule, InputModule, LoginModule],
     providers: [],
 })
 export class ComponentsModule extends CustomElementModule {
     protected components = [
         {
-            selector: 'web-spy-button',
-            component: ButtonComponent
+            selector: 'spy-button',
+            component: ButtonComponent,
         },
         {
-            selector: 'web-mp-login',
-            component: LoginComponent
+            selector: 'mp-login',
+            component: LoginComponent,
         },
         {
-            selector: 'web-spy-form-item',
-            component: FormItemComponent
+            selector: 'spy-form-item',
+            component: FormItemComponent,
         },
         {
-            selector: 'web-spy-input',
-            component: InputComponent
-        }
+            selector: 'spy-input',
+            component: InputComponent,
+        },
     ];
 }
