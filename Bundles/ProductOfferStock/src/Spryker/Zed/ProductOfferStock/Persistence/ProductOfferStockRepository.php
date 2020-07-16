@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
@@ -38,6 +39,26 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             ->mapProductOfferStockEntityToProductOfferStockTransfer(
                 $productOfferStockEntity,
                 new ProductOfferStockTransfer()
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
+    {
+        $productOfferStockEntities = $this->applyFilters(
+            $this->getFactory()->getProductOfferStockPropelQuery(),
+            $productOfferStockRequestTransfer
+        )->find();
+
+        return $this->getFactory()
+            ->createProductOfferStockMapper()
+            ->mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
+                $productOfferStockEntities,
+                new ArrayObject()
             );
     }
 

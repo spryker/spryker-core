@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantProduct\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\MerchantProductCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantProductTransfer;
 
 /**
  * Auto-generated group annotations
@@ -35,13 +36,17 @@ class MerchantProductFacadeTest extends Unit
     public function testFindMerchantReturnsMerchant(): void
     {
         // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
         $expectedMerchantTransfer = $this->tester->haveMerchant();
-        $productConcreteTransfer = $this->tester->haveProduct();
-        $this->tester->addMerchantProductRelation($expectedMerchantTransfer->getIdMerchant(), $productConcreteTransfer->getFkProductAbstract());
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $expectedMerchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
 
         // Act
         $merchantTransfer = $this->tester->getFacade()->findMerchant(
-            (new MerchantProductCriteriaTransfer())->setIdProductAbstract($productConcreteTransfer->getFkProductAbstract())
+            (new MerchantProductCriteriaTransfer())->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
         );
 
         // Assert
@@ -64,5 +69,87 @@ class MerchantProductFacadeTest extends Unit
 
         // Assert
         $this->assertNull($merchantTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetByIdProductAbstract(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+        // Act
+        $merchantProductCollectionTransfer = $this->tester->getFacade()->get($merchantProductCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(1, $merchantProductCollectionTransfer->getMerchantProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetByIdMerchantProductAbstracts(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $merchantProductTransfer1 = $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $merchantProductTransfer2 = $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addMerchantProductAbstractId($merchantProductTransfer1->getIdMerchantProductAbstract())
+            ->addMerchantProductAbstractId($merchantProductTransfer2->getIdMerchantProductAbstract());
+
+        // Act
+        $merchantProductCollectionTransfer = $this->tester->getFacade()->get($merchantProductCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $merchantProductCollectionTransfer->getMerchantProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetByIdMerchants(): void
+    {
+        // Arrange
+        $this->tester->ensureMerchantProductAbstractTableIsEmpty();
+        $merchantTransfer = $this->tester->haveMerchant();
+        $merchantTransfer2 = $this->tester->haveMerchant();
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $productAbstractTransfer2 = $this->tester->haveProductAbstract();
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
+        $this->tester->haveMerchantProduct([
+            MerchantProductTransfer::ID_MERCHANT => $merchantTransfer2->getIdMerchant(),
+            MerchantProductTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer2->getIdProductAbstract(),
+        ]);
+        $merchantProductCriteriaTransfer = (new MerchantProductCriteriaTransfer())
+            ->addIdMerchant($merchantTransfer->getIdMerchant())
+            ->addIdMerchant($merchantTransfer2->getIdMerchant());
+
+        // Act
+        $merchantProductCollectionTransfer = $this->tester->getFacade()->get($merchantProductCriteriaTransfer);
+
+        // Assert
+        $this->assertCount(2, $merchantProductCollectionTransfer->getMerchantProducts());
     }
 }

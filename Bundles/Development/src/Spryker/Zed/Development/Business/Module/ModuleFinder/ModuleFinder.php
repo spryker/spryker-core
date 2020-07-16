@@ -147,7 +147,7 @@ class ModuleFinder implements ModuleFinderInterface
 
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/\smodule$/', $description);
+        return (bool)preg_match('/\smodule$/', $description);
     }
 
     /**

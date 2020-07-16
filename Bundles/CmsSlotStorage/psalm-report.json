@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsSlotStorage\\Persistence\\SpyCmsSlotStorage::setKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotStorage/src/Spryker/Zed/CmsSlotStorage/Persistence/Propel/Mapper/CmsSlotStorageMapper.php",
+            "snippet": "        $cmsSlotStorageEntity->setKey($cmsSlotStorageTransfer->getKey());",
+            "selected_text": "$cmsSlotStorageTransfer->getKey()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}
