@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Persistence;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderCountsTransfer;
 use Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer;
 
 interface SalesMerchantPortalGuiRepositoryInterface
@@ -20,4 +21,11 @@ interface SalesMerchantPortalGuiRepositoryInterface
     public function getMerchantOrderTableData(
         MerchantOrderTableCriteriaTransfer $merchantOrderTableCriteriaTransfer
     ): MerchantOrderCollectionTransfer;
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderCountsTransfer
+     */
+    public function getMerchantOrderCounts(int $idMerchant): MerchantOrderCountsTransfer;
 }
