@@ -13,6 +13,9 @@ use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundle
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
 
+/**
+ * @method \Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig getConfig()
+ */
 class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
@@ -32,7 +35,6 @@ class ConfigurableBundlesRestApiDependencyProvider extends AbstractBundleDepende
         $container = $this->addGlossaryStorageClient($container);
 
         return $container;
-
     }
 
     /**

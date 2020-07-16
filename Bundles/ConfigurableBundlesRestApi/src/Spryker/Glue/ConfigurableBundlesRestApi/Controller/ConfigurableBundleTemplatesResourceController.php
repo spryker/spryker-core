@@ -16,7 +16,6 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
  */
 class ConfigurableBundleTemplatesResourceController extends AbstractController
 {
-
     /**
      * @Glue({
      *     "getResourceById": {
