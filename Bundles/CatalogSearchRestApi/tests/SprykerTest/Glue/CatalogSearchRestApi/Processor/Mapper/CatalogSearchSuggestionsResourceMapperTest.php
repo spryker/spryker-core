@@ -84,6 +84,8 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         $this->assertEmpty($this->getProductsFromRestCatalogSearchAttributesTransfer($attributes));
         $this->assertEmpty($attributes->getCategories());
         $this->assertEmpty($attributes->getCmsPages());
+        $this->assertEmpty($attributes->getCategoryCollection());
+        $this->assertEmpty($attributes->getCmsPageCollection());
     }
 
     /**
@@ -119,6 +121,16 @@ class CatalogSearchSuggestionsResourceMapperTest extends Unit
         foreach ($restCatalogSearchSuggestionsAttributes->getCmsPages() as $cmsPage) {
             $this->assertArrayHasKey('name', $cmsPage);
             $this->assertArrayNotHasKey('id_cms_page', $cmsPage);
+        }
+
+        foreach ($restCatalogSearchSuggestionsAttributes->getCategoryCollection() as $category) {
+            $this->assertArrayHasKey('name', $category->toArray());
+            $this->assertArrayHasKey('url', $category->toArray());
+        }
+
+        foreach ($restCatalogSearchSuggestionsAttributes->getCmsPageCollection() as $cmsPage) {
+            $this->assertArrayHasKey('name', $cmsPage->toArray());
+            $this->assertArrayHasKey('url', $cmsPage->toArray());
         }
     }
 

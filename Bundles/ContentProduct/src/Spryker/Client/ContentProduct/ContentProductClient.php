@@ -31,4 +31,23 @@ class ContentProductClient extends AbstractClient implements ContentProductClien
             ->createContentProductAbstractListTypeMapper()
             ->executeProductAbstractListTypeByKey($contentKey, $localeName);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     */
+    public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createContentProductAbstractListTypeMapper()
+            ->executeProductAbstractListTypeByKeys($contentKeys, $localeName);
+    }
 }

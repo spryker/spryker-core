@@ -5,11 +5,12 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/content-product": "^1.0.0",
+    "spryker/content-product": "^1.1.0",
     "spryker/glue-application": "^1.15.0",
     "spryker/glue-application-extension": "^1.2.0",
     "spryker/kernel": "^3.32.0",
-    "spryker/products-rest-api": "^2.4.0",
+    "spryker/products-rest-api": "^2.10.0",
+    "spryker/store": "^1.0.0",
     "spryker/symfony": "^3.2.0"
   },
   "require-dev": {
