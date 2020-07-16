@@ -13,10 +13,19 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Customer\CustomerConfig getSharedConfig()
+ */
 class CustomerConfig extends AbstractBundleConfig
 {
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
     public const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
+
+    /**
+     * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin::MAIL_TYPE
+     */
+    public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
+    public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
@@ -117,6 +126,18 @@ class CustomerConfig extends AbstractBundleConfig
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDoubleOptInEnabled();
     }
 
     /**

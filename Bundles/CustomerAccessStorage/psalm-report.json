@@ -1,0 +1,59 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerAccessStorage\\Persistence\\Propel\\Mapper\\CustomerAccessStorageMapperInterface::fillCustomerAccessTransferFromEntities expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CustomerAccess\\Persistence\\SpyUnauthenticatedCustomerAccess> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Persistence/CustomerAccessStorageRepository.php",
+            "snippet": "            ->fillCustomerAccessTransferFromEntities($unauthenticatedCustomerAccess);",
+            "selected_text": "$unauthenticatedCustomerAccess",
+            "error_level": 3,
+            "shortcode": 92,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\CustomerAccessStorage\\Persistence\\SpyUnauthenticatedCustomerAccessStorage> variable $entities",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Persistence/CustomerAccessStorageRepository.php",
+            "snippet": "        return $entities->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Zed\\SynchronizationExtension\\Dependency\\Plugin\\SynchronizationDataRepositoryPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Communication/Plugin/Synchronization/CustomerAccessSynchronizationDataPlugin.php",
+            "snippet": "class CustomerAccessSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataRepositoryPluginInterface",
+            "selected_text": "CustomerAccessSynchronizationDataPlugin",
+            "error_level": 2,
+            "shortcode": 152,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CustomerAccessStorage\\Persistence\\CustomerAccessStorageRepositoryInterface::findAllCustomerAccessStorageEntities has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessStorage/src/Spryker/Zed/CustomerAccessStorage/Communication/Plugin/Synchronization/CustomerAccessSynchronizationDataPlugin.php",
+            "snippet": "        $customerAccessStorageEntities = $this->getRepository()->findAllCustomerAccessStorageEntities();",
+            "selected_text": "findAllCustomerAccessStorageEntities",
+            "error_level": 2,
+            "shortcode": 1,
+            "taint_trace": null
+        }
+    ]
+}

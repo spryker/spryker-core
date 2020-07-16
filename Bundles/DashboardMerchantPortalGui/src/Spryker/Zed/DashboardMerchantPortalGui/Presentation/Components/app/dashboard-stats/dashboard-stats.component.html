@@ -1,0 +1,7 @@
+<spy-card [title]="title">
+    <ng-content></ng-content>
+</spy-card>
+
+<ng-template #title>
+    <ng-content select="[title]"></ng-content>
+</ng-template>

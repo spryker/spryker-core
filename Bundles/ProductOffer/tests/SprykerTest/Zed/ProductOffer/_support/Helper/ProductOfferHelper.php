@@ -32,6 +32,10 @@ class ProductOfferHelper extends Module
         $productOfferTransfer = (new ProductOfferBuilder($seedData))->build();
         $productOfferTransfer->setIdProductOffer(null);
 
+        if (isset($seedData[ProductOfferTransfer::STORES])) {
+            $productOfferTransfer->setStores($seedData[ProductOfferTransfer::STORES]);
+        }
+
         $productOfferTransfer = $this->getLocator()
             ->productOffer()
             ->facade()

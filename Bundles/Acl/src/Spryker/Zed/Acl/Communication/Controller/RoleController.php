@@ -150,25 +150,33 @@ class RoleController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
-        $idRole = $this->castId($request->request->get(self::PARAM_ID_ROLE));
+        $form = $this->getFactory()->createDeleteRoleForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
+        }
+
+        $idRole = $this->castId($request->request->get(static::PARAM_ID_ROLE));
 
         if (empty($idRole)) {
             $this->addErrorMessage('Missing role id!');
 
-            return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
         }
 
         $groupsHavingThisRole = $this->getQueryContainer()->queryRoleHasGroup($idRole)->count();
         if ($groupsHavingThisRole > 0) {
             $this->addErrorMessage('Unable to delete because role has groups assigned.');
 
-            return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
+            return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
         }
 
         $this->getFacade()->removeRole($idRole);
         $this->addSuccessMessage('Role was successfully removed.');
 
-        return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
+        return $this->redirectResponse(static::ACL_ROLE_LIST_URL);
     }
 
     /**

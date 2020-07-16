@@ -37,6 +37,14 @@ class DeleteCompanyRoleController extends AbstractController
      */
     public function deleteAction(Request $request): RedirectResponse
     {
+        $deleteForm = $this->getFactory()->createCompanyRoleDeleteForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $idCompanyRole = $request->query->getInt(static::PARAMETER_ID_COMPANY_ROLE);
 
         if (!$idCompanyRole) {
@@ -81,8 +89,11 @@ class DeleteCompanyRoleController extends AbstractController
             return $this->redirectToReferer($request);
         }
 
+        $deleteForm = $this->getFactory()->createCompanyRoleDeleteForm();
+
         return $this->viewResponse([
             'companyRoleTransfer' => $companyRoleTransfer,
+            'deleteForm' => $deleteForm->createView(),
         ]);
     }
 

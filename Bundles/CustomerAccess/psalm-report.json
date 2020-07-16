@@ -1,0 +1,58 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 99,
+            "line_to": 99,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CustomerAccess\\Persistence\\SpyUnauthenticatedCustomerAccess::setContentType cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccess/src/Spryker/Zed/CustomerAccess/Persistence/CustomerAccessEntityManager.php",
+            "snippet": "        $spyCustomerAccess->setContentType($contentTypeAccessTransfer->getContentType());",
+            "selected_text": "$contentTypeAccessTransfer->getContentType()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerAccess\\Persistence\\Propel\\Mapper\\CustomerAccessMapperInterface::mapEntitiesToCustomerAccessTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CustomerAccess\\Persistence\\SpyUnauthenticatedCustomerAccess> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccess/src/Spryker/Zed/CustomerAccess/Persistence/CustomerAccessRepository.php",
+            "snippet": "            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());",
+            "selected_text": "$unauthenticatedCustomerAccessEntity",
+            "error_level": 3,
+            "shortcode": 92,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerAccess\\Persistence\\Propel\\Mapper\\CustomerAccessMapperInterface::mapEntitiesToCustomerAccessTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CustomerAccess\\Persistence\\SpyUnauthenticatedCustomerAccess> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccess/src/Spryker/Zed/CustomerAccess/Persistence/CustomerAccessRepository.php",
+            "snippet": "            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());",
+            "selected_text": "$unauthenticatedCustomerAccessEntity",
+            "error_level": 3,
+            "shortcode": 92,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 90,
+            "line_to": 90,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerAccess\\Persistence\\Propel\\Mapper\\CustomerAccessMapperInterface::mapEntitiesToCustomerAccessTransfer expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CustomerAccess\\Persistence\\SpyUnauthenticatedCustomerAccess> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccess/src/Spryker/Zed/CustomerAccess/Persistence/CustomerAccessRepository.php",
+            "snippet": "            ->mapEntitiesToCustomerAccessTransfer($unauthenticatedCustomerAccessEntity, new CustomerAccessTransfer());",
+            "selected_text": "$unauthenticatedCustomerAccessEntity",
+            "error_level": 3,
+            "shortcode": 92,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

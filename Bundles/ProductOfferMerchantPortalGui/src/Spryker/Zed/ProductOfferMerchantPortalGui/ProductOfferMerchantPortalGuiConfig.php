@@ -11,4 +11,23 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferMerchantPortalGuiConfig extends AbstractBundleConfig
 {
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getDashboardExpiringOffersDaysThreshold(): int
+    {
+        return 5;
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getDashboardLowStockThreshold(): int
+    {
+        return 5;
+    }
 }
