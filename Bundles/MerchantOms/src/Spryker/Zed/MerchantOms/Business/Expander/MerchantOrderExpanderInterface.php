@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOms\Business\StateMachineItem;
+namespace Spryker\Zed\MerchantOms\Business\Expander;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 

@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
@@ -22,7 +23,14 @@ class DetailController extends AbstractController
     protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
 
     /**
+     * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
+     */
+    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+
+    /**
      * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
@@ -34,32 +42,23 @@ class DetailController extends AbstractController
             ->findMerchantOrder(
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
-                    ->setWithItems(true)
                     ->setWithOrder(true)
+                    ->setWithUniqueProductCount(true)
             );
 
-        $customerMerchantOrderNumber = 0;
+        if (!$merchantOrderTransfer) {
+            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+        }
 
-        if (
-            $merchantOrderTransfer
-            && $merchantOrderTransfer->getOrder()
-            && $merchantOrderTransfer->getOrder()->getCustomerReference()
-        ) {
-            $merchantOrderCollectionTransfer = $this->getFactory()
-                ->getMerchantSalesOrderFacade()
-                ->getMerchantOrderCollection(
-                    (new MerchantOrderCriteriaTransfer())
-                        ->setCustomerReference($merchantOrderTransfer->getOrder()->getCustomerReference())
-                        ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
-                );
-
-            $customerMerchantOrderNumber = $merchantOrderCollectionTransfer->getMerchantOrders()->count();
+        $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+        if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
 
         $responseData = [
             'html' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
                 'merchantOrder' => $merchantOrderTransfer,
-                'customerMerchantOrderNumber' => $customerMerchantOrderNumber,
+                'customerMerchantOrderNumber' => $this->getCustomerMerchantOrderNumber($merchantOrderTransfer),
                 'shipmentsNumber' => $this->getShipmentsNumber($merchantOrderTransfer),
             ])->getContent(),
         ];
@@ -72,14 +71,35 @@ class DetailController extends AbstractController
      *
      * @return int
      */
+    protected function getCustomerMerchantOrderNumber(MerchantOrderTransfer $merchantOrderTransfer): int
+    {
+        $customerMerchantOrderNumber = 0;
+
+        if (!$merchantOrderTransfer->getOrder() || !$merchantOrderTransfer->getOrder()->getCustomerReference()) {
+            return $customerMerchantOrderNumber;
+        }
+
+        $merchantOrderCollectionTransfer = $this->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->getMerchantOrderCollection(
+                (new MerchantOrderCriteriaTransfer())
+                    ->setCustomerReference($merchantOrderTransfer->getOrder()->getCustomerReference())
+                    ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
+            );
+
+        return $merchantOrderCollectionTransfer->getMerchantOrders()->count();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return int
+     */
     protected function getShipmentsNumber(MerchantOrderTransfer $merchantOrderTransfer): int
     {
         $shipmentsNumber = 0;
         foreach ($merchantOrderTransfer->getExpenses() as $expenseTransfer) {
-            if (
-                !$expenseTransfer->getShipment()
-                || $expenseTransfer->getShipment()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()
-            ) {
+            if ($expenseTransfer->getType() !== static::SHIPMENT_EXPENSE_TYPE) {
                 continue;
             }
             $shipmentsNumber++;

@@ -62,6 +62,7 @@
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
         <property name="withOrder" type="bool"/>
+        <property name="withUniqueProductCount" type="bool"/>
         <property name="customerReference" type="string"/>
     </transfer>
 

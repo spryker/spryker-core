@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\MerchantOms\Business\StateMachineItem;
+namespace Spryker\Zed\MerchantOms\Business\Expander;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface;
@@ -32,8 +32,8 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      */
     public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        $stateMachineItemStateIds = $this->getStateMachineItemStateIds($merchantOrderTransfer);
-        $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemStatesByStateIds($stateMachineItemStateIds);
+        $merchantOrderItemIds = $this->getMerchantOrderItemIds($merchantOrderTransfer);
+        $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemStatesByMerchantOrderItemIds($merchantOrderItemIds);
 
         $itemStates = [];
         foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
@@ -48,13 +48,13 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      *
      * @return int[]
      */
-    protected function getStateMachineItemStateIds(MerchantOrderTransfer $merchantOrderTransfer): array
+    protected function getMerchantOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
-        $stateMachineItemStateIds = [];
+        $merchantOrderItemIds = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $stateMachineItemStateIds[] = $merchantOrderItemTransfer->getFkStateMachineItemState();
+            $merchantOrderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItem();
         }
 
-        return $stateMachineItemStateIds;
+        return $merchantOrderItemIds;
     }
 }

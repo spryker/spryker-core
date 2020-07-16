@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Persistence;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderItemTableMap;
+use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -44,24 +45,28 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
     }
 
     /**
-     * @param array $stateIds
+     * @module StateMachine
+     *
+     * @param int[] $merchantOrderItemIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemStatesByStateIds(array $stateIds): array
+    public function getStateMachineItemStatesByMerchantOrderItemIds(array $merchantOrderItemIds): array
     {
         $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
 
-        $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery
-            ->filterByFkStateMachineItemState_In($stateIds)
+        $stateMachineItemStateNames = $merchantSalesOrderItemQuery
+            ->filterByIdMerchantSalesOrderItem_In($merchantOrderItemIds)
             ->joinWithStateMachineItemState()
+            ->select([SpyStateMachineItemStateTableMap::COL_NAME])
+            ->groupBy(SpyStateMachineItemStateTableMap::COL_NAME)
             ->find();
 
         $stateMachineItemTransfers = [];
 
-        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
+        foreach ($stateMachineItemStateNames as $stateMachineItemStateName) {
             $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
-                ->setStateName($merchantSalesOrderItemEntity->getStateMachineItemState()->getName());
+                ->setStateName($stateMachineItemStateName);
         }
 
         return $stateMachineItemTransfers;

@@ -76,7 +76,7 @@ interface MerchantSalesOrderFacadeInterface
      * Specification:
      * - Returns a merchant order found using MerchantOrderCriteriaTransfer.
      * - Returns NULL if merchant order is not found.
-     * - Executes MerchantOrderExpanderPluginInterface plugins
+     * - Executes MerchantOrderExpanderPluginInterface plugins.
      *
      * @api
      *

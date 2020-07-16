@@ -36,6 +36,7 @@
 
     <transfer name="Expense">
         <property name="merchantReference" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItem">
@@ -74,6 +75,11 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -158,12 +164,15 @@
         <property name="merchantReference" type="string"/>
         <property name="withOrder" type="bool"/>
         <property name="withItems" type="bool"/>
+        <property name="withUniqueProductCount" type="bool"/>
         <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">
         <property name="id" type="string"/>
         <property name="title" type="string"/>
+        <property name="type" type="string"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
 </transfers>

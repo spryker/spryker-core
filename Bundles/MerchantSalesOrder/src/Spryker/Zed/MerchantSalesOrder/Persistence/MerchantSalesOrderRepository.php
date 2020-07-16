@@ -30,6 +30,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class MerchantSalesOrderRepository extends AbstractRepository implements MerchantSalesOrderRepositoryInterface
 {
+    protected const FIELD_COUNT = 'count';
+
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
@@ -139,33 +141,31 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return null;
         }
 
-        $uniqueProductQuantity = 0;
-        if ($merchantOrderCriteriaTransfer->getWithItems()) {
-            $merchantSalesOrderItemEntities = $merchantSalesOrderEntity->getMerchantSalesOrderItemsJoinSalesOrderItem();
-            $uniqueProductQuantity = $this->getUniqueProductQuantity($merchantSalesOrderItemEntities);
+        if ($merchantOrderCriteriaTransfer->getWithItems() || $merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+            $merchantSalesOrderEntity->getMerchantSalesOrderItems();
         }
 
-        $merchantOrderTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderEntityToMerchantOrderTransfer($merchantSalesOrderEntity, new MerchantOrderTransfer());
-        $merchantOrderTransfer->setUniqueProductQuantity($uniqueProductQuantity);
-
-        return $merchantOrderTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemEntities
+     * @param int $idMerchantOrder
      *
      * @return int
      */
-    protected function getUniqueProductQuantity(ObjectCollection $merchantSalesOrderItemEntities): int
+    public function getUniqueProductQuantity(int $idMerchantOrder): int
     {
-        $itemSkus = [];
-        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
-            $itemSkus[] = $merchantSalesOrderItemEntity->getSalesOrderItem()->getSku();
-        }
-
-        return count(array_unique($itemSkus));
+        return $this->getFactory()
+            ->createMerchantSalesOrderItemQuery()
+            ->filterByFkMerchantSalesOrder($idMerchantOrder)
+            ->useSalesOrderItemQuery()
+                ->groupBySku()
+            ->endUse()
+            ->withColumn('COUNT(*)', static::FIELD_COUNT)
+            ->select([static::FIELD_COUNT])
+            ->count();
     }
 
     /**

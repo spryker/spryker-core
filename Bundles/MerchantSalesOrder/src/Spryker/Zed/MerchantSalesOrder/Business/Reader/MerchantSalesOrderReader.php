@@ -66,6 +66,12 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
             }
         }
 
+        if ($merchantCriteriaTransfer->getWithUniqueProductCount()) {
+            $merchantOrderTransfer->setUniqueProductQuantity(
+                $this->merchantSalesOrderRepository->getUniqueProductQuantity($merchantOrderTransfer->getIdMerchantOrder())
+            );
+        }
+
         return $this->executeMerchantOrderExpanderPlugins($merchantOrderTransfer);
     }
 
