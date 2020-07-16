@@ -121,7 +121,7 @@
     "spryker/cms-collector": "*",
     "spryker/cms-content-widget": "*",
     "spryker/cms-content-widget-cms-block-connector": "*",
-    "spryker/cms-content-widget-content-item-connector": "*",
+    "spryker/cms-content-widget-content-connector": "*",
     "spryker/cms-content-widget-product-connector": "*",
     "spryker/cms-content-widget-product-group-connector": "*",
     "spryker/cms-content-widget-product-search-connector": "*",
