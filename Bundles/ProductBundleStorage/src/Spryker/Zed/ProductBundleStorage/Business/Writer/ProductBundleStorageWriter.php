@@ -74,12 +74,11 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
     protected function writeCollection(array $productConcreteIds): void
     {
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setProductConcreteIds($productConcreteIds);
+            ->setProductConcreteIds($productConcreteIds)
+            ->setIsGrouped(true);
 
         $productBundleCollectionTransfer = $this->productBundleFacade
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
-
-        // TODO: should group it?
 
         foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
             $productBundleStorageTransfer = $this->mapProductBundleTransferToStorageTransfer(

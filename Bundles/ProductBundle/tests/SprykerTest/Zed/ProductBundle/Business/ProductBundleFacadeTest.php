@@ -207,6 +207,28 @@ class ProductBundleFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testGetProductBundleCollectionByCriteriaFilterWithGroupedFilter(): void
+    {
+        //Assign
+        $productConcreteBundleTransfer = $this->createProductBundle(static::BUNDLED_PRODUCT_PRICE_1);
+
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete())
+            ->setIsGrouped(true);
+
+        //Act
+        $productBundleTransfers = $this->getProductBundleFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertCount(1, $productBundleTransfers);
+        $this->assertCount(2, $productBundleTransfers->offsetGet(0)->getBundledProducts());
+    }
+
+    /**
+     * @return void
+     */
     public function testExpandCartItemGroupKeyShouldAppendBundleToKey(): void
     {
         // Arrange

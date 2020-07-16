@@ -20,10 +20,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
  */
 class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
-    /**
-     * @uses \Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap::COL_FK_PRODUCT
-     */
-    protected const COL_FK_PRODUCT = 'spy_product_bundle.fk_product';
+    protected const ID_PRODUCT_CONCRETE_BUNDLE = 'spy_product_bundle.id_product_concrete_bundle';
 
     /**
      * {@inheritDoc}
@@ -42,7 +39,8 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
             ->setLimit($limit);
 
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setFilter($filterTransfer);
+            ->setFilter($filterTransfer)
+            ->setIsGrouped(true);
 
         return $this->getFactory()
             ->getProductBundleFacade()
@@ -84,6 +82,6 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
      */
     public function getIdColumnName(): ?string
     {
-        return static::COL_FK_PRODUCT;
+        return static::ID_PRODUCT_CONCRETE_BUNDLE;
     }
 }

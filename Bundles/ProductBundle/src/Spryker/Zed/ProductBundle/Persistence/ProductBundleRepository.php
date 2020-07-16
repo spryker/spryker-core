@@ -70,9 +70,16 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
         $productBundleEntities = $productBundleQuery->find();
 
+        // For BC reasons only.
+        if (!$productBundleCriteriaFilterTransfer->getIsGrouped()) {
+            return $this->getFactory()
+                ->createProductBundleMapper()
+                ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
+        }
+
         return $this->getFactory()
             ->createProductBundleMapper()
-            ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
+            ->mapProductBundleEntityCollectionToProductBundleCollectionTransfer($productBundleEntities);
     }
 
     /**

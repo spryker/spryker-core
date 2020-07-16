@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleTransfer;
 use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpySalesOrderItemBundle;
+use Propel\Runtime\Collection\Collection;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductBundleMapper
@@ -42,6 +43,8 @@ class ProductBundleMapper
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
      * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
@@ -55,6 +58,30 @@ class ProductBundleMapper
         $productBundleCollectionTransfer->setProductBundles(new ArrayObject($productForBundleTransfers));
 
         return $productBundleCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
+     */
+    public function mapProductBundleEntityCollectionToProductBundleCollectionTransfer(Collection $productBundleEntities): ProductBundleCollectionTransfer
+    {
+        $mappedProductBundleTransfers = [];
+        $mappedProductForBundleTransfers = $this->mapProductForBundleByIdProductConcreteBundle($productBundleEntities);
+
+        foreach ($productBundleEntities as $productBundleEntity) {
+            if (isset($mappedProductBundleTransfers[$productBundleEntity->getFkProduct()])) {
+                continue;
+            }
+
+            $mappedProductBundleTransfers[$productBundleEntity->getFkProduct()] = (new ProductBundleTransfer())
+                ->setIdProductConcreteBundle($productBundleEntity->getFkProduct())
+                ->setBundledProducts(new ArrayObject($mappedProductForBundleTransfers[$productBundleEntity->getFkProduct()] ?? []));
+        }
+
+        return (new ProductBundleCollectionTransfer())
+            ->setProductBundles(new ArrayObject(array_values($mappedProductBundleTransfers)));
     }
 
     /**
@@ -79,6 +106,8 @@ class ProductBundleMapper
     }
 
     /**
+     * @deprecated Will be removed with next major release
+     *
      * @param \Orm\Zed\ProductBundle\Persistence\Base\SpyProductBundle[] $productBundleEntities
      *
      * @return \Generated\Shared\Transfer\ProductBundleTransfer[]
@@ -110,5 +139,26 @@ class ProductBundleMapper
             ->setBundleItemIdentifier((string)$salesOrderItemBundleEntity->getIdSalesOrderItemBundle())
             ->setMetadata($productMetadataTransfer)
             ->fromArray($salesOrderItemBundleEntity->toArray(), true);
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
+     *
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     */
+    protected function mapProductForBundleByIdProductConcreteBundle(Collection $productBundleEntities): array
+    {
+        $mappedProductForBundleTransfers = [];
+
+        foreach ($productBundleEntities as $productBundleEntity) {
+            $mappedProductForBundleTransfers[$productBundleEntity->getFkProduct()][] = (new ProductForBundleTransfer())
+                ->fromArray($productBundleEntity->getSpyProductRelatedByFkBundledProduct()->toArray(), true)
+                ->setIdProductConcrete($productBundleEntity->getFkBundledProduct())
+                ->setIdProductBundle($productBundleEntity->getFkProduct())
+                ->setQuantity($productBundleEntity->getQuantity())
+                ->setBundleSku($productBundleEntity->getSpyProductRelatedByFkProduct()->getSku());
+        }
+
+        return $mappedProductForBundleTransfers;
     }
 }
