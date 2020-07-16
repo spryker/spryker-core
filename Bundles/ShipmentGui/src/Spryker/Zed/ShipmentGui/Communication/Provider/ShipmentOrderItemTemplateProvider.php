@@ -36,7 +36,7 @@ class ShipmentOrderItemTemplateProvider implements ShipmentOrderItemTemplateProv
         $additionalData = [];
 
         foreach ($this->shipmentOrderItemTemplatePlugins as $shipmentOrderItemTemplatePlugin) {
-            $additionalData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getAdditionData($itemTransfers);
+            $additionalData[$shipmentOrderItemTemplatePlugin->getTemplatePath()] = $shipmentOrderItemTemplatePlugin->getTemplateData($itemTransfers);
         }
 
         return $additionalData;

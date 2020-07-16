@@ -33,5 +33,5 @@ interface ShipmentOrderItemTemplatePluginInterface
      *
      * @return mixed[]
      */
-    public function getAdditionData(ArrayObject $itemTransfers): array;
+    public function getTemplateData(ArrayObject $itemTransfers): array;
 }

@@ -44,7 +44,7 @@ class MerchantShipmentOrderItemTemplatePlugin extends AbstractPlugin implements 
      *
      * @return mixed[]
      */
-    public function getAdditionData(ArrayObject $itemTransfers): array
+    public function getTemplateData(ArrayObject $itemTransfers): array
     {
         $merchantAdditionalData[static::MERCHANT_NAME] = [];
 
