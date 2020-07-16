@@ -36,7 +36,7 @@ use Spryker\Zed\Url\Dependency\UrlEvents;
 class CmsPageSearchListenerTest extends Unit
 {
     public const NUMBER_OF_LOCALES = 2;
-    public const NUMBER_OF_STORES = 3;
+    public const NUMBER_OF_STORES = 2;
 
     /**
      * @return void
