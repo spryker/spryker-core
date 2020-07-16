@@ -54,6 +54,23 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      */
     public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void
     {
+        $productConcreteIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productConcreteIds = array_unique(array_filter($productConcreteIds));
+
+        if (!$productConcreteIds) {
+            return;
+        }
+
+        $this->writeCollection($productConcreteIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductConcreteIdsEvents(array $eventTransfers): void
+    {
         $productConcreteIds = $this->eventBehaviorFacade
             ->getEventTransferForeignKeys($eventTransfers, SpyProductBundleTableMap::COL_FK_PRODUCT);
 
@@ -101,8 +118,6 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
         ProductBundleStorageTransfer $productBundleStorageTransfer
     ): ProductBundleStorageTransfer {
         $productBundleStorageTransfer = $productBundleStorageTransfer->fromArray($productBundleTransfer->modifiedToArray(), true);
-
-        // TODO: ensure that mapping is correct.
 
         return $productBundleStorageTransfer;
     }

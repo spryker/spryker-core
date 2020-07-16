@@ -20,4 +20,16 @@ interface ProductBundleStorageFacadeInterface
      * @return void
      */
     public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void;
+
+    /**
+     * Specification:
+     * - Publishes product_bundle data to storage based on product_bundle events.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductConcreteIdsEvents(array $eventTransfers): void;
 }

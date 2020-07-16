@@ -15,4 +15,11 @@ interface ProductBundleStorageWriterInterface
      * @return void
      */
     public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductConcreteIdsEvents(array $eventTransfers): void;
 }
