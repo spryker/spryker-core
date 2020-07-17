@@ -121,7 +121,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
      */
     public function getSalesFacade(): MerchantSalesOrderToSalesFacadeInterface
     {
-        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_SALES_ORDER);
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_SALES);
     }
 
     /**

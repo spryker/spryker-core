@@ -103,7 +103,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
-        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder());
+        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
 
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
@@ -113,6 +113,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
             MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => $orderTransfer->getCustomerReference(),
+            MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCT_COUNT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -120,6 +121,10 @@ class MerchantSalesOrderFacadeTest extends Unit
         );
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
             ->fromArray($merchantOrderCriteriaData);
+
+        if ($merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+            $merchantOrderCriteriaTransfer->setWithItems(true);
+        }
 
         //Act
         $merchantOrderCollectionTransfer = $this->tester
@@ -197,6 +202,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+        $expectedUniqueProductCount = $this->tester->getUniqueProductCount($saveOrderTransfer->getOrderItems());
 
         $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
@@ -211,7 +217,7 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         if ($withOrder) {
             $merchantOrderTransfer->setOrder(
-                $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder())
+                $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder())
             );
         }
 
@@ -223,6 +229,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
             MerchantOrderCriteriaTransfer::WITH_ORDER => true,
+            MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCT_COUNT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -250,7 +257,10 @@ class MerchantSalesOrderFacadeTest extends Unit
             );
         }
 
-        $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
+        if ($merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+            $this->assertEquals($expectedUniqueProductCount, $foundMerchantOrderTransfer->getUniqueProductQuantity());
+        }
+
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
         $this->assertInstanceOf(TotalsTransfer::class, $foundMerchantOrderTransfer->getTotals());
     }
@@ -539,6 +549,13 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
                 'merchantOrderItemsCount' => 0,
                 'withOrder' => true,
+            ],
+            'with unique products count' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCT_COUNT,
+                ],
+                'merchantOrderItemsCount' => 1,
             ],
         ];
     }

@@ -17,9 +17,9 @@ interface MerchantOmsRepositoryInterface
     public function getStateMachineItemsByStateIds(array $stateIds): array;
 
     /**
-     * @param array $stateIds
+     * @param int[] $merchantOrderItemIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function getStateMachineItemStatesByStateIds(array $stateIds): array;
+    public function getStateMachineItemStatesByMerchantOrderItemIds(array $merchantOrderItemIds): array;
 }

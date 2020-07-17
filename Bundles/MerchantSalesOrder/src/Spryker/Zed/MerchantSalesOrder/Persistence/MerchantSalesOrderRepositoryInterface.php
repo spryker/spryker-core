@@ -34,6 +34,13 @@ interface MerchantSalesOrderRepositoryInterface
     ): ?MerchantOrderTransfer;
 
     /**
+     * @param int $idMerchantOrder
+     *
+     * @return int
+     */
+    public function getUniqueProductQuantity(int $idMerchantOrder): int;
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer|null

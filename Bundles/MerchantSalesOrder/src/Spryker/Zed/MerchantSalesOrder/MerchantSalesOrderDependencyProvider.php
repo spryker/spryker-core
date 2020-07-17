@@ -18,7 +18,7 @@ use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFa
 class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_CALCULATION = 'FACADE_CALCULATION';
-    public const FACADE_SALES_ORDER = 'FACADE_SALES_ORDER';
+    public const FACADE_SALES = 'FACADE_SALES';
 
     public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
     public const PLUGINS_MERCHANT_ORDER_EXPANDER = 'PLUGINS_MERCHANT_ORDER_EXPANDER';
@@ -33,9 +33,22 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addCalculationFacade($container);
-        $container = $this->addSalesOrderFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addMerchantOrderPostCreatePlugins($container);
         $container = $this->addMerchantOrderExpanderPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideCommunicationLayerDependencies($container);
+        $container = $this->addSalesFacade($container);
 
         return $container;
     }
@@ -59,9 +72,9 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addSalesOrderFacade(Container $container): Container
+    protected function addSalesFacade(Container $container): Container
     {
-        $container->set(static::FACADE_SALES_ORDER, function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new MerchantSalesOrderToSalesFacadeBridge(
                 $container->getLocator()->sales()->facade()
             );

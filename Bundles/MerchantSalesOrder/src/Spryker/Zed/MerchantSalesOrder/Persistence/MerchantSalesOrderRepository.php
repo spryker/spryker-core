@@ -20,6 +20,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -139,33 +140,33 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return null;
         }
 
-        $uniqueProductQuantity = 0;
-        if ($merchantOrderCriteriaTransfer->getWithItems()) {
-            $merchantSalesOrderItemEntities = $merchantSalesOrderEntity->getMerchantSalesOrderItemsJoinSalesOrderItem();
-            $uniqueProductQuantity = $this->getUniqueProductQuantity($merchantSalesOrderItemEntities);
+        if ($merchantOrderCriteriaTransfer->getWithItems() || $merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+            $merchantSalesOrderEntity->getMerchantSalesOrderItems();
         }
 
-        $merchantOrderTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createMerchantSalesOrderMapper()
             ->mapMerchantSalesOrderEntityToMerchantOrderTransfer($merchantSalesOrderEntity, new MerchantOrderTransfer());
-        $merchantOrderTransfer->setUniqueProductQuantity($uniqueProductQuantity);
-
-        return $merchantOrderTransfer;
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[] $merchantSalesOrderItemEntities
+     * @module Sales
+     *
+     * @param int $idMerchantOrder
      *
      * @return int
      */
-    protected function getUniqueProductQuantity(ObjectCollection $merchantSalesOrderItemEntities): int
+    public function getUniqueProductQuantity(int $idMerchantOrder): int
     {
-        $itemSkus = [];
-        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
-            $itemSkus[] = $merchantSalesOrderItemEntity->getSalesOrderItem()->getSku();
-        }
-
-        return count(array_unique($itemSkus));
+        return $this->getFactory()
+            ->createMerchantSalesOrderItemQuery()
+            ->filterByFkMerchantSalesOrder($idMerchantOrder)
+            ->useSalesOrderItemQuery()
+                ->groupBySku()
+            ->endUse()
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU)
+            ->select([SpySalesOrderItemTableMap::COL_SKU])
+            ->count();
     }
 
     /**

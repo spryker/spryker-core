@@ -7,13 +7,13 @@
 
 namespace SprykerTest\Zed\MerchantSalesOrder;
 
+use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
@@ -112,12 +112,17 @@ class MerchantSalesOrderBusinessTester extends Actor
     }
 
     /**
-     * @param int $idSalesOrder
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return int
      */
-    public function getOrderTransferByIdSalesOrder(int $idSalesOrder): OrderTransfer
+    public function getUniqueProductCount(ArrayObject $itemTransfers): int
     {
-        return $this->getLocator()->sales()->facade()->getOrderByIdSalesOrder($idSalesOrder);
+        $itemSkus = [];
+        foreach ($itemTransfers as $itemTransfer) {
+            $itemSkus[] = $itemTransfer->getSku();
+        }
+
+        return count(array_unique($itemSkus));
     }
 }

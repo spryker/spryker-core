@@ -96,7 +96,7 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Expands MerchantOrderTransfer with MerchantOMS item states.
+     * - Expands MerchantOrderTransfer with Merchant OMS item states.
      *
      * @api
      *
