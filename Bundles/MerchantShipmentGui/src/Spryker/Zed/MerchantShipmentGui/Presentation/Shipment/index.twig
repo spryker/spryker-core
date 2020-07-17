@@ -11,7 +11,7 @@
     }) %}
 {% endfor %}
 
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant orders' } %}
+{% embed '@Gui/Partials/widget.twig' with { widget_title: merchantOrderReference ? 'Merchant orders' : 'Order Items' } %}
         {% block widget_title -%}
             <div class="row">
                 <div class="col-sm-9">
