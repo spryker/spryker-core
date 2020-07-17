@@ -20,6 +20,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -30,8 +31,6 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class MerchantSalesOrderRepository extends AbstractRepository implements MerchantSalesOrderRepositoryInterface
 {
-    protected const FIELD_COUNT = 'count';
-
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
@@ -151,6 +150,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
+     * @module Sales
+     *
      * @param int $idMerchantOrder
      *
      * @return int
@@ -163,8 +164,8 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             ->useSalesOrderItemQuery()
                 ->groupBySku()
             ->endUse()
-            ->withColumn('COUNT(*)', static::FIELD_COUNT)
-            ->select([static::FIELD_COUNT])
+            ->withColumn(SpySalesOrderItemTableMap::COL_SKU)
+            ->select([SpySalesOrderItemTableMap::COL_SKU])
             ->count();
     }
 

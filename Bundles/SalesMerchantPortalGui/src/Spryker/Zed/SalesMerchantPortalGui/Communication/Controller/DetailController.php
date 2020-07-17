@@ -21,11 +21,12 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
+    protected const MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND = 'Merchant order not found for id %d.';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
      */
-    public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
+    protected const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -47,12 +48,12 @@ class DetailController extends AbstractController
             );
 
         if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
         }
 
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
         if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
         }
 
         $responseData = [
