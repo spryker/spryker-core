@@ -1,19 +1,20 @@
-namespace: SprykerTest\Zed\ProductBundleStorage
+namespace: SprykerTest\Client\ProductBundleStorage
+
 paths:
     tests: .
     data: ../../../_data
     support: _support
     log: ../../../_output
+
 coverage:
     enabled: true
     remote: false
-    whitelist:
-        include:
-            - '../../../../src/*'
+    whitelist: { include: ['../../../../src/*'] }
+
 suites:
-    Communication:
-        path: Communication
-        class_name: ProductBundleStorageCommunicationTester
+    Client:
+        path: .
+        class_name: ProductBundleStorageClientTester
         modules:
             enabled:
                 - Asserts

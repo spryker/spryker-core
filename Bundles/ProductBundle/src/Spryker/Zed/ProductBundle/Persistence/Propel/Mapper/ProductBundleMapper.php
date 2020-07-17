@@ -68,7 +68,7 @@ class ProductBundleMapper
     public function mapProductBundleEntityCollectionToProductBundleCollectionTransfer(Collection $productBundleEntities): ProductBundleCollectionTransfer
     {
         $mappedProductBundleTransfers = [];
-        $mappedProductForBundleTransfers = $this->mapProductForBundleByIdProductConcreteBundle($productBundleEntities);
+        $mappedProductForBundleTransfers = $this->mapProductForBundlesByIdProductConcreteBundle($productBundleEntities);
 
         foreach ($productBundleEntities as $productBundleEntity) {
             if (isset($mappedProductBundleTransfers[$productBundleEntity->getFkProduct()])) {
@@ -144,9 +144,9 @@ class ProductBundleMapper
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
      *
-     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[]
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
      */
-    protected function mapProductForBundleByIdProductConcreteBundle(Collection $productBundleEntities): array
+    protected function mapProductForBundlesByIdProductConcreteBundle(Collection $productBundleEntities): array
     {
         $mappedProductForBundleTransfers = [];
 

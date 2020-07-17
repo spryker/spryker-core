@@ -84,7 +84,7 @@ class ProductBundleHelper extends Module
 
             $productForBundleTransfer = (new ProductForBundleTransfer())
                 ->setIdProductConcrete($productConcreteTransfer->getIdProductConcrete())
-                ->setQuantity($this->faker->randomNumber(1));
+                ->setQuantity($this->faker->numberBetween(1, 5));
 
             $productForBundleTransfers->append($productForBundleTransfer);
 
@@ -118,8 +118,8 @@ class ProductBundleHelper extends Module
         $this->getPriceProductDataHelper()->havePriceProduct([
             PriceProductTransfer::SKU_PRODUCT_ABSTRACT => $productConcreteTransfer->getAbstractSku(),
             PriceProductTransfer::MONEY_VALUE => [
-                MoneyValueTransfer::NET_AMOUNT => $this->faker->randomNumber(),
-                MoneyValueTransfer::GROSS_AMOUNT => $this->faker->randomNumber(),
+                MoneyValueTransfer::NET_AMOUNT => $this->faker->numberBetween(1000, 5000),
+                MoneyValueTransfer::GROSS_AMOUNT => $this->faker->numberBetween(1000, 5000),
                 MoneyValueTransfer::CURRENCY => $currencyTransfer,
             ],
         ]);

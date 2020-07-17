@@ -122,14 +122,14 @@ class BundledProductExpander implements BundledProductExpanderInterface
     }
 
     /**
-     * @param string $reference
+     * @param int $idProductConcrete
      *
      * @return string
      */
-    protected function generateKey(string $reference): string
+    protected function generateKey(int $idProductConcrete): string
     {
         $synchronizationDataTransfer = (new SynchronizationDataTransfer())
-            ->setReference($reference);
+            ->setReference($idProductConcrete);
 
         return $this->synchronizationService
             ->getStorageKeyBuilder(ProductBundleStorageConfig::PRODUCT_BUNDLE_RESOURCE_NAME)

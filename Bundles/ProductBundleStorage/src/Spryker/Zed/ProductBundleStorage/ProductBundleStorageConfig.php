@@ -20,14 +20,4 @@ class ProductBundleStorageConfig extends AbstractBundleConfig
     {
         return null;
     }
-
-    /**
-     * @api
-     *
-     * @return bool
-     */
-    public function isSendingToQueue(): bool
-    {
-        return true;
-    }
 }
