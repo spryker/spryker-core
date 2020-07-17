@@ -8,20 +8,23 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer;
-use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-class ConfigurableBundleTemplateRestResponseBuilder extends RestResponseBuilder implements ConfigurableBundleTemplateRestResponseBuilderInterface
+class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundleTemplateRestResponseBuilderInterface
 {
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface
+     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
      */
-    protected $configurableBundleTemplateMapper;
+    protected $restResourceBuilder;
+
+    /**
+     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface
+     */
+    protected $configurableBundleTemplateRestResourceBuilder;
 
     /**
      * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface
@@ -30,18 +33,35 @@ class ConfigurableBundleTemplateRestResponseBuilder extends RestResponseBuilder 
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface $configurableBundleTemplateMapper
+     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface $configurableBundleTemplateRestResourceBuilder
      * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface $configurableBundleTempleTranslator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ConfigurableBundleTemplateMapperInterface $configurableBundleTemplateMapper,
+        ConfigurableBundleTemplateRestResourceBuilderInterface $configurableBundleTemplateRestResourceBuilder,
         ConfigurableBundleTempleTranslatorInterface $configurableBundleTempleTranslator
     ) {
-        parent::__construct($restResourceBuilder);
-
-        $this->configurableBundleTemplateMapper = $configurableBundleTemplateMapper;
+        $this->restResourceBuilder = $restResourceBuilder;
+        $this->configurableBundleTemplateRestResourceBuilder = $configurableBundleTemplateRestResourceBuilder;
         $this->configurableBundleTempleTranslator = $configurableBundleTempleTranslator;
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildErrorRestResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface
+    {
+        return $this->createRestResponse()->addError($restErrorMessageTransfer);
     }
 
     /**
@@ -57,9 +77,8 @@ class ConfigurableBundleTemplateRestResponseBuilder extends RestResponseBuilder 
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleTempleTranslator
             ->translateConfigurableBundleTemplateNames([$configurableBundleTemplateStorageTransfer], $localeName);
 
-        $restResource = $this->createConfigurableBundleTemplateRestResource(
-            current($configurableBundleTemplateStorageTransfers)
-        );
+        $restResource = $this->configurableBundleTemplateRestResourceBuilder
+            ->buildConfigurableBundleTemplateRestResource(current($configurableBundleTemplateStorageTransfers));
 
         return $this->createRestResponse()->addResource($restResource);
     }
@@ -81,31 +100,11 @@ class ConfigurableBundleTemplateRestResponseBuilder extends RestResponseBuilder 
 
         foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
             $restResponse->addResource(
-                $this->createConfigurableBundleTemplateRestResource($configurableBundleTemplateStorageTransfer)
+                $this->configurableBundleTemplateRestResourceBuilder
+                    ->buildConfigurableBundleTemplateRestResource($configurableBundleTemplateStorageTransfer)
             );
         }
 
         return $restResponse;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
-     */
-    protected function createConfigurableBundleTemplateRestResource(
-        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
-    ): RestResourceInterface {
-        $restConfigurableBundleTemplatesAttributesTransfer = $this->configurableBundleTemplateMapper
-            ->mapConfigurableBundleTemplateStorageTransferToRestConfigurableBundleTemplatesAttributesTransfer(
-                $configurableBundleTemplateStorageTransfer,
-                new RestConfigurableBundleTemplatesAttributesTransfer()
-            );
-
-        return $this->restResourceBuilder->createRestResource(
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            $configurableBundleTemplateStorageTransfer->getUuid(),
-            $restConfigurableBundleTemplatesAttributesTransfer
-        )->setPayload($configurableBundleTemplateStorageTransfer);
     }
 }

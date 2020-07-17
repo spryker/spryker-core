@@ -16,6 +16,8 @@ use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundl
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleSlotExpanderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapper;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilder;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilder;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslator;
@@ -43,8 +45,19 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     {
         return new ConfigurableBundleTemplateRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createConfigurableBundleTemplateMapper(),
+            $this->createConfigurableBundleTemplateRestResourceBuilder(),
             $this->createConfigurableBundleTempleTranslator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface
+     */
+    public function createConfigurableBundleTemplateRestResourceBuilder(): ConfigurableBundleTemplateRestResourceBuilderInterface
+    {
+        return new ConfigurableBundleTemplateRestResourceBuilder(
+            $this->getResourceBuilder(),
+            $this->createConfigurableBundleTemplateMapper()
         );
     }
 

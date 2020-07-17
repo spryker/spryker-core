@@ -8,10 +8,23 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface ConfigurableBundleTemplateRestResponseBuilderInterface extends RestResponseBuilderInterface
+interface ConfigurableBundleTemplateRestResponseBuilderInterface
 {
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createRestResponse(): RestResponseInterface;
+
+    /**
+     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildErrorRestResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface;
+
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param string $localeName
