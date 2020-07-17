@@ -103,7 +103,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
-        $orderTransfer = $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder());
+        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
 
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
@@ -217,7 +217,7 @@ class MerchantSalesOrderFacadeTest extends Unit
 
         if ($withOrder) {
             $merchantOrderTransfer->setOrder(
-                $this->tester->getOrderTransferByIdSalesOrder($merchantOrderTransfer->getIdOrder())
+                $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder())
             );
         }
 

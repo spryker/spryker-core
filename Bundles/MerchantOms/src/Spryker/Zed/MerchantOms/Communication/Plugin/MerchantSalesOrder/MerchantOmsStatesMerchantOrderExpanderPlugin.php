@@ -20,7 +20,7 @@ class MerchantOmsStatesMerchantOrderExpanderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
-     * - Expands merchant order with merchant OMS states.
+     * - Expands merchant order with merchant order items OMS states.
      *
      * @api
      *
