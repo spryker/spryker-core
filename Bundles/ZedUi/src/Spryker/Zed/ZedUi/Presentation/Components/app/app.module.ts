@@ -12,6 +12,7 @@ import { LocaleModule } from '@spryker/locale';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
 import { NotificationModule } from '@spryker/notification';
+import { DefaultContextSerializationModule } from '@spryker/utils';
 import { WebComponentsModule } from '@spryker/web-components';
 
 import { _getNgModules, ComponentsNgModule } from './registry';
@@ -33,6 +34,7 @@ import { TableRootModule } from './table/table-root.module';
             redirect: AjaxPostActionRedirectService,
             refresh_table: AjaxPostActionRefreshTableService,
         }),
+        DefaultContextSerializationModule,
     ],
     providers: [],
 })

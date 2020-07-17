@@ -31,6 +31,8 @@
         {% endblock %}
 
         {% block globalJs %}
+            <script src="{{ assetsPath('js/mp/vendor-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/vendor-es5.js') }}" nomodule defer></script>
             <script src="{{ assetsPath('js/mp/main-es2015.js') }}" type="module"></script>
             <script src="{{ assetsPath('js/mp/main-es5.js') }}" nomodule defer></script>
         {% endblock %}
