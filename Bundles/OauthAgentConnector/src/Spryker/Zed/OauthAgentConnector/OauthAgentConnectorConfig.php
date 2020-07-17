@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OauthAgentConnector;
 
-use Spryker\Shared\OauthAgentConnector\OauthCustomerConnectorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class OauthAgentConnectorConfig extends AbstractBundleConfig
