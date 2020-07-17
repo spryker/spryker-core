@@ -27,8 +27,26 @@ interface ConfigurableBundleStorageClientInterface
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer;
 
     /**
+     * - Finds configurable bundle templates Storage records by given configurable bundle template ids.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using provided locale.
+     * - Returns array of ConfigurableBundleTemplateStorageTransfers.
+     *
+     * @api
+     *
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getConfigurableBundleTemplateStorageTransfersByIds(
+        array $configurableBundleTemplateIds,
+        string $localeName
+    ): array;
+
+    /**
      * Specification:
      * - Finds configurable bundle template within Storage with a given uuid.
+     * - Populates ConfigurableBundleTemplateStorageTransfer::imageSets using provided locale.
      * - Returns ConfigurableBundleTemplateStorageTransfer if found, null otherwise.
      *
      * @api

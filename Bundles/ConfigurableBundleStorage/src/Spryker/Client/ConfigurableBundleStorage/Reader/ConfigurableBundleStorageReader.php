@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface;
 use Spryker\Shared\ConfigurableBundleStorage\ConfigurableBundleStorageConfig;
 
 class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReaderInterface
@@ -35,18 +36,26 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     protected $configurableBundleTemplateImageStorageReader;
 
     /**
+     * @var \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleTemplateImageStorageReaderInterface $configurableBundleTemplateImageStorageReader
+     * @param \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
         ConfigurableBundleStorageToStorageClientInterface $storageClient,
         ConfigurableBundleStorageToSynchronizationServiceInterface $synchronizationService,
-        ConfigurableBundleTemplateImageStorageReaderInterface $configurableBundleTemplateImageStorageReader
+        ConfigurableBundleTemplateImageStorageReaderInterface $configurableBundleTemplateImageStorageReader,
+        ConfigurableBundleStorageToUtilEncodingServiceInterface $utilEncodingService
     ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
         $this->configurableBundleTemplateImageStorageReader = $configurableBundleTemplateImageStorageReader;
+        $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
@@ -58,6 +67,19 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         return $this->findStorageData((string)$idConfigurableBundleTemplate, $localeName);
+    }
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getConfigurableBundleTemplateStorageTransfersByIds(
+        array $configurableBundleTemplateIds,
+        string $localeName
+    ): array {
+        return $this->getStorageData(array_map('strval', $configurableBundleTemplateIds), $localeName);
     }
 
     /**
@@ -101,6 +123,40 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         $configurableBundleTemplateStorageTransfer = $this->expandConfigurableBundleTemplateStorage($configurableBundleTemplateStorageTransfer, $localeName);
 
         return $configurableBundleTemplateStorageTransfer;
+    }
+
+    /**
+     * @param string[] $keys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    protected function getStorageData(array $keys, string $localeName): array
+    {
+        $storageKeys = [];
+        foreach ($keys as $key) {
+            $storageKeys[] = $this->generateKey($key);
+        }
+
+        $configurableBundleTemplateStorageData = $this->storageClient->getMulti($storageKeys);
+
+        if (!$configurableBundleTemplateStorageData) {
+            return [];
+        }
+
+        $configurableBundleTemplateStorageTransfers = [];
+
+        foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
+            $configurableBundleTemplateStorageTransfer = $this->mapToConfigurableBundleStorage(
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true)
+            );
+            $configurableBundleTemplateStorageTransfers[] = $this->expandConfigurableBundleTemplateStorage(
+                $configurableBundleTemplateStorageTransfer,
+                $localeName
+            );
+        }
+
+        return $configurableBundleTemplateStorageTransfers;
     }
 
     /**

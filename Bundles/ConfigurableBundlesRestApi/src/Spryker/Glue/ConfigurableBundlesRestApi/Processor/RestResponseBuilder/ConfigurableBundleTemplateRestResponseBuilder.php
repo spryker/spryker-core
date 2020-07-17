@@ -13,15 +13,11 @@ use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundleTemplateRestResponseBuilderInterface
+class ConfigurableBundleTemplateRestResponseBuilder extends RestResponseBuilder implements ConfigurableBundleTemplateRestResponseBuilderInterface
 {
-    /**
-     * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
-     */
-    protected $restResourceBuilder;
-
     /**
      * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface
      */
@@ -42,24 +38,10 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         ConfigurableBundleTemplateMapperInterface $configurableBundleTemplateMapper,
         ConfigurableBundleTempleTranslatorInterface $configurableBundleTempleTranslator
     ) {
-        $this->restResourceBuilder = $restResourceBuilder;
+        parent::__construct($restResourceBuilder);
+
         $this->configurableBundleTemplateMapper = $configurableBundleTemplateMapper;
         $this->configurableBundleTempleTranslator = $configurableBundleTempleTranslator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessageTransfers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildErrorRestResponse(array $restErrorMessageTransfers): RestResponseInterface
-    {
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-        foreach ($restErrorMessageTransfers as $restErrorMessageTransfer) {
-            $restResponse->addError($restErrorMessageTransfer);
-        }
-
-        return $restResponse;
     }
 
     /**
@@ -72,72 +54,58 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         string $localeName
     ): RestResponseInterface {
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleTempleTranslator
+            ->translateConfigurableBundleTemplateNames([$configurableBundleTemplateStorageTransfer], $localeName);
+
+        $restResource = $this->createConfigurableBundleTemplateRestResource(
+            current($configurableBundleTemplateStorageTransfers)
+        );
+
+        return $this->createRestResponse()->addResource($restResource);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function buildConfigurableBundleTemplateCollectionRestResponse(
+        array $configurableBundleTemplateStorageTransfers,
+        string $localeName
+    ): RestResponseInterface {
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleTempleTranslator
+            ->translateConfigurableBundleTemplateNames($configurableBundleTemplateStorageTransfers, $localeName);
+
+        $restResponse = $this->createRestResponse();
+
+        foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
+            $restResponse->addResource(
+                $this->createConfigurableBundleTemplateRestResource($configurableBundleTemplateStorageTransfer)
+            );
+        }
+
+        return $restResponse;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function createConfigurableBundleTemplateRestResource(
+        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+    ): RestResourceInterface {
         $restConfigurableBundleTemplatesAttributesTransfer = $this->configurableBundleTemplateMapper
             ->mapConfigurableBundleTemplateStorageTransferToRestConfigurableBundleTemplatesAttributesTransfer(
                 $configurableBundleTemplateStorageTransfer,
                 new RestConfigurableBundleTemplatesAttributesTransfer()
             );
 
-        return $this->createConfigurableBundleTemplateRestResponse(
-            [$configurableBundleTemplateStorageTransfer->getUuid() => $restConfigurableBundleTemplatesAttributesTransfer],
-            $localeName
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
-     * @param string $localeName
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildConfigurableBundleTemplateCollectionRestResponse(
-        array $configurableBundleTemplatePageSearchTransfers,
-        string $localeName
-    ): RestResponseInterface {
-        if (!$configurableBundleTemplatePageSearchTransfers) {
-            return $this->restResourceBuilder->createRestResponse();
-        }
-
-        $restConfigurableBundleTemplatesAttributesTransfers = [];
-        foreach ($configurableBundleTemplatePageSearchTransfers as $configurableBundleTemplatePageSearchTransfer) {
-            $restConfigurableBundleTemplatesAttributesTransfers[$configurableBundleTemplatePageSearchTransfer->getUuid()] = $this->configurableBundleTemplateMapper
-                ->mapConfigurableBundleTemplatePageSearchTransferToRestConfigurableBundleTemplatesAttributesTransfer(
-                    $configurableBundleTemplatePageSearchTransfer,
-                    new RestConfigurableBundleTemplatesAttributesTransfer()
-                );
-        }
-
-        return $this->createConfigurableBundleTemplateRestResponse(
-            $restConfigurableBundleTemplatesAttributesTransfers,
-            $localeName
-        );
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer[] $restConfigurableBundleTemplatesAttributesTransfers
-     * @param string $localeName
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    protected function createConfigurableBundleTemplateRestResponse(
-        array $restConfigurableBundleTemplatesAttributesTransfers,
-        string $localeName
-    ): RestResponseInterface {
-        $restConfigurableBundleTemplatesAttributesTransfers = $this->configurableBundleTempleTranslator
-            ->translateConfigurableBundleTemplateNames($restConfigurableBundleTemplatesAttributesTransfers, $localeName);
-
-        $restResponse = $this->restResourceBuilder->createRestResponse();
-
-        foreach ($restConfigurableBundleTemplatesAttributesTransfers as $uuid => $restConfigurableBundleTemplatesAttributesTransfer) {
-            $restResponse->addResource(
-                $this->restResourceBuilder->createRestResource(
-                    ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-                    $uuid,
-                    $restConfigurableBundleTemplatesAttributesTransfer
-                )
-            );
-        }
-
-        return $restResponse;
+        return $this->restResourceBuilder->createRestResource(
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
+            $configurableBundleTemplateStorageTransfer->getUuid(),
+            $restConfigurableBundleTemplatesAttributesTransfer
+        )->setPayload($configurableBundleTemplateStorageTransfer);
     }
 }

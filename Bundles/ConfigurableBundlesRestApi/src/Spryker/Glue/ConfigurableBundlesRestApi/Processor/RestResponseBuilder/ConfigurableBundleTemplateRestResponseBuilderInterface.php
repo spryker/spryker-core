@@ -10,15 +10,8 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
-interface ConfigurableBundleTemplateRestResponseBuilderInterface
+interface ConfigurableBundleTemplateRestResponseBuilderInterface extends RestResponseBuilderInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessageTransfers
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function buildErrorRestResponse(array $restErrorMessageTransfers): RestResponseInterface;
-
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
      * @param string $localeName
@@ -31,13 +24,13 @@ interface ConfigurableBundleTemplateRestResponseBuilderInterface
     ): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer[] $configurableBundleTemplatePageSearchTransfers
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function buildConfigurableBundleTemplateCollectionRestResponse(
-        array $configurableBundleTemplatePageSearchTransfers,
+        array $configurableBundleTemplateStorageTransfers,
         string $localeName
     ): RestResponseInterface;
 }

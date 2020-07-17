@@ -66,18 +66,16 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
     ): RestResponseInterface {
         $localeName = $restRequest->getMetadata()->getLocale();
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient
-            ->findConfigurableBundleTemplateStorageByUuid(
-                $uuidConfigurableBundleTemplate,
-                $localeName
-            );
+            ->findConfigurableBundleTemplateStorageByUuid($uuidConfigurableBundleTemplate, $localeName);
 
         if (!$configurableBundleTemplateStorageTransfer) {
-            $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-                ->setCode(ConfigurableBundlesRestApiConfig::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
-                ->setStatus(Response::HTTP_NOT_FOUND)
-                ->setDetail(ConfigurableBundlesRestApiConfig::RESPONSE_DETAIL_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
-
-            return $this->configurableBundleTemplateRestResponseBuilder->buildErrorRestResponse([$restErrorMessageTransfer]);
+            return $this->configurableBundleTemplateRestResponseBuilder
+                ->buildErrorRestResponse(
+                    (new RestErrorMessageTransfer())
+                        ->setCode(ConfigurableBundlesRestApiConfig::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
+                        ->setStatus(Response::HTTP_NOT_FOUND)
+                        ->setDetail(ConfigurableBundlesRestApiConfig::RESPONSE_DETAIL_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
+                );
         }
 
         return $this->configurableBundleTemplateRestResponseBuilder
@@ -94,10 +92,27 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         $formattedSearchResults = $this->configurableBundlePageSearchClient
             ->searchConfigurableBundleTemplates(new ConfigurableBundleTemplatePageSearchRequestTransfer());
 
+        if (!$formattedSearchResults[static::FORMATTED_RESULT_KEY]) {
+            return $this->configurableBundleTemplateRestResponseBuilder->createRestResponse();
+        }
+
+        $configurableBundleTemplateIds = [];
+        foreach ($formattedSearchResults[static::FORMATTED_RESULT_KEY] as $configurableBundleTemplatePageSearchTransfer) {
+            /** @var \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer */
+            $configurableBundleTemplateIds[] = $configurableBundleTemplatePageSearchTransfer->getFkConfigurableBundleTemplate();
+        }
+
+        $localeName = $restRequest->getMetadata()->getLocale();
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
+            ->getConfigurableBundleTemplateStorageTransfersByIds(
+                $configurableBundleTemplateIds,
+                $localeName
+            );
+
         return $this->configurableBundleTemplateRestResponseBuilder
             ->buildConfigurableBundleTemplateCollectionRestResponse(
-                $formattedSearchResults[static::FORMATTED_RESULT_KEY] ?? [],
-                $restRequest->getMetadata()->getLocale()
+                $configurableBundleTemplateStorageTransfers,
+                $localeName
             );
     }
 }

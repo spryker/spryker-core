@@ -25,30 +25,30 @@ class ConfigurableBundleTempleTranslator implements ConfigurableBundleTempleTran
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer[] $restConfigurableBundleTemplatesAttributesTransfers
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
     public function translateConfigurableBundleTemplateNames(
-        array $restConfigurableBundleTemplatesAttributesTransfers,
+        array $configurableBundleTemplateStorageTransfers,
         string $localeName
     ): array {
         $configurableBundleTemplateNames = [];
 
-        foreach ($restConfigurableBundleTemplatesAttributesTransfers as $restConfigurableBundleTemplatesAttributesTransfer) {
-            $configurableBundleTemplateNames[] = $restConfigurableBundleTemplatesAttributesTransfer->getName();
+        foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
+            $configurableBundleTemplateNames[] = $configurableBundleTemplateStorageTransfer->getName();
         }
 
         $translatedConfigurableBundleTemplateNames = $this->glossaryStorageClient
             ->translateBulk($configurableBundleTemplateNames, $localeName);
 
-        foreach ($restConfigurableBundleTemplatesAttributesTransfers as $restConfigurableBundleTemplatesAttributesTransfer) {
-            $restConfigurableBundleTemplatesAttributesTransfer->setName(
-                $translatedConfigurableBundleTemplateNames[$restConfigurableBundleTemplatesAttributesTransfer->getName()]
+        foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
+            $configurableBundleTemplateStorageTransfer->setName(
+                $translatedConfigurableBundleTemplateNames[$configurableBundleTemplateStorageTransfer->getName()]
             );
         }
 
-        return $restConfigurableBundleTemplatesAttributesTransfers;
+        return $configurableBundleTemplateStorageTransfers;
     }
 }

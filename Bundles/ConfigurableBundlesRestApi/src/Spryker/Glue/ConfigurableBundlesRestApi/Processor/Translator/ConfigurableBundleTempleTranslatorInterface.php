@@ -10,13 +10,13 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator;
 interface ConfigurableBundleTempleTranslatorInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer[] $restConfigurableBundleTemplatesAttributesTransfers
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
-     * @return \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer[]
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
     public function translateConfigurableBundleTemplateNames(
-        array $restConfigurableBundleTemplatesAttributesTransfers,
+        array $configurableBundleTemplateStorageTransfers,
         string $localeName
     ): array;
 }

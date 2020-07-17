@@ -37,4 +37,18 @@ class ConfigurableBundlesRestApiToConfigurableBundleStorageClientBridge implemen
         return $this->configurableBundleStorageClient
             ->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid, $localeName);
     }
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getConfigurableBundleTemplateStorageTransfersByIds(
+        array $configurableBundleTemplateIds,
+        string $localeName
+    ): array {
+        return $this->configurableBundleStorageClient
+            ->getConfigurableBundleTemplateStorageTransfersByIds($configurableBundleTemplateIds, $localeName);
+    }
 }
