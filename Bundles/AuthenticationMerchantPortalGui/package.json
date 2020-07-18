@@ -13,7 +13,7 @@
         "@spryker/ajax-action": "^0.1.0-fix-web-components.1",
         "@spryker/button": "^0.1.0-fix-web-components.1",
         "@spryker/card": "^0.1.0-fix-web-components.3",
-        "@spryker/drawer": "^0.1.0-fix-web-components.3",
+        "@spryker/drawer": "^0.1.0-fix-web-components.4",
         "@spryker/form-item": "^0.1.0-fix-web-components.1",
         "@spryker/icon": "^0.1.0-fix-web-components.0",
         "@spryker/input": "^0.1.0-fix-web-components.1",
@@ -21,7 +21,7 @@
         "@spryker/notification": "^0.1.0-fix-web-components.3",
         "@spryker/styles": "^0.1.0-fix-web-components.0",
         "@spryker/utils": "^0.1.0-fix-web-components.1",
-        "@spryker/web-components": "^0.2.0-fix-web-components.4",
+        "@spryker/web-components": "^0.2.0-fix-web-components.6",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "^0.10.2"
