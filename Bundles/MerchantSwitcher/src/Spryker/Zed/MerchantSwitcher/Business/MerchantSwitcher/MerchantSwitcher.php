@@ -126,7 +126,7 @@ class MerchantSwitcher implements MerchantSwitcherInterface
         string $merchantReference
     ): ItemTransfer {
         foreach ($merchantProductOfferCollectionTransfer->getProductOffers() as $productOfferTransfer) {
-            if ($productOfferTransfer->getConcreteSku() === $itemTransfer->getSku()) {
+            if ($itemTransfer->getProductOfferReference() && $productOfferTransfer->getConcreteSku() === $itemTransfer->getSku()) {
                 return $itemTransfer
                     ->setMerchantReference($merchantReference)
                     ->setProductOfferReference($productOfferTransfer->getProductOfferReference());

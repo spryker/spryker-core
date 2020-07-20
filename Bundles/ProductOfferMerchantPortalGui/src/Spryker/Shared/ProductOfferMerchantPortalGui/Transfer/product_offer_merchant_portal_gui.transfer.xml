@@ -280,4 +280,26 @@
         <property name="isDefault" type="bool"/>
     </transfer>
 
+    <transfer name="MerchantProductOfferCounts">
+        <property name="total" type="int"/>
+        <property name="active" type="int"/>
+        <property name="inactive" type="int"/>
+        <property name="withStock" type="int"/>
+        <property name="lowInStock" type="int"/>
+        <property name="withValidDates" type="int"/>
+        <property name="expiring" type="int"/>
+        <property name="visible" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardCard">
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
+        <property name="title" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardActionButton">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>

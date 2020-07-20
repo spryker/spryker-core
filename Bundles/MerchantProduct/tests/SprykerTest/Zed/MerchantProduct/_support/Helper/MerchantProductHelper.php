@@ -34,7 +34,7 @@ class MerchantProductHelper extends Module
             $merchantProductAbstract->delete();
         });
 
-        return $merchantProductAbstract->getIdProductAbstractMerchant();
+        return $merchantProductAbstract->getIdMerchantProductAbstract();
     }
 
     /**

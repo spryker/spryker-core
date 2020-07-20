@@ -39,7 +39,10 @@
 {% block content %}
     {{ form_start(form, {row_attr: {novalidate: ''}}) }}
         <web-mp-profile cloak>
-            <h1 title class="mp-profile__title">{{ 'Profile' | trans }}</h1>
+            <span title>{{ 'Profile' | trans }}</span>
+
+            {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true}}) }}
+
             <web-spy-tabs>
                 <web-spy-tab title="{{ 'Business Info' | trans }}" has-warning="{{ (not businessInfoMerchantProfileForm.vars.valid) | boolToStr }}">
                     <div class="mp-profile__row">
@@ -147,9 +150,10 @@
                         <div class="mp-profile__col mp-profile__col--online-right">
                             <web-spy-card class="mp-profile__card" cloak title="{{ 'Online Status' | trans }}">
                                 <div class="mp-profile__status">
+                                    {% set isProfileMerchantActiveChecked = onlineProfileMerchantProfileFields.is_active.vars.checked %}
                                     <div>
-                                        <h3 class="{{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
-                                            {{ onlineProfileMerchantProfileFields.is_active.vars.checked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
+                                        <h3 class="{{ isProfileMerchantActiveChecked ? 'mp-profile__status-title-online' : 'mp-profile__status-title-offline' }}">
+                                            {{ isProfileMerchantActiveChecked ? 'store.state.online' | trans : 'store.state.offline' | trans }}
                                         </h3>
                                     </div>
                                     {{ form_row(onlineProfileMerchantProfileFields.is_active, {
@@ -157,7 +161,7 @@
                                         toggle: true,
                                     }) }}
                                     <div>
-                                        {{ onlineProfileMerchantProfileFields.is_active.vars.checked ?
+                                        {{ isProfileMerchantActiveChecked ?
                                             'profile.status.message.online' | trans | raw :
                                             'profile.status.message.offline' | trans | raw }}
                                     </div>
@@ -167,8 +171,6 @@
                     </div>
                 </web-spy-tab>
             </web-spy-tabs>
-
-            {{ form_row(form.save, {attr: {class: 'mp-profile__submit', 'action': true}}) }}
         </web-mp-profile>
     {{ form_end(form) }}
 {% endblock %}
