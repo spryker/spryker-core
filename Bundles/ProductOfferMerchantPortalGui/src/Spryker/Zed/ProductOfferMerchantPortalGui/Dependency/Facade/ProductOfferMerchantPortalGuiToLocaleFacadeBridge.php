@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade;
 class ProductOfferMerchantPortalGuiToLocaleFacadeBridge implements ProductOfferMerchantPortalGuiToLocaleFacadeInterface
 {
     /**
-     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface $localeFacade
+     * @var \Spryker\Zed\Locale\Business\LocaleFacadeInterface
      */
     protected $localeFacade;
 

@@ -25,14 +25,10 @@ describe('ProductOfferComponent', () => {
         expect(offerTableComponent).toBeTruthy();
     });
 
-    it('should render @Input(title) inside `h1` element', () => {
-        const mockTitle = 'Test Title';
-        const headingContainer = fixture.debugElement.query(By.css('h1'));
+    it('should render `spy-headline` component', () => {
+        const headlineComponent = fixture.debugElement.query(By.css('spy-headline'));
 
-        component.title = mockTitle;
-        fixture.detectChanges();
-
-        expect(headingContainer.nativeElement.textContent).toContain(mockTitle);
+        expect(headlineComponent).toBeTruthy();
     });
 
     it('should bind @Input(tableConfig) to `config` of `mp-product-offer-table` component', () => {

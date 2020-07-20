@@ -8,12 +8,15 @@
 namespace Spryker\Client\PriceProductOfferStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToPriceProductStorageClientInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToSynchronizationServiceInterface;
 use Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapper;
 use Spryker\Client\PriceProductOfferStorage\Mapper\PriceProductOfferStorageMapperInterface;
+use Spryker\Client\PriceProductOfferStorage\Sorter\PriceProductOfferStorageSorter;
+use Spryker\Client\PriceProductOfferStorage\Sorter\PriceProductOfferStorageSorterInterface;
 use Spryker\Client\PriceProductOfferStorage\Storage\PriceProductOfferStorageReader;
 use Spryker\Client\PriceProductOfferStorage\Storage\PriceProductOfferStorageReaderInterface;
 
@@ -32,6 +35,14 @@ class PriceProductOfferStorageFactory extends AbstractFactory
             $this->getPriceProductService(),
             $this->getPriceProductOfferStoragePriceExtractorPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorage\Sorter\PriceProductOfferStorageSorterInterface
+     */
+    public function createPriceProductOfferStorageSorter(): PriceProductOfferStorageSorterInterface
+    {
+        return new PriceProductOfferStorageSorter();
     }
 
     /**
@@ -80,5 +91,13 @@ class PriceProductOfferStorageFactory extends AbstractFactory
     protected function getPriceProductOfferStoragePriceExtractorPlugins(): array
     {
         return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR);
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToPriceProductStorageClientInterface
+     */
+    public function getPriceProductStorageClient(): PriceProductOfferStorageToPriceProductStorageClientInterface
+    {
+        return $this->getProvidedDependency(PriceProductOfferStorageDependencyProvider::CLIENT_PRICE_PRODUCT_STORAGE);
     }
 }

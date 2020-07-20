@@ -20,4 +20,14 @@ interface ContentBannerTypeMapperInterface
      * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer|null
      */
     public function executeBannerTypeByKey(string $contentKey, string $localeName): ?ContentBannerTypeTransfer;
+
+    /**
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentBannerTypeTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentBannerTypeTransfer[]
+     */
+    public function executeBannerTypeByKeys(array $contentKeys, string $localeName): array;
 }
