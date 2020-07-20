@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface MerchantOmsFacadeInterface
@@ -105,4 +106,17 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant order item.
+     * - Returns StateMachineItem transfer filled with state name.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     */
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
 }

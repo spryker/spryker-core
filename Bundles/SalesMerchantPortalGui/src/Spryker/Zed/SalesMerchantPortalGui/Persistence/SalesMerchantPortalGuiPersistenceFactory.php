@@ -13,6 +13,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Persistence\Propel\Mapper\SalesMerchantPo
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 
 /**
+ * @method \Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiConfig getConfig()
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
  */
 class SalesMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFactory
@@ -26,6 +27,8 @@ class SalesMerchantPortalGuiPersistenceFactory extends AbstractPersistenceFactor
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
     public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery

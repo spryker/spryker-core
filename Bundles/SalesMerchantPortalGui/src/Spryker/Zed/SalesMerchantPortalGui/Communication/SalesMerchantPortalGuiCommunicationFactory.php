@@ -12,18 +12,22 @@ use Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterfac
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderTableDataProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiConfig getConfig()
  */
 class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -49,6 +53,20 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getMerchantUserFacade(),
             $this->getCurrencyFacade(),
             $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface
+     */
+    public function createOrdersDashboardCardProvider(): OrdersDashboardCardProviderInterface
+    {
+        return new OrdersDashboardCardProvider(
+            $this->getRepository(),
+            $this->getMerchantUserFacade(),
+            $this->getRouterFacade(),
+            $this->getConfig(),
+            $this->getTwigEnvironment()
         );
     }
 
@@ -114,5 +132,21 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     public function getMerchantSalesOrderFacade(): SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface
+     */
+    public function getRouterFacade(): SalesMerchantPortalGuiToRouterFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_ROUTER);
+    }
+
+    /**
+     * @return \Twig\Environment
+     */
+    protected function getTwigEnvironment()
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_TWIG);
     }
 }

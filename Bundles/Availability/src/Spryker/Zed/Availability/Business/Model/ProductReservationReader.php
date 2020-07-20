@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Orm\Zed\Availability\Persistence\SpyAvailability;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\Availability\Business\Exception\ProductAbstractAvailabilityNotFoundException;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface;
 use Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStoreFacadeInterface;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
@@ -57,6 +58,8 @@ class ProductReservationReader implements ProductReservationReaderInterface
      * @param int $idProductAbstract
      * @param int $idLocale
      *
+     * @throws \Spryker\Zed\Availability\Business\Exception\ProductAbstractAvailabilityNotFoundException
+     *
      * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer
      */
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer
@@ -73,6 +76,12 @@ class ProductReservationReader implements ProductReservationReaderInterface
                 $stockNames
             )
             ->findOne();
+
+        if (!$productAbstractEntity) {
+            throw new ProductAbstractAvailabilityNotFoundException(
+                sprintf('The product abstract availability was not found with this product abstract ID: %d', $idProductAbstract)
+            );
+        }
 
         return $this->mapAbstractProductAvailabilityEntityToTransfer($productAbstractEntity);
     }
