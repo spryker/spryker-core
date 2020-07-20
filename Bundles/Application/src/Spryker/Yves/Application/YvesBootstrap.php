@@ -16,7 +16,7 @@ use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
 /**
- * @deprecated Use `\SprykerShop\Yves\ShopApplication\YvesBootstrap` instead.
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\YvesBootstrap} instead.
  */
 abstract class YvesBootstrap
 {

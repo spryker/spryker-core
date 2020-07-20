@@ -65,10 +65,10 @@ class NavigationTwigExtension extends TwigExtension
      */
     public function renderNavigation(Environment $twig, $navigationKey, $template)
     {
-        $key = $navigationKey . '-' . $this->getLocale();
+        $key = $navigationKey . '-' . $this->locale;
 
         if (!isset(static::$buffer[$key])) {
-            $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
+            $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->locale);
 
             static::$buffer[$key] = $navigationTreeTransfer;
         }
@@ -85,6 +85,8 @@ class NavigationTwigExtension extends TwigExtension
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getLocale()

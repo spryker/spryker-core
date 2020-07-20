@@ -79,7 +79,7 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
      */
     public function renderProductAbstractReview(Environment $twig, $idProductAbstract, $template)
     {
-        $productAbstractReviewTransfer = $this->productReviewClient->findProductAbstractReviewInStorage($idProductAbstract, $this->getLocale());
+        $productAbstractReviewTransfer = $this->productReviewClient->findProductAbstractReviewInStorage($idProductAbstract, $this->locale);
 
         if (!$productAbstractReviewTransfer) {
             return '';
@@ -91,6 +91,8 @@ class ProductAbstractReviewTwigExtension extends TwigExtension
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getLocale()

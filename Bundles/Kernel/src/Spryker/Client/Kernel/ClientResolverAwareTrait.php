@@ -5,9 +5,8 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\Kernel;
+namespace Spryker\Client\Kernel;
 
-use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 
 trait ClientResolverAwareTrait

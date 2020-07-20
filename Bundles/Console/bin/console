@@ -18,9 +18,9 @@ if (!defined('SPRYKER_COMPOSER_INSTALL')) {
 require_once SPRYKER_COMPOSER_INSTALL;
 
 use Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap;
-use Spryker\Zed\Console\Communication\Elector;
+use Spryker\Zed\Console\Communication\ConsoleBootstrapElector;
 
-$elector = new Elector();
+$elector = new ConsoleBootstrapElector();
 
 if ($elector->isProjectMigratedToApplicationPlugins()) {
     $bootstrap = new ConsoleBootstrap();

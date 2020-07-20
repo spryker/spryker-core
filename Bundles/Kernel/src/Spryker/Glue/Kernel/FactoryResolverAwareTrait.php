@@ -17,6 +17,18 @@ trait FactoryResolverAwareTrait
     private $factory;
 
     /**
+     * @param \Spryker\Glue\Kernel\AbstractFactory $factory
+     *
+     * @return $this
+     */
+    public function setFactory(AbstractFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Glue\Kernel\AbstractFactory
      */
     protected function getFactory(): AbstractFactory

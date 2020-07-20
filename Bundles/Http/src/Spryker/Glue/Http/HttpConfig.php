@@ -25,7 +25,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getHttpPort(): int
     {
-        return $this->get(HttpConstants::ZED_HTTP_PORT, static::DEFAULT_REQUEST_HTTP_PORT);
+        return $this->get(HttpConstants::GLUE_HTTP_PORT, static::DEFAULT_REQUEST_HTTP_PORT);
     }
 
     /**
@@ -35,7 +35,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getHttpsPort(): int
     {
-        return $this->get(HttpConstants::ZED_HTTPS_PORT, static::DEFAULT_REQUEST_HTTPS_PORT);
+        return $this->get(HttpConstants::GLUE_HTTPS_PORT, static::DEFAULT_REQUEST_HTTPS_PORT);
     }
 
     /**
@@ -55,7 +55,7 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getTrustedProxies(): array
     {
-        return $this->get(HttpConstants::ZED_TRUSTED_PROXIES, []);
+        return $this->get(HttpConstants::GLUE_TRUSTED_PROXIES, []);
     }
 
     /**
@@ -65,6 +65,6 @@ class HttpConfig extends AbstractBundleConfig
      */
     public function getTrustedHosts(): array
     {
-        return $this->get(HttpConstants::ZED_TRUSTED_HOSTS, []);
+        return $this->get(HttpConstants::GLUE_TRUSTED_HOSTS, []);
     }
 }

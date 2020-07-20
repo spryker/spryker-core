@@ -17,6 +17,18 @@ trait FactoryResolverAwareTrait
     protected $factory;
 
     /**
+     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory
+     *
+     * @return $this
+     */
+    public function setFactory(AbstractCommunicationFactory $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory
      */
     protected function getFactory(): AbstractCommunicationFactory

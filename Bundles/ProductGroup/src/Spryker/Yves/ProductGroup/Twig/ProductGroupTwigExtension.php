@@ -58,7 +58,7 @@ class ProductGroupTwigExtension extends TwigExtension
      */
     public function renderProductGroupItems(Environment $twig, $idProductAbstract, $template)
     {
-        $productGroupItems = $this->productGroupClient->findProductGroupItemsByIdProductAbstract($idProductAbstract, $this->getLocale());
+        $productGroupItems = $this->productGroupClient->findProductGroupItemsByIdProductAbstract($idProductAbstract, $this->locale);
 
         if (!$productGroupItems) {
             return '';
@@ -70,6 +70,8 @@ class ProductGroupTwigExtension extends TwigExtension
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getLocale()

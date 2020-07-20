@@ -15,7 +15,7 @@ use Spryker\Zed\Kernel\Communication\FacadeResolverAwareTrait;
  *
  * @method \Spryker\Zed\Console\Business\ConsoleFacade getFacade()
  */
-class Elector
+class ConsoleBootstrapElector
 {
     use FacadeResolverAwareTrait;
 

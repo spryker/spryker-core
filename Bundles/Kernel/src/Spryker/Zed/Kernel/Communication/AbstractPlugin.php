@@ -7,150 +7,15 @@
 
 namespace Spryker\Zed\Kernel\Communication;
 
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
-use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
-use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Zed\Kernel\QueryContainerResolverAwareTrait;
 use Spryker\Zed\Kernel\RepositoryResolverAwareTrait;
 
 abstract class AbstractPlugin
 {
     use RepositoryResolverAwareTrait;
     use FactoryResolverAwareTrait;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    private $facade;
-
-    /**
-     * @var \Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    private $config;
-
-    /**
-     * @var \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
-     */
-    private $queryContainer;
-
-    /**
-     * @param \Spryker\Zed\Kernel\Business\AbstractFacade $facade
-     *
-     * @return $this
-     */
-    public function setFacade(AbstractFacade $facade)
-    {
-        $this->facade = $facade;
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    protected function getFacade()
-    {
-        if ($this->facade === null) {
-            $this->facade = $this->resolveFacade();
-        }
-
-        return $this->facade;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade
-     */
-    private function resolveFacade()
-    {
-        return $this->getFacadeResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Facade\FacadeResolver
-     */
-    private function getFacadeResolver()
-    {
-        return new FacadeResolver();
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory
-     *
-     * @return $this
-     */
-    public function setFactory(AbstractCommunicationFactory $factory)
-    {
-        $this->factory = $factory;
-
-        return $this;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer $queryContainer
-     *
-     * @return $this
-     */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
-     */
-    protected function getQueryContainer()
-    {
-        if ($this->queryContainer === null) {
-            $this->queryContainer = $this->resolveQueryContainer();
-        }
-
-        return $this->queryContainer;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
-     */
-    private function resolveQueryContainer()
-    {
-        return $this->getQueryContainerResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver
-     */
-    private function getQueryContainerResolver()
-    {
-        return new QueryContainerResolver();
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    protected function getConfig()
-    {
-        if ($this->config === null) {
-            $this->config = $this->resolveBundleConfig();
-        }
-
-        return $this->config;
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
-     */
-    private function resolveBundleConfig()
-    {
-        return $this->getBundleConfigResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Config\BundleConfigResolver
-     */
-    private function getBundleConfigResolver()
-    {
-        return new BundleConfigResolver();
-    }
+    use FacadeResolverAwareTrait;
+    use BundleConfigResolverAwareTrait;
+    use QueryContainerResolverAwareTrait;
 }
