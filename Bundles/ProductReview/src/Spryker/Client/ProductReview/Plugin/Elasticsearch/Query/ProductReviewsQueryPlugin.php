@@ -112,13 +112,9 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function createSearchQuery()
     {
-        $productReviewTypeFilter = $this->createProductReviewTypeFilter();
-        $productReviewsFilter = $this->createProductReviewsFilter();
-
         $boolQuery = new BoolQuery();
-        $boolQuery
-            ->addFilter($productReviewTypeFilter)
-            ->addFilter($productReviewsFilter);
+        $boolQuery = $this->addProductReviewTypeFilterToQuery($boolQuery);
+        $boolQuery = $this->addProductReviewsFilterToQuery($boolQuery);
 
         $query = $this->createQuery($boolQuery);
 
@@ -126,16 +122,19 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * @return \Elastica\Query\Match
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function createProductReviewsFilter()
+    protected function addProductReviewsFilterToQuery(BoolQuery $query): BoolQuery
     {
         $this->productReviewSearchRequestTransfer->requireIdProductAbstract();
 
         $productReviewsFilter = new Match();
         $productReviewsFilter->setField(ProductReviewIndexMap::ID_PRODUCT_ABSTRACT, $this->productReviewSearchRequestTransfer->getIdProductAbstract());
+        $query->addFilter($productReviewsFilter);
 
-        return $productReviewsFilter;
+        return $query;
     }
 
     /**
@@ -154,14 +153,21 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     }
 
     /**
-     * @return \Elastica\Query\Type
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function createProductReviewTypeFilter()
+    protected function addProductReviewTypeFilterToQuery(BoolQuery $query): BoolQuery
     {
+        if (!class_exists('\Elastica\Query\Type')) {
+            return $query;
+        }
+
         $productReviewTypeFilter = new Type();
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
+        $query->addFilter($productReviewTypeFilter);
 
-        return $productReviewTypeFilter;
+        return $query;
     }
 
     /**

@@ -56,12 +56,8 @@ class IndexUpdater implements InstallerInterface
     public function run(IndexDefinitionTransfer $indexDefinitionTransfer, LoggerInterface $logger): void
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
-
-        foreach ($indexDefinitionTransfer->getMappings() as $mappingType => $mappingData) {
-            $logger->info(sprintf('Update mapping type "%s" for index "%s".', $mappingType, $index->getName()));
-
-            $mapping = $this->mappingBuilder->buildMapping($index, $mappingType, $mappingData);
-            $mapping->send();
-        }
+        $logger->info(sprintf('Update mapping for index "%s".', $index->getName()));
+        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer, $index);
+        $mapping->send($index);
     }
 }

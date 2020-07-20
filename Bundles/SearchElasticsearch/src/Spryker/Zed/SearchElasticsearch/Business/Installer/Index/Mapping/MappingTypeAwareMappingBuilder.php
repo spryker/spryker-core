@@ -11,7 +11,7 @@ use Elastica\Index;
 use Elastica\Mapping;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
 
-class MappingBuilder implements MappingBuilderInterface
+class MappingTypeAwareMappingBuilder implements MappingBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
@@ -21,25 +21,15 @@ class MappingBuilder implements MappingBuilderInterface
      */
     public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index): Mapping
     {
-        $mappingData = $this->getMappingData($indexDefinitionTransfer);
-        $mapping = new Mapping();
+        $mappingTypeName = array_key_first($indexDefinitionTransfer->getMappings());
+        $mappingData = $indexDefinitionTransfer->getMappings()[$mappingTypeName];
+        $mappingType = $index->getType($mappingTypeName);
+        $mapping = new Mapping($mappingType);
 
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
 
         return $mapping;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
-     *
-     * @return array
-     */
-    protected function getMappingData(IndexDefinitionTransfer $indexDefinitionTransfer): array
-    {
-        $mappings = $indexDefinitionTransfer->getMappings();
-
-        return reset($mappings) ?: [];
     }
 }

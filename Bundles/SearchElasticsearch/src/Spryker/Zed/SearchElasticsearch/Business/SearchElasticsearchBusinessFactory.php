@@ -14,6 +14,8 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Definition\Builder\IndexDefinitionBuilderInterface;
@@ -33,6 +35,7 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstal
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleaner as CleanerIndexMapCleaner;
@@ -176,6 +179,10 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createMappingBuilder(): MappingBuilderInterface
     {
+        if ($this->createMappingTypeSupportDetector()->isMappingTypesSupported()) {
+            return new MappingTypeAwareMappingBuilder();
+        }
+
         return new MappingBuilder();
     }
 
@@ -315,5 +322,13 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
     public function createElasticaSnapshot(): ElasticaSnapshot
     {
         return new ElasticaSnapshot($this->getElasticsearchClient());
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface
+     */
+    public function createMappingTypeSupportDetector(): MappingTypeSupportDetectorInterface
+    {
+        return new MappingTypeSupportDetector();
     }
 }

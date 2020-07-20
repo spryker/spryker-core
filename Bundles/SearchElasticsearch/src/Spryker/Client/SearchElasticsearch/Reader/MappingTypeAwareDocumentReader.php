@@ -12,7 +12,7 @@ use Elastica\Document;
 use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 
-class DocumentReader implements DocumentReaderInterface
+class MappingTypeAwareDocumentReader implements DocumentReaderInterface
 {
     /**
      * @var \Elastica\Client
@@ -34,13 +34,11 @@ class DocumentReader implements DocumentReaderInterface
      */
     public function readDocument(SearchDocumentTransfer $searchDocumentTransfer): SearchDocumentTransfer
     {
-        $elasticaDocument = $this->elasticaClient
-            ->getIndex(
-                $this->getIndexName($searchDocumentTransfer)
-            )
-            ->getDocument(
-                $searchDocumentTransfer->getId()
-            );
+        $indexName = $this->getIndexName($searchDocumentTransfer);
+        $elasticaIndex = $this->elasticaClient->getIndex($indexName);
+        $typeName = $this->getTypeName($searchDocumentTransfer, $elasticaIndex);
+
+        $elasticaDocument = $elasticaIndex->getType($typeName)->getDocument($searchDocumentTransfer->getId());
 
         return $this->mapElasticaDocumentToSearchDocumentTransfer($elasticaDocument, $searchDocumentTransfer);
     }
@@ -59,18 +57,6 @@ class DocumentReader implements DocumentReaderInterface
     }
 
     /**
-     * @deprecated Will be removed after the migration to Elasticsearch 7.
-     *
-     * @param \Elastica\Index $elasticaIndex
-     *
-     * @return string
-     */
-    protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
-    {
-        return key($elasticaIndex->getMapping());
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
      *
      * @return string
@@ -83,5 +69,34 @@ class DocumentReader implements DocumentReaderInterface
             ->getElasticsearchContext()
             ->requireIndexName()
             ->getIndexName();
+    }
+
+    /**
+     * @deprecated Will be removed after the final transition to the typeless Elasticsearch version.
+     *
+     * @param \Generated\Shared\Transfer\SearchDocumentTransfer $searchDocumentTransfer
+     * @param \Elastica\Index $elasticaIndex
+     *
+     * @return string
+     */
+    protected function getTypeName(SearchDocumentTransfer $searchDocumentTransfer, Index $elasticaIndex): string
+    {
+        return $searchDocumentTransfer->requireSearchContext()
+            ->getSearchContext()
+            ->requireElasticsearchContext()
+            ->getElasticsearchContext()
+            ->getTypeName() ?? $this->readMappingTypeNameFromElasticsearch($elasticaIndex);
+    }
+
+    /**
+     * @deprecated Will be removed after the migration to Elasticsearch 7.
+     *
+     * @param \Elastica\Index $elasticaIndex
+     *
+     * @return string
+     */
+    protected function readMappingTypeNameFromElasticsearch(Index $elasticaIndex): string
+    {
+        return key($elasticaIndex->getMapping());
     }
 }

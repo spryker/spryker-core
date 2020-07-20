@@ -95,45 +95,49 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
      */
     protected function createSearchQuery(): Query
     {
-        $productReviewTypeFilter = $this->createProductReviewTypeFilter();
-        $productReviewsFilter = $this->createProductReviewsFilter();
+        $boolQuery = new BoolQuery();
+        $boolQuery = $this->addProductReviewTypeFilterToQuery($boolQuery);
+        $boolQuery = $this->addProductReviewsFilterToQuery($boolQuery);
 
-        $boolQuery = (new BoolQuery())
-            ->addFilter($productReviewTypeFilter)
-            ->addFilter($productReviewsFilter);
-
-        $query = (new Query())
-            ->setQuery($boolQuery)
-            ->setSource([ProductReviewIndexMap::SEARCH_RESULT_DATA]);
+        $query = (new Query())->setQuery($boolQuery)->setSource([ProductReviewIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
     }
 
     /**
-     * @return \Elastica\Query\Terms
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function createProductReviewsFilter(): Terms
+    protected function addProductReviewsFilterToQuery(BoolQuery $query): BoolQuery
     {
         $this->bulkProductReviewSearchRequestTransfer->requireProductAbstractIds();
 
-        $productReviewsFilter = new Terms();
-        $productReviewsFilter->setTerms(
+        $productReviewsFilter = new Terms(
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT,
             $this->bulkProductReviewSearchRequestTransfer->getProductAbstractIds()
         );
+        $query->addFilter($productReviewsFilter);
 
-        return $productReviewsFilter;
+        return $query;
     }
 
     /**
-     * @return \Elastica\Query\Type
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function createProductReviewTypeFilter(): Type
+    protected function addProductReviewTypeFilterToQuery(BoolQuery $query): BoolQuery
     {
+        if (!class_exists('\Elastica\Query\Type')) {
+            return $query;
+        }
+
         $productReviewTypeFilter = new Type();
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
+        $query->addFilter($productReviewTypeFilter);
 
-        return $productReviewTypeFilter;
+        return $query;
     }
 
     /**

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install;
 
 use Elastica\Client;
-use Elastica\Index;
 use Elastica\Request;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
@@ -58,9 +57,9 @@ class IndexInstaller implements InstallerInterface
     public function run(IndexDefinitionTransfer $indexDefinitionTransfer, LoggerInterface $logger): void
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
-        $mappings = $this->mergeMappings($indexDefinitionTransfer, $index);
+        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer, $index);
 
-        $data = ['mappings' => $mappings];
+        $data = ['mappings' => $mapping->toArray()];
         $settings = $indexDefinitionTransfer->getSettings();
         if ($settings) {
             $data['settings'] = $settings;
@@ -69,22 +68,5 @@ class IndexInstaller implements InstallerInterface
         $logger->info(sprintf('Import mappings and settings for index "%s".', $index->getName()));
 
         $index->request('', Request::PUT, $data);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
-     * @param \Elastica\Index $index
-     *
-     * @return array
-     */
-    protected function mergeMappings(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index): array
-    {
-        $mappings = [];
-        foreach ($indexDefinitionTransfer->getMappings() as $mappingType => $mappingData) {
-            $mapping = $this->mappingBuilder->buildMapping($index, $mappingType, $mappingData);
-            $mappings = array_merge($mappings, $mapping->toArray());
-        }
-
-        return $mappings;
     }
 }

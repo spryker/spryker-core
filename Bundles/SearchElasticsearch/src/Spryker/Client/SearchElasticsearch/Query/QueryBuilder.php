@@ -77,9 +77,9 @@ class QueryBuilder implements QueryBuilderInterface
      */
     public function createTermsQuery(string $field, array $values): Terms
     {
-        $termQuery = new Terms();
+        $termQuery = new Terms($field, $values);
 
-        return $termQuery->setTerms($field, $values);
+        return $termQuery;
     }
 
     /**
