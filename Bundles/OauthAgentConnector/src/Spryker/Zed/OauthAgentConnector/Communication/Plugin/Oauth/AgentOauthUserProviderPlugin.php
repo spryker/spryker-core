@@ -29,7 +29,7 @@ class AgentOauthUserProviderPlugin extends AbstractPlugin implements OauthUserPr
      */
     public function accept(OauthUserTransfer $oauthUserTransfer): bool
     {
-        return $oauthUserTransfer->getGrantType() !== OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS;
+        return $oauthUserTransfer->getGrantType() === OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS;
     }
 
     /**

@@ -8,6 +8,8 @@
 namespace Spryker\Glue\AgentAuthRestApi;
 
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreator;
+use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreator;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\AgentAccessTokenMapper;
@@ -17,7 +19,8 @@ use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessToken
 use Spryker\Glue\Kernel\AbstractFactory;
 
 class AgentAuthRestApiFactory extends AbstractFactory
-{    /**
+{
+    /**
      * @return \Spryker\Glue\AgentAuthRestApi\Processor\Mapper\AgentAccessTokenMapperInterface
      */
     public function createAgentAccessTokenMapper(): AgentAccessTokenMapperInterface
@@ -44,6 +47,17 @@ class AgentAuthRestApiFactory extends AbstractFactory
         return new AgentAccessTokenCreator(
             $this->getOauthClient(),
             $this->createAgentAccessTokenRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreatorInterface
+     */
+    public function createAgentCustomerImpersonationAccessTokenCreator(): AgentCustomerImpersonationAccessTokenCreatorInterface
+    {
+        return new AgentCustomerImpersonationAccessTokenCreator(
+            $this->getOauthClient(),
+            $this->getResourceBuilder()
         );
     }
 

@@ -9,8 +9,7 @@ namespace Spryker\Zed\OauthAgentConnector\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthGrantTypeConfigurationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Oauth\Business\Model\League\Grant\PasswordGrantType;
-use Spryker\Zed\Oauth\OauthConfig;
+use Spryker\Zed\OauthAgentConnector\Business\League\Grant\AgentCredentialsGrantType;
 use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface;
 
@@ -32,6 +31,6 @@ class AgentCredentialsOauthGrantTypeConfigurationProviderPlugin extends Abstract
     {
         return (new OauthGrantTypeConfigurationTransfer())
             ->setIdentifier(OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS)
-            ->setFullyQualifiedClassName(AgetntCredentialsGrantType::class);
+            ->setFullyQualifiedClassName(AgentCredentialsGrantType::class);
     }
 }
