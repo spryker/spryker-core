@@ -35,7 +35,7 @@
         "@spryker/select": "^0.1.0-fix-web-components.1",
         "@spryker/sidebar": "^0.1.0-fix-web-components.2",
         "@spryker/styles": "^0.1.0-fix-web-components.0",
-        "@spryker/table": "^0.1.0-fix-web-components.1",
+        "@spryker/table": "^0.1.0-fix-web-components.2",
         "@spryker/utils": "^0.1.0-fix-web-components.1",
         "@spryker/web-components": "^0.2.0-fix-web-components.6",
         "@webcomponents/webcomponentsjs": "^2.4.1",
