@@ -5,11 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Yves\Testify\Helper;
+namespace SprykerTest\Yves\Application\Helper;
 
 use Codeception\TestInterface;
 use Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin;
-use SprykerTest\Shared\Testify\Helper\AbstractApplicationHelper;
+use SprykerTest\Shared\Application\Helper\AbstractApplicationHelper;
 
 class ApplicationHelper extends AbstractApplicationHelper
 {

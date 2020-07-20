@@ -24,6 +24,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
+    "spryker/http": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
@@ -35,7 +36,9 @@
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/",
-      "SprykerTest\\Shared\\Application\\Helper\\": "tests/SprykerTest/Shared/Application/_support/Helper/"
+      "SprykerTest\\Shared\\Application\\Helper\\": "tests/SprykerTest/Shared/Application/_support/Helper/",
+      "SprykerTest\\Yves\\Application\\Helper\\": "tests/SprykerTest/Yves/Application/_support/Helper/",
+      "SprykerTest\\Zed\\Application\\Helper\\": "tests/SprykerTest/Zed/Application/_support/Helper/"
     }
   },
   "autoload-dev": {

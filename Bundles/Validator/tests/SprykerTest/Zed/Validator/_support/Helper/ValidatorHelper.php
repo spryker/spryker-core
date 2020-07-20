@@ -16,8 +16,8 @@ use Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationP
 use Spryker\Zed\Validator\Communication\ValidatorCommunicationFactory;
 use Spryker\Zed\Validator\ValidatorDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
-use SprykerTest\Zed\Testify\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;

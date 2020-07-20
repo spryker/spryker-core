@@ -56,7 +56,7 @@ abstract class AbstractEventDispatcherHelper extends Module
     }
 
     /**
-     * @return \SprykerTest\Zed\Testify\Helper\ApplicationHelper|\SprykerTest\Yves\Testify\Helper\ApplicationHelper
+     * @return \SprykerTest\Zed\Application\Helper\ApplicationHelper|\SprykerTest\Yves\Application\Helper\ApplicationHelper
      */
     abstract protected function getApplicationHelper();
 

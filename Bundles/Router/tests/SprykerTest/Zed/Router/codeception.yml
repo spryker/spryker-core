@@ -29,4 +29,4 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
-                - \SprykerTest\Zed\Testify\Helper\ApplicationHelper
+                - \SprykerTest\Zed\Application\Helper\ApplicationHelper

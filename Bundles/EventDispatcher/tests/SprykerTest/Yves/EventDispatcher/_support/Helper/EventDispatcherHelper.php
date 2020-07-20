@@ -11,7 +11,7 @@ use Codeception\Stub;
 use Spryker\Yves\EventDispatcher\EventDispatcherFactory;
 use Spryker\Yves\EventDispatcher\Plugin\Application\EventDispatcherApplicationPlugin;
 use SprykerTest\Shared\EventDispatcher\Helper\AbstractEventDispatcherHelper;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
 class EventDispatcherHelper extends AbstractEventDispatcherHelper

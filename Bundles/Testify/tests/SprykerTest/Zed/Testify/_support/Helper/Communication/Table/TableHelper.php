@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Testify\Helper\Communication\Table;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use SprykerTest\Zed\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 
 class TableHelper extends Module
 {

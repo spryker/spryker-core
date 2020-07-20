@@ -15,6 +15,7 @@
     "spryker/zend": "^2.1.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
     "spryker/testify": "*",

@@ -16,7 +16,7 @@ use Spryker\Yves\Router\Route\Route;
 use Spryker\Yves\Router\Route\RouteCollection;
 use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use Symfony\Component\Routing\Router;
 
 class RouterHelper extends Module

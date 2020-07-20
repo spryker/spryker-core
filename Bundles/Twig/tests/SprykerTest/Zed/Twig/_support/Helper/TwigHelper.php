@@ -20,8 +20,8 @@ use Spryker\Zed\Twig\Communication\TwigCommunicationFactory;
 use Spryker\Zed\Twig\TwigConfig;
 use Spryker\Zed\Twig\TwigDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
-use SprykerTest\Zed\Testify\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;
 

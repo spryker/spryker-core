@@ -10,7 +10,7 @@ namespace SprykerTest\Yves\Locale\Helper;
 use Codeception\Module;
 use Codeception\TestInterface;
 use Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 
 class LocaleHelper extends Module
 {

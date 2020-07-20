@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify\Helper;
+namespace SprykerTest\Shared\Application\Helper;
 
 use Codeception\Lib\Framework;
 use Codeception\TestInterface;

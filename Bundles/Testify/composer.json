@@ -19,7 +19,6 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/console": "*",
-    "spryker/http": "*",
     "spryker/json-path": "^1.0.0",
     "spryker/json-schema": "^1.0.0",
     "spryker/propel-orm": "*",

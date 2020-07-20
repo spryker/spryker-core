@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Testify\Helper;
+namespace SprykerTest\Zed\Application\Helper;
 
 trait ApplicationHelperTrait
 {
     /**
-     * @return \SprykerTest\Zed\Testify\Helper\ApplicationHelper
+     * @return \SprykerTest\Zed\Application\Helper\ApplicationHelper
      */
     protected function getApplicationHelper(): ApplicationHelper
     {
-        /** @var \SprykerTest\Zed\Testify\Helper\ApplicationHelper $applicationHelper */
+        /** @var \SprykerTest\Zed\Application\Helper\ApplicationHelper $applicationHelper */
         $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
 
         return $applicationHelper;

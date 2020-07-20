@@ -11,7 +11,7 @@ use Codeception\Stub;
 use Spryker\Zed\EventDispatcher\Communication\EventDispatcherCommunicationFactory;
 use Spryker\Zed\EventDispatcher\Communication\Plugin\Application\EventDispatcherApplicationPlugin;
 use SprykerTest\Shared\EventDispatcher\Helper\AbstractEventDispatcherHelper;
-use SprykerTest\Zed\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 
 class EventDispatcherHelper extends AbstractEventDispatcherHelper
