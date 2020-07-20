@@ -1,2 +1,5 @@
-<h1 class="offer-orders-table-title">{{ title }}</h1>
+<spy-headline>
+    <ng-content select="[title]"></ng-content>
+</spy-headline>
+
 <mp-offer-orders-table [config]="tableConfig"></mp-offer-orders-table>

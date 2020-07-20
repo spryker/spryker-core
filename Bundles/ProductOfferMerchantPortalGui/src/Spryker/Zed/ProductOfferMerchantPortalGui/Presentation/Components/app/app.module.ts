@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { ButtonLinkModule, ButtonLinkComponent } from '@spryker/button';
 import { CustomElementModule } from '@spryker/web-components';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -8,9 +9,9 @@ import { ProductOfferComponent } from './product-offer/product-offer.component';
 import { OffersListModule } from './offers-list/offers-list.module';
 import { OffersListComponent } from './offers-list/offers-list.component';
 import { LocaleModule, LocaleSwitcherComponent } from '@spryker/locale';
-import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
+import { EnLocaleModule } from '@spryker/locale/locales/en';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
-import { TableModule, TableDefaultConfig } from '@spryker/table';
+import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
 import {
     TableColumnTextComponent,
     TableColumnTextModule,
@@ -50,8 +51,15 @@ import {
     AjaxPostActionRefreshTableService,
 } from '@spryker/ajax-post-actions';
 
+class TableDefaultConfigData implements Partial<TableConfig> {
+    total = {
+        enabled: true,
+    };
+}
+
 @NgModule({
     imports: [
+        ButtonLinkModule,
         FormItemModule,
         CollapsibleModule,
         CardModule,
@@ -68,7 +76,7 @@ import {
         BrowserAnimationsModule,
         ProductOfferModule,
         OffersListModule,
-        LocaleModule.forRoot({ defaultLocale: EN_LOCALE }),
+        LocaleModule.forRoot(),
         EnLocaleModule,
         DeLocaleModule,
         TableModule.forRoot(),
@@ -114,9 +122,7 @@ import {
     providers: [
         {
             provide: TableDefaultConfig,
-            useValue: {
-                total: true,
-            },
+            useClass: TableDefaultConfigData,
         },
     ],
 })
@@ -129,6 +135,14 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-mp-product-offer',
             component: ProductOfferComponent,
+        },
+        {
+            selector: 'web-spy-button-link',
+            component: ButtonLinkComponent,
+        },
+        {
+            selector: 'web-spy-locale-switcher',
+            component: LocaleSwitcherComponent,
         },
         {
             selector: 'web-mp-edit-offer',
@@ -173,10 +187,6 @@ export class AppModule extends CustomElementModule {
         {
             selector: 'web-spy-form-item',
             component: FormItemComponent,
-        },
-        {
-            selector: 'web-spy-product-offer-locale-switcher',
-            component: LocaleSwitcherComponent,
         },
     ];
 }
