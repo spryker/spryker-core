@@ -14,16 +14,16 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
  * @Glue({
- *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestConfigurableBundleSlotsAttributesTransfer"
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestConfigurableBundleTemplateSlotsAttributesTransfer"
  * })
  *
  * @method \Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiFactory getFactory()
  */
-class ConfigurableBundleSlotByConfigurableBundleTemplateResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ConfigurableBundleTemplateSlotByConfigurableBundleTemplateResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds `configurable-bundle-slots` resource as relationship by configurable bundle template.
+     * - Adds `configurable-bundle-template-slots` resource as relationship by configurable bundle template.
      * - Requires `ConfigurableBundleTemplateStorageTransfer` be provided in resource payload.
      *
      * @api
@@ -36,7 +36,7 @@ class ConfigurableBundleSlotByConfigurableBundleTemplateResourceRelationshipPlug
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createConfigurableBundleSlotExpander()
+            ->createConfigurableBundleTemplateSlotExpander()
             ->addResourceRelationships($resources, $restRequest);
     }
 
@@ -49,6 +49,6 @@ class ConfigurableBundleSlotByConfigurableBundleTemplateResourceRelationshipPlug
      */
     public function getRelationshipResourceType(): string
     {
-        return ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_SLOTS;
+        return ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS;
     }
 }

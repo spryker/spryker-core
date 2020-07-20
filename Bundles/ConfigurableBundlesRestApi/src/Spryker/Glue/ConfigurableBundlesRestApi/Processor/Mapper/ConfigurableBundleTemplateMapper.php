@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer;
 
@@ -25,24 +24,6 @@ class ConfigurableBundleTemplateMapper implements ConfigurableBundleTemplateMapp
     ): RestConfigurableBundleTemplatesAttributesTransfer {
         $restConfigurableBundleTemplatesAttributesTransfer->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
-            true
-        );
-
-        return $restConfigurableBundleTemplatesAttributesTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
-     * @param \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer $restConfigurableBundleTemplatesAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer
-     */
-    public function mapConfigurableBundleTemplatePageSearchTransferToRestConfigurableBundleTemplatesAttributesTransfer(
-        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer,
-        RestConfigurableBundleTemplatesAttributesTransfer $restConfigurableBundleTemplatesAttributesTransfer
-    ): RestConfigurableBundleTemplatesAttributesTransfer {
-        $restConfigurableBundleTemplatesAttributesTransfer->fromArray(
-            $configurableBundleTemplatePageSearchTransfer->toArray(),
             true
         );
 

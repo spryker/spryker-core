@@ -12,14 +12,20 @@ use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundle
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate\ConfigurableBundleTemplateReader;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate\ConfigurableBundleTemplateReaderInterface;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleSlotExpander;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleSlotExpanderInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateSlotExpander;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateSlotExpanderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapper;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapper;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapperInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilder;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilder;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilder;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilderInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslator;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslatorInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslator;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
@@ -35,6 +41,17 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
             $this->getConfigurableBundleStorageClient(),
             $this->getConfigurableBundlePageSearchClient(),
             $this->createConfigurableBundleTemplateRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateSlotExpanderInterface
+     */
+    public function createConfigurableBundleTemplateSlotExpander(): ConfigurableBundleTemplateSlotExpanderInterface
+    {
+        return new ConfigurableBundleTemplateSlotExpander(
+            $this->createConfigurableBundleTemplateSlotRestResourceBuilder(),
+            $this->createConfigurableBundleTemplateSlotTranslator()
         );
     }
 
@@ -62,11 +79,30 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface
+     */
+    public function createConfigurableBundleTemplateSlotRestResourceBuilder(): ConfigurableBundleTemplateSlotRestResourceBuilderInterface
+    {
+        return new ConfigurableBundleTemplateSlotRestResourceBuilder(
+            $this->getResourceBuilder(),
+            $this->createConfigurableBundleTemplateSlotMapper()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateMapperInterface
      */
     public function createConfigurableBundleTemplateMapper(): ConfigurableBundleTemplateMapperInterface
     {
         return new ConfigurableBundleTemplateMapper();
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapperInterface
+     */
+    public function createConfigurableBundleTemplateSlotMapper(): ConfigurableBundleTemplateSlotMapperInterface
+    {
+        return new ConfigurableBundleTemplateSlotMapper();
     }
 
     /**
@@ -78,11 +114,11 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleSlotExpanderInterface
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslatorInterface
      */
-    public function createConfigurableBundleSlotExpander(): ConfigurableBundleSlotExpanderInterface
+    public function createConfigurableBundleTemplateSlotTranslator(): ConfigurableBundleTemplateSlotTranslatorInterface
     {
-        return new ConfigurableBundleSlotExpander();
+        return new ConfigurableBundleTemplateSlotTranslator($this->getGlossaryStorageClient());
     }
 
     /**
