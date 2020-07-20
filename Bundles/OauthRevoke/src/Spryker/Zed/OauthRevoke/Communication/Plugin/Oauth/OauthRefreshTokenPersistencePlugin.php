@@ -9,13 +9,13 @@ namespace Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth;
 
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistancePluginInterface;
+use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface;
 
 /**
  * @method \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthRevoke\OauthRevokeConfig getConfig()
  */
-class OauthRefreshTokenPersistencePlugin extends AbstractPlugin implements OauthRefreshTokenPersistancePluginInterface
+class OauthRefreshTokenPersistencePlugin extends AbstractPlugin implements OauthRefreshTokenPersistencePluginInterface
 {
     /**
      * {@inheritDoc}

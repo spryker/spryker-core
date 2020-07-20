@@ -9,7 +9,7 @@ namespace Spryker\Zed\OauthExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 
-interface OauthRefreshTokenPersistancePluginInterface
+interface OauthRefreshTokenPersistencePluginInterface
 {
     /**
      * Specification:
