@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/oms": "Oms provides basic functionality."
+  }
+}

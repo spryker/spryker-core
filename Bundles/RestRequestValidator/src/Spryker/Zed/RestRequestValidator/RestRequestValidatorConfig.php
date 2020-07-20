@@ -77,7 +77,7 @@ class RestRequestValidatorConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use getCodeBucketCacheFilePathPattern() instead.
+     * @deprecated Use {@link getCodeBucketCacheFilePathPattern()} instead.
      *
      * @return string
      */

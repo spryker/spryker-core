@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Dependency\Plugin;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface as SearchExtensionSearchStringSetterInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\SearchStringSetterInterface} instead.
  */
 interface SearchStringSetterInterface extends SearchExtensionSearchStringSetterInterface
 {

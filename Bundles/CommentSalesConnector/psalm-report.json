@@ -1,0 +1,58 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method requireOwnerType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentSalesConnector/src/Spryker/Zed/CommentSalesConnector/Business/Writer/CommentThreadWriter.php",
+            "snippet": "                ->requireOwnerType()",
+            "selected_text": "requireOwnerType",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOwnerId on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentSalesConnector/src/Spryker/Zed/CommentSalesConnector/Business/Writer/CommentThreadWriter.php",
+            "snippet": "            ->setOwnerId($quoteTransfer->getCommentThread()->getOwnerId())",
+            "selected_text": "getOwnerId",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getOwnerType on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentSalesConnector/src/Spryker/Zed/CommentSalesConnector/Business/Writer/CommentThreadWriter.php",
+            "snippet": "            ->setOwnerType($quoteTransfer->getCommentThread()->getOwnerType());",
+            "selected_text": "getOwnerType",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\CommentTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CommentSalesConnector/src/Spryker/Zed/CommentSalesConnector/Communication/Plugin/Sales/CommentThreadAttachedCommentOrderPostSavePlugin.php",
+            "snippet": "        if ($quoteTransfer->getCommentThread() && $quoteTransfer->getCommentThread()->getComments()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

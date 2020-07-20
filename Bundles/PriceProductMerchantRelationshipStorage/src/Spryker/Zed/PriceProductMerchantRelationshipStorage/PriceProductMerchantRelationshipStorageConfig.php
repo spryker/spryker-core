@@ -89,12 +89,42 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
     public function isSendingToQueue(): bool
     {
         return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getMerchantRelationEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPriceProductConcreteMerchantRelationEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getPriceProductAbstractMerchantRelationEventQueueName(): ?string
+    {
+        return null;
     }
 }

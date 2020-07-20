@@ -114,9 +114,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ShipmentToStoreBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -128,9 +128,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ShipmentToCurrencyBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -184,9 +184,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addSalesFacade($container);
@@ -211,9 +211,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMethodFilterPlugins(Container $container)
     {
-        $container[static::SHIPMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+        $container->set(static::SHIPMENT_METHOD_FILTER_PLUGINS, function (Container $container) {
             return $this->getMethodFilterPlugins($container);
-        };
+        });
 
         return $container;
     }

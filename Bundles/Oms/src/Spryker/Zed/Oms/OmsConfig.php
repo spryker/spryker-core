@@ -14,6 +14,8 @@ class OmsConfig extends AbstractBundleConfig
 {
     public const DEFAULT_PROCESS_LOCATION = APPLICATION_ROOT_DIR . '/config/Zed/oms';
 
+    public const EVENT_CANCEL = 'cancel';
+
     /**
      * @api
      *
@@ -60,6 +62,19 @@ class OmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - This prefix is used for the auto-generated display name in case of its absence.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getFallbackDisplayNamePrefix(): string
+    {
+        return '';
+    }
+
+    /**
      * @api
      *
      * @return string
@@ -87,5 +102,31 @@ class OmsConfig extends AbstractBundleConfig
     public function getInitialStatus()
     {
         return 'new';
+    }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckTimeoutsQueryLimit(): ?int
+    {
+        return null;
+    }
+
+    /**
+     * Specification:
+     * - Defines the query limit of orders for which order items should be checked.
+     *
+     * @api
+     *
+     * @return int|null
+     */
+    public function getCheckConditionsQueryLimit(): ?int
+    {
+        return null;
     }
 }

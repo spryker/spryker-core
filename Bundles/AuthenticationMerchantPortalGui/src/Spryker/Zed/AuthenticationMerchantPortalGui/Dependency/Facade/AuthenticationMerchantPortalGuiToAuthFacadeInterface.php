@@ -18,6 +18,11 @@ interface AuthenticationMerchantPortalGuiToAuthFacadeInterface
     public function login($username, $password);
 
     /**
+     * @return void
+     */
+    public function logout();
+
+    /**
      * @param string $token
      *
      * @return bool

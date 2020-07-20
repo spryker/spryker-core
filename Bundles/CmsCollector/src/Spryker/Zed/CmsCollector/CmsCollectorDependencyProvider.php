@@ -33,21 +33,21 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_DATA_READER] = function (Container $container) {
+        $container->set(static::SERVICE_DATA_READER, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
 
-        $container[static::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CmsCollectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
-        $container[static::FACADE_SEARCH] = function (Container $container) {
+        $container->set(static::FACADE_SEARCH, function (Container $container) {
             return new CmsCollectorToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         $container = $this->addCmsFacade($container);
 
@@ -61,9 +61,9 @@ class CmsCollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsFacade(Container $container)
     {
-        $container[static::FACADE_CMS] = function (Container $container) {
+        $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsCollectorToCmsBridge($container->getLocator()->cms()->facade());
-        };
+        });
 
         return $container;
     }

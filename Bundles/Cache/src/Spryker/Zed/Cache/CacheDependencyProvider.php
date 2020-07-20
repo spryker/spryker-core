@@ -40,9 +40,9 @@ class CacheDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystem(Container $container)
     {
-        $container[static::SYMFONY_FILE_SYSTEM] = function () {
+        $container->set(static::SYMFONY_FILE_SYSTEM, function () {
             return new Filesystem();
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class CacheDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFinder(Container $container)
     {
-        $container[static::SYMFONY_FINDER] = function () {
+        $container->set(static::SYMFONY_FINDER, function () {
             return new Finder();
-        };
+        });
 
         return $container;
     }

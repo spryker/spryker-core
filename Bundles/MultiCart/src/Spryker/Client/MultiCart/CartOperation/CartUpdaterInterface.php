@@ -20,7 +20,7 @@ interface CartUpdaterInterface
     public function updateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @deprecated Use `markQuoteAsDefault()` instead.
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

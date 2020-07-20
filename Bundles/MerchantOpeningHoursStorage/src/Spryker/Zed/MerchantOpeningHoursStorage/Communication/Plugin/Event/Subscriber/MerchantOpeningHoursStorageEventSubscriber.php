@@ -47,10 +47,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(
-            MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH,
-            new MerchantOpeningHoursScheduleStoragePublishListener()
-        );
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH, new MerchantOpeningHoursScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -62,10 +59,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursWeekdayScheduleCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(
-            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE,
-            new MerchantOpeningHoursWeekdayScheduleStoragePublishListener()
-        );
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -77,10 +71,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursDateScheduleCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(
-            MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE,
-            new MerchantOpeningHoursDateScheduleStoragePublishListener()
-        );
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE, new MerchantOpeningHoursDateScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }

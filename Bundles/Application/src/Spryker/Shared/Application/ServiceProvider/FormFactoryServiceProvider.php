@@ -17,8 +17,8 @@ use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
 /**
- * @deprecated Use `Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin` instead.
- * @deprecated Use `Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin} instead.
  */
 class FormFactoryServiceProvider implements ServiceProviderInterface
 {

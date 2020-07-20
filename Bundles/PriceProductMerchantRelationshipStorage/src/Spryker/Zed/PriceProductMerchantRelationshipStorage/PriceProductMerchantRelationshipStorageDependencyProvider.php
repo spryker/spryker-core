@@ -52,11 +52,11 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new PriceProductMerchantRelationshipStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class PriceProductMerchantRelationshipStorageDependencyProvider extends Abstract
      */
     protected function addPropelPriceProductMerchantRelationshipQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP] = function () {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_MERCHANT_RELATIONSHIP, $container->factory(function () {
             return SpyPriceProductMerchantRelationshipQuery::create();
-        };
+        }));
 
         return $container;
     }

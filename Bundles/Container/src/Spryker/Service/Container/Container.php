@@ -590,7 +590,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::has()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::has()} instead.
      *
      * @param mixed $offset
      *
@@ -604,7 +604,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::get()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::get()} instead.
      *
      * @param mixed $offset
      *
@@ -618,7 +618,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::set()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::set()} instead.
      *
      * @param mixed $offset
      * @param mixed $value
@@ -646,7 +646,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::remove()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::remove()} instead.
      *
      * @param mixed $offset
      *

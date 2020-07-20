@@ -40,9 +40,9 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new TaxProductConnectorToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class TaxProductConnectorDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addTaxFacade(Container $container)
     {
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new TaxProductConnectorToTaxBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         return $container;
     }

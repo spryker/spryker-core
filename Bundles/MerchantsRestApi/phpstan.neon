@@ -1,0 +1,3 @@
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    ignoreErrors:

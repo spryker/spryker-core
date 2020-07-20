@@ -19,7 +19,7 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 class PriceProductEntityManager extends AbstractEntityManager implements PriceProductEntityManagerInterface
 {
     /**
-     * @deprecated Use \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter::deleteOrphanPriceProductStoreEntities() instead.
+     * @deprecated Use {@link \Spryker\Zed\PriceProduct\Business\Model\Product\PriceProductStoreWriter::deleteOrphanPriceProductStoreEntities()} instead.
      *
      * @return void
      */

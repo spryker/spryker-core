@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 /**
  * @method \Spryker\Zed\AvailabilityGui\Communication\AvailabilityGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\AvailabilityGui\AvailabilityGuiConfig getConfig()
+ * @method \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface getRepository()
  */
 class AvailabilityStockForm extends AbstractType
 {
@@ -69,7 +70,7 @@ class AvailabilityStockForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

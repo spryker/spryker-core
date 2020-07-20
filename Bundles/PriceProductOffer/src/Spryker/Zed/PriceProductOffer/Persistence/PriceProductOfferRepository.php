@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\PriceProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PriceProductDimensionTransfer;
+use Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap;
@@ -42,5 +44,35 @@ class PriceProductOfferRepository extends AbstractRepository implements PricePro
                     ->setRight([SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER])
                     ->setJoinType(Criteria::LEFT_JOIN)
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    public function getProductOfferPrices(PriceProductOfferCriteriaTransfer $priceProductOfferCriteriaTransfer): ArrayObject
+    {
+        $priceProductOfferQuery = $this->getFactory()
+            ->getPriceProductOfferPropelQuery()
+            ->joinWithSpyPriceProductStore()
+            ->useSpyPriceProductStoreQuery()
+                ->joinWithPriceProduct()
+                ->joinWithStore()
+                ->joinWithCurrency()
+                ->usePriceProductQuery()
+                    ->joinWithPriceType()
+                ->endUse()
+            ->endUse();
+
+        if ($priceProductOfferCriteriaTransfer->getIdProductOffer()) {
+            $priceProductOfferQuery->filterByFkProductOffer($priceProductOfferCriteriaTransfer->getIdProductOffer());
+        }
+
+        $priceProductOfferEntities = $priceProductOfferQuery->find();
+
+        return $this->getFactory()
+            ->createPriceProductOfferMapper()
+            ->mapPriceProductOfferEntitiesToPriceProductTransfers($priceProductOfferEntities, new ArrayObject());
     }
 }

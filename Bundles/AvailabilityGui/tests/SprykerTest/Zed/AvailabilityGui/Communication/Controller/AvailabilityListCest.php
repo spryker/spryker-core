@@ -36,7 +36,7 @@ class AvailabilityListCest
         $i->amOnPage(AvailabilityPage::AVAILABILITY_LIST_URL);
         $i->listDataTable(AvailabilityPage::AVAILABILITY_LIST_URL . '/index/availability-abstract-table');
 
-        $i->seeBreadcrumbNavigation('Products / Availability');
+        $i->seeBreadcrumbNavigation('Catalog / Availability');
 
         $i->clickDataTableViewButton();
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);

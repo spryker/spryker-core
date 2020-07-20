@@ -59,9 +59,9 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigFunctions(Container $container)
     {
-        $container[static::GUI_TWIG_FUNCTIONS] = function () {
+        $container->set(static::GUI_TWIG_FUNCTIONS, function () {
             return $this->getTwigFunctions();
-        };
+        });
 
         return $container;
     }
@@ -73,9 +73,9 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigFilter(Container $container)
     {
-        $container[static::GUI_TWIG_FILTERS] = function () {
+        $container->set(static::GUI_TWIG_FILTERS, function () {
             return $this->getTwigFilters();
-        };
+        });
 
         return $container;
     }

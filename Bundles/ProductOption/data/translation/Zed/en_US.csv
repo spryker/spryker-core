@@ -27,6 +27,7 @@ Name,Name
 "Product option group created.","Product option group created."
 "Product option group modified.","Product option group modified."
 "Product option list","Product option list"
+"Product Options","Product Options"
 Products,Products
 "Products to be assigned","Products to be assigned"
 "Products to be deassigned","Products to be deassigned"
@@ -41,3 +42,7 @@ Translation,Translation
 "Translation key","Translation key"
 "Updated at","Updated at"
 "View product option","View product option"
+Active,Active
+Inactive,Inactive
+"product.option.group.name.(your key)","product.option.group.name.(your key)"
+"product.option.(your key)","product.option.(your key)"

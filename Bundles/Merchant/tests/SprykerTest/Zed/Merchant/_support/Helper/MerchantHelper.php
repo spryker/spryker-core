@@ -40,6 +40,10 @@ class MerchantHelper extends Module
             ->createMerchant($merchantTransfer);
         $merchantTransfer = $merchantResponseTransfer->getMerchant();
 
+        $this->getDataCleanupHelper()->_addCleanup(function () use ($merchantTransfer) {
+            $this->getMerchantQuery()->filterByIdMerchant($merchantTransfer->getIdMerchant())->delete();
+        });
+
         return $merchantTransfer;
     }
 

@@ -34,9 +34,9 @@ class DashboardDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderDashboardPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RENDER_DASHBOARDS] = function () {
+        $container->set(static::PLUGIN_RENDER_DASHBOARDS, function () {
             return $this->getDashboardPlugins();
-        };
+        });
 
         return $container;
     }

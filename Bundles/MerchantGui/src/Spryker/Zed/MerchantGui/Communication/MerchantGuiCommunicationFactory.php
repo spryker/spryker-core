@@ -9,12 +9,17 @@ namespace Spryker\Zed\MerchantGui\Communication;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
+use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpander;
+use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpanderInterface;
 use Spryker\Zed\MerchantGui\Communication\Form\Constraint\UniqueUrl;
 use Spryker\Zed\MerchantGui\Communication\Form\DataProvider\MerchantFormDataProvider;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantCreateForm;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
 use Spryker\Zed\MerchantGui\Communication\Form\MerchantUpdateForm;
+use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
 use Spryker\Zed\MerchantGui\Communication\Table\MerchantTable;
 use Spryker\Zed\MerchantGui\Communication\Tabs\MerchantFormTabs;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeInterface;
@@ -22,6 +27,7 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterfa
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -95,6 +101,33 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
         return new UniqueUrl([
             UniqueUrl::OPTION_URL_FACADE => $this->getUrlFacade(),
         ]);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpanderInterface
+     */
+    public function createMerchantListDataExpander(): MerchantListDataExpanderInterface
+    {
+        return new MerchantListDataExpander(
+            $this->getRequest(),
+            $this->getMerchantFacade()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActiveMerchantForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveMerchantForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createMerchantStatusForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(MerchantStatusForm::class);
     }
 
     /**
@@ -191,5 +224,21 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->getApplication()['request'];
     }
 }

@@ -9,13 +9,15 @@ namespace SprykerTest\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\E
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\OmsProductOfferReservationTransfer;
 use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
-use Spryker\Zed\Oms\Dependency\OmsEvents;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
+use Spryker\Zed\OmsProductOfferReservation\Dependency\OmsProductOfferReservationEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\OmsProductReservationStoragePublishListener;
 
 /**
@@ -50,6 +52,10 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [
+            new ProductOfferOmsReservationReaderStrategyPlugin(),
+        ]);
     }
 
     /**
@@ -63,7 +69,9 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
         $expectedAvailability = $stockQuantity - $reservedQuantity;
 
         $storeTransfer = $this->tester->haveStore();
-        $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
@@ -74,26 +82,26 @@ class OmsProductReservationStoragePublishListenerTest extends Unit
             ],
         ]);
 
-        $omsProductReservationTransfer = $this->tester->haveOmsProductReservation([
-            OmsProductReservationTransfer::FK_STORE => $storeTransfer->getIdStore(),
-            OmsProductReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,
-            OmsProductReservationTransfer::SKU => $productOfferStockTransfer->getProductOffer()->getConcreteSku(),
+        $omsProductOfferReservationTransfer = $this->tester->haveOmsProductOfferReservation([
+            OmsProductOfferReservationTransfer::ID_STORE => $storeTransfer->getIdStore(),
+            OmsProductOfferReservationTransfer::RESERVATION_QUANTITY => $reservedQuantity,
+            OmsProductOfferReservationTransfer::PRODUCT_OFFER_REFERENCE => $productOfferTransfer->getProductOfferReference(),
         ]);
 
         $omsProductReservationStoragePublishListener = new OmsProductReservationStoragePublishListener();
         $omsProductReservationStoragePublishListener->setFacade($this->tester->getFacade());
 
         $eventEntityTransfers = [
-            (new EventEntityTransfer())->setId($omsProductReservationTransfer->getIdOmsProductReservation()),
+            (new EventEntityTransfer())->setId($omsProductOfferReservationTransfer->getIdOmsProductOfferReservation()),
         ];
 
         // Act
-        $omsProductReservationStoragePublishListener->handleBulk($eventEntityTransfers, OmsEvents::ENTITY_SPY_OMS_PRODUCT_RESERVATION_CREATE);
+        $omsProductReservationStoragePublishListener->handleBulk($eventEntityTransfers, OmsProductOfferReservationEvents::ENTITY_SPY_OMS_PRODUCT_OFFER_RESERVATION_CREATE);
 
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
             $storeTransfer->getName(),
-            $productOfferStockTransfer->getProductOffer()->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference()
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());

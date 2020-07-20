@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Oms\Dependency\Plugin;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\OmsExtension\Dependency\Plugin\ReservationPostSaveTerminationAwareStrategyPluginInterface} instead.
+ */
 interface ReservationHandlerPluginInterface
 {
     /**

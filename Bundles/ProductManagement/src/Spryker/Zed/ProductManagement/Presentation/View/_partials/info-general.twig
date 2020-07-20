@@ -13,6 +13,14 @@
             <div class="hr-line-dashed"></div>
         {% endif %}
 
+        {% if merchant is defined and merchant is not empty %}
+            <div class="row">
+                <div class="col-xs-2"><strong>{{ 'Merchant' | trans }}</strong></div>
+                <div class="col-xs-10">{{ merchant.name }}</div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+
         {% set productType = 'Product' %}
 
         {% if isGiftCard == true %}

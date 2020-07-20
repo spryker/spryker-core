@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemState;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineProcess;
 use Spryker\Zed\StateMachine\Business\Exception\StateMachineException;
+use Spryker\Zed\StateMachine\Business\Process\StateInterface;
 use Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface;
 
 class Finder implements FinderInterface
@@ -283,6 +284,21 @@ class Finder implements FinderInterface
         }
 
         return $processes;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return string[]
+     */
+    public function getProcessStates(StateMachineProcessTransfer $stateMachineProcessTransfer): array
+    {
+        $states = $this->builder->createProcess($stateMachineProcessTransfer)->getStates();
+        $statesNames = array_map(function (StateInterface $state) {
+            return $state->getName();
+        }, $states);
+
+        return $statesNames;
     }
 
     /**

@@ -57,9 +57,9 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductReviewToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductReviewClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_REVIEW, function (Container $container) {
             return $container->getLocator()->productReview()->client();
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductReviewToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -99,9 +99,9 @@ class ProductReviewDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductReviewToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

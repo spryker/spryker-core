@@ -45,9 +45,9 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSession(Container $container)
     {
-        $container[static::SESSION] = function (Container $container) {
+        $container->set(static::SESSION, function (Container $container) {
             return (new Pimple())->getApplication()['request']->getSession();
-        };
+        });
 
         return $container;
     }
@@ -61,9 +61,9 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslationPlugin(Container $container)
     {
-        $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
+        $container->set(static::PLUGIN_TRANSLATION, function (Container $container) {
             return new TranslationPlugin();
-        };
+        });
 
         return $container;
     }
@@ -75,9 +75,9 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_TRANSLATION] = function () {
+        $container->set(static::PLUGINS_TRANSLATION, function () {
             return $this->getTranslationPlugins();
-        };
+        });
 
         return $container;
     }

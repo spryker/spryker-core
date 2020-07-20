@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNoteProductBundleConnector/src/Spryker/Client/CartNoteProductBundleConnector/CartNoteProductBundleConnectorDependencyProvider.php",
+            "snippet": "            return new CartNoteProductBundleConnectorToProductBundleClientBridge($container->getLocator()->productBundle()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CartNoteProductBundleConnector/src/Spryker/Zed/CartNoteProductBundleConnector/CartNoteProductBundleConnectorDependencyProvider.php",
+            "snippet": "            return new CartNoteProductBundleConnectorToProductBundleFacadeBridge($container->getLocator()->productBundle()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

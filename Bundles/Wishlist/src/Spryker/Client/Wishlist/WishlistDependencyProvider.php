@@ -46,9 +46,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceProductClient(Container $container)
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new WishlistToPriceProductClientClientBridge($container->getLocator()->priceProduct()->client());
-        };
+        });
 
         return $container;
     }
@@ -60,9 +60,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container)
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new WishlistToCustomerBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCartClient(Container $container)
     {
-        $container[static::CLIENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_CART, function (Container $container) {
             return new WishlistToCartBridge($container->getLocator()->cart()->client());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductClient(Container $container)
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new WishlistToProductBridge($container->getLocator()->product()->client());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::SERVICE_ZED] = function (Container $container) {
+        $container->set(static::SERVICE_ZED, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         return $container;
     }

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 
 /**
- * @deprecated Use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaver instead
+ * @deprecated Use {@link \Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleSalesOrderSaver} instead
  */
 class ProductBundleSalesOrderSaver extends ProductBundleOrderSaver implements ProductBundleSalesOrderSaverInterface
 {

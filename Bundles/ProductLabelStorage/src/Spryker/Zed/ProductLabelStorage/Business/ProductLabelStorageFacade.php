@@ -22,7 +22,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductLabelDictionaryStorageCollection()} instead.
+     * @deprecated Use {@link writeProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
@@ -52,7 +52,7 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::deleteProductLabelDictionaryStorageCollection()} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::deleteProductLabelDictionaryStorageCollection()} instead.
      *
      * @return void
      */
@@ -78,8 +78,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
+     *   or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacadeInterface::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
      * @param int[] $productAbstractIds
      *
@@ -127,8 +127,8 @@ class ProductLabelStorageFacade extends AbstractFacade implements ProductLabelSt
      *
      * @api
      *
-     * @deprecated Use {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
-     *              or {@link \Spryker\Zed\ProductLabelStorage\Business\ProductLabelStorageFacade::writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
+     * @deprecated Use {@link writeProductAbstractLabelStorageCollectionByProductAbstractLabelEvents()}
+     *  or {@link writeProductAbstractLabelStorageCollectionByProductLabelProductAbstractEvents()} instead.
      *
      * @param int[] $productAbstractIds
      *

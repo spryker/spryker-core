@@ -11,6 +11,7 @@
               {{ 'Sku' | trans }}: {{ productOption.sku }}
             </div>
         </td>
+        <td></td>
         <td>
 
             <div>
@@ -18,6 +19,6 @@
             </div>
             <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': productOption.taxRate|default(0)}) }}</div>
         </td>
-        <td colspan="4"></td>
+        <td colspan="3"></td>
     </tr>
 {% endfor %}

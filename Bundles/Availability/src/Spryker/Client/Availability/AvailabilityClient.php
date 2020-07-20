@@ -20,8 +20,6 @@ class AvailabilityClient extends AbstractClient implements AvailabilityClientInt
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Client\AvailabilityStorage\AvailabilityStorageClient::getProductAvailabilityByIdProductAbstract() instead`.
-     *
      * @param int $idProductAbstract
      *
      * @throws \Spryker\Client\Availability\Exception\ProductAvailabilityNotFoundException

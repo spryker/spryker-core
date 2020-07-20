@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOffer\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -33,6 +35,7 @@ interface ProductOfferFacadeInterface
      * Specification:
      * - Finds ProductOfferTransfer by provided ProductOfferCriteriaFilterTransfer.
      * - Result might be filtered with concreteSku(s), productOfferReference(s) values.
+     * - Executes ProductOfferExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -44,22 +47,27 @@ interface ProductOfferFacadeInterface
 
     /**
      * Specification:
+     * - Generates product offer reference and sets default approval status if they are not set.
      * - Creates a product offer.
+     * - Creates relations between a product offer and stores.
+     * - Executes ProductOfferPostCreatePluginInterface plugin stack.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferCriteriaFilter
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function create(ProductOfferTransfer $productOfferCriteriaFilter): ProductOfferTransfer;
+    public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 
     /**
      * Specification:
-     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given
-     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer
-     * - Persists product offer entity with modified fields from ProductOfferTransfer
-     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if $productOfferTransfer.idProductOffer is not given.
+     * - Returns ProductOfferResponseTransfer.isSuccessful=false if no offer is found with $productOfferTransfer.idProductOffer.
+     * - Persists product offer entity with modified fields from ProductOfferTransfer.
+     * - Returns new product offer entity in ProductOfferResponseTransfer.productOffer and isSuccessful=true.
+     * - Updates relations between a product offer and stores.
+     * - Executes ProductOfferPostUpdatePluginInterface plugin stack.
      *
      * @api
      *
@@ -81,4 +89,17 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     * - Check if cart items product offer belongs to product.
+     * - Returns pre-check transfer with error messages in case of error.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
 }

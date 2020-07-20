@@ -4,7 +4,7 @@
   "description": "Oauth module",
   "license": "proprietary",
   "require": {
-    "league/oauth2-server": "^7.1.0 || ^8.0.0",
+    "league/oauth2-server": "^7.1",
     "php": ">=7.2",
     "spryker/config": "^3.0.0",
     "spryker/guzzle": "^2.0.0",

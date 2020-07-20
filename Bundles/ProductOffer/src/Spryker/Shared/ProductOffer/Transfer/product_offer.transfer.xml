@@ -31,7 +31,7 @@
     <transfer name="ProductOfferResponse">
         <property name="productOffer" type="ProductOffer"/>
         <property name="errors" type="ProductOfferError[]" singular="error"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferError">
@@ -79,7 +79,13 @@
     </transfer>
 
     <transfer name="Message">
+        <property name="type" type="string"/>
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 </transfers>

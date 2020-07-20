@@ -11,6 +11,7 @@ use Spryker\Client\ContentStorage\ContentStorage\ContentStorageReader;
 use Spryker\Client\ContentStorage\ContentStorage\ContentStorageReaderInterface;
 use Spryker\Client\ContentStorage\Dependency\Client\ContentStorageToStorageClientInterface;
 use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToSynchronizationServiceInterface;
+use Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceInterface;
 use Spryker\Client\Kernel\AbstractFactory;
 
 class ContentStorageFactory extends AbstractFactory
@@ -22,7 +23,8 @@ class ContentStorageFactory extends AbstractFactory
     {
         return new ContentStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -40,5 +42,13 @@ class ContentStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ContentStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ContentStorage\Dependency\Service\ContentStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ContentStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ContentStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

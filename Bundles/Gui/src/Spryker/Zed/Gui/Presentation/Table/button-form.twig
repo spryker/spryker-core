@@ -1,0 +1,12 @@
+{{ form_start(form) }}
+    {% for field in form %}
+        {% if field.vars.name != '_token' %}
+            <input type="hidden" name="{{ field.vars.name }}" value="{{ field.vars.data }}" />
+            {% do field.setRendered %}
+        {% endif %}
+    {% endfor %}
+    {{ form_widget(form) }}
+    <button type="submit" class="btn btn-xs btn-outline {{ class }}" {{ parameters | raw }}>
+        {{ icon | raw }} {{ title | trans | raw }}
+    </button>
+{{ form_end(form) }}

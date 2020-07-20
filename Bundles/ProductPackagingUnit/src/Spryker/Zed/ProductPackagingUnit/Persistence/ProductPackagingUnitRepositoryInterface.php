@@ -101,6 +101,20 @@ interface ProductPackagingUnitRepositoryInterface
     public function findSalesOrderItemsByIdSalesOrder(int $idSalesOrder): array;
 
     /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getMappedLeadProductSkusBySalesOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]
+     */
+    public function getMappedProductMeasurementSalesUnits(array $salesOrderItemIds): array;
+
+    /**
      * @uses State
      *
      * @param string $sku
@@ -110,4 +124,11 @@ interface ProductPackagingUnitRepositoryInterface
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
     public function aggregateProductPackagingUnitReservation(string $sku, array $reservedStateNames, ?StoreTransfer $storeTransfer = null): array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return int[]
+     */
+    public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array;
 }

@@ -15,11 +15,9 @@
                 {% if not productCategoryFilters.idProductCategoryFilter %}
                     <div class="alert alert-info alert-dismissable">
                         <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                        {% filter trans|raw %}
-                            <div>
-                                There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below.
-                            </div>
-                        {% endfilter %}
+                        <div>
+                            {{ 'There are no manual filter preferences defined for this category. The filters listed bellow are global settings. To define manual references for this category, modify the filters below.' | trans }}
+                        </div>
                     </div>
                 {% else %}
                     <div class="alert alert-info alert-dismissable">

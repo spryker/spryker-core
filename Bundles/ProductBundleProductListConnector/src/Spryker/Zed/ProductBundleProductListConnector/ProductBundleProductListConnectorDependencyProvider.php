@@ -41,9 +41,9 @@ class ProductBundleProductListConnectorDependencyProvider extends AbstractBundle
      */
     protected function addFacadeProduct(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductBundleProductListConnectorToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class ProductBundleProductListConnectorDependencyProvider extends AbstractBundle
      */
     protected function addFacadeProductBundle(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductBundleProductListConnectorToProductBundleFacadeBridge($container->getLocator()->productBundle()->facade());
-        };
+        });
 
         return $container;
     }

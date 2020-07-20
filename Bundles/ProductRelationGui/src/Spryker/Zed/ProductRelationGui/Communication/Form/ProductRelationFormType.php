@@ -19,7 +19,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GroupSequence;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\ProductRelationGui\Communication\ProductRelationGuiCommunicationFactory getFactory()
@@ -160,7 +159,6 @@ class ProductRelationFormType extends AbstractType
             'choices' => array_flip($options[static::OPTION_RELATION_CHOICES]),
             'placeholder' => 'Select a relation type',
             'constraints' => [
-                new Required(),
                 new NotBlank(),
             ],
         ]);
@@ -214,7 +212,6 @@ class ProductRelationFormType extends AbstractType
             'disabled' => $options[ProductRelationTypeDataProvider::OPTION_PRODUCT_RELATION_KEY_DISABLED],
             'constraints' => [
                 new NotBlank(),
-                new Required(),
                 $this->getFactory()->createProductRelationKeyUniqueConstraint(),
             ],
         ]);

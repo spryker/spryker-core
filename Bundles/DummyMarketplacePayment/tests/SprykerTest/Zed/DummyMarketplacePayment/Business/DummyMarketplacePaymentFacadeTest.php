@@ -29,7 +29,7 @@ use Spryker\Shared\DummyMarketplacePayment\DummyMarketplacePaymentConfig;
  */
 class DummyMarketplacePaymentFacadeTest extends Unit
 {
-    protected const TEST_PRODUCT_OFFER_REFERENCE = 'TEST_PRODUCT_OFFER_REFERENCE';
+    protected const TEST_PRODUCT_MERCHANT = 'TEST_PRODUCT_MERCHANT';
 
     /**
      * @var \SprykerTest\Zed\DummyMarketplacePayment\DummyMarketplacePaymentBusinessTester
@@ -43,8 +43,8 @@ class DummyMarketplacePaymentFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE));
-        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(static::TEST_PRODUCT_OFFER_REFERENCE));
+        $quoteTransfer->addItem((new ItemTransfer())->setMerchantReference(static::TEST_PRODUCT_MERCHANT));
+        $quoteTransfer->addItem((new ItemTransfer())->setMerchantReference(static::TEST_PRODUCT_MERCHANT));
 
         $paymentMethod = (new PaymentMethodTransfer())
             ->setPaymentProvider((new PaymentProviderTransfer())->setName(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME));
@@ -68,8 +68,8 @@ class DummyMarketplacePaymentFacadeTest extends Unit
     {
         // Arrange
         $quoteTransfer = new QuoteTransfer();
-        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(null));
-        $quoteTransfer->addItem((new ItemTransfer())->setProductOfferReference(null));
+        $quoteTransfer->addItem((new ItemTransfer())->setMerchantReference(null));
+        $quoteTransfer->addItem((new ItemTransfer())->setMerchantReference(null));
 
         $paymentMethod = (new PaymentMethodTransfer())
             ->setPaymentProvider((new PaymentProviderTransfer())->setPaymentProviderKey(DummyMarketplacePaymentConfig::PAYMENT_PROVIDER_NAME));

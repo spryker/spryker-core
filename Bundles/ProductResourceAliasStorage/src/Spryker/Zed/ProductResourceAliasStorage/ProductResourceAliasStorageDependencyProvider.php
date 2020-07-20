@@ -60,9 +60,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductResourceAliasStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -88,9 +88,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -102,9 +102,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductAbstractStoragePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT_STORAGE] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT_STORAGE, $container->factory(function () {
             return SpyProductAbstractStorageQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -116,9 +116,9 @@ class ProductResourceAliasStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductConcreteStoragePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_CONCRETE_STORAGE] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_CONCRETE_STORAGE, $container->factory(function () {
             return SpyProductConcreteStorageQuery::create();
-        };
+        }));
 
         return $container;
     }

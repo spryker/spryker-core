@@ -1,0 +1,45 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNote/src/Spryker/Zed/CustomerNote/Business/Model/NoteWriter.php",
+            "snippet": "            $userTransfer->getFirstName(),",
+            "selected_text": "$userTransfer->getFirstName()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNote/src/Spryker/Zed/CustomerNote/Business/Model/NoteWriter.php",
+            "snippet": "            $userTransfer->getLastName()",
+            "selected_text": "$userTransfer->getLastName()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 13,
+            "line_to": 17,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNoteEntityManager::save has the more specific type 'Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer', expecting 'Spryker\\Shared\\Kernel\\Transfer\\EntityTransferInterface' as defined by Spryker\\Zed\\Kernel\\Persistence\\AbstractEntityManager::save",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNote/src/Spryker/Zed/CustomerNote/Persistence/CustomerNoteEntityManager.php",
+            "snippet": "/**\n * @method \\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)\n * @method \\Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNotePersistenceFactory getFactory()\n */\nclass CustomerNoteEntityManager extends AbstractEntityManager implements CustomerNoteEntityManagerInterface",
+            "selected_text": "/**\n * @method \\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer save(\\Generated\\Shared\\Transfer\\SpyCustomerNoteEntityTransfer $customerNoteEntityTransfer)\n * @method \\Spryker\\Zed\\CustomerNote\\Persistence\\CustomerNotePersistenceFactory getFactory()\n */\nc",
+            "error_level": 5,
+            "shortcode": 140,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

@@ -82,6 +82,8 @@ interface ProductRelationFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link updateProductRelation()} instead.
+     *
      * @param int $idProductRelation
      *
      * @throws \Spryker\Zed\ProductRelation\Business\Exception\ProductRelationNotFoundException
@@ -95,6 +97,8 @@ interface ProductRelationFacadeInterface
      * - Deactivates product relation and touches relation collector
      *
      * @api
+     *
+     * @deprecated Use {@link updateProductRelation()} instead.
      *
      * @param int $idProductRelation
      *

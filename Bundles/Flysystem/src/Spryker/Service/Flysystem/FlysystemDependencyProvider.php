@@ -38,9 +38,9 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFlysystemPluginCollection($container)
     {
-        $container[self::PLUGIN_COLLECTION_FLYSYSTEM] = function (Container $container) {
+        $container->set(static::PLUGIN_COLLECTION_FLYSYSTEM, function (Container $container) {
             return [];
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class FlysystemDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFilesystemBuilderPluginCollection($container)
     {
-        $container[self::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container) {
+        $container->set(static::PLUGIN_COLLECTION_FILESYSTEM_BUILDER, function (Container $container) {
             return [];
-        };
+        });
 
         return $container;
     }

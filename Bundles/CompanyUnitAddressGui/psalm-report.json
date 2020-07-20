@@ -1,0 +1,84 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyBusinessUnitAddressFormDataProvider.php",
+            "snippet": "            $result[$address->getIdCompanyUnitAddress()] = $address->getAddress1();",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 125,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 84,
+            "line_to": 84,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "            $result[$company->getIdCompany()] = $company->getName();",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 125,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 98,
+            "line_to": 98,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $result[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Form/DataProvider/CompanyUnitAddressFormDataProvider.php",
+            "snippet": "            $result[$country->getIdCountry()] = $country->getName();",
+            "selected_text": "$result",
+            "error_level": 3,
+            "shortcode": 125,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 213,
+            "line_to": 213,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Table\\CompanyUnitAddressTable::getCountryName is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 218,
+            "line_to": 218,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\CompanyUnitAddressGui\\Communication\\Table\\CompanyUnitAddressTable::getCountryName is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",
+            "snippet": "            return $companyUnitAddressEntity->getCountry()->getName();",
+            "selected_text": "$companyUnitAddressEntity->getCountry()->getName()",
+            "error_level": 5,
+            "shortcode": 139,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 232,
+            "line_to": 232,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressGui/src/Spryker/Zed/CompanyUnitAddressGui/Communication/Table/CompanyUnitAddressTable.php",
+            "snippet": "            return $companyUnitAddressEntity->getCompany()->getName();",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

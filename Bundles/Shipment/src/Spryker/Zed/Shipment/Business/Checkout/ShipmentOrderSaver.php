@@ -19,7 +19,7 @@ use Spryker\Zed\Shipment\Persistence\ShipmentEntityManagerInterface;
 use Spryker\Zed\Shipment\Persistence\ShipmentRepositoryInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver instead.
+ * @deprecated Use {@link \Spryker\Zed\Shipment\Business\Checkout\MultiShipmentOrderSaver} instead.
  */
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface
 {

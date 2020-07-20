@@ -38,11 +38,11 @@ class CompanyRoleDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CompanyRoleToPermissionFacadeBridge(
                 $container->getLocator()->permission()->facade()
             );
-        };
+        });
 
         return $container;
     }

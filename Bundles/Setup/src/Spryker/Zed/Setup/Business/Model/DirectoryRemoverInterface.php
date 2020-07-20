@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Setup\Business\Model;
 
 /**
- * @deprecated Use Spryker\Zed\Setup\Business\Model\GeneratedDirectoryInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Setup\Business\Model\GeneratedDirectoryInterface} instead.
  */
 interface DirectoryRemoverInterface
 {

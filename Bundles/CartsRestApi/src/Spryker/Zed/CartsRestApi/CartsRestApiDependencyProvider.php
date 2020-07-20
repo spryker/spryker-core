@@ -74,9 +74,9 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuotePropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_QUOTE, function () {
+        $container->set(static::PROPEL_QUERY_QUOTE, $container->factory(function () {
             return SpyQuoteQuery::create();
-        });
+        }));
 
         return $container;
     }

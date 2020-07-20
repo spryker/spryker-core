@@ -16,6 +16,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
+use Spryker\Zed\ProductOption\Communication\Form\ToggleActiveProductOptionForm;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToMoneyFacadeInterface;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
@@ -300,10 +301,10 @@ class ProductOptionListTable extends AbstractTable
     protected function getStatus(SpyProductOptionGroup $productOptionGroupEntity)
     {
         if ($productOptionGroupEntity->getActive()) {
-            return '<p class="text-success">Active</p>';
+            return $this->generateLabel('Active', 'label-info');
         }
 
-        return '<p class="text-danger">Inactive</p>';
+        return $this->generateLabel('Inactive', 'label-danger');
     }
 
     /**
@@ -385,9 +386,20 @@ class ProductOptionListTable extends AbstractTable
     protected function generateStatusButton(Url $viewDiscountUrl, $isActive)
     {
         if ($isActive) {
-            return $this->generateRemoveButton($viewDiscountUrl, 'Deactivate');
+            return $this->generateFormButton(
+                $viewDiscountUrl,
+                'Deactivate',
+                ToggleActiveProductOptionForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
+            );
         }
 
-        return $this->generateViewButton($viewDiscountUrl, 'Activate');
+        return $this->generateFormButton(
+            $viewDiscountUrl,
+            'Activate',
+            ToggleActiveProductOptionForm::class
+        );
     }
 }

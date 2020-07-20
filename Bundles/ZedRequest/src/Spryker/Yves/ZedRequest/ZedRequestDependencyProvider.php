@@ -37,9 +37,9 @@ class ZedRequestDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilNetworkService(Container $container)
     {
-        $container[self::SERVICE_UTIL_NETWORK] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_NETWORK, function (Container $container) {
             return new ZedRequestToUtilNetworkBridge($container->getLocator()->utilNetwork()->service());
-        };
+        });
 
         return $container;
     }

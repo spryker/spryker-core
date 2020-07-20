@@ -8,10 +8,12 @@
 namespace Spryker\Zed\Oms\Business\OrderStateMachine;
 
 use Exception;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Shared\Oms\OmsConfig;
 use Spryker\Zed\Oms\Business\Exception\StateNotFoundException;
+use Spryker\Zed\Oms\Business\Process\StateInterface;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 class Finder implements FinderInterface
@@ -357,5 +359,20 @@ class Finder implements FinderInterface
         $state = $allStates[$stateName];
 
         return $state->getDisplay();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     *
+     * @return \Spryker\Zed\Oms\Business\Process\StateInterface|null
+     */
+    public function findStateByName(ItemTransfer $itemTransfer): ?StateInterface
+    {
+        $processName = $itemTransfer->requireProcess()->getProcess();
+        $process = $this->builder->createProcess($processName);
+        $stateName = $itemTransfer->requireState()->getState()->getName();
+        $allStates = $process->getAllStates();
+
+        return $allStates[$stateName] ?? null;
     }
 }

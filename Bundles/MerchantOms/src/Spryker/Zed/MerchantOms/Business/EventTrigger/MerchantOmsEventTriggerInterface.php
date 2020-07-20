@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOms\Business\EventTrigger;
 
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
 
 interface MerchantOmsEventTriggerInterface
 {
@@ -24,4 +25,13 @@ interface MerchantOmsEventTriggerInterface
      * @return int
      */
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer
+     */
+    public function triggerEventForMerchantOrderItem(
+        MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+    ): MerchantOmsTriggerResponseTransfer;
 }

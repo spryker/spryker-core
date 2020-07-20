@@ -31,7 +31,8 @@ trait ContainerMocker
         }
 
         foreach ($containerMocks as $key => $containerMock) {
-            $container[$key] = $containerMock;
+            /** @var \Spryker\Service\Container\ContainerInterface $container */
+            $container->set($key, $containerMock);
         }
 
         return $container;

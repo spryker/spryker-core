@@ -12,7 +12,7 @@ use Spryker\Shared\Money\Dependency\Plugin\MoneyPluginInterface;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\QueryFactory} instead.
  */
 class QueryFactory implements QueryFactoryInterface
 {

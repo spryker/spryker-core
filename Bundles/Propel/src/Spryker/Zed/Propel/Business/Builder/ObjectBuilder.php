@@ -14,7 +14,7 @@ namespace Spryker\Zed\Propel\Business\Builder;
 use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder as PropelOrmObjectBuilder;
 
 /**
- * @deprecated Use Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder class instead.
+ * @deprecated Use {@link \Spryker\Zed\PropelOrm\Business\Builder\ObjectBuilder} instead.
  */
 class ObjectBuilder extends PropelOrmObjectBuilder
 {

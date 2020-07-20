@@ -12,7 +12,7 @@ use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 
 /**
- * @deprecated Use `Spryker\Zed\Kernel\Communication\Form\AbstractType` for Zed instead.
+ * @deprecated Use {@link \Spryker\Zed\Kernel\Communication\Form\AbstractType} for Zed instead.
  */
 abstract class AbstractForm extends SharedAbstractForm
 {

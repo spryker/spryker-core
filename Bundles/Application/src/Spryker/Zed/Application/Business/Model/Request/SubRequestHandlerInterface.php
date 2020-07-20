@@ -10,7 +10,7 @@ namespace Spryker\Zed\Application\Business\Model\Request;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\Spryker\Zed\Http\Communication\SubRequest\SubRequestHandlerInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\Http\Communication\SubRequest\SubRequestHandlerInterface} instead.
  */
 interface SubRequestHandlerInterface
 {

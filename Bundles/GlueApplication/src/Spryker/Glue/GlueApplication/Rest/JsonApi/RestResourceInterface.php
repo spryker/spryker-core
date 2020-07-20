@@ -18,7 +18,7 @@ interface RestResourceInterface
     public const RESOURCE_LINKS = 'links';
 
     /**
-     * @deprecated use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface::LINK_SELF instead
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface::LINK_SELF} instead
      */
     public const RESOURCE_LINKS_SELF = 'self';
     public const RESOURCE_RELATIONSHIPS = 'relationships';

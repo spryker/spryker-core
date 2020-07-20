@@ -49,9 +49,9 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilSanitizeService(Container $container)
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new ServiceProductReviewGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
     }
 
     /**
@@ -61,9 +61,9 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilDateTimeService(Container $container)
     {
-        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new ServiceProductReviewGuiToDateTimeBridge($container->getLocator()->utilDateTime()->service());
-        };
+        });
     }
 
     /**
@@ -85,9 +85,9 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addProductReviewFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewGuiToProductReviewBridge($container->getLocator()->productReview()->facade());
-        };
+        });
     }
 
     /**
@@ -97,9 +97,9 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addProductReviewQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_REVIEW] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_REVIEW, function (Container $container) {
             return new ProductReviewGuiToProductReviewQueryContainerBridge($container->getLocator()->productReview()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -109,8 +109,8 @@ class ProductReviewGuiDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductReviewGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 }

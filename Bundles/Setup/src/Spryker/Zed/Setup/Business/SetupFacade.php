@@ -63,7 +63,7 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
      *
      * @api
      *
-     * @deprecated Use emptyGeneratedDirectory() instead
+     * @deprecated Use {@link emptyGeneratedDirectory()} instead
      *
      * @return void
      */

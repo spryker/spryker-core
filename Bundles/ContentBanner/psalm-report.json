@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentBanner/src/Spryker/Client/ContentBanner/Mapper/ContentBannerTypeMapper.php",
+            "snippet": "            throw new MissingBannerTermException(sprintf('There is no ContentBanner Term which can work with the term %s.', $term));",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

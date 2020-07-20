@@ -17,4 +17,11 @@
         <property name="detail" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ContentProductAbstractListsAttributes">
+    </transfer>
+
 </transfers>

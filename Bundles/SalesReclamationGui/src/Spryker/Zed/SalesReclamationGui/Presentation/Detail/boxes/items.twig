@@ -36,7 +36,7 @@
     {% endblock %}
 
     {% block widget_header_content %}
-        Reclamation state: {{ reclamation.isOpen ? 'Open' | trans : 'Close' | trans }}
+        {{ 'Reclamation state' | trans ~ ': ' ~ ((reclamation.isOpen ? 'Open' : 'Close') | trans) }}
     {% endblock %}
 
     {% block widget_content %}
@@ -49,7 +49,7 @@
                 <th>{{ 'Unit Price' | trans }} <small>({{ reclamation.order.priceMode }})</small></th>
                 <th>{{ 'Item total' | trans }}</th>
                 <th>{{ 'State' | trans }}</th>
-                <th>Actions</th>
+                <th>{{ 'Actions' | trans }}</th>
             </tr>
             </thead>
             {% embed '@SalesReclamationGui/Detail/boxes/no-group-items.twig' with {items: reclamation.reclamationItems} %}{% endembed %}

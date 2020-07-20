@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $countryChoices[int|mixed|null] using possibly null offset int|mixed|null",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/Communication/Form/DataProvider/MerchantProfileAddressFormDataProvider.php",
+            "snippet": "            $countryChoices[$country->getIdCountry()] = $country->getName();",
+            "selected_text": "$countryChoices",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileGui\\Communication\\Form\\Transformer\\MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer::transform has the more specific type 'Generated\\Shared\\Transfer\\MerchantProfileAddressCollectionTransfer', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/Communication/Form/Transformer/MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer.php",
+            "snippet": "    public function transform($value): MerchantProfileAddressTransfer",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantProfileAddressTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/Communication/Form/Transformer/MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer.php",
+            "snippet": "        if ($value instanceof MerchantProfileAddressCollectionTransfer && $value->getAddresses()->offsetExists(0)) {",
+            "selected_text": "offsetExists",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MerchantProfileAddressTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/Communication/Form/Transformer/MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer.php",
+            "snippet": "            return $value->getAddresses()->offsetGet(0);",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantProfileGui\\Communication\\Form\\Transformer\\MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer::reverseTransform has the more specific type 'Generated\\Shared\\Transfer\\MerchantProfileAddressTransfer', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/Communication/Form/Transformer/MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer.php",
+            "snippet": "    public function reverseTransform($value): MerchantProfileAddressCollectionTransfer",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/MerchantProfileGuiDependencyProvider.php",
+            "snippet": "            return new MerchantProfileGuiToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/MerchantProfileGuiDependencyProvider.php",
+            "snippet": "            return new MerchantProfileGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 77,
+            "line_to": 77,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantProfileGui/src/Spryker/Zed/MerchantProfileGui/MerchantProfileGuiDependencyProvider.php",
+            "snippet": "            return new MerchantProfileGuiToCountryFacadeBridge($container->getLocator()->country()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

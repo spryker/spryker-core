@@ -27,9 +27,9 @@ class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCustomerQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new CustomerUserConnectorToCustomerQueryContainerBridge($container->getLocator()->customer()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -41,9 +41,9 @@ class CustomerUserConnectorDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addUserQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_USER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_USER, function (Container $container) {
             return new CustomerUserConnectorToUserQueryContainerBridge($container->getLocator()->user()->queryContainer());
-        };
+        });
 
         return $container;
     }

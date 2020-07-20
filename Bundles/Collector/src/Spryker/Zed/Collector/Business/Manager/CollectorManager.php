@@ -15,10 +15,24 @@ use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Spryker\Zed\Collector\CollectorConfig;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class CollectorManager implements CollectorManagerInterface
 {
+    /**
+     * @var \Spryker\Zed\Collector\CollectorConfig
+     */
+    protected $collectorConfig;
+
+    /**
+     * @param \Spryker\Zed\Collector\CollectorConfig $collectorConfig
+     */
+    public function __construct(CollectorConfig $collectorConfig)
+    {
+        $this->collectorConfig = $collectorConfig;
+    }
+
     /**
      * @param \Spryker\Zed\Collector\Business\Collector\DatabaseCollectorInterface $collector
      * @param \Orm\Zed\Touch\Persistence\SpyTouchQuery $baseQuery
@@ -41,6 +55,10 @@ class CollectorManager implements CollectorManagerInterface
         TouchUpdaterInterface $touchUpdater,
         OutputInterface $output
     ) {
+        if (!$this->collectorConfig->isCollectorEnabled()) {
+            return;
+        }
+
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
         $collector->setLocale($locale);
         $collector->deleteDataFromStore($touchUpdater, $dataWriter, $itemType);

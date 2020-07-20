@@ -1,0 +1,32 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Navigation element details' | trans %}
+{% block section_title %}
+    {{ 'Duplicate Navigation Element' | trans }}
+{% endblock %}
+
+{% block head_title %}
+    {{ widget_title | trans }}
+{% endblock %}
+
+{% block action %}
+    {{ backActionButton('/navigation-gui', 'Back to Navigation Elements' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(duplicateNavigationForm) }}
+                {{ form_widget(duplicateNavigationForm) }}
+
+                <input id="navigation-save-btn" type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+            {{ form_end(duplicateNavigationForm) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

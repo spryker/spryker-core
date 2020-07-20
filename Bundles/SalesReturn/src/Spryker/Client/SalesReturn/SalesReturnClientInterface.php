@@ -10,25 +10,10 @@ namespace Spryker\Client\SalesReturn;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 interface SalesReturnClientInterface
 {
-    /**
-     * Specification:
-     * - Makes Zed request.
-     * - Retrieves return reasons from persistence by criteria from FilterTransfer.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
-     */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer;
-
     /**
      * Specification:
      * - Makes Zed request.
@@ -48,6 +33,7 @@ interface SalesReturnClientInterface
      * Specification:
      * - Makes Zed request.
      * - Validates return request.
+     * - Expects that order items have same currency.
      * - Expects order items state to be returnable.
      * - Generates unique reference number.
      * - Stores return.

@@ -52,7 +52,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
+     * @deprecated Use {@link getYvesInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */
@@ -115,7 +115,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
+     * @deprecated Use {@link getZedInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */

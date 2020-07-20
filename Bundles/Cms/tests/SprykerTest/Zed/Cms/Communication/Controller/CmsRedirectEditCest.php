@@ -34,6 +34,6 @@ class CmsRedirectEditCest
         $i->listDataTable(CmsRedirectListPage::URL . '/table');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Content Management / Redirects / Edit CMS Redirect');
+        $i->seeBreadcrumbNavigation('Content / Redirects / Edit CMS Redirect');
     }
 }

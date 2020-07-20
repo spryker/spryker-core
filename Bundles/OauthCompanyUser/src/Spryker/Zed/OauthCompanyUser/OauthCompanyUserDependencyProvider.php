@@ -70,9 +70,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new OauthCompanyUserToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addOauthFacade(Container $container): Container
     {
-        $container[static::FACADE_OAUTH] = function (Container $container) {
+        $container->set(static::FACADE_OAUTH, function (Container $container) {
             return new OauthCompanyUserToOauthFacadeBridge($container->getLocator()->oauth()->facade());
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new OauthCompanyUserToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthCompanyUserToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addOauthCompanyUserIdentifierExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_OAUTH_COMPANY_USER_IDENTIFIER_EXPANDER, function () {
             return $this->getOauthCompanyUserIdentifierExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -148,9 +148,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerOauthRequestMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_OAUTH_REQUEST_MAPPER, function () {
             return $this->getCustomerOauthRequestMapperPlugins();
-        };
+        });
 
         return $container;
     }
@@ -162,9 +162,9 @@ class OauthCompanyUserDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCustomerExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_EXPANDER, function () {
             return $this->getCustomerExpanderPlugins();
-        };
+        });
 
         return $container;
     }

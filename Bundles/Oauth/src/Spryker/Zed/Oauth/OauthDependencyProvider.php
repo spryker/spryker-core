@@ -67,11 +67,11 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -83,9 +83,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_USER_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGIN_USER_PROVIDER, function (Container $container) {
             return $this->getUserProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addScopeProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_SCOPE_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGIN_SCOPE_PROVIDER, function (Container $container) {
             return $this->getScopeProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGrantTypeConfigurationProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER, function (Container $container) {
             return $this->getGrantTypeConfigurationProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthUserIdentifierFilterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER] = function () {
+        $container->set(static::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER, function () {
             return $this->getOauthUserIdentifierFilterPlugins();
-        };
+        });
 
         return $container;
     }

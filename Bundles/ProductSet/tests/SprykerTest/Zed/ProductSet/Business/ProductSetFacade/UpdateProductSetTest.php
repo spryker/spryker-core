@@ -13,8 +13,8 @@ use Generated\Shared\DataBuilder\ProductImageSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetBuilder;
 use Generated\Shared\DataBuilder\ProductSetDataBuilder;
 use Generated\Shared\Transfer\ProductSetTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Shared\ProductSet\ProductSetConfig;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -31,6 +31,8 @@ use Spryker\Shared\ProductSet\ProductSetConfig;
  */
 class UpdateProductSetTest extends Unit
 {
+    use InstancePoolingHelperTrait;
+
     /**
      * @return void
      */
@@ -38,7 +40,7 @@ class UpdateProductSetTest extends Unit
     {
         parent::setUp();
 
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
     }
 
     /**
