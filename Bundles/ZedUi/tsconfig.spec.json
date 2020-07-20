@@ -1,18 +1,16 @@
 {
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "outDir": "./out-tsc/spec",
-    "types": [
-      "jasmine",
-      "node"
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "outDir": "./out-tsc/spec",
+        "types": ["jasmine", "node"],
+        "skipLibCheck": true
+    },
+    "files": [
+        "src/Spryker/Zed/ZedUi/Presentation/Components/test.ts",
+        "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts"
+    ],
+    "include": [
+        "src/Spryker/Zed/ZedUi/Presentation/Components/**/*.spec.ts",
+        "src/Spryker/Zed/ZedUi/Presentation/Components/**/*.d.ts"
     ]
-  },
-  "files": [
-    "src/Spryker/Zed/ZedUi/Presentation/Components/test.ts",
-    "src/Spryker/Zed/ZedUi/Presentation/Components/polyfills.ts"
-  ],
-  "include": [
-    "src/Spryker/Zed/ZedUi/Presentation/Components/**/*.spec.ts",
-    "src/Spryker/Zed/ZedUi/Presentation/Components/**/*.d.ts"
-  ]
 }

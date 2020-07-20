@@ -16,7 +16,7 @@
   },
   "autoload": {
     "files": [
-      "Bundles/Development/tests/dd.php"
+      "autoload.php"
     ]
   },
   "bin": [
@@ -25,11 +25,6 @@
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
-  },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
   },
   "replace": {
     "spryker/acl": "*",
@@ -44,6 +39,7 @@
     "spryker/assertion": "*",
     "spryker/auth": "*",
     "spryker/auth-mail-connector": "*",
+    "spryker/auth-mail-connector-extension": "*",
     "spryker/auth-rest-api": "*",
     "spryker/auth-rest-api-extension": "*",
     "spryker/authentication-merchant-portal-gui": "*",
@@ -120,6 +116,7 @@
     "spryker/cms-collector": "*",
     "spryker/cms-content-widget": "*",
     "spryker/cms-content-widget-cms-block-connector": "*",
+    "spryker/cms-content-widget-content-connector": "*",
     "spryker/cms-content-widget-product-connector": "*",
     "spryker/cms-content-widget-product-group-connector": "*",
     "spryker/cms-content-widget-product-search-connector": "*",
@@ -130,6 +127,9 @@
     "spryker/cms-navigation-connector": "*",
     "spryker/cms-page-data-import": "*",
     "spryker/cms-page-search": "*",
+    "spryker/cms-pages-content-banners-resource-relationship": "*",
+    "spryker/cms-pages-content-product-abstract-lists-resource-relationship": "*",
+    "spryker/cms-pages-rest-api": "*",
     "spryker/cms-slot": "*",
     "spryker/cms-slot-block": "*",
     "spryker/cms-slot-block-category-connector": "*",
@@ -259,6 +259,7 @@
     "spryker/customers-rest-api-extension": "*",
     "spryker/dashboard": "*",
     "spryker/dashboard-merchant-portal-gui": "*",
+    "spryker/dashboard-merchant-portal-gui-extension": "*",
     "spryker/data-export": "*",
     "spryker/data-export-extension": "*",
     "spryker/data-import": "*",
@@ -334,6 +335,7 @@
     "spryker/merchant-gui-extension": "*",
     "spryker/merchant-oms": "*",
     "spryker/merchant-oms-data-import": "*",
+    "spryker/merchant-oms-gui": "*",
     "spryker/merchant-opening-hours": "*",
     "spryker/merchant-opening-hours-data-import": "*",
     "spryker/merchant-opening-hours-rest-api": "*",
@@ -347,6 +349,8 @@
     "spryker/merchant-product-offer-storage": "*",
     "spryker/merchant-product-offer-storage-extension": "*",
     "spryker/merchant-product-offers-rest-api": "*",
+    "spryker/merchant-product-search": "*",
+    "spryker/merchant-product-storage": "*",
     "spryker/merchant-profile": "*",
     "spryker/merchant-profile-data-import": "*",
     "spryker/merchant-profile-gui": "*",
@@ -367,6 +371,7 @@
     "spryker/merchant-sales-order-extension": "*",
     "spryker/merchant-search": "*",
     "spryker/merchant-shipment": "*",
+    "spryker/merchant-shipment-gui": "*",
     "spryker/merchant-stock": "*",
     "spryker/merchant-stock-data-import": "*",
     "spryker/merchant-stock-gui": "*",
@@ -518,6 +523,7 @@
     "spryker/product-offer-availabilities-rest-api": "*",
     "spryker/product-offer-availability": "*",
     "spryker/product-offer-availability-storage": "*",
+    "spryker/product-offer-extension": "*",
     "spryker/product-offer-merchant-portal-gui": "*",
     "spryker/product-offer-packaging-unit": "*",
     "spryker/product-offer-prices-rest-api": "*",
@@ -646,6 +652,7 @@
     "spryker/shipment-discount-connector": "*",
     "spryker/shipment-extension": "*",
     "spryker/shipment-gui": "*",
+    "spryker/shipment-gui-extension": "*",
     "spryker/shipments-rest-api": "*",
     "spryker/shop-context": "*",
     "spryker/shop-context-extension": "*",

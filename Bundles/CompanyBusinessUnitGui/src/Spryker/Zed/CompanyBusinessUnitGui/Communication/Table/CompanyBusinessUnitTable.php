@@ -12,6 +12,7 @@ use Orm\Zed\CompanyBusinessUnit\Persistence\Map\SpyCompanyBusinessUnitTableMap;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnit;
 use Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyBusinessUnitGui\Communication\Form\DeleteCompanyBusinessUnitForm;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -178,7 +179,9 @@ class CompanyBusinessUnitTable extends AbstractTable
             Url::generate(static::URL_COMPANY_BUSINESS_UNIT_DELETE, [
                 static::PARAM_ID_COMPANY_BUSINESS_UNIT => $idCompanyBusinessUnit,
             ]),
-            'Delete'
+            'Delete',
+            [],
+            DeleteCompanyBusinessUnitForm::class
         );
 
         return implode(' ', $buttons);

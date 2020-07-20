@@ -76,7 +76,7 @@ class AuthMailConnectorFacadeTest extends Unit
         AuthMailConnectorToMailBridge $authMailConnectorToMailBridgeMock
     ): AuthMailConnectorBusinessFactory {
         $authMailConnectorBusinessFactoryMock = $this->getMockBuilder(AuthMailConnectorBusinessFactory::class)
-            ->setMethods(['getMailFacade', 'getConfig'])
+            ->setMethods(['getMailFacade', 'getConfig', 'getAuthMailExpanderPlugins'])
             ->getMock();
 
         $authMailConnectorBusinessFactoryMock
@@ -86,6 +86,10 @@ class AuthMailConnectorFacadeTest extends Unit
         $authMailConnectorBusinessFactoryMock
             ->method('getConfig')
             ->willReturn(new AuthMailConnectorConfig());
+
+        $authMailConnectorBusinessFactoryMock
+            ->method('getAuthMailExpanderPlugins')
+            ->willReturn([]);
 
         return $authMailConnectorBusinessFactoryMock;
     }

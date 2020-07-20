@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\PageDataLoader;
 
+use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductPageLoadTransfer;
 use Generated\Shared\Transfer\ProductPayloadTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,6 +23,7 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
     /**
      * {@inheritDoc}
      * - Expands ProductPageLoadTransfer object with merchant data.
+     * - Merges merchant name from PayloadTransfer with merchant names from given merchant data.
      *
      * @api
      *
@@ -73,10 +75,33 @@ class MerchantProductPageDataLoaderPlugin extends AbstractPlugin implements Prod
                 continue;
             }
 
-            $payloadTransfer->setMerchantNames($productAbstractMerchantTransfer->getMerchantNames())
+            $merchantNames = $this->mergeMerchantNames($payloadTransfer, $productAbstractMerchantTransfer);
+            $payloadTransfer->setMerchantNames($merchantNames)
                 ->setMerchantReferences($productAbstractMerchantTransfer->getMerchantReferences());
         }
 
         return $payloadTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductPayloadTransfer $payloadTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractMerchantTransfer $productAbstractMerchantTransfer
+     *
+     * @return string[][]
+     */
+    protected function mergeMerchantNames(ProductPayloadTransfer $payloadTransfer, ProductAbstractMerchantTransfer $productAbstractMerchantTransfer): array
+    {
+        $merchantNames = $payloadTransfer->getMerchantNames();
+        foreach ($productAbstractMerchantTransfer->getMerchantNames() as $store => $names) {
+            if (array_key_exists($store, $merchantNames)) {
+                $merchantNames[$store] = array_unique(array_merge($merchantNames[$store], $names));
+
+                continue;
+            }
+
+            $merchantNames[$store] = $names;
+        }
+
+        return $merchantNames;
     }
 }

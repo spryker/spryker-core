@@ -1,0 +1,32 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 56,
+            "line_to": 56,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Client/ContentProduct/Mapper/ContentProductAbstractListTypeMapper.php",
+            "snippet": "                sprintf('There is no matching Term for ProductAbstractListType when provided with term %s.', $term)",
+            "selected_text": "$term",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\MessageTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ContentProduct/src/Spryker/Zed/ContentProduct/Business/Validator/ContentProductAbstractListValidator.php",
+            "snippet": "        if ($contentParameterMessageTransfer->getMessages()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}
