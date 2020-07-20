@@ -11,7 +11,7 @@
         "@angular/forms": "^9.1.12",
         "@angular/platform-browser": "^9.1.12",
         "@spryker/ajax-action": "^0.1.0-fix-web-components.1",
-        "@spryker/button": "^0.1.0-fix-web-components.1",
+        "@spryker/button": "^0.1.0-fix-web-components.2",
         "@spryker/card": "^0.1.0-fix-web-components.3",
         "@spryker/collapsible": "^0.1.0-fix-web-components.0",
         "@spryker/drawer": "^0.1.0-fix-web-components.4",
