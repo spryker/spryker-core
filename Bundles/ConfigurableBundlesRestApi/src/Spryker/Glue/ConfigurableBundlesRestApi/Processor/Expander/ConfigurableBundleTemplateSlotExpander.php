@@ -9,10 +9,9 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslatorInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleTemplateSlotExpanderInterface
+class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleRestResourceExpanderInterface
 {
     /**
      * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface
@@ -20,20 +19,12 @@ class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleTempla
     protected $configurableBundleSlotRestResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslatorInterface
-     */
-    protected $configurableBundleTemplateSlotTranslator;
-
-    /**
      * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface $configurableBundleSlotRestResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTemplateSlotTranslatorInterface $configurableBundleTemplateSlotTranslator
      */
     public function __construct(
-        ConfigurableBundleTemplateSlotRestResourceBuilderInterface $configurableBundleSlotRestResourceBuilder,
-        ConfigurableBundleTemplateSlotTranslatorInterface $configurableBundleTemplateSlotTranslator
+        ConfigurableBundleTemplateSlotRestResourceBuilderInterface $configurableBundleSlotRestResourceBuilder
     ) {
         $this->configurableBundleSlotRestResourceBuilder = $configurableBundleSlotRestResourceBuilder;
-        $this->configurableBundleTemplateSlotTranslator = $configurableBundleTemplateSlotTranslator;
     }
 
     /**
@@ -50,13 +41,7 @@ class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleTempla
                 continue;
             }
 
-            $configurableBundleTemplateSlotStorageTransfers = $this->configurableBundleTemplateSlotTranslator
-                ->translateConfigurableBundleTemplateSlotNames(
-                    $configurableBundleTemplateStorageTransfer->getSlots()->getArrayCopy(),
-                    $restRequest->getMetadata()->getLocale()
-                );
-
-            foreach ($configurableBundleTemplateSlotStorageTransfers as $configurableBundleTemplateSlotStorageTransfer) {
+            foreach ($configurableBundleTemplateStorageTransfer->getSlots() as $configurableBundleTemplateSlotStorageTransfer) {
                 $configurableBundleTemplateSlotRestResource = $this->configurableBundleSlotRestResourceBuilder
                     ->buildConfigurableBundleTemplateSlotRestResource($configurableBundleTemplateSlotStorageTransfer);
 

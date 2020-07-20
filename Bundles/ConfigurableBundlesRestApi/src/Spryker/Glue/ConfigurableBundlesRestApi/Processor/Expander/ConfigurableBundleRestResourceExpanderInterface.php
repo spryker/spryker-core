@@ -9,7 +9,7 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface ConfigurableBundleTemplateSlotExpanderInterface
+interface ConfigurableBundleRestResourceExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources

@@ -10,7 +10,7 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplateSlotsAttributesTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapperInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -22,20 +22,20 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapperInterface
+     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface
      */
-    protected $configurableBundleTemplateSlotMapper;
+    protected $configurableBundleRestApiMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleTemplateSlotMapperInterface $configurableBundleTemplateSlotMapper
+     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface $configurableBundleRestApiMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ConfigurableBundleTemplateSlotMapperInterface $configurableBundleTemplateSlotMapper
+        ConfigurableBundleRestApiMapperInterface $configurableBundleRestApiMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->configurableBundleTemplateSlotMapper = $configurableBundleTemplateSlotMapper;
+        $this->configurableBundleRestApiMapper = $configurableBundleRestApiMapper;
     }
 
     /**
@@ -46,8 +46,8 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
     public function buildConfigurableBundleTemplateSlotRestResource(
         ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
     ): RestResourceInterface {
-        $restConfigurableBundleTemplateSlotsAttributesTransfer = $this->configurableBundleTemplateSlotMapper
-            ->mapConfigurableBundleTemplateSlotStorageTransferToRestConfigurableBundleTemplateSlotsAttributesTransfer(
+        $restConfigurableBundleTemplateSlotsAttributesTransfer = $this->configurableBundleRestApiMapper
+            ->mapConfigurableBundleTemplateSlotStorageTransferToRestAttributesTransfer(
                 $configurableBundleTemplateSlotStorageTransfer,
                 new RestConfigurableBundleTemplateSlotsAttributesTransfer()
             );

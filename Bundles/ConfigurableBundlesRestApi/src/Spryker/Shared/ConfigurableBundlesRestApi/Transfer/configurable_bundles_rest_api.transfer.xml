@@ -11,12 +11,12 @@
         <property name="name" type="string"/>
     </transfer>
 
-    <transfer name="RestProductImageSetsAttributes">
+    <transfer name="RestConfigurableBundleTemplateImageSetsAttributes">
         <property name="name" type="string"/>
-        <property name="images" type="RestImagesAttributes[]" singular="images"/>
+        <property name="images" type="RestConfigurableBundleImagesAttributes[]" singular="image"/>
     </transfer>
 
-    <transfer name="RestImagesAttributes">
+    <transfer name="RestConfigurableBundleImagesAttributes">
         <property name="externalUrlLarge" type="string"/>
         <property name="externalUrlSmall" type="string"/>
     </transfer>

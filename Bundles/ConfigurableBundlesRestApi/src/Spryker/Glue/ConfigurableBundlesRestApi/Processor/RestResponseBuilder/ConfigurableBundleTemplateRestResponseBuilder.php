@@ -10,7 +10,7 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleRestApiTranslatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
@@ -27,23 +27,23 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
     protected $configurableBundleTemplateRestResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface
+     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleRestApiTranslatorInterface
      */
-    protected $configurableBundleTempleTranslator;
+    protected $configurableBundleRestApiTranslator;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface $configurableBundleTemplateRestResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleTempleTranslatorInterface $configurableBundleTempleTranslator
+     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleRestApiTranslatorInterface $configurableBundleRestApiTranslator
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         ConfigurableBundleTemplateRestResourceBuilderInterface $configurableBundleTemplateRestResourceBuilder,
-        ConfigurableBundleTempleTranslatorInterface $configurableBundleTempleTranslator
+        ConfigurableBundleRestApiTranslatorInterface $configurableBundleRestApiTranslator
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->configurableBundleTemplateRestResourceBuilder = $configurableBundleTemplateRestResourceBuilder;
-        $this->configurableBundleTempleTranslator = $configurableBundleTempleTranslator;
+        $this->configurableBundleRestApiTranslator = $configurableBundleRestApiTranslator;
     }
 
     /**
@@ -74,8 +74,11 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         string $localeName
     ): RestResponseInterface {
-        $configurableBundleTemplateStorageTransfers = $this->configurableBundleTempleTranslator
-            ->translateConfigurableBundleTemplateNames([$configurableBundleTemplateStorageTransfer], $localeName);
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleRestApiTranslator
+            ->translateConfigurableBundleTemplateStorageTransfers(
+                [$configurableBundleTemplateStorageTransfer],
+                $localeName
+            );
 
         $restResource = $this->configurableBundleTemplateRestResourceBuilder
             ->buildConfigurableBundleTemplateRestResource(current($configurableBundleTemplateStorageTransfers));
@@ -93,8 +96,11 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
         array $configurableBundleTemplateStorageTransfers,
         string $localeName
     ): RestResponseInterface {
-        $configurableBundleTemplateStorageTransfers = $this->configurableBundleTempleTranslator
-            ->translateConfigurableBundleTemplateNames($configurableBundleTemplateStorageTransfers, $localeName);
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleRestApiTranslator
+            ->translateConfigurableBundleTemplateStorageTransfers(
+                $configurableBundleTemplateStorageTransfers,
+                $localeName
+            );
 
         $restResponse = $this->createRestResponse();
 

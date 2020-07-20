@@ -7,14 +7,14 @@
 
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder;
 
-use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer;
+use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
+use Generated\Shared\Transfer\RestConfigurableBundleTemplateImageSetsAttributesTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
-class ConfigurableBundleTemplateRestResourceBuilder implements ConfigurableBundleTemplateRestResourceBuilderInterface
+class ConfigurableBundleTemplateImageSetRestResourceBuilder implements ConfigurableBundleTemplateImageSetRestResourceBuilderInterface
 {
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -39,23 +39,25 @@ class ConfigurableBundleTemplateRestResourceBuilder implements ConfigurableBundl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+     * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer
+     * @param string $idResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    public function buildConfigurableBundleTemplateRestResource(
-        ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
+    public function buildConfigurableBundleTemplateImageSetRestResource(
+        ProductImageSetStorageTransfer $productImageSetStorageTransfer,
+        string $idResource
     ): RestResourceInterface {
-        $restConfigurableBundleTemplatesAttributesTransfer = $this->configurableBundleRestApiMapper
-            ->mapConfigurableBundleTemplateStorageTransferToRestAttributesTransfer(
-                $configurableBundleTemplateStorageTransfer,
-                new RestConfigurableBundleTemplatesAttributesTransfer()
+        $restConfigurableBundleTemplateImageSetsAttributesTransfer = $this->configurableBundleRestApiMapper
+            ->mapProductImageSetStorageTransferToRestAttributesTransfer(
+                $productImageSetStorageTransfer,
+                new RestConfigurableBundleTemplateImageSetsAttributesTransfer()
             );
 
         return $this->restResourceBuilder->createRestResource(
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            $configurableBundleTemplateStorageTransfer->getUuid(),
-            $restConfigurableBundleTemplatesAttributesTransfer
-        )->setPayload($configurableBundleTemplateStorageTransfer);
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_SETS,
+            $idResource,
+            $restConfigurableBundleTemplateImageSetsAttributesTransfer
+        );
     }
 }
