@@ -10,6 +10,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/sales": "^11.4.0",
     "spryker/shipment": "^8.0.0",
+    "spryker/shipment-gui-extension": "^0.1.0",
     "spryker/store": "^1.9.1",
     "spryker/symfony": "^3.2.2",
     "spryker/tax": "^5.0.0",
