@@ -1,0 +1,34 @@
+{% set totals = [
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+    {
+        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
+        prcie: '€ 324.17',
+    },
+] %}
+
+{% for total in totals %}
+    <div class="mp-manage-order__totals">
+        <span class="mp-manage-order__totals-col">{{ total.name }}</span>
+
+        <span class="mp-manage-order__totals-col">{{ total.prcie }}</span>
+    </div>
+{% endfor %}
