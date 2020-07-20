@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,8 +32,6 @@ class DetailController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     public function indexAction(Request $request): JsonResponse
@@ -47,14 +46,7 @@ class DetailController extends AbstractController
                     ->setWithUniqueProductCount(true)
             );
 
-        if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
-        }
-
-        $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-        if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
-        }
+        $this->validateMerchantOrderTransfer($idMerchantOrder, $merchantOrderTransfer);
 
         $responseData = [
             'html' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
@@ -65,6 +57,57 @@ class DetailController extends AbstractController
         ];
 
         return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param int $idMerchantOrder
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function totalItemListAction(int $idMerchantOrder): JsonResponse
+    {
+        $merchantOrderTransfer = $this->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->findMerchantOrder(
+                (new MerchantOrderCriteriaTransfer())
+                    ->setIdMerchantOrder($idMerchantOrder)
+                    ->setWithItems(true)
+            );
+
+        $this->validateMerchantOrderTransfer($idMerchantOrder, $merchantOrderTransfer);
+
+        $saleOrderItemIds = $this->getSaleOrderItemIds($merchantOrderTransfer);
+        $itemCollectionTransfer = $this->getFactory()->getSalesFacade()->getOrderItems(
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($saleOrderItemIds)
+        );
+
+        $responseData = [
+            'html' => $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
+                'items' => $itemCollectionTransfer->getItems(),
+            ])->getContent(),
+        ];
+
+        return new JsonResponse($responseData);
+    }
+
+    /**
+     * @param int $idMerchantOrder
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
+     *
+     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+     *
+     * @return void
+     */
+    protected function validateMerchantOrderTransfer(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): void
+    {
+        if (!$merchantOrderTransfer) {
+            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
+        }
+
+        $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
+        if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
+            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
+        }
     }
 
     /**
@@ -107,5 +150,20 @@ class DetailController extends AbstractController
         }
 
         return $shipmentsNumber;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return int[]
+     */
+    protected function getSaleOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
+    {
+        $saleOrderItemIds = [];
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
+            $saleOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
+        }
+
+        return $saleOrderItemIds;
     }
 }

@@ -45,6 +45,7 @@
         <property name="state" type="string"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="product" type="ProductConcrete"/>
+        <property name="idOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -173,6 +174,14 @@
         <property name="title" type="string"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
 </transfers>
