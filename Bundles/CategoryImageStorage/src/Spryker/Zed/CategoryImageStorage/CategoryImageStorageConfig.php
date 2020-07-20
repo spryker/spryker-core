@@ -14,7 +14,7 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig::getCategoryImageSynchronizationPoolName instead.
+     * @deprecated Use {@link \Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig::getCategoryImageSynchronizationPoolName()} instead.
      *
      * @return string|null
      */
@@ -29,6 +29,16 @@ class CategoryImageStorageConfig extends AbstractBundleConfig
      * @return string|null
      */
     public function getCategoryImageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

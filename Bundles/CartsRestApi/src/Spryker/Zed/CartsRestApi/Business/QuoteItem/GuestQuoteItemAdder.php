@@ -62,7 +62,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @deprecated Use addToGuestCart() instead.
+     * @deprecated Use {@link addToGuestCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

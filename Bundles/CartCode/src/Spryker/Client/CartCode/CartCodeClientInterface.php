@@ -26,7 +26,7 @@ interface CartCodeClientInterface
      *
      * @api
      *
-     * @deprecated Use addCartCode() instead.
+     * @deprecated Use {@link addCartCode()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -47,7 +47,7 @@ interface CartCodeClientInterface
      *
      * @api
      *
-     * @deprecated Use removeCartCode() instead.
+     * @deprecated Use {@link removeCartCode()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -68,7 +68,7 @@ interface CartCodeClientInterface
      *
      * @api
      *
-     * @deprecated Use clearAllCartCodes() instead.
+     * @deprecated Use {@link clearAllCartCodes()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *

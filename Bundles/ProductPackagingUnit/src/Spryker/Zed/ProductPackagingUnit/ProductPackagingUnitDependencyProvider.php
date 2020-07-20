@@ -82,11 +82,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductPackagingUnitToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -98,11 +98,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductPackagingUnitToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -114,11 +114,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductMeasurementUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_MEASUREMENT_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_MEASUREMENT_UNIT, function (Container $container) {
             return new ProductPackagingUnitToProductMeasurementUnitFacadeBridge(
                 $container->getLocator()->productMeasurementUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -130,11 +130,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addAvailabilityFacade(Container $container): Container
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new ProductPackagingUnitToAvailabilityFacadeBridge(
                 $container->getLocator()->availability()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -146,11 +146,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addOmsFacade(Container $container): Container
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new ProductPackagingUnitToOmsFacadeBridge(
                 $container->getLocator()->oms()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -162,11 +162,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductPackagingUnitToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -178,11 +178,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductPackagingUnitToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -194,11 +194,11 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addSalesQuantityFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES_QUANTITY] = function (Container $container) {
+        $container->set(static::FACADE_SALES_QUANTITY, function (Container $container) {
             return new ProductPackagingUnitToSalesQuantityFacadeBridge(
                 $container->getLocator()->salesQuantity()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -210,9 +210,9 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -224,9 +224,9 @@ class ProductPackagingUnitDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addUtilTextService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_TEXT] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_TEXT, function (Container $container) {
             return new ProductPackagingUnitToUtilTextServiceBridge($container->getLocator()->utilText()->service());
-        };
+        });
 
         return $container;
     }

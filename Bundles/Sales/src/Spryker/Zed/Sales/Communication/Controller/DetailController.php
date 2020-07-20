@@ -71,6 +71,8 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
+            'tableColumnHeaders' => $this->getFactory()->createOrderItemsTableExpander()->getColumnHeaders(),
+            'tableColumnCellsContent' => $this->getFactory()->createOrderItemsTableExpander()->getColumnCellsContent($orderTransfer->getItems()),
         ], $blockResponseData);
     }
 
@@ -125,13 +127,10 @@ class DetailController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
+        /** @var array $orderTransfer */
         $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
-        /*
-         * @var string $blockName
-         * @var \Symfony\Component\HttpFoundation\Response $blockResponse
-         */
         foreach ($data as $blockName => $blockUrl) {
             $responseData[$blockName] = $this->handleSubRequest($subRequest, $blockUrl);
         }

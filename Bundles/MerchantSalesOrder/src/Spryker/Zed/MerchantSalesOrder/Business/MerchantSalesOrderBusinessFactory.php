@@ -16,10 +16,10 @@ use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreator;
 use Spryker\Zed\MerchantSalesOrder\Business\Creator\MerchantOrderTotalsCreatorInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpander;
+use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
-use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpander;
-use Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
@@ -46,14 +46,6 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface
-     */
-    public function createOrderExpander(): OrderExpanderInterface
-    {
-        return new OrderExpander($this->getRepository());
-    }
-
-    /**
      * @return \Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface
      */
     public function createExpenseExpander(): ExpenseExpanderInterface
@@ -67,6 +59,14 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     public function createMerchantOrderItemCreator(): MerchantOrderItemCreatorInterface
     {
         return new MerchantOrderItemCreator($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderExpanderInterface
+     */
+    public function createOrderExpander(): OrderExpanderInterface
+    {
+        return new OrderExpander($this->getRepository());
     }
 
     /**
@@ -86,7 +86,7 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\OrderItem\OrderItemExpanderInterface
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {

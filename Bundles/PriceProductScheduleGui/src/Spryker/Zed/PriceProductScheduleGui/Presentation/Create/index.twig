@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% block section_title title | trans %}
+{% set title = title | trans({'%s': idProduct}) %}
+
+{% block section_title title %}
 
 {% block action %}
     {{ backActionButton(url(redirectUrl), 'Back to the product\'s scheduled prices' | trans) }}

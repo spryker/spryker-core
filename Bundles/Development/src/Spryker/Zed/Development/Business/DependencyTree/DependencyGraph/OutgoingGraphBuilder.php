@@ -110,14 +110,14 @@ class OutgoingGraphBuilder
      */
     protected function addIncomingDependencies()
     {
-        $incomingDependencies = array_keys($this->dependencyManager->parseIncomingDependencies($this->bundleName));
+        $incomingDependencies = $this->dependencyManager->parseIncomingDependencies($this->bundleName);
 
         foreach ($incomingDependencies as $incomingBundle) {
             $attributes = [
-                'url' => '/development/dependency/outgoing-graph?bundle=' . $incomingBundle,
+                'url' => '/development/dependency/outgoing-graph?bundle=' . $incomingBundle->getName(),
             ];
-            $this->graph->addNode($incomingBundle, $attributes);
-            $this->graph->addEdge($incomingBundle, $this->bundleName);
+            $this->graph->addNode($incomingBundle->getName(), $attributes);
+            $this->graph->addEdge($incomingBundle->getName(), $this->bundleName);
         }
     }
 

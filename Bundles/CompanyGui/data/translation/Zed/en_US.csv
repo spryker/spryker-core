@@ -1,6 +1,7 @@
 "Add Company","Add Company"
 Approved,Approved
 "Back to Companies","Back to Companies"
+Companies,Companies
 "Company has been activated.","Company has been activated."
 "Company has been approved.","Company has been approved."
 "Company has been created.","Company has been created."
@@ -17,3 +18,4 @@ Deny,Deny
 "List of Companies","List of companies"
 "Overview of Companies","Overview of Companies"
 Save,Save
+Pending,Pending

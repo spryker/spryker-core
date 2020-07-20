@@ -10,7 +10,7 @@ namespace Spryker\Yves\Kernel\Dependency\Plugin;
 use Spryker\Yves\Kernel\Widget\WidgetContainerInterface;
 
 /**
- * @deprecated Use \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface instead.
+ * @deprecated Use {@link \Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface} instead.
  */
 interface WidgetPluginInterface extends WidgetContainerInterface
 {

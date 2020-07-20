@@ -34,6 +34,6 @@ class ProductManagementProductConcreteEditCest
         $i->amOnPage(ProductManagementProductListPage::URL);
         $i->clickDataTableViewButton();
         $i->clickDataTableEditButton(1, 'product-variant-table_wrapper');
-        $i->seeBreadcrumbNavigation('Products / Products / Edit Concrete Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Concrete Product');
     }
 }

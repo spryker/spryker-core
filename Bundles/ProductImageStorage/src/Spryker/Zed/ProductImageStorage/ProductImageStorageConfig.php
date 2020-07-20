@@ -14,7 +14,7 @@ class ProductImageStorageConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @return bool
      */
@@ -29,6 +29,26 @@ class ProductImageStorageConfig extends AbstractBundleConfig
      * @return string|null
      */
     public function getProductImageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductImageAbstractEventQueueName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getProductImageConcreteEventQueueName(): ?string
     {
         return null;
     }

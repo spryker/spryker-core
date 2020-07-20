@@ -42,7 +42,7 @@ interface PropelFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `createDatabase()` instead.
+     * @deprecated Use {@link createDatabase()} instead.
      *
      * @return void
      */

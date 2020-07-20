@@ -14,7 +14,7 @@
     "spryker/merchant-user": "^0.5.0",
     "spryker/symfony": "^3.0.0",
     "spryker/url": "^3.0.0",
-    "spryker/zed-ui": "^0.2.1"
+    "spryker/zed-ui": "^0.3.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

@@ -10,11 +10,13 @@ namespace Spryker\Zed\CmsSlotGui\Communication;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
 use Spryker\Zed\CmsSlotGui\CmsSlotGuiDependencyProvider;
+use Spryker\Zed\CmsSlotGui\Communication\Form\ToggleActiveCmsSlotForm;
 use Spryker\Zed\CmsSlotGui\Communication\Table\SlotTable;
 use Spryker\Zed\CmsSlotGui\Communication\Table\TemplateTable;
 use Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToCmsSlotFacadeInterface;
 use Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -40,6 +42,14 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getTranslatorFacade(),
             $idSlotTemplate
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActiveCmsSlotForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveCmsSlotForm::class);
     }
 
     /**

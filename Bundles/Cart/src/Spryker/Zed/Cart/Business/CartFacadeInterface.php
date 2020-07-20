@@ -119,7 +119,7 @@ interface CartFacadeInterface
 
     /**
      * Specification:
-     * - Uses CartFacade::validateQuote before reloading
+     * - Uses {@link \Spryker\Zed\Cart\Business\CartFacadeInterface::validateQuote()} before reloading
      * - Reloads all items in cart as new, it recreates all items transfer, reads new prices, options, bundles if quote is not locked.
      *
      * @api

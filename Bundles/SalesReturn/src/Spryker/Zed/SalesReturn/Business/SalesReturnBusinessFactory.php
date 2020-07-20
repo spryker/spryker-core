@@ -29,6 +29,7 @@ use Spryker\Zed\SalesReturn\Business\Writer\ReturnWriterInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToOmsFacadeInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToSalesFacadeInterface;
 use Spryker\Zed\SalesReturn\Dependency\Facade\SalesReturnToStoreFacadeInterface;
+use Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface;
 use Spryker\Zed\SalesReturn\SalesReturnDependencyProvider;
 
 /**
@@ -130,7 +131,8 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function createIsReturnableSetter(): IsReturnableSetterInterface
     {
         return new IsReturnableSetter(
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getUtilDateTimeService()
         );
     }
 
@@ -156,5 +158,13 @@ class SalesReturnBusinessFactory extends AbstractBusinessFactory
     public function getOmsFacade(): SalesReturnToOmsFacadeInterface
     {
         return $this->getProvidedDependency(SalesReturnDependencyProvider::FACADE_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesReturn\Dependency\Service\SalesReturnToUtilDateTimeServiceInterface
+     */
+    protected function getUtilDateTimeService(): SalesReturnToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(SalesReturnDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

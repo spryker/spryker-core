@@ -47,13 +47,19 @@ class DeleteFileController extends AbstractController
      */
     public function fileAction(Request $request)
     {
+        $deleteForm = $this->getFactory()->createDeleteFileForm()->handleRequest($request);
+        $redirectUrl = Url::generate(static::URL_REDIRECT_BASE)->build();
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
         $idFile = $this->castId($request->get(static::URL_PARAM_ID_FILE));
 
         $this->getFactory()
             ->getFileManagerFacade()
             ->deleteFile($idFile);
-
-        $redirectUrl = Url::generate(static::URL_REDIRECT_BASE)->build();
 
         return $this->redirectResponse($redirectUrl);
     }

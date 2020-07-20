@@ -51,12 +51,23 @@ class ProductAbstractRelationReader implements ProductAbstractRelationReaderInte
         $relationsToDeAssign = $this->findRelationsBecomingInactive($productLabelNewEntity);
         $relationsToAssign = $this->findRelationsBecomingActive($productLabelNewEntity);
 
-        $idProductLabels = array_merge(array_keys($relationsToDeAssign), array_keys($relationsToAssign));
+        $idProductLabels = $this->getUniqueProductLabelIds($relationsToDeAssign, $relationsToAssign);
         foreach ($idProductLabels as $idProductLabel) {
             $result[] = $this->mapRelationTransfer($idProductLabel, $relationsToAssign, $relationsToDeAssign);
         }
 
         return $result;
+    }
+
+    /**
+     * @param int[][] $relationsToDeAssign
+     * @param int[][] $relationsToAssign
+     *
+     * @return int[]
+     */
+    protected function getUniqueProductLabelIds(array $relationsToDeAssign, array $relationsToAssign): array
+    {
+        return array_unique(array_merge(array_keys($relationsToDeAssign), array_keys($relationsToAssign)));
     }
 
     /**

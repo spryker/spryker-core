@@ -51,7 +51,7 @@ class QuoteItemUpdater implements QuoteItemUpdaterInterface
     }
 
     /**
-     * @deprecated Use updateItemQuantity() instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

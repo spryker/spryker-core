@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\MerchantOms\Business;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -56,5 +60,49 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     public function getStateMachineItemsByStateIds(array $stateIds): array
     {
         return $this->getRepository()->getStateMachineItemsByStateIds($stateIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer
+     */
+    public function triggerEventForMerchantOrderItem(
+        MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+    ): MerchantOmsTriggerResponseTransfer {
+        return $this->getFactory()->createMerchantOmsEventTrigger()->triggerEventForMerchantOrderItem($merchantOmsTriggerRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function getMerchantOmsProcessByMerchant(
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
+    ): StateMachineProcessTransfer {
+        return $this->getFactory()->createStateMachineProcessReader()->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     */
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer
+    {
+        return $this->getRepository()->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
     }
 }

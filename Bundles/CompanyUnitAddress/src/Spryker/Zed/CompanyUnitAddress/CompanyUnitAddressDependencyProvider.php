@@ -49,9 +49,9 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCountryFacade(Container $container): Container
     {
-        $container[static::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new CompanyUnitAddressToCountryFacadeBridge($container->getLocator()->country()->facade());
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CompanyUnitAddressToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyBusinessUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyUnitAddressToCompanyBusinessUnitFacadeBridge($container->getLocator()->companyBusinessUnit()->facade());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addAddressPostUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_ADDRESS_POST_SAVE] = function (Container $container) {
+        $container->set(static::PLUGIN_ADDRESS_POST_SAVE, function (Container $container) {
             return $this->getCompanyUnitAddressPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class CompanyUnitAddressDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addCompanyUnitAddressHydratePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_ADDRESS_TRANSFER_HYDRATING] = function (Container $container) {
+        $container->set(static::PLUGIN_ADDRESS_TRANSFER_HYDRATING, function (Container $container) {
             return $this->getCompanyUnitAddressHydratePlugins();
-        };
+        });
 
         return $container;
     }

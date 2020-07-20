@@ -34,9 +34,9 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -48,13 +48,13 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_CMS] = function (Container $container) {
+        $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsStorageToCmsBridge($container->getLocator()->cms()->facade());
-        };
+        });
 
-        $container[static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGIN_CONTENT_WIDGET_DATA_EXPANDER, function (Container $container) {
             return $this->getContentWidgetDataExpander();
-        };
+        });
 
         $container = $this->addStoreFacade($container);
 
@@ -68,13 +68,13 @@ class CmsStorageDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_PAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_PAGE, function (Container $container) {
             return new CmsStorageToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CmsStorageToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
 
         return $container;
     }

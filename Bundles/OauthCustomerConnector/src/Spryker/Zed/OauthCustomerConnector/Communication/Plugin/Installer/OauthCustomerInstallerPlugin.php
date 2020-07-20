@@ -11,7 +11,7 @@ use Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use \Spryker\Zed\Oauth\Communication\Plugin\Installer\OauthClientInstallerPlugin, \Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Installer\OauthCustomerScopeInstallerPlugin instead.
+ * @deprecated Use {@link \Spryker\Zed\Oauth\Communication\Plugin\Installer\OauthClientInstallerPlugin,} \Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Installer\OauthCustomerScopeInstallerPlugin instead.
  *
  * @method \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig getConfig()

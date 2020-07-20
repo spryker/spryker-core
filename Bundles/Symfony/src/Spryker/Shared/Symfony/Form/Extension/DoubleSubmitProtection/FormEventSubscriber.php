@@ -15,7 +15,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 /**
- * @deprecated Use `Spryker\Shared\Form\DoubleSubmitProtection\Subscriber\FormEventSubscriber` instead.
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\Subscriber\FormEventSubscriber} instead.
  */
 class FormEventSubscriber implements EventSubscriberInterface
 {

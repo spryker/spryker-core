@@ -1,0 +1,211 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 126,
+            "line_to": 126,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'bool' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::valid is incorrect, got 'int'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "    public function valid()",
+            "selected_text": "valid",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'int' does not match the declared return type 'bool' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::valid",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        return count($this->batchData);",
+            "selected_text": "count($this->batchData)",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 145,
+            "line_to": 145,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'int' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::count is incorrect, got 'null|scalar'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "    public function count()",
+            "selected_text": "count",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'null|scalar' does not match the declared return type 'int' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::count",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        return $st->fetchColumn();",
+            "selected_text": "$st->fetchColumn()",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 107,
+            "line_to": 107,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'bool' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PropelBatchIterator::valid is incorrect, got 'int'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PropelBatchIterator.php",
+            "snippet": "    public function valid()",
+            "selected_text": "valid",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'int' does not match the declared return type 'bool' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PropelBatchIterator::valid",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PropelBatchIterator.php",
+            "snippet": "        return count($this->currentDataSet);",
+            "selected_text": "count($this->currentDataSet)",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 93,
+            "line_to": 93,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible bool variable $st",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        $st->execute($sqlPart->getParameters());",
+            "selected_text": "execute",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible bool variable $st",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        $this->batchData = $st->fetchAll(PDO::FETCH_ASSOC);",
+            "selected_text": "fetchAll",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 153,
+            "line_to": 153,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible bool variable $st",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        $st->execute($sqlPart->getParameters());",
+            "selected_text": "execute",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'int' for Spryker\\Service\\UtilDataReader\\Model\\BatchIterator\\PdoBatchIterator::count is not nullable, but the function returns 'null|scalar'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        return $st->fetchColumn();",
+            "selected_text": "$st->fetchColumn()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible bool variable $st",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/BatchIterator/PdoBatchIterator.php",
+            "snippet": "        return $st->fetchColumn();",
+            "selected_text": "fetchColumn",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 73,
+            "line_to": 73,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Service\\UtilDataReader\\Model\\Reader\\Csv\\CsvMeta::getColumns is not nullable, but 'array<array-key, mixed>|false|null' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvMeta.php",
+            "snippet": "     * @return array",
+            "selected_text": "array",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyNullPropertyAssignmentValue",
+            "message": "$this->columns with non-nullable declared type 'array<array-key, mixed>' cannot be assigned nullable type 'array<array-key, mixed>|false|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvMeta.php",
+            "snippet": "            $this->columns = $this->csvFile->fgetcsv();",
+            "selected_text": "$this->csvFile->fgetcsv()",
+            "error_level": 3,
+            "shortcode": 148
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'array<array-key, mixed>' for Spryker\\Service\\UtilDataReader\\Model\\Reader\\Csv\\CsvMeta::getColumns is not nullable, but the function returns 'array<array-key, mixed>|false|null'",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvMeta.php",
+            "snippet": "        return $this->columns;",
+            "selected_text": "$this->columns",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 143,
+            "line_to": 143,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Service\\UtilDataReader\\Model\\Reader\\Csv\\CsvReader::createCsvFile cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvReader.php",
+            "snippet": "            $this->csvFile = $this->createCsvFile($this->csvFilename);",
+            "selected_text": "$this->csvFilename",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 186,
+            "line_to": 186,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvReader.php",
+            "snippet": "                $this->csvFilename",
+            "selected_text": "$this->csvFilename",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 217,
+            "line_to": 217,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method fseek on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/UtilDataReader/src/Spryker/Service/UtilDataReader/Model/Reader/Csv/CsvReader.php",
+            "snippet": "        $this->csvFile->fseek(0);",
+            "selected_text": "fseek",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

@@ -24,7 +24,7 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 
     /**
-     * @deprecated For BC compatibility only. Use `\Spryker\Client\CmsPageSearch\CmsPageSearchConfig::FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     * @deprecated For BC compatibility only. Use {@link \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * @uses \Spryker\Shared\Search\SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */

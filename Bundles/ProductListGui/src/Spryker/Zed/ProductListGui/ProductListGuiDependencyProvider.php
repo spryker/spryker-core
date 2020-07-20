@@ -79,9 +79,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_LIST] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LIST, $container->factory(function () {
             return SpyProductListQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -93,9 +93,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -107,9 +107,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LIST] = function ($container) {
+        $container->set(static::FACADE_PRODUCT_LIST, function ($container) {
             return new ProductListGuiToProductListFacadeBridge($container->getLocator()->productList()->facade());
-        };
+        });
 
         return $container;
     }
@@ -121,9 +121,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryFacade(Container $container): Container
     {
-        $container[static::FACADE_CATEGORY] = function ($container) {
+        $container->set(static::FACADE_CATEGORY, function ($container) {
             return new ProductListGuiToCategoryFacadeBridge($container->getLocator()->category()->facade());
-        };
+        });
 
         return $container;
     }
@@ -135,9 +135,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function ($container) {
+        $container->set(static::FACADE_PRODUCT, function ($container) {
             return new ProductListGuiToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -149,11 +149,11 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilCsvService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_CSV] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_CSV, function (Container $container) {
             return new ProductListGuiToUtilCsvServiceBridge(
                 $container->getLocator()->utilCsv()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -165,9 +165,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function ($container) {
+        $container->set(static::FACADE_LOCALE, function ($container) {
             return new ProductListGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -179,9 +179,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_ACTION_EXPANDER, function () {
             return $this->getProductListTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -193,9 +193,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_CONFIG_EXPANDER, function () {
             return $this->getProductListTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -207,9 +207,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableQueryCriteriaExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_QUERY_CRITERIA_EXPANDER, function () {
             return $this->getProductListTableQueryCriteriaExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -221,9 +221,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_DATA_EXPANDER, function () {
             return $this->getProductListTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -235,9 +235,9 @@ class ProductListGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductListTableHeaderExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_LIST_TABLE_HEADER_EXPANDER, function () {
             return $this->getProductListTableHeaderExpanderPlugins();
-        };
+        });
 
         return $container;
     }

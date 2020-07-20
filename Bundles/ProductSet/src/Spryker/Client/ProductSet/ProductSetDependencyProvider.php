@@ -45,9 +45,9 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideSearchClient(Container $container)
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return $container->getLocator()->search()->client();
-        };
+        });
     }
 
     /**
@@ -57,9 +57,9 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListResultFormatterPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS] = function (Container $container) {
+        $container->set(static::PLUGIN_PRODUCT_SET_LIST_RESULT_FORMATTERS, function (Container $container) {
             return $this->getProductSetListResultFormatterPlugins();
-        };
+        });
     }
 
     /**
@@ -69,9 +69,9 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideProductSetListQueryExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS] = function (Container $container) {
+        $container->set(static::PLUGIN_PRODUCT_SET_LIST_QUERY_EXPANDERS, function (Container $container) {
             return $this->getProductSetListQueryExpanderPlugins();
-        };
+        });
     }
 
     /**
@@ -97,9 +97,9 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductSetToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
     }
 
     /**
@@ -109,8 +109,8 @@ class ProductSetDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideLocaleClient(Container $container)
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductSetToLocaleBridge($container->getLocator()->locale()->client());
-        };
+        });
     }
 }

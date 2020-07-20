@@ -8,7 +8,7 @@
 namespace Spryker\Zed\ProductRelation\Dependency;
 
 /**
- * @deprecated Use \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig instead.
+ * @deprecated Use {@link \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig} instead.
  *
  * @see \Spryker\Shared\ProductRelationStorage\ProductRelationStorageConfig
  */

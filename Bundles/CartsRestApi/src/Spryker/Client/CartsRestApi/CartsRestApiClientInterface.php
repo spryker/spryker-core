@@ -88,7 +88,7 @@ interface CartsRestApiClientInterface
      *
      * @api
      *
-     * @deprecated Use updateItemQuantity() instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -116,7 +116,7 @@ interface CartsRestApiClientInterface
      *
      * @api
      *
-     * @deprecated Use addToCart() instead.
+     * @deprecated Use {@link addToCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -144,7 +144,7 @@ interface CartsRestApiClientInterface
      *
      * @api
      *
-     * @deprecated Use removeItem() instead.
+     * @deprecated Use {@link removeItem()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -172,7 +172,7 @@ interface CartsRestApiClientInterface
      *
      * @api
      *
-     * @deprecated Use addToGuestCart() instead.
+     * @deprecated Use {@link addToGuestCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

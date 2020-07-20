@@ -41,11 +41,13 @@
         <property name="idOrderItem" type="int"/>
         <property name="idMerchantOrder" type="int"/>
         <property name="orderItem" type="Item"/>
+        <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderItemCriteria">
         <property name="idMerchantOrderItem" type="int"/>
         <property name="idOrderItem" type="int"/>
+        <property name="merchantOrderItemReference" type="string"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
@@ -72,6 +74,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
+        <property name="merchantReferences" type="string[]" singular="merchantReference"/>
     </transfer>
 
     <transfer name="Pagination">

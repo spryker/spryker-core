@@ -6,7 +6,8 @@ Addresses,Adressen
 "Canceled amount","Stornierter Betrag"
 "Cart Notes","Einkaufswagen Notizen"
 Comments,Kommentare
-"Customer Full Name ","Vollständiger Name des Kunden"
+"Customer Full Name ","Vollständiger Kundenname"
+"Customer Full Name","Vollständiger Kundenname"
 "Customer successfully updated.","Kunde wurde erfolgreich aktualisiert."
 Discount,Rabatt
 "GRAND TOTAL",Gesamtsumme
@@ -20,7 +21,7 @@ Legend,Legende
 "List of orders","Liste der Bestellungen"
 Matrix,Matrix
 Note,Hinweis
-"Number of Items","Menge der Artikel"
+"Number of Items",Artikelanzahl
 Option,Option
 "Order Matrix",Bestellungsmatrix
 "Order Source","Quelle der Bestellung"
@@ -44,9 +45,50 @@ State,Status
 Subtotal,Zwischensumme
 Totals,Gesamtsummen
 "Trigger all matching states","Alle passenden Stati antriggern"
-"Trigger event","Trigger Event"
-"Unique Product Quantity","Unique Product Quantity"
+"Trigger event","Event auslösen"
+"Unique Product Quantity","Anzahl der Produkte"
 "Unit Price",Stückpreis
 "Variant Details",Variantendetails
 "View Order","Bestellung anzeigen"
 "View Order:","Bestellung anzeigen:"
+"Remuneration total",Rückerstattungsbetrag
+"Trigger all matching states inside this order","Alle übereinstimmenden Stati innerhalb dieser Bestellung auslösen"
+"Previous orders count","Anzahl der vorherigen Bestellungen des Kunden"
+Name,Name
+E-mail,E-Mail
+"Order date",Bestelldatum
+Refunds,Rückerstattung
+"Discounts & Vouchers","Rabatte und Gutscheine"
+"Order Items",Auftragspositionen
+Reference,Referenz
+"Order Overview",Bestellübersicht
+"Total taxes","Gesamtsumme Steuern"
+Reclamations,Reklamationen
+Claim,Anspruch
+"payment pending","Ausstehende Zahlung"
+exported,Exportiert
+shipped,Versandt
+delivered,Geliefert
+refunded,Rückerstattet
+closed,Abgeschlossen
+pay,Bezahlen
+ship,Versenden
+stock-update,Bestandsaktualisierung
+close,Schließen
+refund,Rückerstatten
+execute-return,"Retoure ausführen"
+cancel-return,"Retoure stornieren"
+ship-return,"Retoure zum Kunden zurückschicken"
+delivery-return,"Retoure zum Kunden zurücksenden"
+cancel,Stornieren
+"skip timeout","Timeout überspringen"
+"Cancelled amount","Stornierter Betrag"
+"Comment successfully added","Kommentar erfolgreich hinzugefügt."
+"Address Details",Adressdetails
+"Middle name","Zweiter Vorname"
+"Po box",Postfach
+"Zip code",Postleitzahl
+Address1,"Adresse 1"
+Address2,"Adresse 2"
+"Cell phone",Mobiltelefon
+"Edit Address for Order: %idSalesOrder%","Adresse für Bestellung %idSalesOrder% bearbeiten"

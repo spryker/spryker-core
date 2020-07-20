@@ -49,9 +49,9 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new PriceProductVolumeGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addPriceProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductVolumeGuiToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductVolumeGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class PriceProductVolumeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductVolumeGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

@@ -24,9 +24,9 @@ class SalesSplitDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::SALES_QUERY_CONTAINER] = function (Container $container) {
+        $container->set(static::SALES_QUERY_CONTAINER, function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
-        };
+        });
 
         return $container;
     }

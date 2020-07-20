@@ -44,11 +44,22 @@ class SalesProductConnectorDependencyProvider extends AbstractBundleDependencyPr
     {
         $container = parent::providePersistenceLayerDependencies($container);
 
-        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
-            return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
-
+        $container = $this->addProductQueryContainer($container);
         $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductQueryContainer(Container $container): Container
+    {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
+            return new ProductToSalesProductConnectorQueryContainerBridge($container->getLocator()->product()->queryContainer());
+        });
 
         return $container;
     }

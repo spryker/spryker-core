@@ -15,7 +15,7 @@ use Spryker\Zed\Glossary\Dependency\GlossaryEvents;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use `\Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour\GlossaryEventResourceBulkRepositoryPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Communication\Plugin\EventBehaviour\GlossaryEventResourceBulkRepositoryPlugin} instead.
  *
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GlossaryStorage\Business\GlossaryStorageFacadeInterface getFacade()

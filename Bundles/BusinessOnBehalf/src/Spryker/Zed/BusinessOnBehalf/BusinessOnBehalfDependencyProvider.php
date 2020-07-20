@@ -51,9 +51,9 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_USER] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_USER, $container->factory(function () {
             return SpyCompanyUserQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -65,9 +65,9 @@ class BusinessOnBehalfDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new BusinessOnBehalfToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }

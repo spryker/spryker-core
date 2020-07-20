@@ -28,7 +28,7 @@ class CommentController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $formDataProvider = $this->getFactory()->createCommentFormDataProvider();
         $form = $this->getFactory()->getCommentForm(
@@ -52,7 +52,7 @@ class CommentController extends AbstractController
      */
     public function listAction(Request $request)
     {
-        $idSalesOrder = $request->query->get(SalesConfig::PARAM_ID_SALES_ORDER);
+        $idSalesOrder = $request->query->getInt(SalesConfig::PARAM_ID_SALES_ORDER);
 
         $comments = $this->getFacade()->getOrderCommentsByIdSalesOrder($idSalesOrder);
 

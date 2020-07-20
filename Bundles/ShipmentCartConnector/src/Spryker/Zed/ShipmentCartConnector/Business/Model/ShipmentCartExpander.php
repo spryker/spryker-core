@@ -18,7 +18,7 @@ use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToP
 use Spryker\Zed\ShipmentCartConnector\Dependency\Facade\ShipmentCartConnectorToShipmentFacadeInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentCartConnector\Business\Cart\ShipmentCartExpander} instead.
  */
 class ShipmentCartExpander implements ShipmentCartExpanderInterface
 {

@@ -22,7 +22,7 @@ use Spryker\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyPro
 class ShipmentCheckoutConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @deprecated Use createShipmentCheckoutPreCheckWithMultipleShippingAddress() instead.
+     * @deprecated Use {@link createShipmentCheckoutPreCheckWithMultipleShippingAddress()} instead.
      *
      * @return \Spryker\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentCheckoutPreCheckInterface
      */

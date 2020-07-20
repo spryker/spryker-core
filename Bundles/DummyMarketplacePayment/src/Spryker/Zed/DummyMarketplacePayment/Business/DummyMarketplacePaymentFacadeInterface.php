@@ -14,7 +14,7 @@ interface DummyMarketplacePaymentFacadeInterface
 {
     /**
      * Specification:
-     * - If not all order items contain of product reference, then filters dummy marketplace payment methods out.
+     * - If not all order items contain of merchant reference, then filters dummy marketplace payment methods out.
      *
      * @api
      *

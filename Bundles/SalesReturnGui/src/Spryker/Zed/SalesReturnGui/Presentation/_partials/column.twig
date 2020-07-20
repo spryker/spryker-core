@@ -1,0 +1,11 @@
+<div class="ibox float-e-margins">
+    <div class="ibox-title">
+        {% block title %}
+            <h5>{{ title | trans }}</h5>
+        {% endblock %}
+        <div class="clearfix"></div>
+    </div>
+    <div class="ibox-content">
+        {% block content %}{% endblock %}
+    </div>
+</div>

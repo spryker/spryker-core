@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DataProvider\MerchantRelationshipFormDataProvider;
+use Spryker\Zed\MerchantRelationshipGui\Communication\Form\DeleteMerchantRelationshipForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipCreateForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Form\MerchantRelationshipEditForm;
 use Spryker\Zed\MerchantRelationshipGui\Communication\Table\MerchantRelationshipTable;
@@ -66,6 +67,16 @@ class MerchantRelationshipGuiCommunicationFactory extends AbstractCommunicationF
     public function createMerchantRelationshipTable(?int $idCompany = null): MerchantRelationshipTable
     {
         return new MerchantRelationshipTable($this->getPropelMerchantRelationshipQuery(), $idCompany);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteMerchantRelationshipForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteMerchantRelationshipForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

@@ -21,7 +21,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::APPLICATION_PLUGINS} instead.
      */
     public const SERVICE_PROVIDERS = 'service providers';
 
@@ -155,7 +155,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::addApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::addApplicationPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -171,7 +171,7 @@ class ConsoleDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\Console\ConsoleDependencyProvider::getApplicationPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Console\ConsoleDependencyProvider::getApplicationPlugins()} instead.
      *
      * @param \Spryker\Zed\Kernel\Container $container
      *

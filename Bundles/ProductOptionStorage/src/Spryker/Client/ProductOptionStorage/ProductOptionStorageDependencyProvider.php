@@ -54,9 +54,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductOptionStorageToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPriceClient(Container $container)
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductOptionStorageToPriceClientBridge($container->getLocator()->price()->client());
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCurrencyClient(Container $container)
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductOptionStorageToCurrencyClientBridge($container->getLocator()->currency()->client());
-        };
+        });
 
         return $container;
     }
@@ -96,9 +96,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductOptionStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class ProductOptionStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }

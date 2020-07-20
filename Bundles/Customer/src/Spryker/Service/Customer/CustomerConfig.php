@@ -15,7 +15,7 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use getAddressKeyGenerationWhiteListedFields() instead.
+     * @deprecated Use {@link getAddressKeyGenerationWhiteListedFields()} instead.
      *
      * @return string[]
      */

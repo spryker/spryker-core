@@ -53,9 +53,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesReclamationFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES_RECLAMATION] = function (Container $container) {
+        $container->set(static::FACADE_SALES_RECLAMATION, function (Container $container) {
             return new SalesReclamationGuiToSalesReclamationFacadeBridge($container->getLocator()->salesReclamation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addDateTimeService(Container $container): Container
     {
-        $container[static::SERVICE_DATETIME] = function (Container $container) {
+        $container->set(static::SERVICE_DATETIME, function (Container $container) {
             return new SalesReclamationGuiToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -83,9 +83,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesReclamationPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_RECLAMATION] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_SALES_RECLAMATION, $container->factory(function () {
             return SpySalesReclamationQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -97,9 +97,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesReclamationGuiToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class SalesReclamationGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addOmsFacade(Container $container): Container
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new SalesReclamationGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }

@@ -96,4 +96,19 @@ class SalesBusinessTester extends Actor
         return (new OrderListRequestBuilder($seed))
             ->build();
     }
+
+    /**
+     * @param array $seed
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function buildQuote(array $seed = []): QuoteTransfer
+    {
+        return (new QuoteBuilder($seed))
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->build();
+    }
 }

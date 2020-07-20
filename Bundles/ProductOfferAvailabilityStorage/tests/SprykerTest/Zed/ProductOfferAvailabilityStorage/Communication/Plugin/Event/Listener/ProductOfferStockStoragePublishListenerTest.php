@@ -14,6 +14,8 @@ use Generated\Shared\Transfer\StockTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
+use Spryker\Zed\Oms\OmsDependencyProvider;
+use Spryker\Zed\OmsProductOfferReservation\Communication\Plugin\Oms\ProductOfferOmsReservationReaderStrategyPlugin;
 use Spryker\Zed\ProductOffer\Dependency\ProductOfferEvents;
 use Spryker\Zed\ProductOfferAvailabilityStorage\Communication\Plugin\Event\Listener\ProductOfferStockStoragePublishListener;
 
@@ -49,6 +51,10 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
                 $container->getLocator()->rabbitMq()->client()->createQueueAdapter(),
             ];
         });
+
+        $this->tester->setDependency(OmsDependencyProvider::PLUGINS_OMS_RESERVATION_READER_STRATEGY, [
+            new ProductOfferOmsReservationReaderStrategyPlugin(),
+        ]);
     }
 
     /**
@@ -61,7 +67,9 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
         $expectedAvailability = $stockQuantity;
 
         $storeTransfer = $this->tester->haveStore();
+        $productOfferTransfer = $this->tester->haveProductOffer();
         $productOfferStockTransfer = $this->tester->haveProductOfferStock([
+            ProductOfferStockTransfer::ID_PRODUCT_OFFER => $productOfferTransfer->getIdProductOffer(),
             ProductOfferStockTransfer::QUANTITY => $stockQuantity,
             ProductOfferStockTransfer::STOCK => [
                 StockTransfer::STORE_RELATION => [
@@ -85,7 +93,7 @@ class ProductOfferStockStoragePublishListenerTest extends Unit
         // Assert
         $productOfferAvailability = $this->tester->getProductOfferAvailability(
             $storeTransfer->getName(),
-            $productOfferStockTransfer->getProductOffer()->getProductOfferReference()
+            $productOfferTransfer->getProductOfferReference()
         );
 
         $this->assertSame($expectedAvailability, $productOfferAvailability->toInt());

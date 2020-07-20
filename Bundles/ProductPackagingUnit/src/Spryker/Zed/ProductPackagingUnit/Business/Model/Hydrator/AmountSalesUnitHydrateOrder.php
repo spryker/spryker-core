@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToProductMeasurementUnitFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Persistence\ProductPackagingUnitRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class AmountSalesUnitHydrateOrder implements AmountSalesUnitHydrateOrderInterface
 {
     /**

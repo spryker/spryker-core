@@ -10,19 +10,10 @@ namespace Spryker\Client\SalesReturn\Zed;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 
 interface SalesReturnStubInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
-     */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer
      *

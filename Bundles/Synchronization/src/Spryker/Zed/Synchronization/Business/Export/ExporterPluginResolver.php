@@ -47,7 +47,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds()} instead.
      *
      * @param string[] $resources
      *

@@ -32,17 +32,17 @@ class StorageDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
 
-        $container[self::STORAGE_CLIENT] = function (Container $container) {
+        $container->set(static::STORAGE_CLIENT, function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
+        });
 
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new StorageToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new StorageToLocaleClientBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         $container = $this->addStoragePlugin($container);
 

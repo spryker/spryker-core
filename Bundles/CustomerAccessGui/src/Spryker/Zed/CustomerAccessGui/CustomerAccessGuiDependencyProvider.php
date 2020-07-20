@@ -37,9 +37,9 @@ class CustomerAccessGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addCustomerAccessFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER_ACCESS] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER_ACCESS, function (Container $container) {
             return new CustomerAccessGuiToCustomerAccessFacadeBridge($container->getLocator()->customerAccess()->facade());
-        };
+        });
 
         return $container;
     }

@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "MissingTemplateParam",
+            "message": "ArrayObject has missing template params, expecting 2",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
+            "snippet": "     * @phpstan-param \\ArrayObject<\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null $value",
+            "selected_text": "\\ArrayObject<\\Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null",
+            "error_level": -1,
+            "shortcode": 182
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/CategoryImageGuiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->locale()->facade()",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageCollectionTransformer::transform has the more specific type 'array<array-key, Generated\\Shared\\Transfer\\CategoryImageTransfer>', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageCollectionTransformer.php",
+            "snippet": "    public function transform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageCollectionTransformer::reverseTransform has the more specific type 'array<array-key, mixed>', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageCollectionTransformer.php",
+            "snippet": "    public function reverseTransform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageSetCollectionTransformer::transform has the more specific type 'ArrayObject<Generated\\Shared\\Transfer\\CategoryImageSetTransfer>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
+            "snippet": "    public function transform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\ImageSetCollectionTransformer::reverseTransform has the more specific type 'array<array-key, mixed>|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/ImageSetCollectionTransformer.php",
+            "snippet": "    public function reverseTransform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\LocaleTransformer::transform has the more specific type 'Generated\\Shared\\Transfer\\LocaleTransfer|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::transform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/LocaleTransformer.php",
+            "snippet": "    public function transform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        },
+        {
+            "severity": "info",
+            "line_from": 51,
+            "line_to": 51,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 1 of Spryker\\Zed\\CategoryImageGui\\Communication\\Form\\Transformer\\LocaleTransformer::reverseTransform has the more specific type 'int|null', expecting 'mixed' as defined by Symfony\\Component\\Form\\DataTransformerInterface::reverseTransform",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryImageGui/src/Spryker/Zed/CategoryImageGui/Communication/Form/Transformer/LocaleTransformer.php",
+            "snippet": "    public function reverseTransform($value)",
+            "selected_text": "$value",
+            "error_level": 5,
+            "shortcode": 140
+        }
+    ],
+    "deprecation": []
+}

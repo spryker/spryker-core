@@ -5,17 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    {% set config = {
-        dataUrl: dataUrl,
-        columns: columns,
-        selectable: true,
-        rowActions: rowActions,
-        pageSizes: pageSizes,
-        search: search,
-        filters: filters
-    } %}
+    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
 
-    <mp-product-offer title="{{ 'Create Offer' | trans }}" table-config="{{ config | json_encode() }}"></mp-product-offer>
+    <web-mp-product-offer cloak table-config='{{ guiTableConfiguration(productTableConfiguration) }}'>
+        <span title>{{ 'Create Offer' | trans }}</span>
+    </web-mp-product-offer>
+
 {% endblock %}
 
 {% block footerJs %}

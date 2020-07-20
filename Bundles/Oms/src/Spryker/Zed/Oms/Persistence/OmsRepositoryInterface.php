@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Oms\Persistence;
 
+use Generated\Shared\Transfer\OmsProductReservationTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
@@ -43,4 +46,33 @@ interface OmsRepositoryInterface
      * @return \Generated\Shared\Transfer\ItemStateTransfer[]
      */
     public function getItemHistoryStatesByOrderItemIds(array $salesOrderItemIds): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OmsProductReservationTransfer|null
+     */
+    public function findProductReservation(ReservationRequestTransfer $reservationRequestTransfer): ?OmsProductReservationTransfer;
+
+    /**
+     * @param string $sku
+     * @param int $idStore
+     *
+     * @return \Spryker\DecimalObject\Decimal
+     */
+    public function findProductReservationQuantity(string $sku, int $idStore): Decimal;
+
+    /**
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer[]
+     */
+    public function findProductReservationStores(string $sku): array;
 }

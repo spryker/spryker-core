@@ -35,9 +35,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductImageStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -49,9 +49,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ProductImageStorageToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
 
         return $container;
     }
@@ -78,9 +78,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductImageStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -92,11 +92,11 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductImageQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_IMAGE, function (Container $container) {
             return new ProductImageStorageToProductImageQueryContainerBridge(
                 $container->getLocator()->productImage()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }
@@ -108,9 +108,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductLocalizedAttributesQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES] = function (): SpyProductLocalizedAttributesQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_LOCALIZED_ATTRIBUTES, $container->factory(function (): SpyProductLocalizedAttributesQuery {
             return SpyProductLocalizedAttributesQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -122,9 +122,9 @@ class ProductImageStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addPropelProductImageSetQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_IMAGE_SET] = function (): SpyProductImageSetQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_IMAGE_SET, $container->factory(function (): SpyProductImageSetQuery {
             return SpyProductImageSetQuery::create();
-        };
+        }));
 
         return $container;
     }

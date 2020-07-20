@@ -20,3 +20,5 @@ Status,Status
 "Store relation","Store relation"
 View,View
 "View Payment Method: %s","View Payment Method: %s"
+"Payment method has been successfully updated","Payment method has been successfully updated"
+"Payment Management","Payment Management"

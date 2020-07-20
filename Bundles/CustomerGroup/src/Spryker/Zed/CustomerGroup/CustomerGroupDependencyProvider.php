@@ -52,9 +52,9 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDataFormatterService(Container $container)
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -66,11 +66,11 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CUSTOMER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CUSTOMER, function (Container $container) {
             return new CustomerGroupToCustomerQueryContainerBridge(
                 $container->getLocator()->customer()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class CustomerGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CustomerGroupToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

@@ -1,0 +1,102 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Vault\\Dependency\\Service\\VaultToUtilEncryptionServiceInterface::decryptOpenSsl cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Reader/VaultReader.php",
+            "snippet": "            $vaultDepositTransfer->getCipherText(),",
+            "selected_text": "$vaultDepositTransfer->getCipherText()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 80,
+            "line_to": 80,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Vault\\Business\\Reader\\VaultReader::getInitializingVector is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Reader/VaultReader.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Vault\\Business\\Reader\\VaultReader::getInitializingVector is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Reader/VaultReader.php",
+            "snippet": "            return $vaultDepositTransfer->getInitialVector();",
+            "selected_text": "$vaultDepositTransfer->getInitialVector()",
+            "error_level": 5,
+            "shortcode": 139
+        },
+        {
+            "severity": "info",
+            "line_from": 88,
+            "line_to": 88,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Vault\\Business\\Converter\\InitialVectorConverterInterface::convertToBin cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Reader/VaultReader.php",
+            "snippet": "        return $this->initialVectorConverter->convertToBin($vaultDepositTransfer->getInitialVector());",
+            "selected_text": "$vaultDepositTransfer->getInitialVector()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Vault\\Persistence\\VaultRepositoryInterface::findVaultDepositByDataTypeAndKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Writer/VaultWriter.php",
+            "snippet": "        if ($this->vaultRepository->findVaultDepositByDataTypeAndKey($vaultDepositTransfer->getDataType(), $vaultDepositTransfer->getDataKey())) {",
+            "selected_text": "$vaultDepositTransfer->getDataType()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 83,
+            "line_to": 83,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Vault\\Persistence\\VaultRepositoryInterface::findVaultDepositByDataTypeAndKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Business/Writer/VaultWriter.php",
+            "snippet": "        if ($this->vaultRepository->findVaultDepositByDataTypeAndKey($vaultDepositTransfer->getDataType(), $vaultDepositTransfer->getDataKey())) {",
+            "selected_text": "$vaultDepositTransfer->getDataKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 53,
+            "line_to": 53,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\Vault\\Persistence\\Propel\\Mapper\\VaultDepositMapper::mapVaultDepositTransferToEntity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/Persistence/VaultEntityManager.php",
+            "snippet": "                $vaultDepositEntity",
+            "selected_text": "$vaultDepositEntity",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/Vault/src/Spryker/Zed/Vault/VaultDependencyProvider.php",
+            "snippet": "                $container->getLocator()->utilEncryption()->service()",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

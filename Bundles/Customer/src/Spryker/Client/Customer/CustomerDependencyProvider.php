@@ -83,9 +83,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDefaultAddressChangePlugins(Container $container)
     {
-        $container[static::PLUGINS_DEFAULT_ADDRESS_CHANGE] = function () {
+        $container->set(static::PLUGINS_DEFAULT_ADDRESS_CHANGE, function () {
             return $this->getDefaultAddressChangePlugins();
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::SERVICE_SESSION] = function (Container $container) {
+        $container->set(static::SERVICE_SESSION, function (Container $container) {
             return $container->getLocator()->session()->client();
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::SERVICE_ZED] = function (Container $container) {
+        $container->set(static::SERVICE_ZED, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerSessionGetPlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_SESSION_GET] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_SESSION_GET, function () {
             return $this->getCustomerSessionGetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -139,9 +139,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerSessionSetPlugins(Container $container)
     {
-        $container[static::PLUGINS_CUSTOMER_SESSION_SET] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_SESSION_SET, function () {
             return $this->getCustomerSessionSetPlugins();
-        };
+        });
 
         return $container;
     }
@@ -153,9 +153,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     public function addCustomerSecuredPatternRulePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CUSTOMER_SECURED_PATTERN_RULE] = function () {
+        $container->set(static::PLUGINS_CUSTOMER_SECURED_PATTERN_RULE, function () {
             return $this->getCustomerSecuredPatternRulePlugins();
-        };
+        });
 
         return $container;
     }
@@ -167,9 +167,9 @@ class CustomerDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAccessTokenAuthenticationHandlerPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER] = function () {
+        $container->set(static::PLUGIN_ACCESS_TOKEN_AUTHENTICATION_HANDLER, function () {
             return $this->getAccessTokenAuthenticationHandlerPlugin();
-        };
+        });
 
         return $container;
     }

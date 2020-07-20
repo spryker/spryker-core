@@ -61,6 +61,24 @@ class CustomerDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
+     * @throws \Codeception\Exception\TestRuntimeException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function confirmCustomer(CustomerTransfer $customerTransfer): CustomerTransfer
+    {
+        $customerResponseTransfer = $this->getCustomerFacade()->confirmCustomerRegistration($customerTransfer);
+
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            throw new TestRuntimeException(sprintf('Could not confirm customer %s', $customerTransfer->getEmail()));
+        }
+
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
      * @return void
      */
     protected function ensureCustomerWithReferenceDoesNotExist(CustomerTransfer $customerTransfer): void

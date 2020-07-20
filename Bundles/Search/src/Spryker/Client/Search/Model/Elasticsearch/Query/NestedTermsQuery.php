@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\NestedTermsQuery` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\NestedTermsQuery} instead.
  */
 class NestedTermsQuery extends AbstractNestedQuery
 {

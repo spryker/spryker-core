@@ -34,7 +34,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
+     * @deprecated Use {@link \Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier()} instead for vendor specific source identification.
      *
      * @return string
      */

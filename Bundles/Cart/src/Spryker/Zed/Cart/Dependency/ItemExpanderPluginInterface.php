@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cart\Dependency;
 use Spryker\Zed\CartExtension\Dependency\Plugin\ItemExpanderPluginInterface as SprykerItemExpanderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\CartExtension\Dependency\ItemExpanderPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CartExtension\Dependency\ItemExpanderPluginInterface} instead.
  */
 interface ItemExpanderPluginInterface extends SprykerItemExpanderPluginInterface
 {

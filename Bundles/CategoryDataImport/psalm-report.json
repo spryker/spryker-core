@@ -1,0 +1,103 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\CategoryDataImport\\Business\\CategoryDataImportBusinessFactory::createCategoryImporter is incorrect, got 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/CategoryDataImportBusinessFactory.php",
+            "snippet": "     * @return \\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "selected_text": "\\Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 40,
+            "line_to": 40,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterBeforeImportAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface' does not match the declared return type 'Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface' for Spryker\\Zed\\CategoryDataImport\\Business\\CategoryDataImportBusinessFactory::createCategoryImporter",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/CategoryDataImportBusinessFactory.php",
+            "snippet": "        return $dataImporter;",
+            "selected_text": "$dataImporter",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addstep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/CategoryDataImportBusinessFactory.php",
+            "snippet": "            ->addStep($this->createAddLocalesStep())",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::adddatasetstepbroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/CategoryDataImportBusinessFactory.php",
+            "snippet": "            ->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/CategoryDataImportBusinessFactory.php",
+            "snippet": "            ->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 215,
+            "line_to": 215,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of findByFkCategoryNodeDescendant cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/Model/CategoryWriterStep.php",
+            "snippet": "                ->findByFkCategoryNodeDescendant($categoryNodeEntity->getFkParentCategoryNode());",
+            "selected_text": "$categoryNodeEntity->getFkParentCategoryNode()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 103,
+            "line_to": 103,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\Category\\Persistence\\SpyCategoryNode> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/Model/Reader/CategoryReader.php",
+            "snippet": "                static::ID_CATEGORY_NODE => $categoryEntity->getNodes()->getFirst()->getIdCategoryNode(),",
+            "selected_text": "getFirst",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getCategory on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CategoryDataImport/src/Spryker/Zed/CategoryDataImport/Business/Model/Reader/CategoryReader.php",
+            "snippet": "            $categoryEntity = $urlEntity->getSpyCategoryNode()->getCategory();",
+            "selected_text": "getCategory",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

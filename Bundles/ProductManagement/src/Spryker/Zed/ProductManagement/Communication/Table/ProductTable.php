@@ -12,11 +12,13 @@ use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMa
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 use Spryker\Zed\ProductManagement\Communication\Controller\EditController;
 use Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface;
+use Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface;
 
 class ProductTable extends AbstractProductTable
 {
@@ -47,18 +49,26 @@ class ProductTable extends AbstractProductTable
     protected $productTypeHelper;
 
     /**
+     * @var \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface
+     */
+    protected $productManagementRepository;
+
+    /**
      * @param \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface $productQueryContainer
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      * @param \Spryker\Zed\ProductManagement\Communication\Helper\ProductTypeHelperInterface $productTypeHelper
+     * @param \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface $productManagementRepository
      */
     public function __construct(
         ProductQueryContainerInterface $productQueryContainer,
         LocaleTransfer $localeTransfer,
-        ProductTypeHelperInterface $productTypeHelper
+        ProductTypeHelperInterface $productTypeHelper,
+        ProductManagementRepositoryInterface $productManagementRepository
     ) {
         $this->productQueryQueryContainer = $productQueryContainer;
         $this->localeTransfer = $localeTransfer;
         $this->productTypeHelper = $productTypeHelper;
+        $this->productManagementRepository = $productManagementRepository;
     }
 
     /**
@@ -68,6 +78,13 @@ class ProductTable extends AbstractProductTable
      */
     protected function configure(TableConfiguration $config)
     {
+        $url = Url::generate(
+            '/table',
+            $this->getRequest()->query->all()
+        );
+
+        $config->setUrl($url);
+
         $config->setHeader([
             static::COL_ID_PRODUCT_ABSTRACT => 'Product ID',
             static::COL_NAME => 'Name',
@@ -87,6 +104,7 @@ class ProductTable extends AbstractProductTable
             static::COL_PRODUCT_TYPE,
             static::COL_STORE_RELATION,
             static::COL_ACTIONS,
+            static::COL_IS_BUNDLE,
         ]);
 
         $config->setSearchable([
@@ -123,6 +141,8 @@ class ProductTable extends AbstractProductTable
             ->endUse()
             ->withColumn(SpyProductAbstractLocalizedAttributesTableMap::COL_NAME, static::COL_NAME)
             ->withColumn(SpyTaxSetTableMap::COL_NAME, static::COL_TAX_SET);
+
+        $query = $this->expandPropelQuery($query);
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -265,10 +285,20 @@ class ProductTable extends AbstractProductTable
     {
         foreach ($productAbstractEntity->getSpyProducts() as $spyProductEntity) {
             if ($spyProductEntity->getSpyProductBundlesRelatedByFkProduct()->count() > 0) {
-                return 'Yes';
+                return $this->generateLabel('Yes', null);
             }
         }
 
-        return 'No';
+        return $this->generateLabel('No', null);
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    protected function expandPropelQuery(ModelCriteria $query): ModelCriteria
+    {
+        return $this->productManagementRepository->expandQuery($query);
     }
 }

@@ -9,11 +9,17 @@ namespace Spryker\Zed\SalesReturnDataImport\Business\ReturnDataImportStep;
 
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\SalesReturnDataImport\Business\DataSet\ReturnReasonDataSetInterface;
 
-class ReturnReasonWriterStep implements DataImportStepInterface
+class ReturnReasonWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\SalesReturnSearch\SalesReturnSearchConfig::RETURN_REASON_PUBLISH_WRITE
+     */
+    protected const EVENT_RETURN_REASON_PUBLISH_WRITE = 'Return.reason.publish_write';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -28,6 +34,11 @@ class ReturnReasonWriterStep implements DataImportStepInterface
         $salesReturnReasonEntity
             ->setGlossaryKeyReason($dataSet[ReturnReasonDataSetInterface::COLUMN_GLOSSARY_KEY_REASON])
             ->save();
+
+        $this->addPublishEvents(
+            static::EVENT_RETURN_REASON_PUBLISH_WRITE,
+            $salesReturnReasonEntity->getIdSalesReturnReason()
+        );
     }
 
     /**

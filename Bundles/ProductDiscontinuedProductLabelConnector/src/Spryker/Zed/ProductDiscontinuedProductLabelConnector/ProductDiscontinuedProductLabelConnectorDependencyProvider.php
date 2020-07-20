@@ -76,11 +76,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addProductLabelFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductLabelBridge(
                 $container->getLocator()->productLabel()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -92,11 +92,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -108,11 +108,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addProductDiscontinuedFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge(
                 $container->getLocator()->productDiscontinued()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -124,11 +124,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }

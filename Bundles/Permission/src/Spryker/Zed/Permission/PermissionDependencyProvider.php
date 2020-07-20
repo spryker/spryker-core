@@ -41,9 +41,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionPlugins(Container $container)
     {
-        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION, function (Container $container) {
             return $this->getPermissionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionStoragePlugins(Container $container)
     {
-        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION_STORAGE, function (Container $container) {
             return $this->getPermissionStoragePlugins();
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class PermissionDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionClient(Container $container)
     {
-        $container[static::CLIENT_PERMISSION] = function (Container $container) {
+        $container->set(static::CLIENT_PERMISSION, function (Container $container) {
             return $container->getLocator()->permission()->client();
-        };
+        });
 
         return $container;
     }

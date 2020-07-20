@@ -120,7 +120,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacade::createStock() instead.
+     * @deprecated Use {@link createStock()} instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *

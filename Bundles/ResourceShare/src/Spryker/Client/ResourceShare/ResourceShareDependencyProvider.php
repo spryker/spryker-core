@@ -39,9 +39,9 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addBeforeZedResourceShareActivatorStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_BEFORE_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY] = function () {
+        $container->set(static::PLUGINS_BEFORE_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY, function () {
             return $this->getBeforeZedResourceShareActivatorStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -53,9 +53,9 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addAfterZedResourceShareActivatorStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_AFTER_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY] = function () {
+        $container->set(static::PLUGINS_AFTER_ZED_RESOURCE_SHARE_ACTIVATOR_STRATEGY, function () {
             return $this->getAfterZedResourceShareActivatorStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class ResourceShareDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new ResourceShareToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }

@@ -352,6 +352,8 @@ interface ProductPackagingUnitFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountSalesUnit()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -360,15 +362,41 @@ interface ProductPackagingUnitFacadeInterface
 
     /**
      * Specification:
+     * - Hydrates order items with additional packaging unit sales unit.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array;
+
+    /**
+     * Specification:
      * - Hydrates order transfer with additional packaging unit amount lead product.
      *
      * @api
+     *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountLeadProduct()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithAmountLeadProduct(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with additional packaging unit amount lead product.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array;
 
     /**
      * Specification:
@@ -437,4 +465,17 @@ interface ProductPackagingUnitFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Filters out products which have packaging unit available and returns back modified array.
+     * - Requires ProductConcreteTransfer::idProductConcrete to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array;
 }

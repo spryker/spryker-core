@@ -1,0 +1,19 @@
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+
+{% block headTitle %}
+    {{ 'Orders' | trans }}
+{% endblock %}
+
+{% block content %}
+    <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+
+    <web-mp-offer-orders cloak table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
+        <span title>{{ 'Orders' | trans }}</span>
+    </web-mp-offer-orders>
+{% endblock %}
+
+{% block footerJs %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/mp-offer-orders/main-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp-offer-orders/main-es5.js') }}" nomodule defer></script>
+{% endblock %}

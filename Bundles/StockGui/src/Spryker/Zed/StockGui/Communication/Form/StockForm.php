@@ -16,7 +16,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\StockGui\Communication\StockGuiCommunicationFactory getFactory()
@@ -89,7 +88,6 @@ class StockForm extends AbstractType
         $builder->add(static::FIELD_NAME, TextType::class, [
             'label' => 'Name',
             'constraints' => [
-                new Required(),
                 new NotBlank(['normalizer' => 'trim']),
                 new Length(['max' => static::FIELD_NAME_MAX_LENGTH]),
                 $this->getFactory()->createStockNameUniqueConstraint(),
@@ -114,9 +112,6 @@ class StockForm extends AbstractType
             ],
             'multiple' => false,
             'expanded' => true,
-            'constraints' => [
-                new Required(),
-            ],
         ]);
 
         return $this;

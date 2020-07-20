@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
 interface QuoteItemAdderInterface
 {
     /**
-     * @deprecated Use addToCart() instead.
+     * @deprecated Use {@link addToCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

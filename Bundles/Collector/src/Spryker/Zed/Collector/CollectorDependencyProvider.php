@@ -57,9 +57,9 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -71,9 +71,9 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CollectorToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -85,9 +85,9 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new CollectorToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

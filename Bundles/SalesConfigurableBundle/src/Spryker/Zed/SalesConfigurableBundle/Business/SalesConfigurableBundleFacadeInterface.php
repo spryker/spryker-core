@@ -55,6 +55,8 @@ interface SalesConfigurableBundleFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\SalesConfigurableBundle\Business\SalesConfigurableBundleFacadeInterface::expandItemsWithSalesOrderConfiguredBundles()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -76,4 +78,17 @@ interface SalesConfigurableBundleFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function transformConfiguredBundleOrderItems(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Expands items with sales order configured bundles.
+     * - Expects ItemTransfer::ID_SALES_ORDER_ITEM to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithSalesOrderConfiguredBundles(array $itemTransfers): array;
 }

@@ -88,9 +88,9 @@ class DetailController extends AbstractController
             ->getSalesReclamationFacade()
             ->closeReclamation($reclamationTransfer);
 
-        $this->addSuccessMessage(
-            sprintf('Reclamation with id %s closed', $reclamationTransfer->getIdSalesReclamation())
-        );
+        $this->addSuccessMessage('Reclamation with id %id% closed', [
+            '%id%' => $reclamationTransfer->getIdSalesReclamation(),
+        ]);
 
         return $this->redirectResponse(
             Url::generate(

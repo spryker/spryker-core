@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $declaredClasses using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Builder/ExtensionObjectBuilder.php",
+            "snippet": "        unset($declaredClasses[$ignoredNamespace]);",
+            "selected_text": "$declaredClasses",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $declaredClasses using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Builder/ExtensionQueryBuilder.php",
+            "snippet": "        unset($declaredClasses[$ignoredNamespace]);",
+            "selected_text": "$declaredClasses",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 512,
+            "line_to": 512,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\PropelOrm\\Business\\Builder\\ObjectBuilder::buildReturnTypeStringForModel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilder.php",
+            "snippet": "     * @return \" . $this->buildReturnTypeStringForModel($column, $returnType) . \"",
+            "selected_text": "$returnType",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 553,
+            "line_to": 553,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Builder/ObjectBuilder.php",
+            "snippet": "            return $defaultValue . $this->buildAdditionalReturnTypeForModel($mappingModel);",
+            "selected_text": "$this->buildAdditionalReturnTypeForModel($mappingModel)",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 401,
+            "line_to": 401,
+            "type": "MissingReturnType",
+            "message": "Method Spryker\\Zed\\PropelOrm\\Business\\Builder\\QueryBuilder::addClassOpen does not have a return type, expecting void",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Builder/QueryBuilder.php",
+            "snippet": "    protected function addClassOpen(&$script)",
+            "selected_text": "addClassOpen",
+            "error_level": 2,
+            "shortcode": 50
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyFalseOperand",
+            "message": "Left operand cannot be falsable, got false|int",
+            "file_name": "vendor/spryker/spryker/Bundles/PropelOrm/src/Spryker/Zed/PropelOrm/Business/Model/Formatter/AssociativeArrayFormatter.php",
+            "snippet": "            $phpName = substr($key, strpos($key, '.') + 1);",
+            "selected_text": "strpos($key, '.')",
+            "error_level": 3,
+            "shortcode": 162
+        }
+    ],
+    "deprecation": []
+}

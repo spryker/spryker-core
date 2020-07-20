@@ -52,11 +52,11 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     public function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeGuiToProductFacadeBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -68,11 +68,11 @@ class ProductAlternativeGuiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductAlternativeFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_ALTERNATIVE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_ALTERNATIVE, function (Container $container) {
             return new ProductAlternativeGuiToProductAlternativeFacadeBridge(
                 $container->getLocator()->productAlternative()->facade()
             );
-        };
+        });
 
         return $container;
     }

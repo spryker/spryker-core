@@ -36,9 +36,9 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = $this->addStoreFacade($container);
 
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CategoryPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container = $this->addStoreFacade($container);
 
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CategoryPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -66,13 +66,13 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new CategoryPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CategoryPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
 
         return $container;
     }

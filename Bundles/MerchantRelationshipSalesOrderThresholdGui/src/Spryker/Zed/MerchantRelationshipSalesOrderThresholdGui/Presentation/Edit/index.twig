@@ -20,6 +20,7 @@
 {% endblock %}
 
 {% set merchantRelationshipHardThresholdEnabled = merchantRelationshipThresholdform.hardThreshold.strategy.vars.choices|length > 0 %}
+{% set merchantRelationshipHardMaxThresholdEnabled = merchantRelationshipThresholdform.hardMaximumThreshold.strategy.vars.choices|length > 0 %}
 {% set merchantRelationshipSoftThresholdEnabled = merchantRelationshipThresholdform.softThreshold.strategy.vars.choices|length > 0 %}
 
 {% block content %}
@@ -46,6 +47,39 @@
                                 {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
                                     {% block content %}
                                         {% for input in merchantRelationshipThresholdform.hardThreshold[localeTransfer.localeName] %}
+                                            <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
+                                                {{ form_label(input) }}
+                                                {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
+                                                {{ form_errors(input) }}
+                                            </div>
+                                        {% endfor %}
+                                    {% endblock %}
+                                {% endembed %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                {% do merchantRelationshipThresholdform.hardThreshold.setRendered %}
+            {% endif %}
+
+            {% if merchantRelationshipHardMaxThresholdEnabled %}
+                <div class="panel panel-default">
+                    <div class="panel-heading">{{ 'Hard Maximum Threshold' | trans }}</div>
+                    <div class="panel-body">
+                        {{ form_row(merchantRelationshipThresholdform.hardMaximumThreshold.strategy) }}
+                        {{ form_row(merchantRelationshipThresholdform.hardMaximumThreshold.threshold) }}
+                        {% for child in merchantRelationshipThresholdform.hardMaximumThreshold if child.vars.attr.threshold_key is defined %}
+                            <div class="threshold_group_hard threshold-key-{{ child.vars.attr.threshold_key }}">
+                                {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
+                            </div>
+                        {% endfor %}
+
+                        {% for localeTransfer in localeCollection %}
+                            {% if merchantRelationshipThresholdform.hardMaximumThreshold[localeTransfer.localeName] is defined %}
+                                {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+                                    {% block content %}
+                                        {% for input in merchantRelationshipThresholdform.hardMaximumThreshold[localeTransfer.localeName] %}
                                             <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
                                                 {{ form_label(input) }}
                                                 {{ form_widget(input, {'attr': {'class': 'name-translation'}}) }}
@@ -98,7 +132,7 @@
             {{ form_widget(merchantRelationshipThresholdform) }}
 
             <div class="well well-sm">
-                {{ 'You can use the the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>' | raw }}
+                {{ 'You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>' | trans | raw  }}
             </div>
 
             <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}"/>
