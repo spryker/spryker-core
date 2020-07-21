@@ -36,18 +36,18 @@ use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
-use Spryker\Client\SearchElasticsearch\Reader\DocumentReader;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactory;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
-use Spryker\Client\SearchElasticsearch\Reader\MappingTypeAwareDocumentReader;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
 use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpander;
 use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
-use Spryker\Client\SearchElasticsearch\Writer\DocumentWriter;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactory;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface;
-use Spryker\Client\SearchElasticsearch\Writer\MappingTypeAwareDocumentWriter;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface;
@@ -312,11 +312,17 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createDocumentWriter(): DocumentWriterInterface
     {
-        if ($this->createMappingTypeSupportDetector()->isMappingTypesSupported()) {
-            return new MappingTypeAwareDocumentWriter($this->getElasticaClient());
-        }
+        return $this->createDocumentWriterFactory()->createDocumentWriter($this->getElasticaClient());
+    }
 
-        return new DocumentWriter($this->getElasticaClient());
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactoryInterface
+     */
+    public function createDocumentWriterFactory(): DocumentWriterFactoryInterface
+    {
+        return new DocumentWriterFactory(
+            $this->createMappingTypeSupportDetector()
+        );
     }
 
     /**
@@ -324,11 +330,17 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createDocumentReader(): DocumentReaderInterface
     {
-        if ($this->createMappingTypeSupportDetector()->isMappingTypesSupported()) {
-            return new MappingTypeAwareDocumentReader($this->getElasticaClient());
-        }
+        return $this->createDocumentReaderFactory()->createDocumentReader($this->getElasticaClient());
+    }
 
-        return new DocumentReader($this->getElasticaClient());
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface
+     */
+    public function createDocumentReaderFactory(): DocumentReaderFactoryInterface
+    {
+        return new DocumentReaderFactory(
+            $this->createMappingTypeSupportDetector()
+        );
     }
 
     /**
