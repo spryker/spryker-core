@@ -159,7 +159,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function addProductReviewTypeFilterToQuery(BoolQuery $query): BoolQuery
     {
-        if (!class_exists('\Elastica\Query\Type')) {
+        if (!$this->isTypeQuerySupported()) {
             return $query;
         }
 
@@ -176,5 +176,13 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isTypeQuerySupported(): bool
+    {
+        return class_exists('\Elastica\Query\Type');
     }
 }

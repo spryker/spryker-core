@@ -30,9 +30,9 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingType
 class MappingBuilderTest extends Unit
 {
     /**
-     * @var string[][]
+     * @var string[][][]
      */
-    protected $fixtureMappingData = [
+    protected $fixtureMappingConfiguration = [
         'dummy_mapping_type' => [
             'foo_key' => ['foo_value'],
             'bar_key' => ['bar_value'],
@@ -47,7 +47,7 @@ class MappingBuilderTest extends Unit
      */
     public function testCanBuildMappingWithType(): void
     {
-        if (!class_exists('\Elastica\Query\Type')) {
+        if (!class_exists('\Elastica\Type')) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 6 (or lower) environment.');
         }
 
@@ -58,22 +58,22 @@ class MappingBuilderTest extends Unit
         $indexMock->method('getType')->willReturn(new Type($indexMock, $mappingType));
 
         $mappingBuilder = new MappingTypeAwareMappingBuilder();
-        $indexDefinitionTransfer = (new IndexDefinitionTransfer())->setMappings($this->fixtureMappingData);
+        $indexDefinitionTransfer = (new IndexDefinitionTransfer())->setMappings($this->fixtureMappingConfiguration);
         $mapping = $mappingBuilder->buildMapping($indexDefinitionTransfer, $indexMock);
 
-        foreach (reset($this->fixtureMappingData) as $key => $value) {
+        $mappingData = array_shift($this->fixtureMappingConfiguration);
+
+        foreach ($mappingData as $key => $value) {
             $this->assertEquals($value, $mapping->getParam($key));
         }
     }
 
     /**
-     * @retrn void
-     *
      * @return void
      */
     public function testCanBuildTypelessMapping(): void
     {
-        if (class_exists('\Elastica\Query\Type')) {
+        if (class_exists('\Elastica\Type')) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 7 (or higher) environment.');
         }
 
@@ -81,10 +81,12 @@ class MappingBuilderTest extends Unit
         $indexMock = $this->createMock(Index::class);
 
         $mappingBuilder = new MappingBuilder();
-        $indexDefinitionTransfer = (new IndexDefinitionTransfer())->setMappings($this->fixtureMappingData);
+        $indexDefinitionTransfer = (new IndexDefinitionTransfer())->setMappings($this->fixtureMappingConfiguration);
         $mapping = $mappingBuilder->buildMapping($indexDefinitionTransfer, $indexMock);
 
-        foreach (reset($this->fixtureMappingData) as $key => $value) {
+        $mappingData = array_shift($this->fixtureMappingConfiguration);
+
+        foreach ($mappingData as $key => $value) {
             $this->assertEquals($value, $mapping->getParam($key));
         }
     }

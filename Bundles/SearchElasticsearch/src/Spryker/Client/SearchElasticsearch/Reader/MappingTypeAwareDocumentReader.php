@@ -12,6 +12,9 @@ use Elastica\Document;
 use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 
+/**
+ * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+ */
 class MappingTypeAwareDocumentReader implements DocumentReaderInterface
 {
     /**

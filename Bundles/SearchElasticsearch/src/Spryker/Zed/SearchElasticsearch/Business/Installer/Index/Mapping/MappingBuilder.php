@@ -19,7 +19,7 @@ class MappingBuilder implements MappingBuilderInterface
      *
      * @return \Elastica\Mapping
      */
-    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index): Mapping
+    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index)
     {
         $mappingData = $this->getMappingData($indexDefinitionTransfer);
         $mapping = new Mapping();
@@ -40,6 +40,6 @@ class MappingBuilder implements MappingBuilderInterface
     {
         $mappings = $indexDefinitionTransfer->getMappings();
 
-        return reset($mappings) ?: [];
+        return array_shift($mappings) ?: [];
     }
 }

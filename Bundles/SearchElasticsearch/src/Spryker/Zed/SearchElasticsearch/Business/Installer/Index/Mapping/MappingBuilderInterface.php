@@ -8,7 +8,6 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Elastica\Index;
-use Elastica\Mapping;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
 
 interface MappingBuilderInterface
@@ -17,7 +16,7 @@ interface MappingBuilderInterface
      * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
      * @param \Elastica\Index $index
      *
-     * @return \Elastica\Mapping
+     * @return \Elastica\Mapping|\Elastica\Type\Mapping
      */
-    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index): Mapping;
+    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index);
 }

@@ -33,9 +33,9 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\IndexInstallBroker;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\IndexInstallBrokerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller as ES6IndexInstaller;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactory;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
-use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleaner as CleanerIndexMapCleaner;
@@ -179,11 +179,19 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createMappingBuilder(): MappingBuilderInterface
     {
-        if ($this->createMappingTypeSupportDetector()->isMappingTypesSupported()) {
-            return new MappingTypeAwareMappingBuilder();
-        }
+        return $this->createMappingBuilderFactory()->createMappingBuilder();
+    }
 
-        return new MappingBuilder();
+    /**
+     * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactoryInterface
+     */
+    public function createMappingBuilderFactory(): MappingBuilderFactoryInterface
+    {
+        return new MappingBuilderFactory(
+            $this->createMappingTypeSupportDetector()
+        );
     }
 
     /**
