@@ -111,15 +111,25 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
      */
     protected function addProductReviewsFilterToQuery(BoolQuery $query): BoolQuery
     {
-        $this->bulkProductReviewSearchRequestTransfer->requireProductAbstractIds();
-
         $productReviewsFilter = new Terms(
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT,
-            $this->bulkProductReviewSearchRequestTransfer->getProductAbstractIds()
+            $this->getSearchTermsForProductReviewsFilter()
         );
         $query->addFilter($productReviewsFilter);
 
         return $query;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getSearchTermsForProductReviewsFilter(): array
+    {
+        $this->bulkProductReviewSearchRequestTransfer->requireProductAbstractIds();
+
+        return array_map(function (int $productAbstractId) {
+            return (string)$productAbstractId;
+        }, $this->bulkProductReviewSearchRequestTransfer->getProductAbstractIds());
     }
 
     /**
