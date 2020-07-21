@@ -40,6 +40,6 @@ class MappingBuilder implements MappingBuilderInterface
     {
         $mappings = $indexDefinitionTransfer->getMappings();
 
-        return array_shift($mappings) ?: [];
+        return $mappings ? array_shift($mappings) : [];
     }
 }
