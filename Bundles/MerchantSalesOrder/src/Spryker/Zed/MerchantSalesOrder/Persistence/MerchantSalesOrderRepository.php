@@ -140,7 +140,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             return null;
         }
 
-        if ($merchantOrderCriteriaTransfer->getWithItems() || $merchantOrderCriteriaTransfer->getWithUniqueProductCount()) {
+        if ($merchantOrderCriteriaTransfer->getWithItems()) {
             $merchantSalesOrderEntity->getMerchantSalesOrderItems();
         }
 
@@ -156,7 +156,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
      *
      * @return int
      */
-    public function getUniqueProductQuantity(int $idMerchantOrder): int
+    public function getUniqueProductsCount(int $idMerchantOrder): int
     {
         return $this->getFactory()
             ->createMerchantSalesOrderItemQuery()
@@ -304,6 +304,19 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
                 $merchantSalesOrderEntity,
                 new MerchantOrderItemTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->applyMerchantOrderFilters(
+            $this->getFactory()->createMerchantSalesOrderQuery(),
+            $merchantOrderCriteriaTransfer
+        )->count();
     }
 
     /**

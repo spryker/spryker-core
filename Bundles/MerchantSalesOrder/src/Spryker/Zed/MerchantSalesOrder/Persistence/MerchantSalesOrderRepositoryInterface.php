@@ -38,7 +38,7 @@ interface MerchantSalesOrderRepositoryInterface
      *
      * @return int
      */
-    public function getUniqueProductQuantity(int $idMerchantOrder): int;
+    public function getUniqueProductsCount(int $idMerchantOrder): int;
 
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
@@ -48,4 +48,11 @@ interface MerchantSalesOrderRepositoryInterface
     public function findMerchantOrderItem(
         MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
     ): ?MerchantOrderItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int;
 }

@@ -33,14 +33,10 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
     public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
         $merchantOrderItemIds = $this->getMerchantOrderItemIds($merchantOrderTransfer);
-        $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemStatesByMerchantOrderItemIds($merchantOrderItemIds);
 
-        $itemStates = [];
-        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
-            $itemStates[] = $stateMachineItemTransfer->getStateName();
-        }
-
-        return $merchantOrderTransfer->setItemStates(array_unique($itemStates));
+        return $merchantOrderTransfer->setItemStates(
+            $this->merchantOmsRepository->getStateMachineItemStatesByMerchantOrderItemIds($merchantOrderItemIds)
+        );
     }
 
     /**

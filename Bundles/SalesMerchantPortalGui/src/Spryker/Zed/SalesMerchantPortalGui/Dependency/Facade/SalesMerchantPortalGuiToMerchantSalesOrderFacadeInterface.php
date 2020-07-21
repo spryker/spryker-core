@@ -26,4 +26,11 @@ interface SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int;
 }

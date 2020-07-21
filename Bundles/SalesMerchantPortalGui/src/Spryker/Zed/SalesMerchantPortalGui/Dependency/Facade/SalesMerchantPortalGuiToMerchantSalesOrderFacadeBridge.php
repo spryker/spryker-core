@@ -45,4 +45,14 @@ class SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge implements SalesMer
     {
         return $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->merchantSalesOrderFacade->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+    }
 }

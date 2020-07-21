@@ -46,29 +46,29 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): ?MerchantOrderTransfer
     {
-        $merchantOrderTransfer = $this->merchantSalesOrderRepository->findMerchantOrder($merchantCriteriaTransfer);
+        $merchantOrderTransfer = $this->merchantSalesOrderRepository->findMerchantOrder($merchantOrderCriteriaTransfer);
 
         if (!$merchantOrderTransfer) {
             return null;
         }
 
-        if ($merchantCriteriaTransfer->getWithOrder()) {
+        if ($merchantOrderCriteriaTransfer->getWithOrder()) {
             $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
             if ($orderTransfer) {
                 $merchantOrderTransfer->setOrder($orderTransfer);
-                $merchantOrderTransfer->setExpenses($this->filterMerchantOrderExpenses($merchantOrderTransfer));
+                $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
             }
         }
 
-        if ($merchantCriteriaTransfer->getWithUniqueProductCount()) {
-            $merchantOrderTransfer->setUniqueProductQuantity(
-                $this->merchantSalesOrderRepository->getUniqueProductQuantity($merchantOrderTransfer->getIdMerchantOrder())
+        if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
+            $merchantOrderTransfer->setUniqueProductsCount(
+                $this->merchantSalesOrderRepository->getUniqueProductsCount($merchantOrderTransfer->getIdMerchantOrder())
             );
         }
 
@@ -80,7 +80,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
      */
-    protected function filterMerchantOrderExpenses(MerchantOrderTransfer $merchantOrderTransfer): ArrayObject
+    protected function getMerchantOrderExpenses(MerchantOrderTransfer $merchantOrderTransfer): ArrayObject
     {
         $expenseTransfers = new ArrayObject();
 
