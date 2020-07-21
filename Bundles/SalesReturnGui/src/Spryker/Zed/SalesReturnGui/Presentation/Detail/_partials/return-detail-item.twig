@@ -23,8 +23,6 @@
                 orderItem: orderItem,
             } %}
         </div>
-
-        {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
     </td>
     <td>
         x {{ orderItem.quantity }}
@@ -86,3 +84,11 @@
         order: order,
     } %}
 {% endif %}
+
+<tr class="addition-row">
+    <td colspan="2"></td>
+    <td>
+        {{ 'Reason' | trans }}: {{ returnItem.reason ? returnItem.reason | trans : '--' }}
+    </td>
+    <td colspan="5"></td>
+</tr>
