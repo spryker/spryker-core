@@ -51,7 +51,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
      *
      * @return string[]
      */
-    public function getStateMachineItemStatesByMerchantOrderItemIds(array $merchantOrderItemIds): array
+    public function getStateNamesByMerchantOrderItemIds(array $merchantOrderItemIds): array
     {
         return $this->getFactory()
             ->getMerchantSalesOrderItemPropelQuery()

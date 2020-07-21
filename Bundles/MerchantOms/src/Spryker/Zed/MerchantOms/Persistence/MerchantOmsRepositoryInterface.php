@@ -25,7 +25,7 @@ interface MerchantOmsRepositoryInterface
      *
      * @return string[]
      */
-    public function getStateMachineItemStatesByMerchantOrderItemIds(array $merchantOrderItemIds): array;
+    public function getStateNamesByMerchantOrderItemIds(array $merchantOrderItemIds): array;
 
     /**
      * @param int $idSalesOrderItem
