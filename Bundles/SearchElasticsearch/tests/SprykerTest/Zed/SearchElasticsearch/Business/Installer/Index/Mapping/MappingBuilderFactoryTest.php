@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Codeception\Test\Unit;
+use Elastica\Type;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory;
@@ -35,7 +36,7 @@ class MappingBuilderFactoryTest extends Unit
     public function testCanCreateMappingTypeAwareMappingBuild(): void
     {
         // Arrange
-        if (!class_exists('\Elastica\Type')) {
+        if (!class_exists(Type::class)) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 6 (or lower) environment.');
         }
 
@@ -54,7 +55,7 @@ class MappingBuilderFactoryTest extends Unit
     public function testCanCreateappingBuild(): void
     {
         // Arrange
-        if (class_exists('\Elastica\Type')) {
+        if (class_exists(Type::class)) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 7 (or higher) environment.');
         }
 

@@ -47,7 +47,7 @@ class MappingBuilderTest extends Unit
      */
     public function testCanBuildMappingWithType(): void
     {
-        if (!class_exists('\Elastica\Type')) {
+        if (!class_exists(Type::class)) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 6 (or lower) environment.');
         }
 
@@ -73,7 +73,7 @@ class MappingBuilderTest extends Unit
      */
     public function testCanBuildTypelessMapping(): void
     {
-        if (class_exists('\Elastica\Type')) {
+        if (class_exists(Type::class)) {
             $this->markTestSkipped('This test can only be run in Elasticsearch 7 (or higher) environment.');
         }
 

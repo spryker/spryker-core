@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SearchElasticsearch\ElasticaClient\MappingType;
 
 use Codeception\Test\Unit;
+use Elastica\Type;
 use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
 
 /**
@@ -29,7 +30,7 @@ class MappingTypeSupportDetectorTest extends Unit
     public function testCanDetectMappingTypeSupport(): void
     {
         // Arrange
-        $supportsMappingTypes = class_exists('\Elastica\Type');
+        $supportsMappingTypes = class_exists(Type::class);
         $mappingTypeSupportDetector = new MappingTypeSupportDetector();
 
         // Act

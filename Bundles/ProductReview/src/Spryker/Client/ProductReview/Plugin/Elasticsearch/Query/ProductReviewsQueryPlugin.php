@@ -183,6 +183,6 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function isTypeQuerySupported(): bool
     {
-        return class_exists('\Elastica\Query\Type');
+        return class_exists(Type::class);
     }
 }

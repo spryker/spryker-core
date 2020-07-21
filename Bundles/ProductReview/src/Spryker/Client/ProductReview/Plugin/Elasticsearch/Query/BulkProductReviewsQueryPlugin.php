@@ -164,6 +164,6 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
      */
     protected function isTypeQuerySupported(): bool
     {
-        return class_exists('\Elastica\Query\Type');
+        return class_exists(Type::class);
     }
 }
