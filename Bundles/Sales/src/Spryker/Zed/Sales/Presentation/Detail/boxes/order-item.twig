@@ -101,3 +101,8 @@
         } only %}
     {% endif %}
 </td>
+{% if tableColumnCellsContent[orderItem.idSalesOrderItem] is defined %}
+    {% for tableColumnCellContent in tableColumnCellsContent[orderItem.idSalesOrderItem] %}
+        <td>{{ tableColumnCellContent | raw  }}</td>
+    {% endfor %}
+{% endif %}
