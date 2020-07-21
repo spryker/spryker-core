@@ -15,12 +15,20 @@ interface TranslatorConstants
     /**
      * Specification:
      * - Defines paths to Project level translations. Glob pattern can be used.
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const TRANSLATION_ZED_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_ZED_FILE_PATH_PATTERNS';
 
     /**
      * Specification:
      * - Absolute path to the translation cache directory. E.g. /var/www/data/DE/cache/Zed/translation.
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const TRANSLATION_ZED_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_ZED_CACHE_DIRECTORY';
 

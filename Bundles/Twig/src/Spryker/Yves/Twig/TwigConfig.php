@@ -124,7 +124,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
     }
 
     /**
@@ -154,7 +154,10 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getTwigOptions(): array
     {
-        return $this->get(TwigConstants::YVES_TWIG_OPTIONS, []);
+        return array_replace(
+            $this->getSharedConfig()->getDefaultTwigOptions(),
+            $this->get(TwigConstants::YVES_TWIG_OPTIONS, [])
+        );
     }
 
     /**

@@ -55,7 +55,13 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getProjectTranslationFilePathPatterns(): array
     {
-        return $this->get(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS, []);
+        if ($this->getConfig()->hasKey(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS)) {
+            return $this->get(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS);
+        }
+
+        return [
+            sprintf('%s/src/Pyz/Zed/Translator/data/*/[a-z][a-z]_[A-Z][A-Z].csv', APPLICATION_ROOT_DIR),
+        ];
     }
 
     /**
@@ -79,7 +85,11 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getTranslatorCacheDirectory(): string
     {
-        return $this->get(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY);
+        if ($this->getConfig()->hasKey(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY)) {
+            return $this->get(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY);
+        }
+
+        return sprintf('%s/src/Generated/Zed/Translator/codeBucket', APPLICATION_ROOT_DIR);
     }
 
     /**
