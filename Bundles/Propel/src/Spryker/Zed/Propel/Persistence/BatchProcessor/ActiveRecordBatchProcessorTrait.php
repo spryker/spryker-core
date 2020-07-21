@@ -70,27 +70,19 @@ trait ActiveRecordBatchProcessorTrait
      */
     public function persist(ActiveRecordInterface $entity): void
     {
-        $className = get_class($entity);
-
         if (!$entity->isModified()) {
             return;
         }
 
-        if ($entity->isNew()) {
-            if (!isset($this->entitiesToInsert[$className])) {
-                $this->entitiesToInsert[$className] = [];
-            }
+        $storageName = $entity->isNew() ? 'entitiesToInsert' : 'entitiesToUpdate';
 
-            $this->entitiesToInsert[$className][] = $entity;
+        $className = get_class($entity);
 
-            return;
+        if (!isset($this->{$storageName}[$className])) {
+            $this->{$storageName}[$className] = [];
         }
 
-        if (!isset($this->entitiesToUpdate[$className])) {
-            $this->entitiesToUpdate[$className] = [];
-        }
-
-        $this->entitiesToUpdate[$className][] = $entity;
+        $this->{$storageName}[$className][] = $entity;
     }
 
     /**
@@ -303,30 +295,13 @@ trait ActiveRecordBatchProcessorTrait
         foreach ($entities as $entity) {
             $keyIndex = 0;
             $entity = $this->updateDateTimes($entity);
-            $valuesForInsert = [];
-
-            $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
-
-            foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
-                $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
-                if ($columnMap->isPrimaryKey() && !$requiresPrimaryKeyValue) {
-                    continue;
-                }
-
-                if ($columnMap->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
-                    $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
-                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
-
-                    continue;
-                }
-
-                $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
-                $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
-
-                if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
-                }
-            }
+            $valuesForInsert = $this->prepareValuesForInsert(
+                $columnMapCollection,
+                $tableMapClass,
+                $tableMapClassName,
+                $entity,
+                $requiresPrimaryKeyValue
+            );
 
             $columnNamesForInsertWithPdoPlaceholder = array_map(function (array $columnDetails) use (&$keyIndex, $tableMapClass) {
                 if ($columnDetails['columnMap']->isPrimaryKey() && $tableMapClass->getPrimaryKeyMethodInfo() !== null) {
@@ -350,6 +325,50 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         return $statements;
+    }
+
+    /**
+     * @param \Propel\Runtime\Map\ColumnMap[] $columnMapCollection
+     * @param \Propel\Runtime\Map\TableMap $tableMapClass
+     * @param string $tableMapClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     * @param bool $requiresPrimaryKeyValue
+     *
+     * @return array
+     */
+    protected function prepareValuesForInsert(
+        array $columnMapCollection,
+        TableMap $tableMapClass,
+        string $tableMapClassName,
+        ActiveRecordInterface $entity,
+        bool $requiresPrimaryKeyValue
+    ): array {
+        $valuesForInsert = [];
+
+        $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
+
+        foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+            $quotedColumnName = $this->quote($columnMap->getName(), $tableMapClass);
+            if ($columnMap->isPrimaryKey()) {
+                if (!$requiresPrimaryKeyValue || $tableMapClass->getPrimaryKeyMethodInfo() === null) {
+                    continue;
+                }
+
+                $value = sprintf('(SELECT nextval(\'%s\'))', $tableMapClass->getPrimaryKeyMethodInfo());
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData, $value);
+
+                continue;
+            }
+
+            $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
+            $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
+
+            if ($entity->isColumnModified($fullyQualifiedColumnName)) {
+                $valuesForInsert[$quotedColumnName] = $this->prepareValuesForSave($columnMap, $entityData);
+            }
+        }
+
+        return $valuesForInsert;
     }
 
     /**
@@ -431,25 +450,12 @@ trait ActiveRecordBatchProcessorTrait
             $keyIndex = 0;
             $entity = $this->updateDateTimes($entity);
 
-            $valuesForUpdate = [];
-            $idColumnValuesAndTypes = [];
-
-            $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
-
-            foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
-                if ($columnMap->isPrimaryKey()) {
-                    $idColumnValuesAndTypes[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
-
-                    continue;
-                }
-
-                $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
-                $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
-
-                if ($entity->isColumnModified($fullyQualifiedColumnName)) {
-                    $valuesForUpdate[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
-                }
-            }
+            [$valuesForUpdate, $idColumnValuesAndTypes] = $this->prepareValuesForUpdate(
+                $columnMapCollection,
+                $tableMapClass,
+                $tableMapClassName,
+                $entity
+            );
 
             $columnNamesForUpdateWithPdoPlaceholder = array_map(function ($columnName) use (&$keyIndex, $tableMapClass) {
                 return sprintf('%s=:p%d', $this->quote($columnName, $tableMapClass), $keyIndex++);
@@ -476,6 +482,42 @@ trait ActiveRecordBatchProcessorTrait
         }
 
         return $statements;
+    }
+
+    /**
+     * @param array $columnMapCollection
+     * @param \Propel\Runtime\Map\TableMap $tableMapClass
+     * @param string $tableMapClassName
+     * @param \Propel\Runtime\ActiveRecord\ActiveRecordInterface $entity
+     *
+     * @return array
+     */
+    protected function prepareValuesForUpdate(
+        array $columnMapCollection,
+        TableMap $tableMapClass,
+        string $tableMapClassName,
+        ActiveRecordInterface $entity
+    ): array {
+        $valuesForUpdate = [];
+        $idColumnValuesAndTypes = [];
+        $entityData = $entity->toArray(TableMap::TYPE_FIELDNAME);
+
+        foreach ($columnMapCollection as $columnIdentifier => $columnMap) {
+            if ($columnMap->isPrimaryKey()) {
+                $idColumnValuesAndTypes[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
+
+                continue;
+            }
+
+            $columnIdentifier = sprintf('COL_%s', $columnIdentifier);
+            $fullyQualifiedColumnName = constant(sprintf('%s::%s', $tableMapClassName, $columnIdentifier));
+
+            if ($entity->isColumnModified($fullyQualifiedColumnName)) {
+                $valuesForUpdate[$columnMap->getName()] = $this->prepareValuesForSave($columnMap, $entityData);
+            }
+        }
+
+        return [$valuesForUpdate, $idColumnValuesAndTypes];
     }
 
     /**
