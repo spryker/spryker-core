@@ -30,19 +30,6 @@
                 orderItem: orderItem,
             } %}
         </div>
-
-        {{ form_row(returnItem.reason, {
-            attr: {
-                class: 'select-reason js-select-reason',
-                'data-target': 'js-custom-reason-' ~ productUniqueKey,
-            },
-        }) }}
-
-        {{ form_row(returnItem.customReason, {
-            attr: {
-                class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
-            },
-        }) }}
     </td>
     <td>
         x {{ orderItem.quantity }}
@@ -102,3 +89,22 @@
         order: order,
     } %}
 {% endif %}
+
+<tr class="addition-row">
+    <td colspan="2"></td>
+    <td>
+        {{ form_row(returnItem.reason, {
+            attr: {
+                class: 'select-reason js-select-reason',
+                'data-target': 'js-custom-reason-' ~ productUniqueKey,
+            },
+        }) }}
+
+        {{ form_row(returnItem.customReason, {
+            attr: {
+                class: 'js-custom-reason-' ~ productUniqueKey ~ ' hidden',
+            },
+        }) }}
+    </td>
+    <td colspan="5"></td>
+</tr>
