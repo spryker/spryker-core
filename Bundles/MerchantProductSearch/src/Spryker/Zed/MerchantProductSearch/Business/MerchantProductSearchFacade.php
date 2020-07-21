@@ -40,11 +40,11 @@ class MerchantProductSearchFacade extends AbstractFacade implements MerchantProd
      *
      * @return void
      */
-    public function writeCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantProductAbstractEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createMerchantProductSearchWriter()
-            ->writeCollectionByIdProductAbstractMerchantEvents($eventTransfers);
+            ->writeCollectionByIdMerchantProductAbstractEvents($eventTransfers);
     }
 
     /**

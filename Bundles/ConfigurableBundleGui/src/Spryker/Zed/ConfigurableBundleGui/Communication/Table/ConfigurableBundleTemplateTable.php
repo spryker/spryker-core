@@ -15,6 +15,8 @@ use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
 use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\ActivateConfigurableBundleTemplateForm;
+use Spryker\Zed\ConfigurableBundleGui\Communication\Form\DeactivateConfigurableBundleTemplateForm;
 use Spryker\Zed\ConfigurableBundleGui\Dependency\Facade\ConfigurableBundleGuiToLocaleFacadeInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -232,19 +234,24 @@ class ConfigurableBundleTemplateTable extends AbstractTable
     protected function generateTemplateStatusChangeButton(SpyConfigurableBundleTemplate $configurableBundleTemplateEntity): string
     {
         if ($configurableBundleTemplateEntity->getIsActive()) {
-            return $this->generateRemoveButton(
+            return $this->generateFormButton(
                 Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_DEACTIVATE, [
                     static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
                 ]),
-                'Deactivate'
+                'Deactivate',
+                DeactivateConfigurableBundleTemplateForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
             );
         }
 
-        return $this->generateViewButton(
+        return $this->generateFormButton(
             Url::generate(static::ROUTE_CONFIGURABLE_BUNDLE_TEMPLATE_ACTIVATE, [
                 static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateEntity->getIdConfigurableBundleTemplate(),
             ]),
-            'Activate'
+            'Activate',
+            ActivateConfigurableBundleTemplateForm::class
         );
     }
 

@@ -26,6 +26,7 @@ use Spryker\Zed\ProductListGui\Communication\Exporter\ProductListExporterInterfa
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListAggregateFormDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListCategoryRelationFormDataProvider;
 use Spryker\Zed\ProductListGui\Communication\Form\DataProvider\ProductListFormDataProvider;
+use Spryker\Zed\ProductListGui\Communication\Form\DeleteProductListForm;
 use Spryker\Zed\ProductListGui\Communication\Form\ProductListAggregateFormType;
 use Spryker\Zed\ProductListGui\Communication\Importer\ProductListImporter;
 use Spryker\Zed\ProductListGui\Communication\Importer\ProductListImporterInterface;
@@ -260,6 +261,14 @@ class ProductListGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getUtilCsvService(),
             $this->getProductFacade()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteProductListForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteProductListForm::class);
     }
 
     /**

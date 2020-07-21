@@ -1,0 +1,85 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 239,
+            "line_to": 239,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        $resolvedService = static::$globalServices[$id] = $rawService($this);",
+            "selected_text": "$rawService($this)",
+            "error_level": 6,
+            "shortcode": 64,
+            "taint_trace": null
+        },
+        {
+            "severity": "error",
+            "line_from": 269,
+            "line_to": 269,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $this->services[$id]($this);",
+            "selected_text": "$this->services[$id]($this)",
+            "error_level": 6,
+            "shortcode": 64,
+            "taint_trace": null
+        },
+        {
+            "severity": "error",
+            "line_from": 273,
+            "line_to": 273,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "        $resolvedService = $this->services[$id] = $rawService($this);",
+            "selected_text": "$rawService($this)",
+            "error_level": 6,
+            "shortcode": 64,
+            "taint_trace": null
+        },
+        {
+            "severity": "error",
+            "line_from": 421,
+            "line_to": 421,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $service($factory($container), $container);",
+            "selected_text": "$factory($container)",
+            "error_level": 6,
+            "shortcode": 64,
+            "taint_trace": null
+        },
+        {
+            "severity": "error",
+            "line_from": 462,
+            "line_to": 462,
+            "type": "InvalidFunctionCall",
+            "message": "Cannot treat type object{__invoke()} as callable",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "            return $service($factory($container), $container);",
+            "selected_text": "$factory($container)",
+            "error_level": 6,
+            "shortcode": 64,
+            "taint_trace": null
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 155,
+            "line_to": 155,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Service\\Container\\Container::setGlobal has the more specific type 'callable|string', expecting 'mixed' as defined by Spryker\\Service\\Container\\ContainerInterface::setGlobal",
+            "file_name": "vendor/spryker/spryker/Bundles/Container/src/Spryker/Service/Container/Container.php",
+            "snippet": "    public function setGlobal(string $id, $service): void",
+            "selected_text": "$service",
+            "error_level": 5,
+            "shortcode": 140,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

@@ -1,0 +1,110 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 109,
+            "line_to": 109,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $customerEntities has wrong type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\Customer\\Persistence\\SpyCustomer>', should be 'Propel\\Runtime\\Collection\\ObjectCollection'",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AbstractCustomerTable.php",
+            "snippet": "     * @param \\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[]|\\Propel\\Runtime\\Collection\\ObjectCollection $customerEntities",
+            "selected_text": "\\Orm\\Zed\\Customer\\Persistence\\SpyCustomer[]|\\Propel\\Runtime\\Collection\\ObjectCollection",
+            "error_level": 4,
+            "shortcode": 141,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AssignedCustomerTable.php",
+            "snippet": "                $this->userTransfer->getIdUser()",
+            "selected_text": "$this->userTransfer->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::leftJoinSpyUser does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AssignedCustomerTable.php",
+            "snippet": "            ->leftJoinSpyUser()",
+            "selected_text": "leftJoinSpyUser",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUsername on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AssignedCustomerTable.php",
+            "snippet": "        return $customerEntity->getSpyUser()->getUsername();",
+            "selected_text": "getUsername",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 34,
+            "line_to": 34,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AvailableCustomerTable.php",
+            "snippet": "                $this->userTransfer->getIdUser()",
+            "selected_text": "$this->userTransfer->getIdUser()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Propel\\Runtime\\ActiveQuery\\Criteria::leftJoinSpyUser does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AvailableCustomerTable.php",
+            "snippet": "            ->leftJoinSpyUser()",
+            "selected_text": "leftJoinSpyUser",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getIdUser on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AvailableCustomerTable.php",
+            "snippet": "            $this->getEditCustomerUserConnectionsUrl($customerEntity->getSpyUser()->getIdUser()),",
+            "selected_text": "getIdUser",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUsername on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerUserConnectorGui/src/Spryker/Zed/CustomerUserConnectorGui/Communication/Table/AvailableCustomerTable.php",
+            "snippet": "            $customerEntity->getSpyUser()->getUsername()",
+            "selected_text": "getUsername",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

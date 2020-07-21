@@ -930,10 +930,11 @@ abstract class AbstractTable
      * @param string $url
      * @param string $title
      * @param array $options
+     * @param string $formClassName
      *
      * @return string
      */
-    protected function generateRemoveButton($url, $title, array $options = [])
+    protected function generateRemoveButton($url, $title, array $options = [], string $formClassName = DeleteForm::class)
     {
         $name = isset($options[static::DELETE_FORM_NAME_SUFFIX]) ? static::DELETE_FORM_NAME . $options[static::DELETE_FORM_NAME_SUFFIX] : '';
 
@@ -942,7 +943,7 @@ abstract class AbstractTable
             'action' => $url,
         ];
 
-        $form = $this->createDeleteForm($options, $name);
+        $form = $this->createForm($formClassName, $name, $options);
         $options['form'] = $form->createView();
         $options['title'] = $title;
 
@@ -950,6 +951,8 @@ abstract class AbstractTable
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Table\AbstractTable::createForm()} instead.
+     *
      * @param array $options
      * @param string $name
      *
@@ -999,6 +1002,71 @@ abstract class AbstractTable
             'icon' => $icon,
             'parameters' => $parameters,
         ]);
+    }
+
+    /**
+     * @param string|\Spryker\Service\UtilText\Model\Url\Url $url
+     * @param string $title
+     * @param string $formClassName
+     * @param array $buttonOptions
+     * @param array $formOptions
+     *
+     * @return string
+     */
+    protected function generateFormButton($url, string $title, string $formClassName, array $buttonOptions = [], array $formOptions = [])
+    {
+        $buttonOptions = $this->generateButtonOptions([
+            'class' => 'btn-view',
+            'icon' => 'fa-caret-right',
+        ], $buttonOptions);
+
+        $buttonClass = $this->getButtonClass($buttonOptions);
+        $buttonParameters = $this->getButtonParameters($buttonOptions);
+
+        $formOptions = array_merge($formOptions, [
+            'action' => $this->buildUrl($url),
+            'attr' => ['class' => 'form-inline'],
+        ]);
+
+        $form = $this->createForm($formClassName, null, $formOptions);
+
+        return $this->getTwig()->render('button-form.twig', [
+            'class' => $buttonClass,
+            'title' => $title,
+            'icon' => $this->generateButtonIcon($buttonOptions),
+            'parameters' => $buttonParameters,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param string $formClassName
+     * @param string|null $formName
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    protected function createForm(string $formClassName, ?string $formName = null, array $formOptions = []): FormInterface
+    {
+        if (!$formName) {
+            return $this->getFormFactory()->create($formClassName, [], $formOptions);
+        }
+
+        return $this->getFormFactory()->createNamed($formName, $formClassName, [], $formOptions);
+    }
+
+    /**
+     * @param array $buttonOptions
+     *
+     * @return string
+     */
+    protected function generateButtonIcon(array $buttonOptions): string
+    {
+        if (array_key_exists(static::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[static::BUTTON_ICON] !== null) {
+            return '<i class="fa ' . $buttonOptions[static::BUTTON_ICON] . '"></i> ';
+        }
+
+        return '';
     }
 
     /**

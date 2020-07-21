@@ -1,0 +1,58 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\Content\\Business\\KeyProvider\\ContentKeyProviderInterface::getContentKeyByIdContent cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Business/ContentWriter/ContentWriter.php",
+            "snippet": "            $this->contentKeyProvider->getContentKeyByIdContent($contentTransfer->getIdContent())",
+            "selected_text": "$contentTransfer->getIdContent()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 69,
+            "line_to": 69,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Content\\Business\\KeyProvider\\ContentKeyProvider::getContentKeyByIdContent is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Business/KeyProvider/ContentKeyProvider.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Zed\\Content\\Business\\KeyProvider\\ContentKeyProvider::getContentKeyByIdContent is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Business/KeyProvider/ContentKeyProvider.php",
+            "snippet": "        return $contentTransfer->getKey();",
+            "selected_text": "$contentTransfer->getKey()",
+            "error_level": 5,
+            "shortcode": 139,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getKey on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/Content/src/Spryker/Zed/Content/Business/KeyProvider/ContentKeyProvider.php",
+            "snippet": "        return $contentTransfer->getKey();",
+            "selected_text": "getKey",
+            "error_level": 3,
+            "shortcode": 83,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

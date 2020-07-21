@@ -75,3 +75,5 @@ Cellphone,"Cell Phone"
 "Shipment has been successfully created.","Shipment has been successfully created."
 "Edit Shipment for Order: N%idSalesOrder%","Edit Shipment for Order: N%idSalesOrder%"
 "Shipment has been successfully edited.","Shipment has been successfully edited."
+"Item total",Total
+"Shipping Costs","Shipping Costs"

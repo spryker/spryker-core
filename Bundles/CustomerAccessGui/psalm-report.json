@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 43,
+            "line_to": 43,
+            "type": "MoreSpecificImplementedParamType",
+            "message": "Argument 2 of Spryker\\Zed\\CustomerAccessGui\\Communication\\Form\\CustomerAccessForm::buildForm has the more specific type 'array<array-key, string>', expecting 'array<array-key, mixed>' as defined by Symfony\\Component\\Form\\FormTypeInterface::buildForm",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerAccessGui/src/Spryker/Zed/CustomerAccessGui/Communication/Form/CustomerAccessForm.php",
+            "snippet": "    public function buildForm(FormBuilderInterface $builder, array $options): void",
+            "selected_text": "$options",
+            "error_level": 5,
+            "shortcode": 140,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

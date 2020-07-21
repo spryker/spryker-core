@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 89,
+            "line_to": 89,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CompanyUnitAddressLabelGui\\Communication\\Plugin\\CompanyUnitAddressTableExpanderPlugin::beautifyLabel cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUnitAddressLabelGui/src/Spryker/Zed/CompanyUnitAddressLabelGui/Communication/Plugin/CompanyUnitAddressTableExpanderPlugin.php",
+            "snippet": "                    return $this->beautifyLabel($item->getName());",
+            "selected_text": "$item->getName()",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

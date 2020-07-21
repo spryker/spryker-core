@@ -62,11 +62,11 @@ class MerchantProductSearchWriter implements MerchantProductSearchWriterInterfac
      *
      * @return void
      */
-    public function writeCollectionByIdProductAbstractMerchantEvents(array $eventTransfers): void
+    public function writeCollectionByIdMerchantProductAbstractEvents(array $eventTransfers): void
     {
-        $productAbstractMerchantIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $merchantProductAbstractIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        $productAbstractIds = $this->merchantProductSearchRepository->getProductAbstractIdsByProductAbstractMerchantIds($productAbstractMerchantIds);
+        $productAbstractIds = $this->merchantProductSearchRepository->getProductAbstractIdsByMerchantProductAbstractIds($merchantProductAbstractIds);
 
         $this->productPageSearchFacade->refresh($productAbstractIds);
     }
