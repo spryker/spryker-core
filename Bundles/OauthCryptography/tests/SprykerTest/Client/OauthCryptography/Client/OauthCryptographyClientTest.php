@@ -134,7 +134,7 @@ class OauthCryptographyClientTest extends Unit
      */
     protected function getPathToSshKey(): string
     {
-        return APPLICATION_ROOT_DIR . 'config/Zed/dev_only_public.key';
+        return APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
     }
 
     /**
