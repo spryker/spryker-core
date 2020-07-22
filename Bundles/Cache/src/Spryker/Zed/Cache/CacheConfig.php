@@ -80,13 +80,13 @@ class CacheConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines specific cache paths that should be cleared.
+     * - Defines project specific cache paths that should be cleared.
      *
      * @api
      *
      * @return string[]
      */
-    public function getProjectCachePaths(): array
+    public function getProjectSpecificCache(): array
     {
         return [];
     }

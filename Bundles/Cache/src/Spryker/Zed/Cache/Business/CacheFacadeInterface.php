@@ -69,11 +69,11 @@ interface CacheFacadeInterface
 
     /**
      * Specification:
-     * - Empties configured project cache directories.
+     * - Empties configured project specific cache directories.
      *
      * @api
      *
      * @return string[]
      */
-    public function emptyProjectCache(): array;
+    public function emptyProjectSpecificCache(): array;
 }

@@ -41,7 +41,7 @@ class EmptyAllCachesConsole extends Console
         $this->emptyCache($output);
         $this->emptyCodeBucketCache($output);
         $this->emptyDefaultCodeBucketCache($output);
-        $this->emptyProjectCache($output);
+        $this->emptyProjectSpecificCache($output);
         $this->emptyAutoLoadCache($output);
 
         return static::CODE_SUCCESS;
@@ -108,11 +108,11 @@ class EmptyAllCachesConsole extends Console
      *
      * @return void
      */
-    protected function emptyProjectCache(OutputInterface $output): void
+    protected function emptyProjectSpecificCache(OutputInterface $output): void
     {
-        $emptiedDirectories = $this->getFacade()->emptyProjectCache();
+        $emptiedDirectories = $this->getFacade()->emptyProjectSpecificCache();
 
-        $this->info('Removed cache files', true);
+        $this->info('Removed project specific cache files', true);
         $output->writeln($emptiedDirectories);
     }
 }

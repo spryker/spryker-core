@@ -75,13 +75,13 @@ class CacheClearer implements CacheClearerInterface
     /**
      * @return string[]
      */
-    public function clearProjectCache(): array
+    public function clearProjectSpecificCache(): array
     {
-        $projectCachePaths = $this->config->getProjectCachePaths();
+        $projectSpecificCache = $this->config->getProjectSpecificCache();
 
         $emptyProjectDirectories = [];
-        foreach ($projectCachePaths as $projectCachePath) {
-            $emptyProjectDirectories[] = $this->clearDirectoriesByPattern($projectCachePath);
+        foreach ($projectSpecificCache as $projectSpecificCacheDirectory) {
+            $emptyProjectDirectories[] = $this->clearDirectoriesByPattern($projectSpecificCacheDirectory);
         }
 
         return $emptyProjectDirectories;

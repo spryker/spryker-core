@@ -32,5 +32,5 @@ interface CacheClearerInterface
     /**
      * @return string[]
      */
-    public function clearProjectCache(): array;
+    public function clearProjectSpecificCache(): array;
 }

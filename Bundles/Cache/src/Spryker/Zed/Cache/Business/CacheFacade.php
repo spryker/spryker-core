@@ -106,8 +106,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @return string[]
      */
-    public function emptyProjectCache(): array
+    public function emptyProjectSpecificCache(): array
     {
-        return $this->getFactory()->createCacheClearer()->clearProjectCache();
+        return $this->getFactory()->createCacheClearer()->clearProjectSpecificCache();
     }
 }
