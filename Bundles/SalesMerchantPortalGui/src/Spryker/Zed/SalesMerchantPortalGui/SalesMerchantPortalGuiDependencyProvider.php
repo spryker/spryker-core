@@ -14,6 +14,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeBridge;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeBridge;
@@ -30,6 +31,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     public const SERVICE_TWIG = 'twig';
@@ -49,6 +51,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addMoneyFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantOmsFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
         $container = $this->addRouterFacade($container);
         $container = $this->addTwigEnvironment($container);
 
@@ -157,6 +160,22 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
             return new SalesMerchantPortalGuiToMerchantOmsFacadeBridge(
                 $container->getLocator()->merchantOms()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return new SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge(
+                $container->getLocator()->merchantSalesOrder()->facade()
             );
         });
 

@@ -76,6 +76,7 @@ interface MerchantSalesOrderFacadeInterface
      * Specification:
      * - Returns a merchant order found using MerchantOrderCriteriaTransfer.
      * - Returns NULL if merchant order is not found.
+     * - Executes MerchantOrderExpanderPluginInterface plugins.
      *
      * @api
      *
@@ -158,4 +159,16 @@ interface MerchantSalesOrderFacadeInterface
      * @return \Generated\Shared\Transfer\OrderTransfer
      */
     public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer;
+
+    /**
+     * Specification:
+     * - Returns number of merchant orders filtered by given merchant order criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int;
 }

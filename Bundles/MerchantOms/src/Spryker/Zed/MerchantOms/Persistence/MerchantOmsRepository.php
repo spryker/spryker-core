@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Persistence;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderItemTableMap;
+use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -41,6 +42,25 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
         }
 
         return $stateMachineItemTransfers;
+    }
+
+    /**
+     * @module StateMachine
+     *
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return string[]
+     */
+    public function getStateNamesByMerchantOrderItemIds(array $merchantOrderItemIds): array
+    {
+        return $this->getFactory()
+            ->getMerchantSalesOrderItemPropelQuery()
+            ->filterByIdMerchantSalesOrderItem_In($merchantOrderItemIds)
+            ->joinWithStateMachineItemState()
+            ->select([SpyStateMachineItemStateTableMap::COL_NAME])
+            ->distinct()
+            ->find()
+            ->toArray();
     }
 
     /**

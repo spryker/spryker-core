@@ -12,9 +12,7 @@ import {
     TableColumnChipModule,
 } from '@spryker/table/columns';
 import { OfferOrdersTableComponent } from './offer-orders-table.component';
-import {
-    TableFiltersFeatureModule,
-} from '@spryker/table/features';
+import { TableFiltersFeatureModule } from '@spryker/table/features';
 import {
     TableFilterDateRangeComponent,
     TableFilterDateRangeModule,
@@ -22,6 +20,18 @@ import {
     TableFilterSelectModule,
 } from '@spryker/table/filters';
 import { TableDatasourceHttpService } from '@spryker/table/datasources';
+import { NotificationModule } from '@spryker/notification';
+import { AjaxActionModule } from '@spryker/ajax-action';
+import {
+    AjaxPostActionCloseService,
+    AjaxPostActionRedirectService,
+    AjaxPostActionRefreshTableService,
+} from '@spryker/ajax-post-actions';
+import {
+    TableHtmlOverlayActionHandlerModule,
+    TableHtmlOverlayActionHandlerService
+} from '@spryker/table/action-handlers';
+import { DefaultContextSerializationModule } from '@spryker/utils';
 
 class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
@@ -61,6 +71,17 @@ class TableDefaultConfigData implements Partial<TableConfig> {
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
         }),
+        TableModule.withActions({
+            'html-overlay': TableHtmlOverlayActionHandlerService,
+        }),
+        NotificationModule.forRoot(),
+        AjaxActionModule.withActions({
+            close_overlay: AjaxPostActionCloseService,
+            redirect: AjaxPostActionRedirectService,
+            refresh_table: AjaxPostActionRefreshTableService,
+        }),
+        TableHtmlOverlayActionHandlerModule,
+        DefaultContextSerializationModule,
     ],
     providers: [
         {

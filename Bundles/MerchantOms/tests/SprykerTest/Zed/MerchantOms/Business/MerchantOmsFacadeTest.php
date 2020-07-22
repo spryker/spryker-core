@@ -104,6 +104,42 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testExpandMerchantOrderWithStatesReturnsCorrectData(): void
+    {
+        // Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $expectedMerchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
+
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
+
+        $stateMachineItemStateTransfer = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $stateMachineProcessEntity->getIdStateMachineProcess(),
+        ]);
+
+        $expectedMerchantOrderTransfer->setItemStates([$stateMachineItemStateTransfer->getName()]);
+
+        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateMachineItemStateTransfer->getIdStateMachineItemState(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $expectedMerchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+        ]);
+        $expectedMerchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
+
+        // Act
+        $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderWithStates($expectedMerchantOrderTransfer);
+
+        // Assert
+        $this->assertSame($expectedMerchantOrderTransfer->getItemStates(), $merchantOrderTransfer->getItemStates());
+    }
+
+    /**
+     * @return void
+     */
     public function testTriggerEventForMerchantOrderItemReturnsSuccess(): void
     {
         // Arrange

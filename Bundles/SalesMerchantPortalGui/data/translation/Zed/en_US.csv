@@ -11,6 +11,20 @@ Search,Search
 States,States
 Store,Store
 Stores,Stores
+Details,Details
+Order,Order
+"Order date","Order date"
+"Number of products","Number of products"
+Items,Items
+Shipments,Shipments
+Subtotal,Subtotal
+Shipment,Shipment
+"Included Tax Amount","Included Tax Amount"
+"Client name","Client name"
+"Client email","Client email"
+"Previous orders","Previous orders"
+Overview,Overview
+Totals,Totals
 "From the last %daysNumber% days","From the last %daysNumber% days"
 "Manage Orders","Manage Orders"
 New,New

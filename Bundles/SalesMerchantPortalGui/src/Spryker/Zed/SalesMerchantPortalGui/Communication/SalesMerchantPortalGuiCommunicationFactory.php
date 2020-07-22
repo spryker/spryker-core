@@ -17,6 +17,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboar
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
@@ -114,6 +115,14 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     public function getMerchantOmsFacade(): SalesMerchantPortalGuiToMerchantOmsFacadeInterface
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
+     */
+    public function getMerchantSalesOrderFacade(): SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 
     /**

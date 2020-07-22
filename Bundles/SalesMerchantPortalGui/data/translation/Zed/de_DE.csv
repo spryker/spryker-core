@@ -11,6 +11,20 @@ Search,Suche
 States,States
 Store,Store
 Stores,Stores
+Details,Details
+Order,Bestellung
+"Order date",Bestelldatum
+"Number of products","Anzahl der Produkte"
+Items,Artikel
+Shipments,Liefermethoden
+Subtotal,Zwischensumme
+Shipment,Versand
+"Included Tax Amount","Enthaltener Steuerbetrag"
+"Client name",Kundenname
+"Client email",Kunden-e-mail
+"Previous orders","Vorherige Bestellungen"
+Overview,Überblick
+Totals,Summen
 "From the last %daysNumber% days","From the last %daysNumber% days"
 "Manage Orders","Manage Orders"
 New,New
