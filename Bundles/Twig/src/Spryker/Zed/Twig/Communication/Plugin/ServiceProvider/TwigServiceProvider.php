@@ -63,7 +63,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
             );
         });
 
-        $app['twig.options'] = Config::get(TwigConstants::ZED_TWIG_OPTIONS);
+        $app['twig.options'] = $this->getConfig()->getTwigOptions();
 
         $app['twig.global.variables'] = $app->share(function () {
             return [];
