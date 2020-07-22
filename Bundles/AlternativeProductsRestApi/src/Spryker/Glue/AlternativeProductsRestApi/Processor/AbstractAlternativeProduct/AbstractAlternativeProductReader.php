@@ -60,7 +60,7 @@ class AbstractAlternativeProductReader implements AbstractAlternativeProductRead
             return $this->alternativeProductRestResponseBuilder->createConcreteProductSkuMissingError();
         }
 
-        $concreteProductSku = $concreteProductResource->getId();
+        $concreteProductSku = (string)$concreteProductResource->getId();
         $concreteProductStorageData = $this->productStorage->findProductConcreteStorageDataByMapping(
             static::PRODUCT_CONCRETE_MAPPING_TYPE,
             $concreteProductSku,

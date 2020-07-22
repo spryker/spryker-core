@@ -7,6 +7,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
   <body>
-    <app-root></app-root>
+    <app-root>
+      <web-mp-manage-order>
+        <!--TODO: button epic -->
+        <div state-transitions-meessage class="mp-manage-order__transitions">
+          <web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>
+          <web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>
+          <web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>
+        </div>
+        
+        <span state-transitions-meessage>
+          Have to change button type in the app.module.
+        </span>
+  
+        <!--TODO: button epic -->
+        <div items-states class="mp-manage-order__states">
+          <div class="mp-manage-order__states-col mp-manage-order__states-col--title">Order’s Items state</div>
+          
+          <div class="mp-manage-order__states-col">
+            <div items-states class="mp-manage-order__states">
+              <web-spy-chips class="mp-manage-order__states-col">Delivered</web-spy-chips>
+              
+              <web-spy-chips class="mp-manage-order__states-col">Payment Pending</web-spy-chips>
+              
+              <web-spy-chips class="mp-manage-order__states-col">Exported</web-spy-chips>
+            </div>
+          </div>
+        </div>
+  
+        <web-spy-tabs class="mp-manage-order__content">
+          <web-spy-tab title="Test Title 1" class="mp-manage-order__card">
+            <web-spy-card title="Overview">
+              <div class="mp-manage-order-grid">
+                <web-mp-manage-order-stats-block name="Order date" info="14.04.2020, 10:09"></web-mp-manage-order-stats-block>
+          
+                <web-mp-manage-order-stats-block name="Order date" info="14.04.2020, 10:09"></web-mp-manage-order-stats-block>
+              </div>
+            </web-spy-card>
+      
+            <web-spy-card title="Overview" class="mp-manage-order__card">
+              <!--TODO: button epic -->
+              <web-spy-collapsible title="10 ITEMS" class="mp-manage-order__card-column-item">
+                <div>Collapse Content</div>
+              </web-spy-collapsible>
+              
+              <web-mp-manage-order-totals class="mp-manage-order__card-column-item"></web-mp-manage-order-totals>
+              
+              <web-mp-manage-order-totals class="mp-manage-order__card-column-item"></web-mp-manage-order-totals>
+            </web-spy-card>
+          </web-spy-tab>
+    
+          <web-spy-tab title="Test Title 2"></web-spy-tab>
+        </web-spy-tabs>
+      </web-mp-manage-order>
+    </app-root>
   </body>
 </html>
