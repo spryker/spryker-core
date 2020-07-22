@@ -229,7 +229,7 @@ class OfferTable extends AbstractTable
                         EditController::REQUEST_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
                         EditController::REQUEST_APPROVAL_STATUS => $availableApprovalStatus]
                 ),
-                $availableApprovalStatus. '_button',
+                $availableApprovalStatus . '_button',
                 ApprovalStatusForm::class,
                 ['icon' => 'fa fa fa-caret-right', 'class' => $class]
             );

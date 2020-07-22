@@ -12,7 +12,7 @@ approved,Genehmigt
 waiting_for_approval,"Warten auf die Bestätigung"
 declined,Abgelehnt
 declined_button,Verweigern
-approved_button,Zugriff genehmigen
+approved_button,"Zugriff genehmigen"
 Active,Aktiv
 Inactive,Inaktiv
 product-offer.approval-status-was-updated,"Der Genehmigungsstatus wurde aktualisiert"
