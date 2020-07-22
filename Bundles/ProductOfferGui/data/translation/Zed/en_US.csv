@@ -1,10 +1,16 @@
 Offers,Offers
 "List of Offers","List of Offers"
 "Offer ID","Offer ID"
-"Reference","Reference"
-"SKU","SKU"
-"Name","Name"
-"Status","Status"
-"Visibility","Visibility"
-"Stores","Stores"
-"Actions","Actions"
+Reference,Reference
+SKU,SKU
+Name,Name
+Status,Status
+Visibility,Visibility
+Stores,Stores
+Actions,Actions
+approved,Approved
+waiting_for_approval,"Waiting for approval"
+declined,Declined
+Active,Active
+Inactive,Inactive
+product-offer.approval-status-was-updated,"The approval status was updated"
