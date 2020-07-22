@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\AgentAuthRestApi\Controller;
 
-use Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
@@ -15,13 +15,13 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 /**
  * @method \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiFactory getFactory()
  */
-class AgentAccessTokensResourceController extends AbstractController
+class AgentCustomerImpersonationAccessTokensResourceController extends AbstractController
 {
     /**
      * @Glue({
      *     "post": {
      *          "summary": [
-     *              "Creates agent's access token."
+     *              "Creates customer imprsonation access token."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"
@@ -37,16 +37,16 @@ class AgentAccessTokensResourceController extends AbstractController
      * })
      *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     * @param \Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer $restAgentAccessTokensRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer $restAgentCustomerImpersonationAccessTokensRequestAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function postAction(
         RestRequestInterface $restRequest,
-        RestAgentAccessTokensRequestAttributesTransfer $restAgentAccessTokensRequestAttributesTransfer
+        RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer $restAgentCustomerImpersonationAccessTokensRequestAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createAgentAccessTokenCreator()
-            ->createAccessToken($restRequest, $restAgentAccessTokensRequestAttributesTransfer);
+            ->createAgentCustomerImpersonationAccessTokenCreator()
+            ->create($restRequest, $restAgentCustomerImpersonationAccessTokensRequestAttributesTransfer);
     }
 }

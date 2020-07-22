@@ -51,16 +51,9 @@ class AgentAccessTokenCreator implements AgentAccessTokenCreatorInterface
     ): RestResponseInterface {
         $oauthRequestTransfer = (new OauthRequestTransfer())
             ->fromArray($restAgentAccessTokensRequestAttributesTransfer->toArray(), true)
-            ->setGrantType('password');
-
-//        $restUserTransfer = $restRequest->getRestUser();
-//        if ($restUserTransfer) {
-//            $oauthRequestTransfer->setCustomerReference($restUserTransfer->getNaturalIdentifier());
-//        }
+            ->setGrantType(AgentAuthRestApiConfig::GRANT_TYPE_AGENT_CREDENTIALS);
 
         $oauthResponseTransfer = $this->oauthClient->processAccessTokenRequest($oauthRequestTransfer);
-
-        var_dump($oauthResponseTransfer); die();
 
         if (!$oauthResponseTransfer->getIsValid()) {
             return $this->agentAccessTokenRestResponseBuilder->createInvalidCredentialsErrorResponse();

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
@@ -61,7 +60,7 @@ class AgentProvider implements AgentProviderInterface
 
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setAgentUserName($findAgentResponseTransfer->getAgent()->getUsername())
-            ->setIdCustomer($findAgentResponseTransfer->getAgent()->getIdUser());
+            ->setIdAgent($findAgentResponseTransfer->getAgent()->getIdUser());
 
         $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))

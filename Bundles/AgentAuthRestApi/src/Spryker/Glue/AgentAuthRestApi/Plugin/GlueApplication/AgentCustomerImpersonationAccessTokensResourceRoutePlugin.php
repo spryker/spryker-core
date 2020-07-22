@@ -7,17 +7,17 @@
 
 namespace Spryker\Glue\AgentAuthRestApi\Plugin\GlueApplication;
 
-use Generated\Shared\Transfer\RestAgentAccessTokensRequestAttributesTransfer;
+use Generated\Shared\Transfer\RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer;
 use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
-class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+class AgentCustomerImpersonationAccessTokensResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for agent-access-tokens resource.
+     * - Configures available actions for agent-customer-impersonation-access-tokens resource.
      *
      * @api
      *
@@ -42,7 +42,7 @@ class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getResourceType(): string
     {
-        return AgentAuthRestApiConfig::RESOURCE_AGENT_ACCESS_TOKENS;
+        return AgentAuthRestApiConfig::RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS;
     }
 
     /**
@@ -54,7 +54,7 @@ class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getController(): string
     {
-        return 'agent-access-tokens-resource';
+        return 'agent-customer-impersonation-access-tokens-resource';
     }
 
     /**
@@ -66,6 +66,6 @@ class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getResourceAttributesClassName(): string
     {
-        return RestAgentAccessTokensRequestAttributesTransfer::class;
+        return RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer::class;
     }
 }

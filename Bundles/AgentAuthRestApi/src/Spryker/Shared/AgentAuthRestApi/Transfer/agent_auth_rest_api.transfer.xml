@@ -2,15 +2,30 @@
 <transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
     <transfer name="RestAgentAccessTokensRequestAttributes">
-        <property name="username" type="string"/>
-        <property name="password" type="string"/>
-    </transfer>
+    <property name="username" type="string"/>
+    <property name="password" type="string"/>
+  </transfer>
 
-    <transfer name="RestAgentAccessTokensAttributes">
-        <property name="tokenType" type="string"/>
-        <property name="expiresIn" type="string"/>
-        <property name="accessToken" type="string"/>
-        <property name="refreshToken" type="string"/>
-    </transfer>
+  <transfer name="RestAgentAccessTokensAttributes">
+    <property name="tokenType" type="string"/>
+    <property name="expiresIn" type="string"/>
+    <property name="accessToken" type="string"/>
+    <property name="refreshToken" type="string"/>
+  </transfer>
+
+  <transfer name="RestAgentCustomerImpersonationAccessTokensRequestAttributes">
+    <property name="customerReference" type="string"/>
+  </transfer>
+
+  <transfer name="RestAgentCustomerImpersonationAccessTokensAttributes">
+      <property name="tokenType" type="string"/>
+      <property name="expiresIn" type="string"/>
+      <property name="accessToken" type="string"/>
+      <property name="refreshToken" type="string"/>
+  </transfer>
+
+  <transfer name="RestUser">
+      <property name="idAgent" type="int"/>
+  </transfer>
 
 </transfers>

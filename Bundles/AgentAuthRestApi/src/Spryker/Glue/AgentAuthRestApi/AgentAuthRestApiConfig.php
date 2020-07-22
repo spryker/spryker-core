@@ -11,6 +11,7 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class AgentAuthRestApiConfig extends AbstractBundleConfig
 {
+    public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
 
     /**
@@ -20,4 +21,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_INVALID_LOGIN = '4001';
     public const RESPONSE_DETAIL_INVALID_LOGIN = 'Failed to authenticate user.';
+
+    public const RESPONSE_CODE_AGENT_ONLY = '4002';
+    public const RESPONSE_DETAIL_AGENT_ONLY = 'Action is available to agent user only.';
 }

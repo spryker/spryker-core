@@ -16,13 +16,18 @@ use League\OAuth2\Server\RequestEvent;
 use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Grant\GrantTypeInterface;
-use Spryker\Zed\Oauth\OauthConfig;
+use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig;
 
 class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterface
 {
     protected const REQUEST_PARAMETER_USERNAME = 'username';
     protected const REQUEST_PARAMETER_PASSWORD = 'password';
     protected const REQUEST_PARAMETER_SCOPE = 'scope';
+
+    /**
+     * @var \Spryker\Zed\Oauth\Business\Model\League\Repositories\UserRepositoryInterface
+     */
+    protected $userRepository;
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
@@ -64,16 +69,16 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
      */
     public function getIdentifier()
     {
-        return OauthConfig::GRANT_TYPE_PASSWORD;
+        return OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS;
     }
 
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
-     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
+     * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
      *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity)
     {
         $username = $this->getRequestParameter(static::REQUEST_PARAMETER_USERNAME, $request);
         if ($username === null) {
@@ -85,12 +90,8 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
             throw OAuthServerException::invalidRequest(static::REQUEST_PARAMETER_PASSWORD);
         }
 
-        $user = $this->userRepository->getUserEntityByUserCredentials(
-            $username,
-            $password,
-            $this->getIdentifier(),
-            $client
-        );
+        $user = $this->userRepository->getUserEntityByRequest($request->getParsedBody(), $this->getIdentifier(), $clientEntity);
+
         if (!($user instanceof UserEntityInterface)) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::USER_AUTHENTICATION_FAILED, $request));
 

@@ -4,11 +4,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/agent": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/oauth": "*",
+    "spryker/oauth-extension": "*",
+    "spryker/util-encoding": "*"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/installer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -25,5 +28,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/installer": "ADD SUGGEST DESCRIPTION"
   }
 }
