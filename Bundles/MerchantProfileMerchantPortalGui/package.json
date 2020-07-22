@@ -20,7 +20,6 @@
         "@spryker/icon": "^0.2.0-next.0",
         "@spryker/input": "^0.2.0-next.0",
         "@spryker/label": "^0.1.0-next.2",
-        "@spryker/locale": "^0.2.0-next.0",
         "@spryker/notification": "^0.2.0-next.0",
         "@spryker/select": "^0.2.0-next.0",
         "@spryker/styles": "^0.2.0-next.0",

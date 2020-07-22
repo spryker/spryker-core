@@ -4,7 +4,7 @@
     referenceTitle: 'Merchant Reference' | trans,
 } %}
 
-<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
+<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
     <!--TODO: state-machine story -->
     {#<div state-transitions-meessage class="mp-manage-order__transitions">#}
         {#<web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>#}
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <web-spy-tabs class="mp-manage-order__content">
+    <web-spy-tabs class="mp-manage-order__content" cloak>
         <web-spy-tab title="{{ 'Details' | trans }}">
             {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
