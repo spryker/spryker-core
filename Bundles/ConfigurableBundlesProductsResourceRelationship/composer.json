@@ -1,19 +1,14 @@
 {
-  "name": "spryker/products-rest-api",
-  "type": "library",
-  "description": "ProductsRestApi module",
+  "name": "spryker/configurable-bundles-products-resource-relationship",
+  "description": "ConfigurableBundlesProductsResourceRelationship module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/glossary-storage": "^1.0.0",
-    "spryker/glue-application": "^1.0.0",
+    "spryker/catalog": "^5.5.0",
+    "spryker/glue-application": "^1.9.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-storage": "^1.28.0",
-    "spryker/products-rest-api-extension": "^1.1.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/urls-rest-api-extension": "^1.0.0"
+    "spryker/products-rest-api": "2.11.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
@@ -31,7 +26,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "2.0.x-dev"
+      "dev-master": "1.0.x-dev"
     }
   },
   "config": {

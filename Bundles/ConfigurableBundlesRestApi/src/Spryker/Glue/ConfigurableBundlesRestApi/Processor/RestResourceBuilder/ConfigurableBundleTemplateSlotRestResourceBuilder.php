@@ -56,6 +56,6 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
             $configurableBundleTemplateSlotStorageTransfer->getUuid(),
             $restConfigurableBundleTemplateSlotsAttributesTransfer
-        );
+        )->setPayload($configurableBundleTemplateSlotStorageTransfer);
     }
 }

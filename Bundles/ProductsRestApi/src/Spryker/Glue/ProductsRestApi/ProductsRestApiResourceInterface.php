@@ -80,6 +80,19 @@ interface ProductsRestApiResourceInterface
 
     /**
      * Specification:
+     *  - Retrieves concrete product resources by given product concrete ids.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]]
+     */
+    public function getProductConcretesByIds(array $productConcreteIds, RestRequestInterface $restRequest): array;
+
+    /**
+     * Specification:
      * - Retrieves multiple abstract product resource by ids.
      * - Returned collection of rest resources is indexed by product abstract id.
      *

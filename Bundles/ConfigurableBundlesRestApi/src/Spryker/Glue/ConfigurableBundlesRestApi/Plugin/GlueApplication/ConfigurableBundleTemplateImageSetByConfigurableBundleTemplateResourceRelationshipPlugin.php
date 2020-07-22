@@ -19,7 +19,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
  *
  * @method \Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiFactory getFactory()
  */
-class ConfigurableBundleTemplateImageSetsByConfigurableBundleTemplateResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}

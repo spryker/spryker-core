@@ -21,4 +21,29 @@
         <property name="externalUrlSmall" type="string"/>
     </transfer>
 
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateStorage">
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+        <property name="slots" singular="slot" type="ConfigurableBundleTemplateSlotStorage[]"/>
+        <property name="imageSets" type="ProductImageSetStorage[]" singular="imageSet"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSetStorage">
+        <property name="images" type="ProductImageStorage[]" singular="image"/>
+    </transfer>
+
+    <transfer name="ProductImageStorage">
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplatePageSearchRequest">
+    </transfer>
+
 </transfers>
