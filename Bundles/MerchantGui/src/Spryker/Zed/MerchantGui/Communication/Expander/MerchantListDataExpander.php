@@ -48,8 +48,6 @@ class MerchantListDataExpander implements MerchantListDataExpanderInterface
      */
     public function expandData(array $viewData): array
     {
-        $viewData['idMerchant'] = $this->request->get(static::URL_PARAM_ID_PRODUCT);
-
         $viewData['merchants'] = [];
         $merchantCollectionTransfer = $this->merchantFacade
             ->get(new MerchantCriteriaTransfer());

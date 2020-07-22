@@ -1,19 +1,19 @@
 {
-  "name": "spryker/product-offer-gui",
-  "description": "ProductOfferGui module",
+  "name": "spryker/merchant-product-offer-gui",
+  "description": "MerchantProductOfferGui module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
     "spryker/gui": "*",
     "spryker/kernel": "^3.33.0",
-    "spryker/locale": "^3.0.0",
-    "spryker/product": "^6.1.0",
+    "spryker/merchant": "^3.1.0",
     "spryker/product-offer": "^0.4.1",
     "spryker/product-offer-gui-extension": "^0.1.0",
     "spryker/propel-orm": "^1.9.0",
-    "spryker/store": "^1.4.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/util-text": "^1.1.0"
+    "spryker/symfony": "^3.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -33,8 +33,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "require-dev": {
-    "spryker/code-sniffer": "*"
   }
 }

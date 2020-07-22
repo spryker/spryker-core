@@ -15,6 +15,7 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 /**
  * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
+ * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface getRepository()
  */
 class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -25,7 +26,9 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     {
         return new OfferTable(
             $this->getProductOfferPropelQuery(),
-            $this->getLocaleFacade()->getCurrentLocale()
+            $this->getLocaleFacade()->getCurrentLocale(),
+            $this->getRepository(),
+            $this->getProductOfferTableExpanderPlugins()
         );
     }
 
@@ -43,5 +46,29 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getLocaleFacade()
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferInterface
+     */
+    public function getProductOfferFacade()
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_PRODUCT_OFFER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferListActionViewDataExpanderPluginInterface[]
+     */
+    public function getProductOfferListActionViewDataExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[]
+     */
+    protected function getProductOfferTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER);
     }
 }

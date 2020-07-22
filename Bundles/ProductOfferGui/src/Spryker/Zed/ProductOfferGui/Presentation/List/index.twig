@@ -6,6 +6,9 @@
 {% block section_title widget_title %}
 
 {% block content %}
+
+    {% include '@ProductOfferGui/_partials/filters.twig' %}
+
     {% embed '@Gui/Partials/widget.twig' %}
         {% block widget_title -%}
             <h5>{{ 'List of Offers' | trans}}</h5>

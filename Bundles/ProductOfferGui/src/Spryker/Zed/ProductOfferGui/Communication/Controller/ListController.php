@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method \Spryker\Zed\ProductOfferGui\Communication\ProductOfferGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferGui\Business\ProductOfferGuiFacadeInterface getFacade()
+ * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface getRepository()
  */
 class ListController extends AbstractController
 {
@@ -26,9 +27,11 @@ class ListController extends AbstractController
         $offerTable = $this->getFactory()
             ->createOfferTable();
 
-        return $this->viewResponse([
+        $viewData = $this->executeProductOfferListActionViewDataExpanderPlugins([
             'offerTable' => $offerTable->render(),
         ]);
+
+        return $this->viewResponse($viewData);
     }
 
     /**
@@ -40,5 +43,19 @@ class ListController extends AbstractController
             ->createOfferTable();
 
         return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @param array $viewData
+     *
+     * @return array
+     */
+    protected function executeProductOfferListActionViewDataExpanderPlugins(array $viewData): array
+    {
+        foreach ($this->getFactory()->getProductOfferListActionViewDataExpanderPlugins() as $productOfferListActionViewDataExpanderPlugin) {
+            $viewData = $productOfferListActionViewDataExpanderPlugin->expand($viewData);
+        }
+
+        return $viewData;
     }
 }
