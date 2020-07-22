@@ -11,6 +11,8 @@ Actions,Actions
 approved,Approved
 waiting_for_approval,"Waiting for approval"
 declined,Declined
+declined_button,Deny
+approved_button,Approve Access
 Active,Active
 Inactive,Inactive
 product-offer.approval-status-was-updated,"The approval status was updated"
