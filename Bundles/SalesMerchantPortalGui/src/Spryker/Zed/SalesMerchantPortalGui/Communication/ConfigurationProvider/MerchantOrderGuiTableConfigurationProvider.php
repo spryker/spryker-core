@@ -33,6 +33,8 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
     public const COL_KEY_STORE = 'store';
 
+    protected const ROW_ACTION_ID_MERCHANT_ORDER_DETAIL = 'merchant-order-detail';
+
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
      */
@@ -144,7 +146,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
-            ->setId('merchant-order-detail')
+            ->setId(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
             ->setTitle('Details')
             ->setType('html-overlay')
             ->addTypeOption(
@@ -158,7 +160,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         $guiTableConfigurationTransfer->setRowActions(
             (new GuiTableRowActionsConfigurationTransfer())
                 ->addAction($guiTableRowActionTransfer)
-                ->setClick('merchant-order-detail')
+                ->setClick(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
         );
 
         return $guiTableConfigurationTransfer;

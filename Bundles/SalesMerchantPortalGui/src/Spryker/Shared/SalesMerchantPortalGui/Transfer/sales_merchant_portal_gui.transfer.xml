@@ -28,7 +28,7 @@
         <property name="totals" type="Totals"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="merchantOrderReference" type="string"/>
-        <property name="uniqueProductQuantity" type="int"/>
+        <property name="uniqueProductsCount" type="int"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
@@ -165,7 +165,7 @@
         <property name="merchantReference" type="string"/>
         <property name="withOrder" type="bool"/>
         <property name="withItems" type="bool"/>
-        <property name="withUniqueProductCount" type="bool"/>
+        <property name="withUniqueProductsCount" type="bool"/>
         <property name="customerReference" type="string"/>
     </transfer>
 

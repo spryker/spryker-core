@@ -1,6 +1,6 @@
 {% set orderDetails = {
     title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
-    reference: merchantOrder.merchantReference,
+    reference: merchantOrder.merchantOrderReference,
     referenceTitle: 'Merchant Reference' | trans,
 } %}
 
@@ -38,27 +38,27 @@
     <span items-states-title>Order’s Items state</span>
 
     <div items-states class="mp-manage-order__states">
-        {% set statesList = ['Delivered', 'Payment', 'Exported'] %}
-
-        {% for state in statesList %}
+        {% for state in merchantOrder.itemStates %}
             <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
         {% endfor %}
     </div>
 
     <web-spy-tabs class="mp-manage-order__content">
         <web-spy-tab title="{{ 'Details' | trans }}">
+            {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
+
             {% set overviewItems = [
                 {
                     name: 'Order date' | trans,
-                    info: merchantOrder.createdAt | formatDateTime,
+                    info: merchantOrder.createdAt | date('d.m.Y, H:i'),
                 },
                 {
                     name: 'Number of products' | trans,
-                    info: merchantOrder.uniqueProductQuantity,
+                    info: merchantOrder.uniqueProductsCount,
                 },
                 {
                     name: 'Items' | trans,
-                    info: merchantOrder.merchantOrderItems.count(),
+                    info: merchantOrderItemsCount,
                 },
                 {
                     name: 'Shipments' | trans,
@@ -78,7 +78,7 @@
             </web-spy-card>
 
             <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
-                <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} ITEMS" class="mp-manage-order__card-column-item">
+                <web-spy-collapsible title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
                     <mp-html-renderer-url url="www.google.com"></mp-html-renderer-url>
                 </web-spy-collapsible>
 
@@ -124,15 +124,15 @@
 
             {% set customerItems = [
                 {
-                    name: 'CLIENT NAME' | trans,
+                    name: 'Client name' | trans | upper,
                     info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
                 },
                 {
-                    name: 'CLIENT EMAIL' | trans,
+                    name: 'Client email' | trans| upper,
                     info: merchantOrder.order.email,
                 },
                 {
-                    name: 'PREVIOUS ORDERS' | trans,
+                    name: 'Previous orders' | trans | upper,
                     info: customerMerchantOrderNumber,
                 },
             ] %}

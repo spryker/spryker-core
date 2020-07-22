@@ -170,4 +170,18 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
             ->createOrderExpander()
             ->expandOrderWithMerchantReferences($orderTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->getRepository()->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+    }
 }

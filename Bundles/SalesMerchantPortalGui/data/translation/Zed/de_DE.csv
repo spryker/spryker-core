@@ -20,9 +20,9 @@ Shipments,Liefermethoden
 Subtotal,Zwischensumme
 Shipment,Versand
 "Included Tax Amount","Enthaltener Steuerbetrag"
-"CLIENT NAME",KUNDENNAME
-"CLIENT EMAIL",KUNDEN-E-MAIL
-"PREVIOUS ORDERS","VORHERIGE BESTELLUNGEN"
+"Client name",Kundenname
+"Client email",Kunden-e-mail
+"Previous orders","Vorherige Bestellungen"
 Overview,Überblick
 Totals,Summen
 "From the last %daysNumber% days","From the last %daysNumber% days"

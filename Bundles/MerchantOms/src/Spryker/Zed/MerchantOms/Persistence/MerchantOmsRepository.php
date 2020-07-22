@@ -49,27 +49,18 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
      *
      * @param int[] $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     * @return string[]
      */
-    public function getStateMachineItemStatesByMerchantOrderItemIds(array $merchantOrderItemIds): array
+    public function getStateNamesByMerchantOrderItemIds(array $merchantOrderItemIds): array
     {
-        $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
-
-        $stateMachineItemStateNames = $merchantSalesOrderItemQuery
+        return $this->getFactory()
+            ->getMerchantSalesOrderItemPropelQuery()
             ->filterByIdMerchantSalesOrderItem_In($merchantOrderItemIds)
             ->joinWithStateMachineItemState()
             ->select([SpyStateMachineItemStateTableMap::COL_NAME])
-            ->groupBy(SpyStateMachineItemStateTableMap::COL_NAME)
-            ->find();
-
-        $stateMachineItemTransfers = [];
-
-        foreach ($stateMachineItemStateNames as $stateMachineItemStateName) {
-            $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
-                ->setStateName($stateMachineItemStateName);
-        }
-
-        return $stateMachineItemTransfers;
+            ->distinct()
+            ->find()
+            ->toArray();
     }
 
     /**

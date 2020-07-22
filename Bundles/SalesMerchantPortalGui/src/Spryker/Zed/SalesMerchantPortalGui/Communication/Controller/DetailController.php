@@ -22,7 +22,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
-    protected const MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND = 'Merchant order not found for id %d.';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE
@@ -43,7 +42,8 @@ class DetailController extends AbstractController
                 (new MerchantOrderCriteriaTransfer())
                     ->setIdMerchantOrder($idMerchantOrder)
                     ->setWithOrder(true)
-                    ->setWithUniqueProductCount(true)
+                    ->setWithItems(true)
+                    ->setWithUniqueProductsCount(true)
             );
 
         $this->validateMerchantOrderTransfer($idMerchantOrder, $merchantOrderTransfer);
@@ -101,12 +101,12 @@ class DetailController extends AbstractController
     protected function validateMerchantOrderTransfer(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): void
     {
         if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
 
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
         if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            throw new NotFoundHttpException(sprintf(static::MESSAGE_ERROR_MERCHANT_ORDER_NOT_FOUND, $idMerchantOrder));
+            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
     }
 
@@ -117,21 +117,21 @@ class DetailController extends AbstractController
      */
     protected function getCustomerMerchantOrderNumber(MerchantOrderTransfer $merchantOrderTransfer): int
     {
+        $merchantOrderTransfer->requireOrder();
+
         $customerMerchantOrderNumber = 0;
 
-        if (!$merchantOrderTransfer->getOrder() || !$merchantOrderTransfer->getOrder()->getCustomerReference()) {
+        if (!$merchantOrderTransfer->getOrder()->getCustomerReference()) {
             return $customerMerchantOrderNumber;
         }
 
-        $merchantOrderCollectionTransfer = $this->getFactory()
+        return $this->getFactory()
             ->getMerchantSalesOrderFacade()
-            ->getMerchantOrderCollection(
+            ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
                     ->setCustomerReference($merchantOrderTransfer->getOrder()->getCustomerReference())
                     ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             );
-
-        return $merchantOrderCollectionTransfer->getMerchantOrders()->count();
     }
 
     /**
