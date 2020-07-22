@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Shared\Transfer\StockProductTransfer;
-use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Shared\Sales\SalesConstants;
@@ -63,14 +62,14 @@ class ShippingAddressSaveTest extends Test
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
 
         // Act
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
-        $this->assertNotNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should have been assigned on sales order level.');
+        $salesOrderEntity = $salesOrderQuery->findOne();
+        $this->assertNotNull($salesOrderEntity->getShippingAddress(), 'Shipping address should have been assigned on sales order level.');
+        $this->assertNotNull($salesOrderEntity->getBillingAddress(), 'Shipping address should have been assigned on sales order level.');
     }
 
     /**
@@ -85,14 +84,14 @@ class ShippingAddressSaveTest extends Test
     {
         // Arrange
         $salesOrderQuery = SpySalesOrderQuery::create()->orderByIdSalesOrder(Criteria::DESC);
-        $salesOrderAddressQuery = SpySalesOrderAddressQuery::create();
 
         // Act
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
-        $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
+        $salesOrderEntity = $salesOrderQuery->findOne();
+        $this->assertNotNull($salesOrderEntity->getBillingAddress(), 'Billing address should have been assigned on sales order level.');
+        $this->assertNull($salesOrderEntity->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 
     /**
@@ -122,7 +121,7 @@ class ShippingAddressSaveTest extends Test
     {
         $quoteTransfer = (new QuoteBuilder())
             ->withShippingAddress()
-            ->withAnotherBillingAddress()
+            ->withBillingAddress()
             ->withItem()
             ->withTotals()
             ->withCustomer()
@@ -175,9 +174,12 @@ class ShippingAddressSaveTest extends Test
      */
     protected function createSequenceNumberSettingsTransfer(): SequenceNumberSettingsTransfer
     {
-        return (new SequenceNumberSettingsBuilder([
+        /** @var \Generated\Shared\Transfer\SequenceNumberSettingsTransfer $sequenceNumberSettingsTransfer */
+        $sequenceNumberSettingsTransfer = (new SequenceNumberSettingsBuilder([
             'name' => SalesConstants::NAME_ORDER_REFERENCE,
             'prefix' => 'DE--',
         ]))->build();
+
+        return $sequenceNumberSettingsTransfer;
     }
 }
