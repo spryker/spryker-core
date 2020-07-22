@@ -32,10 +32,6 @@ class FileSystemKeyLoader implements FileSystemKeyLoaderInterface
     {
         $publicKey = $this->oauthCryptographyConfig->getPublicKeyPath();
 
-        if (!$publicKey instanceof CryptKey) {
-            $publicKey = new CryptKey($publicKey);
-        }
-
-        return [$publicKey];
+        return [new CryptKey($publicKey)];
     }
 }

@@ -34,7 +34,9 @@ class BearerTokenAuthorizationValidator implements BearerTokenAuthorizationValid
 
         foreach ($publicKeys as $publicKey) {
             try {
-                $bearerTokenValidator->setPublicKey($publicKey);
+                if ($bearerTokenValidator instanceof BearerTokenValidator) {
+                    $bearerTokenValidator->setPublicKey($publicKey);
+                }
                 $verifiedRequest = $bearerTokenValidator->validateAuthorization($request);
             } catch (OAuthServerException $OAuthServerException) {
                 continue;
