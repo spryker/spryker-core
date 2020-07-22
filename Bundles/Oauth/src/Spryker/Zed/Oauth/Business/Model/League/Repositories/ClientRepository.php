@@ -21,7 +21,7 @@ class ClientRepository implements ClientRepositoryInterface
     /**
      * @var array
      */
-    protected static $oauthClientEntityTransferStorage = [];
+    protected static $oauthClientEntityTransferCache = [];
 
     /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
@@ -38,7 +38,7 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function getClientEntity($clientIdentifier)
     {
-        $oauthClientEntityTransfer = $this->getOauthEntityTransfer($clientIdentifier);
+        $oauthClientEntityTransfer = $this->findOauthClientEntityTransfer($clientIdentifier);
 
         if (!$oauthClientEntityTransfer) {
             return null;
@@ -62,7 +62,7 @@ class ClientRepository implements ClientRepositoryInterface
      */
     public function validateClient($clientIdentifier, $clientSecret, $grantType)
     {
-        $oauthClientEntityTransfer = $this->getOauthEntityTransfer($clientIdentifier);
+        $oauthClientEntityTransfer = $this->findOauthClientEntityTransfer($clientIdentifier);
 
         if (!$oauthClientEntityTransfer) {
             return false;
@@ -83,13 +83,13 @@ class ClientRepository implements ClientRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
      */
-    protected function getOauthEntityTransfer($clientIdentifier)
+    protected function findOauthClientEntityTransfer($clientIdentifier)
     {
-        if (!isset(static::$oauthClientEntityTransferStorage[$clientIdentifier])) {
-            static::$oauthClientEntityTransferStorage[$clientIdentifier] = $this->oauthRepository
+        if (!isset(static::$oauthClientEntityTransferCache[$clientIdentifier])) {
+            static::$oauthClientEntityTransferCache[$clientIdentifier] = $this->oauthRepository
                 ->findClientByIdentifier($clientIdentifier);
         }
 
-        return static::$oauthClientEntityTransferStorage[$clientIdentifier];
+        return static::$oauthClientEntityTransferCache[$clientIdentifier];
     }
 }
