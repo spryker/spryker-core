@@ -222,7 +222,7 @@ class Url
      */
     public function normalizePath()
     {
-        if (!$this->path || $this->path === '/' || $this->path === '*') {
+        if (!$this->path || in_array($this->path, ['/', '*'], true)) {
             return $this;
         }
 
@@ -231,7 +231,7 @@ class Url
         foreach ($segments as $segment) {
             if ($segment === '..') {
                 array_pop($results);
-            } elseif ($segment !== '.' && $segment !== '') {
+            } elseif (!in_array($segment, ['.', ''], true)) {
                 $results[] = $segment;
             }
         }
@@ -392,30 +392,32 @@ class Url
     {
         $url = $scheme = '';
 
-        if (isset($parts[self::SCHEME])) {
-            $scheme = $parts[self::SCHEME];
+        if (isset($parts[static::SCHEME])) {
+            $scheme = $parts[static::SCHEME];
             $url .= $scheme . ':';
         }
 
-        if (isset($parts[self::HOST])) {
-            $url .= '//';
-            if (isset($parts[self::USER])) {
-                $url .= $parts[self::USER];
-                if (isset($parts[self::PASS])) {
-                    $url .= ':' . $parts[self::PASS];
-                }
-                $url .= '@';
-            }
+        if (!isset($parts[static::HOST])) {
+            return $url;
+        }
 
-            $url .= $parts[self::HOST];
-
-            // Only include the port if it is not the default port of the scheme
-            if (
-                isset($parts[self::PORT])
-                && !(($scheme === 'http' && $parts[self::PORT] === 80) || ($scheme === 'https' && $parts[self::PORT] === 443))
-            ) {
-                $url .= ':' . $parts[self::PORT];
+        $url .= '//';
+        if (isset($parts[static::USER])) {
+            $url .= $parts[static::USER];
+            if (isset($parts[static::PASS])) {
+                $url .= ':' . $parts[static::PASS];
             }
+            $url .= '@';
+        }
+
+        $url .= $parts[static::HOST];
+
+        // Only include the port if it is not the default port of the scheme
+        if (
+            isset($parts[static::PORT])
+            && !(($scheme === 'http' && $parts[static::PORT] === 80) || ($scheme === 'https' && $parts[static::PORT] === 443))
+        ) {
+            $url .= ':' . $parts[static::PORT];
         }
 
         return $url;

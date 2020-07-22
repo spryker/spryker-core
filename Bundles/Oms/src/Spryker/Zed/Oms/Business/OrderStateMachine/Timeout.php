@@ -289,7 +289,7 @@ class Timeout implements TimeoutInterface
             ->setOmsEvent($omsEventTransfer)
             ->setTimestamp($currentTime->getTimestamp());
 
-        $timeoutProcessor = $this->timeoutProcessorCollection->get($event->getTimeoutProcessor());
+        $timeoutProcessor = $this->timeoutProcessorCollection->get((string)$event->getTimeoutProcessor());
         $timeoutProcessorTimeoutResponseTransfer = $timeoutProcessor->calculateTimeout($timeoutProcessorTimeoutRequestTransfer);
 
         return (new DateTime())->setTimestamp($timeoutProcessorTimeoutResponseTransfer->getTimeoutTimestamp());
