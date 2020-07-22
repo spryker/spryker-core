@@ -27,8 +27,7 @@ class AgentCustomerImpersonationAccessTokensResourceRoutePlugin extends Abstract
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addPost('post', false);
+        $resourceRouteCollection->addPost('post');
 
         return $resourceRouteCollection;
     }

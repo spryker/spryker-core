@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\OauthAgentConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\OauthClientTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 
 class OauthAgentConnectorToOauthFacadeBridge implements OauthAgentConnectorToOauthFacadeInterface
@@ -33,26 +32,6 @@ class OauthAgentConnectorToOauthFacadeBridge implements OauthAgentConnectorToOau
     public function saveScope(OauthScopeTransfer $oauthScopeTransfer): OauthScopeTransfer
     {
         return $this->oauthFacade->saveScope($oauthScopeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthScopeTransfer $oauthScopeTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthScopeTransfer|null
-     */
-    public function findScopeByIdentifier(OauthScopeTransfer $oauthScopeTransfer): ?OauthScopeTransfer
-    {
-        return $this->oauthFacade->findScopeByIdentifier($oauthScopeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\OauthClientTransfer $oauthClientTransfer
-     *
-     * @return \Generated\Shared\Transfer\OauthClientTransfer|null
-     */
-    public function findClientByIdentifier(OauthClientTransfer $oauthClientTransfer): ?OauthClientTransfer
-    {
-        return $this->oauthFacade->findClientByIdentifier($oauthClientTransfer);
     }
 
     /**
