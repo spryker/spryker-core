@@ -43,4 +43,11 @@ interface MerchantOmsToStateMachineFacadeInterface
      * @return string[]
      */
     public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return string[][]
+     */
+    public function getManualEventsForStateMachineItems(array $stateMachineItems);
 }

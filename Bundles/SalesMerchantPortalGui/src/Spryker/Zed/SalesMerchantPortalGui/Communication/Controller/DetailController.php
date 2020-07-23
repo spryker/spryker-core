@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
+use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -46,13 +48,16 @@ class DetailController extends AbstractController
                     ->setWithUniqueProductsCount(true)
             );
 
-        $this->validateMerchantOrderTransfer($idMerchantOrder, $merchantOrderTransfer);
+        $this->assureMerchantOrderExists($idMerchantOrder, $merchantOrderTransfer);
 
         $responseData = [
             'html' => $this->renderView('@SalesMerchantPortalGui/Partials/merchant_order_detail.twig', [
                 'merchantOrder' => $merchantOrderTransfer,
                 'customerMerchantOrderNumber' => $this->getCustomerMerchantOrderNumber($merchantOrderTransfer),
                 'shipmentsNumber' => $this->getShipmentsNumber($merchantOrderTransfer),
+                'merchantOrderManualEvents' => $this->getFactory()
+                    ->getMerchantOmsFacade()
+                    ->getManualEventsByIdMerchantOrder($idMerchantOrder),
             ])->getContent(),
         ];
 
@@ -60,12 +65,14 @@ class DetailController extends AbstractController
     }
 
     /**
-     * @param int $idMerchantOrder
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function totalItemListAction(int $idMerchantOrder): JsonResponse
+    public function totalItemListAction(Request $request): Response
     {
+        $idMerchantOrder = $this->castId($request->get(static::PARAM_ID_MERCHANT_ORDER));
+
         $merchantOrderTransfer = $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->findMerchantOrder(
@@ -74,20 +81,16 @@ class DetailController extends AbstractController
                     ->setWithItems(true)
             );
 
-        $this->validateMerchantOrderTransfer($idMerchantOrder, $merchantOrderTransfer);
+        $this->assureMerchantOrderExists($idMerchantOrder, $merchantOrderTransfer);
 
         $saleOrderItemIds = $this->getSaleOrderItemIds($merchantOrderTransfer);
         $itemCollectionTransfer = $this->getFactory()->getSalesFacade()->getOrderItems(
             (new OrderItemFilterTransfer())->setSalesOrderItemIds($saleOrderItemIds)
         );
 
-        $responseData = [
-            'html' => $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
-                'items' => $itemCollectionTransfer->getItems(),
-            ])->getContent(),
-        ];
-
-        return new JsonResponse($responseData);
+        return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
+            'orderItems' => $this->getSalesOrderItemsGroupedBySku($itemCollectionTransfer),
+        ]);
     }
 
     /**
@@ -98,7 +101,7 @@ class DetailController extends AbstractController
      *
      * @return void
      */
-    protected function validateMerchantOrderTransfer(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): void
+    protected function assureMerchantOrderExists(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): void
     {
         if (!$merchantOrderTransfer) {
             throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
@@ -165,5 +168,29 @@ class DetailController extends AbstractController
         }
 
         return $saleOrderItemIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function getSalesOrderItemsGroupedBySku(ItemCollectionTransfer $itemCollectionTransfer): array
+    {
+        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers */
+        $itemTransfers = [];
+        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
+            if (!isset($itemTransfers[$itemTransfer->getSku()])) {
+                $itemTransfers[$itemTransfer->getSku()] = $itemTransfer;
+
+                continue;
+            }
+
+            $itemTransfers[$itemTransfer->getSku()]->setQuantity(
+                $itemTransfers[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
+            );
+        }
+
+        return $itemTransfers;
     }
 }

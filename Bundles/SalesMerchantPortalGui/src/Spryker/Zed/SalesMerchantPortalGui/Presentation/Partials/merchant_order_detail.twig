@@ -5,31 +5,15 @@
 } %}
 
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
-    {% set butttonsList = [
-        {
-            title: 'Ship',
-            url: 'some/url',
-            method: 'GET',
-        },
-        {
-            title: 'Return',
-            url: 'some/url',
-            method: 'POST',
-        },
-        {
-            title: 'Close',
-            url: 'some/url',
-            method: 'GET',
-        },
-    ] %}
+
+    {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
     <div state-transitions class="mp-manage-order__transitions">
-        {% for button in butttonsList %}
+        {% for eventName in merchantOrderManualEvents %}
             <web-spy-ajax-button
-                method="{{ button.method }}"
-                url="{{ button.url }}"
+                url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
                 class="mp-manage-order__transitions-col"
-            >{{ button.title }}</web-spy-ajax-button>
+            >{{ eventName }}</web-spy-ajax-button>
         {% endfor %}
     </div>
 
@@ -78,8 +62,8 @@
             </web-spy-card>
 
             <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
-                <web-spy-collapsible title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
-                    <mp-html-renderer-url url="www.google.com"></mp-html-renderer-url>
+                <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
+                    <mp-html-renderer-url url="/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order={{ idMerchantOrder }}"></mp-html-renderer-url>
                 </web-spy-collapsible>
 
                 {% set subtotalTitleOrderTotals = [

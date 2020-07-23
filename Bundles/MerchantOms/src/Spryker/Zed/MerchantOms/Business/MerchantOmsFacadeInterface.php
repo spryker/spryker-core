@@ -119,4 +119,16 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
+
+    /**
+     * Specification:
+     * - Returns unique event list for all merchant order items by given merchant order id.
+     *
+     * @api
+     *
+     * @param int $idMerchantOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array;
 }

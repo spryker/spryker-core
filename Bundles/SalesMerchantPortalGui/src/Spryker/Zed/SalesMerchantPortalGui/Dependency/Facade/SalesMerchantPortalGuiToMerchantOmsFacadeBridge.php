@@ -8,6 +8,7 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 class SalesMerchantPortalGuiToMerchantOmsFacadeBridge implements SalesMerchantPortalGuiToMerchantOmsFacadeInterface
@@ -34,5 +35,35 @@ class SalesMerchantPortalGuiToMerchantOmsFacadeBridge implements SalesMerchantPo
         MerchantCriteriaTransfer $merchantCriteriaTransfer
     ): StateMachineProcessTransfer {
         return $this->merchantOmsFacade->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
+    }
+
+    /**
+     * @param int $idMerchantOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array
+    {
+        return $this->merchantOmsFacade->getManualEventsByIdMerchantOrder($idMerchantOrder);
+    }
+
+    /**
+     * @param int[] $stateIds
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     */
+    public function getStateMachineItemsByStateIds(array $stateIds): array
+    {
+        return $this->merchantOmsFacade->getStateMachineItemsByStateIds($stateIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return int
+     */
+    public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int
+    {
+        return $this->merchantOmsFacade->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);
     }
 }

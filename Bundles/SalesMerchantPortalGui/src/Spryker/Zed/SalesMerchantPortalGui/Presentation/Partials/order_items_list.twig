@@ -1,34 +1,24 @@
-{% set totals = [
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-    {
-        name: 'Acer Chromebook C730-C8T7, Chromebook, Clamshell, 2, 2.58 GHz, White x 3',
-        prcie: '€ 324.17',
-    },
-] %}
-
-{% for total in totals %}
+{% for orderItem in orderItems %}
     <div class="mp-manage-order__totals">
-        <span class="mp-manage-order__totals-col">{{ total.name }}</span>
+        <span class="mp-manage-order__totals-col">
+            {{ orderItem.name }}
+            {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length %}
+                {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0, 2) %}
+                    , {{ attributeValue }}
+                {% endfor %}
+            {% endif %}
+            x {{ orderItem.quantity }}
+        </span>
 
-        <span class="mp-manage-order__totals-col">{{ total.prcie }}</span>
+        {% set itemPriceToPay = orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0) %}
+        {% set priceToPay = itemPriceToPay * orderItem.quantity %}
+        <span class="mp-manage-order__totals-col">{{ priceToPay | money(true, orderItem.currencyIsoCode) }}</span>
     </div>
+
+    {% for productOption in orderItem.productOptions %}
+    <div class="mp-manage-order__totals">
+        <span class="mp-manage-order__totals-col">+ {{ productOption.value }}</span>
+        <span class="mp-manage-order__totals-col">{{ productOption.sumPrice | default(productOption.unitPrice) | money(true, orderItem.currencyIsoCode) }} </span>
+    </div>
+    {% endfor %}
 {% endfor %}

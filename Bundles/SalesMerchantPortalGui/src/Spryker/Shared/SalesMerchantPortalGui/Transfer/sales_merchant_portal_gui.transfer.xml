@@ -201,4 +201,13 @@
         <property name="url" type="string"/>
     </transfer>
 
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+    </transfer>
+
 </transfers>

@@ -120,4 +120,18 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     {
         return $this->getRepository()->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $idMerchantOrder
+     *
+     * @return string[]
+     */
+    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array
+    {
+        return $this->getFactory()->createMerchantOmsEventReader()->getManualEventsByIdMerchantOrder($idMerchantOrder);
+    }
 }
