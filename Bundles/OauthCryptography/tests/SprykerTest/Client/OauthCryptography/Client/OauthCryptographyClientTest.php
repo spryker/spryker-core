@@ -21,7 +21,6 @@ use Spryker\Client\OauthCryptography\OauthCryptographyFactory;
 use Spryker\Client\OauthCryptography\Validator\BearerTokenAuthorizationValidator;
 use Spryker\Client\OauthCryptography\Validator\BearerTokenAuthorizationValidatorInterface;
 use Spryker\Shared\OauthCryptography\OauthCryptographyConstants;
-use const APPLICATION_ROOT_DIR;
 
 /**
  * Auto-generated group annotations
