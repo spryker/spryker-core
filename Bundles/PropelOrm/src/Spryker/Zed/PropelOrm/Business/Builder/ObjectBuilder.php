@@ -116,7 +116,7 @@ class ObjectBuilder extends PropelObjectBuilder
      *
      * @see parent::addColumnMutators()
      *
-     * @param string &$script The script will be modified in this method.
+     * @param string $script The script will be modified in this method.
      * @param \Propel\Generator\Model\Column $col The current column.
      *
      * @return void
@@ -137,7 +137,7 @@ class ObjectBuilder extends PropelObjectBuilder
 ";
         }
 
-        $hasDefaultValue = $col->getDefaultValue() !== null ? 'true' : 'false';
+        $hasDefaultValue = $col->getDefaultValue() == null ? 'false' : 'true';
 
         $script .= "
         // When this is true we will not check for value equality as we need to be able to set a value for this field
