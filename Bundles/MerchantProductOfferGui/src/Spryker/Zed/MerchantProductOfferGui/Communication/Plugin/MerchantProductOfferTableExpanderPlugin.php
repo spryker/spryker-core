@@ -19,8 +19,8 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
-     * - Expands a merchant entity to query.
-     * - Filters by idMerchant if it exists in request.
+     *  - Adds merchant name to the query select statement.
+     *  - Expands query with filter by the merchant.
      *
      * @api
      *
@@ -37,7 +37,7 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Expands a merchant name column.
+     * - Expands product offer table configuration with merchant name column.
      *
      * @api
      *
@@ -54,19 +54,19 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
-     * - Expands a merchant name to table data.
+     * - Expands table data with merchant name.
      *
      * @api
      *
-     * @param array $data
-     * @param array $item
+     * @param array $rowData
+     * @param array $productOfferData
      *
      * @return array
      */
-    public function expandData(array $data, array $item): array
+    public function expandData(array $rowData, array $productOfferData): array
     {
         return $this->getFactory()
             ->createMerchantProductOfferTableExpander()
-            ->expandData($data, $item);
+            ->expandData($rowData, $productOfferData);
     }
 }

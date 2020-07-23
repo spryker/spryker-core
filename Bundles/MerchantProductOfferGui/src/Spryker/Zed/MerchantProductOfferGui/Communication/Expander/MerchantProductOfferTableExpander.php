@@ -91,18 +91,18 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @param array $array
+     * @param array $rowData
      * @param string $key
-     * @param array $new
+     * @param array $extensionData
      *
      * @return array
      */
-    protected function insertAfterHeader(array $array, string $key, array $new): array
+    protected function insertAfterHeader(array $rowData, string $key, array $extensionData): array
     {
-        $keys = array_keys($array);
+        $keys = array_keys($rowData);
         $index = array_search($key, $keys);
-        $pos = $index === false ? count($array) : $index + 1;
+        $pos = $index === false ? count($rowData) : $index + 1;
 
-        return array_merge(array_slice($array, 0, $pos), $new, array_slice($array, $pos));
+        return array_merge(array_slice($rowData, 0, $pos), $extensionData, array_slice($rowData, $pos));
     }
 }

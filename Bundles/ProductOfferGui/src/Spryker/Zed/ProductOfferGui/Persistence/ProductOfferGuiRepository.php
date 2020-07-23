@@ -25,7 +25,7 @@ class ProductOfferGuiRepository extends AbstractRepository implements ProductOff
     public function mapQueryCriteriaTransferToModelCriteria(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria
     {
         return $this->getFactory()
-            ->createProductOfferQueryExpander()
+            ->createProductOfferQueryCriteriaMapper()
             ->mapQueryCriteriaTransferToModelCriteria($query, $queryCriteriaTransfer);
     }
 }

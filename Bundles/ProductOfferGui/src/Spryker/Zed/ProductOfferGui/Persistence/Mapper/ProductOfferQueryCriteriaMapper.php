@@ -5,27 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGui\Persistence\Expander;
+namespace Spryker\Zed\ProductOfferGui\Persistence\Mapper;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-class ProductOfferQueryExpander implements ProductOfferQueryExpanderInterface
+class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapperInterface
 {
-    /**
-     * @var \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[]
-     */
-    protected $productOfferTableExpanderPlugins;
-
-    /**
-     * @param \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[] $productOfferTableExpanderPlugins
-     */
-    public function __construct(array $productOfferTableExpanderPlugins)
-    {
-        $this->productOfferTableExpanderPlugins = $productOfferTableExpanderPlugins;
-    }
-
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer

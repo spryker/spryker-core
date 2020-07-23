@@ -29,6 +29,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/gui": "Required to use gui in plugins."
+    "spryker/gui": "If you want to use table expander plugin."
   }
 }

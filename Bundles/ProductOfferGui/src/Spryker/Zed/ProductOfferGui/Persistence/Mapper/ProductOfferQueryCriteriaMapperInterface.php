@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGui\Persistence\Expander;
+namespace Spryker\Zed\ProductOfferGui\Persistence\Mapper;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 
-interface ProductOfferQueryExpanderInterface
+interface ProductOfferQueryCriteriaMapperInterface
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query

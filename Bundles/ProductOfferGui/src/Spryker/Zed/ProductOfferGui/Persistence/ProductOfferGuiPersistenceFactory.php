@@ -8,9 +8,8 @@
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
-use Spryker\Zed\ProductOfferGui\Persistence\Expander\ProductOfferQueryExpander;
-use Spryker\Zed\ProductOfferGui\Persistence\Expander\ProductOfferQueryExpanderInterface;
-use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
+use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapper;
+use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
@@ -20,18 +19,10 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 class ProductOfferGuiPersistenceFactory extends AbstractPersistenceFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferGui\Persistence\Expander\ProductOfferQueryExpanderInterface
+     * @return \Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapperInterface
      */
-    public function createProductOfferQueryExpander(): ProductOfferQueryExpanderInterface
+    public function createProductOfferQueryCriteriaMapper(): ProductOfferQueryCriteriaMapperInterface
     {
-        return new ProductOfferQueryExpander($this->getProductOfferTableExpanderPlugins());
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[]
-     */
-    protected function getProductOfferTableExpanderPlugins(): array
-    {
-        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER);
+        return new ProductOfferQueryCriteriaMapper();
     }
 }

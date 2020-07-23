@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 /**
- * Use this plugin if wants to expand table data.
+ * Allows to extend the product offer table.
  */
 interface ProductOfferTableExpanderPluginInterface
 {
@@ -45,10 +45,10 @@ interface ProductOfferTableExpanderPluginInterface
      *
      * @api
      *
-     * @param array $data
-     * @param array $item
+     * @param array $rowData
+     * @param array $productOfferData
      *
      * @return array
      */
-    public function expandData(array $data, array $item): array;
+    public function expandData(array $rowData, array $productOfferData): array;
 }
