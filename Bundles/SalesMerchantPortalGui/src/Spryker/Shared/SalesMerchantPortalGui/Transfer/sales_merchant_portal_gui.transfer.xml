@@ -125,4 +125,21 @@
     <transfer name="GuiTableFilter">
     </transfer>
 
+    <transfer name="MerchantOrderCounts">
+        <property name="new" type="int"/>
+        <property name="total" type="int"/>
+        <property name="totalPerStore" type="int[]" associative="true" singular="totalPerStore"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardCard">
+        <property name="actionButtons" type="MerchantDashboardActionButton[]" singular="actionButton"/>
+        <property name="title" type="string"/>
+        <property name="content" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantDashboardActionButton">
+        <property name="title" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
 </transfers>
