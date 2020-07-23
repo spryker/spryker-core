@@ -305,7 +305,7 @@ class ElasticsearchHelper extends Module
      */
     public function createIndexMock(array $indexParams = [], string $mappingTypeName = self::DEFAULT_MAPPING_TYPE): Index
     {
-        $indexMock = Stub::make(Index::class, $indexParams);
+        $indexMock = Stub::makeEmpty(Index::class, $indexParams);
 
         if ($this->supportsMappingTypes()) {
             $indexMock->method('getType')->willReturn(new Type($indexMock, $mappingTypeName));
@@ -322,10 +322,10 @@ class ElasticsearchHelper extends Module
     public function createMappingMock(array $params = [])
     {
         if ($this->supportsMappingTypes()) {
-            return Stub::make('Elastica\Type\Mapping', $params);
+            return Stub::makeEmpty('Elastica\Type\Mapping', $params);
         }
 
-        return Stub::make('Elastica\Mapping', $params);
+        return Stub::makeEmpty('Elastica\Mapping', $params);
     }
 
     /**

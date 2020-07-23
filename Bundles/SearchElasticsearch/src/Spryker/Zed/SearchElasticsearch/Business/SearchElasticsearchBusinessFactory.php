@@ -37,7 +37,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuil
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderFactoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexSettingsUpdater;
-use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactory;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactoryInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleaner as CleanerIndexMapCleaner;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleanerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGenerator as GeneratorIndexMapGenerator;
@@ -199,9 +200,20 @@ class SearchElasticsearchBusinessFactory extends AbstractBusinessFactory
      */
     public function createIndexUpdater(): InstallerInterface
     {
-        return new IndexUpdater(
+        return $this->createIndexUpdaterFactory()->createIndexUpdater();
+    }
+
+    /**
+     * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdaterFactoryInterface
+     */
+    public function createIndexUpdaterFactory(): IndexUpdaterFactoryInterface
+    {
+        return new IndexUpdaterFactory(
             $this->getElasticsearchClient(),
-            $this->createMappingBuilder()
+            $this->createMappingBuilder(),
+            $this->createMappingTypeSupportDetector()
         );
     }
 

@@ -34,7 +34,7 @@ class MappingBuilderFactoryTest extends Unit
     /**
      * @return void
      */
-    public function testCanCreateMappingTypeAwareMappingBuild(): void
+    public function testCanCreateMappingBuilder(): void
     {
         // Arrange
         $mappingBuilderFactory = (new SearchElasticsearchBusinessFactory())->createMappingBuilderFactory();

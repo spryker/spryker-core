@@ -10,7 +10,6 @@ namespace Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\
 use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
-use Elastica\Mapping;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
 
@@ -28,6 +27,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuil
  * @group Index
  * @group AbstractIndexTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 abstract class AbstractIndexTest extends Unit
 {
@@ -38,9 +39,11 @@ abstract class AbstractIndexTest extends Unit
      */
     protected function createMappingBuilderMock(array $mappings = []): MappingBuilderInterface
     {
-        $mappingMock = $this->createMock(Mapping::class);
-        $mappingMock->method('toArray')->willReturn($mappings);
-
+        $mappingMock = $this->tester->createMappingMock([
+            'toArray' => function () use ($mappings) {
+                return $mappings;
+            },
+        ]);
         $mappingBuilder = $this->createMock(MappingBuilderInterface::class);
         $mappingBuilder->method('buildMapping')->willReturn($mappingMock);
 

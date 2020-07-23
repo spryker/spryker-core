@@ -7,10 +7,13 @@
 
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Update;
 
-use Elastica\Mapping;
+use Elastica\Client;
 use Psr\Log\NullLogger;
 use Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\AbstractIndexTest;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\AbstractIndexUpdater;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\MappingTypeAwareIndexUpdater;
 
 /**
  * Auto-generated group annotations
@@ -24,6 +27,8 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater
  * @group Update
  * @group IndexUpdaterTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 class IndexUpdaterTest extends AbstractIndexTest
 {
@@ -41,10 +46,7 @@ class IndexUpdaterTest extends AbstractIndexTest
         $indexMock->method('exists')->willReturn($isIndexExists);
         $clientMock = $this->createClientMock($indexMock);
 
-        $indexInstaller = new IndexUpdater(
-            $clientMock,
-            $this->createMappingBuilderMock()
-        );
+        $indexInstaller = $this->createIndexUpdated($clientMock, $this->createMappingBuilderMock());
 
         $isAccepted = $indexInstaller->accept($this->createIndexDefinitionTransfer());
 
@@ -75,7 +77,11 @@ class IndexUpdaterTest extends AbstractIndexTest
         $indexMock = $this->createIndexMock();
         $indexMock->method('getName')->willReturn($indexName);
         $clientMock = $this->createClientMock($indexMock);
-        $mappingMock = $this->createMock(Mapping::class);
+        $mappingMock = $this->tester->createMappingMock([
+            'toArray' => function () use ($mappings) {
+                return $mappings;
+            },
+        ]);
 
         $mappingBuilderMock = $this->createMappingBuilderMock();
         $mappingBuilderMock->expects($this->once())
@@ -83,10 +89,7 @@ class IndexUpdaterTest extends AbstractIndexTest
             ->with($mappings, $indexMock)
             ->willReturn($mappingMock);
 
-        $indexUpdater = new IndexUpdater(
-            $clientMock,
-            $mappingBuilderMock
-        );
+        $indexUpdater = $this->createIndexUpdated($clientMock, $mappingBuilderMock);
 
         $indexDefinitionTransfer = ($this->createIndexDefinitionTransfer())
             ->setMappings($mappings)
@@ -123,5 +126,23 @@ class IndexUpdaterTest extends AbstractIndexTest
                 ],
             ],
         ];
+    }
+
+    /**
+     * @param \Elastica\Client|\PHPUnit\Framework\MockObject\MockObject $elasticaClient
+     * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface|\PHPUnit\Framework\MockObject\MockObject $mappingBuilder
+     *
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\AbstractIndexUpdater
+     */
+    protected function createIndexUpdated(Client $elasticaClient, MappingBuilderInterface $mappingBuilder): AbstractIndexUpdater
+    {
+        if ($this->tester->supportsMappingTypes()) {
+            return new MappingTypeAwareIndexUpdater(
+                $elasticaClient,
+                $mappingBuilder
+            );
+        }
+
+        return new IndexUpdater($elasticaClient, $mappingBuilder);
     }
 }

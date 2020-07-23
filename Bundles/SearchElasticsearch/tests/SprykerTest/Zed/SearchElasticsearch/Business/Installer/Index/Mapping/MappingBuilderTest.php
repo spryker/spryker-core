@@ -9,6 +9,8 @@ namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Codeception\Test\Unit;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 
 /**
  * Auto-generated group annotations
@@ -46,7 +48,7 @@ class MappingBuilderTest extends Unit
         /** @var \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject $indexMock */
         $indexMock = $this->tester->createIndexMock();
 
-        $mappingBuilder = new MappingBuilder();
+        $mappingBuilder = $this->createMappingBuilder();
         $mapping = $mappingBuilder->buildMapping($this->fixtureMappingConfiguration, $indexMock);
 
         $mappingData = array_shift($this->fixtureMappingConfiguration);
@@ -54,5 +56,17 @@ class MappingBuilderTest extends Unit
         foreach ($mappingData as $key => $value) {
             $this->assertEquals($value, $mapping->getParam($key));
         }
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface
+     */
+    protected function createMappingBuilder(): MappingBuilderInterface
+    {
+        if ($this->tester->supportsMappingTypes()) {
+            return new MappingTypeAwareMappingBuilder();
+        }
+
+        return new MappingBuilder();
     }
 }
