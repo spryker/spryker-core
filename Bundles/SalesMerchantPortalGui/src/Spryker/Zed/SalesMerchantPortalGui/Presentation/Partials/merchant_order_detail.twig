@@ -4,8 +4,7 @@
     referenceTitle: 'Merchant Reference' | trans,
 } %}
 
-<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}">
-
+<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
     {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
     <div state-transitions class="mp-manage-order__transitions">
@@ -27,7 +26,7 @@
         {% endfor %}
     </div>
 
-    <web-spy-tabs class="mp-manage-order__content">
+    <web-spy-tabs class="mp-manage-order__content" cloak>
         <web-spy-tab title="{{ 'Details' | trans }}">
             {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
