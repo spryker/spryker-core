@@ -11,7 +11,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferConfig extends AbstractBundleConfig
 {
-    protected const DEFAULT_APPROVAL_STATUS = 'approved';
+    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    protected const STATUS_APPROVED = 'approved';
+    protected const STATUS_DENIED = 'denied';
 
     /**
      * @api
@@ -20,6 +22,27 @@ class ProductOfferConfig extends AbstractBundleConfig
      */
     public function getDefaultApprovalStatus(): string
     {
-        return static::DEFAULT_APPROVAL_STATUS;
+        return static::STATUS_APPROVED;
+    }
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getStatusTree(): array
+    {
+        return [
+            static::STATUS_WAITING_FOR_APPROVAL => [
+                static::STATUS_APPROVED,
+                static::STATUS_DENIED,
+            ],
+            static::STATUS_APPROVED => [
+                static::STATUS_DENIED,
+            ],
+            static::STATUS_DENIED => [
+                static::STATUS_APPROVED,
+            ],
+        ];
     }
 }

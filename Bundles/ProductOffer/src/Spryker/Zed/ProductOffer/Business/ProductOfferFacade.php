@@ -114,4 +114,18 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
             ->createItemProductOfferChecker()
             ->checkItemProductOffer($cartChangeTransfer);
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getApplicableMerchantStatuses(string $currentStatus): array
+    {
+        return $this->getFactory()->createProductOfferStatusReader()->getApplicableMerchantStatuses($currentStatus);
+    }
 }

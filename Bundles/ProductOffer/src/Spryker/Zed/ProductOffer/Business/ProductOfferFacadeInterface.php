@@ -102,4 +102,17 @@ interface ProductOfferFacadeInterface
      * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
      */
     public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer;
+
+    /**
+     * Specification:
+     * - Gets the available product offer statuses for the current product offer status.
+     * - Returns empty array if no available statuses exist.
+     *
+     * @api
+     *
+     * @param string $currentStatus
+     *
+     * @return string[]
+     */
+    public function getApplicableMerchantStatuses(string $currentStatus): array;
 }
