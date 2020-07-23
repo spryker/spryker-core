@@ -89,11 +89,35 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
      */
     public function getConfigurableBundleTemplateCollection(RestRequestInterface $restRequest): RestResponseInterface
     {
+        $configurableBundleTemplateIds = $this->getAllConfigurableBundleTemplateIds();
+
+        if (!$configurableBundleTemplateIds) {
+            return $this->configurableBundleTemplateRestResponseBuilder->createRestResponse();
+        }
+
+        $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
+            ->getConfigurableBundleTemplateStorageTransfersByIds(
+                $configurableBundleTemplateIds,
+                $restRequest->getMetadata()->getLocale()
+            );
+
+        return $this->configurableBundleTemplateRestResponseBuilder
+            ->buildConfigurableBundleTemplateCollectionRestResponse(
+                $configurableBundleTemplateStorageTransfers,
+                $restRequest->getMetadata()->getLocale()
+            );
+    }
+
+    /**
+     * @return int[]
+     */
+    protected function getAllConfigurableBundleTemplateIds(): array
+    {
         $formattedSearchResults = $this->configurableBundlePageSearchClient
             ->searchConfigurableBundleTemplates(new ConfigurableBundleTemplatePageSearchRequestTransfer());
 
         if (!$formattedSearchResults[static::FORMATTED_RESULT_KEY]) {
-            return $this->configurableBundleTemplateRestResponseBuilder->createRestResponse();
+            return [];
         }
 
         $configurableBundleTemplateIds = [];
@@ -102,17 +126,6 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
             $configurableBundleTemplateIds[] = $configurableBundleTemplatePageSearchTransfer->getFkConfigurableBundleTemplate();
         }
 
-        $localeName = $restRequest->getMetadata()->getLocale();
-        $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
-            ->getConfigurableBundleTemplateStorageTransfersByIds(
-                array_filter($configurableBundleTemplateIds),
-                $localeName
-            );
-
-        return $this->configurableBundleTemplateRestResponseBuilder
-            ->buildConfigurableBundleTemplateCollectionRestResponse(
-                $configurableBundleTemplateStorageTransfers,
-                $localeName
-            );
+        return array_filter($configurableBundleTemplateIds);
     }
 }

@@ -17,7 +17,7 @@ class ConfigurableBundleTemplatesResourceRoutePlugin extends AbstractPlugin impl
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for configurable-bundle-templates resource.
+     * - Configures available actions for `configurable-bundle-templates` resource.
      *
      * @api
      *

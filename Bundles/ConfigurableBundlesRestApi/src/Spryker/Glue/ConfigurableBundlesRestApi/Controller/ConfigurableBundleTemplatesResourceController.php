@@ -20,7 +20,7 @@ class ConfigurableBundleTemplatesResourceController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves ConfigurableBundleTemplates data by id."
+     *              "Retrieves ConfigurableBundleTemplate data by id."
      *          ],
      *          "parameters": [{
      *              "ref": "acceptLanguage"

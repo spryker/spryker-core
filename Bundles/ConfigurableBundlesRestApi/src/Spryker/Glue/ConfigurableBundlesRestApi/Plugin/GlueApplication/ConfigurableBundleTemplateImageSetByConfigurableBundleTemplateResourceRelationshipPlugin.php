@@ -26,6 +26,7 @@ class ConfigurableBundleTemplateImageSetByConfigurableBundleTemplateResourceRela
      * - Adds `configurable-bundle-template-image-sets` resource as relationship by configurable bundle template.
      * - Requires `ConfigurableBundleTemplateStorageTransfer` be provided in resource payload.
      * - Requires `ConfigurableBundleTemplateStorageTransfer::uuid` be provided.
+     * - Requires `ConfigurableBundleTemplateStorageTransfer::imageSets` be provided.
      *
      * @api
      *
