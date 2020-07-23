@@ -4,7 +4,7 @@
   "description": "Guzzle module",
   "license": "proprietary",
   "require": {
-    "guzzlehttp/guzzle": "^6.3.0",
+    "CartUpSellingProductsRestApiCest": "^7.0.0",
     "php": ">=7.2"
   },
   "minimum-stability": "dev",
