@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Codeception\Test\Unit;
-use Elastica\Type;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory;
@@ -27,6 +26,8 @@ use Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchBusinessFactory;
  * @group Mapping
  * @group MappingBuilderFactoryTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 class MappingBuilderFactoryTest extends Unit
 {
@@ -36,35 +37,18 @@ class MappingBuilderFactoryTest extends Unit
     public function testCanCreateMappingTypeAwareMappingBuild(): void
     {
         // Arrange
-        if (!class_exists(Type::class)) {
-            $this->markTestSkipped('This test can only be run in Elasticsearch 6 (or lower) environment.');
-        }
-
         $mappingBuilderFactory = (new SearchElasticsearchBusinessFactory())->createMappingBuilderFactory();
 
         // Act
         $mappingBuilder = $mappingBuilderFactory->createMappingBuilder();
 
         // Assert
-        $this->assertInstanceOf(MappingTypeAwareMappingBuilder::class, $mappingBuilder);
-    }
+        if ($this->tester->supportsMappingTypes()) {
+            $this->assertInstanceOf(MappingTypeAwareMappingBuilder::class, $mappingBuilder);
 
-    /**
-     * @return void
-     */
-    public function testCanCreateappingBuild(): void
-    {
-        // Arrange
-        if (class_exists(Type::class)) {
-            $this->markTestSkipped('This test can only be run in Elasticsearch 7 (or higher) environment.');
+            return;
         }
 
-        $mappingBuilderFactory = (new SearchElasticsearchBusinessFactory())->createMappingBuilderFactory();
-
-        // Act
-        $mappingBuilder = $mappingBuilderFactory->createMappingBuilder();
-
-        // Assert
         $this->assertInstanceOf(MappingBuilder::class, $mappingBuilder);
     }
 }

@@ -9,7 +9,6 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Elastica\Index;
 use Elastica\Type\Mapping;
-use Generated\Shared\Transfer\IndexDefinitionTransfer;
 
 /**
  * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
@@ -17,15 +16,15 @@ use Generated\Shared\Transfer\IndexDefinitionTransfer;
 class MappingTypeAwareMappingBuilder implements MappingBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
+     * @param array $mappings
      * @param \Elastica\Index $index
      *
      * @return \Elastica\Type\Mapping
      */
-    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index)
+    public function buildMapping(array $mappings, Index $index)
     {
-        $mappingTypeName = array_key_first($indexDefinitionTransfer->getMappings());
-        $mappingData = $indexDefinitionTransfer->getMappings()[$mappingTypeName];
+        $mappingTypeName = array_key_first($mappings);
+        $mappingData = $mappingTypeName !== null ? $mappings[$mappingTypeName] : [];
         $mappingType = $index->getType($mappingTypeName);
         $mapping = new Mapping($mappingType);
 

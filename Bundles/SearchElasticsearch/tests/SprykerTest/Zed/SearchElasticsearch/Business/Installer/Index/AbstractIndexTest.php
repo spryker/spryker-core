@@ -10,7 +10,8 @@ namespace Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\
 use Codeception\Test\Unit;
 use Elastica\Client;
 use Elastica\Index;
-use Elastica\Type\Mapping;
+use Elastica\Mapping;
+use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
 
 /**
@@ -67,5 +68,20 @@ abstract class AbstractIndexTest extends Unit
     protected function createIndexMock(): Index
     {
         return $this->createMock(Index::class);
+    }
+
+    /**
+     * @param string $indexName
+     * @param array $mappings
+     * @param array $settings
+     *
+     * @return \Generated\Shared\Transfer\IndexDefinitionTransfer
+     */
+    protected function createIndexDefinitionTransfer(string $indexName = 'index_name', array $mappings = [[]], array $settings = []): IndexDefinitionTransfer
+    {
+        return (new IndexDefinitionTransfer())
+            ->setIndexName($indexName)
+            ->setMappings($mappings)
+            ->setSettings($settings);
     }
 }

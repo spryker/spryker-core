@@ -7,9 +7,7 @@
 
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Update;
 
-use Elastica\Index;
-use Elastica\Type\Mapping;
-use Generated\Shared\Transfer\IndexDefinitionTransfer;
+use Elastica\Mapping;
 use Psr\Log\NullLogger;
 use Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\AbstractIndexTest;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update\IndexUpdater;
@@ -48,7 +46,7 @@ class IndexUpdaterTest extends AbstractIndexTest
             $this->createMappingBuilderMock()
         );
 
-        $isAccepted = $indexInstaller->accept(new IndexDefinitionTransfer());
+        $isAccepted = $indexInstaller->accept($this->createIndexDefinitionTransfer());
 
         $this->assertEquals($expectedIsAccepted, $isAccepted);
     }
@@ -67,24 +65,22 @@ class IndexUpdaterTest extends AbstractIndexTest
     /**
      * @dataProvider canUpdateMappingsProvider
      *
-     * @param int $expectedNumberOfUpdates
      * @param string $indexName
      * @param array $mappings
      *
      * @return void
      */
-    public function testCanUpdateMappings(int $expectedNumberOfUpdates, string $indexName, array $mappings): void
+    public function testCanUpdateMappings(string $indexName, array $mappings): void
     {
         $indexMock = $this->createIndexMock();
         $indexMock->method('getName')->willReturn($indexName);
         $clientMock = $this->createClientMock($indexMock);
-        $normalizedMappingData = $this->normalizeMappingDataForTest($indexMock, $mappings);
         $mappingMock = $this->createMock(Mapping::class);
 
         $mappingBuilderMock = $this->createMappingBuilderMock();
-        $mappingBuilderMock->expects($this->exactly($expectedNumberOfUpdates))
+        $mappingBuilderMock->expects($this->once())
             ->method('buildMapping')
-            ->withConsecutive(...$normalizedMappingData)
+            ->with($mappings, $indexMock)
             ->willReturn($mappingMock);
 
         $indexUpdater = new IndexUpdater(
@@ -92,7 +88,7 @@ class IndexUpdaterTest extends AbstractIndexTest
             $mappingBuilderMock
         );
 
-        $indexDefinitionTransfer = (new IndexDefinitionTransfer())
+        $indexDefinitionTransfer = ($this->createIndexDefinitionTransfer())
             ->setMappings($mappings)
             ->setIndexName($indexName);
 
@@ -106,46 +102,26 @@ class IndexUpdaterTest extends AbstractIndexTest
     {
         return [
             'one mapping' => [
-                1,
                 'index-name',
                 [
-                    'foo' => ['foo'],
+                    'foo' => ['foo' => ['foo']],
                 ],
             ],
             'two mappings' => [
-                2,
                 'another-index-name',
                 [
-                    'foo' => ['foo'],
-                    'bar' => ['bar'],
+                    'foo' => ['foo' => ['foo']],
+                    'bar' => ['bar' => ['bar']],
                 ],
             ],
-            'three mapping' => [
-                3,
+            'three mappings' => [
                 'yet-another-index-name',
                 [
-                    'foo' => ['foo'],
-                    'bar' => ['bar'],
-                    'baz' => ['baz'],
+                    'foo' => ['foo' => ['foo']],
+                    'bar' => ['bar' => ['bar']],
+                    'baz' => ['baz' => ['baz']],
                 ],
             ],
         ];
-    }
-
-    /**
-     * @param \Elastica\Index $index
-     * @param array $mappingData
-     *
-     * @return array
-     */
-    protected function normalizeMappingDataForTest(Index $index, array $mappingData): array
-    {
-        $normalizedMappingData = [];
-
-        foreach ($mappingData as $key => $mapping) {
-            $normalizedMappingData[] = [$index, $key, $mapping];
-        }
-
-        return $normalizedMappingData;
     }
 }

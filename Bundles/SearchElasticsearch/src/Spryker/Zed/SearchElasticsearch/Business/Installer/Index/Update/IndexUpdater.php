@@ -57,7 +57,7 @@ class IndexUpdater implements InstallerInterface
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
         $logger->info(sprintf('Update mapping for index "%s".', $index->getName()));
-        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer, $index);
+        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer->getMappings(), $index);
         $mapping->send($index);
     }
 }

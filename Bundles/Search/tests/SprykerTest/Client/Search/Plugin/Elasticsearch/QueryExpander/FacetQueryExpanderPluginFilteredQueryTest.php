@@ -128,8 +128,8 @@ class FacetQueryExpanderPluginFilteredQueryTest extends AbstractFacetQueryExpand
                 ->setQuery((new BoolQuery())
                     ->addFilter((new Term())
                         ->setTerm(PageIndexMap::STRING_FACET_FACET_NAME, 'foo'))
-                    ->addFilter((new Terms())
-                        ->setTerms(PageIndexMap::STRING_FACET_FACET_VALUE, ['asdf', 'qwer']))));
+                    ->addFilter((new Terms(PageIndexMap::STRING_FACET_FACET_VALUE))
+                        ->setTerms(['asdf', 'qwer']))));
         $parameters = [
             'foo-param' => [
                 'asdf',

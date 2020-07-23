@@ -9,19 +9,18 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Elastica\Index;
 use Elastica\Mapping;
-use Generated\Shared\Transfer\IndexDefinitionTransfer;
 
 class MappingBuilder implements MappingBuilderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
+     * @param array $mappings
      * @param \Elastica\Index $index
      *
      * @return \Elastica\Mapping
      */
-    public function buildMapping(IndexDefinitionTransfer $indexDefinitionTransfer, Index $index)
+    public function buildMapping(array $mappings, Index $index)
     {
-        $mappingData = $this->getMappingData($indexDefinitionTransfer);
+        $mappingData = $this->getMappingData($mappings);
         $mapping = new Mapping();
 
         foreach ($mappingData as $key => $value) {
@@ -32,14 +31,12 @@ class MappingBuilder implements MappingBuilderInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\IndexDefinitionTransfer $indexDefinitionTransfer
+     * @param array $mappings
      *
      * @return array
      */
-    protected function getMappingData(IndexDefinitionTransfer $indexDefinitionTransfer): array
+    protected function getMappingData(array $mappings): array
     {
-        $mappings = $indexDefinitionTransfer->getMappings();
-
         return $mappings ? array_shift($mappings) : [];
     }
 }

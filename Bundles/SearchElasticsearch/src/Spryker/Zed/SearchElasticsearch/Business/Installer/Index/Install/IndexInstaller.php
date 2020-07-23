@@ -57,7 +57,7 @@ class IndexInstaller implements InstallerInterface
     public function run(IndexDefinitionTransfer $indexDefinitionTransfer, LoggerInterface $logger): void
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
-        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer, $index);
+        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer->getMappings(), $index);
 
         $data = ['mappings' => $mapping->toArray()];
         $settings = $indexDefinitionTransfer->getSettings();

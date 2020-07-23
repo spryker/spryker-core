@@ -18,7 +18,6 @@ use Spryker\Zed\SearchElasticsearch\Business\Snapshot\Repository;
 use Spryker\Zed\SearchElasticsearch\Business\Snapshot\RepositoryInterface;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Zed\SearchElasticsearch\SearchElasticsearchDependencyProvider;
-use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
  * Auto-generated group annotations
@@ -287,6 +286,8 @@ class SearchElasticsearchFacadeTest extends Unit
             $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
         );
 
+        $destIndex->refresh();
+
         // Assert
         $this->assertDocumentInIndexHasExpectedContent($destIndex, $documentId, $documentContent);
     }
@@ -300,7 +301,7 @@ class SearchElasticsearchFacadeTest extends Unit
      */
     protected function assertDocumentInIndexHasExpectedContent(Index $index, string $documentId, array $expectedContent): void
     {
-        $response = $index->request(sprintf('%s/%s', ElasticsearchHelper::DEFAULT_MAPPING_TYPE, $documentId), Request::GET);
+        $response = $index->request('_doc/' . $documentId, Request::GET);
 
         $this->assertSame($expectedContent, $response->getData()[static::DOCUMENT_CONTENT_KEY]);
     }
