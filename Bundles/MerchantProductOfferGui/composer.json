@@ -1,0 +1,27 @@
+{
+  "name": "spryker/merchant-product-offer-gui",
+  "description": "MerchantProductOfferGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/kernel": "^3.30.0",
+    "spryker/merchant": "^3.0.0",
+    "spryker/product-offer-gui-extension": "^0.1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
