@@ -16,7 +16,7 @@
   },
   "autoload": {
     "files": [
-      "Bundles/Development/tests/dd.php"
+      "autoload.php"
     ]
   },
   "bin": [
@@ -25,11 +25,6 @@
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
-  },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
   },
   "replace": {
     "spryker/acl": "*",
@@ -121,7 +116,7 @@
     "spryker/cms-collector": "*",
     "spryker/cms-content-widget": "*",
     "spryker/cms-content-widget-cms-block-connector": "*",
-    "spryker/cms-content-widget-content-item-connector": "*",
+    "spryker/cms-content-widget-content-connector": "*",
     "spryker/cms-content-widget-product-connector": "*",
     "spryker/cms-content-widget-product-group-connector": "*",
     "spryker/cms-content-widget-product-search-connector": "*",
@@ -210,6 +205,7 @@
     "spryker/config": "*",
     "spryker/configurable-bundle": "*",
     "spryker/configurable-bundle-cart": "*",
+    "spryker/configurable-bundle-carts-rest-api": "*",
     "spryker/configurable-bundle-data-import": "*",
     "spryker/configurable-bundle-gui": "*",
     "spryker/configurable-bundle-gui-extension": "*",
