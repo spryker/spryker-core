@@ -10,8 +10,6 @@ namespace Spryker\Zed\Twig\Communication\Plugin\ServiceProvider;
 use FilesystemIterator;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Symfony\Bridge\Twig\Extension\HttpKernelRuntime;
