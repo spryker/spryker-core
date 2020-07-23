@@ -32,6 +32,7 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
     </transfer>
 
     <transfer name="Expense">
@@ -208,6 +209,7 @@
 
     <transfer name="MerchantOmsTriggerRequest">
         <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
 </transfers>

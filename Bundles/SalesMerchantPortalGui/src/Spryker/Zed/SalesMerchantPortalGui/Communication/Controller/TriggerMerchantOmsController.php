@@ -57,13 +57,13 @@ class TriggerMerchantOmsController extends AbstractController
             ->getMerchantOmsFacade()
             ->triggerEventForMerchantOrderItems($merchantOmsTriggerRequestTransfer);
 
-        $postActionUrl = sprintf('/sales-merchant-portal-gui/detail?%s=%d', static::PARAM_ID_MERCHANT_ORDER, $idMerchantOrder);
-
         $responseData = [
             'postActions' => [
                 [
-                    'type' => 'refresh_overlay',
-                    'url' => $postActionUrl,
+                    'type' => 'refresh_ajax_form',
+                ],
+                [
+                    'type' => 'refresh_table',
                 ],
             ],
             'notifications' => [

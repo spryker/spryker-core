@@ -16,11 +16,11 @@ use Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpan
  * @method \Spryker\Zed\MerchantOms\Communication\MerchantOmsCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantOms\MerchantOmsConfig getConfig()
  */
-class MerchantOmsStatesMerchantOrderExpanderPlugin extends AbstractPlugin implements MerchantOrderExpanderPluginInterface
+class MerchantOmsMerchantOrderExpanderPlugin extends AbstractPlugin implements MerchantOrderExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands merchant order with merchant order items OMS states.
+     * - Expands merchant order with merchant order items OMS states and manual events.
      *
      * @api
      *
@@ -30,6 +30,6 @@ class MerchantOmsStatesMerchantOrderExpanderPlugin extends AbstractPlugin implem
      */
     public function expand(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        return $this->getFacade()->expandMerchantOrderWithStates($merchantOrderTransfer);
+        return $this->getFacade()->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
     }
 }

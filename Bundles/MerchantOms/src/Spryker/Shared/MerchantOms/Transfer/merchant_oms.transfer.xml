@@ -7,6 +7,7 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
     </transfer>
 
     <transfer name="Merchant">

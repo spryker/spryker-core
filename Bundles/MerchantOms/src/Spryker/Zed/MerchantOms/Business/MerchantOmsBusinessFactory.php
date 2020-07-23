@@ -8,8 +8,6 @@
 namespace Spryker\Zed\MerchantOms\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\MerchantOms\Business\EventReader\MerchantOmsEventReader;
-use Spryker\Zed\MerchantOms\Business\EventReader\MerchantOmsEventReaderInterface;
 use Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTrigger;
 use Spryker\Zed\MerchantOms\Business\EventTrigger\MerchantOmsEventTriggerInterface;
 use Spryker\Zed\MerchantOms\Business\Expander\MerchantOrderExpander;
@@ -56,17 +54,8 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantOrderExpander(): MerchantOrderExpanderInterface
     {
-        return new MerchantOrderExpander($this->getRepository());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantOms\Business\EventReader\MerchantOmsEventReaderInterface
-     */
-    public function createMerchantOmsEventReader(): MerchantOmsEventReaderInterface
-    {
-        return new MerchantOmsEventReader(
+        return new MerchantOrderExpander(
             $this->getStateMachineFacade(),
-            $this->getMerchantSalesOrderFacade(),
             $this->getRepository()
         );
     }

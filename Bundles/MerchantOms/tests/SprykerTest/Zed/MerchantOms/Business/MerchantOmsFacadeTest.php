@@ -104,7 +104,7 @@ class MerchantOmsFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandMerchantOrderWithStatesReturnsCorrectData(): void
+    public function testExpandMerchantOrderWithMerchantOmsDataReturnsCorrectData(): void
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -131,7 +131,7 @@ class MerchantOmsFacadeTest extends Unit
         $expectedMerchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
 
         // Act
-        $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderWithStates($expectedMerchantOrderTransfer);
+        $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderWithMerchantOmsData($expectedMerchantOrderTransfer);
 
         // Assert
         $this->assertSame($expectedMerchantOrderTransfer->getItemStates(), $merchantOrderTransfer->getItemStates());
