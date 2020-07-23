@@ -19,7 +19,6 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\ProductOfferGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductOfferGui\Communication\Form\ApprovalStatusForm;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface;
 use Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface;
@@ -227,8 +226,8 @@ class ProductOfferTable extends AbstractTable
                 Url::generate(
                     ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
                     [
-                        EditController::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                        EditController::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
+                        ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                        ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
                 ),
                 $availableApprovalStatus . '_button',
                 ApprovalStatusForm::class,

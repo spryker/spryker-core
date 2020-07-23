@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,9 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AbstractController
 {
-    public const REQUEST_PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
-    public const REQUEST_PARAM_APPROVAL_STATUS = 'approval-status';
-
     protected const MESSAGE_SUCCESS_APPROVAL_STATUS_UPDATE = 'The approval status was updated';
 
     /**
@@ -30,8 +28,8 @@ class EditController extends AbstractController
      */
     public function updateApprovalStatusAction(Request $request): RedirectResponse
     {
-        $approvalStatus = $request->get(static::REQUEST_PARAM_APPROVAL_STATUS);
-        $idProductOffer = $this->castId($request->get(static::REQUEST_PARAM_ID_PRODUCT_OFFER));
+        $approvalStatus = $request->get(ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS);
+        $idProductOffer = $this->castId($request->get(ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER));
 
         $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update(
             (new ProductOfferTransfer())
