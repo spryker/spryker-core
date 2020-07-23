@@ -105,7 +105,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         $localeName = $restRequest->getMetadata()->getLocale();
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
             ->getConfigurableBundleTemplateStorageTransfersByIds(
-                $configurableBundleTemplateIds,
+                array_filter($configurableBundleTemplateIds),
                 $localeName
             );
 

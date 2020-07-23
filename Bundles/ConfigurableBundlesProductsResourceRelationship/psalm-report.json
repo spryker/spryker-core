@@ -1,0 +1,30 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ConfigurableBundlesProductsResourceRelationship\\Processor\\Reader\\ProductConcreteReaderInterface::getProductConcreteIdsByProductListId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Expander/ProductConcreteExpander.php",
+            "snippet": "                    $configurableBundleTemplateSlotStorageTransfer->getIdProductList()",
+            "selected_text": "$configurableBundleTemplateSlotStorageTransfer->getIdProductList()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossibleRawObjectIteration",
+            "message": "Possibly undesired iteration over regular object Elastica\\Result",
+            "file_name": "vendor/spryker/spryker/Bundles/ConfigurableBundlesProductsResourceRelationship/src/Spryker/Glue/ConfigurableBundlesProductsResourceRelationship/Processor/Reader/ProductConcreteReader.php",
+            "snippet": "        foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {",
+            "selected_text": "$productConcretePageSearchTransfers",
+            "error_level": 4,
+            "shortcode": 208
+        }
+    ],
+    "deprecation": []
+}

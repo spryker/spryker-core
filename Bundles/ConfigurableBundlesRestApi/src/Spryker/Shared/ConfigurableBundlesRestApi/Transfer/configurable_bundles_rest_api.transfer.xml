@@ -23,6 +23,7 @@
 
     <transfer name="RestErrorMessage">
         <property name="code" type="string"/>
+        <property name="status" type="int"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateStorage">
@@ -34,10 +35,12 @@
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
         <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductImageSetStorage">
         <property name="images" type="ProductImageStorage[]" singular="image"/>
+        <property name="name" type="string"/>
     </transfer>
 
     <transfer name="ProductImageStorage">

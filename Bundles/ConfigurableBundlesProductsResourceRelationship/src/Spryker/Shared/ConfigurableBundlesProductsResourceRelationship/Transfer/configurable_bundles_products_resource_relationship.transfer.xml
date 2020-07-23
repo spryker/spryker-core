@@ -11,6 +11,7 @@
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlotStorage">
+        <property name="idProductList" type="int"/>
     </transfer>
 
 </transfers>

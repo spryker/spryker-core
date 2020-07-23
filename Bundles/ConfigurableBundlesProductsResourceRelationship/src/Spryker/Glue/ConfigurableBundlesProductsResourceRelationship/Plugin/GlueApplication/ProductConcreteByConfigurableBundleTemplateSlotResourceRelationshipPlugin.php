@@ -25,6 +25,7 @@ class ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin 
      * {@inheritDoc}
      * - Adds `concrete-products` resource as relationship by configurable bundle template slot.
      * - Requires `ConfigurableBundleTemplateSlotStorageTransfer` be provided in resource payload.
+     * - Requires `ConfigurableBundleTemplateSlotStorageTransfer::idProductList` be provided.
      *
      * @api
      *

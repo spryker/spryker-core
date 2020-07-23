@@ -6,10 +6,11 @@
   "require": {
     "php": ">=7.2",
     "spryker/catalog": "^5.5.0",
+    "spryker/configurable-bundles-rest-api": "^1.0.0",
     "spryker/glue-application": "^1.9.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/products-rest-api": "2.11.0"
+    "spryker/products-rest-api": "2.10.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

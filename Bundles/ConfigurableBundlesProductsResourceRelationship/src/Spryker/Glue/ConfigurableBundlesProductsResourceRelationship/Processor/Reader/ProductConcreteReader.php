@@ -57,6 +57,6 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
             $productConcreteIds[] = $productConcretePageSearchTransfer->getFkProduct();
         }
 
-        return $productConcreteIds;
+        return array_filter($productConcreteIds);
     }
 }
