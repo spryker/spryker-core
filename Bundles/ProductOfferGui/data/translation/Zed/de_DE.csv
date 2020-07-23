@@ -1,0 +1,18 @@
+Offers,"Bietet an"
+"List of Offers","Liste der Angebote"
+"Offer ID","Angebots ID"
+Reference,Referenz
+SKU,Artikelnummer
+Name,Name
+Status,Status
+Visibility,Sichtweite
+Stores,Shops
+Actions,Aktionen
+approved,Genehmigt
+waiting_for_approval,"Warten auf die Bestätigung"
+declined,Abgelehnt
+declined_button,Verweigern
+approved_button,"Zugriff genehmigen"
+Active,Aktiv
+Inactive,Inaktiv
+"The approval status was updated","Der Genehmigungsstatus wurde aktualisiert"
