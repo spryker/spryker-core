@@ -12,8 +12,6 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterfa
 
 class MerchantListDataExpander implements MerchantListDataExpanderInterface
 {
-    protected const URL_PARAM_ID_PRODUCT = 'id-merchant';
-
     /**
      * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
      */
