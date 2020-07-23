@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Search\Business;
 
 use Codeception\Test\Unit;
 use Elastica\Snapshot;
+use Elastica\Type;
 use Psr\Log\NullLogger;
 use Spryker\Client\Search\Provider\SearchClientProvider;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
@@ -140,6 +141,7 @@ class SearchFacadeBCTest extends Unit
     {
         // Arrange
         $index = $this->tester->haveIndex(static::INDEX_NAME);
+        $this->skipIfElasticsearch7();
 
         // Act
         $response = $this->tester->getFacade()->delete();
@@ -155,6 +157,7 @@ class SearchFacadeBCTest extends Unit
     public function testGetTotalCountReturnsNumberOfDocumentsInAnIndex(): void
     {
         $this->skipIfCi();
+        $this->skipIfElasticsearch7();
 
         // Arrange
         $this->tester->haveDocumentInIndex(static::INDEX_NAME);
@@ -172,6 +175,7 @@ class SearchFacadeBCTest extends Unit
     public function testInstallIndexInstallsIndices(): void
     {
         $this->skipIfCi();
+        $this->skipIfElasticsearch7();
 
         // Arrange
         $this->tester->mockConfigMethod('getClassTargetDirectory', codecept_output_dir());
@@ -200,6 +204,16 @@ class SearchFacadeBCTest extends Unit
     {
         if (getenv('TRAVIS')) {
             $this->markTestSkipped('Travis not set up properly');
+        }
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!class_exists(Type::class)) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
         }
     }
 }
