@@ -12,7 +12,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ProductOfferGuiConfig extends AbstractBundleConfig
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferGui\Communication\Controller\EditController::updateActivityStatusAction()
+     * @uses \Spryker\Zed\ProductOfferGui\Communication\Controller\EditController::updateApprovalStatusAction()
      */
-    public const URL_UPDATE_APPROVAL_STATUS = '/product-offer-gui/edit/update-activity-status';
+    public const URL_UPDATE_APPROVAL_STATUS = '/product-offer-gui/edit/update-approval-status';
 }

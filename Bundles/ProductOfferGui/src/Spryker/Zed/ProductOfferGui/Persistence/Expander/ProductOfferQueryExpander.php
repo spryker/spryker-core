@@ -28,31 +28,16 @@ class ProductOfferQueryExpander implements ProductOfferQueryExpanderInterface
 
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function expandQuery(ModelCriteria $query): ModelCriteria
+    public function mapQueryCriteriaTransferToModelCriteria(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria
     {
-        $queryCriteriaTransfer = $this->buildQueryCriteriaTransfer();
-
         $query = $this->addJoin($query, $queryCriteriaTransfer);
         $query = $this->addWithColumns($query, $queryCriteriaTransfer);
 
         return $query;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
-     */
-    protected function buildQueryCriteriaTransfer(): QueryCriteriaTransfer
-    {
-        $queryCriteriaTransfer = new QueryCriteriaTransfer();
-
-        foreach ($this->productOfferTableExpanderPlugins as $productOfferTableExpanderPlugin) {
-            $queryCriteriaTransfer = $productOfferTableExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
-        }
-
-        return $queryCriteriaTransfer;
     }
 
     /**

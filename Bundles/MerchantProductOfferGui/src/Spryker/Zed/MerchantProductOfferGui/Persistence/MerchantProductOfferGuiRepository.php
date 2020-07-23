@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Persistence;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
@@ -23,20 +23,20 @@ class MerchantProductOfferGuiRepository extends AbstractRepository implements Me
 {
     /**
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
     public function expandQueryCriteriaTransfer(
         QueryCriteriaTransfer $queryCriteriaTransfer,
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+        MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): QueryCriteriaTransfer {
         $queryJoinTransfer = (new QueryJoinTransfer())
             ->setJoinType(Criteria::INNER_JOIN)
             ->setRelation('SpyMerchant');
 
-        if ($merchantProductOfferCriteriaFilterTransfer->getIdMerchant()) {
-            $queryJoinTransfer->setCondition(sprintf('%s = %d', SpyProductOfferTableMap::COL_FK_MERCHANT, $merchantProductOfferCriteriaFilterTransfer->getIdMerchant()));
+        if ($merchantProductOfferCriteriaTransfer->getIdMerchant()) {
+            $queryJoinTransfer->setCondition(sprintf('%s = %d', SpyProductOfferTableMap::COL_FK_MERCHANT, $merchantProductOfferCriteriaTransfer->getIdMerchant()));
         }
 
         $queryCriteriaTransfer->addJoin($queryJoinTransfer)

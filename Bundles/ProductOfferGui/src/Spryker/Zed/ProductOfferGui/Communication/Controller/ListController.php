@@ -24,11 +24,11 @@ class ListController extends AbstractController
      */
     public function indexAction(): array
     {
-        $offerTable = $this->getFactory()
-            ->createOfferTable();
+        $productOfferTable = $this->getFactory()
+            ->createProductOfferTable();
 
         $viewData = $this->executeProductOfferListActionViewDataExpanderPlugins([
-            'offerTable' => $offerTable->render(),
+            'productOfferTable' => $productOfferTable->render(),
         ]);
 
         return $this->viewResponse($viewData);
@@ -39,10 +39,10 @@ class ListController extends AbstractController
      */
     public function tableAction(): JsonResponse
     {
-        $table = $this->getFactory()
-            ->createOfferTable();
+        $productOfferTable = $this->getFactory()
+            ->createProductOfferTable();
 
-        return $this->jsonResponse($table->fetchData());
+        return $this->jsonResponse($productOfferTable->fetchData());
     }
 
     /**

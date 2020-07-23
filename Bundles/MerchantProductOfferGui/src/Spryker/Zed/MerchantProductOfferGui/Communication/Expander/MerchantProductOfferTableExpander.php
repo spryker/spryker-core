@@ -7,17 +7,16 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Communication\Expander;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpanderInterface
 {
-    protected const COL_POSITION = 2;
-
     protected const URL_PARAM_ID_MERCHANT = 'id-merchant';
     protected const COL_MERCHANT_NAME = 'Merchant';
 
@@ -54,7 +53,7 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
 
         return $this->merchantProductOfferGuiRepository->expandQueryCriteriaTransfer(
             $queryCriteriaTransfer,
-            (new MerchantProductOfferCriteriaFilterTransfer())->setIdMerchant($idMerchant)
+            (new MerchantProductOfferCriteriaTransfer())->setIdMerchant($idMerchant)
         );
     }
 
@@ -66,31 +65,44 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     public function expandTableConfiguration(TableConfiguration $config): TableConfiguration
     {
         $header = $config->getHeader();
-        $header = $this->insertArray($header, [static::COL_MERCHANT_NAME]);
+        $header = $this->insertAfterHeader(
+            $header,
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
+            [static::COL_MERCHANT_NAME]
+        );
         $config->setHeader($header);
 
         return $config;
     }
 
     /**
-     * @param array $data
-     * @param array $item
+     * @param array $rowData
+     * @param array $productOfferData
      *
      * @return array
      */
-    public function expandData(array $data, array $item): array
+    public function expandData(array $rowData, array $productOfferData): array
     {
-        return $this->insertArray($data, [$item[MerchantTransfer::NAME]]);
+        return $this->insertAfterHeader(
+            $rowData,
+            SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
+            [$productOfferData[MerchantTransfer::NAME]]
+        );
     }
 
     /**
-     * @param array $data
-     * @param array $dataPart
+     * @param array $array
+     * @param string $key
+     * @param array $new
      *
      * @return array
      */
-    protected function insertArray(array $data, array $dataPart)
+    protected function insertAfterHeader(array $array, string $key, array $new): array
     {
-        return array_merge(array_splice($data, 0, static::COL_POSITION), $dataPart, array_splice($data, 0));
+        $keys = array_keys($array);
+        $index = array_search($key, $keys);
+        $pos = $index === false ? count($array) : $index + 1;
+
+        return array_merge(array_slice($array, 0, $pos), $new, array_slice($array, $pos));
     }
 }

@@ -18,7 +18,7 @@ use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferB
  */
 class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_PRODUCT_OFFER_QUERY = 'PROPEL_PRODUCT_OFFER_QUERY';
+    public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
     public const PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER';
 
@@ -64,7 +64,7 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelProductOfferQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_PRODUCT_OFFER_QUERY, $container->factory(function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, $container->factory(function () {
             return SpyProductOfferQuery::create();
         }));
 
@@ -78,9 +78,9 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container->set(static::FACADE_LOCALE, $container->factory(function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductOfferGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        }));
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductOfferFacade(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_OFFER, $container->factory(function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new ProductOfferGuiToProductOfferBridge($container->getLocator()->productOffer()->facade());
-        }));
+        });
 
         return $container;
     }

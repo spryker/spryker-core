@@ -10,9 +10,15 @@ namespace Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
+/**
+ * Use this plugin if wants to expand table data.
+ */
 interface ProductOfferTableExpanderPluginInterface
 {
     /**
+     * Specification:
+     * - Expands product offer table query criteria.
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
@@ -22,6 +28,9 @@ interface ProductOfferTableExpanderPluginInterface
     public function expandQueryCriteria(QueryCriteriaTransfer $queryCriteriaTransfer): QueryCriteriaTransfer;
 
     /**
+     * Specification:
+     * - Expands product offer table configuration.
+     *
      * @api
      *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -31,6 +40,9 @@ interface ProductOfferTableExpanderPluginInterface
     public function expandTableConfiguration(TableConfiguration $config): TableConfiguration;
 
     /**
+     * Specification:
+     * - Expands product offer table view data.
+     *
      * @api
      *
      * @param array $data

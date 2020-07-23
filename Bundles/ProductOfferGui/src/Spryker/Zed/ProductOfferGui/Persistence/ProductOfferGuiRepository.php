@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -17,13 +18,14 @@ class ProductOfferGuiRepository extends AbstractRepository implements ProductOff
 {
     /**
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
      * @return \Propel\Runtime\ActiveQuery\ModelCriteria
      */
-    public function expandQuery(ModelCriteria $query): ModelCriteria
+    public function mapQueryCriteriaTransferToModelCriteria(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria
     {
         return $this->getFactory()
             ->createProductOfferQueryExpander()
-            ->expandQuery($query);
+            ->mapQueryCriteriaTransferToModelCriteria($query, $queryCriteriaTransfer);
     }
 }

@@ -29,6 +29,6 @@
     "sort-packages": true
   },
   "suggest": {
-    "spryker/gui": "ADD SUGGEST DESCRIPTION"
+    "spryker/gui": "Required to use gui in plugins."
   }
 }

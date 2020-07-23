@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Persistence;
 
-use Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
 
 interface MerchantProductOfferGuiRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
-     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
      */
     public function expandQueryCriteriaTransfer(
         QueryCriteriaTransfer $queryCriteriaTransfer,
-        MerchantProductOfferCriteriaFilterTransfer $merchantProductOfferCriteriaFilterTransfer
+        MerchantProductOfferCriteriaTransfer $merchantProductOfferCriteriaTransfer
     ): QueryCriteriaTransfer;
 }

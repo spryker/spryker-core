@@ -26,6 +26,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
+
         $container = $this->addApplication($container);
 
         return $container;

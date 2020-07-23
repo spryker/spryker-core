@@ -19,6 +19,8 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 {
     /**
      * {@inheritDoc}
+     * - Expands a merchant entity to query.
+     * - Filters by idMerchant if it exists in request.
      *
      * @api
      *
@@ -35,6 +37,7 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
+     * - Expands a merchant name column.
      *
      * @api
      *
@@ -51,6 +54,7 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
 
     /**
      * {@inheritDoc}
+     * - Expands a merchant name to table data.
      *
      * @api
      *

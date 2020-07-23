@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Table;
 
-use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferStoreTableMap;
@@ -16,31 +16,31 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig;
+use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGuiConfig;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOfferGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductOfferGui\Communication\Form\ApprovalStatusForm;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface;
 use Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface;
-use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig as ZedProductOfferGuiConfig;
+use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
 
-class OfferTable extends AbstractTable
+class ProductOfferTable extends AbstractTable
 {
-    public const COL_STORES = 'stores';
-    public const COL_ACTIONS = 'actions';
+    protected const COL_STORES = 'stores';
+    protected const COL_ACTIONS = 'actions';
     protected const COL_PRODUCT_NAME = 'product_name';
-
     protected const STORE_CLASS_LABEL = 'label-info';
 
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
-        ProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
-        ProductOfferGuiConfig::STATUS_APPROVED => 'label-info',
-        ProductOfferGuiConfig::STATUS_DECLINED => 'label-danger',
+        SharedProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
+        SharedProductOfferGuiConfig::STATUS_APPROVED => 'label-info',
+        SharedProductOfferGuiConfig::STATUS_DECLINED => 'label-danger',
     ];
 
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [
-        ProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
-        ProductOfferGuiConfig::STATUS_DECLINED => 'btn-remove',
+        SharedProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
+        SharedProductOfferGuiConfig::STATUS_DECLINED => 'btn-remove',
     ];
 
     /**
@@ -49,9 +49,9 @@ class OfferTable extends AbstractTable
     protected $productOfferQuery;
 
     /**
-     * @var \Generated\Shared\Transfer\LocaleTransfer
+     * @var \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface
      */
-    protected $localeTransfer;
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface
@@ -65,18 +65,18 @@ class OfferTable extends AbstractTable
 
     /**
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
+     * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface $localeFacade
      * @param \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface $repository
      * @param \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[] $productOfferTableExpanderPlugins
      */
     public function __construct(
         SpyProductOfferQuery $productOfferQuery,
-        LocaleTransfer $localeTransfer,
+        ProductOfferGuiToLocaleInterface $localeFacade,
         ProductOfferGuiRepositoryInterface $repository,
         array $productOfferTableExpanderPlugins
     ) {
         $this->productOfferQuery = $productOfferQuery;
-        $this->localeTransfer = $localeTransfer;
+        $this->localeFacade = $localeFacade;
         $this->repository = $repository;
         $this->productOfferTableExpanderPlugins = $productOfferTableExpanderPlugins;
     }
@@ -157,7 +157,10 @@ class OfferTable extends AbstractTable
      */
     protected function prepareQuery(): SpyProductOfferQuery
     {
-        $this->productOfferQuery = $this->repository->expandQuery($this->productOfferQuery);
+        $this->productOfferQuery = $this->repository->mapQueryCriteriaTransferToModelCriteria(
+            $this->productOfferQuery,
+            $this->buildQueryCriteriaTransfer()
+        );
 
         $this->productOfferQuery
             ->groupByIdProductOffer()
@@ -170,7 +173,7 @@ class OfferTable extends AbstractTable
             ->endUse()
             ->addJoin(SpyProductOfferTableMap::COL_CONCRETE_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
             ->addJoin(SpyProductTableMap::COL_ID_PRODUCT, SpyProductLocalizedAttributesTableMap::COL_FK_PRODUCT, Criteria::INNER_JOIN)
-            ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeTransfer->getIdLocale()))
+            ->where(sprintf('%s = (%s)', SpyProductLocalizedAttributesTableMap::COL_FK_LOCALE, $this->localeFacade->getCurrentLocale()->getIdLocale()))
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, static::COL_PRODUCT_NAME);
 
         return $this->productOfferQuery;
@@ -205,8 +208,6 @@ class OfferTable extends AbstractTable
             $results[] = $rowData;
         }
 
-        unset($queryResults);
-
         return $results;
     }
 
@@ -224,10 +225,10 @@ class OfferTable extends AbstractTable
         foreach ($availableApprovalStatusButtonsMapping as $availableApprovalStatus => $class) {
             $availableApprovalStatusButtons[] = $this->generateFormButton(
                 Url::generate(
-                    ZedProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
+                    ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
                     [
-                        EditController::REQUEST_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                        EditController::REQUEST_APPROVAL_STATUS => $availableApprovalStatus]
+                        EditController::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                        EditController::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
                 ),
                 $availableApprovalStatus . '_button',
                 ApprovalStatusForm::class,
@@ -275,9 +276,27 @@ class OfferTable extends AbstractTable
 
         $storeLabels = [];
         foreach ($storeNames as $storeName) {
+            if (!$storeName) {
+                continue;
+            }
+
             $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
         }
 
         return implode(' ', $storeLabels);
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QueryCriteriaTransfer
+     */
+    protected function buildQueryCriteriaTransfer(): QueryCriteriaTransfer
+    {
+        $queryCriteriaTransfer = new QueryCriteriaTransfer();
+
+        foreach ($this->productOfferTableExpanderPlugins as $productOfferTableExpanderPlugin) {
+            $queryCriteriaTransfer = $productOfferTableExpanderPlugin->expandQueryCriteria($queryCriteriaTransfer);
+        }
+
+        return $queryCriteriaTransfer;
     }
 }

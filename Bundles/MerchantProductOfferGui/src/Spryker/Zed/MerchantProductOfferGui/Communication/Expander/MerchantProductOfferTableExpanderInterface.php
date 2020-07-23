@@ -27,10 +27,10 @@ interface MerchantProductOfferTableExpanderInterface
     public function expandTableConfiguration(TableConfiguration $config): TableConfiguration;
 
     /**
-     * @param array $data
-     * @param array $item
+     * @param array $rowData
+     * @param array $productOfferData
      *
      * @return array
      */
-    public function expandData(array $data, array $item): array;
+    public function expandData(array $rowData, array $productOfferData): array;
 }

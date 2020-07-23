@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin;
 
+/**
+ * Use this plugin if wants to expand data to view.
+ */
 interface ProductOfferListActionViewDataExpanderPluginInterface
 {
     /**

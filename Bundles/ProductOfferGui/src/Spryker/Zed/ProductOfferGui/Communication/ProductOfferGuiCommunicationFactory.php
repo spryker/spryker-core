@@ -9,7 +9,9 @@ namespace Spryker\Zed\ProductOfferGui\Communication;
 
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferGui\Communication\Table\OfferTable;
+use Spryker\Zed\ProductOfferGui\Communication\Table\ProductOfferTable;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferInterface;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 
 /**
@@ -20,13 +22,13 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ProductOfferGui\Communication\Table\OfferTable
+     * @return \Spryker\Zed\ProductOfferGui\Communication\Table\ProductOfferTable
      */
-    public function createOfferTable(): OfferTable
+    public function createProductOfferTable(): ProductOfferTable
     {
-        return new OfferTable(
+        return new ProductOfferTable(
             $this->getProductOfferPropelQuery(),
-            $this->getLocaleFacade()->getCurrentLocale(),
+            $this->getLocaleFacade(),
             $this->getRepository(),
             $this->getProductOfferTableExpanderPlugins()
         );
@@ -37,13 +39,13 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getProductOfferPropelQuery(): SpyProductOfferQuery
     {
-        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PROPEL_PRODUCT_OFFER_QUERY);
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PROPEL_QUERY_PRODUCT_OFFER);
     }
 
     /**
      * @return \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface
      */
-    public function getLocaleFacade()
+    public function getLocaleFacade(): ProductOfferGuiToLocaleInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_LOCALE);
     }
@@ -51,7 +53,7 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferInterface
      */
-    public function getProductOfferFacade()
+    public function getProductOfferFacade(): ProductOfferGuiToProductOfferInterface
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::FACADE_PRODUCT_OFFER);
     }

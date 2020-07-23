@@ -18,7 +18,7 @@ class MerchantProductOfferListActionViewDataExpanderPlugin extends AbstractPlugi
 {
     /**
      * {@inheritDoc}
-     * - Expands view data for product offer with new data.
+     * - Expands merchant data for product offer with new data.
      *
      * @api
      *
