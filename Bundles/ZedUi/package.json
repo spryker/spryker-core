@@ -35,7 +35,7 @@
         "@spryker/select": "^0.2.0-next.0",
         "@spryker/sidebar": "^0.2.0-next.0",
         "@spryker/styles": "^0.2.0-next.0",
-        "@spryker/table": "^0.2.0-next.0",
+        "@spryker/table": "^0.2.0-next.1",
         "@spryker/utils": "^0.2.0-next.0",
         "@spryker/web-components": "^0.2.1-next.0",
         "@webcomponents/webcomponentsjs": "^2.4.1",
