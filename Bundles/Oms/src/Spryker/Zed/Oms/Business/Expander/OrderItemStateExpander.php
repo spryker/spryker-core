@@ -67,7 +67,7 @@ class OrderItemStateExpander implements OrderItemStateExpanderInterface
                 continue;
             }
 
-            $itemTransfer = $this->setItemState($itemTransfer, $state);
+            $this->setItemState($itemTransfer, $state);
         }
 
         return $itemTransfers;
