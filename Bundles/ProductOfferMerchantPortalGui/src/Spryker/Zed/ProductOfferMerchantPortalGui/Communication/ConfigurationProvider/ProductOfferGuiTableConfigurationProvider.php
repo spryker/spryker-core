@@ -15,12 +15,12 @@ use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
-class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider
+class ProductOfferGuiTableConfigurationProvider implements ProductOfferGuiTableConfigurationProviderInterface
 {
     public const COL_KEY_OFFER_REFERENCE = 'offerReference';
     public const COL_KEY_MERCHANT_SKU = 'merchantSku';
@@ -51,15 +51,23 @@ class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigur
     protected $translatorFacade;
 
     /**
+     * @var \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected $guiTableConfigurationBuilder;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      */
     public function __construct(
         ProductOfferMerchantPortalGuiToStoreFacadeInterface $storeFacade,
-        ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+        ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
     ) {
         $this->storeFacade = $storeFacade;
         $this->translatorFacade = $translatorFacade;
+        $this->guiTableConfigurationBuilder = $guiTableConfigurationBuilder;
     }
 
     /**
@@ -88,31 +96,31 @@ class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigur
     protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $columns = new ArrayObject([
-            $this->createColumnText(static::COL_KEY_OFFER_REFERENCE, 'Reference', true, false),
-            $this->createColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, true),
-            $this->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
-            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
-            $this->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
-            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_OFFER_REFERENCE, 'Reference', true, false),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, true),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true),
+            $this->guiTableConfigurationBuilder->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true),
+            $this->guiTableConfigurationBuilder->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
                 'limit' => 3,
                 'typeOptions' => [
                     'color' => 'grey',
                 ],
             ]),
-            $this->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
+            $this->guiTableConfigurationBuilder->createColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
                 'color' => 'grey',
             ], [
                 'color' => [0 => 'red'],
             ]),
-            $this->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, [
+            $this->guiTableConfigurationBuilder->createColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, [
                 'color' => 'grey',
             ], [
                 'color' => [$this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green'],
             ]),
-            $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true),
-            $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true),
-            $this->createColumnDate(static::COL_KEY_CREATED_AT, 'Created', true, true),
-            $this->createColumnDate(static::COL_KEY_UPDATED_AT, 'Updated', true, true),
+            $this->guiTableConfigurationBuilder->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true),
+            $this->guiTableConfigurationBuilder->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true),
+            $this->guiTableConfigurationBuilder->createColumnDate(static::COL_KEY_CREATED_AT, 'Created', true, true),
+            $this->guiTableConfigurationBuilder->createColumnDate(static::COL_KEY_UPDATED_AT, 'Updated', true, true),
         ]);
 
         $guiTableConfigurationTransfer->setColumns($columns);
@@ -136,18 +144,18 @@ class ProductOfferGuiTableConfigurationProvider extends AbstractGuiTableConfigur
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $filters = new ArrayObject([
-            $this->createFilterSelect('hasStock', 'Stock', false, [
+            $this->guiTableConfigurationBuilder->createFilterSelect('hasStock', 'Stock', false, [
                 '1' => 'Has stock',
                 '0' => 'Out of stock',
             ]),
-            $this->createFilterSelect('isActive', 'Visibility', false, [
+            $this->guiTableConfigurationBuilder->createFilterSelect('isActive', 'Visibility', false, [
                 '1' => 'Online',
                 '0' => 'Offline',
             ]),
-            $this->createFilterSelect('inStores', 'Stores', true, $this->getStoreOptions()),
-            $this->createFilterDateRange('createdAt', 'Created'),
-            $this->createFilterDateRange('updatedAt', 'Updated'),
-            $this->createFilterDateRange('validity', 'Validity'),
+            $this->guiTableConfigurationBuilder->createFilterSelect('inStores', 'Stores', true, $this->getStoreOptions()),
+            $this->guiTableConfigurationBuilder->createFilterDateRange('createdAt', 'Created'),
+            $this->guiTableConfigurationBuilder->createFilterDateRange('updatedAt', 'Updated'),
+            $this->guiTableConfigurationBuilder->createFilterDateRange('validity', 'Validity'),
         ]);
         $guiTableConfigurationTransfer->setFilters(
             (new GuiTableFiltersConfigurationTransfer())->setItems($filters)

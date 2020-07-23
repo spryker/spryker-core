@@ -8,13 +8,16 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
-use Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
@@ -43,6 +46,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Service\ProductOfferMer
 use Spryker\Zed\ProductOfferMerchantPortalGui\ProductOfferMerchantPortalGuiDependencyProvider;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\FormInterface;
+use Twig\Environment;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
@@ -51,26 +55,30 @@ use Symfony\Component\Form\FormInterface;
 class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProviderInterface
      */
-    public function createProductGuiTableConfigurationProvider(): GuiTableConfigurationProviderInterface
+    public function createProductGuiTableConfigurationProvider(): ProductGuiTableConfigurationProviderInterface
     {
-        return new ProductGuiTableConfigurationProvider($this->getTranslatorFacade());
-    }
-
-    /**
-     * @return \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface
-     */
-    public function createProductOfferGuiTableConfigurationProvider(): GuiTableConfigurationProviderInterface
-    {
-        return new ProductOfferGuiTableConfigurationProvider(
-            $this->getStoreFacade(),
-            $this->getTranslatorFacade()
+        return new ProductGuiTableConfigurationProvider(
+            $this->getTranslatorFacade(),
+            $this->getGuiTableConfigurationBuilder()
         );
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface
+     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProviderInterface
+     */
+    public function createProductOfferGuiTableConfigurationProvider(): ProductOfferGuiTableConfigurationProviderInterface
+    {
+        return new ProductOfferGuiTableConfigurationProvider(
+            $this->getStoreFacade(),
+            $this->getTranslatorFacade(),
+            $this->getGuiTableConfigurationBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
     public function createProductTableDataProvider(): GuiTableDataProviderInterface
     {
@@ -83,7 +91,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
     public function createProductOfferTableDataProvider(): GuiTableDataProviderInterface
     {
@@ -243,9 +251,25 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     /**
      * @return \Twig\Environment
      */
-    protected function getTwigEnvironment()
+    protected function getTwigEnvironment(): Environment
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_TWIG);
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface
+     */
+    public function getGuiTableHttpDataRequestHandler(): GuiTableDataRequestHandlerInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER);
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    public function getGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
+    {
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
     }
 
     /**

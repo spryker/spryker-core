@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeBridge;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToLocaleFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeBridge;
@@ -31,8 +32,11 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
 
     public const SERVICE_TWIG = 'twig';
+    public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER = 'gui_table_http_data_request_handler';
+    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
 
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
 
@@ -50,7 +54,10 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantOmsFacade($container);
         $container = $this->addRouterFacade($container);
+        $container = $this->addLocaleFacade($container);
         $container = $this->addTwigEnvironment($container);
+        $container = $this->addGuiTableHttpDataRequestHandler($container);
+        $container = $this->addGuiTableConfigurationBuilder($container);
 
         return $container;
     }
@@ -198,10 +205,54 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new SalesMerchantPortalGuiToLocaleFacadeBridge(
+                $container->getLocator()->locale()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addTwigEnvironment(Container $container): Container
     {
         $container->set(static::SERVICE_TWIG, function () {
             return (new Pimple())->getApplication()->get(static::SERVICE_TWIG);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableHttpDataRequestHandler(Container $container): Container
+    {
+        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableConfigurationBuilder(Container $container): Container
+    {
+        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
         });
 
         return $container;

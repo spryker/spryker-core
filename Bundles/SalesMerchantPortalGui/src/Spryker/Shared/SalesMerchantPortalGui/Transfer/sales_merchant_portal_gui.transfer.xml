@@ -142,4 +142,7 @@
         <property name="url" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

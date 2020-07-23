@@ -34,20 +34,14 @@ class OffersController extends AbstractController
      */
     public function tableDataAction(Request $request): JsonResponse
     {
-        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
-        $guiTableConfigurationTransfer = $this->getFactory()
-            ->createProductOfferGuiTableConfigurationProvider()
-            ->getConfiguration();
-        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
-            $request->query->all(),
-            $guiTableConfigurationTransfer
+        /** @var \Symfony\Component\HttpFoundation\JsonResponse $jsonResponse */
+        $jsonResponse = $this->getFactory()->getGuiTableHttpDataRequestHandler()->handleGetDataRequest(
+            $request,
+            $this->getFactory()->createProductOfferTableDataProvider(),
+            $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration(),
+            $this->getFactory()->getLocaleFacade()->getCurrentLocale()
         );
-        $guiTableDataResponseTransfer = $this->getFactory()
-            ->createProductOfferTableDataProvider()
-            ->getData($guiTableDataRequestTransfer);
 
-        return $this->jsonResponse(
-            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
-        );
+        return $jsonResponse;
     }
 }

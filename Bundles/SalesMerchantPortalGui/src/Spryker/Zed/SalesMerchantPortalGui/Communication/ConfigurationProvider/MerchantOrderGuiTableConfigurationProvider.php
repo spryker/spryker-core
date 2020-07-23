@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
 
-class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider
+class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTableConfigurationProviderInterface
 {
     public const COL_KEY_REFERENCE = 'reference';
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
@@ -51,18 +51,26 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     protected $merchantUserFacade;
 
     /**
+     * @var \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     */
+    protected $guiTableConfigurationBuilder;
+
+    /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      */
     public function __construct(
         SalesMerchantPortalGuiToStoreFacadeInterface $storeFacade,
         SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade,
-        SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+        SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
     ) {
         $this->storeFacade = $storeFacade;
         $this->merchantOmsFacade = $merchantOmsFacade;
         $this->merchantUserFacade = $merchantUserFacade;
+        $this->guiTableConfigurationBuilder = $guiTableConfigurationBuilder;
     }
 
     /**
@@ -90,20 +98,20 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $columns = new ArrayObject([
-            $this->createColumnText(static::COL_KEY_REFERENCE, 'Reference', true, false),
-            $this->createColumnText(static::COL_KEY_MERCHANT_REFERENCE, 'Merchant Reference', true, true),
-            $this->createColumnDate(static::COL_KEY_CREATED, 'Created', true, false),
-            $this->createColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true),
-            $this->createColumnText(static::COL_KEY_EMAIL, 'Email', true, true),
-            $this->createColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, [
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_REFERENCE, 'Reference', true, false),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_MERCHANT_REFERENCE, 'Merchant Reference', true, true),
+            $this->guiTableConfigurationBuilder->createColumnDate(static::COL_KEY_CREATED, 'Created', true, false),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_EMAIL, 'Email', true, true),
+            $this->guiTableConfigurationBuilder->createColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, [
                 'limit' => 3,
                 'typeOptions' => [
                     'color' => 'green',
                 ],
             ]),
-            $this->createColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true),
-            $this->createColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true),
-            $this->createColumnChip(static::COL_KEY_STORE, 'Store', false, true, [
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true),
+            $this->guiTableConfigurationBuilder->createColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true),
+            $this->guiTableConfigurationBuilder->createColumnChip(static::COL_KEY_STORE, 'Store', false, true, [
                 'color' => 'grey',
             ]),
         ]);
@@ -121,9 +129,9 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $filters = new ArrayObject([
-            $this->createFilterDateRange('created', 'Created'),
-            $this->createFilterSelect('stores', 'Stores', true, $this->getStoreOptions()),
-            $this->createFilterSelect('orderItemStates', 'States', true, $this->getStatesOptions()),
+            $this->guiTableConfigurationBuilder->createFilterDateRange('created', 'Created'),
+            $this->guiTableConfigurationBuilder->createFilterSelect('stores', 'Stores', true, $this->getStoreOptions()),
+            $this->guiTableConfigurationBuilder->createFilterSelect('orderItemStates', 'States', true, $this->getStatesOptions()),
         ]);
         $guiTableConfigurationTransfer->setFilters(
             (new GuiTableFiltersConfigurationTransfer())->setItems($filters)

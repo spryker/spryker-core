@@ -8,7 +8,7 @@
     "spryker/currency": "^3.1.0",
     "spryker/dashboard-merchant-portal-gui-extension": "^0.1.0",
     "spryker/decimal-object": "^1.0.0",
-    "spryker/gui-table": "^0.1.1",
+    "spryker/gui-table": "^0.2.0",
     "spryker/kernel": "^3.51.0",
     "spryker/locale": "^3.0.0",
     "spryker/merchant-product-offer": "^0.6.0",

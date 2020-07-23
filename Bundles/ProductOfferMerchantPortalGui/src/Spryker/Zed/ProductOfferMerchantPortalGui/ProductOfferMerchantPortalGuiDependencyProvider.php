@@ -47,6 +47,8 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_TWIG = 'twig';
+    public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER = 'gui_table_http_data_request_handler';
+    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
     public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
@@ -73,6 +75,8 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addGuiTableFacade($container);
         $container = $this->addRouterFacade($container);
         $container = $this->addTwigEnvironment($container);
+        $container = $this->addGuiTableHttpDataRequestHandler($container);
+        $container = $this->addGuiTableConfigurationBuilder($container);
 
         return $container;
     }
@@ -279,6 +283,34 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     {
         $container->set(static::SERVICE_TWIG, function () {
             return (new Pimple())->getApplication()->get(static::SERVICE_TWIG);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableHttpDataRequestHandler(Container $container): Container
+    {
+        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addGuiTableConfigurationBuilder(Container $container): Container
+    {
+        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function () {
+            return (new Pimple())->getApplication()->get(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
         });
 
         return $container;
