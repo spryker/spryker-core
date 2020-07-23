@@ -62,7 +62,9 @@
 
             <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
                 <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
-                    <mp-html-renderer-url url="/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order={{ idMerchantOrder }}"></mp-html-renderer-url>
+                    {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
+
+                    <web-mp-html-renderer-url url="{{ totalsUrl }}"></web-mp-html-renderer-url>
                 </web-spy-collapsible>
 
                 {% set subtotalTitleOrderTotals = [

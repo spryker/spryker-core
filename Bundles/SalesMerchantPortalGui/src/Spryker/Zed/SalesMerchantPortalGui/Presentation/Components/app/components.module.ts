@@ -12,6 +12,8 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageOrderStatsBlockComponent } from './manage-order/manage-order-stats-block/manage-order-stats-block.component';
 import { ManageOrderTotalsComponent } from './manage-order/manage-order-totals/manage-order-totals.component';
 import { ManageOrderModule } from './manage-order/manage-order.module';
+import { HtmlRendererUrlModule } from './html-renderer-url/html-renderer-url.module';
+import { HtmlRendererUrlComponent } from './html-renderer-url/html-renderer-url.component';
 
 @NgModule({
     imports: [
@@ -22,6 +24,7 @@ import { ManageOrderModule } from './manage-order/manage-order.module';
         TabsModule,
         CollapsibleModule,
         ManageOrderModule,
+        HtmlRendererUrlModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
@@ -65,6 +68,10 @@ export class ComponentsModule extends CustomElementModule {
         {
             selector: 'spy-collapsible',
             component: CollapsibleComponent,
+        },
+        {
+            selector: 'mp-html-renderer-url',
+            component: HtmlRendererUrlComponent,
         },
     ];
 }
