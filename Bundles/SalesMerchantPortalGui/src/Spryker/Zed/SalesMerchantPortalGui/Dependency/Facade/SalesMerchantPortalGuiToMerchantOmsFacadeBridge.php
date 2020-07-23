@@ -38,16 +38,6 @@ class SalesMerchantPortalGuiToMerchantOmsFacadeBridge implements SalesMerchantPo
     }
 
     /**
-     * @param int $idMerchantOrder
-     *
-     * @return string[]
-     */
-    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array
-    {
-        return $this->merchantOmsFacade->getManualEventsByIdMerchantOrder($idMerchantOrder);
-    }
-
-    /**
      * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]

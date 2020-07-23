@@ -23,13 +23,6 @@ interface SalesMerchantPortalGuiToMerchantOmsFacadeInterface
     ): StateMachineProcessTransfer;
 
     /**
-     * @param int $idMerchantOrder
-     *
-     * @return string[]
-     */
-    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array;
-
-    /**
      * @param int[] $stateIds
      *
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]

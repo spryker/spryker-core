@@ -8,7 +8,7 @@
     {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
     <div state-transitions class="mp-manage-order__transitions">
-        {% for eventName in merchantOrderManualEvents %}
+        {% for eventName in merchantOrder.manualEvents %}
             <web-spy-ajax-button
                 url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
                 class="mp-manage-order__transitions-col"

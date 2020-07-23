@@ -98,6 +98,7 @@ interface MerchantOmsFacadeInterface
     /**
      * Specification:
      * - Expands MerchantOrderTransfer with Merchant OMS item states.
+     * - Expands MerchantOrderTransfer with Merchant OMS manual events.
      *
      * @api
      *
@@ -105,7 +106,7 @@ interface MerchantOmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 
     /**
      * Specification:
@@ -119,16 +120,4 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
-
-    /**
-     * Specification:
-     * - Returns unique event list for all merchant order items by given merchant order id.
-     *
-     * @api
-     *
-     * @param int $idMerchantOrder
-     *
-     * @return string[]
-     */
-    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array;
 }

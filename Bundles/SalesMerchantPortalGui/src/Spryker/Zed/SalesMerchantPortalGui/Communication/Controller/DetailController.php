@@ -55,9 +55,6 @@ class DetailController extends AbstractController
                 'merchantOrder' => $merchantOrderTransfer,
                 'customerMerchantOrderNumber' => $this->getCustomerMerchantOrderNumber($merchantOrderTransfer),
                 'shipmentsNumber' => $this->getShipmentsNumber($merchantOrderTransfer),
-                'merchantOrderManualEvents' => $this->getFactory()
-                    ->getMerchantOmsFacade()
-                    ->getManualEventsByIdMerchantOrder($idMerchantOrder),
             ])->getContent(),
         ];
 

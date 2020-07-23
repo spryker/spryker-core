@@ -102,9 +102,9 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        return $this->getFactory()->createMerchantOrderExpander()->expandMerchantOrderWithStates($merchantOrderTransfer);
+        return $this->getFactory()->createMerchantOrderExpander()->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
     }
 
     /**
@@ -119,19 +119,5 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer
     {
         return $this->getRepository()->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idMerchantOrder
-     *
-     * @return string[]
-     */
-    public function getManualEventsByIdMerchantOrder(int $idMerchantOrder): array
-    {
-        return $this->getFactory()->createMerchantOmsEventReader()->getManualEventsByIdMerchantOrder($idMerchantOrder);
     }
 }
