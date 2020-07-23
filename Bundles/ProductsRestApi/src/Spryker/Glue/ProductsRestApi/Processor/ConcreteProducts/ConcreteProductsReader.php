@@ -174,10 +174,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductConcretesByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
     {
         $bulkProductConcreteStorageData = $this->productStorageClient
-            ->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(
+            ->getBulkProductConcreteStorageDataByIds(
                 $productConcreteIds,
                 $restRequest->getMetadata()->getLocale()
             );

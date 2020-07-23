@@ -394,7 +394,7 @@ interface ProductStorageClientInterface
      *
      * @return array
      */
-    public function getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(
+    public function getBulkProductConcreteStorageDataByIds(
         array $productConcreteIds,
         string $localeName
     ): array;

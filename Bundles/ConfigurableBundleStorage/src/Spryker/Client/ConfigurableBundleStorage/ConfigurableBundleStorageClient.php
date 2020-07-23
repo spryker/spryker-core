@@ -42,13 +42,13 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getConfigurableBundleTemplateStorageData(
+    public function getBulkConfigurableBundleTemplateStorage(
         array $configurableBundleTemplateIds,
         string $localeName
     ): array {
         return $this->getFactory()
             ->createConfigurableBundleStorageReader()
-            ->getConfigurableBundleTemplateStorageData($configurableBundleTemplateIds, $localeName);
+            ->getBulkConfigurableBundleTemplateStorage($configurableBundleTemplateIds, $localeName);
     }
 
     /**

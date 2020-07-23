@@ -55,11 +55,11 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
                     $configurableBundleTemplateSlotStorageTransfer->getIdProductList()
                 );
 
-            $productConcreteResources = $this->productsRestApiResource
-                ->getProductConcretesByIds($productConcreteIds, $restRequest);
+            $productConcreteRestResources = $this->productsRestApiResource
+                ->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
 
-            foreach ($productConcreteResources as $productConcreteResource) {
-                $resource->addRelationship($productConcreteResource);
+            foreach ($productConcreteRestResources as $productConcreteRestResource) {
+                $resource->addRelationship($productConcreteRestResource);
             }
         }
     }

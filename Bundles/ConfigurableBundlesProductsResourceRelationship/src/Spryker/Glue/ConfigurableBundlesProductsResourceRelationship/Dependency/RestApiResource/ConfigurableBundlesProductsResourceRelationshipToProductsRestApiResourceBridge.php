@@ -30,8 +30,8 @@ class ConfigurableBundlesProductsResourceRelationshipToProductsRestApiResourceBr
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductConcretesByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
     {
-        return $this->productsRestApiResource->getProductConcretesByIds($productConcreteIds, $restRequest);
+        return $this->productsRestApiResource->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
     }
 }

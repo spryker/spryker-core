@@ -60,5 +60,5 @@ interface ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function getProductConcretesByIds(array $productConcreteIds, RestRequestInterface $restRequest): array;
+    public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array;
 }

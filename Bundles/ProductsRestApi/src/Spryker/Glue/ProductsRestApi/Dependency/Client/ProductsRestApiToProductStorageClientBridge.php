@@ -101,11 +101,11 @@ class ProductsRestApiToProductStorageClientBridge implements ProductsRestApiToPr
      *
      * @return array
      */
-    public function getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName(
+    public function getBulkProductConcreteStorageDataByIds(
         array $productConcreteIds,
         string $localeName
     ): array {
         return $this->productStorageClient
-            ->getBulkProductConcreteStorageDataByProductConcreteIdsAndLocaleName($productConcreteIds, $localeName);
+            ->getBulkProductConcreteStorageDataByIds($productConcreteIds, $localeName);
     }
 }

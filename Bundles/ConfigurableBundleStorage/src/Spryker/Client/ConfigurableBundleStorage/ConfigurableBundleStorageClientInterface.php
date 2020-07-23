@@ -38,7 +38,7 @@ interface ConfigurableBundleStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getConfigurableBundleTemplateStorageData(
+    public function getBulkConfigurableBundleTemplateStorage(
         array $configurableBundleTemplateIds,
         string $localeName
     ): array;

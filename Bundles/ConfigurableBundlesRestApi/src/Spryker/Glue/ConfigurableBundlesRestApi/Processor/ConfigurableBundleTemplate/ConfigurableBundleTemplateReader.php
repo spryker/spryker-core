@@ -96,7 +96,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         }
 
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
-            ->getConfigurableBundleTemplateStorageData(
+            ->getBulkConfigurableBundleTemplateStorage(
                 $configurableBundleTemplateIds,
                 $restRequest->getMetadata()->getLocale()
             );
