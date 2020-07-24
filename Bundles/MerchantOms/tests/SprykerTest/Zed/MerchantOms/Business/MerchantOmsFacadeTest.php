@@ -42,6 +42,15 @@ class MerchantOmsFacadeTest extends Unit
     protected const TEST_STATE_MACHINE_EVENT = 'test';
     protected const TEST_PROCESS_NAME = 'processName';
     protected const TEST_STATE_NAMES = ['new', 'canceled'];
+    protected const TEST_MANUAL_EVENT_NAMES = [
+        [
+            'ship',
+            'cancel by merchant',
+        ],
+        [
+            'deliver',
+        ],
+    ];
 
     /**
      * @var \SprykerTest\Zed\MerchantOms\MerchantOmsBusinessTester
@@ -57,6 +66,7 @@ class MerchantOmsFacadeTest extends Unit
 
         $stateMachineFacadeMock = $this->createMock(StateMachineFacade::class);
         $stateMachineFacadeMock->method('triggerEventForItems')->willReturn(1);
+        $stateMachineFacadeMock->method('getManualEventsForStateMachineItems')->willReturn(static::TEST_MANUAL_EVENT_NAMES);
 
         $this->tester->setDependency(
             MerchantOmsDependencyProvider::FACADE_STATE_MACHINE,
@@ -129,12 +139,14 @@ class MerchantOmsFacadeTest extends Unit
             MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
         ]);
         $expectedMerchantOrderTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
+        $expectedManualEvents = array_unique(array_merge([], ...static::TEST_MANUAL_EVENT_NAMES));
 
         // Act
         $merchantOrderTransfer = $this->tester->getFacade()->expandMerchantOrderWithMerchantOmsData($expectedMerchantOrderTransfer);
 
         // Assert
         $this->assertSame($expectedMerchantOrderTransfer->getItemStates(), $merchantOrderTransfer->getItemStates());
+        $this->assertSame($merchantOrderTransfer->getManualEvents(), $expectedManualEvents);
     }
 
     /**
