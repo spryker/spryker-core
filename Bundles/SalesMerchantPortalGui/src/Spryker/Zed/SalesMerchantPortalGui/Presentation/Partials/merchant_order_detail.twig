@@ -7,16 +7,18 @@
 <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
     {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
-    <div state-transitions class="mp-manage-order__transitions">
-        {% for eventName in merchantOrder.manualEvents %}
-            <web-spy-ajax-button
-                url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
-                class="mp-manage-order__transitions-col"
-            >{{ eventName }}</web-spy-ajax-button>
-        {% endfor %}
-    </div>
+    {% if merchantOrder.manualEvents is not empty %}
+        <div state-transitions class="mp-manage-order__transitions">
+            {% for eventName in merchantOrder.manualEvents %}
+                <web-spy-ajax-button
+                    url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
+                    class="mp-manage-order__transitions-col"
+                >{{ eventName }}</web-spy-ajax-button>
+            {% endfor %}
+        </div>
 
-    <span state-transitions-meessage>Only matching states items will be updated.</span>
+        <span state-transitions-meessage>Only matching states items will be updated.</span>
+    {% endif %}
 
     <span items-states-title>Order’s Items state</span>
 
