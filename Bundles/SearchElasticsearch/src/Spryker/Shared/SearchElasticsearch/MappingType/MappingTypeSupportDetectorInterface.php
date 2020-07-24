@@ -12,5 +12,5 @@ interface MappingTypeSupportDetectorInterface
     /**
      * @return bool
      */
-    public function isMappingTypesSupported(): bool;
+    public function isMappingTypeSupported(): bool;
 }

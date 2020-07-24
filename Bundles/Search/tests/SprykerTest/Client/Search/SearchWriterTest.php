@@ -44,16 +44,6 @@ class SearchWriterTest extends Unit
     /**
      * @return void
      */
-    protected function _setUp(): void
-    {
-        $this->skipIfElasticsearch7();
-
-        parent::_setUp();
-    }
-
-    /**
-     * @return void
-     */
     public function testWriteCreateDocumentsWithValidDataSet(): void
     {
         $dataSet = $this->getValidTestDataSet();
@@ -79,6 +69,8 @@ class SearchWriterTest extends Unit
      */
     protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
@@ -180,7 +172,7 @@ class SearchWriterTest extends Unit
      */
     protected function skipIfElasticsearch7(): void
     {
-        if (!class_exists(Type::class)) {
+        if (!method_exists(Index::class, 'getType')) {
             $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
         }
     }

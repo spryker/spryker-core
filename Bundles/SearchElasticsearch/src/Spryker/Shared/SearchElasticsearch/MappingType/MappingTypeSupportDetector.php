@@ -7,15 +7,15 @@
 
 namespace Spryker\Shared\SearchElasticsearch\MappingType;
 
-use Elastica\Type;
+use Elastica\Index;
 
 class MappingTypeSupportDetector implements MappingTypeSupportDetectorInterface
 {
     /**
      * @return bool
      */
-    public function isMappingTypesSupported(): bool
+    public function isMappingTypeSupported(): bool
     {
-        return class_exists(Type::class);
+        return method_exists(Index::class, 'getType');
     }
 }

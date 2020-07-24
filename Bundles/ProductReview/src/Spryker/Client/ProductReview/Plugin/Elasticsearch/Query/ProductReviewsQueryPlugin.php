@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\Query;
 
+use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\AbstractQuery;
 use Elastica\Query\BoolQuery;
@@ -159,7 +160,7 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
      */
     protected function addProductReviewTypeFilterToQuery(BoolQuery $query): BoolQuery
     {
-        if (!$this->isTypeQuerySupported()) {
+        if (!$this->supportsMappingTypes()) {
             return $query;
         }
 
@@ -181,8 +182,8 @@ class ProductReviewsQueryPlugin extends AbstractPlugin implements QueryInterface
     /**
      * @return bool
      */
-    protected function isTypeQuerySupported(): bool
+    protected function supportsMappingTypes(): bool
     {
-        return class_exists(Type::class);
+        return method_exists(Index::class, 'getType');
     }
 }

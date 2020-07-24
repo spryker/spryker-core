@@ -46,7 +46,7 @@ class IndexUpdaterFactory implements IndexUpdaterFactoryInterface
      */
     public function createIndexUpdater(): InstallerInterface
     {
-        if ($this->mappingTypeSupportDetector->isMappingTypesSupported()) {
+        if ($this->mappingTypeSupportDetector->isMappingTypeSupported()) {
             return new MappingTypeAwareIndexUpdater($this->client, $this->mappingBuilder);
         }
 

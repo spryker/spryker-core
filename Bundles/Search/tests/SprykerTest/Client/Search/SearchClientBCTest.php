@@ -8,7 +8,7 @@
 namespace SprykerTest\Client\Search;
 
 use Codeception\Test\Unit;
-use Elastica\Type;
+use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 
 /**
@@ -174,7 +174,7 @@ class SearchClientBCTest extends Unit
      */
     protected function skipIfElasticsearch7(): void
     {
-        if (!class_exists(Type::class)) {
+        if (!method_exists(Index::class, 'getType')) {
             $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
         }
     }

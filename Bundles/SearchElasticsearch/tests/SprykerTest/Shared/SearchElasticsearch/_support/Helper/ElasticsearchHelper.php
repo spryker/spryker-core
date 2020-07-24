@@ -352,6 +352,6 @@ class ElasticsearchHelper extends Module
      */
     public function supportsMappingTypes(): bool
     {
-        return class_exists(Type::class);
+        return method_exists(Index::class, 'getType');
     }
 }

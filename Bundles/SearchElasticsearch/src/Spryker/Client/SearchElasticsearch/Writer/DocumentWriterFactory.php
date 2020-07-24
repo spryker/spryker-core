@@ -35,7 +35,7 @@ class DocumentWriterFactory implements DocumentWriterFactoryInterface
      */
     public function createDocumentWriter(Client $client): DocumentWriterInterface
     {
-        if ($this->mappingTypeSupportDetector->isMappingTypesSupported()) {
+        if ($this->mappingTypeSupportDetector->isMappingTypeSupported()) {
             return new MappingTypeAwareDocumentWriter($client);
         }
 

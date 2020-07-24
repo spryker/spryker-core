@@ -35,7 +35,7 @@ class DocumentReaderFactory implements DocumentReaderFactoryInterface
      */
     public function createDocumentReader(Client $client): DocumentReaderInterface
     {
-        if ($this->mappingTypeSupportDetector->isMappingTypesSupported()) {
+        if ($this->mappingTypeSupportDetector->isMappingTypeSupported()) {
             return new MappingTypeAwareDocumentReader($client);
         }
 

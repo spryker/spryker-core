@@ -32,7 +32,7 @@ class MappingBuilderFactory implements MappingBuilderFactoryInterface
      */
     public function createMappingBuilder(): MappingBuilderInterface
     {
-        if ($this->mappingTypeSupportDetector->isMappingTypesSupported()) {
+        if ($this->mappingTypeSupportDetector->isMappingTypeSupported()) {
             return new MappingTypeAwareMappingBuilder();
         }
 
