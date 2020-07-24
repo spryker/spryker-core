@@ -47,11 +47,7 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
         );
 
         $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);
-        if ($manualEvents) {
-            $merchantOrderTransfer->setManualEvents(
-                array_unique(array_merge([], ...$manualEvents))
-            );
-        }
+        $merchantOrderTransfer->setManualEvents(array_unique(array_merge([], ...$manualEvents)));
 
         return $merchantOrderTransfer->setItemStates(
             $this->getUniqueItemStates($stateMachineItemTransfers)

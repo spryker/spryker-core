@@ -31,6 +31,7 @@
         <property name="identifier" type="int"/>
         <property name="stateName" type="string"/>
         <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
