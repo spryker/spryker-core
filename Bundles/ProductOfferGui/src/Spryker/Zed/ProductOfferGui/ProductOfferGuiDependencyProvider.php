@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferGui;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeBridge;
@@ -19,8 +20,11 @@ use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferF
  */
 class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
+    public const PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER';
+    public const PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_PRODUCT_OFFER_VIEW_SECTION = 'PLUGINS_PRODUCT_OFFER_VIEW_SECTION';
     public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
@@ -34,8 +38,11 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addProductOfferFacade($container);
+        $container = $this->addPropelProductOfferQuery($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addProductOfferFacade($container);
+        $container = $this->addProductOfferListActionViewDataExpanderPlugins($container);
+        $container = $this->addProductOfferTableExpanderPlugins($container);
         $container = $this->addProductFacade($container);
         $container = $this->addProductOfferViewSectionPlugins($container);
 
@@ -61,13 +68,11 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addProductOfferFacade(Container $container): Container
+    protected function addPropelProductOfferQuery(Container $container): Container
     {
-        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
-            return new ProductOfferGuiToProductOfferFacadeBridge(
-                $container->getLocator()->productOffer()->facade()
-            );
-        });
+        $container->set(static::PROPEL_QUERY_PRODUCT_OFFER, $container->factory(function () {
+            return SpyProductOfferQuery::create();
+        }));
 
         return $container;
     }
@@ -80,12 +85,68 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addLocaleFacade(Container $container): Container
     {
         $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new ProductOfferGuiToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
-            );
+            return new ProductOfferGuiToLocaleFacadeBridge($container->getLocator()->locale()->facade());
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
+            return new ProductOfferGuiToProductOfferFacadeBridge($container->getLocator()->productOffer()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferListActionViewDataExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER, function () {
+            return $this->getProductOfferListActionViewDataExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferListActionViewDataExpanderPluginInterface[]
+     */
+    protected function getProductOfferListActionViewDataExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductOfferTableExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER, function () {
+            return $this->getProductOfferTableExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[]
+     */
+    protected function getProductOfferTableExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**
@@ -133,9 +194,9 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductAbstractPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        });
+        }));
 
         return $container;
     }

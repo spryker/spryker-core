@@ -9,6 +9,8 @@ namespace Spryker\Zed\ProductOfferGui\Persistence;
 
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapper;
+use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapperInterface;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 
 /**
@@ -17,6 +19,14 @@ use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
  */
 class ProductOfferGuiPersistenceFactory extends AbstractPersistenceFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapperInterface
+     */
+    public function createProductOfferQueryCriteriaMapper(): ProductOfferQueryCriteriaMapperInterface
+    {
+        return new ProductOfferQueryCriteriaMapper();
+    }
+
     /**
      * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery<mixed>
      *

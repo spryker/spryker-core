@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
+use Generated\Shared\Transfer\QueryCriteriaTransfer;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -15,6 +17,25 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductOfferGuiRepository extends AbstractRepository implements ProductOfferGuiRepositoryInterface
 {
+    /**
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
+     * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
+     *
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
+     */
+    public function mapQueryCriteriaTransferToModelCriteria(
+        SpyProductOfferQuery $query,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): SpyProductOfferQuery {
+        return $this->getFactory()
+            ->createProductOfferQueryCriteriaMapper()
+            ->mapQueryCriteriaTransferToModelCriteria($query, $queryCriteriaTransfer);
+    }
+
     /**
      * @param string $sku
      *

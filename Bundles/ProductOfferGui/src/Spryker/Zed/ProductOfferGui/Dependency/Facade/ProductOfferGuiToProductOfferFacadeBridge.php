@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductOfferGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 class ProductOfferGuiToProductOfferFacadeBridge implements ProductOfferGuiToProductOfferFacadeInterface
@@ -23,6 +24,16 @@ class ProductOfferGuiToProductOfferFacadeBridge implements ProductOfferGuiToProd
     public function __construct($productOfferFacade)
     {
         $this->productOfferFacade = $productOfferFacade;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    {
+        return $this->productOfferFacade->update($productOfferTransfer);
     }
 
     /**

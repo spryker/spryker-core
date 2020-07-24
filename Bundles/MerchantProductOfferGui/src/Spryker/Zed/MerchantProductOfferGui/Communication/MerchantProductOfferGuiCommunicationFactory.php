@@ -7,17 +7,49 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Communication;
 
+use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReader;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReaderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiDependencyProvider;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface getRepository()
  */
 class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface
+     */
+    public function createMerchantProductOfferTableExpander(): MerchantProductOfferTableExpanderInterface
+    {
+        return new MerchantProductOfferTableExpander(
+            $this->getRepository(),
+            $this->getRequest()
+        );
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): Request
+    {
+        return $this->getApplication()['request'];
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Communication\Application
+     */
+    public function getApplication(): Application
+    {
+        return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::PLUGIN_APPLICATION);
+    }
+
     /**
      * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReaderInterface
      */

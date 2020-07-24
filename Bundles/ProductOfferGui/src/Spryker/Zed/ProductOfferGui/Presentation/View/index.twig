@@ -4,12 +4,12 @@
 {% block section_title %}{{ page_title }}{% endblock %}
 
 {% block action %}
-    {{ backActionButton(url('/product-offer-gui'), 'Back to Offers' | trans) }}
+    {{ backActionButton(url('/product-offer-gui/list'), 'Back to Offers' | trans) }}
     {%  for applicableProductOfferStatus in applicableProductOfferStatuses %}
         {% if applicableProductOfferStatus == 'denied' %}
-            {{ removeActionButton(url('/product-offer-gui/product-offer-status', {'status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), (applicableProductOfferStatus ~ '_button') | trans, {'icon':'<i class="fa fa-trash"></i> '}) }}
+            {{ removeActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), (applicableProductOfferStatus ~ '_button') | trans, {'icon':'<i class="fa fa-trash"></i> '}) }}
         {% else %}
-            {{ createActionButton(url('/product-offer-gui/product-offer-status', {'status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), (applicableProductOfferStatus ~ '_button') | trans, {'icon':'<i class="fa fa-play"></i> '}) }}
+            {{ createActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), (applicableProductOfferStatus ~ '_button') | trans, {'icon':'<i class="fa fa-play"></i> '}) }}
         {%  endif %}
     {%  endfor %}
 {% endblock %}

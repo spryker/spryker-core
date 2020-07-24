@@ -23,6 +23,14 @@ class ProductOfferGuiToLocaleFacadeBridge implements ProductOfferGuiToLocaleFaca
     }
 
     /**
+     * @return \Generated\Shared\Transfer\LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        return $this->localeFacade->getCurrentLocale();
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleCollection()

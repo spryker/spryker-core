@@ -8,10 +8,18 @@
 namespace Spryker\Zed\ProductOfferGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface ProductOfferGuiToProductOfferFacadeInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer;
+
     /**
      * @param \Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter
      *

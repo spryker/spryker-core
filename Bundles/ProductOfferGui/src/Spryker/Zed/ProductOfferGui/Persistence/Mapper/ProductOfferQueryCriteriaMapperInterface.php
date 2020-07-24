@@ -5,13 +5,12 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferGui\Persistence;
+namespace Spryker\Zed\ProductOfferGui\Persistence\Mapper;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
-interface ProductOfferGuiRepositoryInterface
+interface ProductOfferQueryCriteriaMapperInterface
 {
     /**
      * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
@@ -27,11 +26,4 @@ interface ProductOfferGuiRepositoryInterface
         SpyProductOfferQuery $query,
         QueryCriteriaTransfer $queryCriteriaTransfer
     ): SpyProductOfferQuery;
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
-    public function findProductAbstractBySku(string $sku): ?SpyProductAbstract;
 }

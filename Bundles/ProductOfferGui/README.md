@@ -4,6 +4,7 @@
 
 ProductOfferGui is the Zed Administrative Interface component for managing product offers.
 
+
 ## Installation
 
 ```

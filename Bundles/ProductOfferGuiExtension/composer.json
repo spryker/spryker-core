@@ -5,6 +5,10 @@
   "require": {
     "php": ">=7.2"
   },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/gui": "*"
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -12,7 +16,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
@@ -20,5 +27,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "suggest": {
+    "spryker/gui": "If you want to use table expander plugin."
   }
 }
