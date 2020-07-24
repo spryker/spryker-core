@@ -1,0 +1,27 @@
+{
+  "name": "spryker/product-offer-reservation-gui",
+  "description": "ProductOfferReservationGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/kernel": "^3.30.0",
+    "spryker/oms-product-offer-reservation": "*",
+    "spryker/product-offer-stock-gui-extension": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}
