@@ -1,0 +1,74 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'Volume Prices for Offer' | trans ~ ': ' ~ productOfferReference %}
+{% block section_title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+    <table class="price-volume-table">
+        <tbody>
+        <tr>
+            <td>{{ 'Price Dimension Name' | trans }}:</td>
+            <td>{{ priceProduct.priceDimension.name }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Price Type' | trans }}:</td>
+            <td>{{ priceProduct.priceType.name }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Currency' | trans }}:</td>
+            <td>{{ priceProduct.moneyValue.currency.name }}</td>
+        </tr>
+        <tr>
+            <td>{{ 'Store' | trans }}:</td>
+            <td>{{ priceProduct.moneyValue.store.name }}</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <table class="table table--expand">
+        <thead>
+        <tr class="active">
+            <th>{{ 'Quantity' | trans }}</th>
+            <th>{{ 'Gross price' | trans }}</th>
+            <th>{{ 'Net price' | trans }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                1
+            </td>
+            <td>
+                {{ priceProduct.moneyValue.grossAmount | money(true, priceProduct.moneyValue.currency.code)  }}
+            </td>
+            <td>
+                {{ priceProduct.moneyValue.netAmount | money(true, priceProduct.moneyValue.currency.code)  }}
+            </td>
+        </tr>
+
+        {% for volume in volumePrices %}
+            <tr>
+                <td>
+                    {{ volume.quantity }}
+                </td>
+                <td>
+                    {{ volume.gross_price | money(true, priceProduct.moneyValue.currency.code) }}
+                </td>
+                <td>
+                    {{ volume.net_price | money(true, priceProduct.moneyValue.currency.code) }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ backUrl }}" class="btn btn-back">{{ 'Back' | trans}}</a>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

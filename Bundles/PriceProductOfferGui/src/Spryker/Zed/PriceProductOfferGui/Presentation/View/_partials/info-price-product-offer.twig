@@ -1,0 +1,97 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price' | trans } %}
+    {% block widget_content %}
+        {% if productOffer.prices.count < 1 %}
+            <div class="row form-group">
+                <div class="col-xs-12"><b>{{ 'This offer has no prices.' | trans }}</b></div>
+            </div>
+        {% else %}
+            {% set priceModeGross = 'GROSS_MODE' %}
+            {% set priceModeNet = 'NET_MODE' %}
+            {% set priceModeBoth = 'BOTH' %}
+
+            {% set priceModeCollection = priceTable | first | first %}
+
+            <table id="price-table-collection" class="table table-bordered">
+                <thead>
+                <tr>
+                    <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-bottom: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></th>
+                    <th style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF;  border-bottom: 1px solid #FFF;border-left:1px solid #FFF;"></th>
+
+                    {% for priceMode, priceTypes in priceModeCollection %}
+                        {% set priceTypesLength = priceTypes|length %}
+
+                        {% if priceTypesLength > 0 %}
+                            <th colspan="{{ priceTypesLength }}" style="text-align:center;">
+                                {% if priceModeGross == priceMode %}
+                                    {{ 'Gross price' | trans }}
+                                {% endif %}
+
+                                {% if priceModeNet == priceMode %}
+                                    {{ 'Net price' | trans }}
+                                {% endif %}
+                            </th>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF; border-right:1px solid #FFF;"></td>
+                    <td style="width: 50px; background-color:#FFF; border-top: 1px solid #FFF; border-left:1px solid #FFF;;"></td>
+
+                    {% for priceTypes in priceModeCollection %}
+                        {% for priceType in priceTypes | keys %}
+                            <td>{{ priceType }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                </thead>
+
+                <tbody>
+                {% for storeName, storeCurrencies in priceTable %}
+
+                    {% for currencyIsoCode, priceModes in storeCurrencies %}
+                        <tr class="gray-bg">
+                            {% if loop.first %}
+                                <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold" rowspan="{{ storeCurrencies|length }}">
+                                    {{ storeName }}
+                                </td>
+                            {% endif %}
+
+                            <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
+                                {{ currencies[currencyIsoCode].symbol }}
+
+                                {% include '@PriceProductOfferVolumeGui/View/_partials/volume_price_action_button.twig' with {
+                                    idProductOffer: productOffer.idProductOffer,
+                                    storeName: storeName,
+                                    currencyCode: currencyIsoCode,
+                                    priceData: priceData[storeName][currencyIsoCode]
+                                } only %}
+
+                            </td>
+
+                            {% for priceMode, priceTypes in priceModes %}
+                                {% for priceType, priceProductTransfer in priceTypes %}
+
+                                    {% set moneyValue = priceProductTransfer.moneyValue %}
+                                    {% set priceTypeTransfer = priceProductTransfer.priceType %}
+
+                                    <td class="">
+                                        {% if (priceTypeTransfer.priceModeConfiguration == priceModeGross or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeGross %}
+                                            {{ moneyValue.grossAmount | default(0) | money(false) }}
+                                        {%  endif %}
+
+                                        {%  if (priceTypeTransfer.priceModeConfiguration == priceModeNet or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeNet %}
+                                            {{ moneyValue.netAmount | default(0) | money(false) }}
+                                        {%  endif %}
+                                    </td>
+
+                                {% endfor %}
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+    {% endblock %}
+{% endembed %}
