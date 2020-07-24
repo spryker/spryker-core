@@ -73,6 +73,8 @@ class ElasticsearchWriterTest extends Unit
      */
     protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
@@ -167,5 +169,15 @@ class ElasticsearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
 
         return $mockResponse;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }
