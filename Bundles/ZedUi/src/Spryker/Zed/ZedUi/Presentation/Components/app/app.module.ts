@@ -7,7 +7,7 @@ import {
     AjaxPostActionCloseService,
     AjaxPostActionRedirectService,
     AjaxPostActionRefreshTableService,
-    AjaxPostActionRefreshAjaxFormService,
+    AjaxPostActionRefreshDrawerService,
 } from '@spryker/ajax-post-actions';
 import { LocaleModule } from '@spryker/locale';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
@@ -34,7 +34,7 @@ import { TableRootModule } from './table/table-root.module';
             close_overlay: AjaxPostActionCloseService,
             redirect: AjaxPostActionRedirectService,
             refresh_table: AjaxPostActionRefreshTableService,
-            refresh_ajax_form: AjaxPostActionRefreshAjaxFormService,
+            refresh_drawer: AjaxPostActionRefreshDrawerService,
         }),
         DefaultContextSerializationModule,
     ],

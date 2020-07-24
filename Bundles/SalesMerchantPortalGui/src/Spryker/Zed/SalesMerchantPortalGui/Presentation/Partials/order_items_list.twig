@@ -1,17 +1,16 @@
 {% for orderItem in orderItems %}
-    {% set attributeAddValue = '' %}
+    {% set superAttributes = '' %}
 
     {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length %}
         {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0, 2) %}
-            {% set attributeAddValue = ', ' ~ attributeValue %}
+            {% set superAttributes = ', ' ~ attributeValue %}
         {% endfor %}
     {% endif %}
 
     <div class="mp-manage-order__totals">
         <div class="mp-manage-order__totals-row">
             <span class="mp-manage-order__totals-col">
-                {{ orderItem.name }}
-                {{ attributeAddValue }}
+                {{ orderItem.name }}{{ superAttributes }}
                 x {{ orderItem.quantity }}
             </span>
 

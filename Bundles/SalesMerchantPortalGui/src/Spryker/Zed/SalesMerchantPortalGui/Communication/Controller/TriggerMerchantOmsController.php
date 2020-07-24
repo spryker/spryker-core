@@ -60,7 +60,7 @@ class TriggerMerchantOmsController extends AbstractController
         $responseData = [
             'postActions' => [
                 [
-                    'type' => 'refresh_ajax_form',
+                    'type' => 'refresh_drawer',
                 ],
                 [
                     'type' => 'refresh_table',
