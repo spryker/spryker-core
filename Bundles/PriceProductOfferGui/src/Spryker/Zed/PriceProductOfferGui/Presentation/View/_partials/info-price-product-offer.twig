@@ -1,6 +1,6 @@
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Price' | trans } %}
     {% block widget_content %}
-        {% if productOffer.prices.count < 1 %}
+        {% if productOffer is not defined or productOffer.prices.count < 1 %}
             <div class="row form-group">
                 <div class="col-xs-12"><b>{{ 'This offer has no prices.' | trans }}</b></div>
             </div>
