@@ -37,6 +37,8 @@ class OauthRefreshTokenCreator implements OauthRefreshTokenCreatorInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\Creator\OauthRefreshTokenCreator::saveRefreshTokenFromTransfer()} instead.
+     *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *
      * @return void
@@ -48,6 +50,16 @@ class OauthRefreshTokenCreator implements OauthRefreshTokenCreatorInterface
             new OauthRefreshTokenTransfer()
         );
 
+        $this->oauthRevokeEntityManager->saveRefreshToken($oauthRefreshTokenTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return void
+     */
+    public function saveRefreshTokenFromTransfer(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void
+    {
         $this->oauthRevokeEntityManager->saveRefreshToken($oauthRefreshTokenTransfer);
     }
 }
