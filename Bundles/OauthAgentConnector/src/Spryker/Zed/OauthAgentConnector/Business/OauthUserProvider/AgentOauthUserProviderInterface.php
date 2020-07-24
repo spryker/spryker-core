@@ -9,7 +9,7 @@ namespace Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider;
 
 use Generated\Shared\Transfer\OauthUserTransfer;
 
-interface AgentProviderInterface
+interface AgentOauthUserProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer

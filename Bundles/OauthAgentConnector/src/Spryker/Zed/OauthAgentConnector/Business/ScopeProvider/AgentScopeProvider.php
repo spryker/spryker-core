@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 use Generated\Shared\Transfer\OauthScopeTransfer;
 use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig;
 
-class ScopeProvider implements ScopeProviderInterface
+class AgentScopeProvider implements AgentScopeProviderInterface
 {
     /**
      * @var \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig
@@ -19,11 +19,11 @@ class ScopeProvider implements ScopeProviderInterface
     protected $oauthAgentConnectorConfig;
 
     /**
-     * @param \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig $oauthCustomerConnectorConfig
+     * @param \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig $oauthAgentConnectorConfig
      */
-    public function __construct(OauthAgentConnectorConfig $oauthCustomerConnectorConfig)
+    public function __construct(OauthAgentConnectorConfig $oauthAgentConnectorConfig)
     {
-        $this->oauthAgentConnectorConfig = $oauthCustomerConnectorConfig;
+        $this->oauthAgentConnectorConfig = $oauthAgentConnectorConfig;
     }
 
     /**

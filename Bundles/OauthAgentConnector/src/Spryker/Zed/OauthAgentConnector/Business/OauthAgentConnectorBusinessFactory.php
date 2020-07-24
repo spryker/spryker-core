@@ -10,14 +10,13 @@ namespace Spryker\Zed\OauthAgentConnector\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\OauthAgentConnector\Business\Installer\AgentOauthScopeInstaller;
 use Spryker\Zed\OauthAgentConnector\Business\Installer\AgentOauthScopeInstallerInterface;
-use Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentProvider;
-use Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentProviderInterface;
-use Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\ScopeProvider;
-use Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\ScopeProviderInterface;
+use Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentOauthUserProvider;
+use Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentOauthUserProviderInterface;
+use Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\AgentScopeProvider;
+use Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\AgentScopeProviderInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToOauthFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
-use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig;
 use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorDependencyProvider;
 
 /**
@@ -26,22 +25,22 @@ use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorDependencyProvider;
 class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentProviderInterface
+     * @return \Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentOauthUserProviderInterface
      */
-    public function createCustomerProvider(): AgentProviderInterface
+    public function createAgentOauthUserProvider(): AgentOauthUserProviderInterface
     {
-        return new AgentProvider(
-            $this->getCustomerFacade(),
+        return new AgentOauthUserProvider(
+            $this->getAgentFacade(),
             $this->getUtilEncodingService()
         );
     }
 
     /**
-     * @return \Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\ScopeProviderInterface
+     * @return \Spryker\Zed\OauthAgentConnector\Business\ScopeProvider\AgentScopeProviderInterface
      */
-    public function createScopeProvider(): ScopeProviderInterface
+    public function createAgentScopeProvider(): AgentScopeProviderInterface
     {
-        return new ScopeProvider($this->getConfig());
+        return new AgentScopeProvider($this->getConfig());
     }
 
     /**
@@ -58,9 +57,9 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface
      */
-    public function getCustomerFacade(): OauthAgentConnectorToAgentFacadeInterface
+    public function getAgentFacade(): OauthAgentConnectorToAgentFacadeInterface
     {
-        return $this->getProvidedDependency(OauthAgentConnectorDependencyProvider::FACADE_CUSTOMER);
+        return $this->getProvidedDependency(OauthAgentConnectorDependencyProvider::FACADE_AGENT);
     }
 
     /**
@@ -69,14 +68,6 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
     public function getOauthFacade(): OauthAgentConnectorToOauthFacadeInterface
     {
         return $this->getProvidedDependency(OauthAgentConnectorDependencyProvider::FACADE_OAUTH);
-    }
-
-    /**
-     * @return \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig
-     */
-    public function getModuleConfig(): OauthAgentConnectorConfig
-    {
-        return $this->getConfig();
     }
 
     /**

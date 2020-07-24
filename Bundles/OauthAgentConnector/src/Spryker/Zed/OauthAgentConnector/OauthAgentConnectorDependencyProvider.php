@@ -18,7 +18,7 @@ use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtil
  */
 class OauthAgentConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_CUSTOMER = 'FACADE_AGENT';
+    public const FACADE_AGENT = 'FACADE_AGENT';
     public const FACADE_OAUTH = 'FACADE_OAUTH';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -30,7 +30,7 @@ class OauthAgentConnectorDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container = $this->addCustomerFacade($container);
+        $container = $this->addAgentFacade($container);
         $container = $this->addOauthFacade($container);
         $container = $this->addUtilEncodingService($container);
 
@@ -42,9 +42,9 @@ class OauthAgentConnectorDependencyProvider extends AbstractBundleDependencyProv
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerFacade(Container $container): Container
+    protected function addAgentFacade(Container $container): Container
     {
-        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+        $container->set(static::FACADE_AGENT, function (Container $container) {
             return new OauthAgentConnectorToAgentFacadeBridge($container->getLocator()->agent()->facade());
         });
 

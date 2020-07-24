@@ -13,7 +13,7 @@ use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgent
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
 use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
-class AgentProvider implements AgentProviderInterface
+class AgentOauthUserProvider implements AgentOauthUserProviderInterface
 {
     /**
      * @var \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface

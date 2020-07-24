@@ -40,7 +40,7 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
         ServerRequestInterface $request,
         ResponseTypeInterface $responseType,
         DateInterval $accessTokenTTL
-    ) {
+    ): ResponseTypeInterface {
         // Validate request
         $client = $this->validateClient($request);
         $scopes = $this->validateScopes($this->getRequestParameter(static::REQUEST_PARAMETER_SCOPE, $request, $this->defaultScope));
@@ -67,7 +67,7 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
     /**
      * @return string
      */
-    public function getIdentifier()
+    public function getIdentifier(): string
     {
         return OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS;
     }
@@ -78,7 +78,7 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
      *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
-    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity)
+    protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $clientEntity): UserEntityInterface
     {
         $username = $this->getRequestParameter(static::REQUEST_PARAMETER_USERNAME, $request);
         if ($username === null) {

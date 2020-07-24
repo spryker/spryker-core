@@ -18,6 +18,9 @@ class AgentOauthScopeInstallerPlugin extends AbstractPlugin implements Installer
 {
     /**
      * {@inheritDoc}
+     * - Installes agent-specific OAuth scopes.
+     * - Scopes are defined in `OauthAgentConnectorConfig::getAgentScopes()`.
+     * - Skips scope if it already exists in depsistent storage.
      *
      * @api
      *
