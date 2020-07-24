@@ -6,4 +6,15 @@
     <transfer name="ProductOfferStock">
         <property name="productOfferReference" type="string"/>
     </transfer>
+
+    <transfer name="OmsProductOfferReservationCriteria">
+        <property name="productOfferReference" type="string"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
 </transfers>

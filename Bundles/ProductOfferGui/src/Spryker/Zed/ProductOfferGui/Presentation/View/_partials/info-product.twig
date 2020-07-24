@@ -2,14 +2,14 @@
     {% block widget_content %}
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'SKU' | trans }}</b></div>
-            <div class="col-xs-10">{{ productConcrete.sku }}</div>
+            <div class="col-xs-10"><a target="_blank" href="{{ url('/product-management/view', {'id-product-abstract': productConcrete.fkProductAbstract}) }}">{{ productConcrete.sku }}</a></div>
         </div>
 
         {% set productType = 'Product' | trans %}
 
         {% if isGiftCard == true %}
             {% set productType = 'Gift Card' | trans %}
-        {% endif %}s
+        {% endif %}
 
         {% if isProductBundle == true %}
             {% set productType = 'Product Bundle' | trans %}

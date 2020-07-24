@@ -59,4 +59,17 @@ interface ProductOfferValidityFacadeInterface
      * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
     public function expandProductOfferWithProductOfferValidity(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Finds product offer validity by provided product offer id.
+     * - Returns ProductOfferValidity transfer object.
+     *
+     * @api
+     *
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferValidityTransfer|null
+     */
+    public function findProductOfferValidityByIdProductOffer(int $idProductOffer): ?ProductOfferValidityTransfer;
 }

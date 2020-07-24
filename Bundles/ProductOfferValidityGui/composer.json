@@ -1,15 +1,12 @@
 {
-  "name": "spryker/price-product-offer-gui",
-  "description": "PriceProductOfferGui module",
+  "name": "spryker/product-offer-validity-gui",
+  "description": "ProductOfferValidityGui module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.33.0",
-    "spryker/price": "^5.6.0",
-    "spryker/price-product": "^4.16.0",
-    "spryker/price-product-offer": "^0.6.0",
-    "spryker/product-offer-gui-extension": "^0.1.0",
-    "spryker/util-encoding": "^2.1.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-offer-gui-extension": "*",
+    "spryker/product-offer-validity": "*"
   },
   "autoload": {
     "psr-4": {
