@@ -1,7 +1,9 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% set page_title = 'Volume Prices for Offer' | trans ~ ': ' ~ productOfferReference %}
-{% block section_title %}{{ page_title }}{% endblock %}
+
+{% block head_title page_title %}
+{% block section_title page_title %}
 
 {% block content %}
     <table class="price-volume-table">
