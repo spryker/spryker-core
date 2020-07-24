@@ -138,6 +138,8 @@ class TranslatorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application

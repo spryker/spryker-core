@@ -19,6 +19,9 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Testify\Locator\Business\BusinessLocator as Locator;
 
+/**
+ * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\BusinessHelper} instead.
+ */
 class BusinessHelper extends Module
 {
     protected const BUSINESS_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';

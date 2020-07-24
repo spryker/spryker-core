@@ -30,12 +30,20 @@ use Spryker\Zed\Kernel\Container;
  */
 class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_ENCODING = 'util encoding service';
     public const SERVICE_PROVIDER = 'SERVICE_PROVIDER';
     public const SERVICE_PROVIDER_API = 'SERVICE_PROVIDER_API';
     public const INTERNAL_CALL_SERVICE_PROVIDER = 'INTERNAL_CALL_SERVICE_PROVIDER';
     public const INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION = 'INTERNAL_CALL_SERVICE_PROVIDER_WITH_AUTHENTICATION';
     public const PLUGINS_APPLICATION = 'PLUGINS_APPLICATION';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
+    public const SERVICE_ENCODING = 'util encoding service';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const ENVIRONMENT = 'ENVIRONMENT';
 
     /**
@@ -57,16 +65,40 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
+        $container = $this->addApplicationPlugins($container);
         $container = $this->addServiceProviders($container);
         $container = $this->addApiServiceProviders($container);
         $container = $this->addInternalCallServiceProviders($container);
         $container = $this->addInternalCallServiceProvidersWithAuthentication($container);
-        $container = $this->addApplicationPlugins($container);
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addApplicationPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
+            return $this->getApplicationPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    protected function getApplicationPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -81,6 +113,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -95,6 +129,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
@@ -149,6 +185,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::addApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -163,6 +201,8 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Application\ApplicationDependencyProvider::getApplicationPlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Silex\ServiceProviderInterface[]
@@ -224,28 +264,6 @@ class ApplicationDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Silex\ServiceProviderInterface[]
      */
     protected function getInternalCallServiceProvidersWithAuthentication(Container $container)
-    {
-        return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addApplicationPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_APPLICATION, function (Container $container): array {
-            return $this->getApplicationPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
-     */
-    protected function getApplicationPlugins(): array
     {
         return [];
     }

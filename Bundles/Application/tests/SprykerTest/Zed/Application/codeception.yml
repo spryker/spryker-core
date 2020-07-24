@@ -12,14 +12,6 @@ coverage:
     whitelist: { include: ['../../../../src/*'] }
 
 suites:
-    Business:
-        path: Business
-        class_name: ApplicationBusinessTester
-        modules:
-            enabled:
-                - Asserts
-                - \SprykerTest\Shared\Testify\Helper\Environment
-
     Communication:
         path: Communication
         class_name: ApplicationCommunicationTester

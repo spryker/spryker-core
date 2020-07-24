@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\Routing\Loader\ClosureLoader;
 use Symfony\Component\Routing\Router;
 
-class Application implements HttpKernelInterface, TerminableInterface
+class Application implements HttpKernelInterface, TerminableInterface, ApplicationInterface
 {
     /**
      * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
@@ -34,11 +34,6 @@ class Application implements HttpKernelInterface, TerminableInterface
      * @see \Symfony\Component\HttpFoundation\RequestStack
      */
     public const SERVICE_REQUEST_STACK = 'request_stack';
-
-    /**
-     * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
-     */
-    protected $plugins = [];
 
     /**
      * @var \Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface[]
@@ -57,10 +52,16 @@ class Application implements HttpKernelInterface, TerminableInterface
 
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $applicationPlugins
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, array $applicationPlugins = [])
     {
         $this->container = $container;
+        $this->enableHttpMethodParameterOverride();
+
+        foreach ($applicationPlugins as $applicationPlugin) {
+            $this->registerApplicationPlugin($applicationPlugin);
+        }
     }
 
     /**
@@ -70,7 +71,6 @@ class Application implements HttpKernelInterface, TerminableInterface
      */
     public function registerApplicationPlugin(ApplicationPluginInterface $applicationPlugin)
     {
-        $this->plugins[] = $applicationPlugin;
         $this->container = $applicationPlugin->provide($this->container);
 
         if ($applicationPlugin instanceof BootableApplicationPluginInterface) {
@@ -117,7 +117,10 @@ class Application implements HttpKernelInterface, TerminableInterface
     public function handle(Request $request, $type = self::MASTER_REQUEST, $catch = true): Response
     {
         $this->container->set('request', $request);
-        $this->flushControllers();
+
+        if ($this->container->has('controllers')) {
+            $this->flushControllers();
+        }
 
         $response = $this->getKernel()->handle($request);
 
@@ -178,5 +181,16 @@ class Application implements HttpKernelInterface, TerminableInterface
     protected function getKernel(): HttpKernel
     {
         return $this->container->get('kernel');
+    }
+
+    /**
+     * Allow overriding http method. Needed to use the "_method" parameter in forms.
+     * This should not be changeable by projects
+     *
+     * @return void
+     */
+    protected function enableHttpMethodParameterOverride()
+    {
+        Request::enableHttpMethodParameterOverride();
     }
 }
