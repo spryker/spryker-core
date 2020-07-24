@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.33.0",
-    "spryker/oauth-extension": "^1.4.0"
+    "spryker/oauth-extension": "^1.5.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
