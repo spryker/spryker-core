@@ -117,4 +117,37 @@ interface HttpConstants
      * @api
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'HTTP:ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
+
+    /**
+     * Specification:
+     *  - HTTP port for Glue.
+     *
+     * @api
+     */
+    public const GLUE_HTTP_PORT = 'HTTP:GLUE_HTTP_PORT';
+
+    /**
+     * Specification:
+     * - HTTPS port for Glue.
+     *
+     * @api
+     */
+    public const GLUE_HTTPS_PORT = 'HTTP:GLUE_HTTPS_PORT';
+
+    /**
+     * Specification:
+     * - IP address (or range) of your proxy.
+     * - Example: `['192.0.0.1', '10.0.0.0/8']`.
+     *
+     * @api
+     */
+    public const GLUE_TRUSTED_PROXIES = 'HTTP:GLUE_TRUSTED_PROXIES';
+
+    /**
+     * Specification:
+     * - List of trusted hosts managed by regexp.
+     *
+     * @api
+     */
+    public const GLUE_TRUSTED_HOSTS = 'HTTP:GLUE_TRUSTED_HOSTS';
 }

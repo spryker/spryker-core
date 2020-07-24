@@ -29,6 +29,11 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -65,7 +70,10 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
     protected function addTwigEnvironment(Container $container): Container
     {
         $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
-            $twig = $this->getTwigEnvironment();
+            /** @var \Twig\Environment $twig */
+            $twig = $container->getApplicationService(static::SERVICE_TWIG);
+            $twig->setLoader($this->createFilesystemLoader());
+            $twig->setCache(false);
 
             return new SchedulerJenkinsToTwigEnvironmentBridge($twig);
         });
@@ -74,6 +82,8 @@ class SchedulerJenkinsDependencyProvider extends AbstractBundleDependencyProvide
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment(): Environment

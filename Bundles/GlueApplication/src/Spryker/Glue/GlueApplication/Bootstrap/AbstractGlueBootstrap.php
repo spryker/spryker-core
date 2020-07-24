@@ -20,6 +20,10 @@ use Spryker\Shared\Application\Application as SprykerApplication;
 use Spryker\Shared\Kernel\Communication\Application;
 use Symfony\Component\HttpFoundation\Session\Session;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\GlueApplication\Bootstrap\GlueBootstrap} instead.
+ * @deprecated Use {@link \Spryker\Shared\Http\Plugin\EventDispatcher\ResponseListenerEventDispatcherPlugin} instead.
+ */
 abstract class AbstractGlueBootstrap
 {
     use BundleDependencyProviderResolverAwareTrait;
