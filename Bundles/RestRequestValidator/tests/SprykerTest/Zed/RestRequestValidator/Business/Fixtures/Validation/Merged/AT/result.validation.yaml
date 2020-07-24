@@ -12,7 +12,6 @@ endpoint:
   patch:
     booleanField:
     - IsTrue
-    - Required
   get:
     dateField:
     - Date

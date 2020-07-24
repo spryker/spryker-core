@@ -49,9 +49,9 @@ class ProductQuantityDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container) {
+        $container->set(static::SERVICE_PRODUCT_QUANTITY, function (Container $container) {
             return $container->getLocator()->productQuantity()->service();
-        };
+        });
 
         return $container;
     }

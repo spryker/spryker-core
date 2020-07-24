@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class AddController extends AbstractController
 {
@@ -39,10 +40,12 @@ class AddController extends AbstractController
 
         $type = $request->query->get('type');
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
+                $dataProvider->getData($priceDimension),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);

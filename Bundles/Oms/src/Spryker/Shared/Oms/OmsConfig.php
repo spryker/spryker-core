@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Oms;
 
-class OmsConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class OmsConfig extends AbstractSharedConfig
 {
     /**
      * Predefined enumerated state flag list as defined in oms.xsd file.
@@ -16,4 +18,5 @@ class OmsConfig
     public const STATE_TYPE_FLAG_EXCLUDE_FROM_INVOICE = 'exclude from invoice';
     public const STATE_TYPE_FLAG_READY_FOR_INVOICE = 'ready for invoice';
     public const STATE_TYPE_FLAG_WAITING_FOR_EXPORT = 'waiting for export';
+    public const STATE_TYPE_FLAG_CANCELLABLE = 'cancellable';
 }

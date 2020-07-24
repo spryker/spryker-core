@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderCancelRequestTransfer;
+use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -142,6 +144,7 @@ interface SalesFacadeInterface
      * Specification:
      *  - Returns a list of of orders for the given customer id and (optional) filters.
      *  - Aggregates order totals calls -> SalesAggregator
+     *  - Executes SearchOrderExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -158,6 +161,7 @@ interface SalesFacadeInterface
      * - OrderListTransfer::$filters can contain offset-based pagination and ordering parameters.
      * - OrderListTransfer::$pagination can be used to apply page-based pagination strategy to the queried orders.
      * - Hydrates the resulting orders with related data.
+     * - Executes SearchOrderExpanderPluginInterface plugin stack.
      * - Aggregates order totals calls -> SalesAggregator.
      *
      * @api
@@ -175,6 +179,7 @@ interface SalesFacadeInterface
      * - Uses OrderListRequestTransfer::$filter to pull params for offset-based pagination strategy.
      * - OrderListRequestTransfer::customerReference must be set.
      * - Hydrates OrderTransfer with data from persistence by idSaleOrder.
+     * - Executes SearchOrderExpanderPluginInterface plugin stack.
      * - Updates the total number of orders for the customer to the pagination transfer.
      *
      * @api
@@ -190,6 +195,7 @@ interface SalesFacadeInterface
      *  - Returns a list of of orders for the given customer id and (optional) filters, without order items information.
      *  - Aggregates order totals calls -> SalesAggregator
      *  - Paginates order list for limited result
+     *  - Executes SearchOrderExpanderPluginInterface plugin stack.
      *
      * @api
      *
@@ -321,7 +327,7 @@ interface SalesFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link getUniqueItemsFromOrder()} instead`.
+     * @deprecated Use {@link getUniqueItemsFromOrder()} instead.
      *
      * @param iterable|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
      *
@@ -383,4 +389,35 @@ interface SalesFacadeInterface
      * @return \Generated\Shared\Transfer\OrderListTransfer
      */
     public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Expands order items with currency ISO code.
+     * - Expects ItemTransfer::FK_SALES_ORDER to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithCurrencyIsoCode(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Requires OrderCancelRequestTransfer::orderReference to be set.
+     * - Requires CustomerTransfer:customerReference to be set.
+     * - Requires ItemTransfer::idSalesOrderItem to be set.
+     * - Retrieves OrderTransfer filtered by orderReference and customerReference.
+     * - Checks OrderTransfer::isCancellable.
+     * - Triggers cancel event for provided order items.
+     * - Returns "isSuccessful=true" and order transfer on success or `isSuccessful=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
+     */
+    public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
 }

@@ -29,9 +29,12 @@ interface ConfigurableBundleStorageRepositoryInterface
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
      * @param int[] $configurableBundleTemplateIds
      *
-     * @return \Generated\Shared\Transfer\SpyConfigurableBundleTemplateStorageEntityTransfer[]
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getFilteredConfigurableBundleTemplateStorageEntities(FilterTransfer $filterTransfer, array $configurableBundleTemplateIds): array;
+    public function getFilteredConfigurableBundleTemplateStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $configurableBundleTemplateIds
+    ): array;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

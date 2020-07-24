@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/Redis/src/Spryker/Zed/Redis/Business/Export/RedisExporter.php",
+            "snippet": "        return sprintf('redis-cli -p %s --rdb %s', $redisPort, $destination);",
+            "selected_text": "$redisPort",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}

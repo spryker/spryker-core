@@ -64,7 +64,7 @@ class StoreQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
             throw new InvalidArgumentException(sprintf(
-                'Localized query expander available only with %s, got: %s',
+                'Store query expander available only with %s, got: %s',
                 BoolQuery::class,
                 get_class($boolQuery)
             ));

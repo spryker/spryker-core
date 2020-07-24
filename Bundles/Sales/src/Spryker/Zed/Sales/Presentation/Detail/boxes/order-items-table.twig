@@ -1,0 +1,33 @@
+<table class="footable table toggle-arrow-tiny {% block order_item_table_class %}{% endblock %}" data-qa="order-item-list">
+    <thead>
+    {% block order_item_table_head %}
+        <tr class="text-left">
+            <th><input type="checkbox" id="check-all-orders" /></th>
+            <th colspan="2">{{ 'Product' | trans }}</th>
+            <th>{{ 'Quantity' | trans }}</th>
+            <th>{{ 'Unit Price' | trans }} <small>({{ order.priceMode }})</small></th>
+            <th>{{ 'Item total' | trans }}</th>
+            <th>{{ 'State' | trans }}</th>
+            <th>{{ 'Trigger event' | trans }}</th>
+            {% for tableColumnHeader in tableColumnHeaders %}
+                <th>{{ tableColumnHeader | trans }}</th>
+            {% endfor %}
+        </tr>
+    {% endblock %}
+    </thead>
+    <tbody>
+    {% block order_item_table_body %}
+        {% if order.salesOrderConfiguredBundles is defined and order.salesOrderConfiguredBundles | length > 0 %}
+            {% include '@Sales/Detail/boxes/configured-bundle.twig' with {order: order} %}
+        {% else %}
+            {% include '@Sales/Detail/boxes/configured-bundle-general.twig' with {order: order} %}
+        {% endif %}
+
+        {% if order.itemGroups is defined and order.itemGroups | length > 0 %}
+            {% include '@Sales/Detail/boxes/item-group.twig' with {tableColumnCellsContent: tableColumnCellsContent, groups: order.itemGroups} %}
+        {% else %}
+            {% include '@Sales/Detail/boxes/no-group-items.twig' with {items: order.items} %}
+        {% endif %}
+    {% endblock %}
+    </tbody>
+</table>

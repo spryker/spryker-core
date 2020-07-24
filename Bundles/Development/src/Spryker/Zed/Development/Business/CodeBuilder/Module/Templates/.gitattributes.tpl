@@ -29,4 +29,5 @@ dependency.json export-ignore
 .gitignore export-ignore
 phpstan.neon export-ignore
 phpstan.json export-ignore
+psalm-report.json export-ignore linguist-generated=true
 tooling.yml export-ignore

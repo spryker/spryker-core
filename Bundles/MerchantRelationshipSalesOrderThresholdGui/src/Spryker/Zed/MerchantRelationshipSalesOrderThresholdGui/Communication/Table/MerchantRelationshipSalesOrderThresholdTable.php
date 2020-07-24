@@ -208,7 +208,7 @@ class MerchantRelationshipSalesOrderThresholdTable extends AbstractTable
     protected function formatThresholdsColumn(array $thresholdGroups): string
     {
         $thresholdGroups = array_map(function (string $thresholdGroup) {
-            return "<span class='label label-info'>" . $thresholdGroup . '</span>';
+            return $this->generateLabel($thresholdGroup, 'label-info');
         }, $thresholdGroups);
 
         return implode(' ', $thresholdGroups);

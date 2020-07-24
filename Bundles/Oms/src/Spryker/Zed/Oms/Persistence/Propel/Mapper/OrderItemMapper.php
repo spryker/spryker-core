@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Oms\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ItemStateTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
@@ -53,5 +54,32 @@ class OrderItemMapper implements OrderItemMapperInterface
         }
 
         return $itemStateTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $salesOrderItemEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function mapSalesOrderItemEntityCollectionToOrderItemTransfers(
+        ObjectCollection $salesOrderItemEntityCollection
+    ): array {
+        $itemTransfers = [];
+
+        foreach ($salesOrderItemEntityCollection as $salesOrderItemEntity) {
+            $itemTransfer = (new ItemTransfer())->fromArray($salesOrderItemEntity->toArray(), true);
+
+            $itemTransfer->setProcess(
+                $salesOrderItemEntity->getProcess()->getName()
+            );
+
+            $itemTransfer->setState(
+                (new ItemStateTransfer())->fromArray($salesOrderItemEntity->getState()->toArray(), true)
+            );
+
+            $itemTransfers[] = $itemTransfer;
+        }
+
+        return $itemTransfers;
     }
 }

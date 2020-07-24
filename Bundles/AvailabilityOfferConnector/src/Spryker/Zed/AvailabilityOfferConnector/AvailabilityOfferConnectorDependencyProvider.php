@@ -38,9 +38,9 @@ class AvailabilityOfferConnectorDependencyProvider extends AbstractBundleDepende
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new AvailabilityOfferConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class AvailabilityOfferConnectorDependencyProvider extends AbstractBundleDepende
      */
     protected function addAvailabilityFacade(Container $container)
     {
-        $container[static::FACADE_AVAILABILITY] = function (Container $container) {
+        $container->set(static::FACADE_AVAILABILITY, function (Container $container) {
             return new AvailabilityOfferConnectorToAvailabilityFacadeBridge($container->getLocator()->availability()->facade());
-        };
+        });
 
         return $container;
     }

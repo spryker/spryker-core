@@ -67,9 +67,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addEventFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ProductMeasurementUnitToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         return $container;
     }
@@ -81,9 +81,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addUtilMeasurementUnitConversionService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_MEASUREMENT_UNIT_CONVERSION, function (Container $container) {
             return new ProductMeasurementUnitToUtilMeasurementUnitConversionServiceBridge($container->getLocator()->utilMeasurementUnitConversion()->service());
-        };
+        });
 
         return $container;
     }
@@ -95,9 +95,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addSalesOrderItemPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_SALES_ORDER_ITEM] = function () {
+        $container->set(static::PROPEL_QUERY_SALES_ORDER_ITEM, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -109,9 +109,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductMeasurementUnitToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
 
         return $container;
     }
@@ -123,9 +123,9 @@ class ProductMeasurementUnitDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ProductMeasurementUnitToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }

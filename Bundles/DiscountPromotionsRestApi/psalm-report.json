@@ -1,0 +1,78 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "MismatchingDocblockReturnType",
+            "message": "Docblock has incorrect return type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\PromotionItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "     * @return \\ArrayObject|\\Generated\\Shared\\Transfer\\PromotionItemTransfer[]",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\PromotionItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 142
+        },
+        {
+            "severity": "info",
+            "line_from": 104,
+            "line_to": 104,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getUuid on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Glue/DiscountPromotionsRestApi/Processor/Expander/PromotionItemByQuoteResourceRelationshipExpander.php",
+            "snippet": "                ->getUuid();",
+            "selected_text": "getUuid",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
+            "snippet": "        if ($cartItemRequestTransfer->getDiscountPromotionUuid() === null || !$persistentCartChangeTransfer->getItems()->offsetExists(0)) {",
+            "selected_text": "offsetExists",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 44,
+            "line_to": 44,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DiscountPromotionsRestApi\\Dependency\\Facade\\DiscountPromotionsRestApiToDiscountPromotionFacadeInterface::findDiscountPromotionByUuid cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
+            "snippet": "            $cartItemRequestTransfer->getDiscountPromotionUuid()",
+            "selected_text": "$cartItemRequestTransfer->getDiscountPromotionUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/Business/Mapper/DiscountPromotionMapper.php",
+            "snippet": "            ->offsetGet(0)",
+            "selected_text": "offsetGet",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/DiscountPromotionsRestApi/src/Spryker/Zed/DiscountPromotionsRestApi/DiscountPromotionsRestApiDependencyProvider.php",
+            "snippet": "            return new DiscountPromotionsRestApiToDiscountPromotionFacadeBridge($container->getLocator()->discountPromotion()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

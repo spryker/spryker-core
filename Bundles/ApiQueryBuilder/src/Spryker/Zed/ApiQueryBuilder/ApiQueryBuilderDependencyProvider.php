@@ -58,9 +58,9 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addApiQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_API, function (Container $container) {
             return new ApiQueryBuilderToApiBridge($container->getLocator()->api()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelQueryBuilderQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PROPEL_QUERY_BUILDER, function (Container $container) {
             return new ApiQueryBuilderToPropelQueryBuilderBridge($container->getLocator()->propelQueryBuilder()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ApiQueryBuilderDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ApiQueryBuilderToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

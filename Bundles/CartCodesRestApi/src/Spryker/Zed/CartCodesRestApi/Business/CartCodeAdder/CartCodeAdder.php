@@ -17,6 +17,11 @@ use Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartsRestAp
 class CartCodeAdder implements CartCodeAdderInterface
 {
     /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     */
+    protected const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
      * @var \Spryker\Zed\CartCodesRestApi\Dependency\Facade\CartCodesRestApiToCartCodeFacadeInterface
      */
     protected $cartCodeFacade;
@@ -56,7 +61,7 @@ class CartCodeAdder implements CartCodeAdderInterface
         $cartCodeRequestTransfer->setQuote($quoteResponseTransfer->getQuoteTransfer());
         $cartCodeResponseTransfer = $this->cartCodeFacade->addCartCode($cartCodeRequestTransfer);
 
-        if (!$cartCodeResponseTransfer->getIsSuccessful()) {
+        if (!($cartCodeResponseTransfer->getIsSuccessful() && $this->isSuccessMessageExists($cartCodeResponseTransfer))) {
             return $this->createCartCodeResponseTransferWithErrorMessageTransfer(
                 CartCodesRestApiConfig::ERROR_IDENTIFIER_CART_CODE_CANT_BE_ADDED
             );
@@ -75,5 +80,21 @@ class CartCodeAdder implements CartCodeAdderInterface
         return (new CartCodeResponseTransfer())
             ->setIsSuccessful(false)
             ->addMessage((new MessageTransfer())->setValue($errorIdentifier));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeResponseTransfer $cartCodeResponseTransfer
+     *
+     * @return bool
+     */
+    protected function isSuccessMessageExists(CartCodeResponseTransfer $cartCodeResponseTransfer): bool
+    {
+        foreach ($cartCodeResponseTransfer->getMessages() as $messageTransfer) {
+            if ($messageTransfer->getType() === static::MESSAGE_TYPE_SUCCESS) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

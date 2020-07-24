@@ -19,7 +19,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -116,7 +115,6 @@ class CustomerGroupForm extends AbstractType
     protected function getNameFieldConstraints(array $options)
     {
         $constraints = [
-            new Required(),
             new NotBlank(),
             new Length(['max' => 70]),
         ];

@@ -20,6 +20,7 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
+use SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures\BaseQueryPlugin;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
 
 /**
@@ -45,8 +46,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testSearchesBySearchString(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'document_id';
         $searchString = 'bar';
@@ -72,8 +71,8 @@ class SearchElasticsearchClientTest extends Unit
      */
     protected function createQueryPluginMock(?Query $query = null): QueryInterface
     {
-        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\PHPUnit\Framework\MockObject\MockObject $queryPlugin */
-        $queryPlugin = $this->createMock(QueryInterface::class);
+        /** @var \SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures\BaseQueryPlugin|\PHPUnit\Framework\MockObject\MockObject $queryPlugin */
+        $queryPlugin = $this->createMock(BaseQueryPlugin::class);
 
         if ($query) {
             $queryPlugin->method('getSearchQuery')->willReturn($query);
@@ -181,8 +180,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanWriteDocument(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'document-id';
         $documentData = ['foo' => 'bar'];
@@ -200,8 +197,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanWriteMultipleDocuments(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'new-document';
         $documentData = ['foo' => 'bar'];
@@ -225,8 +220,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanReadDocument(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'document-id';
         $documentData = ['foo' => 'bar'];
@@ -245,8 +238,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanDeleteDocument(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'document-id';
         $this->tester->haveDocumentInIndex(static::INDEX_NAME, $documentId);
@@ -264,8 +255,6 @@ class SearchElasticsearchClientTest extends Unit
      */
     public function testCanDeleteMultipleDocuments(): void
     {
-        $this->skipIfCi();
-
         // Arrange
         $documentId = 'document-id';
         $anotherDocumentId = 'another-document-id';
@@ -307,15 +296,5 @@ class SearchElasticsearchClientTest extends Unit
         }
 
         return $searchDocumentTransfer;
-    }
-
-    /**
-     * @return void
-     */
-    protected function skipIfCi(): void
-    {
-        if (getenv('TRAVIS')) {
-            $this->markTestSkipped('Travis not set up properly');
-        }
     }
 }

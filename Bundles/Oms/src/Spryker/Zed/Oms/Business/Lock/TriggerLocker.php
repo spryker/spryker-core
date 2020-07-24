@@ -9,14 +9,18 @@ namespace Spryker\Zed\Oms\Business\Lock;
 
 use DateInterval;
 use DateTime;
+use Exception;
 use Orm\Zed\Oms\Persistence\SpyOmsStateMachineLock;
 use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Oms\Business\Exception\LockException;
 use Spryker\Zed\Oms\OmsConfig;
 use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Spryker\Zed\Propel\Persistence\BatchProcessor\ActiveRecordBatchProcessorTrait;
 
 class TriggerLocker implements LockerInterface
 {
+    use ActiveRecordBatchProcessorTrait;
+
     /**
      * @var \Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface
      */
@@ -43,18 +47,22 @@ class TriggerLocker implements LockerInterface
      * Attempts to save a lock entity, and if it fails due to unique identifier constraint (entity already locked) -
      * throws a LockException
      *
-     * @param string $identifier
+     * @param string|string[] $identifiers
      * @param string|null $details
      *
      * @throws \Spryker\Zed\Oms\Business\Exception\LockException
      *
      * @return bool
      */
-    public function acquire($identifier, $details = null)
+    public function acquire($identifiers, $details = null)
     {
+        if (is_array($identifiers)) {
+            return $this->acquireBatch($identifiers, $details);
+        }
+
         $stateMachineLockEntity = $this->createStateMachineLockEntity();
 
-        $stateMachineLockEntity->setIdentifier($identifier);
+        $stateMachineLockEntity->setIdentifier($identifiers);
         $stateMachineLockEntity->setExpires($this->createExpirationDate());
         $stateMachineLockEntity->setDetails($details);
 
@@ -75,14 +83,22 @@ class TriggerLocker implements LockerInterface
     }
 
     /**
-     * @param string $identifier
+     * @param string|string[] $identifiers
      *
      * @return void
      */
-    public function release($identifier)
+    public function release($identifiers)
     {
+        if (is_array($identifiers)) {
+            $this->queryContainer
+                ->queryLockItemsByIdentifiers($identifiers)
+                ->delete();
+
+            return;
+        }
+
         $this->queryContainer
-            ->queryLockItemsByIdentifier($identifier)
+            ->queryLockItemsByIdentifier($identifiers)
             ->delete();
     }
 
@@ -94,6 +110,44 @@ class TriggerLocker implements LockerInterface
         $this->queryContainer
             ->queryLockedItemsByExpirationDate(new DateTime('now'))
             ->delete();
+    }
+
+    /**
+     * @param array $identifiers
+     * @param string|null $details
+     *
+     * @throws \Spryker\Zed\Oms\Business\Exception\LockException
+     *
+     * @return bool
+     */
+    protected function acquireBatch(array $identifiers, ?string $details = null): bool
+    {
+        $expirationDate = $this->createExpirationDate();
+
+        foreach ($identifiers as $identifier) {
+            $stateMachineLockEntity = $this->createStateMachineLockEntity();
+
+            $stateMachineLockEntity->setIdentifier($identifier);
+            $stateMachineLockEntity->setExpires($expirationDate);
+            $stateMachineLockEntity->setDetails($details);
+
+            $this->persist($stateMachineLockEntity);
+        }
+
+        try {
+            $isCommitSuccess = $this->commit();
+        } catch (Exception $exception) {
+            throw new LockException(
+                sprintf(
+                    'State machine trigger is locked. Propel exception: %s',
+                    $exception->getMessage()
+                ),
+                $exception->getCode(),
+                $exception
+            );
+        }
+
+        return $isCommitSuccess;
     }
 
     /**

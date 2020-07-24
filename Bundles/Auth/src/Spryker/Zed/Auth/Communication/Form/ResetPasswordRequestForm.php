@@ -13,7 +13,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\Auth\Business\AuthFacadeInterface getFacade()
@@ -50,7 +49,6 @@ class ResetPasswordRequestForm extends AbstractType
         $builder
             ->add(self::FIELD_EMAIL, TextType::class, [
                 'constraints' => [
-                    new Required(),
                     new NotBlank(),
                     new Email(),
                 ],

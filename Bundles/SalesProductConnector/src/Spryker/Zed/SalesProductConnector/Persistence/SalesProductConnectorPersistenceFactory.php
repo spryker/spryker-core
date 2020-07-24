@@ -10,6 +10,7 @@ namespace Spryker\Zed\SalesProductConnector\Persistence;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemMetadataQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface;
+use Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\ProductMapper;
 use Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\SalesOrderItemMetadataMapper;
 use Spryker\Zed\SalesProductConnector\SalesProductConnectorDependencyProvider;
 
@@ -36,6 +37,14 @@ class SalesProductConnectorPersistenceFactory extends AbstractPersistenceFactory
         return new SalesOrderItemMetadataMapper(
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesProductConnector\Persistence\Propel\Mapper\ProductMapper
+     */
+    public function createProductMapper(): ProductMapper
+    {
+        return new ProductMapper();
     }
 
     /**

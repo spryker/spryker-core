@@ -8,8 +8,13 @@
 namespace Spryker\Zed\Oms\Business;
 
 use Generated\Shared\Transfer\OmsAvailabilityReservationRequestTransfer;
+use Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer;
+use Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
+use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ReservationRequestTransfer;
+use Generated\Shared\Transfer\ReservationResponseTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
@@ -20,6 +25,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\Oms\Business\OmsBusinessFactory getFactory()
  * @method \Spryker\Zed\Oms\Persistence\OmsRepositoryInterface getRepository()
+ * @method \Spryker\Zed\Oms\Persistence\OmsEntityManagerInterface getEntityManager()
  */
 class OmsFacade extends AbstractFacade implements OmsFacadeInterface
 {
@@ -176,14 +182,15 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckConditionsQueryCriteriaTransfer|null $omsCheckConditionsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkConditions(array $logContext = [])
+    public function checkConditions(array $logContext = [], ?OmsCheckConditionsQueryCriteriaTransfer $omsCheckConditionsQueryCriteriaTransfer = null)
     {
         return $this->getFactory()
             ->createLockedOrderStateMachine($logContext)
-            ->checkConditions();
+            ->checkConditions($logContext, $omsCheckConditionsQueryCriteriaTransfer);
     }
 
     /**
@@ -192,17 +199,18 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      * @api
      *
      * @param array $logContext
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext = [])
+    public function checkTimeouts(array $logContext = [], ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null)
     {
         $factory = $this->getFactory();
         $orderStateMachine = $factory
             ->createLockedOrderStateMachine($logContext);
 
         return $factory->createOrderStateMachineTimeout()
-            ->checkTimeouts($orderStateMachine);
+            ->checkTimeouts($orderStateMachine, $omsCheckTimeoutsQueryCriteriaTransfer);
     }
 
     /**
@@ -310,7 +318,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function sumReservedProductQuantitiesForSku(string $sku, ?StoreTransfer $storeTransfer = null): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->sumReservedProductQuantitiesForSku($sku, $storeTransfer);
     }
 
@@ -327,7 +335,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedProductQuantityForSku(string $sku, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->getOmsReservedProductQuantityForSku($sku, $storeTransfer);
     }
 
@@ -344,7 +352,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
     public function getOmsReservedProductQuantityForSkus(array $skus, StoreTransfer $storeTransfer): Decimal
     {
         return $this->getFactory()
-            ->createUtilReservation()
+            ->createReservationReader()
             ->getOmsReservedProductQuantityForSkus($skus, $storeTransfer);
     }
 
@@ -609,7 +617,7 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      */
     public function getReservationsFromOtherStores(string $sku, StoreTransfer $storeTransfer): Decimal
     {
-        return $this->getFactory()->createUtilReservation()->getReservationsFromOtherStores($sku, $storeTransfer);
+        return $this->getFactory()->createReservationReader()->getReservationsFromOtherStores($sku, $storeTransfer);
     }
 
     /**
@@ -668,6 +676,8 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link updateReservation()} instead.
+     *
      * @param string $sku
      *
      * @return void
@@ -684,13 +694,29 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return void
+     */
+    public function updateReservation(ReservationRequestTransfer $reservationRequestTransfer): void
+    {
+        $this->getFactory()
+            ->createUtilReservation()
+            ->updateReservation($reservationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @deprecated Will be removed without replacement.
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
     public function getOmsReservedStateCollection(): OmsStateCollectionTransfer
     {
-        return $this->getFactory()->createUtilReservation()->getOmsReservedStateCollection();
+        return $this->getFactory()->createReservationReader()->getOmsReservedStateCollection();
     }
 
     /**
@@ -723,5 +749,83 @@ class OmsFacade extends AbstractFacade implements OmsFacadeInterface
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrderWithOmsStates($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderItemFilterTransfer $orderItemFilterTransfer
+     *
+     * @return string[][]
+     */
+    public function getOrderItemManualEvents(OrderItemFilterTransfer $orderItemFilterTransfer): array
+    {
+        return $this->getFactory()
+            ->createStateMachineReader()
+            ->getOrderItemManualEvents($orderItemFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ReservationRequestTransfer $reservationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ReservationResponseTransfer
+     */
+    public function getOmsReservedProductQuantity(ReservationRequestTransfer $reservationRequestTransfer): ReservationResponseTransfer
+    {
+        return $this->getFactory()->createReservationReader()->getOmsReservedProductQuantity($reservationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithItemState(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemStateExpander()
+            ->expandOrderItemsWithItemState($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithAggregatedItemStates(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderAggregatedItemStateExpander()
+            ->expandOrdersWithAggregatedItemStates($orderTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function setOrderIsCancellableByItemState(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->setOrderIsCancellableByItemState($orderTransfers);
     }
 }

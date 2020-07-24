@@ -48,9 +48,9 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductAttributeGuiToProductBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -62,9 +62,9 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAttributeGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductAttributeFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_ATTRIBUTE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductAttributeGuiToProductAttributeBridge($container->getLocator()->productAttribute()->facade());
-        };
+        });
 
         return $container;
     }
@@ -90,11 +90,11 @@ class ProductAttributeGuiDependencyProvider extends AbstractBundleDependencyProv
      */
     protected function addProductAttributeQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_ATTRIBUTE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_ATTRIBUTE, function (Container $container) {
             return new ProductAttributeGuiToProductAttributeQueryContainerBridge(
                 $container->getLocator()->productAttribute()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }

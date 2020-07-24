@@ -38,9 +38,9 @@ class CompanySupplierDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyQuery(Container $container)
     {
-        $container[static::PROPEL_QUERY_COMPANY] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY, $container->factory(function () {
             return SpyCompanyQuery::create();
-        };
+        }));
 
         return $container;
     }

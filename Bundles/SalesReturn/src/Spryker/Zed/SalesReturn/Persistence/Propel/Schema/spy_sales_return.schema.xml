@@ -8,7 +8,7 @@
     <table name="spy_sales_return" idMethod="native" allowPkInsert="true">
         <column name="id_sales_return" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="return_reference" type="VARCHAR" size="255" required="true"/>
-        <column name="customer_reference" type="VARCHAR" size="255" required="true"/>
+        <column name="customer_reference" type="VARCHAR" size="255" required="false"/>
         <column name="store" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>

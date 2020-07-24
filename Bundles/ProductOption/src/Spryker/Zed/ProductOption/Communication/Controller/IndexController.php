@@ -26,9 +26,16 @@ class IndexController extends AbstractController
      */
     public function toggleActiveAction(Request $request)
     {
+        $redirectUrl = $request->get(BaseOptionController::URL_PARAM_REDIRECT_URL);
+        $toggleActiveForm = $this->getFactory()->createToggleActiveProductOptionForm()->handleRequest($request);
+
+        if (!$toggleActiveForm->isSubmitted() || !$toggleActiveForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return new RedirectResponse($redirectUrl);
+        }
         $idDiscount = $this->castId($request->query->get(BaseOptionController::URL_PARAM_ID_PRODUCT_OPTION_GROUP));
-        $isActive = $request->query->get(BaseOptionController::URL_PARAM_ACTIVE);
-        $redirectUrl = $request->query->get(BaseOptionController::URL_PARAM_REDIRECT_URL);
+        $isActive = $request->get(BaseOptionController::URL_PARAM_ACTIVE);
 
         $isChanged = $this->getFacade()->toggleOptionActive($idDiscount, (bool)$isActive);
 

@@ -28,6 +28,8 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReader;
+use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
@@ -126,6 +128,8 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface
      */
     public function createOrderExpander(): OrderExpanderInterface
@@ -141,7 +145,10 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->createProductMeasurementUnitTranslationExpander()
+        );
     }
 
     /**
@@ -163,6 +170,14 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReaderInterface
+     */
+    public function createProductMeasurementUnitReader(): ProductMeasurementUnitReaderInterface
+    {
+        return new ProductMeasurementUnitReader($this->getRepository());
     }
 
     /**

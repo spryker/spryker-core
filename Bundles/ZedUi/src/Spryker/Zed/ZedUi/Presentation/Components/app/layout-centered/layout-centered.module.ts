@@ -1,13 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { ApplyContextsModule } from '@spryker/utils';
+import { CustomElementBoundaryModule } from '@spryker/web-components';
 
-import { AuthFooterModule } from '../auth-footer/auth-footer.module';
+import { LayoutFooterModule } from '../layout-footer/layout-footer.module';
 import { LayoutCenteredComponent } from './layout-centered.component';
 
 @NgModule({
-    imports: [CommonModule, AuthFooterModule],
+    imports: [
+        CommonModule,
+        ApplyContextsModule,
+        CustomElementBoundaryModule,
+        LayoutFooterModule,
+    ],
     declarations: [LayoutCenteredComponent],
     exports: [LayoutCenteredComponent],
 })
-export class LayoutCenteredModule {
-}
+export class LayoutCenteredModule {}

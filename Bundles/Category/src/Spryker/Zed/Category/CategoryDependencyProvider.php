@@ -107,9 +107,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryFormPlugins(Container $container)
     {
-        $container[static::PLUGIN_CATEGORY_FORM_PLUGINS] = function (Container $container) {
+        $container->set(static::PLUGIN_CATEGORY_FORM_PLUGINS, function (Container $container) {
             return $this->getCategoryFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -121,9 +121,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CategoryToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -135,9 +135,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CategoryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -149,9 +149,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlFacade(Container $container)
     {
-        $container[self::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new CategoryToUrlBridge($container->getLocator()->url()->facade());
-        };
+        });
 
         return $container;
     }
@@ -163,9 +163,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container)
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new CategoryToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
 
         return $container;
     }
@@ -177,9 +177,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGraphPlugin(Container $container)
     {
-        $container[self::PLUGIN_GRAPH] = function () {
+        $container->set(static::PLUGIN_GRAPH, function () {
             return $this->createGraphPlugin();
-        };
+        });
 
         return $container;
     }
@@ -191,9 +191,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationDeletePluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_DELETE] = $container->share(function () {
+        $container->set(static::PLUGIN_STACK_RELATION_DELETE, $container->share(function () {
             return $this->getRelationDeletePluginStack();
-        });
+        }));
 
         return $container;
     }
@@ -205,9 +205,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationUpdatePluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_UPDATE] = $container->share(function () {
+        $container->set(static::PLUGIN_STACK_RELATION_UPDATE, $container->share(function () {
             return $this->getRelationUpdatePluginStack();
-        });
+        }));
 
         return $container;
     }
@@ -219,9 +219,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryUrlPathPlugins(Container $container)
     {
-        $container[static::PLUGINS_CATEGORY_URL_PATH] = $container->share(function () {
+        $container->set(static::PLUGINS_CATEGORY_URL_PATH, $container->share(function () {
             return $this->getCategoryUrlPathPlugins();
-        });
+        }));
 
         return $container;
     }
@@ -233,9 +233,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRelationReadPluginStack(Container $container)
     {
-        $container[static::PLUGIN_STACK_RELATION_READ] = $container->share(function () {
+        $container->set(static::PLUGIN_STACK_RELATION_READ, $container->share(function () {
             return $this->getRelationReadPluginStack();
-        });
+        }));
 
         return $container;
     }
@@ -247,9 +247,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostCreatePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CATEGORY_POST_CREATE] = function () {
+        $container->set(static::PLUGIN_CATEGORY_POST_CREATE, function () {
             return $this->getCategoryPostCreatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -261,9 +261,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostUpdatePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CATEGORY_POST_UPDATE] = function () {
+        $container->set(static::PLUGIN_CATEGORY_POST_UPDATE, function () {
             return $this->getCategoryPostUpdatePlugins();
-        };
+        });
 
         return $container;
     }
@@ -275,9 +275,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryPostReadPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CATEGORY_POST_READ] = function () {
+        $container->set(static::PLUGIN_CATEGORY_POST_READ, function () {
             return $this->getCategoryPostReadPlugins();
-        };
+        });
 
         return $container;
     }
@@ -289,9 +289,9 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryFormTabExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CATEGORY_FORM_TAB_EXPANDER] = function () {
+        $container->set(static::PLUGIN_CATEGORY_FORM_TAB_EXPANDER, function () {
             return $this->getCategoryFormTabExpanderPlugins();
-        };
+        });
 
         return $container;
     }

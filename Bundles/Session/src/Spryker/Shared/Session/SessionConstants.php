@@ -37,6 +37,15 @@ interface SessionConstants
     public const YVES_SESSION_COOKIE_TIME_TO_LIVE = 'SESSION:YVES_SESSION_COOKIE_TIME_TO_LIVE';
 
     /**
+     * Specification:
+     * - Allows to declare if your Yves session cookie should be restricted to a first-party or same-site context.
+     * - Available since PHP 7.3.0.
+     *
+     * @api
+     */
+    public const YVES_SESSION_COOKIE_SAMESITE = 'SESSION:YVES_SESSION_COOKIE_SAMESITE';
+
+    /**
      * @deprecated Use {@link \Spryker\Shared\SessionFile\SessionFileConstants::YVES_SESSION_FILE_PATH} instead.
      */
     public const YVES_SESSION_FILE_PATH = 'SESSION:YVES_SESSION_FILE_PATH';
@@ -97,6 +106,15 @@ interface SessionConstants
     public const ZED_SESSION_COOKIE_DOMAIN = 'SESSION:ZED_SESSION_COOKIE_DOMAIN';
     public const ZED_SESSION_COOKIE_PATH = 'SESSION:ZED_SESSION_COOKIE_PATH';
     public const ZED_SESSION_COOKIE_TIME_TO_LIVE = 'SESSION:ZED_SESSION_COOKIE_TIME_TO_LIVE';
+
+    /**
+     * Specification:
+     * - Allows to declare if your Zed session cookie should be restricted to a first-party or same-site context.
+     * - Available since PHP 7.3.0.
+     *
+     * @api
+     */
+    public const ZED_SESSION_COOKIE_SAMESITE = 'SESSION:ZED_SESSION_COOKIE_SAMESITE';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\SessionFile\SessionFileConstants::ZED_SESSION_FILE_PATH} instead.

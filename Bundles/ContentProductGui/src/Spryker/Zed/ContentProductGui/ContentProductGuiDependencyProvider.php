@@ -46,9 +46,9 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductImageFacade(Container $container): void
     {
-        $container[static::FACADE_PRODUCT_IMAGE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_IMAGE, function (Container $container) {
             return new ContentProductGuiToProductImageBridge($container->getLocator()->productImage()->facade());
-        };
+        });
     }
 
     /**
@@ -58,9 +58,9 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductQueryContainer(Container $container): void
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
     }
 
     /**
@@ -70,9 +70,9 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addLocaleFacade(Container $container): void
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ContentProductGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -82,8 +82,8 @@ class ContentProductGuiDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addContentProductFacade(Container $container): void
     {
-        $container[static::FACADE_CONTENT_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_CONTENT_PRODUCT, function (Container $container) {
             return new ContentProductGuiToContentProductBridge($container->getLocator()->contentProduct()->facade());
-        };
+        });
     }
 }

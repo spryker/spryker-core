@@ -14,7 +14,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class ShipmentMethodForm extends ViewShipmentMethodForm
 {
@@ -78,7 +77,6 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             'choices' => array_flip($options[ShipmentMethodFormDataProvider::OPTION_CARRIER_CHOICES]),
             'constraints' => [
                 new NotBlank(),
-                new Required(),
             ],
         ]);
 
@@ -98,7 +96,6 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             'disabled' => $options[ShipmentMethodFormDataProvider::OPTION_DELIVERY_KEY_DISABLED],
             'constraints' => [
                 new NotBlank(),
-                new Required(),
                 $this->getFactory()->createShipmentMethodKeyUniqueConstraint(),
             ],
         ]);
@@ -117,7 +114,6 @@ class ShipmentMethodForm extends ViewShipmentMethodForm
             'label' => 'Name',
             'constraints' => [
                 new NotBlank(),
-                new Required(),
                 $this->getFactory()->createShipmentMethodNameUniqueConstraint(),
             ],
         ]);

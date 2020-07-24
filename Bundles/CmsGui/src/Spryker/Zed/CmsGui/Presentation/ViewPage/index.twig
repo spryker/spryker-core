@@ -32,18 +32,18 @@
         <div class="alert alert-info">
             <p>
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                {% filter trans|raw %}
+                {% filter trans|raw -%}
                     You are viewing a published page. It was published
-                {% endfilter %}
+                {%- endfilter %}
                 {% if cmsVersion.firstName is not null %}
                     {{ 'by' | trans }} <b>{{ cmsVersion.firstName }} {{ cmsVersion.lastName }}</b>
                 {% endif %}
                     {{ 'on' | trans }} <b>{{ cmsVersion.createdAt | formatDateTime }}</b>.
             </p>
             <p>
-                {% filter trans|raw %}
+                {% filter trans|raw -%}
                     You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
-                {% endfilter %}
+                {%- endfilter %}
             </p>
         </div>
     {% endif %}
@@ -52,7 +52,7 @@
         {% block widget_content %}
 
             <p>
-                <strong>Store relation:</strong>
+                <strong>{{ 'Store relation' | trans }}:</strong>
                 {% for storeName in relatedStoreNames %}
                     <span class="label label-info">{{ storeName }}</span>
                 {% endfor %}
@@ -134,7 +134,7 @@
 
                 {% for glossaryAttribute in cmsGlossary.glossaryAttributes %}
 
-                    <h3>{{ glossaryAttribute.placeholder }}</h3>
+                    <h3>{{ glossaryAttribute.placeholder | trans }}</h3>
 
                     <p>
                         <strong>{{ 'Translation key:' | trans }}</strong> {{ glossaryAttribute.translationKey }}

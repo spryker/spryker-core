@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\MerchantProfileAddressTransfer;
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Transformer\MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,8 +60,7 @@ class MerchantProfileAddressFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addIdMerchantProfileAddressField($builder)
-            ->addCountryField($builder)
+        $this->addCountryField($builder)
             ->addAddress1Field($builder)
             ->addAddress2Field($builder)
             ->addZipCodeField($builder)
@@ -70,18 +68,6 @@ class MerchantProfileAddressFormType extends AbstractType
             ->addAddress3Field($builder);
 
         $builder->addModelTransformer(new MerchantProfileAddressCollectionTransferToMerchantProfileAddressTransferTransformer());
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addIdMerchantProfileAddressField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_ID_MERCHANT_PROFILE_ADDRESS, HiddenType::class);
-
-        return $this;
     }
 
     /**

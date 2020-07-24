@@ -12,7 +12,6 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
@@ -63,7 +62,6 @@ class CmsVersionFormType extends AbstractType
             'choices' => array_flip($choices),
             'required' => true,
             'constraints' => [
-                new Required(),
                 new NotNull(),
             ],
             'attr' => $attr,

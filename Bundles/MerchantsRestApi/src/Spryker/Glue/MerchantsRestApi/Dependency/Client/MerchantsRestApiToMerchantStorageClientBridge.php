@@ -43,4 +43,14 @@ class MerchantsRestApiToMerchantStorageClientBridge implements MerchantsRestApiT
     {
         return $this->merchantStorageClient->findOneByMerchantReference($merchantReference);
     }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantStorageTransfer|null
+     */
+    public function findOne(int $idMerchant): ?MerchantStorageTransfer
+    {
+        return $this->merchantStorageClient->findOne($idMerchant);
+    }
 }

@@ -5,3 +5,5 @@ Key,Key
 Storage,Storage
 "Storage keys","Storage keys"
 "Storage overview","Storage overview"
+"Drop storage timestamps","Drop storage timestamps"
+"No droppable timestamps found.","No droppable timestamps found."

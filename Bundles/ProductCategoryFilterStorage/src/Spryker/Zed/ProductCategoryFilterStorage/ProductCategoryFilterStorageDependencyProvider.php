@@ -29,9 +29,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductCategoryFilterStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -43,9 +43,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new ProductCategoryFilterStorageToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractBundleDepen
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_CATEGORY_FILTER, function (Container $container) {
             return new ProductCategoryFilterStorageToProductCategoryFilterQueryContainerBridge($container->getLocator()->productCategoryFilter()->queryContainer());
-        };
+        });
 
         return $container;
     }

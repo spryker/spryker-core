@@ -42,15 +42,38 @@ class ReturnReferenceGenerator implements ReturnReferenceGeneratorInterface
      */
     public function generateReturnReference(ReturnTransfer $returnTransfer): string
     {
-        $returnTransfer->requireCustomerReference();
+        if ($returnTransfer->getCustomerReference()) {
+            return $this->getCustomerReturnReference($returnTransfer);
+        }
 
-        $customerReference = $returnTransfer->getCustomerReference();
-        $customerReturnCounter = $this->salesReturnRepository->countCustomerReturns($customerReference);
+        return $this->getGuestReturnReference($returnTransfer);
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return string
+     */
+    protected function getCustomerReturnReference(ReturnTransfer $returnTransfer): string
+    {
         return sprintf(
             $this->salesReturnConfig->getReturnReferenceFormat(),
-            $customerReference,
-            $customerReturnCounter + 1
+            $returnTransfer->getCustomerReference(),
+            $this->salesReturnRepository->countCustomerReturns($returnTransfer->getCustomerReference()) + 1
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ReturnTransfer $returnTransfer
+     *
+     * @return string
+     */
+    protected function getGuestReturnReference(ReturnTransfer $returnTransfer): string
+    {
+        return sprintf(
+            $this->salesReturnConfig->getGuestReturnReferenceFormat(),
+            $returnTransfer->getStore(),
+            $this->salesReturnRepository->countCustomerReturns() + 1
         );
     }
 }

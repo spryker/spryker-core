@@ -310,9 +310,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string, string>
+     * @return string[]
      */
     protected function getSalesOrderSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -324,9 +326,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string, string>
+     * @return string[]
      */
     public function getSalesOrderItemSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -338,9 +342,11 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
     }
 
     /**
+     * @phpstan-return array<string, string>
+     *
      * @param \Generated\Shared\Transfer\DataExportConfigurationTransfer $dataExportConfigurationTransfer
      *
-     * @return array<string, string>
+     * @return string[]
      */
     public function getSalesExpenseSelectedColumns(DataExportConfigurationTransfer $dataExportConfigurationTransfer): array
     {
@@ -376,7 +382,7 @@ class SalesDataExportRepository extends AbstractRepository implements SalesDataE
      * - Compensates magic functionality of propel, so single-column select returns the same format as a multi-columns select
      *
      * @param array $rows
-     * @param array $selectedColumns
+     * @param string[] $selectedColumns
      *
      * @return array
      */

@@ -173,11 +173,35 @@ class GetReturnsTest extends Unit
      */
     public function testGetReturnsRetrievesReturnsByReturnReferenceFilter(): void
     {
+        // Arrange
         $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
 
-        // Arrange
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setReturnReference($returnTransfer->getReturnReference());
+
+        // Act
+        $returnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($returnFilterTransfer);
+
+        /** @var \Generated\Shared\Transfer\ReturnTransfer $storedReturnTransfer */
+        $storedReturnTransfer = $returnCollectionTransfer->getReturns()->getIterator()->current();
+
+        // Assert
+        $this->assertCount(1, $returnCollectionTransfer->getReturns());
+        $this->assertEquals($returnTransfer, $storedReturnTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetReturnsRetrievesReturnByReturnIdsFilter(): void
+    {
+        // Arrange
+        $returnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME);
+
+        $returnFilterTransfer = (new ReturnFilterTransfer())
+            ->addIdReturn($returnTransfer->getIdSalesReturn());
 
         // Act
         $returnCollectionTransfer = $this->tester
@@ -270,22 +294,41 @@ class GetReturnsTest extends Unit
 
         $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
         $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $secondPageLastReturnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
+        $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
         $lastReturnTransfer = $this->tester->createReturnByStateMachineProcessName(static::DEFAULT_OMS_PROCESS_NAME, $customerTransfer);
 
         $returnFilterTransfer = (new ReturnFilterTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setFilter((new FilterTransfer())->setOffset(1)->setLimit(2));
 
+        $secondPageReturnFilterTransfer = (new ReturnFilterTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setFilter((new FilterTransfer())->setOffset(2)->setLimit(2));
+
         // Act
         $returnCollectionTransfer = $this->tester
             ->getFacade()
             ->getReturns($returnFilterTransfer);
 
+        $secondPageReturnCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getReturns($secondPageReturnFilterTransfer);
+
         // Assert
         $this->assertCount(2, $returnCollectionTransfer->getReturns());
         $this->assertEquals($lastReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
         $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getNextPage());
-        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getLastPage());
+        $this->assertEquals(3, $returnCollectionTransfer->getPagination()->getLastPage());
+        $this->assertEquals(1, $returnCollectionTransfer->getPagination()->getPage());
+        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getMaxPerPage());
+
+        $this->assertCount(2, $secondPageReturnCollectionTransfer->getReturns());
+        $this->assertEquals($secondPageLastReturnTransfer, $secondPageReturnCollectionTransfer->getReturns()->offsetGet(0));
+        $this->assertEquals(3, $secondPageReturnCollectionTransfer->getPagination()->getNextPage());
+        $this->assertEquals(1, $secondPageReturnCollectionTransfer->getPagination()->getPreviousPage());
+        $this->assertEquals(2, $secondPageReturnCollectionTransfer->getPagination()->getPage());
     }
 
     /**

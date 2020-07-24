@@ -21,10 +21,12 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
+use ReflectionClass;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\Currency\Business\CurrencyFacadeInterface;
+use Spryker\Zed\PriceProduct\Business\Model\Reader;
 use Spryker\Zed\PriceProduct\Business\PriceProductBusinessFactory;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacade;
 use Spryker\Zed\PriceProduct\Communication\Plugin\DefaultPriceQueryCriteriaPlugin;
@@ -1142,6 +1144,26 @@ class PriceProductFacadeTest extends Unit
 
         //Assert
         $this->assertSame(0, $productConcreteTransfer->getPrices()->count());
+    }
+
+    /**
+     * @return void
+     */
+    protected function _before(): void
+    {
+        parent::_before();
+        $this->clearProductPriceTransferCache();
+    }
+
+    /**
+     * @return void
+     */
+    protected function clearProductPriceTransferCache(): void
+    {
+        $reflectionClass = new ReflectionClass(Reader::class);
+        $reflectionProperty = $reflectionClass->getProperty('resolvedPriceProductTransferCollection');
+        $reflectionProperty->setAccessible(true);
+        $reflectionProperty->setValue([]);
     }
 
     /**

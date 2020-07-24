@@ -111,4 +111,13 @@
         <property name="url" type="string"/>
     </transfer>
 
+    <transfer name="RestUrlResolverAttributes">
+        <property name="entityType" type="string"/>
+        <property name="entityId" type="string"/>
+    </transfer>
+
+    <transfer name="UrlStorage">
+        <property name="fkResourceMerchant" type="int"/>
+    </transfer>
+
 </transfers>

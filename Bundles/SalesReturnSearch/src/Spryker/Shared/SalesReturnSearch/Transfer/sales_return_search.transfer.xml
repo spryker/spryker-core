@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ReturnReasonSearch">
+        <property name="idSalesReturnReasonSearch" type="string"/>
+        <property name="idSalesReturnReason" type="int"/>
+        <property name="glossaryKeyReason" type="string"/>
+        <property name="name" type="string"/>
+        <property name="locale" type="string"/>
+        <property name="type" type="string"/>
+        <property name="key" type="string"/>
+        <property name="data" type="array" singular="data"/>
+        <property name="structuredData" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+        <property name="filter" type="Filter"/>
+        <property name="returnReasonIds" type="int[]" singular="returnReasonId"/>
+    </transfer>
+
+    <transfer name="ReturnReasonSearchRequest">
+        <property name="requestParameters" type="array" singular="requestParameter"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ReturnReason">
+        <property name="glossaryKeyReason" type="string"/>
+        <property name="idSalesReturnReason" type="int"/>
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="fkGlossaryKey" type="int"/>
+        <property name="fkLocale" type="int"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="GlossaryKey">
+        <property name="key" type="string"/>
+        <property name="idGlossaryKey" type="int"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnReasonSearchCollection">
+        <property name="nbResults" type="int"/>
+        <property name="returnReasons" type="ReturnReasonSearch[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="SynchronizationData">
+        <property name="data" type="string"/>
+    </transfer>
+
+    <transfer name="PaginationConfig">
+        <property name="parameterName" type="string"/>
+        <property name="itemsPerPageParameterName" type="string"/>
+        <property name="defaultItemsPerPage" type="int"/>
+        <property name="maxItemsPerPage" type="int"/>
+    </transfer>
+
+</transfers>

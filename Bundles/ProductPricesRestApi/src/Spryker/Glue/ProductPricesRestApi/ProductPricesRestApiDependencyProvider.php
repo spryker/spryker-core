@@ -53,11 +53,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToPriceProductStorageClientBridge(
                 $container->getLocator()->priceProductStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -69,11 +69,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addProductStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductPricesRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -85,11 +85,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE_PRODUCT, function (Container $container) {
             return new ProductPricesRestApiToPriceProductClientBridge(
                 $container->getLocator()->priceProduct()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -101,11 +101,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addPriceClient(Container $container): Container
     {
-        $container[static::CLIENT_PRICE] = function (Container $container) {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
             return new ProductPricesRestApiToPriceClientBridge(
                 $container->getLocator()->price()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -117,11 +117,11 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCurrencyClient(Container $container): Container
     {
-        $container[static::CLIENT_CURRENCY] = function (Container $container) {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
             return new ProductPricesRestApiToCurrencyClientBridge(
                 $container->getLocator()->currency()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -133,9 +133,9 @@ class ProductPricesRestApiDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new ProductPricesRestApiToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }

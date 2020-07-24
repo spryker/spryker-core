@@ -35,6 +35,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const PLUGIN_MONEY_COLLECTION_FORM_TYPE = 'PLUGIN_MONEY_COLLECTION_FORM_TYPE';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+    public const PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE = 'PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -51,6 +52,7 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addShipmentMethodQuery($container);
         $container = $this->addMoneyCollectionFormTypePlugin($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
+        $container = $this->addShipmentOrderItemTemplatePlugins($container);
 
         return $container;
     }
@@ -198,10 +200,32 @@ class ShipmentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addShipmentMethodQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, function () {
+        $container->set(static::PROPEL_QUERY_SHIPMENT_METHOD, $container->factory(function () {
             return SpyShipmentMethodQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentOrderItemTemplatePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE, function () {
+            return $this->getShipmentOrderItemTemplatePlugins();
         });
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[]
+     */
+    protected function getShipmentOrderItemTemplatePlugins(): array
+    {
+        return [];
     }
 }

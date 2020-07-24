@@ -11,6 +11,8 @@ use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Graph\GraphInterface;
 use Spryker\Zed\Oms\Business\Util\Drawer;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollection;
+use Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollection;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\CommandCollectionInterface;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionCollection;
@@ -18,6 +20,7 @@ use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionCollectionInterface;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
 use Spryker\Zed\Oms\Dependency\Service\OmsToUtilTextInterface;
+use Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -35,6 +38,9 @@ class DrawerTest extends Unit
     public const CONDITION_NAME = 'conditionName';
     public const COMMAND_NAME = 'commandName';
 
+    protected const TIMEOUT_PROCESSOR_NAME = 'Test/TimeoutProcessorName';
+    protected const TIMEOUT_PROCESSOR_LABEL = 'TimeoutProcessor test label';
+
     /**
      * @return void
      */
@@ -44,7 +50,8 @@ class DrawerTest extends Unit
             [],
             [self::CONDITION_NAME => $this->getConditionMock()],
             $this->getGraphMock(),
-            $this->getOmsToUtilTextServiceMock()
+            $this->getOmsToUtilTextServiceMock(),
+            $this->getTimeoutProcessorCollectionMock()
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -67,7 +74,8 @@ class DrawerTest extends Unit
             [],
             $conditionCollection,
             $this->getGraphMock(),
-            $this->getOmsToUtilTextServiceMock()
+            $this->getOmsToUtilTextServiceMock(),
+            $this->getTimeoutProcessorCollectionMock()
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('conditions');
@@ -87,7 +95,8 @@ class DrawerTest extends Unit
             [self::COMMAND_NAME => $this->getCommandMock()],
             [],
             $this->getGraphMock(),
-            $this->getOmsToUtilTextServiceMock()
+            $this->getOmsToUtilTextServiceMock(),
+            $this->getTimeoutProcessorCollectionMock()
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -110,7 +119,8 @@ class DrawerTest extends Unit
             $commandCollection,
             [],
             $this->getGraphMock(),
-            $this->getOmsToUtilTextServiceMock()
+            $this->getOmsToUtilTextServiceMock(),
+            $this->getTimeoutProcessorCollectionMock()
         );
         $reflection = new ReflectionClass(Drawer::class);
         $reflectionProperty = $reflection->getProperty('commands');
@@ -119,6 +129,30 @@ class DrawerTest extends Unit
 
         $this->assertInstanceOf(CommandCollectionInterface::class, $commands);
         $this->assertInstanceOf(CommandInterface::class, $commands->get(self::COMMAND_NAME));
+    }
+
+    /**
+     * @return void
+     */
+    public function testInstantiationWithTimeoutProcessorCollection(): void
+    {
+        $timeoutProcessorPluginMock = $this->getTimeoutProcessorPluginMock();
+        $timeoutProcessorCollection = new TimeoutProcessorCollection([$timeoutProcessorPluginMock]);
+
+        $drawer = new Drawer(
+            [],
+            [],
+            $this->getGraphMock(),
+            $this->getOmsToUtilTextServiceMock(),
+            $timeoutProcessorCollection
+        );
+        $reflection = new ReflectionClass(Drawer::class);
+        $reflectionProperty = $reflection->getProperty('timeoutProcessorCollection');
+        $reflectionProperty->setAccessible(true);
+        $timeoutProcessorCollection = $reflectionProperty->getValue($drawer);
+
+        $this->assertInstanceOf(TimeoutProcessorCollectionInterface::class, $timeoutProcessorCollection);
+        $this->assertInstanceOf(TimeoutProcessorPluginInterface::class, $timeoutProcessorCollection->get(static::TIMEOUT_PROCESSOR_NAME));
     }
 
     /**
@@ -151,5 +185,25 @@ class DrawerTest extends Unit
     private function getOmsToUtilTextServiceMock(): OmsToUtilTextInterface
     {
         return $this->getMockBuilder(OmsToUtilTextInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Oms\Business\Util\TimeoutProcessorCollectionInterface
+     */
+    private function getTimeoutProcessorCollectionMock(): TimeoutProcessorCollectionInterface
+    {
+        return $this->getMockBuilder(TimeoutProcessorCollectionInterface::class)->getMock();
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\OmsExtension\Dependency\Plugin\TimeoutProcessorPluginInterface
+     */
+    private function getTimeoutProcessorPluginMock(): TimeoutProcessorPluginInterface
+    {
+        $timeoutProcessorPluginMock = $this->getMockBuilder(TimeoutProcessorPluginInterface::class)->getMock();
+        $timeoutProcessorPluginMock->method('getName')->willReturn(static::TIMEOUT_PROCESSOR_NAME);
+        $timeoutProcessorPluginMock->method('getLabel')->willReturn(static::TIMEOUT_PROCESSOR_LABEL);
+
+        return $timeoutProcessorPluginMock;
     }
 }

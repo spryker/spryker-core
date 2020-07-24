@@ -123,4 +123,17 @@
         <property name="nbResults" type="int"/>
     </transfer>
 
+    <transfer name="ReturnReasonSearchCollection">
+        <property name="nbResults" type="int"/>
+        <property name="returnReasons" type="ReturnReasonSearch[]" singular="returnReason"/>
+    </transfer>
+
+    <transfer name="ReturnReasonSearchRequest">
+        <property name="requestParameters" type="array" singular="requestParameter"/>
+    </transfer>
+
+    <transfer name="ReturnReasonSearch">
+        <property name="name" type="string"/>
+    </transfer>
+
 </transfers>

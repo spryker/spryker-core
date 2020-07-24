@@ -7,7 +7,11 @@
 
 namespace Spryker\Zed\MerchantOms\Business;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface MerchantOmsFacadeInterface
 {
@@ -44,6 +48,24 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
+     * - Requires MerchantOmsTriggerRequest.merchantOrderItemReference transfer field to be set.
+     * - Requires MerchantOmsTriggerRequest.merchantOmsEventName transfer field to be set.
+     * - Dispatches a merchant OMS event for merchant order item.
+     * - Returns MerchantOmsTriggerRequest.isSuccessful = true if event trigger was successful.
+     * - Returns MerchantOmsTriggerRequest.isSuccessful = false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer
+     */
+    public function triggerEventForMerchantOrderItem(
+        MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer
+    ): MerchantOmsTriggerResponseTransfer;
+
+    /**
+     * Specification:
      * - Finds merchant order items.
      * - Returns array of StateMachineItem transfers filled with identifier(id of merchant order item) and idItemState.
      *
@@ -54,4 +76,34 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array;
+
+    /**
+     * Specification:
+     * - Returns StateMachineProcess transfer based on criteria.
+     * - Returns default StateMachineProcess transfer if process not found.
+     * - Fills StateMachineProcess transfer by process state names.
+     * - Calls StateMachine facade methods to get the data.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\StateMachineProcessTransfer
+     */
+    public function getMerchantOmsProcessByMerchant(
+        MerchantCriteriaTransfer $merchantCriteriaTransfer
+    ): StateMachineProcessTransfer;
+
+    /**
+     * Specification:
+     * - Finds merchant order item.
+     * - Returns StateMachineItem transfer filled with state name.
+     *
+     * @api
+     *
+     * @param int $idSalesOrderItem
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     */
+    public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
 }

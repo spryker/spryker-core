@@ -1,13 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LayoutModule } from '@spryker/layout';
+import { NgModule } from '@angular/core';
 import { HeaderModule } from '@spryker/header';
-import { SidebarModule } from '@spryker/sidebar';
+import { LayoutModule } from '@spryker/layout';
 import { LogoModule } from '@spryker/logo';
 import { NavigationModule } from '@spryker/navigation';
+import { SidebarModule } from '@spryker/sidebar';
+import { ApplyContextsModule } from '@spryker/utils';
+import { CustomElementBoundaryModule } from '@spryker/web-components';
 
 import { LayoutMainComponent } from './layout-main.component';
-import { IconDashboardModule, IconProfileModule } from '../../icons';
+import {
+    IconDashboardModule,
+    IconProfileModule,
+    IconOffersModule,
+    IconOrdersModule,
+} from '../../icons';
 
 @NgModule({
     imports: [
@@ -17,11 +24,14 @@ import { IconDashboardModule, IconProfileModule } from '../../icons';
         SidebarModule,
         LogoModule,
         NavigationModule,
+        ApplyContextsModule,
+        CustomElementBoundaryModule,
         IconDashboardModule,
-	    IconProfileModule
+	    IconProfileModule,
+        IconOrdersModule,
+        IconOffersModule,
     ],
     declarations: [LayoutMainComponent],
     exports: [LayoutMainComponent],
 })
-export class LayoutMainModule {
-}
+export class LayoutMainModule {}

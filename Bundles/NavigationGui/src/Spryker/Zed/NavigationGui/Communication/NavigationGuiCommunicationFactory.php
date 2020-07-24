@@ -12,12 +12,16 @@ use Generated\Shared\Transfer\NavigationTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationFormDataProvider;
 use Spryker\Zed\NavigationGui\Communication\Form\DataProvider\NavigationNodeFormDataProvider;
+use Spryker\Zed\NavigationGui\Communication\Form\DeleteNavigationForm;
+use Spryker\Zed\NavigationGui\Communication\Form\DeleteNavigationNodeForm;
+use Spryker\Zed\NavigationGui\Communication\Form\DuplicateNavigationForm;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\NavigationNodeLocalizedAttributesFormType;
 use Spryker\Zed\NavigationGui\Communication\Form\UpdateNavigationFormType;
 use Spryker\Zed\NavigationGui\Communication\Table\NavigationTable;
 use Spryker\Zed\NavigationGui\NavigationGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\NavigationGui\NavigationGuiConfig getConfig()
@@ -65,6 +69,25 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function createNavigationFormType()
     {
         return NavigationFormType::class;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\NavigationTransfer|null $data
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDuplicateNavigationForm(?NavigationTransfer $data = null, array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(DuplicateNavigationForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteNavigationForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteNavigationForm::class);
     }
 
     /**
@@ -149,6 +172,14 @@ class NavigationGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createNavigationNodeFormDataProvider()
     {
         return new NavigationNodeFormDataProvider($this->getNavigationFacade(), $this->getLocaleFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteNavigationNodeForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteNavigationNodeForm::class);
     }
 
     /**

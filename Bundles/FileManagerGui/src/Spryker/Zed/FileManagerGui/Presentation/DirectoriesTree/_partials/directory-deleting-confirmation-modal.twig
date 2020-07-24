@@ -11,9 +11,9 @@
                 <p>{{ 'Do you want to remove the folder with all files?' | trans }}</p>
             </div>
             <div class="modal-footer">
-                <a id="delete-directory-confirmation-link" href="">
-                    <button type="button" class="btn btn-primary">{{ 'Сonfirm' | trans }}</button>
-                </a>
+                {{ form_start(deleteDirectoryForm, {action: '', attr: {class: 'form-inline'} }) }}
+                    <button id="delete-directory-confirmation-button" class="btn btn-primary">{{ 'Сonfirm' | trans }}</button>
+                {{ form_end(deleteDirectoryForm) }}
                 <button type="button" class="btn btn-danger" data-dismiss="modal">{{ 'Cancel' | trans }}</button>
             </div>
         </div>

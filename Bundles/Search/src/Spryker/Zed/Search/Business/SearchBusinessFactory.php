@@ -11,8 +11,11 @@ use Elastica\Snapshot;
 use Psr\Log\LoggerInterface;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface;
+use Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionFinder;
+use Spryker\Zed\Search\Business\Definition\JsonIndexDefinitionMapper;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeChecker;
 use Spryker\Zed\Search\Business\LegacyModeChecker\SearchLegacyModeCheckerInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\Copier\IndexCopier;
@@ -30,6 +33,7 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\SearchIndexManager;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\SnapshotHandler;
 use Spryker\Zed\Search\Business\Model\SearchInstaller;
 use Spryker\Zed\Search\Business\Model\SearchInstallerInterface;
+use Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface;
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
@@ -71,10 +75,31 @@ class SearchBusinessFactory extends AbstractBusinessFactory
     public function createJsonIndexDefinitionLoader()
     {
         return new JsonIndexDefinitionLoader(
-            $this->getConfig()->getJsonIndexDefinitionDirectories(),
+            $this->createJsonIndexDefinitionFinder(),
             $this->createJsonIndexDefinitionMerger(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Definition\IndexDefinitionFinderInterface
+     */
+    public function createJsonIndexDefinitionFinder(): IndexDefinitionFinderInterface
+    {
+        return new JsonIndexDefinitionFinder(
+            $this->getConfig()->getJsonIndexDefinitionDirectories(),
+            $this->createJsonIndexDefinitionMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Business\Definition\IndexDefinitionMapperInterface
+     */
+    public function createJsonIndexDefinitionMapper(): IndexDefinitionMapperInterface
+    {
+        return new JsonIndexDefinitionMapper(
             $this->getUtilEncodingService(),
-            [Store::getInstance()->getStoreName()]
+            $this->getStoreFacade()
         );
     }
 
@@ -353,5 +378,13 @@ class SearchBusinessFactory extends AbstractBusinessFactory
         return new SearchLegacyModeChecker(
             $this->getSourceInstallerPlugins()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Search\Dependency\Facade\SearchToStoreFacadeInterface
+     */
+    public function getStoreFacade(): SearchToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::FACADE_STORE);
     }
 }

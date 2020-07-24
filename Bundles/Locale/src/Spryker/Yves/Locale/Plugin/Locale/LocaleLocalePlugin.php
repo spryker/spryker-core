@@ -84,7 +84,8 @@ class LocaleLocalePlugin extends AbstractPlugin implements LocalePluginInterface
      */
     protected function extractLocaleCode(string $requestUri): string
     {
-        $pathElements = explode('/', trim($requestUri, '/'));
+        $urlPath = (string)parse_url(trim($requestUri, '/'), PHP_URL_PATH);
+        $pathElements = explode('/', $urlPath);
 
         return $pathElements[0];
     }

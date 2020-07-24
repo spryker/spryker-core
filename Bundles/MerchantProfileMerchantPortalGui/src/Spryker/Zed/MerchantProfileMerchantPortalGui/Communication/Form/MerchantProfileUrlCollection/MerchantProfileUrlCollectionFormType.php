@@ -8,13 +8,11 @@
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\MerchantProfileUrlCollection;
 
 use Spryker\Zed\Kernel\Communication\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Regex;
-use Symfony\Component\Validator\Constraints\Required;
 
 /**
  * @method \Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\MerchantProfileMerchantPortalGuiCommunicationFactory getFactory()
@@ -51,8 +49,7 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->addUrlField($builder)
-            ->addFkLocaleField($builder);
+        $this->addUrlField($builder);
     }
 
     /**
@@ -75,7 +72,6 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
             'required' => false,
             'attr' => ['placeholder' => static::PLACEHOLDER_URL],
             'constraints' => [
-                new Required(),
                 new NotBlank(),
                 new Regex([
                     'pattern' => static::URL_PATH_PATTERN,
@@ -83,18 +79,6 @@ class MerchantProfileUrlCollectionFormType extends AbstractType
                 ]),
             ],
         ]);
-
-        return $this;
-    }
-
-    /**
-     * @param \Symfony\Component\Form\FormBuilderInterface $builder
-     *
-     * @return $this
-     */
-    protected function addFkLocaleField(FormBuilderInterface $builder)
-    {
-        $builder->add(static::FIELD_FK_LOCALE, HiddenType::class);
 
         return $this;
     }

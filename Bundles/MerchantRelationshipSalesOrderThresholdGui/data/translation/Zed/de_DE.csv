@@ -2,6 +2,7 @@
 "Edit Merchant Relationship Threshold","Grenzwert der Händlerbeziehung bearbeiten"
 "Enter minimum order value","Mindestbestellwert angeben"
 "Hard Threshold","Harter Grenzwert"
+"Hard Maximum Threshold","Harter maximaler Schwellenwert"
 "Merchant relationship name","Name der Händlerbeziehung"
 "Merchant relationships",Handelsbeziehungen
 Message,Nachricht
@@ -13,3 +14,8 @@ Save,Speichern
 "Store and Currency","Shop und Währung"
 "The Merchant Relationship Threshold is saved successfully.","Der Grenzwert der Händlerbeziehung wurde erfolgreich gespeichert."
 Thresholds,Grenzwerte
+Soft,Weich
+Hard,Hart
+"The Merchant Relationship Thresholds is saved successfully.","Schwellenwerte der Händlerbeziehung wurde erfolgreich gespeichert."
+"You can use the placeholders <code>{{threshold}}</code> and <code>{{fee}}</code>","Sie können die Platzhalter <code>{{threshold}}</code> und <code>{{fee}}</code> benutzen"
+"BU name","Name der Geschäftseinheit"
