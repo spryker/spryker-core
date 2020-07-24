@@ -5,26 +5,36 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Yves\Testify\Helper;
+namespace SprykerTest\Shared\Application\Helper;
 
-use Codeception\Module;
+use Codeception\Lib\Framework;
 use Codeception\TestInterface;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Application;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
+use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
+use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
-class ApplicationHelper extends Module
+abstract class AbstractApplicationHelper extends Framework
 {
     use ContainerHelperTrait;
+    use CommunicationHelperTrait;
+
+    protected const MODULE_NAME = 'Application';
 
     /**
      * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_KERNEL
      */
     protected const SERVICE_KERNEL = 'kernel';
+
+    /**
+     * @var \Symfony\Component\BrowserKit\AbstractBrowser|null
+     */
+    public $client;
 
     /**
      * @var \Spryker\Shared\Application\Application|null
@@ -35,16 +45,6 @@ class ApplicationHelper extends Module
      * @var \Symfony\Component\HttpKernel\HttpKernelBrowser|null
      */
     protected $httpKernelBrowser;
-
-    /**
-     * @param \Codeception\TestInterface $test
-     *
-     * @return void
-     */
-    public function _before(TestInterface $test): void
-    {
-        $this->addApplicationPlugin(new HttpApplicationPlugin());
-    }
 
     /**
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface $applicationPlugin
@@ -59,9 +59,9 @@ class ApplicationHelper extends Module
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\HttpKernelBrowser
+     * @return \Symfony\Component\BrowserKit\AbstractBrowser
      */
-    public function getHttpKernelBrowser(): HttpKernelBrowser
+    public function getHttpKernelBrowser(): AbstractBrowser
     {
         if ($this->httpKernelBrowser === null) {
             $this->httpKernelBrowser = new HttpKernelBrowser($this->getKernel());
@@ -71,14 +71,25 @@ class ApplicationHelper extends Module
     }
 
     /**
+     * @return \Symfony\Component\BrowserKit\AbstractBrowser
+     */
+    public function getClient(): AbstractBrowser
+    {
+        if ($this->client === null) {
+            $this->client = $this->getHttpKernelBrowser();
+        }
+
+        return $this->client;
+    }
+
+    /**
      * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
     public function getKernel(): HttpKernelInterface
     {
         $this->getApplication()->boot();
-        $container = $this->getContainer();
 
-        return $container->get(static::SERVICE_KERNEL);
+        return $this->getContainer()->get(static::SERVICE_KERNEL);
     }
 
     /**
@@ -111,6 +122,7 @@ class ApplicationHelper extends Module
     public function _after(TestInterface $test): void
     {
         $this->application = null;
+        $this->client = null;
         $this->httpKernelBrowser = null;
     }
 }

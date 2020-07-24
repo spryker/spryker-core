@@ -44,6 +44,13 @@ class ProductPriceMapExpanderPlugin extends AbstractPlugin implements ProductAbs
         LocaleTransfer $localeTransfer
     ) {
         $price = $productData[static::KEY_PRICE];
+
+        if ($price === null) {
+            $this->setPricesByType($pageMapBuilder, $pageMapTransfer, $productData);
+
+            return $pageMapTransfer;
+        }
+
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::KEY_PRICE, $price)
             ->addIntegerSort($pageMapTransfer, static::KEY_PRICE, $price)

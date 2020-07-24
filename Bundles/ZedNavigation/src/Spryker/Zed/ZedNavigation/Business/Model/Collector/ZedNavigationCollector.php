@@ -33,6 +33,11 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     protected $zedNavigationConfig;
 
     /**
+     * @var array|null
+     */
+    protected $navigationDefinition;
+
+    /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface $navigationSchemaFinder
      * @param \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver
      * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
@@ -54,6 +59,10 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
      */
     public function getNavigation()
     {
+        if ($this->navigationDefinition !== null) {
+            return $this->navigationDefinition;
+        }
+
         try {
             /** @var \Zend\Config\Config $navigationDefinition */
             $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchema(), true);

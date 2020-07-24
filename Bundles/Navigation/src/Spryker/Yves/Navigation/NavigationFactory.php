@@ -20,10 +20,20 @@ class NavigationFactory extends AbstractFactory
      */
     public function createNavigationTwigExtension()
     {
-        return new NavigationTwigExtension($this->getClient(), $this->createApplication());
+        return new NavigationTwigExtension($this->getClient(), $this->getLocale());
     }
 
     /**
+     * @return string
+     */
+    public function getLocale(): string
+    {
+        return $this->getProvidedDependency(NavigationDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     protected function createApplication()

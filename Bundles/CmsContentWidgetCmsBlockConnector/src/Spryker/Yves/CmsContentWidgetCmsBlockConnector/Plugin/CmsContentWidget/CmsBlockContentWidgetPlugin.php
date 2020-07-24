@@ -109,7 +109,7 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
-            ->findBlocksByNames($blockNames, $this->getLocale(), $this->getApplication()['store']);
+            ->findBlocksByNames($blockNames, $this->getLocale(), $this->getContainer()->get('store'));
 
         return $blocks;
     }

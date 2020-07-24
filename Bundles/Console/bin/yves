@@ -17,7 +17,7 @@ if (!defined('SPRYKER_COMPOSER_INSTALL')) {
 
 require_once SPRYKER_COMPOSER_INSTALL;
 
-use Spryker\Yves\Console\ConsoleBootstrap;
+use Spryker\Yves\Console\Bootstrap\ConsoleBootstrap;
 
 $bootstrap = new ConsoleBootstrap();
 $bootstrap->run();
