@@ -227,7 +227,17 @@ class ProductOfferTable extends AbstractTable
      */
     protected function buildLinks(array $item): string
     {
-        $buttons = [];
+        $buttons[] = $this->generateViewButton(
+            Url::generate(
+                ProductOfferGuiConfig::URL_VIEW,
+                [
+                    ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                ]
+            ),
+            'View',
+            ['icon' => 'fa fa fa-eye', 'class' => 'btn-info']
+        );
+
         $availableApprovalStatusButtonsMapping = static::APPROVAL_STATUS_CLASS_BUTTON_MAPPING;
         unset($availableApprovalStatusButtonsMapping[$item[SpyProductOfferTableMap::COL_APPROVAL_STATUS]]);
 
@@ -244,17 +254,6 @@ class ProductOfferTable extends AbstractTable
                 ['icon' => 'fa fa fa-caret-right', 'class' => $class]
             );
         }
-
-        $buttons[] = $this->generateViewButton(
-            Url::generate(
-                ProductOfferGuiConfig::URL_VIEW,
-                [
-                    ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
-                ]
-            ),
-            'View',
-            ['icon' => 'fa fa fa-eye', 'class' => 'btn-info']
-        );
 
         return implode(' ', $buttons);
     }
