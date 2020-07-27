@@ -12,8 +12,8 @@ use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
 use Spryker\Glue\Kernel\BundleControllerAction;
 use Spryker\Glue\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Glue\Kernel\Controller\RouteNameResolver;
+use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
-use Spryker\Shared\Kernel\Communication\Application;
 use Symfony\Component\HttpFoundation\Request;
 
 class ResourceRouter implements ResourceRouterInterface
@@ -24,7 +24,7 @@ class ResourceRouter implements ResourceRouterInterface
     protected $requestHeaderValidator;
 
     /**
-     * @var \Spryker\Shared\Kernel\Communication\Application
+     * @var \Spryker\Service\Container\ContainerInterface
      */
     protected $application;
 
@@ -40,13 +40,13 @@ class ResourceRouter implements ResourceRouterInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\HttpRequestValidatorInterface $requestHeaderValidator
-     * @param \Spryker\Shared\Kernel\Communication\Application $application
+     * @param \Spryker\Service\Container\ContainerInterface $application
      * @param \Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface $uriParser
      * @param \Spryker\Glue\GlueApplication\Rest\ResourceRouteLoaderInterface $resourceRouteLoader
      */
     public function __construct(
         HttpRequestValidatorInterface $requestHeaderValidator,
-        Application $application,
+        ContainerInterface $application,
         UriParserInterface $uriParser,
         ResourceRouteLoaderInterface $resourceRouteLoader
     ) {

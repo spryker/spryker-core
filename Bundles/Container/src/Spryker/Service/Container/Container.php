@@ -73,7 +73,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var array
+     * @var \Closure[][]
      */
     protected $toBeExtended = [];
 
@@ -88,7 +88,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $currentExtendingHash;
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $sharedServiceHashes = [];
 
@@ -638,7 +638,7 @@ class Container implements ContainerInterface, ArrayAccess
             return;
         }
 
-        if (method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
+        if ($value && (is_string($value) || is_object($value)) && method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
             $value = $this->factory($value);
         }
 

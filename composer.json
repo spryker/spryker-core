@@ -6,7 +6,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master"
+    "spryker/code-sniffer": "dev-bugfix/mp-3261-sniffer-removes-throw-annotation"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -336,6 +336,7 @@
     "spryker/merchant-gui-extension": "*",
     "spryker/merchant-oms": "*",
     "spryker/merchant-oms-data-import": "*",
+    "spryker/merchant-oms-gui": "*",
     "spryker/merchant-opening-hours": "*",
     "spryker/merchant-opening-hours-data-import": "*",
     "spryker/merchant-opening-hours-rest-api": "*",
@@ -371,6 +372,7 @@
     "spryker/merchant-sales-order-extension": "*",
     "spryker/merchant-search": "*",
     "spryker/merchant-shipment": "*",
+    "spryker/merchant-shipment-gui": "*",
     "spryker/merchant-stock": "*",
     "spryker/merchant-stock-data-import": "*",
     "spryker/merchant-stock-gui": "*",
@@ -400,6 +402,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
@@ -651,6 +654,7 @@
     "spryker/shipment-discount-connector": "*",
     "spryker/shipment-extension": "*",
     "spryker/shipment-gui": "*",
+    "spryker/shipment-gui-extension": "*",
     "spryker/shipments-rest-api": "*",
     "spryker/shop-context": "*",
     "spryker/shop-context-extension": "*",
