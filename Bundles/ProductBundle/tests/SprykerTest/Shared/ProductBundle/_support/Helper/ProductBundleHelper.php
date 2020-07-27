@@ -48,11 +48,12 @@ class ProductBundleHelper extends Module
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param array $seed
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    public function haveProductBundle(array $seed = []): ProductConcreteTransfer
+    public function haveProductBundle(ProductConcreteTransfer $productConcreteTransfer, array $seed = []): ProductConcreteTransfer
     {
         $productBundleTransfer = (new ProductBundleBuilder($seed))->build();
 
@@ -64,7 +65,6 @@ class ProductBundleHelper extends Module
             $productBundleTransfer->setBundledProducts($this->createProductForBundleTransfers());
         }
 
-        $productConcreteTransfer = $this->createProduct();
         $productConcreteTransfer->setProductBundle($productBundleTransfer);
 
         return $this->getLocator()->productBundle()->facade()->saveBundledProducts($productConcreteTransfer);

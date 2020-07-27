@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Business\Writer;
@@ -14,12 +14,19 @@ interface ProductBundleStorageWriterInterface
      *
      * @return void
      */
-    public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void;
+    public function writeCollectionByProductBundlePublishEvents(array $eventTransfers): void;
 
     /**
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return void
      */
-    public function writeCollectionByProductConcreteIdsEvents(array $eventTransfers): void;
+    public function writeCollectionByProductBundleEvents(array $eventTransfers): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductEvents(array $eventTransfers): void;
 }

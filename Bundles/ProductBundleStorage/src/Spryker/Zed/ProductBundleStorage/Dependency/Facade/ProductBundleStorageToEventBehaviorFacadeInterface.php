@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Dependency\Facade;
@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductBundleStorage\Dependency\Facade;
 interface ProductBundleStorageToEventBehaviorFacadeInterface
 {
     /**
+     * @phpstan-return array<int>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
@@ -17,6 +19,8 @@ interface ProductBundleStorageToEventBehaviorFacadeInterface
     public function getEventTransferIds(array $eventTransfers);
 
     /**
+     * @phpstan-return array<int>
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *

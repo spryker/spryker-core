@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle;
@@ -30,13 +30,15 @@ class BundledProductWritePublisherPlugin extends AbstractPlugin implements Publi
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductConcreteIdsEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByProductBundleEvents($eventTransfers);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @phpstan-return array<int, string>
      *
      * @return array
      */

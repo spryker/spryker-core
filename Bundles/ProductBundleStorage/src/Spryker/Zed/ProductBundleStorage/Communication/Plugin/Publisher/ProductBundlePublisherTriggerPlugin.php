@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
@@ -20,11 +20,10 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
  */
 class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
-    // TODO: discuss it!
     /**
-     * @uses \Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap::COL_FK_PRODUCT
+     * @uses \Generated\Shared\Transfer\ProductBundleTransfer::ID_PRODUCT_CONCRETE_BUNDLE
      */
-    protected const ID_PRODUCT_CONCRETE_BUNDLE = 'spy_product_bundle.id_product_concrete_bundle';
+    protected const ID_PRODUCT_CONCRETE_BUNDLE = 'id_product_concrete_bundle';
 
     /**
      * {@inheritDoc}
@@ -44,7 +43,7 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
 
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setFilter($filterTransfer)
-            ->setIsGrouped(true);
+            ->setApplyGrouped(true);
 
         return $this->getFactory()
             ->getProductBundleFacade()
@@ -86,6 +85,6 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
      */
     public function getIdColumnName(): ?string
     {
-        return static::ID_PRODUCT_CONCRETE_BUNDLE;
+        return sprintf('.%s', static::ID_PRODUCT_CONCRETE_BUNDLE);
     }
 }

@@ -20,4 +20,12 @@ class ProductStorageConfig extends AbstractSharedConfig
      * Defines queue name for publish.
      */
     public const PUBLISH_PRODUCT_CONCRETE = 'publish.product_concrete';
+
+    /**
+     * Specification
+     * - This events will be used for spy_product entity changes.
+     *
+     * @api
+     */
+    public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 }

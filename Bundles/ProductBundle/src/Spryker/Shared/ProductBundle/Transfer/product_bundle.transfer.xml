@@ -131,7 +131,7 @@
         <property name="idBundledProduct" type="int"/>
         <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
         <property name="filter" type="Filter"/>
-        <property name="isGrouped" type="bool"/>
+        <property name="applyGrouped" type="bool"/>
     </transfer>
 
     <transfer name="Filter">

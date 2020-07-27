@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -25,11 +26,11 @@ class ProductBundleStorageFacade extends AbstractFacade implements ProductBundle
      *
      * @return void
      */
-    public function writeCollectionByProductConcreteBundleIdsEvents(array $eventTransfers): void
+    public function writeCollectionByProductBundlePublishEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductBundleStorageWriter()
-            ->writeCollectionByProductConcreteBundleIdsEvents($eventTransfers);
+            ->writeCollectionByProductBundlePublishEvents($eventTransfers);
     }
 
     /**
@@ -41,10 +42,41 @@ class ProductBundleStorageFacade extends AbstractFacade implements ProductBundle
      *
      * @return void
      */
-    public function writeCollectionByProductConcreteIdsEvents(array $eventTransfers): void
+    public function writeCollectionByProductBundleEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductBundleStorageWriter()
-            ->writeCollectionByProductConcreteIdsEvents($eventTransfers);
+            ->writeCollectionByProductBundleEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     *
+     * @return void
+     */
+    public function writeCollectionByProductEvents(array $eventTransfers): void
+    {
+        $this->getFactory()
+            ->createProductBundleStorageWriter()
+            ->writeCollectionByProductEvents($eventTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $concreteProductIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $concreteProductIds): array
+    {
+        return $this->getRepository()->getPaginatedProductBundleStorageDataTransfers($filterTransfer, $concreteProductIds);
     }
 }

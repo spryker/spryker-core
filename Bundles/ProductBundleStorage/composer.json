@@ -8,10 +8,7 @@
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/product-bundle": "^7.0.0",
-    "spryker/product-storage": "^1.20.0",
-    "spryker/product-storage-extension": "^1.0.0",
     "spryker/publisher-extension": "^1.0.0",
-    "spryker/storage": "^3.4.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.0.0"
@@ -29,8 +26,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
-    "spryker/event": "To use event behavior.",
-    "spryker/url-storage": "To use shop route plugin."
+    "spryker/event": "To use event behavior."
   },
   "autoload": {
     "psr-4": {

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Shared\ProductBundleStorage;
@@ -19,15 +19,7 @@ class ProductBundleStorageConfig
 
     /**
      * Specification:
-     * - Queue name as used for error product_bundle messages.
-     *
-     * @api
-     */
-    public const PRODUCT_BUNDLE_SYNC_STORAGE_ERROR_QUEUE = 'sync.storage.product_bundle.error';
-
-    /**
-     * Specification:
-     * - Resource name, this will use for key generating.
+     * - Resource name, this will be used for key generation.
      *
      * @api
      */
@@ -64,4 +56,9 @@ class ProductBundleStorageConfig
      * @api
      */
     public const ENTITY_SPY_PRODUCT_BUNDLE_DELETE = 'Entity.spy_product_bundle.delete';
+
+    /**
+     * @uses \Spryker\Shared\ProductStorage\ProductStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
+     */
+    public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 }

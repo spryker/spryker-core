@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
@@ -56,7 +56,7 @@ class BundledProductWritePublisherPluginTest extends Unit
     public function testBundledProductWritePublisherPlugin(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->tester->haveProductBundle();
+        $productConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
         $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
         // Act
@@ -98,8 +98,8 @@ class BundledProductWritePublisherPluginTest extends Unit
     public function testBundledProductWritePublisherPluginWithSeveralIds(): void
     {
         // Arrange
-        $firstProductConcreteTransfer = $this->tester->haveProductBundle();
-        $secondProductConcreteTransfer = $this->tester->haveProductBundle();
+        $firstProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
+        $secondProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         // Act
         $bundledProductWritePublisherPlugin = new BundledProductWritePublisherPlugin();

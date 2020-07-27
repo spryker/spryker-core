@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
@@ -55,7 +55,7 @@ class ProductBundleWritePublisherPluginTest extends Unit
     public function testProductBundleWritePublisherPlugin(): void
     {
         // Arrange
-        $productConcreteTransfer = $this->tester->haveProductBundle();
+        $productConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
         $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
         // Act
@@ -68,24 +68,24 @@ class ProductBundleWritePublisherPluginTest extends Unit
 
         // Assert
         $productBundleStorageTransfer = $this->tester->findProductBundleStorageByFkProduct($productConcreteTransfer->getIdProductConcrete());
-        $productForBundleStorageTransfers = $productBundleStorageTransfer->getBundledProducts();
+        $productForProductBundleStorageTransfers = $productBundleStorageTransfer->getBundledProducts();
 
         $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productBundleStorageTransfer->getIdProductConcreteBundle());
         $this->assertSame(
             $productForBundleTransfers->offsetGet(0)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(0)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(0)->getIdProductConcrete()
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(0)->getQuantity(),
-            $productForBundleStorageTransfers->offsetGet(0)->getQuantity()
+            $productForProductBundleStorageTransfers->offsetGet(0)->getQuantity()
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(1)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(1)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(1)->getIdProductConcrete()
         );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(2)->getIdProductConcrete(),
-            $productForBundleStorageTransfers->offsetGet(2)->getIdProductConcrete()
+            $productForProductBundleStorageTransfers->offsetGet(2)->getIdProductConcrete()
         );
     }
 
@@ -95,8 +95,8 @@ class ProductBundleWritePublisherPluginTest extends Unit
     public function testProductBundleWritePublisherPluginWithSeveralIds(): void
     {
         // Arrange
-        $firstProductConcreteTransfer = $this->tester->haveProductBundle();
-        $secondProductConcreteTransfer = $this->tester->haveProductBundle();
+        $firstProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
+        $secondProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         // Act
         $productBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();

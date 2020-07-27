@@ -37,7 +37,7 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
     public function testGetProductBundleCollectionByCriteriaFilterWithProductConcreteIdFilter(): void
     {
         //Assign
-        $productConcreteBundleTransfer = $this->tester->haveProductBundle();
+        $productConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete());
@@ -94,11 +94,11 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
     public function testGetProductBundleCollectionByCriteriaFilterWithGroupedFilter(): void
     {
         //Assign
-        $productConcreteBundleTransfer = $this->tester->haveProductBundle();
+        $productConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->addIdProductConcrete($productConcreteBundleTransfer->getIdProductConcrete())
-            ->setIsGrouped(true);
+            ->setApplyGrouped(true);
 
         //Act
         $productConcreteBundleTransfers = $this->tester->getFacade()

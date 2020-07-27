@@ -62,26 +62,25 @@ class ProductBundleMapper
 
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductBundle\Persistence\SpyProductBundle[] $productBundleEntities
+     * @param \Generated\Shared\Transfer\ProductBundleCollectionTransfer $productBundleCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleCollectionTransfer
      */
-    public function mapProductBundleEntityCollectionToProductBundleCollectionTransfer(Collection $productBundleEntities): ProductBundleCollectionTransfer
-    {
-        $mappedProductBundleTransfers = [];
-        $mappedProductForBundleTransfers = $this->mapProductForBundlesByIdProductConcreteBundle($productBundleEntities);
+    public function mapProductBundleEntityCollectionToProductBundleCollectionTransfer(
+        Collection $productBundleEntities,
+        ProductBundleCollectionTransfer $productBundleCollectionTransfer
+    ): ProductBundleCollectionTransfer {
+        $mappedProductForBundleTransfers = $this->mapProductBundleEntitiesToGroupedProductForBundleTransfers($productBundleEntities);
 
-        foreach ($productBundleEntities as $productBundleEntity) {
-            if (isset($mappedProductBundleTransfers[$productBundleEntity->getFkProduct()])) {
-                continue;
-            }
-
-            $mappedProductBundleTransfers[$productBundleEntity->getFkProduct()] = (new ProductBundleTransfer())
-                ->setIdProductConcreteBundle($productBundleEntity->getFkProduct())
-                ->setBundledProducts(new ArrayObject($mappedProductForBundleTransfers[$productBundleEntity->getFkProduct()] ?? []));
+        foreach ($mappedProductForBundleTransfers as $fkProduct => $productForBundleTransfers) {
+            $productBundleCollectionTransfer->addProductBundle(
+                (new ProductBundleTransfer())
+                    ->setIdProductConcreteBundle($fkProduct)
+                    ->setBundledProducts(new ArrayObject($productForBundleTransfers))
+            );
         }
 
-        return (new ProductBundleCollectionTransfer())
-            ->setProductBundles(new ArrayObject(array_values($mappedProductBundleTransfers)));
+        return $productBundleCollectionTransfer;
     }
 
     /**
@@ -146,7 +145,7 @@ class ProductBundleMapper
      *
      * @return \Generated\Shared\Transfer\ProductForBundleTransfer[][]
      */
-    protected function mapProductForBundlesByIdProductConcreteBundle(Collection $productBundleEntities): array
+    protected function mapProductBundleEntitiesToGroupedProductForBundleTransfers(Collection $productBundleEntities): array
     {
         $mappedProductForBundleTransfers = [];
 

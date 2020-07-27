@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductBundleCollectionTransfer;
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -51,8 +52,42 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             ->createProductBundleQuery()
             ->joinWithSpyProductRelatedByFkProduct();
 
+        $this->applyFilters($productBundleCriteriaFilterTransfer, $productBundleQuery);
+
+        $productBundleEntities = $productBundleQuery->find();
+
+        // For BC reasons only.
+        if (!$productBundleCriteriaFilterTransfer->getApplyGrouped()) {
+            return $this->getFactory()
+                ->createProductBundleMapper()
+                ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
+        }
+
+        return $this->getFactory()
+            ->createProductBundleMapper()
+            ->mapProductBundleEntityCollectionToProductBundleCollectionTransfer($productBundleEntities, new ProductBundleCollectionTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer
+     * @param \Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery $productBundleQuery
+     *
+     * @return void
+     */
+    protected function applyFilters(
+        ProductBundleCriteriaFilterTransfer $productBundleCriteriaFilterTransfer,
+        SpyProductBundleQuery $productBundleQuery
+    ): void {
         if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
             $productBundleQuery->filterByFkBundledProduct($productBundleCriteriaFilterTransfer->getIdBundledProduct());
+        }
+
+        $bundledProductIds = array_merge(
+            $productBundleCriteriaFilterTransfer->getBundledProductIds(),
+            [$productBundleCriteriaFilterTransfer->getIdBundledProduct()]
+        );
+        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
+            $productBundleQuery->filterByFkBundledProduct_In($bundledProductIds);
         }
 
         if ($productBundleCriteriaFilterTransfer->getProductConcreteIds()) {
@@ -67,19 +102,6 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
 
             $productBundleQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         }
-
-        $productBundleEntities = $productBundleQuery->find();
-
-        // For BC reasons only.
-        if (!$productBundleCriteriaFilterTransfer->getIsGrouped()) {
-            return $this->getFactory()
-                ->createProductBundleMapper()
-                ->mapProductBundleEntitiesToProductBundleCollectionTransfer($productBundleEntities->getArrayCopy(), new ProductBundleCollectionTransfer());
-        }
-
-        return $this->getFactory()
-            ->createProductBundleMapper()
-            ->mapProductBundleEntityCollectionToProductBundleCollectionTransfer($productBundleEntities);
     }
 
     /**

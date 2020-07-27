@@ -6,10 +6,10 @@
 
     <transfer name="ProductBundleStorage">
         <property name="idProductConcreteBundle" type="int"/>
-        <property name="bundledProducts" type="ProductForBundleStorage[]" singular="bundledProduct"/>
+        <property name="bundledProducts" type="ProductForProductBundleStorage[]" singular="bundledProduct"/>
     </transfer>
 
-    <transfer name="ProductForBundleStorage">
+    <transfer name="ProductForProductBundleStorage">
         <property name="idProductConcrete" type="int"/>
         <property name="quantity" type="int"/>
     </transfer>
@@ -17,7 +17,6 @@
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
         <property name="bundledProducts" type="ProductView[]" singular="bundledProduct"/>
-        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="SynchronizationData">
@@ -26,7 +25,9 @@
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="bundledProductIds" type="int[]" singular="idBundledProduct"/>
         <property name="filter" type="Filter"/>
+        <property name="applyGrouped" type="bool"/>
     </transfer>
 
     <transfer name="ProductBundleCollection">
@@ -34,11 +35,16 @@
     </transfer>
 
     <transfer name="ProductBundle">
+        <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
+    </transfer>
+
+    <transfer name="ProductForBundle">
     </transfer>
 
     <transfer name="Filter">
         <property name="offset" type="int"/>
         <property name="orderBy" type="string"/>
+        <property name="limit" type="int"/>
     </transfer>
 
 </transfers>

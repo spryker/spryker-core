@@ -16,7 +16,7 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\ProductBundleStorage\Business\ProductBundleStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductBundleStorage\Communication\ProductBundleStorageCommunicationFactory getFactory()
  */
-class ProductBundleWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class ProductConcreteProductBundleWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -30,7 +30,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductBundlePublishEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByProductEvents($eventTransfers);
     }
 
     /**
@@ -45,7 +45,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
     public function getSubscribedEvents(): array
     {
         return [
-            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_UPDATE,
         ];
     }
 }
