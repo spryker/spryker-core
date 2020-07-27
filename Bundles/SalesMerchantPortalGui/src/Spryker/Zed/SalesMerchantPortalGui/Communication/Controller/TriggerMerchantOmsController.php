@@ -52,11 +52,8 @@ class TriggerMerchantOmsController extends AbstractController
         }
 
         $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
-            ->setMerchantOmsEventName($eventName);
-
-        $merchantOmsTriggerRequestTransfer->setMerchantOrderItems(
-            $merchantOrderTransfer->getMerchantOrderItems()
-        );
+            ->setMerchantOmsEventName($eventName)
+            ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems());
 
         $this->getFactory()
             ->getMerchantOmsFacade()

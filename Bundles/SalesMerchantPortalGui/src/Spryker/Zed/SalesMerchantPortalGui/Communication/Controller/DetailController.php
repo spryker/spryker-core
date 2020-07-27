@@ -79,9 +79,9 @@ class DetailController extends AbstractController
 
         $this->assureMerchantOrderExists($idMerchantOrder, $merchantOrderTransfer);
 
-        $saleOrderItemIds = $this->getSaleOrderItemIds($merchantOrderTransfer);
+        $salesOrderItemIds = $this->getSalesOrderItemIds($merchantOrderTransfer);
         $itemCollectionTransfer = $this->getFactory()->getSalesFacade()->getOrderItems(
-            (new OrderItemFilterTransfer())->setSalesOrderItemIds($saleOrderItemIds)
+            (new OrderItemFilterTransfer())->setSalesOrderItemIds($salesOrderItemIds)
         );
 
         return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
@@ -156,13 +156,13 @@ class DetailController extends AbstractController
      *
      * @return int[]
      */
-    protected function getSaleOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
+    protected function getSalesOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
-        $saleOrderItemIds = [];
+        $salesOrderItemIds = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $saleOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
+            $salesOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
         }
 
-        return $saleOrderItemIds;
+        return $salesOrderItemIds;
     }
 }
