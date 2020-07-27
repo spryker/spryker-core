@@ -16,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator} instead.
+ */
 class AccessTokenValidator implements AccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
@@ -131,10 +134,8 @@ class AccessTokenValidator implements AccessTokenValidatorInterface
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken(
+        return $this->oauthClient->validateAccessToken(
             $authAccessTokenValidationRequestTransfer
         );
-
-        return $authAccessTokenValidationResponseTransfer;
     }
 }

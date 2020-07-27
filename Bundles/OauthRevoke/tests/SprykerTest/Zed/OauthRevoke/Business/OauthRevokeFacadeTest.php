@@ -257,4 +257,31 @@ class OauthRevokeFacadeTest extends Unit
         $this->assertNotEmpty($oauthRefreshTokenEntity);
         $this->assertEquals($refreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
     }
+
+    /**
+     * @return void
+     */
+    public function testSaveRefreshTokenFromTransfer(): void
+    {
+        // Arrange
+        $this->tester->deleteAllOauthRefreshTokens();
+        $userIdentifier = json_encode([
+            'customer_reference' => 'DE--test',
+        ]);
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier('identifier1')
+            ->setCustomerReference('DE--test')
+            ->setUserIdentifier(json_encode($userIdentifier))
+            ->setExpiresAt((new DateTime())->format('Y-m-d H:i:s'))
+            ->setIdOauthClient('frontend');
+        // Act
+        $this->oauthRevokeFacade->saveRefreshTokenFromTransfer($oauthRefreshTokenTransfer);
+
+        // Assert
+        $oauthRefreshTokenEntity = SpyOauthRefreshTokenQuery::create()
+            ->findOne();
+
+        $this->assertNotEmpty($oauthRefreshTokenEntity);
+        $this->assertEquals('identifier1', $oauthRefreshTokenEntity->getIdentifier());
+    }
 }

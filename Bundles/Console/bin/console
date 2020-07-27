@@ -17,5 +17,19 @@ if (!defined('SPRYKER_COMPOSER_INSTALL')) {
 
 require_once SPRYKER_COMPOSER_INSTALL;
 
-$bootstrap = new Spryker\Zed\Console\Communication\ConsoleBootstrap();
+use Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap;
+use Spryker\Zed\Console\Communication\ConsoleBootstrapElector;
+
+$elector = new ConsoleBootstrapElector();
+
+if ($elector->isProjectMigratedToApplicationPlugins()) {
+    $bootstrap = new ConsoleBootstrap();
+    $bootstrap->run();
+
+    return;
+}
+
+use Spryker\Zed\Console\Communication\ConsoleBootstrap as DeprecatedConsoleBootstrap;
+
+$bootstrap = new DeprecatedConsoleBootstrap();
 $bootstrap->run();
