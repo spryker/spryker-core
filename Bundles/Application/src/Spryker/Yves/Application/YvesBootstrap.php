@@ -15,6 +15,9 @@ use Spryker\Yves\Kernel\BundleDependencyProviderResolverAwareTrait;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 
+/**
+ * @deprecated Use {@link \SprykerShop\Yves\ShopApplication\YvesBootstrap} instead.
+ */
 abstract class YvesBootstrap
 {
     use BundleDependencyProviderResolverAwareTrait;

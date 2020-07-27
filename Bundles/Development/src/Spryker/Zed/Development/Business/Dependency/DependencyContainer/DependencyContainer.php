@@ -52,6 +52,8 @@ class DependencyContainer implements DependencyContainerInterface
             $moduleName = $this->getModuleNameFromComposerName($composerName);
         }
 
+        $isOptional = $this->makeOptionalIfSilex($moduleName, $isOptional);
+
         $dependencyTransfer = new DependencyTransfer();
         $dependencyTransfer
             ->setModule($moduleName)
@@ -132,5 +134,22 @@ class DependencyContainer implements DependencyContainerInterface
         $filter = new DashToCamelCase();
 
         return ucfirst($filter->filter($moduleName));
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param string $moduleName
+     * @param bool $isOptional
+     *
+     * @return bool
+     */
+    protected function makeOptionalIfSilex(string $moduleName, bool $isOptional): bool
+    {
+        if ($moduleName === 'Silex') {
+            $isOptional = true;
+        }
+
+        return $isOptional;
     }
 }
