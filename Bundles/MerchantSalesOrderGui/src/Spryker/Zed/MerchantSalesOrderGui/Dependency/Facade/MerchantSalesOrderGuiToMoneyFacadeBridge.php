@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 
-class MerchantSalesOrderGuiToMoneyBridge implements MerchantSalesOrderGuiToMoneyInterface
+class MerchantSalesOrderGuiToMoneyFacadeBridge implements MerchantSalesOrderGuiToMoneyFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Money\Business\MoneyFacadeInterface

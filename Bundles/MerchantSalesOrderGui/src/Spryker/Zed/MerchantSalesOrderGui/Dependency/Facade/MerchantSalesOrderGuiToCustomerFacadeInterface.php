@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade;
 
-interface MerchantSalesOrderGuiToCustomerInterface
+interface MerchantSalesOrderGuiToCustomerFacadeInterface
 {
     /**
      * @param string $customerReference

@@ -9,7 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MoneyTransfer;
 
-interface MerchantSalesOrderGuiToMoneyInterface
+interface MerchantSalesOrderGuiToMoneyFacadeInterface
 {
     /**
      * @param int $amount

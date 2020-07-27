@@ -10,8 +10,9 @@ namespace Spryker\Zed\MerchantSalesOrderGui;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerBridge;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeBridge;
 
@@ -21,8 +22,11 @@ use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiTo
 class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
+
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
+    public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
 
@@ -40,6 +44,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addCustomerFacade($container);
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addDateTimeService($container);
+        $container = $this->addMerchantUserFacade($container);
 
         return $container;
     }
@@ -66,7 +71,21 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     protected function addMoneyFacade(Container $container)
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
-            return new MerchantSalesOrderGuiToMoneyBridge($container->getLocator()->money()->facade());
+            return new MerchantSalesOrderGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantUserFacade(Container $container)
+    {
+        $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
+            return new MerchantSalesOrderGuiToMerchantUserFacadeBridge($container->getLocator()->merchantUser()->facade());
         });
 
         return $container;
@@ -80,7 +99,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     protected function addCustomerFacade(Container $container)
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
-            return new MerchantSalesOrderGuiToCustomerBridge($container->getLocator()->customer()->facade());
+            return new MerchantSalesOrderGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
         });
 
         return $container;

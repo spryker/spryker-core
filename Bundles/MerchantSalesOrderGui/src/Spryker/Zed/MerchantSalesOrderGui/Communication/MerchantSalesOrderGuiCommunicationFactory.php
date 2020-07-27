@@ -10,8 +10,9 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Communication;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Table\MyOrderTable;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerInterface;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiDependencyProvider;
@@ -32,7 +33,8 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getMoneyFacade(),
             $this->getUtilSanitizeService(),
             $this->getDateTimeService(),
-            $this->getCustomerFacade()
+            $this->getCustomerFacade(),
+            $this->getMerchantUserFacade()
         );
     }
 
@@ -45,9 +47,9 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyInterface
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface
      */
-    protected function getMoneyFacade(): MerchantSalesOrderGuiToMoneyInterface
+    public function getMoneyFacade(): MerchantSalesOrderGuiToMoneyFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MONEY);
     }
@@ -55,7 +57,7 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     /**
      * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeInterface
      */
-    protected function getUtilSanitizeService(): MerchantSalesOrderGuiToUtilSanitizeInterface
+    public function getUtilSanitizeService(): MerchantSalesOrderGuiToUtilSanitizeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::SERVICE_UTIL_SANITIZE);
     }
@@ -63,16 +65,24 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     /**
      * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface
      */
-    protected function getDateTimeService(): MerchantSalesOrderGuiToUtilDateTimeServiceInterface
+    public function getDateTimeService(): MerchantSalesOrderGuiToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::SERVICE_DATE_FORMATTER);
     }
 
     /**
-     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerInterface
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface
      */
-    protected function getCustomerFacade(): MerchantSalesOrderGuiToCustomerInterface
+    public function getCustomerFacade(): MerchantSalesOrderGuiToCustomerFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface
+     */
+    public function getMerchantUserFacade(): MerchantSalesOrderGuiToMerchantUserFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MERCHANT_USER);
     }
 }

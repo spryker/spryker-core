@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade;
 
-class MerchantSalesOrderGuiToCustomerBridge implements MerchantSalesOrderGuiToCustomerInterface
+class MerchantSalesOrderGuiToCustomerFacadeBridge implements MerchantSalesOrderGuiToCustomerFacadeInterface
 {
     /**
      * @var \Spryker\Zed\Customer\Business\CustomerFacadeInterface

@@ -16,8 +16,9 @@ use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerInterface;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiConfig;
@@ -39,7 +40,7 @@ class MyOrderTable extends AbstractTable
     protected $merchantSalesOrderQuery;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyInterface
+     * @var \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface
      */
     protected $moneyFacade;
 
@@ -54,29 +55,37 @@ class MyOrderTable extends AbstractTable
     protected $utilDateTimeService;
 
     /**
-     * @var \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerInterface
+     * @var \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface
      */
     protected $customerFacade;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface
+     */
+    protected $merchantUserFacade;
+
+    /**
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery
-     * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyInterface $moneyFacade
+     * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface $moneyFacade
      * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeInterface $sanitizeService
      * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface $utilDateTimeService
-     * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerInterface $customerFacade
+     * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface $customerFacade
+     * @param \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface $merchantUserFacade
      */
     public function __construct(
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
-        MerchantSalesOrderGuiToMoneyInterface $moneyFacade,
+        MerchantSalesOrderGuiToMoneyFacadeInterface $moneyFacade,
         MerchantSalesOrderGuiToUtilSanitizeInterface $sanitizeService,
         MerchantSalesOrderGuiToUtilDateTimeServiceInterface $utilDateTimeService,
-        MerchantSalesOrderGuiToCustomerInterface $customerFacade
+        MerchantSalesOrderGuiToCustomerFacadeInterface $customerFacade,
+        MerchantSalesOrderGuiToMerchantUserFacadeInterface $merchantUserFacade
     ) {
         $this->merchantSalesOrderQuery = $merchantSalesOrderQuery;
         $this->moneyFacade = $moneyFacade;
         $this->sanitizeService = $sanitizeService;
         $this->utilDateTimeService = $utilDateTimeService;
         $this->customerFacade = $customerFacade;
+        $this->merchantUserFacade = $merchantUserFacade;
     }
 
     /**
@@ -145,6 +154,8 @@ class MyOrderTable extends AbstractTable
      */
     protected function prepareQuery(): SpyMerchantSalesOrderQuery
     {
+        $merchantReference = $this->merchantUserFacade->getCurrentMerchantUser()->getMerchant()->getMerchantReference();
+
         $this->merchantSalesOrderQuery
             ->groupByIdMerchantSalesOrder()
             ->useOrderQuery()
@@ -153,7 +164,7 @@ class MyOrderTable extends AbstractTable
             ->useMerchantSalesOrderItemQuery()
                 ->joinStateMachineItemState()
             ->endUse()
-            ->where(SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE . '=?', static::MERCHANT_REFERENCE)
+            ->where(SpyMerchantSalesOrderTableMap::COL_MERCHANT_REFERENCE . '=?', $merchantReference)
             ->select([
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE,
                 SpySalesOrderTableMap::COL_EMAIL,
