@@ -6,7 +6,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-master"
+    "spryker/code-sniffer": "dev-bugfix/mp-3261-sniffer-removes-throw-annotation"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -401,6 +401,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
