@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface ConfigurableBundleTemplateRestResponseBuilderInterface

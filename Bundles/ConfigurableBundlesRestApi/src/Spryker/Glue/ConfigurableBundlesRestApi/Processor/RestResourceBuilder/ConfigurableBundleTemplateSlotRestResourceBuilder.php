@@ -56,15 +56,15 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
             );
 
         $configurableBundleTemplateSlotRestResource = $this->restResourceBuilder->createRestResource(
-                ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
-                $configurableBundleTemplateSlotStorageTransfer->getUuid(),
-                $restConfigurableBundleTemplateSlotsAttributesTransfer
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
+            $configurableBundleTemplateSlotStorageTransfer->getUuid(),
+            $restConfigurableBundleTemplateSlotsAttributesTransfer
         );
 
         $configurableBundleTemplateSlotRestResource->setPayload($configurableBundleTemplateSlotStorageTransfer);
         $configurableBundleTemplateSlotRestResource->addLink(
-                RestLinkInterface::LINK_SELF,
-                $this->createConfigurableBundleTemplateSlotSelfLink($idParentResource)
+            RestLinkInterface::LINK_SELF,
+            $this->createConfigurableBundleTemplateSlotSelfLink($idParentResource)
         );
 
         return $configurableBundleTemplateSlotRestResource;
