@@ -90,7 +90,7 @@ class TwigConfig extends AbstractSharedConfig
         return [
             'cache' => new FilesystemCache(
                 sprintf(
-                    '%s/src/Generated/%s/Twig/codeBucket/cache',
+                    '%s/src/Generated/%s/Twig/codeBucket',
                     APPLICATION_ROOT_DIR,
                     ucfirst(strtolower(APPLICATION))
                 ),
