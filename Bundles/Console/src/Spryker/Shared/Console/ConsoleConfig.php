@@ -20,4 +20,14 @@ class ConsoleConfig extends AbstractSharedConfig
     {
         return $this->get(ConsoleConstants::CATCH_EXCEPTIONS, false);
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->get(ConsoleConstants::IS_DEBUG_ENABLED, false);
+    }
 }

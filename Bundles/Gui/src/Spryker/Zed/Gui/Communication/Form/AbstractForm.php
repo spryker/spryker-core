@@ -8,14 +8,19 @@
 namespace Spryker\Zed\Gui\Communication\Form;
 
 use Spryker\Shared\Gui\Form\AbstractForm as SharedAbstractForm;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\Kernel\Communication\Form\AbstractType} for Zed instead.
  */
 abstract class AbstractForm extends SharedAbstractForm
 {
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @var \Symfony\Component\HttpFoundation\Request
      */
@@ -54,7 +59,9 @@ abstract class AbstractForm extends SharedAbstractForm
     protected function getRequest()
     {
         if ($this->request === null) {
-            $this->request = (new Pimple())->getApplication()['request'];
+            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+            $requestStack = (new GlobalContainer())->get(static::SERVICE_REQUEST_STACK);
+            $this->request = $requestStack->getCurrentRequest();
         }
 
         return $this->request;

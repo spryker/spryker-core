@@ -36,6 +36,11 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const TWIG_ENVIRONMENT = 'twig environment';
 
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
     public const PLUGINS_CMS_PAGE_TABLE_EXPANDER = 'PLUGINS_CMS_PAGE_TABLE_EXPANDER';
     public const PLUGINS_CREATE_GLOSSARY_EXPANDER = 'PLUGINS_CREATE_GLOSSARY_EXPANDER';
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
@@ -74,7 +79,7 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
-            return $this->getTwigEnvironment();
+            return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
         $container = $this->addCmsPageTableExpanderPlugins($container);
@@ -87,6 +92,8 @@ class CmsGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()

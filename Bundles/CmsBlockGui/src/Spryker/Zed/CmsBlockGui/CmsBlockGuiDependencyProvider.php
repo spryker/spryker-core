@@ -32,6 +32,11 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
     public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
     public const PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND';
 
@@ -64,7 +69,7 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTwigEnvironment(Container $container)
     {
         $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
-            return $this->getTwigEnvironment();
+            return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
         return $container;
@@ -157,6 +162,8 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
