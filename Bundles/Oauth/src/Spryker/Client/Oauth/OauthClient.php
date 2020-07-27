@@ -39,6 +39,8 @@ class OauthClient extends AbstractClient implements OauthClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Oauth\OauthClient::validateOauthAccessToken()} instead.
+     *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
@@ -47,6 +49,21 @@ class OauthClient extends AbstractClient implements OauthClientInterface
         OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
     ): OauthAccessTokenValidationResponseTransfer {
         return $this->getFactory()->createAccessTokenValidator()->validate($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
+        return $this->getFactory()->createOauthAccessTokenValidator()->validate($authAccessTokenValidationRequestTransfer);
     }
 
     /**

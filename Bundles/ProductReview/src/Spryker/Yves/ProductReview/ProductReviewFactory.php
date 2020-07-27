@@ -20,10 +20,20 @@ class ProductReviewFactory extends AbstractFactory
      */
     public function createProductAbstractReviewTwigExtension()
     {
-        return new ProductAbstractReviewTwigExtension($this->getClient(), $this->getApplication());
+        return new ProductAbstractReviewTwigExtension($this->getClient(), $this->getLocale());
     }
 
     /**
+     * @return string
+     */
+    protected function getLocale(): string
+    {
+        return $this->getProvidedDependency(ProductReviewDependencyProvider::SERVICE_LOCALE);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Yves\Kernel\Application
      */
     protected function getApplication()

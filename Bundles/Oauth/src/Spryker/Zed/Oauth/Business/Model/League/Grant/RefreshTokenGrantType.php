@@ -32,6 +32,8 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
      * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
      * @param \DateInterval $accessTokenTTL
      *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
      * @return \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface
      */
     public function respondToAccessTokenRequest(
@@ -86,6 +88,8 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
     /**
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param string $clientId
+     *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
      *
      * @return array
      */

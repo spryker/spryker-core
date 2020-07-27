@@ -16,6 +16,7 @@ use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinder;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenUserFinderInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\AccessTokenValidatorInterface;
+use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenRestRequestValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidator;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface;
 use Spryker\Glue\AuthRestApi\Processor\AccessTokens\SimultaneousAuthenticationRestRequestValidator;
@@ -79,6 +80,24 @@ class AuthRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\AuthRestApi\AuthRestApiFactory::createOauthAccessTokenRestRequestValidator()} instead.
+     *
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
+     */
+    public function createOauthAccessTokenValidator(): OauthAccessTokenValidatorInterface
+    {
+        return new OauthAccessTokenValidator($this->getOauthClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
+     */
+    public function createOauthAccessTokenRestRequestValidator(): OauthAccessTokenValidatorInterface
+    {
+        return new OauthAccessTokenRestRequestValidator($this->getOauthClient());
+    }
+
+    /**
      * @return \Spryker\Glue\AuthRestApi\Processor\ResponseFormatter\AuthenticationErrorResponseHeadersFormatter
      */
     public function createAuthenticationErrorResponseHeadersFormatter(): AuthenticationErrorResponseHeadersFormatter
@@ -104,14 +123,6 @@ class AuthRestApiFactory extends AbstractFactory
     public function createSimultaneousAuthenticationRestRequestValidator(): SimultaneousAuthenticationRestRequestValidatorInterface
     {
         return new SimultaneousAuthenticationRestRequestValidator();
-    }
-
-    /**
-     * @return \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenValidatorInterface
-     */
-    public function createOauthAccessTokenValidator(): OauthAccessTokenValidatorInterface
-    {
-        return new OauthAccessTokenValidator($this->getOauthClient());
     }
 
     /**
