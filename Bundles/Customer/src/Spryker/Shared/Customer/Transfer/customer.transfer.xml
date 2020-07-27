@@ -186,4 +186,9 @@
         <property name="restorePasswordKeyExists" type="bool"/>
         <property name="passwordExists" type="bool"/>
     </transfer>
+
+    <transfer name="AddressCriteriaFilter">
+        <property name="idCustomerAddress" type="int"/>
+        <property name="fkCustomer" type="int"/>
+    </transfer>
 </transfers>

@@ -3,7 +3,6 @@
 {% block body %}
     {% if navigation is defined %}
         {% set navigationConfig = render_navigation_component_config(navigation.menu) %}
-
         <web-mp-merchant-layout-main cloak navigation-config="{{ navigationConfig }}">
             <web-mp-header name="header"></web-mp-header>
 

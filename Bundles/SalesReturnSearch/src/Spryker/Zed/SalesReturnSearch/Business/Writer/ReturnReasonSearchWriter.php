@@ -122,7 +122,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer[] $returnReasonTransfers
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][][] $returnReasonSearchTransfers
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][] $returnReasonSearchTransfers
      * @param string[][] $returnReasonTranslations
      *
      * @return void
@@ -146,7 +146,7 @@ class ReturnReasonSearchWriter implements ReturnReasonSearchWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ReturnReasonTransfer $returnReasonTransfer
-     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][][] $returnReasonSearchTransfers
+     * @param \Generated\Shared\Transfer\ReturnReasonSearchTransfer[][] $returnReasonSearchTransfers
      * @param string[][] $returnReasonTranslations
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $localeTransfers
      *

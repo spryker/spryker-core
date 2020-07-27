@@ -10,12 +10,11 @@
     "spryker/gui": "^3.0.0",
     "spryker/guzzle": "^2.0.0",
     "spryker/health-check-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/log": "^3.0.0",
     "spryker/money": "^2.0.0",
     "spryker/product-page-search-extension": "^1.0.0",
     "spryker/search-extension": "^1.0.0",
-    "spryker/silex": "^2.0.0",
     "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
@@ -27,7 +26,11 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/search-elasticsearch": "*",
+    "spryker/silex": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/silex": "Add this when you still want to use the abandoned Silex."
   },
   "autoload": {
     "psr-4": {

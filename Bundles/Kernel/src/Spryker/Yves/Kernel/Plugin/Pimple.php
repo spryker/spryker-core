@@ -7,30 +7,47 @@
 
 namespace Spryker\Yves\Kernel\Plugin;
 
-use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
-class Pimple extends AbstractPlugin
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\StaticContainer} instead.
+ */
+class Pimple extends GlobalContainer
 {
     /**
-     * @var \Spryker\Service\Container\Container
+     * @var \Silex\Application
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Service\Container\Container $application
+     * @param \Spryker\Service\Container\ContainerInterface|\Silex\Application $application
      *
      * @return void
      */
-    public static function setApplication($application)
+    public static function setApplication($application): void
     {
-        self::$application = $application;
+        if ($application instanceof ContainerInterface) {
+            parent::setContainer($application);
+
+            return;
+        }
+
+        static::$application = $application;
     }
 
     /**
-     * @return \Spryker\Service\Container\Container
+     * @return \Spryker\Service\Container\Container|\Silex\Application
      */
     public function getApplication()
     {
-        return self::$application;
+        if (static::$application === null) {
+            /** @var \Spryker\Service\Container\Container $container */
+            $container = parent::getContainer();
+
+            return $container;
+        }
+
+        return static::$application;
     }
 }

@@ -1,6 +1,8 @@
-<div class="mp-layout-centered ctx-spy-bg-gray">
+<div class="mp-layout-centered" spyApplyContexts="spy-bg-gray">
     <div class="mp-layout-centered__content">
-        <ng-content></ng-content>
+        <span spyCustomElementBoundary>
+            <ng-content></ng-content>
+        </span>
     </div>
     <div class="mp-layout-centered__footer">
         <mp-layout-footer></mp-layout-footer>
