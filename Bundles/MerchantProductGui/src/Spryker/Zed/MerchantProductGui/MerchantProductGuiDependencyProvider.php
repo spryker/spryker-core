@@ -14,8 +14,17 @@ use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchan
 
 class MerchantProductGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
     public const FACADE_MERCHANT_PRODUCT = 'FACADE_MERCHANT_PRODUCT';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -27,12 +36,15 @@ class MerchantProductGuiDependencyProvider extends AbstractBundleDependencyProvi
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addApplication($container);
+        $container = $this->addRequestStack($container);
         $container = $this->addMerchantProductFacade($container);
 
         return $container;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -43,6 +55,20 @@ class MerchantProductGuiDependencyProvider extends AbstractBundleDependencyProvi
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addRequestStack(Container $container): Container
+    {
+        $container->set(static::SERVICE_REQUEST_STACK, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;

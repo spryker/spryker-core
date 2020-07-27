@@ -5,12 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Form\Plugin\Communication\Application;
+namespace SprykerTest\Zed\Form\Communication\Plugin\Application;
 
 use Codeception\Test\Unit;
-use Spryker\Service\Container\ContainerInterface;
 use Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin;
-use Spryker\Zed\Kernel\Container;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -20,14 +19,16 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  * @group SprykerTest
  * @group Zed
  * @group Form
- * @group Plugin
  * @group Communication
+ * @group Plugin
  * @group Application
  * @group FormApplicationPluginTest
  * Add your own group annotations below this line
  */
 class FormApplicationPluginTest extends Unit
 {
+    use ContainerHelperTrait;
+
     protected const SERVICE_FORM_FACTORY = 'form.factory';
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
     protected const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
@@ -43,7 +44,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationPluginSetFormFactoryService(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -60,7 +61,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationSetFormFactoryServiceAlias(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -77,7 +78,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationSetCsrfProvider(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -86,13 +87,5 @@ class FormApplicationPluginTest extends Unit
         //Arrange
         $this->assertTrue($container->has(static::SERVICE_FORM_CSRF_PROVIDER));
         $this->assertInstanceOf(CsrfTokenManagerInterface::class, $container->get(static::SERVICE_FORM_CSRF_PROVIDER));
-    }
-
-    /**
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
-    protected function createContainer(): ContainerInterface
-    {
-        return new Container();
     }
 }

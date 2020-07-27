@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Glossary;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleBridge;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -28,6 +28,11 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'messages';
 
     /**
+     * @uses \Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     */
+    protected const SERVICE_VALIDATOR = 'validator';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -38,8 +43,8 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
         });
 
-        $container->set(static::PLUGIN_VALIDATOR, function () {
-            return (new Pimple())->getApplication()['validator'];
+        $container->set(static::PLUGIN_VALIDATOR, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_VALIDATOR);
         });
 
         return $container;

@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "propel/propel": "2.0.0-alpha10",
+    "propel/propel": "dev-master#421dcba7e31c2e6f2996c1e9ec50e30de6d56703",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.49.0",
