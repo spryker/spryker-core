@@ -41,10 +41,10 @@
         {% block tabs %}
             <web-spy-tabs class="mp-manage-order__content" cloak>
                 {% block detailTab %}
+                    {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
+
                     <web-spy-tab title="{{ 'Details' | trans }}">
                         {% block overviewCard %}
-                            {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
-
                             {% set overviewItems = [
                                 {
                                     name: 'Order date' | trans,
