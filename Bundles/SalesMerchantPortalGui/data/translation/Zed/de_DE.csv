@@ -31,4 +31,6 @@ New,New
 "Per Store","Per Store"
 "Status change triggered successfully.","Die Statusänderung wurde erfolgreich ausgelöst."
 "Only matching states items will be updated.","Es werden nur Elemente mit übereinstimmenden Status aktualisiert."
-"Order’s Items state","Artikelstatus der Bestellung"
+"Order's Items state","Artikelstatus der Bestellung"
+"Merchant order not found for id %d.","Händlerbestellung für ID %d nicht gefunden"
+"Event name is empty.","Ereignisname ist leer."

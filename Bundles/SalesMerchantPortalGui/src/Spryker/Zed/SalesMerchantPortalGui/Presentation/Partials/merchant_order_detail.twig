@@ -1,3 +1,12 @@
+{#
+@var merchantOrder \Generated\Shared\Transfer\MerchantOrderTransfer
+@var metadata \Generated\Shared\Transfer\OrderTransfer
+@var totals \Generated\Shared\Transfer\TotalsTransfer
+@var expense \Generated\Shared\Transfer\ExpenseTransfer
+@var shipment \Generated\Shared\Transfer\ShipmentTransfer
+@var method \Generated\Shared\Transfer\ShipmentMethodTransfer
+#}
+
 {% block body %}
     {% set orderDetails = {
         title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
@@ -24,7 +33,7 @@
         {% endblock %}
 
         {% block itemStates %}
-            <span items-states-title>{{ 'Order’s Items state' | trans }}</span>
+            <span items-states-title>{{ "Order's Items state" | trans }}</span>
 
             <div items-states class="mp-manage-order__states">
                 {% for state in merchantOrder.itemStates %}
@@ -73,7 +82,7 @@
 
                         {% block totalsCard %}
                             <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
-                                <web-spy-collapsible title="{{ merchantOrder.merchantOrderItems.count() }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
+                                <web-spy-collapsible title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
                                     {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
 
                                     <web-mp-html-renderer-url url="{{ totalsUrl }}"></web-mp-html-renderer-url>

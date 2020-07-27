@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
@@ -36,6 +35,10 @@ class TriggerMerchantOmsController extends AbstractController
         $idMerchantOrder = $this->castId($request->get(static::PARAM_ID_MERCHANT_ORDER));
         $eventName = $request->get(static::PARAM_EVENT_NAME);
 
+        if (!$eventName) {
+            return $this->getErrorResponse('Event name is empty.');
+        }
+
         $merchantOrderTransfer = $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->findMerchantOrder(
@@ -44,14 +47,16 @@ class TriggerMerchantOmsController extends AbstractController
                     ->setWithItems(true)
             );
 
-        $this->assureMerchantOrderExists($idMerchantOrder, $merchantOrderTransfer);
+        if (!$this->isMerchantOrderExists($idMerchantOrder, $merchantOrderTransfer)) {
+            return $this->getErrorResponse(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+        }
 
         $merchantOmsTriggerRequestTransfer = (new MerchantOmsTriggerRequestTransfer())
             ->setMerchantOmsEventName($eventName);
 
-        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOmsTriggerRequestTransfer->addMerchantOrderItem($merchantOrderItemTransfer);
-        }
+        $merchantOmsTriggerRequestTransfer->setMerchantOrderItems(
+            $merchantOrderTransfer->getMerchantOrderItems()
+        );
 
         $this->getFactory()
             ->getMerchantOmsFacade()
@@ -81,19 +86,36 @@ class TriggerMerchantOmsController extends AbstractController
      * @param int $idMerchantOrder
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer|null $merchantOrderTransfer
      *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return void
+     * @return bool
      */
-    protected function assureMerchantOrderExists(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): void
+    protected function isMerchantOrderExists(int $idMerchantOrder, ?MerchantOrderTransfer $merchantOrderTransfer): bool
     {
         if (!$merchantOrderTransfer) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            return false;
         }
 
         $currentMerchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
         if ($currentMerchantUserTransfer->getMerchant()->getMerchantReference() !== $merchantOrderTransfer->getMerchantReference()) {
-            throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
+            return false;
         }
+
+        return true;
+    }
+
+    /**
+     * @param string $errorMessage
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    protected function getErrorResponse(string $errorMessage): JsonResponse
+    {
+        return new JsonResponse([
+            'notifications' => [
+                [
+                    'type' => 'error',
+                    'message' => $errorMessage,
+                ],
+            ],
+        ]);
     }
 }

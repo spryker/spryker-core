@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
-use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
@@ -86,7 +85,7 @@ class DetailController extends AbstractController
         );
 
         return $this->renderView('@SalesMerchantPortalGui/Partials/order_items_list.twig', [
-            'orderItems' => $this->getSalesOrderItemsGroupedBySku($itemCollectionTransfer),
+            'orderItems' => $itemCollectionTransfer->getItems(),
         ]);
     }
 
@@ -165,29 +164,5 @@ class DetailController extends AbstractController
         }
 
         return $saleOrderItemIds;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemCollectionTransfer $itemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
-     */
-    protected function getSalesOrderItemsGroupedBySku(ItemCollectionTransfer $itemCollectionTransfer): array
-    {
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers */
-        $itemTransfers = [];
-        foreach ($itemCollectionTransfer->getItems() as $itemTransfer) {
-            if (!isset($itemTransfers[$itemTransfer->getSku()])) {
-                $itemTransfers[$itemTransfer->getSku()] = $itemTransfer;
-
-                continue;
-            }
-
-            $itemTransfers[$itemTransfer->getSku()]->setQuantity(
-                $itemTransfers[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
-            );
-        }
-
-        return $itemTransfers;
     }
 }
