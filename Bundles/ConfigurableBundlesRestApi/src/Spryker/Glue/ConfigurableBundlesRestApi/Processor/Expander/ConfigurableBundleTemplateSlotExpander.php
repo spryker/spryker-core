@@ -8,10 +8,7 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateSlotRestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleRestResourceExpanderInterface
@@ -46,29 +43,13 @@ class ConfigurableBundleTemplateSlotExpander implements ConfigurableBundleRestRe
 
             foreach ($configurableBundleTemplateStorageTransfer->getSlots() as $configurableBundleTemplateSlotStorageTransfer) {
                 $configurableBundleTemplateSlotRestResource = $this->configurableBundleSlotRestResourceBuilder
-                    ->buildConfigurableBundleTemplateSlotRestResource($configurableBundleTemplateSlotStorageTransfer)
-                    ->addLink(
-                        RestLinkInterface::LINK_SELF,
-                        $this->createConfigurableBundleTemplateSlotSelfLink($resource)
+                    ->buildConfigurableBundleTemplateSlotRestResource(
+                        $configurableBundleTemplateSlotStorageTransfer,
+                        $resource->getId()
                     );
 
                 $resource->addRelationship($configurableBundleTemplateSlotRestResource);
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $parentRestResource
-     *
-     * @return string
-     */
-    protected function createConfigurableBundleTemplateSlotSelfLink(RestResourceInterface $parentRestResource): string
-    {
-        return sprintf(
-            '%s/%s?include=%s',
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            $parentRestResource->getId(),
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS
-        );
     }
 }

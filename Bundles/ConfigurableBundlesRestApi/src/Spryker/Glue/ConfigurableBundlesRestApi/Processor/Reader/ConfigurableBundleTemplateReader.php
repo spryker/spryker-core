@@ -5,17 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate;
+namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
-use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundlePageSearchClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundleStorageClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateReaderInterface
 {
@@ -70,12 +67,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
 
         if (!$configurableBundleTemplateStorageTransfer) {
             return $this->configurableBundleTemplateRestResponseBuilder
-                ->buildErrorRestResponse(
-                    (new RestErrorMessageTransfer())
-                        ->setCode(ConfigurableBundlesRestApiConfig::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
-                        ->setStatus(Response::HTTP_NOT_FOUND)
-                        ->setDetail(ConfigurableBundlesRestApiConfig::RESPONSE_DETAIL_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
-                );
+                ->buildConfigurableBundleTemplateNotFoundErrorRestResponse();
         }
 
         return $this->configurableBundleTemplateRestResponseBuilder
@@ -116,7 +108,7 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
         $formattedSearchResults = $this->configurableBundlePageSearchClient
             ->searchConfigurableBundleTemplates(new ConfigurableBundleTemplatePageSearchRequestTransfer());
 
-        if (!$formattedSearchResults[static::FORMATTED_RESULT_KEY]) {
+        if (!isset($formattedSearchResults[static::FORMATTED_RESULT_KEY])) {
             return [];
         }
 

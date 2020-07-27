@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplateSlotsAttributesTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -40,11 +41,13 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
+     * @param string $idParentResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildConfigurableBundleTemplateSlotRestResource(
-        ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
+        ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer,
+        string $idParentResource
     ): RestResourceInterface {
         $restConfigurableBundleTemplateSlotsAttributesTransfer = $this->configurableBundleRestApiMapper
             ->mapConfigurableBundleTemplateSlotStorageTransferToRestAttributesTransfer(
@@ -52,10 +55,33 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
                 new RestConfigurableBundleTemplateSlotsAttributesTransfer()
             );
 
-        return $this->restResourceBuilder->createRestResource(
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
-            $configurableBundleTemplateSlotStorageTransfer->getUuid(),
-            $restConfigurableBundleTemplateSlotsAttributesTransfer
-        )->setPayload($configurableBundleTemplateSlotStorageTransfer);
+        $configurableBundleTemplateSlotRestResource = $this->restResourceBuilder->createRestResource(
+                ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,
+                $configurableBundleTemplateSlotStorageTransfer->getUuid(),
+                $restConfigurableBundleTemplateSlotsAttributesTransfer
+        );
+
+        $configurableBundleTemplateSlotRestResource->setPayload($configurableBundleTemplateSlotStorageTransfer);
+        $configurableBundleTemplateSlotRestResource->addLink(
+                RestLinkInterface::LINK_SELF,
+                $this->createConfigurableBundleTemplateSlotSelfLink($idParentResource)
+        );
+
+        return $configurableBundleTemplateSlotRestResource;
+    }
+
+    /**
+     * @param string $idParentResource
+     *
+     * @return string
+     */
+    protected function createConfigurableBundleTemplateSlotSelfLink(string $idParentResource): string
+    {
+        return sprintf(
+            '%s/%s?include=%s',
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
+            $idParentResource,
+            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS
+        );
     }
 }

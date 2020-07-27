@@ -8,10 +8,7 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
-use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateImageSetRestResourceBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleRestResourceExpanderInterface
@@ -48,30 +45,11 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleRe
                 $configurableBundleTemplateSlotRestResource = $this->configurableBundleTemplateImageSetRestResourceBuilder
                     ->buildConfigurableBundleTemplateImageSetRestResource(
                         $productImageSetStorageTransfer,
-                        $configurableBundleTemplateStorageTransfer->getUuid()
-                    )
-                    ->addLink(
-                        RestLinkInterface::LINK_SELF,
-                        $this->createConfigurableBundleTemplateImageSetSelfLink($resource)
+                        $resource->getId()
                     );
 
                 $resource->addRelationship($configurableBundleTemplateSlotRestResource);
             }
         }
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $parentRestResource
-     *
-     * @return string
-     */
-    protected function createConfigurableBundleTemplateImageSetSelfLink(RestResourceInterface $parentRestResource): string
-    {
-        return sprintf(
-            '%s/%s?include=%s',
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
-            $parentRestResource->getId(),
-            ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_SETS
-        );
     }
 }

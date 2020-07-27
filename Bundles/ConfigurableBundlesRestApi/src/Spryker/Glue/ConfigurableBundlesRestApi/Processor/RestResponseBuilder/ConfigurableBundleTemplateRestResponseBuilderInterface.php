@@ -19,11 +19,9 @@ interface ConfigurableBundleTemplateRestResponseBuilderInterface
     public function createRestResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildErrorRestResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface;
+    public function buildConfigurableBundleTemplateNotFoundErrorRestResponse(): RestResponseInterface;
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer

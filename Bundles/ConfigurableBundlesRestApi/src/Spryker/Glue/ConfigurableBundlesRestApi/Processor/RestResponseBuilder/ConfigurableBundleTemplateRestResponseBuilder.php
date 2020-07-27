@@ -9,10 +9,12 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator\ConfigurableBundleRestApiTranslatorInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundleTemplateRestResponseBuilderInterface
 {
@@ -55,12 +57,15 @@ class ConfigurableBundleTemplateRestResponseBuilder implements ConfigurableBundl
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer $restErrorMessageTransfer
-     *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function buildErrorRestResponse(RestErrorMessageTransfer $restErrorMessageTransfer): RestResponseInterface
+    public function buildConfigurableBundleTemplateNotFoundErrorRestResponse(): RestResponseInterface
     {
+        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
+            ->setCode(ConfigurableBundlesRestApiConfig::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND)
+            ->setStatus(Response::HTTP_NOT_FOUND)
+            ->setDetail(ConfigurableBundlesRestApiConfig::RESPONSE_DETAIL_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
+
         return $this->createRestResponse()->addError($restErrorMessageTransfer);
     }
 

@@ -14,12 +14,12 @@ interface ConfigurableBundleTemplateImageSetRestResourceBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer
-     * @param string $idResource
+     * @param string $idParentResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildConfigurableBundleTemplateImageSetRestResource(
         ProductImageSetStorageTransfer $productImageSetStorageTransfer,
-        string $idResource
+        string $idParentResource
     ): RestResourceInterface;
 }

@@ -10,13 +10,13 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundlePageSearchClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundleStorageClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToGlossaryStorageClientInterface;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate\ConfigurableBundleTemplateReader;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleRestResourceExpanderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateImageSetExpander;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Expander\ConfigurableBundleTemplateSlotExpander;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapper;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleRestApiMapperInterface;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader\ConfigurableBundleTemplateReader;
+use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader\ConfigurableBundleTemplateReaderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateImageSetRestResourceBuilder;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateImageSetRestResourceBuilderInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder\ConfigurableBundleTemplateRestResourceBuilder;
@@ -32,7 +32,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class ConfigurableBundlesRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate\ConfigurableBundleTemplateReaderInterface
+     * @return \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader\ConfigurableBundleTemplateReaderInterface
      */
     public function createConfigurableBundleTemplateReader(): ConfigurableBundleTemplateReaderInterface
     {

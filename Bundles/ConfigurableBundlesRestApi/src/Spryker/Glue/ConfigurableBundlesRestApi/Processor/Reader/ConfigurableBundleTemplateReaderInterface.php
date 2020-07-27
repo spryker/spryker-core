@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\ConfigurableBundleTemplate;
+namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader;
 
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;

@@ -14,10 +14,12 @@ interface ConfigurableBundleTemplateSlotRestResourceBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
+     * @param string $idParentResource
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function buildConfigurableBundleTemplateSlotRestResource(
-        ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
+        ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer,
+        string $idParentResource
     ): RestResourceInterface;
 }
