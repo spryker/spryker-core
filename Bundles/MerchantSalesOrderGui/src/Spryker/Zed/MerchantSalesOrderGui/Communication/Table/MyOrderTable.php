@@ -192,6 +192,8 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -222,6 +224,8 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string
@@ -241,6 +245,8 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string
@@ -289,6 +295,8 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string
