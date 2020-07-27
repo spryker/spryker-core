@@ -86,10 +86,14 @@
     </transfer>
 
     <transfer name="GuiTableDataResponse">
-        <property name="data" type="array" singular="data"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="total" type="int"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
     </transfer>
 
     <transfer name="Money">

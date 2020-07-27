@@ -75,8 +75,15 @@
     </transfer>
 
     <transfer name="GuiTableDataResponse">
-        <property name="data" type="array" singular="data"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
     </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+        <property name="payload" type="GuiTableDataResponsePayload"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponsePayload"/>
 
     <transfer name="SelectGuiTableFilterTypeOptions">
         <property name="multiselect" type="bool"/>
