@@ -33,6 +33,7 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
         $companyBusinessUnitKey = $dataSet[ShoppingListCompanyBusinessUnitDataSetInterface::COLUMN_COMPANY_BUSINESS_UNIT_KEY];
         if (!isset($this->idCompanyBusinessUnitCache[$companyBusinessUnitKey])) {
             $companyBusinessUnitQuery = new SpyCompanyBusinessUnitQuery();
+            /** @var int|null $idCompanyUser */
             $idCompanyUser = $companyBusinessUnitQuery
                 ->select([SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT])
                 ->findOneByKey($companyBusinessUnitKey);

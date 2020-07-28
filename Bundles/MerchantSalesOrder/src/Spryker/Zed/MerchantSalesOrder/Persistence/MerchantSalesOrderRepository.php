@@ -248,7 +248,10 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $query */
+        $query = $paginationModel->getQuery();
+
+        return $query;
     }
 
     /**

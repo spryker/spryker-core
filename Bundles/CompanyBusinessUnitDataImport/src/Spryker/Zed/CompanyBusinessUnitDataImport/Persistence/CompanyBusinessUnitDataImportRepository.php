@@ -34,6 +34,7 @@ class CompanyBusinessUnitDataImportRepository extends AbstractRepository impleme
             return $this->idCompanyBusinessUnitListCache[$companyBusinessUnitKey];
         }
 
+        /** @var int|null $idCompanyBusinessUnit */
         $idCompanyBusinessUnit = $this->getFactory()->createCompanyBusinessUnitQuery()
             ->filterByKey($companyBusinessUnitKey)
             ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)

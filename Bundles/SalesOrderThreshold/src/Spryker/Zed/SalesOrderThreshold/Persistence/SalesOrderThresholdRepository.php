@@ -119,12 +119,13 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
      */
     public function findSalesOrderThresholdTaxSetId(): ?int
     {
-        $taxSetId = $this->getFactory()
+        /** @var int|null $idTaxSet */
+        $idTaxSet = $this->getFactory()
             ->createSalesOrderThresholdTaxSetPropelQuery()
             ->select([SpySalesOrderThresholdTaxSetTableMap::COL_FK_TAX_SET])
             ->findOne();
 
-        return $taxSetId;
+        return $idTaxSet;
     }
 
     /**
@@ -137,7 +138,8 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
      */
     public function findMaxTaxRateByCountryIso2Code(string $countryIso2Code): ?float
     {
-        return $this->getFactory()->createSalesOrderThresholdTaxSetPropelQuery()
+        /** @var float|null $maxTaxRate */
+        $maxTaxRate = $this->getFactory()->createSalesOrderThresholdTaxSetPropelQuery()
             ->useTaxSetQuery()
             ->useSpyTaxSetTaxQuery()
             ->useSpyTaxRateQuery()
@@ -153,5 +155,7 @@ class SalesOrderThresholdRepository extends AbstractRepository implements SalesO
             ->endUse()
             ->select([static::COL_MAX_TAX_RATE])
             ->findOne();
+
+        return $maxTaxRate;
     }
 }
