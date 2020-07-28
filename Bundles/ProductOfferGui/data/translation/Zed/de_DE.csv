@@ -1,14 +1,12 @@
 Actions,Aktionen
 Active,Aktiv
 Approved,Bestätigt
-approved,Genehmigt
 approved_button,"Zugriff genehmigen"
-Back to Offers,Zurück zu Angeboten
-declined,Abgelehnt
-declined_button,Verweigern
+"Back to Offers","Zurück zu Angeboten"
+denied_button,Abgelehnt
 Denied,Abgelehnt
 Description,Beschreibung
-Gift Card,Geschenkgutschein
+"Gift Card","Geschenkgutschein"
 Inactive,Inaktiv
 "List of Offers","Liste der Angebote"
 Name,Name
@@ -16,14 +14,14 @@ Offer,Angebot
 "Offer ID","Angebots ID"
 Offers,"Bietet an"
 Product,Produkt
-Product Bundle,Bündelprodukt
+"Product Bundle","Bündelprodukt"
 Reference,Referenz
 SKU,Artikelnummer
 Status,Status
 Stores,Shops
 "The approval status was updated","Der Genehmigungsstatus wurde aktualisiert"
 Type,Typ
-View Offer,Angebot anzeigen
+"View Offer","Angebot anzeigen"
 Visibility,Sichtbarkeit
-Waiting for Approval,Warten auf die Bestätigung
-waiting_for_approval,"Warten auf die Bestätigung"
+"Waiting for Approval","Warten auf die Bestätigung"
+waiting_for_approval_button,"Warten auf die Bestätigung"

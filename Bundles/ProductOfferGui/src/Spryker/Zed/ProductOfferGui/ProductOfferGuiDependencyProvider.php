@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGui;
 
-use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -20,14 +19,13 @@ use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferF
  */
 class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
+    public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
+    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
     public const PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER = 'PLUGINS_PRODUCT_OFFER_LIST_ACTION_VIEW_DATA_EXPANDER';
     public const PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER = 'PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER';
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
-    public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
-    public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const PLUGINS_PRODUCT_OFFER_VIEW_SECTION = 'PLUGINS_PRODUCT_OFFER_VIEW_SECTION';
-    public const PROPEL_QUERY_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_ABSTRACT';
+    public const PROPEL_QUERY_PRODUCT_OFFER = 'PROPEL_QUERY_PRODUCT_OFFER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -38,27 +36,13 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addPropelProductOfferQuery($container);
         $container = $this->addLocaleFacade($container);
+        $container = $this->addProductFacade($container);
         $container = $this->addProductOfferFacade($container);
         $container = $this->addProductOfferListActionViewDataExpanderPlugins($container);
         $container = $this->addProductOfferTableExpanderPlugins($container);
-        $container = $this->addProductFacade($container);
         $container = $this->addProductOfferViewSectionPlugins($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function providePersistenceLayerDependencies(Container $container)
-    {
-        $container = parent::providePersistenceLayerDependencies($container);
-
-        $container = $this->addProductAbstractPropelQuery($container);
+        $container = $this->addPropelProductOfferQuery($container);
 
         return $container;
     }
@@ -185,19 +169,5 @@ class ProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
     protected function getProductOfferViewSectionPlugins(): array
     {
         return [];
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addProductAbstractPropelQuery(Container $container): Container
-    {
-        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
-            return SpyProductAbstractQuery::create();
-        }));
-
-        return $container;
     }
 }

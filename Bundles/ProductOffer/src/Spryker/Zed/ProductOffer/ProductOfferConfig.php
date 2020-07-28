@@ -16,6 +16,9 @@ class ProductOfferConfig extends AbstractBundleConfig
     protected const STATUS_DENIED = 'denied';
 
     /**
+     * Specification:
+     * - Returns default status for product offer.
+     *
      * @api
      *
      * @return string
@@ -26,6 +29,9 @@ class ProductOfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns mapped available statuses array with status as key.
+     *
      * @api
      *
      * @return array

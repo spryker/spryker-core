@@ -34,12 +34,16 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             return null;
         }
 
-        return $this->getFactory()
+        $productOfferStockTransfer = $this->getFactory()
             ->createProductOfferStockMapper()
             ->mapProductOfferStockEntityToProductOfferStockTransfer(
                 $productOfferStockEntity,
                 new ProductOfferStockTransfer()
             );
+
+        return $productOfferStockTransfer->setProductOfferReference(
+            $productOfferStockRequestTransfer->getProductOfferReference()
+        );
     }
 
     /**

@@ -27,7 +27,7 @@ class PriceProductOfferProductOfferViewSectionPlugin extends AbstractPlugin impl
      */
     public function getTemplate(): string
     {
-        return '@PriceProductOfferGui/View/_partials/info-price-product-offer.twig';
+        return '@PriceProductOfferGui/_partials/info-price-product-offer.twig';
     }
 
     /**
@@ -36,7 +36,7 @@ class PriceProductOfferProductOfferViewSectionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *

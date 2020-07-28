@@ -27,16 +27,16 @@ class MerchantProductOfferViewSectionPlugin extends AbstractPlugin implements Pr
      */
     public function getTemplate(): string
     {
-        return '@MerchantProductOfferGui/View/_partials/info-merchant.twig';
+        return '@MerchantProductOfferGui/_partials/info-merchant.twig';
     }
 
     /**
      * {@inheritDoc}
-     * - Returns merchant data from provided ProductOffer transfer object;
+     * - Returns merchant data from provided ProductOffer transfer.
      *
      * @api
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *

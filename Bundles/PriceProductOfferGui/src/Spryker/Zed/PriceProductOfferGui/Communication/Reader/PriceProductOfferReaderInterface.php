@@ -5,14 +5,14 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOffer;
+namespace Spryker\Zed\PriceProductOfferGui\Communication\Reader;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface PriceProductOfferReaderInterface
 {
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *

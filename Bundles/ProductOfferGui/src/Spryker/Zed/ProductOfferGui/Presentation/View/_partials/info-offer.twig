@@ -13,7 +13,7 @@
             {% set statusTitle = 'Denied' | trans %}
         {% endif %}
 
-        {% if productOffer.approvalStatus == 'waiting-for-approval' %}
+        {% if productOffer.approvalStatus == 'waiting_for_approval' %}
             {% set statusLabelClass = 'label-warning' %}
             {% set statusTitle = 'Waiting for Approval' | trans %}
         {% endif %}
@@ -41,12 +41,12 @@
         </div>
         <div class="hr-line-dashed"></div>
 
-        {% if relatedStoreNames is defined %}
+        {% if relatedStores is defined %}
             <div class="row form-group">
                 <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
                 <div class="col-xs-10">
-                    {% for storeName in relatedStoreNames %}
-                        <span class="label label-info">{{ storeName }}</span>
+                    {% for relatedStore in relatedStores %}
+                        <span class="label label-info">{{ relatedStore.name }}</span>
                     {% endfor %}
                 </div>
             </div>

@@ -8,7 +8,8 @@
 namespace Spryker\Zed\PriceProductOfferVolumeGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Client\PriceProductOfferVolumeGuiToPriceProductOfferVolumeClientInterface;
+use Spryker\Zed\PriceProductOfferVolumeGui\Communication\Reader\PriceProductOfferVolumeReader;
+use Spryker\Zed\PriceProductOfferVolumeGui\Communication\Reader\PriceProductOfferVolumeReaderInterface;
 use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Facade\PriceProductOfferVolumeGuiToProductOfferFacadeInterface;
 use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferVolumeGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductOfferVolumeGui\PriceProductOfferVolumeGuiDependencyProvider;
@@ -19,19 +20,19 @@ use Spryker\Zed\PriceProductOfferVolumeGui\PriceProductOfferVolumeGuiDependencyP
 class PriceProductOfferVolumeGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @return \Spryker\Zed\PriceProductOfferVolumeGui\Communication\Reader\PriceProductOfferVolumeReaderInterface
+     */
+    public function createPriceProductOfferVolumeReader(): PriceProductOfferVolumeReaderInterface
+    {
+        return new PriceProductOfferVolumeReader($this->getUtilEncodingService());
+    }
+
+    /**
      * @return \Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Facade\PriceProductOfferVolumeGuiToProductOfferFacadeInterface
      */
     public function getProductOfferFacade(): PriceProductOfferVolumeGuiToProductOfferFacadeInterface
     {
         return $this->getProvidedDependency(PriceProductOfferVolumeGuiDependencyProvider::FACADE_PRODUCT_OFFER);
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Client\PriceProductOfferVolumeGuiToPriceProductOfferVolumeClientInterface
-     */
-    public function getPriceProductOfferVolumeClient(): PriceProductOfferVolumeGuiToPriceProductOfferVolumeClientInterface
-    {
-        return $this->getProvidedDependency(PriceProductOfferVolumeGuiDependencyProvider::CLIENT_PRICE_PRODUCT_OFFER_VOLUME);
     }
 
     /**

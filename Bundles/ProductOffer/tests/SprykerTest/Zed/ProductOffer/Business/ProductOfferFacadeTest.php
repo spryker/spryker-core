@@ -406,14 +406,14 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetApplicableMerchantStatusesWithApprovedCurrentStatus(): void
+    public function testGetApplicableMerchantStatusesForApprovedStatus(): void
     {
         // Arrange
-        $approvedStatus = 'approved';
+        $currentApprovalStatus = 'approved';
         $expectedResult = ['denied'];
 
         // Act
-        $result = $this->tester->getFacade()->getApplicableMerchantStatuses($approvedStatus);
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
 
         // Assert
         $this->assertSame($expectedResult, $result);
@@ -422,14 +422,14 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetApplicableMerchantStatusesWithDeniedCurrentStatus(): void
+    public function testGetApplicableMerchantStatusesForDeniedStatus(): void
     {
         // Arrange
-        $approvedStatus = 'denied';
+        $currentApprovalStatus = 'denied';
         $expectedResult = ['approved'];
 
         // Act
-        $result = $this->tester->getFacade()->getApplicableMerchantStatuses($approvedStatus);
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
 
         // Assert
         $this->assertSame($expectedResult, $result);
@@ -438,14 +438,14 @@ class ProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetApplicableMerchantStatusesWithWaitingCurrentStatus(): void
+    public function testGetApplicableMerchantStatusesForWaitingForApprovalStatus(): void
     {
         // Arrange
-        $approvedStatus = 'waiting-for-approval';
+        $currentApprovalStatus = 'waiting-for-approval';
         $expectedResult = ['approved', 'denied'];
 
         // Act
-        $result = $this->tester->getFacade()->getApplicableMerchantStatuses($approvedStatus);
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
 
         // Assert
         $this->assertSame($expectedResult, $result);

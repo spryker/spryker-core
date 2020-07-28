@@ -8,11 +8,10 @@
 namespace Spryker\Zed\MerchantProductOfferGui\Communication\Reader;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
-use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 
-class MerchantProductOfferGuiReader implements MerchantProductOfferGuiReaderInterface
+class MerchantProductOfferReader implements MerchantProductOfferReaderInterface
 {
     /**
      * @var \Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface
@@ -28,7 +27,7 @@ class MerchantProductOfferGuiReader implements MerchantProductOfferGuiReaderInte
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
@@ -43,12 +42,10 @@ class MerchantProductOfferGuiReader implements MerchantProductOfferGuiReaderInte
 
         $merchantTransfer = $this->merchantFacade->findOne($merchantCriteriaTransfer);
 
-        if (!$merchantTransfer) {
-            $merchantTransfer = new MerchantTransfer();
-        }
-
-        return array_merge($merchantTransfer->toArray(), [
-            'sku' => $productOfferTransfer->getMerchantSku(),
-        ]);
+        return [
+            'idMerchant' => $productOfferTransfer->getFkMerchant(),
+            'merchantName' => $merchantTransfer->getName(),
+            'merchantSku' => $productOfferTransfer->getMerchantSku(),
+        ];
     }
 }

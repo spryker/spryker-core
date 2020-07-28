@@ -9,7 +9,6 @@ namespace Spryker\Zed\PriceProductOfferVolumeGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
-use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Client\PriceProductOfferVolumeGuiToPriceProductOfferVolumeClientBridge;
 use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Facade\PriceProductOfferVolumeGuiToProductOfferFacadeBridge;
 use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferVolumeGuiToUtilEncodingServiceBridge;
 
@@ -18,9 +17,8 @@ use Spryker\Zed\PriceProductOfferVolumeGui\Dependency\Service\PriceProductOfferV
  */
 class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const CLIENT_PRICE_PRODUCT_OFFER_VOLUME = 'CLIENT_PRICE_PRODUCT_OFFER_VOLUME';
     public const FACADE_PRODUCT_OFFER = 'FACADE_PRODUCT_OFFER';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -32,7 +30,6 @@ class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDepende
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addProductOfferFacade($container);
-        $container = $this->addPriceProductOfferVolumeClient($container);
         $container = $this->addUtilEncodingService($container);
 
         return $container;
@@ -48,22 +45,6 @@ class PriceProductOfferVolumeGuiDependencyProvider extends AbstractBundleDepende
         $container->set(static::FACADE_PRODUCT_OFFER, function (Container $container) {
             return new PriceProductOfferVolumeGuiToProductOfferFacadeBridge(
                 $container->getLocator()->productOffer()->facade()
-            );
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductOfferVolumeClient(Container $container): Container
-    {
-        $container->set(static::CLIENT_PRICE_PRODUCT_OFFER_VOLUME, function (Container $container) {
-            return new PriceProductOfferVolumeGuiToPriceProductOfferVolumeClientBridge(
-                $container->getLocator()->priceProductOfferVolume()->client()
             );
         });
 

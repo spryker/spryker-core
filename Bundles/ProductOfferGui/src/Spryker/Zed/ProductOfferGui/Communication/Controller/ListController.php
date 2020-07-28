@@ -45,9 +45,9 @@ class ListController extends AbstractController
     }
 
     /**
-     * @phpstan-param array<mixed> $viewData
+     * @phpstan-param array<string, mixed> $viewData
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param array $viewData
      *

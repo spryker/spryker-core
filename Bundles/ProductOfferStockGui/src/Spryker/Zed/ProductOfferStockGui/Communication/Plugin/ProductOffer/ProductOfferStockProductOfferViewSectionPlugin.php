@@ -27,7 +27,7 @@ class ProductOfferStockProductOfferViewSectionPlugin extends AbstractPlugin impl
      */
     public function getTemplate(): string
     {
-        return '@ProductOfferStockGui/View/_partials/info-product-offer-stock.twig';
+        return '@ProductOfferStockGui/_partials/info-product-offer-stock.twig';
     }
 
     /**
@@ -36,7 +36,7 @@ class ProductOfferStockProductOfferViewSectionPlugin extends AbstractPlugin impl
      *
      * @api
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *

@@ -24,11 +24,11 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addproductOfferStockFacade($container);
+        $container = $this->addProductOfferStockFacade($container);
         $container = $this->addProductOfferStockTableExpanderPlugins($container);
 
         return $container;
@@ -39,7 +39,7 @@ class ProductOfferStockGuiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addproductOfferStockFacade(Container $container): Container
+    protected function addProductOfferStockFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_OFFER_STOCK, function (Container $container) {
             return new ProductOfferStockGuiToProductOfferStockFacadeBridge(

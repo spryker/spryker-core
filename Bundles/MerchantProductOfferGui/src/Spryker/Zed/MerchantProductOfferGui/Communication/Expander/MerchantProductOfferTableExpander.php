@@ -76,10 +76,10 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @phpstan-param array<mixed> $rowData
-     * @phpstan-param array<mixed> $productOfferData
+     * @phpstan-param array<string, mixed> $rowData
+     * @phpstan-param array<string, mixed> $productOfferData
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param array $rowData
      * @param array $productOfferData
@@ -96,10 +96,10 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
     }
 
     /**
-     * @phpstan-param array<mixed> $rowData
-     * @phpstan-param array<mixed> $extensionData
+     * @phpstan-param array<string, mixed> $rowData
+     * @phpstan-param array<int, mixed> $extensionData
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param array $rowData
      * @param string $key

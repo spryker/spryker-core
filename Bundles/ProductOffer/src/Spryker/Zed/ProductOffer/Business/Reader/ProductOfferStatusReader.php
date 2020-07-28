@@ -29,7 +29,7 @@ class ProductOfferStatusReader implements ProductOfferStatusReaderInterface
      *
      * @return string[]
      */
-    public function getApplicableMerchantStatuses(string $currentStatus): array
+    public function getApplicableApprovalStatuses(string $currentStatus): array
     {
         $statusTree = $this->productOfferConfig->getStatusTree();
 

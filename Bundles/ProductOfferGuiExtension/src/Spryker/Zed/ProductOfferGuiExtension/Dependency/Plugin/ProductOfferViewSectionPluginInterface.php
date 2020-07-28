@@ -9,11 +9,14 @@ namespace Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
+/**
+ * Provides ability to expand view section for product offer.
+ */
 interface ProductOfferViewSectionPluginInterface
 {
     /**
      * Specification:
-     * - Returns template for render.
+     * - Returns template for section rendering.
      *
      * @api
      *
@@ -23,11 +26,11 @@ interface ProductOfferViewSectionPluginInterface
 
     /**
      * Specification:
-     * - Returns data for render in view section of product offer.
+     * - Returns data that is necessary to render the section template.
      *
      * @api
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *

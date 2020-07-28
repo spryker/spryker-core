@@ -38,7 +38,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
@@ -56,14 +56,12 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
             $productOfferStockTransfer = $this->productOfferStockFacade
                 ->getProductOfferStock($productOfferStockRequestTransfer);
 
-            $productOfferStockTransfer->setProductOfferReference($productOfferTransfer->getProductOfferReference());
-
             $productOfferStocks[] = [
                 'name' => $productOfferStockTransfer->getStock()->getName(),
                 'quantity' => $productOfferStockTransfer->getQuantity(),
                 'isNeverOutOfStock' => $productOfferStockTransfer->getIsNeverOutOfStock(),
                 'storeName' => $storeTransfer->getName(),
-                'additional' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
+                'additionalColumns' => $this->executeProductOfferStockTableExpanderPlugins($productOfferStockTransfer, $storeTransfer),
             ];
         }
 
@@ -73,7 +71,7 @@ class ProductOfferStockReader implements ProductOfferStockReaderInterface
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer

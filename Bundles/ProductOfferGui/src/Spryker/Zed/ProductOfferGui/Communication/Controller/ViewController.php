@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -22,9 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 class ViewController extends AbstractController
 {
     protected const PARAM_ID_PRODUCT_OFFER = 'id-product-offer';
+    protected const MESSAGE_PRODUCT_OFFER_NOT_FOUND = 'Product offer not found';
 
     /**
-     * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
+     * @phpstan-return array<string, mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -33,7 +32,7 @@ class ViewController extends AbstractController
     public function indexAction(Request $request)
     {
         $idProductOffer = $this->castId($request->get(
-            self::PARAM_ID_PRODUCT_OFFER
+            static::PARAM_ID_PRODUCT_OFFER
         ));
 
         $productOfferCriteriaFilter = (new ProductOfferCriteriaFilterTransfer())
@@ -44,58 +43,27 @@ class ViewController extends AbstractController
             ->findOne($productOfferCriteriaFilter);
 
         if (!$productOfferTransfer) {
+            $this->addErrorMessage(static::MESSAGE_PRODUCT_OFFER_NOT_FOUND);
+
             return $this->redirectResponse(ProductOfferGuiConfig::URL_PRODUCT_OFFER_LIST);
         }
 
-        $storeNames = $this->getStoreNames($productOfferTransfer->getStores());
-
         $applicableProductOfferStatuses = $this->getFactory()
             ->getProductOfferFacade()
-            ->getApplicableMerchantStatuses($productOfferTransfer->getApprovalStatus());
+            ->getApplicableApprovalStatuses($productOfferTransfer->getApprovalStatus());
 
         $productConcreteTransfer = $this->getFactory()
             ->getProductFacade()
             ->getProductConcrete($productOfferTransfer->getConcreteSku());
-
-        $productAbstractTransfer = (new ProductAbstractTransfer())
-            ->setSku($productConcreteTransfer->getAbstractSku());
-
-        $isGiftCard = $this->getFactory()
-            ->createProductTypeHelper()
-            ->isGiftCardByProductAbstract($productAbstractTransfer);
-
-        $isProductBundle = $this->getFactory()
-            ->createProductTypeHelper()
-            ->isProductBundleByProductAbstract($productAbstractTransfer);
 
         return $this->viewResponse([
             'applicableProductOfferStatuses' => $applicableProductOfferStatuses,
             'productConcrete' => $productConcreteTransfer,
             'productOffer' => $productOfferTransfer,
             'localeCollection' => $this->getFactory()->getLocaleFacade()->getLocaleCollection(),
-            'relatedStoreNames' => $storeNames,
-            'viewPlugins' => $this->getViewPlugins($productOfferTransfer),
-            'isGiftCard' => $isGiftCard,
-            'isProductBundle' => $isProductBundle,
+            'relatedStores' => $productOfferTransfer->getStores(),
+            'viewSections' => $this->getViewSections($productOfferTransfer),
         ]);
-    }
-
-    /**
-     * @phpstan-param \ArrayObject<\Generated\Shared\Transfer\StoreTransfer> $storeTransfers
-     *
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[] $storeTransfers
-     *
-     * @return string[]
-     */
-    protected function getStoreNames(ArrayObject $storeTransfers): array
-    {
-        $storeNames = [];
-
-        foreach ($storeTransfers as $storeTransfer) {
-            $storeNames[] = $storeTransfer->getName();
-        }
-
-        return $storeNames;
     }
 
     /**
@@ -105,7 +73,7 @@ class ViewController extends AbstractController
      *
      * @return array
      */
-    protected function getViewPlugins(ProductOfferTransfer $productOfferTransfer): array
+    protected function getViewSections(ProductOfferTransfer $productOfferTransfer): array
     {
         $viewPlugins = [];
 

@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
 interface ProductOfferGuiRepositoryInterface
@@ -27,11 +26,4 @@ interface ProductOfferGuiRepositoryInterface
         SpyProductOfferQuery $query,
         QueryCriteriaTransfer $queryCriteriaTransfer
     ): SpyProductOfferQuery;
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
-    public function findProductAbstractBySku(string $sku): ?SpyProductAbstract;
 }

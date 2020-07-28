@@ -11,7 +11,6 @@ use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeBridge;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductFacadeBridge;
-use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeBridge;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUtilEncodingServiceBridge;
 
 /**
@@ -20,7 +19,6 @@ use Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUt
 class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
-    public const FACADE_PRICE_PRODUCT_OFFER = 'FACADE_PRICE_PRODUCT_OFFER';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_PRICE = 'FACADE_PRICE';
 
@@ -29,30 +27,13 @@ class PriceProductOfferGuiDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addPriceProductOfferFacade($container);
         $container = $this->addPriceProductFacade($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addUtilEncodingService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addPriceProductOfferFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_PRICE_PRODUCT_OFFER, function (Container $container) {
-            return new PriceProductOfferGuiToPriceProductOfferFacadeBridge(
-                $container->getLocator()->priceProductOffer()->facade()
-            );
-        });
 
         return $container;
     }

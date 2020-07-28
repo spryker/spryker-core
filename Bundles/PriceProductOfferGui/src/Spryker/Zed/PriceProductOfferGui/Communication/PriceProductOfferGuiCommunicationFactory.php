@@ -8,11 +8,10 @@
 namespace Spryker\Zed\PriceProductOfferGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOffer\PriceProductOfferReader;
-use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOffer\PriceProductOfferReaderInterface;
+use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReader;
+use Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReaderInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUtilEncodingServiceInterface;
 use Spryker\Zed\PriceProductOfferGui\PriceProductOfferGuiDependencyProvider;
 
@@ -22,24 +21,15 @@ use Spryker\Zed\PriceProductOfferGui\PriceProductOfferGuiDependencyProvider;
 class PriceProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOffer\PriceProductOfferReaderInterface
+     * @return \Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOfferReaderInterface
      */
     public function createPriceProductOfferReader(): PriceProductOfferReaderInterface
     {
         return new PriceProductOfferReader(
-            $this->getPriceProductOfferFacade(),
             $this->getPriceProductFacade(),
             $this->getPriceFacade(),
             $this->getUtilEncodingService()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeInterface
-     */
-    public function getPriceProductOfferFacade(): PriceProductOfferGuiToPriceProductOfferFacadeInterface
-    {
-        return $this->getProvidedDependency(PriceProductOfferGuiDependencyProvider::FACADE_PRICE_PRODUCT_OFFER);
     }
 
     /**

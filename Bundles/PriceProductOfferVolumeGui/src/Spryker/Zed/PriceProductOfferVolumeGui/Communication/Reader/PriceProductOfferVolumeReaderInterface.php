@@ -5,18 +5,24 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferStockGui\Communication\Reader\ProductOfferStock;
+namespace Spryker\Zed\PriceProductOfferVolumeGui\Communication\Reader;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 
-interface ProductOfferStockReaderInterface
+interface PriceProductOfferVolumeReaderInterface
 {
     /**
      * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     * @param string $storeName
+     * @param string $currencyCode
      *
      * @return array
      */
-    public function getProductOfferStockData(ProductOfferTransfer $productOfferTransfer): array;
+    public function getVolumePricesData(
+        ProductOfferTransfer $productOfferTransfer,
+        string $storeName,
+        string $currencyCode
+    ): array;
 }

@@ -9,8 +9,6 @@ namespace Spryker\Zed\ProductOfferGui\Communication;
 
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferGui\Communication\Helper\ProductTypeHelper;
-use Spryker\Zed\ProductOfferGui\Communication\Helper\ProductTypeHelperInterface;
 use Spryker\Zed\ProductOfferGui\Communication\Table\ProductOfferTable;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductFacadeInterface;
@@ -31,6 +29,7 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
         return new ProductOfferTable(
             $this->getProductOfferPropelQuery(),
             $this->getLocaleFacade(),
+            $this->getProductOfferFacade(),
             $this->getRepository(),
             $this->getProductOfferTableExpanderPlugins()
         );
@@ -76,14 +75,6 @@ class ProductOfferGuiCommunicationFactory extends AbstractCommunicationFactory
     protected function getProductOfferTableExpanderPlugins(): array
     {
         return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PLUGINS_PRODUCT_OFFER_TABLE_EXPANDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferGui\Communication\Helper\ProductTypeHelperInterface
-     */
-    public function createProductTypeHelper(): ProductTypeHelperInterface
-    {
-        return new ProductTypeHelper($this->getRepository());
     }
 
     /**

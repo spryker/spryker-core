@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductOfferValidityGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ProductOfferValidityGui\Communication\Reader\ProductOfferValidityGuiReader;
-use Spryker\Zed\ProductOfferValidityGui\Communication\Reader\ProductOfferValidityGuiReaderInterface;
 use Spryker\Zed\ProductOfferValidityGui\Dependency\Facade\ProductOfferValidityGuiToProductOfferValidityFacadeInterface;
 use Spryker\Zed\ProductOfferValidityGui\ProductOfferValidityGuiDependencyProvider;
 
@@ -18,14 +16,6 @@ use Spryker\Zed\ProductOfferValidityGui\ProductOfferValidityGuiDependencyProvide
  */
 class ProductOfferValidityGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\ProductOfferValidityGui\Communication\Reader\ProductOfferValidityGuiReaderInterface
-     */
-    public function createProductOfferValidityGuiReader(): ProductOfferValidityGuiReaderInterface
-    {
-        return new ProductOfferValidityGuiReader($this->getProductOfferValidityFacade());
-    }
-
     /**
      * @return \Spryker\Zed\ProductOfferValidityGui\Dependency\Facade\ProductOfferValidityGuiToProductOfferValidityFacadeInterface
      */

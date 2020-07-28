@@ -19,7 +19,7 @@ class ProductOfferValidityProductOfferViewSectionPlugin extends AbstractPlugin i
 {
     /**
      * {@inheritDoc}
-     * - Returns template for render product offer validity info.
+     * - Returns template to rendering product offer validity info.
      *
      * @api
      *
@@ -27,7 +27,7 @@ class ProductOfferValidityProductOfferViewSectionPlugin extends AbstractPlugin i
      */
     public function getTemplate(): string
     {
-        return '@ProductOfferValidityGui/View/_partials/info-product-offer-validity.twig';
+        return '@ProductOfferValidityGui/_partials/info-product-offer-validity.twig';
     }
 
     /**
@@ -44,8 +44,6 @@ class ProductOfferValidityProductOfferViewSectionPlugin extends AbstractPlugin i
      */
     public function getData(ProductOfferTransfer $productOfferTransfer): array
     {
-        return $this->getFactory()
-            ->createProductOfferValidityGuiReader()
-            ->getProductOfferValidityData($productOfferTransfer);
+        return $productOfferTransfer->getProductOfferValidity()->toArray();
     }
 }

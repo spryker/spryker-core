@@ -11,8 +11,8 @@ use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
-use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReader;
-use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReaderInterface;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReader;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface;
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,11 +51,11 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
     }
 
     /**
-     * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferGuiReaderInterface
+     * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface
      */
-    public function createMerchantProductOfferGuiReader(): MerchantProductOfferGuiReaderInterface
+    public function createMerchantProductOfferGuiReader(): MerchantProductOfferReaderInterface
     {
-        return new MerchantProductOfferGuiReader($this->getMerchantFacade());
+        return new MerchantProductOfferReader($this->getMerchantFacade());
     }
 
     /**

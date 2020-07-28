@@ -5,22 +5,16 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferGui\Communication\Reader\PriceProductOffer;
+namespace Spryker\Zed\PriceProductOfferGui\Communication\Reader;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductFacadeInterface;
-use Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeInterface;
 use Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUtilEncodingServiceInterface;
 
 class PriceProductOfferReader implements PriceProductOfferReaderInterface
 {
-    /**
-     * @var \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeInterface
-     */
-    protected $priceProductOfferFacade;
-
     /**
      * @var \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductFacadeInterface
      */
@@ -47,25 +41,22 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     protected static $grossPriceModeIdentifier;
 
     /**
-     * @param \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade
      * @param \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceProductFacadeInterface $priceProductFacade
      * @param \Spryker\Zed\PriceProductOfferGui\Dependency\Facade\PriceProductOfferGuiToPriceFacadeInterface $priceFacade
      * @param \Spryker\Zed\PriceProductOfferGui\Dependency\Service\PriceProductOfferGuiToUtilEncodingServiceInterface $utilEncodingService
      */
     public function __construct(
-        PriceProductOfferGuiToPriceProductOfferFacadeInterface $priceProductOfferFacade,
         PriceProductOfferGuiToPriceProductFacadeInterface $priceProductFacade,
         PriceProductOfferGuiToPriceFacadeInterface $priceFacade,
         PriceProductOfferGuiToUtilEncodingServiceInterface $utilEncodingService
     ) {
-        $this->priceProductOfferFacade = $priceProductOfferFacade;
         $this->priceProductFacade = $priceProductFacade;
         $this->priceFacade = $priceFacade;
         $this->utilEncodingService = $utilEncodingService;
     }
 
     /**
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
@@ -73,23 +64,19 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
      */
     public function getProductOfferPricesData(ProductOfferTransfer $productOfferTransfer): array
     {
-        $priceTable = [];
-        $currencies = [];
-        $priceData = [];
-        $productOfferTransfer = $this->priceProductOfferFacade->expandProductOfferWithPrices($productOfferTransfer);
-
         if (!$productOfferTransfer->getPrices()->count()) {
             return [];
         }
+
+        $priceTable = [];
+        $currencies = [];
+        $priceData = [];
 
         foreach ($productOfferTransfer->getPrices() as $priceProductTransfer) {
             $priceTable = $this->getPriceTable($priceProductTransfer, $priceTable);
             $priceData = $this->getPriceData($priceProductTransfer, $priceData);
             $currencyTransfer = $priceProductTransfer->getMoneyValue()->getCurrency();
-
-            if ($currencyTransfer) {
-                $currencies[$currencyTransfer->getCode()] = $currencyTransfer;
-            }
+            $currencies[$currencyTransfer->getCode()] = $currencyTransfer;
         }
 
         return [
@@ -101,9 +88,9 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     }
 
     /**
-     * @phpstan-param array<mixed> $priceTable
+     * @phpstan-param array<string, \Generated\Shared\Transfer\PriceProductTransfer> $priceTable
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, \Generated\Shared\Transfer\PriceProductTransfer>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $priceTable
@@ -116,12 +103,12 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
     ): array {
         $priceTypeTransfer = $priceProductTransfer->getPriceType();
 
-        $grossPriceModeIdentifier = $this->getGrossPriceModeIdentifier();
-        $netPriceModeIdentifier = $this->getNetPriceModeIdentifier();
-
         if (!$priceTypeTransfer) {
             return $priceTable;
         }
+
+        $grossPriceModeIdentifier = $this->getGrossPriceModeIdentifier();
+        $netPriceModeIdentifier = $this->getNetPriceModeIdentifier();
 
         $priceType = $priceTypeTransfer->getName();
         $priceModeConfiguration = $priceTypeTransfer->getPriceModeConfiguration();
@@ -132,17 +119,19 @@ class PriceProductOfferReader implements PriceProductOfferReaderInterface
         if ($priceModeConfiguration === $this->getPriceModeIdentifierForBothType()) {
             $priceTable[$storeName][$currencyIsoCode][$netPriceModeIdentifier][$priceType] = $priceProductTransfer;
             $priceTable[$storeName][$currencyIsoCode][$grossPriceModeIdentifier][$priceType] = $priceProductTransfer;
-        } else {
-            $priceTable[$storeName][$currencyIsoCode][$priceModeConfiguration][$priceType] = $priceProductTransfer;
+
+            return $priceTable;
         }
+
+        $priceTable[$storeName][$currencyIsoCode][$priceModeConfiguration][$priceType] = $priceProductTransfer;
 
         return $priceTable;
     }
 
     /**
-     * @phpstan-param array<mixed> $priceData
+     * @phpstan-param array<string, mixed> $priceData
      *
-     * @phpstan-return array<mixed>
+     * @phpstan-return array<string, mixed>
      *
      * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param array $priceData

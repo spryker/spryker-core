@@ -51,8 +51,8 @@ class ProductOfferGuiToProductOfferFacadeBridge implements ProductOfferGuiToProd
      *
      * @return string[]
      */
-    public function getApplicableMerchantStatuses(string $currentStatus): array
+    public function getApplicableApprovalStatuses(string $currentStatus): array
     {
-        return $this->productOfferFacade->getApplicableMerchantStatuses($currentStatus);
+        return $this->productOfferFacade->getApplicableApprovalStatuses($currentStatus);
     }
 }

@@ -7,14 +7,6 @@
 
         {% set productType = 'Product' | trans %}
 
-        {% if isGiftCard == true %}
-            {% set productType = 'Gift Card' | trans %}
-        {% endif %}
-
-        {% if isProductBundle == true %}
-            {% set productType = 'Product Bundle' | trans %}
-        {% endif %}
-
         <div class="row form-group">
             <div class="col-xs-2"><b>{{ 'Type' | trans }}</b></div>
             <div class="col-xs-10">{{ productType }}</div>

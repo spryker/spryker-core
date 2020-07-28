@@ -32,5 +32,5 @@ interface ProductOfferGuiToProductOfferFacadeInterface
      *
      * @return string[]
      */
-    public function getApplicableMerchantStatuses(string $currentStatus): array;
+    public function getApplicableApprovalStatuses(string $currentStatus): array;
 }

@@ -124,8 +124,8 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      *
      * @return string[]
      */
-    public function getApplicableMerchantStatuses(string $currentStatus): array
+    public function getApplicableApprovalStatuses(string $currentStatus): array
     {
-        return $this->getFactory()->createProductOfferStatusReader()->getApplicableMerchantStatuses($currentStatus);
+        return $this->getFactory()->createProductOfferStatusReader()->getApplicableApprovalStatuses($currentStatus);
     }
 }
