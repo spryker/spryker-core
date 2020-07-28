@@ -86,7 +86,7 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             $productBundleCriteriaFilterTransfer->getBundledProductIds(),
             [$productBundleCriteriaFilterTransfer->getIdBundledProduct()]
         );
-        if ($productBundleCriteriaFilterTransfer->getIdBundledProduct()) {
+        if ($productBundleCriteriaFilterTransfer->getBundledProductIds()) {
             $productBundleQuery->filterByFkBundledProduct_In($bundledProductIds);
         }
 
