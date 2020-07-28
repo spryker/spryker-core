@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Oauth\Business;
 
 use Codeception\Test\Unit;
-use DateTime;
+use DateTimeImmutable;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthClientTransfer;
@@ -334,7 +334,7 @@ class OauthFacadeTest extends Unit
             ->setUserIdentifier('test')
             ->setFkOauthClient($oauthClient->getIdentifier())
             ->setCustomerReference('test')
-            ->setExpiresAt((new DateTime($expiresAt))->format('Y-m-d H:i:s'))
+            ->setExpiresAt((new DateTimeImmutable($expiresAt))->format('Y-m-d H:i:s'))
             ->save();
 
         // Act
