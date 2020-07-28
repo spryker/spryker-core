@@ -1,5 +1,5 @@
 {
-  "include": {
-    "spryker/silexphp": "Required to get the correct version of `Silexphp` without `LocalListener`."
+  "include-dev": {
+    "spryker/silex": "Required to get the correct version of `Silexphp` without `LocalListener`."
   }
 }

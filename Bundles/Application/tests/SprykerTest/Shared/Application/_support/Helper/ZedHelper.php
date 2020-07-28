@@ -17,6 +17,7 @@ use Spryker\Shared\Testify\TestifyConstants;
 class ZedHelper extends Module
 {
     protected const LOGOUT_LINK_SELECTOR = "(//a[contains(@href,'/auth/logout')])[2]";
+
     /**
      * @var bool
      */

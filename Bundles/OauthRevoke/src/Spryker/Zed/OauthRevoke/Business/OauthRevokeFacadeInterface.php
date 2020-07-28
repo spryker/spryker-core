@@ -104,9 +104,24 @@ interface OauthRevokeFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface::saveRefreshTokenFromTransfer() } instead.
+     *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *
      * @return void
      */
     public function saveRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity): void;
+
+    /**
+     * Specification:
+     * - Executes `OauthUserIdentifierFilterPluginInterface` stack of plugins.
+     * - Persists the new refresh token to permanent storage.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthRefreshTokenTransfer $oauthRefreshTokenTransfer
+     *
+     * @return void
+     */
+    public function saveRefreshTokenFromTransfer(OauthRefreshTokenTransfer $oauthRefreshTokenTransfer): void;
 }

@@ -17,10 +17,11 @@ interface RedisFacadeInterface
      *
      * @param string $destination
      * @param int $redisPort
+     * @param string|null $redisHost
      *
      * @return bool
      */
-    public function export(string $destination, int $redisPort): bool;
+    public function export(string $destination, int $redisPort, ?string $redisHost = null): bool;
 
     /**
      * Specification:
