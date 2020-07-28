@@ -130,7 +130,7 @@ class ElasticsearchHelper extends Module
      * @param string $documentId
      * @param string $indexName
      * @param array|string $expectedData
-     * @param string $typeName (@deprecated Will be removed once the support for Elasticsearch 6 and lower is dropped.)
+     * @param string $typeName Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
      *
      * @return void
      */
@@ -150,7 +150,7 @@ class ElasticsearchHelper extends Module
     /**
      * @param string $documentId
      * @param string $indexName
-     * @param string $mappingType (@deprecated Will be removed once the support for Elasticsearch 6 and lower is dropped.)
+     * @param string $mappingType Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
      *
      * @return \Elastica\Document
      */
@@ -332,7 +332,7 @@ class ElasticsearchHelper extends Module
      * @param string $documentId
      * @param array $documentData
      * @param string $index
-     * @param string $mappingType (@deprecated Will be removed once the support for Elasticsearch 6 and lower is dropped.)
+     * @param string $mappingType Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
      *
      * @return \Elastica\Document
      */
