@@ -98,6 +98,7 @@ interface MerchantOmsFacadeInterface
     /**
      * Specification:
      * - Expands MerchantOrderTransfer with Merchant OMS item states.
+     * - Expands MerchantOrderTransfer with Merchant OMS manual events.
      *
      * @api
      *
@@ -105,7 +106,7 @@ interface MerchantOmsFacadeInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 
     /**
      * Specification:

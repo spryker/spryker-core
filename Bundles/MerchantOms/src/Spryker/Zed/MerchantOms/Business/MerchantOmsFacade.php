@@ -102,9 +102,9 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        return $this->getFactory()->createMerchantOrderExpander()->expandMerchantOrderWithStates($merchantOrderTransfer);
+        return $this->getFactory()->createMerchantOrderExpander()->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
     }
 
     /**

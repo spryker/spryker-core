@@ -54,7 +54,10 @@ class MerchantOmsBusinessFactory extends AbstractBusinessFactory
      */
     public function createMerchantOrderExpander(): MerchantOrderExpanderInterface
     {
-        return new MerchantOrderExpander($this->getRepository());
+        return new MerchantOrderExpander(
+            $this->getStateMachineFacade(),
+            $this->getRepository()
+        );
     }
 
     /**

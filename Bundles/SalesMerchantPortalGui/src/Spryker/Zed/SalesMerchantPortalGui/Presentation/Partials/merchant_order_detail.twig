@@ -1,143 +1,163 @@
-{% set orderDetails = {
-    title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
-    reference: merchantOrder.merchantOrderReference,
-    referenceTitle: 'Merchant Reference' | trans,
-} %}
+{#
+@var merchantOrder \Generated\Shared\Transfer\MerchantOrderTransfer
+@var expense \Generated\Shared\Transfer\ExpenseTransfer
+#}
 
-<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
-    <!--TODO: state-machine story -->
-    {#<div state-transitions-meessage class="mp-manage-order__transitions">#}
-        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">IT IS NOT</web-spy-ajax-button>#}
-        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">WORKING</web-spy-ajax-button>#}
-        {#<web-spy-ajax-button class="mp-manage-order__transitions-col">NOW</web-spy-ajax-button>#}
-    {#</div>#}
+{% block body %}
+    {% set orderDetails = {
+        title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
+        reference: merchantOrder.merchantOrderReference,
+        referenceTitle: 'Merchant Reference' | trans,
+    } %}
 
-    <!--TODO: state-machine story -->
-    {#<span state-transitions-meessage>#}
-      {#Have to change button type in the app.module.#}
-    {#</span>#}
+    <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
+        {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
-    <!--TODO: state-machine story -->
-    <div items-states class="mp-manage-order__states">
-        <div class="mp-manage-order__states-col mp-manage-order__states-col--title">Order’s Items state</div>
+        {% block stateTransitions %}
+            {% if merchantOrder.manualEvents is not empty %}
+                <div state-transitions class="mp-manage-order__transitions">
+                    {% for eventName in merchantOrder.manualEvents %}
+                        <web-spy-ajax-button
+                            url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
+                            class="mp-manage-order__transitions-col"
+                        >{{ eventName }}</web-spy-ajax-button>
+                    {% endfor %}
+                </div>
 
-        <div class="mp-manage-order__states-col">
+                <span state-transitions-meessage>{{ 'Only matching states items will be updated.' | trans }}</span>
+            {% endif %}
+        {% endblock %}
+
+        {% block itemStates %}
+            <span items-states-title>{{ "Order's Items state" | trans }}</span>
+
             <div items-states class="mp-manage-order__states">
                 {% for state in merchantOrder.itemStates %}
                     <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
                 {% endfor %}
             </div>
-        </div>
-    </div>
+        {% endblock %}
 
-    <web-spy-tabs class="mp-manage-order__content" cloak>
-        <web-spy-tab title="{{ 'Details' | trans }}">
-            {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
+        {% block tabs %}
+            <web-spy-tabs class="mp-manage-order__content" cloak>
+                {% block detailTab %}
+                    {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
-            {% set overviewItems = [
-                {
-                    name: 'Order date' | trans,
-                    info: merchantOrder.createdAt | date('d.m.Y, H:i'),
-                },
-                {
-                    name: 'Number of products' | trans,
-                    info: merchantOrder.uniqueProductsCount,
-                },
-                {
-                    name: 'Items' | trans,
-                    info: merchantOrderItemsCount,
-                },
-                {
-                    name: 'Shipments' | trans,
-                    info: shipmentsNumber,
-                },
-            ] %}
+                    <web-spy-tab title="{{ 'Details' | trans }}">
+                        {% block overviewCard %}
+                            {% set overviewItems = [
+                                {
+                                    name: 'Order date' | trans,
+                                    info: merchantOrder.createdAt | date('d.m.Y, H:i'),
+                                },
+                                {
+                                    name: 'Number of products' | trans,
+                                    info: merchantOrder.uniqueProductsCount,
+                                },
+                                {
+                                    name: 'Items' | trans,
+                                    info: merchantOrderItemsCount,
+                                },
+                                {
+                                    name: 'Shipments' | trans,
+                                    info: shipmentsNumber,
+                                },
+                            ] %}
 
-            <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
-                <div class="mp-manage-order-grid">
-                    {% for overviewItem in overviewItems %}
-                        <web-mp-manage-order-stats-block
-                            name="{{ overviewItem.name }}"
-                            info="{{ overviewItem.info }}">
-                        </web-mp-manage-order-stats-block>
-                    {% endfor %}
-                </div>
-            </web-spy-card>
+                            <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
+                                <div class="mp-manage-order-grid">
+                                    {% for overviewItem in overviewItems %}
+                                        <web-mp-manage-order-stats-block
+                                            name="{{ overviewItem.name }}"
+                                            info="{{ overviewItem.info }}">
+                                        </web-mp-manage-order-stats-block>
+                                    {% endfor %}
+                                </div>
+                            </web-spy-card>
+                        {% endblock %}
 
-            <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
-                <!--TODO: state-machine story -->
-                <web-spy-collapsible title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
-                    <div>Collapse Content</div>
-                </web-spy-collapsible>
+                        {% block totalsCard %}
+                            <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
+                                <web-spy-collapsible title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}" class="mp-manage-order__card-column-item">
+                                    {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
 
-                {% set subtotalTitleOrderTotals = [
-                    {
-                        title: 'Subtotal' | trans,
-                        value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
-                        isTitle: true,
-                    },
-                ] %}
+                                    <web-mp-html-renderer-url url="{{ totalsUrl }}"></web-mp-html-renderer-url>
+                                </web-spy-collapsible>
 
-                {% set subtotalExpensesOrderTotals = merchantOrder.expenses | reduce((accumulator, expense) => (
-                    accumulator | merge([{
-                        title: 'Shipment' | trans ~ ' ' ~ expense.shipment.method.carrierName ?? '' ~ ' ' ~ expense.name,
-                        value: expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode),
-                    }])
-                ), []) %}
+                                {% set subtotalTitleOrderTotals = [
+                                    {
+                                        title: 'Subtotal' | trans,
+                                        value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
+                                        isTitle: true,
+                                    },
+                                ] %}
 
-                {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
+                                {% set subtotalExpensesOrderTotals = merchantOrder.expenses | reduce((accumulator, expense) => (
+                                    accumulator | merge([{
+                                        title: 'Shipment' | trans ~ ' ' ~ expense.shipment.method.carrierName ?? '' ~ ' ' ~ expense.name,
+                                        value: expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode),
+                                    }])
+                                ), []) %}
 
-                <web-mp-manage-order-totals
-                    order-totals="{{ subtotalOrderTotals | json_encode() }}"
-                    class="mp-manage-order__card-column-item">
-                </web-mp-manage-order-totals>
+                                {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
 
-                {% set grandTotalOrderTotals = [
-                    {
-                        title: 'Grand Total' | trans,
-                        value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
-                        isTitle: true,
-                    },
-                    {
-                        title: 'Included Tax Amount' | trans,
-                        value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
-                    },
-                ] %}
+                                <web-mp-manage-order-totals
+                                    order-totals="{{ subtotalOrderTotals | json_encode() }}"
+                                    class="mp-manage-order__card-column-item">
+                                </web-mp-manage-order-totals>
 
-                <web-mp-manage-order-totals
-                    order-totals="{{ grandTotalOrderTotals | json_encode() }}"
-                    class="mp-manage-order__card-column-item">
-                </web-mp-manage-order-totals>
-            </web-spy-card>
+                                {% set grandTotalOrderTotals = [
+                                    {
+                                        title: 'Grand Total' | trans,
+                                        value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
+                                        isTitle: true,
+                                    },
+                                    {
+                                        title: 'Included Tax Amount' | trans,
+                                        value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
+                                    },
+                                ] %}
 
-            {% set customerItems = [
-                {
-                    name: 'Client name' | trans | upper,
-                    info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
-                },
-                {
-                    name: 'Client email' | trans| upper,
-                    info: merchantOrder.order.email,
-                },
-                {
-                    name: 'Previous orders' | trans | upper,
-                    info: customerMerchantOrderNumber,
-                },
-            ] %}
+                                <web-mp-manage-order-totals
+                                    order-totals="{{ grandTotalOrderTotals | json_encode() }}"
+                                    class="mp-manage-order__card-column-item">
+                                </web-mp-manage-order-totals>
+                            </web-spy-card>
+                        {% endblock %}
 
-            <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
-                <div class="mp-manage-order-grid">
-                    {% for customerItem in customerItems %}
-                        <web-mp-manage-order-stats-block
-                            name="{{ customerItem.name }}"
-                            info="{{ customerItem.info }}">
-                        </web-mp-manage-order-stats-block>
-                    {% endfor %}
-                </div>
-            </web-spy-card>
-        </web-spy-tab>
+                        {% block customerCard %}
+                            {% set customerItems = [
+                                {
+                                    name: 'Client name' | trans | upper,
+                                    info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
+                                },
+                                {
+                                    name: 'Client email' | trans| upper,
+                                    info: merchantOrder.order.email,
+                                },
+                                {
+                                    name: 'Previous orders' | trans | upper,
+                                    info: customerMerchantOrderNumber,
+                                },
+                            ] %}
 
-        <!--TODO: items tab story -->
-        <web-spy-tab title="{{ 'Items' | trans }}"></web-spy-tab>
-    </web-spy-tabs>
-</web-mp-manage-order>
+                            <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
+                                <div class="mp-manage-order-grid">
+                                    {% for customerItem in customerItems %}
+                                        <web-mp-manage-order-stats-block
+                                            name="{{ customerItem.name }}"
+                                            info="{{ customerItem.info }}">
+                                        </web-mp-manage-order-stats-block>
+                                    {% endfor %}
+                                </div>
+                            </web-spy-card>
+                        {% endblock %}
+                    </web-spy-tab>
+                {% endblock %}
+
+                <!--TODO: items tab story -->
+                <web-spy-tab title="{{ 'Items' | trans }}"></web-spy-tab>
+            </web-spy-tabs>
+        {% endblock %}
+    </web-mp-manage-order>
+{% endblock %}

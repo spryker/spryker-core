@@ -1,0 +1,36 @@
+{#
+@var orderItem \Generated\Shared\Transfer\ItemTransfer
+@var productOption \Generated\Shared\Transfer\ProductOptionTransfer
+#}
+
+{% for orderItem in orderItems %}
+    {% set superAttributes = '' %}
+
+    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length %}
+        {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0, 2) %}
+            {% set superAttributes = ', ' ~ attributeValue %}
+        {% endfor %}
+    {% endif %}
+
+    <div class="mp-manage-order__totals">
+        <div class="mp-manage-order__totals-row">
+            <span class="mp-manage-order__totals-col">
+                {{ orderItem.name }}{{ superAttributes }}
+                x {{ orderItem.quantity }}
+            </span>
+
+            {% set itemPriceToPay = orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0) %}
+            {% set priceToPay = itemPriceToPay * orderItem.quantity %}
+
+            <span class="mp-manage-order__totals-col">{{ priceToPay | money(true, orderItem.currencyIsoCode) }}</span>
+        </div>
+
+        {% for productOption in orderItem.productOptions %}
+            <div class="mp-manage-order__totals-row mp-manage-order__totals-row--options">
+                <span class="mp-manage-order__totals-col">+ {{ productOption.value }}</span>
+
+                <span class="mp-manage-order__totals-col">{{ productOption.sumPrice | default(productOption.unitPrice) | money(true, orderItem.currencyIsoCode) }} </span>
+            </div>
+        {% endfor %}
+    </div>
+{% endfor %}

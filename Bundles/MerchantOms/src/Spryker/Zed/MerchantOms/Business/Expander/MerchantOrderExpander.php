@@ -8,20 +8,30 @@
 namespace Spryker\Zed\MerchantOms\Business\Expander;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface;
 
 class MerchantOrderExpander implements MerchantOrderExpanderInterface
 {
+    /**
+     * @var \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface
+     */
+    protected $stateMachineFacade;
+
     /**
      * @var \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface
      */
     protected $merchantOmsRepository;
 
     /**
+     * @param \Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface $stateMachineFacade
      * @param \Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface $merchantOmsRepository
      */
-    public function __construct(MerchantOmsRepositoryInterface $merchantOmsRepository)
-    {
+    public function __construct(
+        MerchantOmsToStateMachineFacadeInterface $stateMachineFacade,
+        MerchantOmsRepositoryInterface $merchantOmsRepository
+    ) {
+        $this->stateMachineFacade = $stateMachineFacade;
         $this->merchantOmsRepository = $merchantOmsRepository;
     }
 
@@ -30,12 +40,17 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
-    public function expandMerchantOrderWithStates(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
     {
-        $merchantOrderItemIds = $this->getMerchantOrderItemIds($merchantOrderTransfer);
+        $stateMachineItemTransfers = $this->merchantOmsRepository->getStateMachineItemsByStateIds(
+            $this->getStateMachineItemStateIds($merchantOrderTransfer)
+        );
+
+        $manualEvents = $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItemTransfers);
+        $merchantOrderTransfer->setManualEvents(array_unique(array_merge([], ...$manualEvents)));
 
         return $merchantOrderTransfer->setItemStates(
-            $this->merchantOmsRepository->getStateNamesByMerchantOrderItemIds($merchantOrderItemIds)
+            $this->getUniqueItemStates($stateMachineItemTransfers)
         );
     }
 
@@ -44,13 +59,28 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      *
      * @return int[]
      */
-    protected function getMerchantOrderItemIds(MerchantOrderTransfer $merchantOrderTransfer): array
+    protected function getStateMachineItemStateIds(MerchantOrderTransfer $merchantOrderTransfer): array
     {
-        $merchantOrderItemIds = [];
+        $stateMachineItemStateIds = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
-            $merchantOrderItemIds[] = $merchantOrderItemTransfer->getIdMerchantOrderItem();
+            $stateMachineItemStateIds[] = $merchantOrderItemTransfer->getFkStateMachineItemState();
         }
 
-        return $merchantOrderItemIds;
+        return $stateMachineItemStateIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItemTransfers
+     *
+     * @return string[]
+     */
+    protected function getUniqueItemStates(array $stateMachineItemTransfers): array
+    {
+        $stateItems = [];
+        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
+            $stateItems[] = $stateMachineItemTransfer->getStateName();
+        }
+
+        return array_unique($stateItems);
     }
 }

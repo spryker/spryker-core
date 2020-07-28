@@ -11,8 +11,22 @@
 @manage-order-reference-title-padding-right: 8px;
 @manage-order-states-title-margin-right: 13px;
 @manage-order-transitions-padding-bottom: 10px;
+@manage-order-transitions-icon-padding-right: 5px;
 
 @manage-order-card-column-item-padding-bottom: 20px;
+@manage-order-totals-item-indent-bottom: 10px;
+@manage-order-totals-item-options-padding-left: 30px;
+@manage-order-totals-item-border: 1px solid @gray-light;
+
+@{table-html-overlay-action-handler-prefix-cls} {
+    display: block;
+    height: 100%;
+    position: relative;
+
+    .@{table-html-overlay-action-handler-prefix-cls}-empty-state {
+        position: absolute;
+    }
+}
 
 .mp-manage-order {
     display: block;
@@ -88,6 +102,21 @@
         &-col {
             padding: @manage-order-grid-default-padding;
         }
+
+        &-message {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            font-size: @font-size-sm;
+            line-height: 1;
+            color: @blue;
+            font-weight: @font-weight-default;
+        }
+
+        &-icon {
+            font-size: @font-size-lg;
+            padding-right: @manage-order-transitions-icon-padding-right;
+        }
     }
 
     &__states {
@@ -126,6 +155,29 @@
 
         &:first-child {
             padding-top: 0;
+        }
+    }
+
+    &__totals {
+        color: @gray-darker;
+        font: @font-weight-medium @font-size-base @font-family;
+        margin-bottom: @manage-order-totals-item-indent-bottom;
+        border-bottom: @manage-order-totals-item-border;
+
+        &-row {
+            display: flex;
+            align-items: flex-start;;
+            justify-content: space-between;
+            margin: -@manage-order-grid-default-padding;
+            padding-bottom: @manage-order-totals-item-indent-bottom;
+
+            &--options {
+                padding-left: @manage-order-totals-item-options-padding-left;
+            }
+        }
+
+        &-col {
+            padding: @manage-order-grid-default-padding;
         }
     }
 }

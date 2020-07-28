@@ -7,6 +7,7 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
     </transfer>
 
     <transfer name="Merchant">
@@ -29,6 +30,8 @@
         <property name="idItemState" type="int"/>
         <property name="identifier" type="int"/>
         <property name="stateName" type="string"/>
+        <property name="processName" type="string"/>
+        <property name="stateMachineName" type="string"/>
     </transfer>
 
     <transfer name="MerchantOmsTriggerRequest">
@@ -72,5 +75,9 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
     </transfer>
 </transfers>

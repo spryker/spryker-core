@@ -32,6 +32,7 @@
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="merchantReference" type="string"/>
         <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
     </transfer>
 
     <transfer name="Expense">
@@ -45,6 +46,7 @@
         <property name="state" type="string"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
         <property name="product" type="ProductConcrete"/>
+        <property name="idOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ProductConcrete">
@@ -175,6 +177,14 @@
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
     <transfer name="MerchantOrderCounts">
         <property name="new" type="int"/>
         <property name="total" type="int"/>
@@ -190,6 +200,16 @@
     <transfer name="MerchantDashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
 </transfers>

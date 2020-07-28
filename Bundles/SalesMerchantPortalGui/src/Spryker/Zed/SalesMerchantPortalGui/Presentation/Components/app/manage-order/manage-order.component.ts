@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@angular/core';
 import { ToJson } from '@spryker/utils';
+import { IconInfoModule } from '@spryker/icon/icons';
 
 export interface OrderDetails {
     title: string;
@@ -19,4 +20,6 @@ export interface OrderDetails {
 })
 export class ManageOrderComponent {
     @Input() @ToJson() orderDetails?: OrderDetails;
+
+    transitionMaessgaeIcon = IconInfoModule.icon;
 }

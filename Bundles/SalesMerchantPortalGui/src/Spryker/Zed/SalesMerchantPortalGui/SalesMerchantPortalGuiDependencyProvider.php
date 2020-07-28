@@ -18,6 +18,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeBridge;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeBridge;
 
 /**
@@ -29,6 +30,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_GUI_TABLE = 'FACADE_GUI_TABLE';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
     public const FACADE_MONEY = 'FACADE_MONEY';
+    public const FACADE_SALES = 'FACADE_SALES';
     public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
@@ -49,6 +51,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addGuiTableFacade($container);
         $container = $this->addCurrencyFacade($container);
         $container = $this->addMoneyFacade($container);
+        $container = $this->addSalesFacade($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addMerchantOmsFacade($container);
         $container = $this->addMerchantSalesOrderFacade($container);
@@ -128,6 +131,22 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new SalesMerchantPortalGuiToMoneyFacadeBridge(
                 $container->getLocator()->money()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addSalesFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SALES, function (Container $container) {
+            return new SalesMerchantPortalGuiToSalesFacadeBridge(
+                $container->getLocator()->sales()->facade()
             );
         });
 
