@@ -2,10 +2,10 @@ Actions,Actions
 Active,Active
 Approved,Approved
 approved,Approved
-approved_button,"Approve Access"
+approved_offer_button,"Approve"
 Back to Offers,Back to Offers
 denied,Denied
-denied_button,Deny
+denied_offer_button,Deny
 Denied,Denied
 Description,Description
 Gift Card,Gift Card

@@ -123,7 +123,7 @@ class ProductOfferTable extends AbstractTable
             SpyProductOfferTableMap::COL_IS_ACTIVE,
             SpyProductOfferStoreTableMap::COL_FK_STORE,
         ]);
-        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
             SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
@@ -254,6 +254,8 @@ class ProductOfferTable extends AbstractTable
             ->getApplicableApprovalStatuses($item[SpyProductOfferTableMap::COL_APPROVAL_STATUS]);
 
         foreach ($availableApprovalStatuses as $availableApprovalStatus) {
+            $iconClass = $availableApprovalStatus === 'approved' ? 'fa fa fa-caret-right' : 'fa fa fa-trash';
+
             $buttons[] = $this->generateFormButton(
                 Url::generate(
                     ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
@@ -261,9 +263,9 @@ class ProductOfferTable extends AbstractTable
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
                         ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
                 ),
-                $availableApprovalStatus . '_button',
+                $availableApprovalStatus . '_offer_button',
                 ApprovalStatusForm::class,
-                ['icon' => 'fa fa fa-caret-right', 'class' => $availableApprovalStatusButtonsMapping[$availableApprovalStatus]]
+                ['icon' => $iconClass, 'class' => $availableApprovalStatusButtonsMapping[$availableApprovalStatus]]
             );
         }
 

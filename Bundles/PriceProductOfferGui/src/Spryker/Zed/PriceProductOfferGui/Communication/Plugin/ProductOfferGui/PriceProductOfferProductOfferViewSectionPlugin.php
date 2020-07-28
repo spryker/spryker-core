@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PriceProductOfferGui\Communication\Plugin\ProductOffer;
+namespace Spryker\Zed\PriceProductOfferGui\Communication\Plugin\ProductOfferGui;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;

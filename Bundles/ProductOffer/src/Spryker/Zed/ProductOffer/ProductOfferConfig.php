@@ -11,7 +11,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferConfig extends AbstractBundleConfig
 {
-    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting-for-approval';
+    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
     protected const STATUS_APPROVED = 'approved';
     protected const STATUS_DENIED = 'denied';
 

@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferGui\Communication\Expander;
 use Generated\Shared\Transfer\MerchantProductOfferCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface;
@@ -68,9 +69,15 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
         $header = $this->insertAfterHeader(
             $header,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [static::COL_MERCHANT_NAME]
+            [SpyMerchantTableMap::COL_NAME => static::COL_MERCHANT_NAME]
         );
         $config->setHeader($header);
+
+        $sortable = $config->getSortable();
+
+        $sortable[] = SpyMerchantTableMap::COL_NAME;
+
+        $config->setSortable($sortable);
 
         return $config;
     }
@@ -91,13 +98,13 @@ class MerchantProductOfferTableExpander implements MerchantProductOfferTableExpa
         return $this->insertAfterHeader(
             $rowData,
             SpyProductOfferTableMap::COL_PRODUCT_OFFER_REFERENCE,
-            [$productOfferData[MerchantTransfer::NAME]]
+            [SpyMerchantTableMap::COL_NAME => $productOfferData[MerchantTransfer::NAME]]
         );
     }
 
     /**
      * @phpstan-param array<string, mixed> $rowData
-     * @phpstan-param array<int, mixed> $extensionData
+     * @phpstan-param array<string, mixed> $extensionData
      *
      * @phpstan-return array<string, mixed>
      *
