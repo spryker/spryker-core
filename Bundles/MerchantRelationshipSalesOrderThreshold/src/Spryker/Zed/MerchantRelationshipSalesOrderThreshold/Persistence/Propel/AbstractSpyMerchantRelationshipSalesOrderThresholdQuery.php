@@ -27,7 +27,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return $this
+     * @return static
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
@@ -45,7 +45,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return $this
+     * @return static
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
