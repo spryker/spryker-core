@@ -1,13 +1,15 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Validity Dates' | trans } %}
-    {% block widget_content %}
-        <div class="row form-group">
-            <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
-            <div class="col-xs-10">{{ valid_from | date }}</div>
-        </div>
+{% if valid_from is defined and valid_to is defined %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Validity Dates' | trans } %}
+        {% block widget_content %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Valid From' | trans }}</b></div>
+                <div class="col-xs-10">{{ valid_from | date }}</div>
+            </div>
 
-        <div class="row form-group">
-            <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
-            <div class="col-xs-10">{{ valid_to | date }}</div>
-        </div>
-    {% endblock %}
-{% endembed %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Valid To' | trans }}</b></div>
+                <div class="col-xs-10">{{ valid_to | date }}</div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endif %}

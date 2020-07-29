@@ -44,6 +44,10 @@ class ProductOfferValidityProductOfferViewSectionPlugin extends AbstractPlugin i
      */
     public function getData(ProductOfferTransfer $productOfferTransfer): array
     {
+        if (!$productOfferTransfer->getProductOfferValidity()) {
+            return [];
+        }
+
         return $productOfferTransfer->getProductOfferValidity()->toArray();
     }
 }
