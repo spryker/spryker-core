@@ -59,11 +59,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         }
 
         if ($merchantOrderCriteriaTransfer->getWithOrder()) {
-            $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
-            if ($orderTransfer) {
-                $merchantOrderTransfer->setOrder($orderTransfer);
-                $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
-            }
+            $merchantOrderTransfer = $this->addSalesOrder($merchantOrderTransfer, $merchantOrderCriteriaTransfer);
         }
 
         if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
@@ -105,6 +101,39 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         foreach ($this->merchantOrderExpanderPlugins as $merchantOrderExpanderPlugin) {
             $merchantOrderTransfer = $merchantOrderExpanderPlugin->expand($merchantOrderTransfer);
         }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     */
+    protected function addSalesOrder(
+        MerchantOrderTransfer $merchantOrderTransfer,
+        MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+    ): MerchantOrderTransfer {
+        $orderTransfer = $this->salesFacade->findOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
+        if (!$orderTransfer) {
+            return $merchantOrderTransfer;
+        }
+
+        if ($merchantOrderCriteriaTransfer->getWithItems()) {
+            $itemTransfers = [];
+            foreach ($orderTransfer->getItems() as $itemTransfer) {
+                $itemTransfers[$itemTransfer->getIdSalesOrderItem()] = $itemTransfer;
+            }
+            foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+                $itemTransfer = $itemTransfers[$merchantOrderItemTransfer->getIdOrderItem()];
+                $merchantOrderItemTransfer->setOrderItem($itemTransfer);
+            }
+            unset($itemTransfers);
+        }
+
+        $orderTransfer->setItems(new ArrayObject());
+
+        $merchantOrderTransfer->setOrder($orderTransfer);
+        $merchantOrderTransfer->setExpenses($this->getMerchantOrderExpenses($merchantOrderTransfer));
 
         return $merchantOrderTransfer;
     }
