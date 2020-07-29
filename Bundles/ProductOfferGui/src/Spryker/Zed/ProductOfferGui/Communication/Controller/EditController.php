@@ -31,11 +31,13 @@ class EditController extends AbstractController
         $approvalStatus = $request->get(ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS);
         $idProductOffer = $this->castId($request->get(ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER));
 
-        $productOfferResponseTransfer = $this->getFactory()->getProductOfferFacade()->update(
-            (new ProductOfferTransfer())
-                ->setIdProductOffer($idProductOffer)
-                ->setApprovalStatus($approvalStatus)
-        );
+        $productOfferResponseTransfer = $this->getFactory()
+            ->getProductOfferFacade()
+            ->update(
+                (new ProductOfferTransfer())
+                    ->setIdProductOffer($idProductOffer)
+                    ->setApprovalStatus($approvalStatus)
+            );
 
         if ($productOfferResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::MESSAGE_SUCCESS_APPROVAL_STATUS_UPDATE);

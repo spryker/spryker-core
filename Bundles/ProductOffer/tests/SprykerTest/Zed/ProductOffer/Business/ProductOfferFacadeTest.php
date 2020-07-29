@@ -402,4 +402,52 @@ class ProductOfferFacadeTest extends Unit
         $this->assertCount(1, $storeTransfers);
         $this->assertEquals($productOfferTransfer->getStores(), $storeTransfers);
     }
+
+    /**
+     * @return void
+     */
+    public function testGetApplicableMerchantStatusesForApprovedStatus(): void
+    {
+        // Arrange
+        $currentApprovalStatus = 'approved';
+        $expectedResult = ['denied'];
+
+        // Act
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
+
+        // Assert
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApplicableMerchantStatusesForDeniedStatus(): void
+    {
+        // Arrange
+        $currentApprovalStatus = 'denied';
+        $expectedResult = ['approved'];
+
+        // Act
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
+
+        // Assert
+        $this->assertSame($expectedResult, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetApplicableMerchantStatusesForWaitingForApprovalStatus(): void
+    {
+        // Arrange
+        $currentApprovalStatus = 'waiting-for-approval';
+        $expectedResult = ['approved', 'denied'];
+
+        // Act
+        $result = $this->tester->getFacade()->getApplicableApprovalStatuses($currentApprovalStatus);
+
+        // Assert
+        $this->assertSame($expectedResult, $result);
+    }
 }

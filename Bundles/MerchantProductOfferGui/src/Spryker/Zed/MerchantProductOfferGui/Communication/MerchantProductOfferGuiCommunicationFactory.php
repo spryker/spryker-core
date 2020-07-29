@@ -11,11 +11,13 @@ use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReader;
+use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface;
+use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantProductOfferGui\Persistence\MerchantProductOfferGuiRepositoryInterface getRepository()
  */
@@ -46,5 +48,21 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::PLUGIN_APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface
+     */
+    public function createMerchantProductOfferReader(): MerchantProductOfferReaderInterface
+    {
+        return new MerchantProductOfferReader($this->getMerchantFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface
+     */
+    public function getMerchantFacade(): MerchantProductOfferGuiToMerchantFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::FACADE_MERCHANT);
     }
 }

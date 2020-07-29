@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\Communication\ProductOfferGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductOfferGui\Business\ProductOfferGuiFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface getRepository()
  */
 class ListController extends AbstractController
@@ -46,6 +45,10 @@ class ListController extends AbstractController
     }
 
     /**
+     * @phpstan-param array<string, mixed> $viewData
+     *
+     * @phpstan-return array<string, mixed>
+     *
      * @param array $viewData
      *
      * @return array
