@@ -53,7 +53,7 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
     /**
      * @return \Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOfferReaderInterface
      */
-    public function createMerchantProductOfferGuiReader(): MerchantProductOfferReaderInterface
+    public function createMerchantProductOfferReader(): MerchantProductOfferReaderInterface
     {
         return new MerchantProductOfferReader($this->getMerchantFacade());
     }

@@ -59,7 +59,7 @@
                             <td style="background-color:#F5F5F6; text-align: center; vertical-align: middle; font-weight:bold">
                                 {{ currencies[currencyIsoCode].symbol }}
 
-                                {% include '@PriceProductOfferVolumeGui/View/_partials/volume_price_action_button.twig' with {
+                                {% include '@PriceProductOfferVolumeGui/_partials/volume_price_action_button.twig' with {
                                     idProductOffer: productOffer.idProductOffer,
                                     storeName: storeName,
                                     currencyCode: currencyIsoCode,
@@ -74,7 +74,7 @@
                                     {% set moneyValue = priceProductTransfer.moneyValue %}
                                     {% set priceTypeTransfer = priceProductTransfer.priceType %}
 
-                                    <td class="">
+                                    <td>
                                         {% if (priceTypeTransfer.priceModeConfiguration == priceModeGross or priceTypeTransfer.priceModeConfiguration == priceModeBoth) and priceMode == priceModeGross %}
                                             {{ moneyValue.grossAmount | default(0) | money(false) }}
                                         {%  endif %}

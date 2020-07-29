@@ -45,7 +45,7 @@ class MerchantProductOfferViewSectionPlugin extends AbstractPlugin implements Pr
     public function getData(ProductOfferTransfer $productOfferTransfer): array
     {
         return $this->getFactory()
-            ->createMerchantProductOfferGuiReader()
+            ->createMerchantProductOfferReader()
             ->getMerchantData($productOfferTransfer);
     }
 }

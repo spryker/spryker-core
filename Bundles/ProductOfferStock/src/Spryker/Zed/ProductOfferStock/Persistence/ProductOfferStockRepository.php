@@ -25,8 +25,11 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      */
     public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer
     {
+        $productOfferStockQuery = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->joinWithSpyProductOffer();
         $productOfferStockEntity = $this->applyFilters(
-            $this->getFactory()->getProductOfferStockPropelQuery(),
+            $productOfferStockQuery,
             $productOfferStockRequestTransfer
         )->findOne();
 
@@ -34,16 +37,12 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
             return null;
         }
 
-        $productOfferStockTransfer = $this->getFactory()
+        return $this->getFactory()
             ->createProductOfferStockMapper()
             ->mapProductOfferStockEntityToProductOfferStockTransfer(
                 $productOfferStockEntity,
                 new ProductOfferStockTransfer()
             );
-
-        return $productOfferStockTransfer->setProductOfferReference(
-            $productOfferStockRequestTransfer->getProductOfferReference()
-        );
     }
 
     /**
