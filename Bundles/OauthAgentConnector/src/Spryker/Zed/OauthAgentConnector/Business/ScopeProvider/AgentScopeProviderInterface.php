@@ -9,7 +9,7 @@ namespace Spryker\Zed\OauthAgentConnector\Business\ScopeProvider;
 
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
 
-interface ScopeProviderInterface
+interface AgentScopeProviderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer

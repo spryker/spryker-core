@@ -11,8 +11,9 @@ use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 
-class AgentProvider implements AgentProviderInterface
+class AgentOauthUserProvider implements AgentOauthUserProviderInterface
 {
     /**
      * @var \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface
@@ -45,16 +46,19 @@ class AgentProvider implements AgentProviderInterface
     {
         $oauthUserTransfer->setIsSuccess(false);
 
-        // TODO: make sure the agent creds are valid spy_user that has is_agent=true.
-        $isAuthorized = true;
-
-        if (!$isAuthorized) {
+        $findAgentResponseTransfer = $this->agentFacade->findAgentByUsername($oauthUserTransfer->getUsername());
+        if (!$findAgentResponseTransfer->getIsAgentFound()) {
             return $oauthUserTransfer;
         }
 
-        $findAgentResponseTransfer = $this->agentFacade->findAgentByUsername($oauthUserTransfer->getUsername());
-
-        if (!$findAgentResponseTransfer->getIsAgentFound()) {
+        // Inject this.
+        $encoder = new NativePasswordEncoder();
+        $isAuthorized = $encoder->isPasswordValid(
+            $findAgentResponseTransfer->getAgent()->getPassword(),
+            $oauthUserTransfer->getPassword(),
+            null
+        );
+        if (!$isAuthorized) {
             return $oauthUserTransfer;
         }
 

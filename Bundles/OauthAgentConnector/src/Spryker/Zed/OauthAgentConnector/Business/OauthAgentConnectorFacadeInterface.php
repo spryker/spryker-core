@@ -42,7 +42,9 @@ interface OauthAgentConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Installs agent oauth scope data.
+     * - Installes agent-specific OAuth scopes.
+     * - Scopes are defined in `OauthAgentConnectorConfig::getAgentScopes()`.
+     * - Skips scope if it already exists in depsistent storage.
      *
      * @api
      *

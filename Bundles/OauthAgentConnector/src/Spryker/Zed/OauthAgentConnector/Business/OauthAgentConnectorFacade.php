@@ -27,7 +27,7 @@ class OauthAgentConnectorFacade extends AbstractFacade implements OauthAgentConn
      */
     public function getAgentOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
     {
-        return $this->getFactory()->createCustomerProvider()->getAgentOauthUser($oauthUserTransfer);
+        return $this->getFactory()->createAgentOauthUserProvider()->getAgentOauthUser($oauthUserTransfer);
     }
 
     /**
@@ -41,7 +41,7 @@ class OauthAgentConnectorFacade extends AbstractFacade implements OauthAgentConn
      */
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {
-        return $this->getFactory()->createScopeProvider()->getScopes($oauthScopeRequestTransfer);
+        return $this->getFactory()->createAgentScopeProvider()->getScopes($oauthScopeRequestTransfer);
     }
 
     /**
