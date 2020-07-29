@@ -129,7 +129,7 @@
                             {% set customerItems = [
                                 {
                                     name: 'Client name' | trans | upper,
-                                    info: merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName ~ ', ' ~ merchantOrder.order.salutation,
+                                    info: merchantOrder.order.salutation ~ ' ' ~ merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName,
                                 },
                                 {
                                     name: 'Client email' | trans| upper,
