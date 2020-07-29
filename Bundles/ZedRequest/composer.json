@@ -5,7 +5,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/application": "^3.2.0",
     "spryker/config": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/guzzle": "^2.1.0",
