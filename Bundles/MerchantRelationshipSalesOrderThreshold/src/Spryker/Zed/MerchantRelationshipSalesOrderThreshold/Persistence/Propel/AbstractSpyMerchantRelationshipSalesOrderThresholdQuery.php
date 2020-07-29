@@ -31,7 +31,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
-        /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Propel\AbstractSpyMerchantRelationshipSalesOrderThresholdQuery $query */
+        /** @var static $query */
         $query = $this->_if($storeTransfer->getIdStore() !== null)
                 ->filterByFkStore($storeTransfer->getIdStore())
             ->_else()
@@ -52,7 +52,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
-        /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Propel\AbstractSpyMerchantRelationshipSalesOrderThresholdQuery $query */
+        /** @var static $query */
         $query = $this->_if($currencyTransfer->getIdCurrency() !== null)
                 ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->_else()
