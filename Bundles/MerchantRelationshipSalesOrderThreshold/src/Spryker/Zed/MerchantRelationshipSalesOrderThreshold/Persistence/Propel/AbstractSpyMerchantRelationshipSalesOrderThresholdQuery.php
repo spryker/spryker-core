@@ -53,7 +53,7 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
         /** @var \Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Persistence\Propel\AbstractSpyMerchantRelationshipSalesOrderThresholdQuery $query */
-        $query =  $this->_if($currencyTransfer->getIdCurrency() !== null)
+        $query = $this->_if($currencyTransfer->getIdCurrency() !== null)
                 ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->_else()
                 ->useCurrencyQuery()
