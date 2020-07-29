@@ -148,7 +148,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     /**
      * @param int $idOrderProcess
      *
-     * @return static
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function filterByIdItemOrderProcess($idOrderProcess)
     {
@@ -162,7 +162,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
     /**
      * @param int $idItemState
      *
-     * @return static
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function filterByIdItemState($idItemState)
     {
@@ -182,7 +182,7 @@ abstract class AbstractSpySalesOrderQuery extends BaseSpySalesOrderQuery
      *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals. Add SprykerCriteria::BETWEEN explicitly.
      * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
      *
-     * @return static
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
     public function filterByLastItemStateChange($lastStateChange, $comparison = Criteria::EQUAL)
     {
