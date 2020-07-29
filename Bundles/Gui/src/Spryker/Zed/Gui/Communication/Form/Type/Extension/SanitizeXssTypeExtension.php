@@ -50,7 +50,7 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
      */
     public function getExtendedType(): string
     {
-        return TextType::class;
+        return TextareaType::class;
     }
 
     /**
