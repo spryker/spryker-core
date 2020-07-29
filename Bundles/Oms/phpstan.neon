@@ -1,8 +1,6 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\)#'
     - '#Cannot cast .+SpyOmsProductReservationStore to int.#'
-    - '#Method .+OmsQueryContainer::.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
     -
         message: '#Result of && is always false.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
