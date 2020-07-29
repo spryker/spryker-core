@@ -34,6 +34,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
     {
         $currencyCode = $dataSet[PriceProductScheduleDataSetInterface::KEY_CURRENCY];
         if (!isset($this->idCurrencyCache[$currencyCode])) {
+            /** @var int|null $idCurrency */
             $idCurrency = $this->createProductQuery()
                 ->select(SpyCurrencyTableMap::COL_ID_CURRENCY)
                 ->findOneByCode($currencyCode);

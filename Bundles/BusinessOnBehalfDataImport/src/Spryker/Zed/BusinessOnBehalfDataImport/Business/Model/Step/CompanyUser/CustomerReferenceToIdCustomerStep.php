@@ -48,6 +48,7 @@ class CustomerReferenceToIdCustomerStep implements DataImportStepInterface
             return $this->idCustomerBuffer[$customerReference];
         }
 
+        /** @var int|null $idCustomer */
         $idCustomer = SpyCustomerQuery::create()
             ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
             ->findOneByCustomerReference($customerReference);

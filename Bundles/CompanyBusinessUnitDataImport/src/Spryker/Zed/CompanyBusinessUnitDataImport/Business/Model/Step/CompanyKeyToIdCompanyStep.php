@@ -44,6 +44,7 @@ class CompanyKeyToIdCompanyStep implements DataImportStepInterface
             return $this->idCompanyListCache[$companyKey];
         }
 
+        /** @var int|null $idCompany */
         $idCompany = $this->createCompanyQuery()
             ->filterByKey($companyKey)
             ->select(SpyCompanyTableMap::COL_ID_COMPANY)

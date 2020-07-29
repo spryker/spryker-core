@@ -82,8 +82,11 @@ class OmsRepository extends AbstractRepository implements OmsRepositoryInterface
                 ->endUse();
         }
 
+        /** @var array $salesOrderItemAggregations */
+        $salesOrderItemAggregations = $salesOrderItemQuery->find();
+
         $salesAggregationTransfers = [];
-        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
+        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
                 ->fromArray($salesOrderItemAggregation, true);
         }

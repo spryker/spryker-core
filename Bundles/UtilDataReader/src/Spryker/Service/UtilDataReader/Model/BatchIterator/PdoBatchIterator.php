@@ -151,7 +151,9 @@ class PdoBatchIterator implements CountableIteratorInterface
         $countSql = 'SELECT COUNT(*) cnt FROM (' . $sqlPart->getSql() . ') AS v';
         $st = $this->queryContainer->getConnection()->prepare($countSql);
         $st->execute($sqlPart->getParameters());
+        /** @var int $count */
+        $count = $st->fetchColumn();
 
-        return $st->fetchColumn();
+        return $count;
     }
 }
