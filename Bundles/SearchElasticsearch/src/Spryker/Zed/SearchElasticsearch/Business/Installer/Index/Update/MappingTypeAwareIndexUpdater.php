@@ -9,7 +9,7 @@ namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update;
 
 use Elastica\Index;
 
-class IndexUpdater extends AbstractIndexUpdater
+class MappingTypeAwareIndexUpdater extends AbstractIndexUpdater
 {
     /**
      * @param array $mappings
@@ -19,8 +19,8 @@ class IndexUpdater extends AbstractIndexUpdater
      */
     protected function buildMapping(array $mappings, Index $index): void
     {
-        /** @var \Elastica\Mapping $mapping */
+        /** @var \Elastica\Type\Mapping $mapping */
         $mapping = $this->mappingBuilder->buildMapping($mappings, $index);
-        $mapping->send($index);
+        $mapping->send();
     }
 }

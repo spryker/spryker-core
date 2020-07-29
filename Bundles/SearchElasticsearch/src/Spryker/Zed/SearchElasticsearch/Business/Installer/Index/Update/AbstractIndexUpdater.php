@@ -5,21 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install;
+namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Update;
 
 use Elastica\Client;
-use Elastica\Request;
+use Elastica\Index;
 use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\InstallerInterface;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
 
-class IndexInstaller implements InstallerInterface
+abstract class AbstractIndexUpdater implements InstallerInterface
 {
     /**
      * @var \Elastica\Client
      */
     protected $client;
+
+    /**
+     * @var \Elastica\Index
+     */
+    protected $index;
 
     /**
      * @var \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface
@@ -45,7 +50,7 @@ class IndexInstaller implements InstallerInterface
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
 
-        return !$index->exists();
+        return $index->exists();
     }
 
     /**
@@ -57,16 +62,15 @@ class IndexInstaller implements InstallerInterface
     public function run(IndexDefinitionTransfer $indexDefinitionTransfer, LoggerInterface $logger): void
     {
         $index = $this->client->getIndex($indexDefinitionTransfer->getIndexName());
-        $mapping = $this->mappingBuilder->buildMapping($indexDefinitionTransfer->getMappings(), $index);
-
-        $data = ['mappings' => $mapping->toArray()];
-        $settings = $indexDefinitionTransfer->getSettings();
-        if ($settings) {
-            $data['settings'] = $settings;
-        }
-
-        $logger->info(sprintf('Import mappings and settings for index "%s".', $index->getName()));
-
-        $index->request('', Request::PUT, $data);
+        $logger->info(sprintf('Update mapping for index "%s".', $index->getName()));
+        $this->buildMapping($indexDefinitionTransfer->getMappings(), $index);
     }
+
+    /**
+     * @param array $mappings
+     * @param \Elastica\Index $index
+     *
+     * @return void
+     */
+    abstract protected function buildMapping(array $mappings, Index $index): void;
 }

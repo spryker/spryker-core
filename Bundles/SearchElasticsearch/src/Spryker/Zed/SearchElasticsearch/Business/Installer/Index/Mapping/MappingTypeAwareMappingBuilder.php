@@ -8,35 +8,30 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Elastica\Index;
-use Elastica\Mapping;
+use Elastica\Type\Mapping;
 
-class MappingBuilder implements MappingBuilderInterface
+/**
+ * @deprecated Will be removed once the support of Elasticsearch 6 and lower is dropped.
+ */
+class MappingTypeAwareMappingBuilder implements MappingBuilderInterface
 {
     /**
      * @param array $mappings
      * @param \Elastica\Index $index
      *
-     * @return \Elastica\Mapping
+     * @return \Elastica\Type\Mapping
      */
     public function buildMapping(array $mappings, Index $index)
     {
-        $mappingData = $this->getMappingData($mappings);
-        $mapping = new Mapping();
+        $mappingTypeName = array_key_first($mappings);
+        $mappingData = $mappingTypeName !== null ? $mappings[$mappingTypeName] : [];
+        $mappingType = $index->getType($mappingTypeName);
+        $mapping = new Mapping($mappingType);
 
         foreach ($mappingData as $key => $value) {
             $mapping->setParam($key, $value);
         }
 
         return $mapping;
-    }
-
-    /**
-     * @param array $mappings
-     *
-     * @return array
-     */
-    protected function getMappingData(array $mappings): array
-    {
-        return $mappings ? array_shift($mappings) : [];
     }
 }
