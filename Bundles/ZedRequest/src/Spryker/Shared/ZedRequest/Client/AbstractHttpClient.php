@@ -19,7 +19,6 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
@@ -175,18 +174,6 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @return int
-     */
-    protected function getConfigServerPort()
-    {
-        if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED, static::DEFAULT_SSL_PORT);
-        }
-
-        return Config::get(ApplicationConstants::PORT_ZED, static::DEFAULT_PORT);
-    }
-
-    /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
@@ -210,18 +197,13 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $configHostName = Config::get(ApplicationConstants::HOST_ZED);
-            $configServerPort = $this->getConfigServerPort();
-            $hostSchema = $request->getUri()->getScheme();
-            $hostAuthority = $hostSchema . '://' . $request->getUri()->getAuthority();
-            $configFileName = $this->getConfigFilePathName();
             $message = sprintf(
                 static::ZED_REQUEST_ERROR,
-                $hostAuthority,
+                $request->getUri()->getScheme() . '://' . $request->getUri()->getAuthority(),
                 $this->setSslStatusMessage(),
-                $configHostName,
-                $configServerPort,
-                $configFileName
+                $request->getUri()->getHost(),
+                $request->getUri()->getPort(),
+                $this->getConfigFilePathName()
             );
             $response = $e->getResponse();
             if ($response) {

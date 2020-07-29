@@ -14,14 +14,39 @@ use Spryker\Shared\Kernel\KernelConstants;
  */
 interface ApplicationConstants
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
+    /**
+     * @api
+     */
     public const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     */
     public const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
 
-    public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; // Deprecated: Will be removed with the next major.
+    /**
+     * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     */
+    public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const STORE_PREFIX = 'STORE_PREFIX';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
     /**
@@ -99,11 +124,29 @@ interface ApplicationConstants
      */
     public const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
     /**
@@ -156,6 +199,8 @@ interface ApplicationConstants
      * - Defines a custom configuration for \Elastica\Client.
      * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
      * - @see http://elastica.io/ for details.
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -247,6 +292,8 @@ interface ApplicationConstants
 
     /**
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
+     *
+     * @deprecated Will be removed without replacement
      */
     public const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
 
@@ -255,9 +302,6 @@ interface ApplicationConstants
      */
     public const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
-    /**
-     * Cloud
-     */
     /**
      * @deprecated Unused, will be removed with next major release.
      */
@@ -296,12 +340,16 @@ interface ApplicationConstants
     /**
      * Yves host name / domain without scheme and port (e.g. www.de.demoshop.local) (Required)
      *
+     * @todo HOST_YVES is used in 2 places
+     *
      * @api
      */
     public const HOST_YVES = 'HOST_YVES';
 
     /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -310,12 +358,16 @@ interface ApplicationConstants
     /**
      * Port definition for Yves with leading colon (e.g. :8080)
      *
+     * @deprecated Will be removes without replacement
+     *
      * @api
      */
     public const PORT_YVES = 'APPLICATION:PORT_YVES';
 
     /**
      * Port definition for Zed with leading colon (e.g. :9080)
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -324,12 +376,16 @@ interface ApplicationConstants
     /**
      * Secure port definition for Yves with leading colon (e.g. :8443)
      *
+     * @deprecated Will be removes without replacement
+     *
      * @api
      */
     public const PORT_SSL_YVES = 'APPLICATION:PORT_SSL_YVES';
 
     /**
      * Secure port definition for Zed with leading colon (e.g. :9443)
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -352,12 +408,16 @@ interface ApplicationConstants
     /**
      * Base URL for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
+     * @deprecated Will be removes without replacement
+     *
      * @api
      */
     public const BASE_URL_STATIC_ASSETS = 'APPLICATION:BASE_URL_STATIC_ASSETS';
 
     /**
      * Base URL for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -366,12 +426,16 @@ interface ApplicationConstants
     /**
      * Secure base URL for Yves including scheme and port (e.g. https://www.de.demoshop.local:8443)
      *
+     * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_YVES} instead.
+     *
      * @api
      */
     public const BASE_URL_SSL_YVES = 'APPLICATION:BASE_URL_SSL_YVES';
 
     /**
      * Secure base URL for Zed including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     *
+     * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_ZED} instead.
      *
      * @api
      */
@@ -380,12 +444,16 @@ interface ApplicationConstants
     /**
      * Secure base URL for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
+     * @deprecated Will be removes without replacement
+     *
      * @api
      */
     public const BASE_URL_SSL_STATIC_ASSETS = 'APPLICATION:BASE_URL_SSL_STATIC_ASSETS';
 
     /**
      * Secure base URL for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
+     *
+     * @deprecated Will be removes without replacement
      *
      * @api
      */
@@ -436,6 +504,9 @@ interface ApplicationConstants
      */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
+    /**
+     * @api
+     */
     public const FORM_FACTORY = 'FORM_FACTORY';
 
     /**

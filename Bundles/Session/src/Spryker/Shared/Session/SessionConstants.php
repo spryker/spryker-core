@@ -12,6 +12,9 @@ namespace Spryker\Shared\Session;
  */
 interface SessionConstants
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const SESSION_IS_TEST = 'SESSION:SESSION_IS_TEST';
 
     /**

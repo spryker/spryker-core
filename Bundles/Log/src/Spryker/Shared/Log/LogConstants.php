@@ -84,6 +84,8 @@ interface LogConstants
      * Specification:
      * - Absolute path to the installation log files directory.
      *
+     * @deprecated Will be removed without replacement
+     *
      * @api
      */
     public const LOG_FOLDER_PATH_INSTALLATION = 'LOG:LOG_FOLDER_PATH_INSTALLATION';
