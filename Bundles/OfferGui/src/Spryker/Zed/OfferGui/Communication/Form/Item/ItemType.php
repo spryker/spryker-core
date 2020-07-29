@@ -106,7 +106,9 @@ class ItemType extends AbstractType
             return $this->addUnitGrossPriceField($builder, $options);
         }
 
-        return $this->addUnitNetPriceField($builder, $options);
+        $this->addUnitNetPriceField($builder, $options);
+
+        return $this;
     }
 
     /**
@@ -121,7 +123,9 @@ class ItemType extends AbstractType
             return $this->addManualGrossPriceField($builder, $options);
         }
 
-        return $this->addManualNetPriceField($builder, $options);
+        $this->addManualNetPriceField($builder, $options);
+
+        return $this;
     }
 
     /**

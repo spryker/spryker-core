@@ -106,7 +106,9 @@ class StoreRelationToggleType extends AbstractType
             return $this->addFieldEditableIdStores($builder);
         }
 
-        return $this->addFieldImmutableIdStores($builder);
+        $this->addFieldImmutableIdStores($builder);
+
+        return $this;
     }
 
     /**
