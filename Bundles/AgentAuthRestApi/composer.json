@@ -4,11 +4,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/auth-rest-api-extension": "*",
     "spryker/glue-application": "*",
     "spryker/glue-application-extension": "*",
     "spryker/kernel": "^3.33.0",
     "spryker/oauth": "*",
-    "spryker/symfony": "*"
+    "spryker/symfony": "*",
+    "spryker/util-encoding": "^1.0.0"
   },
   "autoload": {
     "psr-4": {

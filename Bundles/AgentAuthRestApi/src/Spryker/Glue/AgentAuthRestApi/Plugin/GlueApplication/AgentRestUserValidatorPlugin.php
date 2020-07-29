@@ -23,6 +23,7 @@ class AgentRestUserValidatorPlugin extends AbstractPlugin implements RestUserVal
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
+        // TODO: move logic to processors
         if (
             (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getIdAgent())
             && in_array($restRequest->getResource()->getType(), [AgentAuthRestApiConfig::RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS])

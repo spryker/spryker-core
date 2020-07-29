@@ -8,6 +8,8 @@
 namespace Spryker\Glue\AgentAuthRestApi;
 
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
+use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceInterface;
+use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreator;
 use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreator;
@@ -67,5 +69,21 @@ class AgentAuthRestApiFactory extends AbstractFactory
     public function getOauthClient(): AgentAuthRestApiToOauthClientInterface
     {
         return $this->getProvidedDependency(AgentAuthRestApiDependencyProvider::CLIENT_OAUTH);
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceInterface
+     */
+    public function getOauthService(): AgentAuthRestApiToOauthServiceInterface
+    {
+        return $this->getProvidedDependency(AgentAuthRestApiDependencyProvider::SERVICE_OAUTH);
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): AgentAuthRestApiToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(AgentAuthRestApiDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

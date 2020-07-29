@@ -19,9 +19,14 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      */
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
 
+    public const HEADER_X_AGENT_AUTHORIZATION = 'X-Agent-Authorization';
+
     public const RESPONSE_CODE_INVALID_LOGIN = '4001';
     public const RESPONSE_DETAIL_INVALID_LOGIN = 'Failed to authenticate user.';
 
     public const RESPONSE_CODE_AGENT_ONLY = '4002';
     public const RESPONSE_DETAIL_AGENT_ONLY = 'Action is available to agent user only.';
+
+    public const RESPONSE_CODE_ACCESS_CODE_INVALID = '4003';
+    public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Agent access token is invalid.';
 }

@@ -47,6 +47,7 @@ class AgentCustomerImpersonationAccessTokenCreator implements AgentCustomerImper
         RestRequestInterface $restRequest,
         RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer $restAgentCustomerImpersonationAccessTokensRequestAttributesTransfer
     ): RestResponseInterface {
+        // TODO: use grant type for impersonation to get customer's token.
         return $this->restResourceBuilder->createRestResponse();
     }
 }
