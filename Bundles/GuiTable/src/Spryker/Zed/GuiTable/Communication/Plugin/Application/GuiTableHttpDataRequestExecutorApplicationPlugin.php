@@ -31,7 +31,7 @@ class GuiTableHttpDataRequestExecutorApplicationPlugin extends AbstractPlugin im
      */
     public function provide(ContainerInterface $container): ContainerInterface
     {
-        $container = $this->addGuiTableHttpDataRequestHandlerService($container);
+        $container = $this->addGuiTableHttpDataRequestExecutorService($container);
 
         return $container;
     }
@@ -41,7 +41,7 @@ class GuiTableHttpDataRequestExecutorApplicationPlugin extends AbstractPlugin im
      *
      * @return \Spryker\Service\Container\ContainerInterface
      */
-    protected function addGuiTableHttpDataRequestHandlerService(ContainerInterface $container): ContainerInterface
+    protected function addGuiTableHttpDataRequestExecutorService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR, function (): GuiTableDataRequestExecutorInterface {
             return $this->getFactory()->createGuiTableDataRequestHandler();
