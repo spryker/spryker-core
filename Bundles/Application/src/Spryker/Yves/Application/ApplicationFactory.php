@@ -14,6 +14,9 @@ use Spryker\Yves\Application\Plugin\Provider\ExceptionService\ExceptionHandlerDi
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method \Spryker\Yves\Application\ApplicationConfig getConfig()
+ */
 class ApplicationFactory extends AbstractFactory
 {
     use LoggerTrait;

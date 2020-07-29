@@ -191,6 +191,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
     {
         $productConcreteQuery = $this->getFactory()
             ->createProductQuery();
+        /** @var \Propel\Runtime\Collection\ObjectCollection|null $productConcreteIds */
         $productConcreteIds = $productConcreteQuery
             ->filterByFkProductAbstract($idProductAbstract)
             ->select([SpyProductTableMap::COL_ID_PRODUCT])

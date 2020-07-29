@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\CmsContentWidget;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
@@ -17,9 +18,16 @@ use Spryker\Yves\Kernel\Plugin\Pimple;
 class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const CMS_CONTENT_WIDGET_PLUGINS = 'CMS CONTENT WIDGET PLUGINS';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const TWIG_ENVIRONMENT = 'TWIG ENVIRONMENT';
 
-    protected const SERVICE_TWIG = 'twig';
+    /**
+     * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -32,14 +40,16 @@ class CmsContentWidgetDependencyProvider extends AbstractBundleDependencyProvide
             return $this->getCmsContentWidgetPlugins();
         });
 
-        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
-            return $this->getTwigEnvironment();
+        $container->set(static::SERVICE_TWIG, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
         return $container;
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()

@@ -82,7 +82,7 @@ ship-return,"Retoure zum Kunden zurückschicken"
 delivery-return,"Retoure zum Kunden zurücksenden"
 cancel,Stornieren
 "skip timeout","Timeout überspringen"
-"Cancelled amount","Stornierter Betrag"
+"Refund total","Rückerstattung insgesamt"
 "Comment successfully added","Kommentar erfolgreich hinzugefügt."
 "Address Details",Adressdetails
 "Middle name","Zweiter Vorname"

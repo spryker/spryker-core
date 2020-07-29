@@ -94,7 +94,7 @@ class MySqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \PDOStatement $statement
-     * @param string[][] $queryDataPerTable
+     * @param string[][][] $queryDataPerTable
      *
      * @return \PDOStatement
      */

@@ -124,6 +124,8 @@ interface PropelConstants
      * - Pattern for schema files path.
      * - Path is used with glob to find path.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';

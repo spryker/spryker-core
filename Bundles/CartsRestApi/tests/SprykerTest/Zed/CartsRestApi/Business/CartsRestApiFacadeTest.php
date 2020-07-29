@@ -749,17 +749,6 @@ class CartsRestApiFacadeTest extends Unit
      */
     protected function addQuoteCreatorPlugin(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
-        $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
-            ->willReturn($this->createMockQuoteCreatorPlugin());
-
-        return $cartsRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockQuoteCreatorPlugin(): QuoteCreatorPluginInterface
-    {
         $mockQuoteCreatorPlugin = $this->createPartialMock(
             QuoteCreatorPluginInterface::class,
             ['createQuote']
@@ -768,6 +757,9 @@ class CartsRestApiFacadeTest extends Unit
             ->method('createQuote')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
 
-        return $mockQuoteCreatorPlugin;
+        $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
+            ->willReturn($mockQuoteCreatorPlugin);
+
+        return $cartsRestApiBusinessFactoryMock;
     }
 }

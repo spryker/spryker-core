@@ -33,6 +33,7 @@ class QuoteKeyToIdQuoteStep implements DataImportStepInterface
         $quoteKey = $dataSet[SharedCartDataSetInterface::KEY_QUOTE];
         if (!isset($this->idQuoteCache[$quoteKey])) {
             $quoteQuery = new SpyQuoteQuery();
+            /** @var int|null $idQuote */
             $idQuote = $quoteQuery
                 ->select(SpyQuoteTableMap::COL_ID_QUOTE)
                 ->findOneByKey($quoteKey);

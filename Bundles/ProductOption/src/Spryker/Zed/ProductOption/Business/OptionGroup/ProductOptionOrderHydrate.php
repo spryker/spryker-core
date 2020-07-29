@@ -164,9 +164,12 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      */
     protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity): ?int
     {
-        return $this->productOptionQueryContainer
+        /** @var int|null $idProductOptionValue */
+        $idProductOptionValue = $this->productOptionQueryContainer
             ->queryProductOptionValueBySku($orderItemOptionEntity->getSku())
             ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->findOne();
+
+        return $idProductOptionValue;
     }
 }

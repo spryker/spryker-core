@@ -16,7 +16,7 @@
   },
   "autoload": {
     "files": [
-      "Bundles/Development/tests/dd.php"
+      "autoload.php"
     ]
   },
   "bin": [
@@ -25,11 +25,6 @@
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
-  },
-  "autoload": {
-    "files": [
-      "autoload.php"
-    ]
   },
   "replace": {
     "spryker/acl": "*",
@@ -121,7 +116,7 @@
     "spryker/cms-collector": "*",
     "spryker/cms-content-widget": "*",
     "spryker/cms-content-widget-cms-block-connector": "*",
-    "spryker/cms-content-widget-content-item-connector": "*",
+    "spryker/cms-content-widget-content-connector": "*",
     "spryker/cms-content-widget-product-connector": "*",
     "spryker/cms-content-widget-product-group-connector": "*",
     "spryker/cms-content-widget-product-search-connector": "*",
@@ -340,6 +335,7 @@
     "spryker/merchant-gui-extension": "*",
     "spryker/merchant-oms": "*",
     "spryker/merchant-oms-data-import": "*",
+    "spryker/merchant-oms-gui": "*",
     "spryker/merchant-opening-hours": "*",
     "spryker/merchant-opening-hours-data-import": "*",
     "spryker/merchant-opening-hours-rest-api": "*",
@@ -375,6 +371,7 @@
     "spryker/merchant-sales-order-extension": "*",
     "spryker/merchant-search": "*",
     "spryker/merchant-shipment": "*",
+    "spryker/merchant-shipment-gui": "*",
     "spryker/merchant-stock": "*",
     "spryker/merchant-stock-data-import": "*",
     "spryker/merchant-stock-gui": "*",
@@ -404,6 +401,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
@@ -655,6 +653,7 @@
     "spryker/shipment-discount-connector": "*",
     "spryker/shipment-extension": "*",
     "spryker/shipment-gui": "*",
+    "spryker/shipment-gui-extension": "*",
     "spryker/shipments-rest-api": "*",
     "spryker/shop-context": "*",
     "spryker/shop-context-extension": "*",

@@ -8,9 +8,9 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Codeception\Test\Unit;
-use Elastica\Index;
-use Elastica\Type;
 use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilder;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface;
+use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingTypeAwareMappingBuilder;
 
 /**
  * Auto-generated group annotations
@@ -24,30 +24,49 @@ use Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuil
  * @group Mapping
  * @group MappingBuilderTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\SearchElasticsearch\SearchElasticsearchZedTester $tester
  */
 class MappingBuilderTest extends Unit
 {
     /**
+     * @var string[][][]
+     */
+    protected $fixtureMappingConfiguration = [
+        'dummy_mapping_type' => [
+            'foo_key' => ['foo_value'],
+            'bar_key' => ['bar_value'],
+            'baz_key' => ['baz_value'],
+        ],
+    ];
+
+    /**
      * @return void
      */
-    public function testCanBuildMapping(): void
+    public function testCanBuildTypelessMapping(): void
     {
-        $fixtureMappingData = [
-            'foo_key' => 'foo_value',
-            'bar_key' => 'bar_value',
-            'baz_key' => 'baz_value',
-        ];
-        $mappingType = 'page';
-
         /** @var \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject $indexMock */
-        $indexMock = $this->createMock(Index::class);
-        $indexMock->method('getType')->willReturn(new Type($indexMock, $mappingType));
+        $indexMock = $this->tester->createIndexMock();
 
-        $mappingBuilder = new MappingBuilder();
-        $mapping = $mappingBuilder->buildMapping($indexMock, $mappingType, $fixtureMappingData);
+        $mappingBuilder = $this->createMappingBuilder();
+        $mapping = $mappingBuilder->buildMapping($this->fixtureMappingConfiguration, $indexMock);
 
-        foreach ($fixtureMappingData as $key => $value) {
+        $mappingData = array_shift($this->fixtureMappingConfiguration);
+
+        foreach ($mappingData as $key => $value) {
             $this->assertEquals($value, $mapping->getParam($key));
         }
+    }
+
+    /**
+     * @return \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping\MappingBuilderInterface
+     */
+    protected function createMappingBuilder(): MappingBuilderInterface
+    {
+        if ($this->tester->supportsMappingTypes()) {
+            return new MappingTypeAwareMappingBuilder();
+        }
+
+        return new MappingBuilder();
     }
 }

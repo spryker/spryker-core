@@ -7,11 +7,11 @@
 
 namespace Spryker\Yves\SessionRedis;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Client\SessionRedisToRedisClientBridge;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Spryker\Yves\Kernel\Plugin\Pimple;
 
 /**
  * @method \Spryker\Yves\SessionRedis\SessionRedisConfig getConfig()
@@ -79,8 +79,8 @@ class SessionRedisDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRequestStack(Container $container): Container
     {
-        $container->set(static::REQUEST_STACK, function () {
-            return (new Pimple())->getApplication()->get(static::REQUEST_STACK_CONTAINER_KEY);
+        $container->set(static::REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::REQUEST_STACK_CONTAINER_KEY);
         });
 
         return $container;

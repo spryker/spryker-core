@@ -28,6 +28,7 @@ abstract class AbstractCompanyRoleWriterStep
     protected function getIdCompanyRoleByKey(string $companyRoleKey): int
     {
         if (!isset($this->idCompanyRoleListCache[$companyRoleKey])) {
+            /** @var int|null $idCompanyRole */
             $idCompanyRole = $this->getCompanyRoleQuery()
                 ->filterByKey($companyRoleKey)
                 ->select(SpyCompanyRoleTableMap::COL_ID_COMPANY_ROLE)
