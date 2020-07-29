@@ -8,7 +8,6 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Plugin\GlueApplication;
 
 use Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer;
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
@@ -84,6 +83,6 @@ class ConfiguredBundlesResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function getParentResourceType(): string
     {
-        return CartsRestApiConfig::RESOURCE_CARTS;
+        return ConfigurableBundleCartsRestApiConfig::RESOURCE_CARTS;
     }
 }

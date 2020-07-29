@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder\ConfiguredBundleAdder;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder\ConfiguredBundleAdderInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Deleter\ConfiguredBundleDeleter;
@@ -17,6 +18,7 @@ use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
  * @method \Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig getConfig()
+ * @method \Spryker\Client\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiClientInterface getClient()
  */
 class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
 {
@@ -42,5 +44,13 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     public function createConfiguredBundleDeleter(): ConfiguredBundleDeleterInterface
     {
         return new ConfiguredBundleDeleter();
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface
+     */
+    public function getCartsRestApiResource(): ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::RESOURCE_CARTS_REST_API);
     }
 }
