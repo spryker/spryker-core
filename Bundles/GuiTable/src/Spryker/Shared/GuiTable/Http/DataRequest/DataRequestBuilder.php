@@ -9,7 +9,6 @@ namespace Spryker\Shared\GuiTable\Http\DataRequest;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
@@ -53,20 +52,16 @@ class DataRequestBuilder implements DataRequestBuilderInterface
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
     public function buildGuiTableDataRequestFromRequest(
         Request $request,
-        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
-        LocaleTransfer $localeTransfer
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): GuiTableDataRequestTransfer {
         $guiTableDataRequestTransfer = new GuiTableDataRequestTransfer();
 
-        $guiTableDataRequestTransfer->setSearchTerm($request->get('search') ?? null);
-        $guiTableDataRequestTransfer->setIdLocale($localeTransfer->getIdLocale());
-
+        $guiTableDataRequestTransfer->setSearchTerm($request->get('search'));
         $guiTableDataRequestTransfer = $this->addPaginationToDataRequest($request, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);
         $guiTableDataRequestTransfer = $this->addOrderToDataRequest($request, $guiTableDataRequestTransfer);
         $guiTableDataRequestTransfer = $this->addFiltersToDataRequest($request, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);

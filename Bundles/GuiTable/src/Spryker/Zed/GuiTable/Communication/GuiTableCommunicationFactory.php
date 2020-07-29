@@ -14,8 +14,6 @@ use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExp
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
-use Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatter;
-use Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatterInterface;
 use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilder;
 use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface;
 use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
@@ -94,19 +92,11 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatterInterface
-     */
-    public function createDateResponseColumnValueFormatter(): DateResponseColumnValueFormatterInterface
-    {
-        return new DateResponseColumnValueFormatter($this->getUtilDateTimeService());
-    }
-
-    /**
      * @return \Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface
      */
     public function createDataResponseFormatter(): DataResponseFormatterInterface
     {
-        return new DataResponseFormatter($this->createDateResponseColumnValueFormatter());
+        return new DataResponseFormatter($this->getUtilDateTimeService());
     }
 
     /**

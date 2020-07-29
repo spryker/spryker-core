@@ -11,23 +11,23 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
-use Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatterInterface;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
 
 class DataResponseFormatter implements DataResponseFormatterInterface
 {
     protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
 
     /**
-     * @var \Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatterInterface
+     * @var \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface
      */
-    protected $dateResponseColumnValueFormatter;
+    protected $utilDateTimeService;
 
     /**
-     * @param \Spryker\Shared\GuiTable\Formatter\DateResponseColumnValueFormatterInterface $dateResponseColumnValueFormatter
+     * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface $utilDateTimeService
      */
-    public function __construct(DateResponseColumnValueFormatterInterface $dateResponseColumnValueFormatter)
+    public function __construct(GuiTableToUtilDateTimeServiceInterface $utilDateTimeService)
     {
-        $this->dateResponseColumnValueFormatter = $dateResponseColumnValueFormatter;
+        $this->utilDateTimeService = $utilDateTimeService;
     }
 
     /**
@@ -41,44 +41,41 @@ class DataResponseFormatter implements DataResponseFormatterInterface
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): array {
         $guiTableDataResponseArray = $guiTableDataResponseTransfer->toArray(true, true);
-
-        $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = array_map(function (array $rowData): array {
-            return $rowData[GuiTableRowDataResponseTransfer::RESPONSE_DATA];
-        }, $guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
-        unset($guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
-
-        $guiTableDataResponseArray = $this->executeResponseColumnValueFormatters(
+        $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = $this->formatValues(
             $guiTableDataResponseArray,
             $guiTableConfigurationTransfer
         );
+
+        unset($guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
 
         return $guiTableDataResponseArray;
     }
 
     /**
-     * @param array $guiTableDataResponseArray
+     * @param mixed[] $guiTableDataResponseArray
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
      * @return mixed[]
      */
-    protected function executeResponseColumnValueFormatters(
+    protected function formatValues(
         array $guiTableDataResponseArray,
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): array {
-        $indexedColumnTypes = $this->getIndexedColumnTypesByColumnIds($guiTableConfigurationTransfer);
-        $guiTableData = $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA];
+        $rows = $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = array_map(function (array $rowData): array {
+            return $rowData[GuiTableRowDataResponseTransfer::RESPONSE_DATA];
+        }, $guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
 
-        foreach ($guiTableData as $tableRowKey => $tableRowData) {
-            foreach ($tableRowData as $columnId => $columnValue) {
-                if (isset($indexedColumnTypes[$columnId]) && $indexedColumnTypes[$columnId] === GuiTableConfigurationBuilderInterface::COLUMN_TYPE_DATE) {
-                    $guiTableData[$tableRowKey][$columnId] = $this->dateResponseColumnValueFormatter->formatColumnValue($columnValue);
+        $indexedColumnTypes = $this->getIndexedColumnTypesByColumnIds($guiTableConfigurationTransfer);
+
+        foreach ($rows as $rowKey => $row) {
+            foreach ($row as $idColumn => $value) {
+                if (isset($indexedColumnTypes[$idColumn]) && $indexedColumnTypes[$idColumn] === GuiTableConfigurationBuilderInterface::COLUMN_TYPE_DATE) {
+                    $rows[$rowKey][$idColumn] = $value ? $this->utilDateTimeService->formatDateTimeToIso8601($value) : null;
                 }
             }
         }
 
-        $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = $guiTableData;
-
-        return $guiTableDataResponseArray;
+        return $rows;
     }
 
     /**

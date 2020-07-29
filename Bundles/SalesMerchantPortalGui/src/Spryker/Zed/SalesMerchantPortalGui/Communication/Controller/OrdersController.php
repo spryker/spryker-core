@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\SalesMerchantPortalGui\Communication\SalesMerchantPortalGuiCommunicationFactory getFactory()
@@ -25,25 +25,23 @@ class OrdersController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'merchantOrderTableConfiguration' => $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
+            'merchantOrderTableConfiguration' => $this->getFactory()
+                ->createMerchantOrderGuiTableConfigurationProvider()
+                ->getConfiguration(),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tableDataAction(Request $request): JsonResponse
+    public function tableDataAction(Request $request): Response
     {
-        /** @var \Symfony\Component\HttpFoundation\JsonResponse $jsonResponse */
-        $jsonResponse = $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createMerchantOrderTableDataProvider(),
-            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration(),
-            $this->getFactory()->getLocaleFacade()->getCurrentLocale()
+            $this->getFactory()->createMerchantOrderGuiTableConfigurationProvider()->getConfiguration()
         );
-
-        return $jsonResponse;
     }
 }

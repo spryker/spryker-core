@@ -39,7 +39,6 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
         $criteriaTransfer = $this->mapFiltersToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
         $criteriaTransfer = $this->mapPagingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
         $criteriaTransfer = $this->mapSortingToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
-        $criteriaTransfer = $this->mapLocaleToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
         $criteriaTransfer = $this->mapSearchTermToCriteria($guiTableDataRequestTransfer, $criteriaTransfer);
 
         return $this->fetchData($criteriaTransfer);
@@ -116,27 +115,6 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
                 ? strtoupper($guiTableDataRequestTransfer->getOrderDirection())
                 : null
         );
-
-        return $criteriaTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
-     * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer $criteriaTransfer
-     *
-     * @return \Spryker\Shared\Kernel\Transfer\AbstractTransfer
-     */
-    protected function mapLocaleToCriteria(
-        GuiTableDataRequestTransfer $guiTableDataRequestTransfer,
-        AbstractTransfer $criteriaTransfer
-    ): AbstractTransfer {
-        $localeSetter = 'setIdLocale';
-
-        if (!method_exists($criteriaTransfer, $localeSetter)) {
-            return $criteriaTransfer;
-        }
-
-        $criteriaTransfer->setIdLocale($guiTableDataRequestTransfer->getIdLocale());
 
         return $criteriaTransfer;
     }

@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
@@ -23,25 +23,23 @@ class CreateOfferController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'productTableConfiguration' => $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration(),
+            'productTableConfiguration' => $this->getFactory()
+                ->createProductGuiTableConfigurationProvider()
+                ->getConfiguration(),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tableDataAction(Request $request): JsonResponse
+    public function tableDataAction(Request $request): Response
     {
-        /** @var \Symfony\Component\HttpFoundation\JsonResponse $jsonResponse */
-        $jsonResponse = $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductTableDataProvider(),
-            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration(),
-            $this->getFactory()->getLocaleFacade()->getCurrentLocale()
+            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration()
         );
-
-        return $jsonResponse;
     }
 }

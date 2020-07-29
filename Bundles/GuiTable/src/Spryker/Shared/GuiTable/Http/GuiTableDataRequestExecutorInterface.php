@@ -8,7 +8,6 @@
 namespace Spryker\Shared\GuiTable\Http;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,14 +20,12 @@ interface GuiTableDataRequestExecutorInterface
      * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface $guiTableDataProvider
      * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
-     * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function execute(
         Request $request,
         GuiTableDataProviderInterface $guiTableDataProvider,
-        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
-        LocaleTransfer $localeTransfer
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): Response;
 }

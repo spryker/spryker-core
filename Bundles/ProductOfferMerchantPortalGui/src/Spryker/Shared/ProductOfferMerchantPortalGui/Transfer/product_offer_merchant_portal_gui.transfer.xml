@@ -63,7 +63,7 @@
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasOffers" type="bool"/>
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
+        <property name="locale" type="Locale"/>
         <property name="idMerchant" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
@@ -84,7 +84,7 @@
         <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
         <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
+        <property name="locale" type="Locale"/>
         <property name="idMerchant" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
@@ -142,7 +142,6 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
-        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Store">

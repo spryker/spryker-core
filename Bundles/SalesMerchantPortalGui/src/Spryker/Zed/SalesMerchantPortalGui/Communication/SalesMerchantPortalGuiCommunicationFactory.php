@@ -17,8 +17,6 @@ use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderT
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface;
-use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeInterface;
-use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface;
@@ -82,14 +80,6 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeInterface
-     */
-    public function getGuiTableFacade(): SalesMerchantPortalGuiToGuiTableFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_GUI_TABLE);
-    }
-
-    /**
      * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface
      */
     public function getCurrencyFacade(): SalesMerchantPortalGuiToCurrencyFacadeInterface
@@ -127,14 +117,6 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     public function getRouterFacade(): SalesMerchantPortalGuiToRouterFacadeInterface
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_ROUTER);
-    }
-
-    /**
-     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToLocaleFacadeInterface
-     */
-    public function getLocaleFacade(): SalesMerchantPortalGuiToLocaleFacadeInterface
-    {
-        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_LOCALE);
     }
 
     /**

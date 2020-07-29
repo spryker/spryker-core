@@ -40,18 +40,23 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const FACADE_MERCHANT_STOCK = 'FACADE_MERCHANT_STOCK';
     public const FACADE_PRICE_PRODUCT = 'FACADE_PRICE_PRODUCT';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
-    public const FACADE_GUI_TABLE = 'FACADE_GUI_TABLE';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
 
-    /** @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG  */
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
     public const SERVICE_TWIG = 'twig';
 
-    /** @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableHttpDataRequestExecutorApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR */
+    /**
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableHttpDataRequestExecutorApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR
+     */
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
-    /** @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableConfigurationBuilderApplicationPlugin::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER */
+    /**
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableConfigurationBuilderApplicationPlugin::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER
+     */
     public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
@@ -284,7 +289,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      */
     protected function addTwigEnvironment(Container $container): Container
     {
-        $container->set(static::SERVICE_TWIG, function ($container) {
+        $container->set(static::SERVICE_TWIG, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_TWIG);
         });
 
@@ -298,7 +303,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      */
     protected function addGuiTableHttpDataRequestHandler(Container $container): Container
     {
-        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR, function ($container) {
+        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR);
         });
 
@@ -312,7 +317,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      */
     protected function addGuiTableConfigurationBuilder(Container $container): Container
     {
-        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function ($container) {
+        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
         });
 

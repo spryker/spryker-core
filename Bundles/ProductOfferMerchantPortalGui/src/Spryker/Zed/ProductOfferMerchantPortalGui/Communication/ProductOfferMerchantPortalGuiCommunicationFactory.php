@@ -32,7 +32,6 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\Pro
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToGuiTableFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -86,7 +85,8 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -99,7 +99,8 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
-            $this->getMerchantUserFacade()
+            $this->getMerchantUserFacade(),
+            $this->getLocaleFacade()
         );
     }
 
@@ -270,14 +271,6 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     public function getGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
     {
         return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToGuiTableFacadeInterface
-     */
-    public function getGuiTableFacade(): ProductOfferMerchantPortalGuiToGuiTableFacadeInterface
-    {
-        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::FACADE_GUI_TABLE);
     }
 
     /**

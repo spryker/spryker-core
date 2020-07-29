@@ -5,16 +5,11 @@
 
     <transfer name="GuiTableDataRequest">
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
         <property name="filters" type="array" singular="filter" associative="true"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
-    </transfer>
-
-    <transfer name="Locale">
-        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="GuiTableConfiguration">
