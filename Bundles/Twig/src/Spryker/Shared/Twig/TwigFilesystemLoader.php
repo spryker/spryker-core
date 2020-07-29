@@ -10,7 +10,9 @@ namespace Spryker\Shared\Twig;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
+use Throwable;
 use Twig\Error\LoaderError;
+use Twig\Source;
 
 class TwigFilesystemLoader implements FilesystemLoaderInterface
 {
@@ -45,13 +47,11 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
      * @param string $path
      * @param string $namespace
      *
-     * @return $this
+     * @return void
      */
-    public function addPath($path, $namespace = '__main__')
+    public function addPath(string $path, string $namespace = '__main__'): void
     {
         $this->paths[] = rtrim($path, '/\\');
-
-        return $this;
     }
 
     /**
@@ -70,7 +70,7 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
      *
      * @return bool
      */
-    public function isFresh($name, $time)
+    public function isFresh(string $name, int $time): bool
     {
         return filemtime($this->findTemplate($name)) <= $time;
     }
@@ -80,9 +80,41 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
      *
      * @return string
      */
-    public function getCacheKey($name)
+    public function getCacheKey(string $name): string
     {
         return $this->findTemplate($name);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Twig\Source
+     */
+    public function getSourceContext(string $name): Source
+    {
+        $path = $this->findTemplate($name);
+        if ($path === null) {
+            return new Source('', $name, '');
+        }
+
+        return new Source(file_get_contents($path), $name, $path);
+    }
+
+    /**
+     * @param string $name
+     * @return bool
+     */
+    public function exists(string $name): bool
+    {
+        if ($this->cache->has($name)) {
+            return true;
+        }
+
+        try {
+            return $this->findTemplate($name) !== null;
+        } catch (Throwable $throwable) {
+            return false;
+        }
     }
 
     /**

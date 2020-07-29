@@ -12,6 +12,8 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use Spryker\Shared\Twig\Loader\TwigChainLoaderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
+use Twig\Loader\ChainLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @method \Spryker\Zed\Twig\Communication\TwigCommunicationFactory getFactory()
@@ -63,11 +65,17 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Loader\TwigChainLoaderInterface
+     * @return \Twig\Loader\ChainLoader
      */
-    protected function getTwigChainLoader(): TwigChainLoaderInterface
+    protected function getTwigChainLoader(): ChainLoader
     {
-        return $this->getFactory()->createTwigChainLoader();
+        $twigChainLoader =  $this->getFactory()->createTwigChainLoader();
+
+        foreach ($this->getFactory()->getTwigLoaderPlugins() as $twigLoaderPlugin) {
+            $twigChainLoader->addLoader($twigLoaderPlugin->getLoader());
+        }
+
+        return $twigChainLoader;
     }
 
     /**

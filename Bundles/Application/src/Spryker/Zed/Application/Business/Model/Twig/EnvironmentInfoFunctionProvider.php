@@ -9,18 +9,18 @@ namespace Spryker\Zed\Application\Business\Model\Twig;
 
 use Spryker\Service\UtilNetwork\Model\Host;
 use Spryker\Shared\Kernel\Store;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 
 /**
  * @deprecated Will be removed without replacement in the next major.
  * If you use `environmentInfo` function in your twig files, please add it on your own.
  */
-class EnvironmentInfo extends TwigFunction
+class EnvironmentInfoFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @return string
      */
-    protected function getFunctionName()
+    public function getFunctionName()
     {
         return 'environmentInfo';
     }
@@ -28,7 +28,7 @@ class EnvironmentInfo extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction()
+    public function getFunction()
     {
         return function ($currentController) {
             $utilNetworkHost = new Host();

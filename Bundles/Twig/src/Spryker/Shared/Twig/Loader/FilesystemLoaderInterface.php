@@ -17,5 +17,5 @@ interface FilesystemLoaderInterface extends LoaderInterface
      *
      * @return void
      */
-    public function addPath($path, $namespace = '__main__');
+    public function addPath(string $path, string $namespace = '__main__'): void;
 }

@@ -12,6 +12,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use Spryker\Shared\Twig\Loader\TwigChainLoaderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
+use Twig\Loader\ChainLoader;
 
 /**
  * @method \Spryker\Yves\Twig\TwigFactory getFactory()
@@ -63,12 +64,16 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
         return $container;
     }
 
-    /**
-     * @return \Spryker\Shared\Twig\Loader\TwigChainLoaderInterface
-     */
-    protected function getTwigChainLoader(): TwigChainLoaderInterface
+
+    protected function getTwigChainLoader(): ChainLoader
     {
-        return $this->getFactory()->createTwigChainLoader();
+        $twigChainLoader =  $this->getFactory()->createTwigChainLoader();
+
+        foreach ($this->getFactory()->getTwigLoaderPlugins() as $twigLoaderPlugin) {
+            $twigChainLoader->addLoader($twigLoaderPlugin->getLoader());
+        }
+
+        return $twigChainLoader;
     }
 
     /**
