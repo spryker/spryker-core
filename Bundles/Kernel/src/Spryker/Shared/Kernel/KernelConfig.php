@@ -31,7 +31,9 @@ class KernelConfig extends AbstractSharedConfig implements ClassNameCandidatesBu
      */
     public function getResolvableCacheFilePath(): string
     {
-        return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/cache/resolver/resolvableClassCache.php';
+        $projectNamespaces = implode('/', $this->getProjectOrganizations());
+
+        return APPLICATION_ROOT_DIR . '/src/Generated/Shared/Kernel/' . $projectNamespaces . '/resolvableClassCache.php';
     }
 
     /**
