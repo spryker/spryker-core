@@ -1,18 +1,27 @@
-Offers,"Bietet an"
+Actions,Aktionen
+Active,Aktiv
+Approved,Bestätigt
+approved_offer_button,"Genehmigen"
+"Back to Offers","Zurück zu Angeboten"
+denied_offer_button,Abgelehnt
+Denied,Abgelehnt
+Description,Beschreibung
+"Gift Card","Geschenkgutschein"
+Inactive,Inaktiv
 "List of Offers","Liste der Angebote"
-"Offer ID","Angebots ID"
+Name,Name
+Offer,Angebot
+"Offer ID","Angebot ID"
+Offers,"Bietet an"
+Product,Produkt
+"Product Bundle","Bündelprodukt"
 Reference,Referenz
 SKU,Artikelnummer
-Name,Name
 Status,Status
-Visibility,Sichtweite
 Stores,Shops
-Actions,Aktionen
-approved,Genehmigt
-waiting_for_approval,"Warten auf die Bestätigung"
-declined,Abgelehnt
-declined_button,Verweigern
-approved_button,"Zugriff genehmigen"
-Active,Aktiv
-Inactive,Inaktiv
 "The approval status was updated","Der Genehmigungsstatus wurde aktualisiert"
+Type,Typ
+"View Offer","Angebot anzeigen"
+Visibility,Sichtbarkeit
+"Waiting for Approval","Warten auf die Bestätigung"
+waiting_for_approval,"Warten auf die Bestätigung"

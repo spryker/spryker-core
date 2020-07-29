@@ -20,7 +20,8 @@ use Spryker\Shared\ProductOfferGui\ProductOfferGuiConfig as SharedProductOfferGu
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductOfferGui\Communication\Form\ApprovalStatusForm;
-use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface;
+use Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface;
 use Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface;
 use Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig;
 
@@ -34,23 +35,30 @@ class ProductOfferTable extends AbstractTable
     protected const APPROVAL_STATUS_CLASS_LABEL_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'label-info',
-        SharedProductOfferGuiConfig::STATUS_DECLINED => 'label-danger',
+        SharedProductOfferGuiConfig::STATUS_DENIED => 'label-danger',
     ];
 
     protected const APPROVAL_STATUS_CLASS_BUTTON_MAPPING = [
         SharedProductOfferGuiConfig::STATUS_APPROVED => 'btn-create',
-        SharedProductOfferGuiConfig::STATUS_DECLINED => 'btn-remove',
+        SharedProductOfferGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
 
     /**
+     * @phpstan-var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
      * @var \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected $productOfferQuery;
 
     /**
-     * @var \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface
+     * @var \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface
      */
     protected $localeFacade;
+
+    /**
+     * @var \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface
+     */
+    protected $productOfferFacade;
 
     /**
      * @var \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface
@@ -63,19 +71,24 @@ class ProductOfferTable extends AbstractTable
     protected $productOfferTableExpanderPlugins;
 
     /**
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $productOfferQuery
+     *
      * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $productOfferQuery
-     * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleInterface $localeFacade
+     * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToLocaleFacadeInterface $localeFacade
+     * @param \Spryker\Zed\ProductOfferGui\Dependency\Facade\ProductOfferGuiToProductOfferFacadeInterface $productOfferFacade
      * @param \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface $repository
      * @param \Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpanderPluginInterface[] $productOfferTableExpanderPlugins
      */
     public function __construct(
         SpyProductOfferQuery $productOfferQuery,
-        ProductOfferGuiToLocaleInterface $localeFacade,
+        ProductOfferGuiToLocaleFacadeInterface $localeFacade,
+        ProductOfferGuiToProductOfferFacadeInterface $productOfferFacade,
         ProductOfferGuiRepositoryInterface $repository,
         array $productOfferTableExpanderPlugins
     ) {
         $this->productOfferQuery = $productOfferQuery;
         $this->localeFacade = $localeFacade;
+        $this->productOfferFacade = $productOfferFacade;
         $this->repository = $repository;
         $this->productOfferTableExpanderPlugins = $productOfferTableExpanderPlugins;
     }
@@ -110,7 +123,7 @@ class ProductOfferTable extends AbstractTable
             SpyProductOfferTableMap::COL_IS_ACTIVE,
             SpyProductOfferStoreTableMap::COL_FK_STORE,
         ]);
-        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_ASC);
 
         $config->setSearchable([
             SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
@@ -152,6 +165,8 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
      * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function prepareQuery(): SpyProductOfferQuery
@@ -179,6 +194,8 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
+     * @phpstan-return array<mixed>
+     *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
@@ -211,34 +228,53 @@ class ProductOfferTable extends AbstractTable
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string
      */
     protected function buildLinks(array $item): string
     {
-        $availableApprovalStatusButtons = [];
+        $buttons[] = $this->generateViewButton(
+            Url::generate(
+                ProductOfferGuiConfig::URL_VIEW,
+                [
+                    ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
+                ]
+            ),
+            'View',
+            ['icon' => 'fa fa fa-eye', 'class' => 'btn-info']
+        );
+
         $availableApprovalStatusButtonsMapping = static::APPROVAL_STATUS_CLASS_BUTTON_MAPPING;
         unset($availableApprovalStatusButtonsMapping[$item[SpyProductOfferTableMap::COL_APPROVAL_STATUS]]);
 
-        foreach ($availableApprovalStatusButtonsMapping as $availableApprovalStatus => $class) {
-            $availableApprovalStatusButtons[] = $this->generateFormButton(
+        $availableApprovalStatuses = $this->productOfferFacade
+            ->getApplicableApprovalStatuses($item[SpyProductOfferTableMap::COL_APPROVAL_STATUS]);
+
+        foreach ($availableApprovalStatuses as $availableApprovalStatus) {
+            $iconClass = $availableApprovalStatus === 'approved' ? 'fa fa fa-caret-right' : 'fa fa fa-trash';
+
+            $buttons[] = $this->generateFormButton(
                 Url::generate(
                     ProductOfferGuiConfig::URL_UPDATE_APPROVAL_STATUS,
                     [
                         ProductOfferGuiConfig::REQUEST_PARAM_ID_PRODUCT_OFFER => $item[SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER],
                         ProductOfferGuiConfig::REQUEST_PARAM_APPROVAL_STATUS => $availableApprovalStatus]
                 ),
-                $availableApprovalStatus . '_button',
+                $availableApprovalStatus . '_offer_button',
                 ApprovalStatusForm::class,
-                ['icon' => 'fa fa fa-caret-right', 'class' => $class]
+                ['icon' => $iconClass, 'class' => $availableApprovalStatusButtonsMapping[$availableApprovalStatus]]
             );
         }
 
-        return implode(' ', $availableApprovalStatusButtons);
+        return implode(' ', $buttons);
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string
@@ -261,10 +297,12 @@ class ProductOfferTable extends AbstractTable
      */
     public function getActiveLabel(bool $isActive): string
     {
-        return $isActive ? $this->generateLabel('Active', static::STORE_CLASS_LABEL) : $this->generateLabel('Inactive', static::STORE_CLASS_LABEL);
+        return $isActive ? $this->generateLabel('Active', static::STORE_CLASS_LABEL) : $this->generateLabel('Inactive', 'label-danger');
     }
 
     /**
+     * @phpstan-param array<string, mixed> $item
+     *
      * @param array $item
      *
      * @return string

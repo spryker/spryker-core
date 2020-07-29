@@ -8,19 +8,25 @@
 namespace Spryker\Zed\ProductOfferGui\Persistence\Mapper;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
 
 class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapperInterface
 {
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    public function mapQueryCriteriaTransferToModelCriteria(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria
-    {
+    public function mapQueryCriteriaTransferToModelCriteria(
+        SpyProductOfferQuery $query,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): SpyProductOfferQuery {
         $query = $this->addJoin($query, $queryCriteriaTransfer);
         $query = $this->addWithColumns($query, $queryCriteriaTransfer);
 
@@ -28,15 +34,19 @@ class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapper
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function addJoin(
-        ModelCriteria $query,
+        SpyProductOfferQuery $query,
         QueryCriteriaTransfer $queryCriteriaTransfer
-    ): ModelCriteria {
+    ): SpyProductOfferQuery {
         foreach ($queryCriteriaTransfer->getJoins() as $queryJoinTransfer) {
             $joinType = $queryJoinTransfer->getJoinType() ?? Criteria::INNER_JOIN;
             if ($queryJoinTransfer->getRelation()) {
@@ -55,15 +65,19 @@ class ProductOfferQueryCriteriaMapper implements ProductOfferQueryCriteriaMapper
     }
 
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
     protected function addWithColumns(
-        ModelCriteria $query,
+        SpyProductOfferQuery $query,
         QueryCriteriaTransfer $queryCriteriaTransfer
-    ): ModelCriteria {
+    ): SpyProductOfferQuery {
         foreach ($queryCriteriaTransfer->getWithColumns() as $field => $value) {
             $query->withColumn($field, $value);
         }

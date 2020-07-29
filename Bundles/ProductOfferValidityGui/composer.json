@@ -1,0 +1,27 @@
+{
+  "name": "spryker/product-offer-validity-gui",
+  "description": "ProductOfferValidityGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-offer-gui-extension": "*",
+    "spryker/product-offer-validity": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {},
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

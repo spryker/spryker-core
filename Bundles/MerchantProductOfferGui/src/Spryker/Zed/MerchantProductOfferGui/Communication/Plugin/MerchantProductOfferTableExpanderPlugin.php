@@ -14,6 +14,7 @@ use Spryker\Zed\ProductOfferGuiExtension\Dependency\Plugin\ProductOfferTableExpa
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferGui\Communication\MerchantProductOfferGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiConfig getConfig()
  */
 class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements ProductOfferTableExpanderPluginInterface
 {
@@ -57,6 +58,11 @@ class MerchantProductOfferTableExpanderPlugin extends AbstractPlugin implements 
      * - Expands table data with merchant name.
      *
      * @api
+     *
+     * @phpstan-param array<string, mixed> $rowData
+     * @phpstan-param array<string, mixed> $productOfferData
+     *
+     * @phpstan-return array<string, mixed>
      *
      * @param array $rowData
      * @param array $productOfferData

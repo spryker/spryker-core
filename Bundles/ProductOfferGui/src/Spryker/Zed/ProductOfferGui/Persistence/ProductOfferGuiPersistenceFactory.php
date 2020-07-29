@@ -7,13 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapper;
 use Spryker\Zed\ProductOfferGui\Persistence\Mapper\ProductOfferQueryCriteriaMapperInterface;
+use Spryker\Zed\ProductOfferGui\ProductOfferGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductOfferGui\ProductOfferGuiConfig getConfig()
- * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductOfferGui\Persistence\ProductOfferGuiRepositoryInterface getRepository()
  */
 class ProductOfferGuiPersistenceFactory extends AbstractPersistenceFactory
@@ -24,5 +25,15 @@ class ProductOfferGuiPersistenceFactory extends AbstractPersistenceFactory
     public function createProductOfferQueryCriteriaMapper(): ProductOfferQueryCriteriaMapperInterface
     {
         return new ProductOfferQueryCriteriaMapper();
+    }
+
+    /**
+     * @phpstan-return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery<mixed>
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function getProductAbstractPropelQuery(): SpyProductAbstractQuery
+    {
+        return $this->getProvidedDependency(ProductOfferGuiDependencyProvider::PROPEL_QUERY_PRODUCT_ABSTRACT);
     }
 }

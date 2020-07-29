@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProductOfferGui;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeBridge;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiConfig getConfig()
@@ -17,6 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+    public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -28,6 +30,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addApplication($container);
+        $container = $this->addMerchantFacade($container);
 
         return $container;
     }
@@ -43,6 +46,22 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT, function (Container $container) {
+            return new MerchantProductOfferGuiToMerchantFacadeBridge(
+                $container->getLocator()->merchant()->facade()
+            );
         });
 
         return $container;

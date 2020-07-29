@@ -1,0 +1,31 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'View Offer' | trans ~ ': ' ~ productOffer.productOfferReference %}
+
+{% block head_title page_title %}
+{% block section_title page_title %}
+
+{% block action %}
+    {{ backActionButton(url('/product-offer-gui/list'), 'Back to Offers' | trans) }}
+    {%  for applicableProductOfferStatus in applicableProductOfferStatuses %}
+        {% if applicableProductOfferStatus == 'denied' %}
+            {{ removeActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), 'Deny' | trans, {'icon':'<i class="fa fa-trash"></i> '}) }}
+        {% else %}
+            {{ createActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), 'Approve' | trans, {'icon':'<i class="fa fa-play"></i> '}) }}
+        {%  endif %}
+    {%  endfor %}
+{% endblock %}
+
+{% block content %}
+    {% include '@ProductOfferGui/View/_partials/info-offer.twig' %}
+    {% include '@ProductOfferGui/View/_partials/info-product.twig' %}
+    {% include '@ProductOfferGui/View/_partials/info-sections.twig' %}
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+{% endblock %}

@@ -8,15 +8,22 @@
 namespace Spryker\Zed\ProductOfferGui\Persistence\Mapper;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 
 interface ProductOfferQueryCriteriaMapperInterface
 {
     /**
-     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
+     * @phpstan-param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed> $query
+     *
+     * @phpstan-return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery<mixed>
+     *
+     * @param \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery $query
      * @param \Generated\Shared\Transfer\QueryCriteriaTransfer $queryCriteriaTransfer
      *
-     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return \Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery
      */
-    public function mapQueryCriteriaTransferToModelCriteria(ModelCriteria $query, QueryCriteriaTransfer $queryCriteriaTransfer): ModelCriteria;
+    public function mapQueryCriteriaTransferToModelCriteria(
+        SpyProductOfferQuery $query,
+        QueryCriteriaTransfer $queryCriteriaTransfer
+    ): SpyProductOfferQuery;
 }

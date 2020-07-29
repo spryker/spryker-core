@@ -45,6 +45,11 @@ interface ProductOfferTableExpanderPluginInterface
      *
      * @api
      *
+     * @phpstan-param array<string, mixed> $rowData
+     * @phpstan-param array<string, mixed> $productOfferData
+     *
+     * @phpstan-return array<string, mixed>
+     *
      * @param array $rowData
      * @param array $productOfferData
      *
