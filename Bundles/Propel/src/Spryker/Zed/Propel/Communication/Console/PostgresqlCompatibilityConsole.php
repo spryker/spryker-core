@@ -43,7 +43,7 @@ class PostgresqlCompatibilityConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== Config::get(PropelConstants::ZED_DB_ENGINE_PGSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) !== PropelConfig::DB_ENGINE_PGSQL) {
             $this->info('This command doesn\'t support chosen DB engine');
 
             return null;
