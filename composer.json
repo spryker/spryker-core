@@ -401,6 +401,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",

@@ -85,4 +85,14 @@ class GlueApplicationConfig extends AbstractBundleConfig
     {
         return true;
     }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->get(GlueApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
+    }
 }

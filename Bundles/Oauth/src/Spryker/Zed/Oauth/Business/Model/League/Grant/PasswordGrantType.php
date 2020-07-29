@@ -70,6 +70,8 @@ class PasswordGrantType extends AbstractGrant implements GrantTypeInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $client
      *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
     protected function validateUser(ServerRequestInterface $request, ClientEntityInterface $client)

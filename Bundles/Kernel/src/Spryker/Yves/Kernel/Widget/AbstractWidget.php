@@ -7,6 +7,8 @@
 
 namespace Spryker\Yves\Kernel\Widget;
 
+use Spryker\Shared\Kernel\Container\GlobalContainer;
+use Spryker\Shared\Kernel\Container\GlobalContainerInterface;
 use Spryker\Yves\Kernel\BundleConfigResolverAwareTrait;
 use Spryker\Yves\Kernel\ClientResolverAwareTrait;
 use Spryker\Yves\Kernel\Dependency\Widget\WidgetInterface;
@@ -125,6 +127,8 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Widget\AbstractWidget::getGlobalContainer()} instead.
+     *
      * @return \Spryker\Service\Container\Container
      */
     protected function getApplication()
@@ -133,10 +137,18 @@ abstract class AbstractWidget implements WidgetInterface
     }
 
     /**
+     * @return \Spryker\Shared\Kernel\Container\GlobalContainerInterface
+     */
+    protected function getGlobalContainer(): GlobalContainerInterface
+    {
+        return new GlobalContainer();
+    }
+
+    /**
      * @return string
      */
     protected function getLocale(): string
     {
-        return $this->getApplication()->get(static::SERVICE_LOCALE);
+        return $this->getGlobalContainer()->get(static::SERVICE_LOCALE);
     }
 }

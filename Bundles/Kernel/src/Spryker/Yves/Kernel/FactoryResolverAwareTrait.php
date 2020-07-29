@@ -17,6 +17,18 @@ trait FactoryResolverAwareTrait
     private $factory;
 
     /**
+     * @param \Spryker\Yves\Kernel\FactoryInterface $factory
+     *
+     * @return $this
+     */
+    public function setFactory(FactoryInterface $factory)
+    {
+        $this->factory = $factory;
+
+        return $this;
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\FactoryInterface
      */
     protected function getFactory()

@@ -46,6 +46,7 @@ class CmsSlotKeyToCmsSlotIdStep implements DataImportStepInterface
             return $this->idCmsSlotBuffer[$cmsSlotKey];
         }
 
+        /** @var int|null $idCmsSlot */
         $idCmsSlot = SpyCmsSlotQuery::create()
             ->filterByKey($cmsSlotKey)
             ->select([SpyCmsSlotTableMap::COL_ID_CMS_SLOT])

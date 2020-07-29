@@ -9,7 +9,6 @@ namespace Spryker\Yves\Navigation\Twig;
 
 use Spryker\Client\Navigation\NavigationClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
-use Spryker\Yves\Kernel\Application;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -25,9 +24,9 @@ class NavigationTwigExtension extends TwigExtension
     protected $navigationClient;
 
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var string
      */
-    protected $application;
+    protected $locale;
 
     /**
      * @var array
@@ -36,12 +35,12 @@ class NavigationTwigExtension extends TwigExtension
 
     /**
      * @param \Spryker\Client\Navigation\NavigationClientInterface $navigationClient
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param string $locale
      */
-    public function __construct(NavigationClientInterface $navigationClient, Application $application)
+    public function __construct(NavigationClientInterface $navigationClient, string $locale)
     {
         $this->navigationClient = $navigationClient;
-        $this->application = $application;
+        $this->locale = $locale;
     }
 
     /**
@@ -66,10 +65,10 @@ class NavigationTwigExtension extends TwigExtension
      */
     public function renderNavigation(Environment $twig, $navigationKey, $template)
     {
-        $key = $navigationKey . '-' . $this->getLocale();
+        $key = $navigationKey . '-' . $this->locale;
 
         if (!isset(static::$buffer[$key])) {
-            $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->getLocale());
+            $navigationTreeTransfer = $this->navigationClient->findNavigationTreeByKey($navigationKey, $this->locale);
 
             static::$buffer[$key] = $navigationTreeTransfer;
         }
@@ -86,10 +85,12 @@ class NavigationTwigExtension extends TwigExtension
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getLocale()
     {
-        return $this->application['locale'];
+        return $this->locale;
     }
 }

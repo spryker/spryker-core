@@ -15,8 +15,9 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use Spryker\Service\UtilSanitize\UtilSanitizeService;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
+use Spryker\Shared\Kernel\Container\GlobalContainerInterface;
 use Spryker\Zed\Gui\Communication\Form\DeleteForm;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Symfony\Component\Form\FormInterface;
 use Twig\Environment;
@@ -35,6 +36,16 @@ abstract class AbstractTable
     public const SORT_BY_COLUMN = 'column';
     public const SORT_BY_DIRECTION = 'dir';
     public const URL_ANCHOR = '#';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
+    /**
+     * @uses \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin::SERVICE_FORM_FACTORY
+     */
+    public const SERVICE_FORM_FACTORY = 'form.factory';
 
     /**
      * Defines delete form name suffix allowing to avoid non-unique attributes (e.g. form name or id) for delete forms on one page.
@@ -178,8 +189,13 @@ abstract class AbstractTable
      */
     protected function getRequest()
     {
-        return (new Pimple())
-            ->getApplication()['request'];
+        $container = $this->getApplicationContainer();
+
+        if ($container->has('request')) {
+            return $container->get('request');
+        }
+
+        return $container->get('request_stack')->getCurrentRequest();
     }
 
     /**
@@ -388,8 +404,7 @@ abstract class AbstractTable
     private function getTwig()
     {
         /** @var \Twig\Environment|null $twig */
-        $twig = (new Pimple())
-            ->getApplication()['twig'];
+        $twig = $this->getApplicationContainer()->get(static::SERVICE_TWIG);
 
         if ($twig === null) {
             throw new LogicException('Twig environment not set up.');
@@ -403,6 +418,14 @@ abstract class AbstractTable
         ));
 
         return $twig;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\Container\GlobalContainerInterface
+     */
+    protected function getApplicationContainer(): GlobalContainerInterface
+    {
+        return new GlobalContainer();
     }
 
     /**
@@ -972,7 +995,7 @@ abstract class AbstractTable
      */
     protected function getFormFactory()
     {
-        return (new Pimple())->getApplication()['form.factory'];
+        return $this->getApplicationContainer()->get(static::SERVICE_FORM_FACTORY);
     }
 
     /**

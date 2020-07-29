@@ -81,4 +81,9 @@ interface RouterConstants
      * @api
      */
     public const YVES_SSL_EXCLUDED_ROUTE_NAMES = 'ROUTER:YVES_SSL_EXCLUDED_ROUTE_NAMES';
+
+    /**
+     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     */
+    public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 }

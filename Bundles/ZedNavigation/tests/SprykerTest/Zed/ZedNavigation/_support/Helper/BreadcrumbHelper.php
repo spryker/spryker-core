@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ZedNavigation\Helper;
 
 use Codeception\Module;
 use SprykerTest\Shared\Testify\Helper\ZedBootstrap;
+use SprykerTest\Zed\Application\Helper\ApplicationHelper;
 
 class BreadcrumbHelper extends Module
 {
@@ -37,45 +38,32 @@ class BreadcrumbHelper extends Module
      */
     public function seeBreadcrumbNavigation(string $breadcrumb): void
     {
-        if ($this->isPresentationSuite) {
-            $this->checkWithWebdriver($breadcrumb);
-        }
-
-        if (!$this->isPresentationSuite) {
-            $this->checkWithFramework($breadcrumb);
-        }
+        $this->checkBreadcrumbNavigation($breadcrumb);
     }
 
     /**
-     * @return \Codeception\Module|\Codeception\Module\WebDriver|\SprykerTest\Shared\Testify\Helper\ZedBootstrap
+     * @return \Codeception\Module\WebDriver|\SprykerTest\Zed\Application\Helper\ApplicationHelper|\SprykerTest\Shared\Testify\Helper\ZedBootstrap
      */
     private function getDriver()
     {
         if ($this->isPresentationSuite) {
-            return $this->getModule('WebDriver');
+            /** @var \Codeception\Module\WebDriver $webDriver */
+            $webDriver = $this->getModule('WebDriver');
+
+            return $webDriver;
         }
 
-        return $this->getModule('\\' . ZedBootstrap::class);
-    }
+        if ($this->hasModule('\\' . ApplicationHelper::class)) {
+            /** @var \SprykerTest\Zed\Application\Helper\ApplicationHelper $applicationHelper */
+            $applicationHelper = $this->getModule('\\' . ApplicationHelper::class);
 
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
-    private function checkWithWebdriver(string $breadcrumb): void
-    {
-        $this->checkBreadcrumbNavigation($breadcrumb);
-    }
+            return $applicationHelper;
+        }
 
-    /**
-     * @param string $breadcrumb
-     *
-     * @return void
-     */
-    private function checkWithFramework(string $breadcrumb): void
-    {
-        $this->checkBreadcrumbNavigation($breadcrumb);
+        /** @var \SprykerTest\Shared\Testify\Helper\ZedBootstrap $zedBootstrap */
+        $zedBootstrap = $this->getModule('\\' . ZedBootstrap::class);
+
+        return $zedBootstrap;
     }
 
     /**

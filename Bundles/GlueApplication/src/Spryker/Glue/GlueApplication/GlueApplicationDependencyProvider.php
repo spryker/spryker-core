@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\Kernel\Plugin\Pimple;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -74,7 +74,7 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
     protected function addGlueApplication(Container $container): Container
     {
         $container->set(static::APPLICATION_GLUE, function (Container $container) {
-            return (new Pimple())->getApplication();
+            return (new GlobalContainer())->getContainer();
         });
 
         return $container;

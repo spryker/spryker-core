@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\Search;
 
 use Codeception\Test\Unit;
+use Elastica\Index;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
 
 /**
@@ -30,6 +31,8 @@ class SearchClientBCTest extends Unit
      */
     protected function _setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         parent::_setUp();
 
         $this->setupEnvironmentForBCSearchTesting();
@@ -164,5 +167,15 @@ class SearchClientBCTest extends Unit
     {
         $this->tester->mockConfigMethod('getSearchIndexName', static::INDEX_NAME);
         $this->tester->mockConfigMethod('getSearchDocumentType', static::MAPPING_TYPE);
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }

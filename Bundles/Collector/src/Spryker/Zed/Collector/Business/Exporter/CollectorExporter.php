@@ -201,12 +201,13 @@ class CollectorExporter
     }
 
     /**
-     * @param array $types
+     * @param string[] $types
      *
-     * @return array
+     * @return string[]
      */
     protected function getAvailableCollectorTypes(array $types)
     {
+        /** @var string[] $availableTypes */
         $availableTypes = $this->touchQueryContainer
             ->queryExportTypes()
             ->find();

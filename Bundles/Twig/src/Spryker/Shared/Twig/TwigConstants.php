@@ -36,6 +36,8 @@ interface TwigConstants
      * Specification:
      * - Path to cache file for resolved template directories.
      *
+     * @deprecated Use {@link \Spryker\Yves\Twig\TwigConfig::getCacheFilePath()} instead.
+     *
      * @api
      */
     public const YVES_PATH_CACHE_FILE = 'YVES_PATH_CACHE_FILE';
@@ -60,6 +62,8 @@ interface TwigConstants
     /**
      * Specification:
      * - Path to cache file for resolved template directories.
+     *
+     * @deprecated Use {@link \Spryker\Zed\Twig\TwigConfig::getCacheFilePath()} instead.
      *
      * @api
      */
