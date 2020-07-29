@@ -26,8 +26,6 @@
         <property name="filters" type="GuiTableFiltersConfiguration"/>
         <property name="itemSelection" type="GuiTableItemSelectionConfiguration"/>
         <property name="syncStateUrl" type="GuiTableSyncStateUrlConfiguration"/>
-        <property name="defaultSortColumn" type="string"/>
-        <property name="defaultSortDirection" type="string"/>
     </transfer>
 
     <transfer name="GuiTableColumnConfiguration">
@@ -108,7 +106,6 @@
 
     <transfer name="CriteriaRangeFilter">
         <property name="from" type="string"/>
-        <property name="to" type="string"/>
     </transfer>
 
 </transfers>

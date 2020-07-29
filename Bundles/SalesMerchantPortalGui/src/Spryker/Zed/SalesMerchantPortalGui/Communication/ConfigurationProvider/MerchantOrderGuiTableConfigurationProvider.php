@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
-use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
@@ -81,8 +80,6 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addPaginationToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey())
-            ->setDefaultSortDirection(Criteria::DESC);
         $guiTableConfigurationTransfer->setDataSource(
             (new GuiTableDataSourceConfigurationTransfer())->setUrl(static::DATA_URL)
         );
@@ -180,14 +177,6 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         );
 
         return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultSortColumnKey(): string
-    {
-        return static::COL_KEY_REFERENCE;
     }
 
     /**

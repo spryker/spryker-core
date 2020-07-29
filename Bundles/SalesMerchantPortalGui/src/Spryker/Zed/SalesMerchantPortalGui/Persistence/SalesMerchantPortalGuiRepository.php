@@ -35,6 +35,11 @@ use Spryker\Zed\SalesMerchantPortalGui\Persistence\Propel\Mapper\SalesMerchantPo
 class SalesMerchantPortalGuiRepository extends AbstractRepository implements SalesMerchantPortalGuiRepositoryInterface
 {
     /**
+     * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE
+     */
+    public const COL_KEY_REFERENCE = 'reference';
+
+    /**
      * @param \Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer $merchantOrderTableCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
@@ -310,12 +315,8 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         SpyMerchantSalesOrderQuery $merchantSalesOrderQuery,
         MerchantOrderTableCriteriaTransfer $merchantOrderTableCriteriaTransfer
     ): SpyMerchantSalesOrderQuery {
-        $orderColumn = $merchantOrderTableCriteriaTransfer->getOrderBy();
-        $orderDirection = $merchantOrderTableCriteriaTransfer->getOrderDirection();
-
-        if (!$orderColumn || !$orderDirection) {
-            return $merchantSalesOrderQuery;
-        }
+        $orderColumn = $merchantOrderTableCriteriaTransfer->getOrderBy() ?? static::COL_KEY_REFERENCE;
+        $orderDirection = $merchantOrderTableCriteriaTransfer->getOrderDirection() ?? Criteria::DESC;
 
         $orderColumn = SalesMerchantPortalGuiMapper::MERCHANT_ORDER_DATA_COLUMN_MAP[$orderColumn] ?? $orderColumn;
 

@@ -71,7 +71,7 @@ class DataRequestBuilder implements DataRequestBuilderInterface
         $guiTableDataRequestTransfer->setIdLocale($this->localeFacade->getCurrentLocale()->getIdLocale());
 
         $guiTableDataRequestTransfer = $this->hydratePagination($requestParams, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);
-        $guiTableDataRequestTransfer = $this->hydrateOrder($requestParams, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);
+        $guiTableDataRequestTransfer = $this->hydrateOrder($requestParams, $guiTableDataRequestTransfer);
         $guiTableDataRequestTransfer = $this->hydrateFilters($requestParams, $guiTableConfigurationTransfer, $guiTableDataRequestTransfer);
 
         return $guiTableDataRequestTransfer;
@@ -132,25 +132,18 @@ class DataRequestBuilder implements DataRequestBuilderInterface
 
     /**
      * @param array $requestParams
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      * @param \Generated\Shared\Transfer\GuiTableDataRequestTransfer $guiTableDataRequestTransfer
      *
      * @return \Generated\Shared\Transfer\GuiTableDataRequestTransfer
      */
     protected function hydrateOrder(
         array $requestParams,
-        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
         GuiTableDataRequestTransfer $guiTableDataRequestTransfer
     ): GuiTableDataRequestTransfer {
-        $sortBy = $requestParams['sortBy'] ?? $guiTableConfigurationTransfer->getDefaultSortColumn();
-
-        if (!$sortBy) {
-            return $guiTableDataRequestTransfer;
+        if (isset($requestParams['sortBy'])) {
+            $guiTableDataRequestTransfer->setOrderBy($requestParams['sortBy']);
+            $guiTableDataRequestTransfer->setOrderDirection($requestParams['sortDirection'] ?? static::DEFAULT_SORT_DIRECTION);
         }
-
-        $guiTableDataRequestTransfer->setOrderBy($sortBy);
-        $sortDirection = $requestParams['sortDirection'] ?? $guiTableConfigurationTransfer->getDefaultSortDirection();
-        $guiTableDataRequestTransfer->setOrderDirection($sortDirection ?? static::DEFAULT_SORT_DIRECTION);
 
         return $guiTableDataRequestTransfer;
     }
