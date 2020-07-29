@@ -124,13 +124,15 @@ class DetailController extends AbstractController
             return $customerMerchantOrderNumber;
         }
 
-        return $this->getFactory()
+        $customerMerchantOrderNumber = $this->getFactory()
             ->getMerchantSalesOrderFacade()
             ->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())
                     ->setCustomerReference($merchantOrderTransfer->getOrder()->getCustomerReference())
                     ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             );
+
+        return $customerMerchantOrderNumber - 1;
     }
 
     /**
