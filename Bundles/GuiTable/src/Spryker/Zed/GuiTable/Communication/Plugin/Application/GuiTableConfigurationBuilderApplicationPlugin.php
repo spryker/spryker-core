@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  */
 class GuiTableConfigurationBuilderApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    protected const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
+    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
 
     /**
      * {@inheritDoc}

@@ -9,7 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication;
 
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
-use Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProviderInterface;
@@ -146,11 +146,11 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface
+     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface
      */
-    public function getGuiTableHttpDataRequestHandler(): GuiTableDataRequestHandlerInterface
+    public function getGuiTableHttpDataRequestExecutor(): GuiTableDataRequestExecutorInterface
     {
-        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER);
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR);
     }
 
     /**

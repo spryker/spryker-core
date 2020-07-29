@@ -35,7 +35,7 @@ class CreateOfferController extends AbstractController
     public function tableDataAction(Request $request): JsonResponse
     {
         /** @var \Symfony\Component\HttpFoundation\JsonResponse $jsonResponse */
-        $jsonResponse = $this->getFactory()->getGuiTableHttpDataRequestHandler()->handleGetDataRequest(
+        $jsonResponse = $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
             $this->getFactory()->createProductTableDataProvider(),
             $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration(),

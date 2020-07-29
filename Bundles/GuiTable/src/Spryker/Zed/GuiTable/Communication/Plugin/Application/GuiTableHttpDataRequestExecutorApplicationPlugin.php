@@ -9,16 +9,16 @@ namespace Spryker\Zed\GuiTable\Communication\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\GuiTable\GuiTableConfig getConfig()
  * @method \Spryker\Zed\GuiTable\Communication\GuiTableCommunicationFactory getFactory()
  */
-class GuiTableHttpDataRequestHandlerApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+class GuiTableHttpDataRequestExecutorApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    protected const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER = 'gui_table_http_data_request_handler';
+    public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**
      * {@inheritDoc}
@@ -43,7 +43,7 @@ class GuiTableHttpDataRequestHandlerApplicationPlugin extends AbstractPlugin imp
      */
     protected function addGuiTableHttpDataRequestHandlerService(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_HANDLER, function (): GuiTableDataRequestHandlerInterface {
+        $container->set(static::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR, function (): GuiTableDataRequestExecutorInterface {
             return $this->getFactory()->createGuiTableDataRequestHandler();
         });
 

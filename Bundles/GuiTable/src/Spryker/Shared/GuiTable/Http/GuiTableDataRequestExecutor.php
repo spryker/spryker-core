@@ -15,7 +15,7 @@ use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class GuiTableDataRequestHandler implements GuiTableDataRequestHandlerInterface
+class GuiTableDataRequestExecutor implements GuiTableDataRequestExecutorInterface
 {
     /**
      * @var \Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface
@@ -57,7 +57,7 @@ class GuiTableDataRequestHandler implements GuiTableDataRequestHandlerInterface
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function handleGetDataRequest(
+    public function execute(
         Request $request,
         GuiTableDataProviderInterface $guiTableDataProvider,
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer,

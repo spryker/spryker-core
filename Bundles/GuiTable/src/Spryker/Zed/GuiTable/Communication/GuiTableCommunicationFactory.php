@@ -20,8 +20,8 @@ use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilder;
 use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface;
 use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
 use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface;
-use Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandler;
-use Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutor;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Shared\GuiTable\Http\HttpJsonResponseBuilder;
 use Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface;
 use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizer;
@@ -118,11 +118,11 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestHandlerInterface
+     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface
      */
-    public function createGuiTableDataRequestHandler(): GuiTableDataRequestHandlerInterface
+    public function createGuiTableDataRequestHandler(): GuiTableDataRequestExecutorInterface
     {
-        return new GuiTableDataRequestHandler(
+        return new GuiTableDataRequestExecutor(
             $this->createDataRequestBuilder(),
             $this->createDataResponseFormatter(),
             $this->createHttpJsonResponseBuilder()
