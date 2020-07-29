@@ -55,6 +55,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             ->leftJoinWithSpyProductMeasurementSalesUnitStore()
             ->leftJoinWith('SpyProductMeasurementSalesUnitStore.SpyStore');
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection|null $productMeasurementSalesUnitEntityCollection */
         $productMeasurementSalesUnitEntityCollection = $query->find();
         if (!$productMeasurementSalesUnitEntityCollection) {
             throw new EntityNotFoundException(sprintf(static::ERROR_NO_SALES_UNIT_BY_ID, $idProductMeasurementSalesUnit));
@@ -304,6 +305,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             return [];
         }
 
+        /** @var array $productMeasurementSalesUnitsData */
         $productMeasurementSalesUnitsData = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->filterByFkProduct_In($productConcreteIds)

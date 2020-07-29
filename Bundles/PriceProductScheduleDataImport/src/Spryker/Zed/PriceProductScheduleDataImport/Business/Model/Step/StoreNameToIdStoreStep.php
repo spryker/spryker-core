@@ -34,6 +34,7 @@ class StoreNameToIdStoreStep implements DataImportStepInterface
     {
         $storeName = $dataSet[PriceProductScheduleDataSetInterface::KEY_STORE];
         if (!isset($this->idStoreCache[$storeName])) {
+            /** @var int|null $idStore */
             $idStore = $this->createStoreQuery()
                 ->select(SpyStoreTableMap::COL_ID_STORE)
                 ->findOneByName($storeName);

@@ -841,6 +841,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
         $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
 
+        /** @var array $merchantProductOfferCounts */
         $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()
