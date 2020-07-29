@@ -103,7 +103,9 @@ class StoreRelationToggleType extends AbstractType
     protected function addFieldIdStores(FormBuilderInterface $builder)
     {
         if ($this->getConfig()->isMultiStorePerZedEnabled()) {
-            return $this->addFieldEditableIdStores($builder);
+            $this->addFieldEditableIdStores($builder);
+
+            return $this;
         }
 
         $this->addFieldImmutableIdStores($builder);
