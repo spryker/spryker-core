@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-    - '#Cannot cast .+SpyOmsProductReservationStore to int.#'
     -
         message: '#Result of && is always false.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Oms/src/Spryker/Zed/Oms/Communication/Plugin/Oms/Command/CommandCollection.php'
