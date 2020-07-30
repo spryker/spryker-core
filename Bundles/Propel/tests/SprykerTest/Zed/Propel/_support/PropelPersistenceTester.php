@@ -11,10 +11,10 @@ use Codeception\Actor;
 use Codeception\Scenario;
 use DateTime;
 use Faker\Factory;
+use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\ColumnMap;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\VarDumper\VarDumper;
 use Throwable;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
@@ -122,7 +122,9 @@ class PropelPersistenceTester extends Actor
     /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      *
-     * @return bool|\DateTime|float|int|mixed|string
+     * @throws \PHPUnit\Framework\ExpectationFailedException
+     *
+     * @return bool|\DateTime|float|int|mixed|string|false
      */
     public function getValue(ColumnMap $columnMap)
     {
@@ -148,7 +150,7 @@ class PropelPersistenceTester extends Actor
             return substr($this->faker->md5, 0, $maxSize);
         }
 
-        if ($columnMap->getType() === 'LONGVARCHAR') {
+        if ($columnMap->getType() === 'LONGVARCHAR' || $columnMap->getType() === 'CLOB') {
             return $this->faker->text;
         }
 
@@ -176,7 +178,12 @@ class PropelPersistenceTester extends Actor
             return new DateTime();
         }
 
-        echo '<pre>' . PHP_EOL . VarDumper::dump($columnMap) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        throw new ExpectationFailedException(sprintf(
+            'Could not create a value for "%s.%s" type "%s".',
+            $columnMap->getTableName(),
+            $columnMap->getName(),
+            $columnMap->getType()
+        ));
     }
 
     /**
