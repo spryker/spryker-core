@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeBridge;
 
@@ -21,6 +21,11 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
     public const FACADE_MERCHANT = 'FACADE_MERCHANT';
 
     /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    public const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -29,7 +34,7 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
     {
         $container = parent::provideCommunicationLayerDependencies($container);
 
-        $container = $this->addApplication($container);
+        $container = $this->addRequestStack($container);
         $container = $this->addMerchantFacade($container);
 
         return $container;
@@ -40,12 +45,10 @@ class MerchantProductOfferGuiDependencyProvider extends AbstractBundleDependency
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addApplication(Container $container): Container
+    protected function addRequestStack(Container $container): Container
     {
-        $container->set(static::PLUGIN_APPLICATION, function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
+        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
         });
 
         return $container;

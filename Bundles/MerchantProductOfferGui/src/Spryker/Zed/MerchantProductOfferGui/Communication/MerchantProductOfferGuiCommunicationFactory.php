@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\MerchantProductOfferGui\Communication;
 
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpander;
 use Spryker\Zed\MerchantProductOfferGui\Communication\Expander\MerchantProductOfferTableExpanderInterface;
@@ -16,6 +15,7 @@ use Spryker\Zed\MerchantProductOfferGui\Communication\Reader\MerchantProductOffe
 use Spryker\Zed\MerchantProductOfferGui\Dependency\Facade\MerchantProductOfferGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \Spryker\Zed\MerchantProductOfferGui\MerchantProductOfferGuiConfig getConfig()
@@ -39,15 +39,15 @@ class MerchantProductOfferGuiCommunicationFactory extends AbstractCommunicationF
      */
     public function getRequest(): Request
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Communication\Application
+     * @return \Symfony\Component\HttpFoundation\RequestStack
      */
-    public function getApplication(): Application
+    public function getRequestStack(): RequestStack
     {
-        return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::PLUGIN_APPLICATION);
+        return $this->getProvidedDependency(MerchantProductOfferGuiDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**
