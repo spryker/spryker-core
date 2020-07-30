@@ -133,7 +133,4 @@
         <property name="title" type="string"/>
     </transfer>
 
-    <transfer name="Item">
-    </transfer>
-
 </transfers>
