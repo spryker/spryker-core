@@ -1,12 +1,11 @@
 Actions,Aktionen
 Active,Aktiv
 Approved,Bestätigt
-approved_offer_button,"Genehmigen"
+approved_offer_button,Genehmigen
 "Back to Offers","Zurück zu Angeboten"
 denied_offer_button,Abgelehnt
 Denied,Abgelehnt
 Description,Beschreibung
-"Gift Card","Geschenkgutschein"
 Inactive,Inaktiv
 "List of Offers","Liste der Angebote"
 Name,Name
@@ -14,7 +13,6 @@ Offer,Angebot
 "Offer ID","Angebot ID"
 Offers,"Bietet an"
 Product,Produkt
-"Product Bundle","Bündelprodukt"
 Reference,Referenz
 SKU,Artikelnummer
 Status,Status

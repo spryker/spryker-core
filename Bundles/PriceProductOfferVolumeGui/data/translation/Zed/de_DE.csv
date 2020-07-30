@@ -1,9 +1,9 @@
 Back,Zurück
 Currency,Währung
-"Gross price","Bruttopreis"
-"Net price","Nettopreis"
+"Gross price",Bruttopreis
+"Net price",Nettopreis
 "Price Dimension Name","Name der Preisdimension"
-"Price Type","Preistyp"
+"Price Type",Preistyp
 Quantity,Menge
 Store,Geschäft
 "View Offer Volume Price","Staffelpreise anzeigen"

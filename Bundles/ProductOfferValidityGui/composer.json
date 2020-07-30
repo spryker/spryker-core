@@ -5,8 +5,8 @@
   "require": {
     "php": ">=7.2",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-offer-gui-extension": "*",
-    "spryker/product-offer-validity": "*"
+    "spryker/product-offer-gui-extension": "^0.1.0",
+    "spryker/product-offer-validity": "^0.2.0"
   },
   "autoload": {
     "psr-4": {

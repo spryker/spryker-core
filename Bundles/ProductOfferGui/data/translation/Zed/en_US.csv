@@ -2,13 +2,12 @@ Actions,Actions
 Active,Active
 Approved,Approved
 approved,Approved
-approved_offer_button,"Approve"
-Back to Offers,Back to Offers
+approved_offer_button,Approve
+"Back to Offers","Back to Offers"
 denied,Denied
 denied_offer_button,Deny
 Denied,Denied
 Description,Description
-Gift Card,Gift Card
 Inactive,Inactive
 "List of Offers","List of Offers"
 Name,Name
@@ -16,14 +15,13 @@ Offer,Offer
 "Offer ID","Offer ID"
 Offers,Offers
 Product,Product
-Product Bundle,Product Bundle
 Reference,Reference
 SKU,SKU
 Status,Status
 Stores,Stores
 "The approval status was updated","The approval status was updated"
 Type,Type
-View Offer,View Offer
+"View Offer",'View Offer"
 Visibility,Visibility
-Waiting for Approval,Waiting for Approval
+"Waiting for Approval","Waiting for Approval"
 waiting_for_approval,"Waiting for approval"
