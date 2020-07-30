@@ -54,7 +54,7 @@ class CompanyRoleWriterStep implements DataImportStepInterface
     protected function getIdCompanyByKey(string $companyKey): int
     {
         if (!isset($this->idCompanyListCache[$companyKey])) {
-            /** @var int $idCompany */
+            /** @var int|null $idCompany */
             $idCompany = $this->getCompanyQuery()
                 ->filterByKey($companyKey)
                 ->select(SpyCompanyTableMap::COL_ID_COMPANY)
