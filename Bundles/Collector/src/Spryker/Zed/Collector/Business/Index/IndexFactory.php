@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector\Business\Index;
 
 use Elastica\Client;
+use Elastica\Index;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 
 class IndexFactory implements IndexFactoryInterface
@@ -20,7 +21,7 @@ class IndexFactory implements IndexFactoryInterface
      */
     public function createIndex(Client $elasticaClient, SearchCollectorConfigurationTransfer $searchCollectorConfigurationTransfer)
     {
-        if (method_exists(Client::class, 'getType')) {
+        if (method_exists(Index::class, 'getType')) {
             return new TypeAwareIndexAdapter($elasticaClient, $searchCollectorConfigurationTransfer);
         }
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Collector\Business\Mapping;
 
 use Elastica\Client;
+use Elastica\Index;
 use Elastica\Type\Mapping;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 
@@ -25,7 +26,7 @@ class MappingFactory implements MappingFactoryInterface
         SearchCollectorConfigurationTransfer $searchCollectorConfigurationTransfer,
         array $mappingProperties = []
     ) {
-        if (method_exists(Client::class, 'getType')) {
+        if (method_exists(Index::class, 'getType')) {
             return new Mapping(
                 $elasticaClient->getIndex($searchCollectorConfigurationTransfer->getIndexName())->getType($searchCollectorConfigurationTransfer->getTypeName()),
                 $mappingProperties
