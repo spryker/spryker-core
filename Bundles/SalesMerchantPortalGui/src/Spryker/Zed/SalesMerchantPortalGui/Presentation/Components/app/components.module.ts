@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule } from '@spryker/web-components';
+import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
 import { ButtonAjaxComponent, ButtonAjaxModule } from '@spryker/button';
 import { ChipsComponent, ChipsModule } from '@spryker/chips';
 import { CardModule, CardComponent } from '@spryker/card';
@@ -30,7 +30,11 @@ import { ManageOrderCollapsibleTotalsModule } from './manage-order-collapsible-t
     ],
 })
 export class ComponentsModule extends CustomElementModule {
-    protected components = [
+    protected components: WebComponentDefs = [
+        {
+            component: TabsComponent,
+            isRoot: true,
+        },
         OfferOrdersComponent,
         ManageOrderComponent,
         ManageOrderStatsBlockComponent,
@@ -38,7 +42,6 @@ export class ComponentsModule extends CustomElementModule {
         ChipsComponent,
         CardComponent,
         TabComponent,
-        TabsComponent,
         ManageOrderTotalsComponent,
         OrderItemsTableComponent,
         ManageOrderCollapsibleTotalsComponent,

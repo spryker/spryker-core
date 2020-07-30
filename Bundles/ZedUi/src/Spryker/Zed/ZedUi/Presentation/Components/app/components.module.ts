@@ -32,36 +32,23 @@ import { MerchantLayoutMainModule } from './merchant-layout-main/merchant-layout
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
         {
-            selector: 'mp-layout-centered',
             component: LayoutCenteredComponent,
             isRoot: true,
         },
         {
-            selector: 'mp-layout-main',
             component: LayoutMainComponent,
             isRoot: true,
         },
         {
-            selector: 'mp-merchant-layout-centered',
             component: MerchantLayoutCenteredComponent,
             isRoot: true,
         },
         {
-            selector: 'mp-merchant-layout-main',
             component: MerchantLayoutMainComponent,
             isRoot: true,
         },
-        {
-            selector: 'mp-header',
-            component: HeaderComponent,
-        },
-        {
-            selector: 'spy-notification',
-            component: NotificationComponent,
-        },
-        {
-            selector: 'spy-locale-switcher',
-            component: LocaleSwitcherComponent,
-        },
+        HeaderComponent,
+        NotificationComponent,
+        LocaleSwitcherComponent,
     ];
 }
