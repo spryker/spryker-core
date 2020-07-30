@@ -6,7 +6,7 @@ parameters:
         message: '#Call to method setMeta\(\) on an unknown class Elastica\\Type\\Mapping.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php'
     -
-        message: '#Call to method updateDocuments\(\) on an unknown class Elastica\\Type.#'
+        message: '#Call to method addDocuments\(\) on an unknown class Elastica\\Type.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Index/TypeAwareIndexAdapter.php'
     -
         message: '#Call to method getName\(\) on an unknown class Elastica\\Type.#'
