@@ -103,6 +103,7 @@ class ExportReservation implements ExportReservationInterface
      */
     protected function getMaxVersion()
     {
+        /** @var string|null $queryResult */
         $queryResult = $this->omsQueryContainer
             ->queryMaxReservationChangeVersion()
             ->findOne();

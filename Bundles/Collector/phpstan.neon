@@ -1,6 +1,5 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
     - '#Call to an undefined method .+Locator::store\(\).#'
     -
         message: '#Call to method setMeta\(\) on an unknown class Elastica\\Type\\Mapping.#'
