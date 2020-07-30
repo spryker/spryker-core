@@ -1,10 +1,8 @@
 Actions,Actions
 Active,Active
 Approved,Approved
-approved,Approved
 approved_offer_button,Approve
 "Back to Offers","Back to Offers"
-denied,Denied
 denied_offer_button,Deny
 Denied,Denied
 Description,Description
@@ -21,7 +19,7 @@ Status,Status
 Stores,Stores
 "The approval status was updated","The approval status was updated"
 Type,Type
-"View Offer",'View Offer"
+"View Offer","View Offer"
 Visibility,Visibility
 "Waiting for Approval","Waiting for Approval"
 waiting_for_approval,"Waiting for approval"
