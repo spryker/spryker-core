@@ -53,7 +53,7 @@ class TypeAwareIndexAdapter implements IndexAdapterInterface
      */
     public function addDocuments(array $documents, array $options = [])
     {
-        return $this->getType()->updateDocuments($documents, $options);
+        return $this->getType()->addDocuments($documents, $options);
     }
 
     /**
