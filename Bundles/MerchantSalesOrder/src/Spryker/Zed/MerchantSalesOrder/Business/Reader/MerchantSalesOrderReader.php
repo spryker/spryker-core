@@ -72,9 +72,11 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int,\Generated\Shared\Transfer\ExpenseTransfer>
+     *
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ExpenseTransfer[]
+     * @return \Generated\Shared\Transfer\ExpenseTransfer[]|\ArrayObject
      */
     protected function getMerchantOrderExpenses(MerchantOrderTransfer $merchantOrderTransfer): ArrayObject
     {
@@ -108,6 +110,8 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     /**
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     protected function addSalesOrder(
         MerchantOrderTransfer $merchantOrderTransfer,

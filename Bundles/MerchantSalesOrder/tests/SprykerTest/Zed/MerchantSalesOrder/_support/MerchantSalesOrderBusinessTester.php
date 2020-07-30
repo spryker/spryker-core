@@ -112,7 +112,7 @@ class MerchantSalesOrderBusinessTester extends Actor
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\ItemTransfer[]|\ArrayObject $itemTransfers
      *
      * @return int
      */

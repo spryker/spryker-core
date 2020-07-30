@@ -50,6 +50,7 @@
         <property name="idMerchantOrderItem" type="int"/>
         <property name="idOrderItem" type="int"/>
         <property name="merchantOrderItemReference" type="string"/>
+        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
     </transfer>
 
     <transfer name="MerchantOrderCriteria">
@@ -117,6 +118,10 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
     </transfer>
 
 </transfers>

@@ -54,6 +54,10 @@ class DetailController extends AbstractController
                 'merchantOrder' => $merchantOrderTransfer,
                 'customerMerchantOrderNumber' => $this->getCustomerMerchantOrderNumber($merchantOrderTransfer),
                 'shipmentsNumber' => $this->getShipmentsNumber($merchantOrderTransfer),
+                'merchantOrderItemTableConfiguration' => $this->getFactory()
+                    ->createMerchantOrderItemGuiTableConfigurationProvider()
+                    ->getConfiguration($merchantOrderTransfer),
+                'merchantOrderItemsIndexedByShipment' => $this->getMerchantOrderItemTransfersIndexedByIdShipment($merchantOrderTransfer),
             ])->getContent(),
         ];
 
@@ -166,5 +170,24 @@ class DetailController extends AbstractController
         }
 
         return $salesOrderItemIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemTransfer[][]
+     */
+    protected function getMerchantOrderItemTransfersIndexedByIdShipment(MerchantOrderTransfer $merchantOrderTransfer): array
+    {
+        $merchantOrderItemTransfers = [];
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            $itemTransfer = $merchantOrderItemTransfer->requireOrderItem()->getOrderItem();
+            $idSalesShipment = $itemTransfer->getShipment()
+                ? $itemTransfer->getShipment()->getIdSalesShipment()
+                : null;
+            $merchantOrderItemTransfers[$idSalesShipment][] = $merchantOrderItemTransfer;
+        }
+
+        return $merchantOrderItemTransfers;
     }
 }

@@ -21,7 +21,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
 
-class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider
+class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider implements MerchantOrderGuiTableConfigurationProviderInterface
 {
     public const COL_KEY_REFERENCE = 'reference';
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';

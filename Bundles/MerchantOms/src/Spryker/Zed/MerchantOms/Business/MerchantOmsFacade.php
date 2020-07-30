@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantOms\Business;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
@@ -119,5 +120,22 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer
     {
         return $this->getRepository()->findCurrentStateByIdSalesOrderItem($idSalesOrderItem);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function expandMerchantOrderItemsWithManualEvents(
+        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+    ): MerchantOrderItemCollectionTransfer {
+        return $this->getFactory()->createMerchantOrderItemsExpander()->expandMerchantOrderItemsWithManualEvents(
+            $merchantOrderItemCollectionTransfer
+        );
     }
 }

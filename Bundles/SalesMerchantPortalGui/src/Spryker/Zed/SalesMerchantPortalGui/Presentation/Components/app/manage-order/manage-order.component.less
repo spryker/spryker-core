@@ -14,19 +14,10 @@
 @manage-order-transitions-icon-padding-right: 5px;
 
 @manage-order-card-column-item-padding-bottom: 20px;
+@manage-order-card-inner-padding-bottom: 10px;
 @manage-order-totals-item-indent-bottom: 10px;
 @manage-order-totals-item-options-padding-left: 30px;
 @manage-order-totals-item-border: 1px solid @gray-light;
-
-@{table-html-overlay-action-handler-prefix-cls} {
-    display: block;
-    height: 100%;
-    position: relative;
-
-    .@{table-html-overlay-action-handler-prefix-cls}-empty-state {
-        position: absolute;
-    }
-}
 
 .mp-manage-order {
     display: block;
@@ -156,6 +147,24 @@
         &:first-child {
             padding-top: 0;
         }
+
+        &-inner {
+            display: block;
+            padding-bottom: @manage-order-card-inner-padding-bottom;
+
+            &:last-child {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .@{spin-prefix-cls}-nested-loading {
+        display: block;
+    }
+
+    .@{table-filters-feature-prefix-cls} {
+        padding: 0;
+        background: none;
     }
 
     &__totals {

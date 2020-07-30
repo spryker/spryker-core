@@ -34,3 +34,15 @@ New,New
 "Order's Items state","Order's Items state"
 "Merchant order not found for id %d.","Merchant order not found for id %d."
 "Event name is empty.","Event name is empty."
+"Merchant order ids are empty.","Merchant order ids are empty."
+Method,Method
+Carrier,Carrier
+"Delivery address","Delivery address"
+"Requested Date","Requested Date"
+SKU,SKU
+Image,Image
+Name,Name
+Quantity,Quantity
+State,State
+"There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
+of,of

@@ -12,8 +12,10 @@ import { ManageOrderComponent } from './manage-order/manage-order.component';
 import { ManageOrderStatsBlockComponent } from './manage-order/manage-order-stats-block/manage-order-stats-block.component';
 import { ManageOrderTotalsComponent } from './manage-order/manage-order-totals/manage-order-totals.component';
 import { ManageOrderModule } from './manage-order/manage-order.module';
-import { HtmlRendererUrlModule } from './html-renderer-url/html-renderer-url.module';
-import { HtmlRendererUrlComponent } from './html-renderer-url/html-renderer-url.component';
+import { OrderItemsTableComponent } from './order-items-table/order-items-table.component';
+import { OrderItemsTableModule } from './order-items-table/order-items-table.module';
+import { ManageOrderCollapsibleTotalsComponent } from './manage-order-collapsible-totals/manage-order-collapsible-totals.component';
+import { ManageOrderCollapsibleTotalsModule } from './manage-order-collapsible-totals/manage-order-collapsible-totals.module';
 
 @NgModule({
     imports: [
@@ -22,56 +24,23 @@ import { HtmlRendererUrlComponent } from './html-renderer-url/html-renderer-url.
         ChipsModule,
         CardModule,
         TabsModule,
-        CollapsibleModule,
         ManageOrderModule,
-        HtmlRendererUrlModule,
+        OrderItemsTableModule,
+        ManageOrderCollapsibleTotalsModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
     protected components = [
-        {
-            selector: 'mp-offer-orders',
-            component: OfferOrdersComponent,
-        },
-        {
-            selector: 'mp-manage-order',
-            component: ManageOrderComponent,
-        },
-        {
-            selector: 'mp-manage-order-stats-block',
-            component: ManageOrderStatsBlockComponent,
-        },
-        {
-            selector: 'spy-ajax-button',
-            component: ButtonAjaxComponent,
-        },
-        {
-            selector: 'spy-chips',
-            component: ChipsComponent,
-        },
-        {
-            selector: 'spy-card',
-            component: CardComponent,
-        },
-        {
-            selector: 'spy-tab',
-            component: TabComponent,
-        },
-        {
-            selector: 'spy-tabs',
-            component: TabsComponent,
-        },
-        {
-            selector: 'mp-manage-order-totals',
-            component: ManageOrderTotalsComponent,
-        },
-        {
-            selector: 'spy-collapsible',
-            component: CollapsibleComponent,
-        },
-        {
-            selector: 'mp-html-renderer-url',
-            component: HtmlRendererUrlComponent,
-        },
+        OfferOrdersComponent,
+        ManageOrderComponent,
+        ManageOrderStatsBlockComponent,
+        ButtonAjaxComponent,
+        ChipsComponent,
+        CardComponent,
+        TabComponent,
+        TabsComponent,
+        ManageOrderTotalsComponent,
+        OrderItemsTableComponent,
+        ManageOrderCollapsibleTotalsComponent,
     ];
 }

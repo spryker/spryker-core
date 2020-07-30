@@ -9,6 +9,8 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 class SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge implements SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
@@ -54,5 +56,15 @@ class SalesMerchantPortalGuiToMerchantSalesOrderFacadeBridge implements SalesMer
     public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
     {
         return $this->merchantSalesOrderFacade->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function getMerchantOrderItemCollection(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): MerchantOrderItemCollectionTransfer
+    {
+        return $this->merchantSalesOrderFacade->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
     }
 }

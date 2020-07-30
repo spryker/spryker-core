@@ -77,6 +77,10 @@
         <property name="message" type="string"/>
     </transfer>
 
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
     <transfer name="MerchantOrderCriteria">
         <property name="idMerchantOrder" type="int"/>
     </transfer>

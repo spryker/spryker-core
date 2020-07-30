@@ -6,6 +6,7 @@ import { ManageOrderComponent } from './manage-order.component';
 const mockStateTransitionsClass = 'mockStateTransitionsClass';
 const mockStateTransitionsMessageClass = 'mockStateTransitionsMessageClass';
 const mockItemStatesClass = 'mockItemStatesClass';
+const mockItemStatesTitleClass = 'mockItemStatesTitleClass';
 const mockDefaultClass = 'mockDefaultClass';
 
 describe('ManageOrderComponent', () => {
@@ -19,6 +20,7 @@ describe('ManageOrderComponent', () => {
                 <div state-transitions class='${mockStateTransitionsClass}'></div>   
                 <div state-transitions-meessage class='${mockStateTransitionsMessageClass}'></div>   
                 <div items-states class='${mockItemStatesClass}'></div>   
+                <div items-states-title class='${mockItemStatesTitleClass}'></div>   
                 <div class='${mockDefaultClass}'></div> 
             </mp-manage-order>
         `,
@@ -53,11 +55,9 @@ describe('ManageOrderComponent', () => {
         expect(stateTransitionsElem).toBeTruthy();
     });
 
-    it('should render slot [state-transitions-meessage] in the last element with `mp-manage-order__heading-col` className after [state-transitions] slot', () => {
+    it('should render slot [state-transitions-meessage] in the element with `mp-manage-order__transitions-message` className', () => {
         const stateTransitionsMessageElem = fixture.debugElement.query(
-            By.css(`
-                .mp-manage-order__heading-col:first-child .${mockStateTransitionsClass} + .${mockStateTransitionsMessageClass}
-            `)
+            By.css(`.mp-manage-order__transitions-message .${mockStateTransitionsMessageClass}`)
         );
 
         fixture.detectChanges();
@@ -65,11 +65,23 @@ describe('ManageOrderComponent', () => {
         expect(stateTransitionsMessageElem).toBeTruthy();
     });
 
-    it('should render slot [items-states] after `.mp-manage-order__heading` component', () => {
-        const itemStatesElem = fixture.debugElement.query(By.css(`.mp-manage-order__heading + .${mockItemStatesClass}`));
+    it('should render slot [items-states] in the last element with `mp-manage-order__states-col` className', () => {
+        const itemStatesElem = fixture.debugElement.query(
+            By.css(`.mp-manage-order__states-col:last-child .${mockItemStatesClass}`)
+        );
 
         expect(itemStatesElem).toBeTruthy();
     });
+
+    it('should render slot [items-states-title] in the element with `mp-manage-order__states-col--title` className', () => {
+        const itemStatesTitleElem = fixture.debugElement.query(
+            By.css(`.mp-manage-order__states-col--title .${mockItemStatesTitleClass}`)
+        );
+
+        expect(itemStatesTitleElem).toBeTruthy();
+    });
+
+
 
     it('should render default slot after `.mp-manage-order__information` element', () => {
         const defaultSlotElem = fixture.debugElement.query(

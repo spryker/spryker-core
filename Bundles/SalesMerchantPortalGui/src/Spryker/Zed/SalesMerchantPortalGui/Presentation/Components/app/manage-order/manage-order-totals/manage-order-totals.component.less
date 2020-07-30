@@ -5,13 +5,10 @@
     display: flex;
     flex-direction: column;
     margin: -@manage-order-grid-default-padding;
+    padding: 0 @collapse-header-padding-x;
 
     &:empty {
         display: none;
-    }
-
-    &:last-child {
-        padding-bottom: 0;
     }
 
     &__item {

@@ -562,6 +562,49 @@ class MerchantSalesOrderFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetMerchantOrderItemCollectionReturnsCorrectData(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
+            $saveOrderTransfer->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+
+        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
+            MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        $expectedMerchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+        ]);
+
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setMerchantOrderItemIds([$expectedMerchantOrderItemTransfer->getIdMerchantOrderItem()]);
+        $expectedMerchantOrderItemsCount = 1;
+
+        //Act
+        $merchantOrderItemCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
+
+        //Assert
+        $this->assertCount($expectedMerchantOrderItemsCount, $merchantOrderItemCollectionTransfer->getMerchantOrderItems());
+        /** @var \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer */
+        $merchantOrderItemTransfer = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->offsetGet(0);
+        $this->assertSame($expectedMerchantOrderItemTransfer->getIdMerchantOrderItem(), $merchantOrderItemTransfer->getIdMerchantOrderItem());
+    }
+
+    /**
      * @return array
      */
     public function getMerchantOrderPositiveScenarioDataProvider(): array

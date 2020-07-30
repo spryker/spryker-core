@@ -34,3 +34,15 @@ New,New
 "Order's Items state","Artikelstatus der Bestellung"
 "Merchant order not found for id %d.","Händlerbestellung für ID %d nicht gefunden"
 "Event name is empty.","Ereignisname ist leer."
+"Merchant order ids are empty.","Händlerbestell-IDs sind leer."
+Method,Methode
+Carrier,Träger
+"Delivery address",Lieferadresse
+"Requested Date",Wunschtermin
+SKU,SKU
+Image,Bild
+Name,Name
+Quantity,Menge
+State,State
+"There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
+of,von

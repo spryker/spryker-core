@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
@@ -76,5 +77,15 @@ class MerchantOmsToStateMachineFacadeBridge implements MerchantOmsToStateMachine
     public function getManualEventsForStateMachineItems(array $stateMachineItems)
     {
         return $this->stateMachineFacade->getManualEventsForStateMachineItems($stateMachineItems);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return string[]
+     */
+    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer)
+    {
+        return $this->stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
     }
 }

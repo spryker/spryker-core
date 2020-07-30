@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
 interface SalesMerchantPortalGuiToMerchantOmsFacadeInterface
@@ -35,4 +36,13 @@ interface SalesMerchantPortalGuiToMerchantOmsFacadeInterface
      * @return int
      */
     public function triggerEventForMerchantOrderItems(MerchantOmsTriggerRequestTransfer $merchantOmsTriggerRequestTransfer): int;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function expandMerchantOrderItemsWithManualEvents(
+        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+    ): MerchantOrderItemCollectionTransfer;
 }
