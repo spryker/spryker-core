@@ -8,10 +8,8 @@
 namespace Spryker\Zed\MerchantGui;
 
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
-use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantGui\Communication\Exception\MissingStoreRelationFormTypePluginException;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToLocaleFacadeBridge;
@@ -37,16 +35,6 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
 
     /**
-     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
-     */
-    public const SERVICE_REQUEST_STACK = 'request_stack';
-
-    /**
-     * @deprecated Will be removed without replacement.
-     */
-    public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
-
-    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -67,8 +55,6 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addLocaleFacade($container);
         $container = $this->addMerchantUpdateFormViewExpanderPlugins($container);
         $container = $this->addStoreRelationFormTypePlugin($container);
-        $container = $this->addRequestStack($container);
-        $container = $this->addApplication($container);
 
         return $container;
     }
@@ -256,38 +242,6 @@ class MerchantGuiDependencyProvider extends AbstractBundleDependencyProvider
                 FormTypeInterface::class
             )
         );
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addRequestStack(Container $container): Container
-    {
-        $container->set(static::SERVICE_REQUEST_STACK, function (ContainerInterface $container) {
-            return $container->getApplicationService(static::SERVICE_REQUEST_STACK);
-        });
-
-        return $container;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addApplication(Container $container): Container
-    {
-        $container->set(static::PLUGIN_APPLICATION, function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication();
-        });
-
-        return $container;
     }
 
     /**
