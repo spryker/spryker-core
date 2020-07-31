@@ -26,6 +26,7 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_STORE = 'FACADE_STORE';
+    public const PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER = 'PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,6 +49,7 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addProductFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addProductAbstractStorageExpanderPlugins($container);
 
         return $container;
     }
@@ -106,5 +108,27 @@ class ProductStorageDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductAbstractStorageExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER, function () {
+            return $this->getProductAbstractStorageExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     */
+    protected function getProductAbstractStorageExpanderPlugins(): array
+    {
+        return [];
     }
 }

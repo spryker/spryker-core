@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    <mp-login cloak>
+    <web-mp-login cloak>
         {%- include '@ZedUi/Partials/FlashMessages/flash-messages.twig' -%}
 
         {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
@@ -16,11 +16,11 @@
             {{ form_row(form.password) }}
             {{ form_row(form.login, {attr: {class: 'login__submit'}}) }}
         {{ form_end(form) }}
-    </mp-login>
+    </web-mp-login>
 {% endblock %}
 
 {% block footerJs %}
-    <script src="{{ assetsPath('js/mp-login/main-es2015.js') }}" type="module"></script>
-    <script src="{{ assetsPath('js/mp-login/main-es5.js') }}" nomodule defer></script>
+    <script src="{{ assetsPath('js/mp/spy/authentication-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/authentication-merchant-portal-gui-es5.js') }}" nomodule defer></script>
     {{ parent() }}
 {% endblock %}

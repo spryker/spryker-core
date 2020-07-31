@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantProduct\Persistence;
 use Orm\Zed\MerchantProduct\Persistence\SpyMerchantProductAbstractQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper\MerchantMapper;
+use Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper\MerchantProductMapper;
 
 /**
  * @method \Spryker\Zed\MerchantProduct\Persistence\MerchantProductRepositoryInterface getRepository()
@@ -31,5 +32,13 @@ class MerchantProductPersistenceFactory extends AbstractPersistenceFactory
     public function createMerchantMapper(): MerchantMapper
     {
         return new MerchantMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantProduct\Persistence\Propel\Mapper\MerchantProductMapper
+     */
+    public function createMerchantProductMapper(): MerchantProductMapper
+    {
+        return new MerchantProductMapper();
     }
 }

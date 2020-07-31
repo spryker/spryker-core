@@ -7,6 +7,7 @@
 
 namespace Spryker\Yves\Kernel;
 
+use Spryker\Client\Kernel\AbstractClient;
 use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
 
 trait ClientResolverAwareTrait
@@ -15,6 +16,18 @@ trait ClientResolverAwareTrait
      * @var \Spryker\Client\Kernel\AbstractClient|null
      */
     private $client;
+
+    /**
+     * @param \Spryker\Client\Kernel\AbstractClient $client
+     *
+     * @return $this
+     */
+    public function setClient(AbstractClient $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
 
     /**
      * @return \Spryker\Client\Kernel\AbstractClient

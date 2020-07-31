@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferValidity\Business;
 
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\ProductOfferValidityTransfer;
+
 interface ProductOfferValidityFacadeInterface
 {
     /**
@@ -20,4 +23,40 @@ interface ProductOfferValidityFacadeInterface
      * @return void
      */
     public function updateProductOfferStatusByValidityDate(): void;
+
+    /**
+     * Specification:
+     * - Persists new Product Offer Validity entity to database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferValidityTransfer $productOfferValidityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferValidityTransfer
+     */
+    public function create(ProductOfferValidityTransfer $productOfferValidityTransfer): ProductOfferValidityTransfer;
+
+    /**
+     * Specification:
+     * - Updates existing Product Offer Validity entity in database.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferValidityTransfer $productOfferValidityTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferValidityTransfer
+     */
+    public function update(ProductOfferValidityTransfer $productOfferValidityTransfer): ProductOfferValidityTransfer;
+
+    /**
+     * Specification:
+     * - Expands provided ProductOfferTransfer with Product Offer Validity.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function expandProductOfferWithProductOfferValidity(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

@@ -8,7 +8,7 @@
     "spryker/glue-application": "^1.8.0",
     "spryker/glue-application-extension": "^1.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/merchant-product-offer-storage": "^0.9.0",
+    "spryker/merchant-product-offer-storage": "^0.11.0",
     "spryker/price-product": "^4.0.0",
     "spryker/price-product-storage": "^4.0.0",
     "spryker/product-storage": "^1.16.0",

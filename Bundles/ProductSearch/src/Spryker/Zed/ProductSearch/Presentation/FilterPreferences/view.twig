@@ -5,7 +5,17 @@
 
 {% block action %}
     {{ editActionButton(url('/product-search/filter-preferences/edit', {'id': app.request.query.get('id')}), 'Edit' | trans) }}
-    {{ removeActionButton(url('/product-search/filter-preferences/delete', {'id': app.request.query.get('id')}), 'Delete' | trans) }}
+
+    {{ form_start(deleteForm,{
+        'action': url('/product-search/filter-preferences/delete', {'id': app.request.query.get('id')}),
+        'attr': {'class': 'form-inline'}
+    }) }}
+        <button type="submit" class="btn btn-sm btn-outline safe-submit btn-remove">
+            <i class="fa fa-trash"></i>
+            {{ 'Delete' | trans }}
+        </button>
+    {{ form_end(deleteForm) }}
+
     {{ backActionButton(url('/product-search/filter-preferences'), 'List of filters' | trans) }}
 {% endblock %}
 

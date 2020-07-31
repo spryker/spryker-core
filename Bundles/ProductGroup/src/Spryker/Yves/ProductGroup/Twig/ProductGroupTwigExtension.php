@@ -9,7 +9,6 @@ namespace Spryker\Yves\ProductGroup\Twig;
 
 use Spryker\Client\ProductGroup\ProductGroupClientInterface;
 use Spryker\Shared\Twig\TwigExtension;
-use Spryker\Yves\Kernel\Application;
 use Twig\Environment;
 use Twig\TwigFunction;
 
@@ -23,18 +22,18 @@ class ProductGroupTwigExtension extends TwigExtension
     protected $productGroupClient;
 
     /**
-     * @var \Spryker\Yves\Kernel\Application
+     * @var string
      */
-    protected $application;
+    protected $locale;
 
     /**
      * @param \Spryker\Client\ProductGroup\ProductGroupClientInterface $productGroupClient
-     * @param \Spryker\Yves\Kernel\Application $application
+     * @param string $locale
      */
-    public function __construct(ProductGroupClientInterface $productGroupClient, Application $application)
+    public function __construct(ProductGroupClientInterface $productGroupClient, string $locale)
     {
         $this->productGroupClient = $productGroupClient;
-        $this->application = $application;
+        $this->locale = $locale;
     }
 
     /**
@@ -59,7 +58,7 @@ class ProductGroupTwigExtension extends TwigExtension
      */
     public function renderProductGroupItems(Environment $twig, $idProductAbstract, $template)
     {
-        $productGroupItems = $this->productGroupClient->findProductGroupItemsByIdProductAbstract($idProductAbstract, $this->getLocale());
+        $productGroupItems = $this->productGroupClient->findProductGroupItemsByIdProductAbstract($idProductAbstract, $this->locale);
 
         if (!$productGroupItems) {
             return '';
@@ -71,10 +70,12 @@ class ProductGroupTwigExtension extends TwigExtension
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     protected function getLocale()
     {
-        return $this->application['locale'];
+        return $this->locale;
     }
 }

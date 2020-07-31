@@ -1,0 +1,19 @@
+{
+    "error": [],
+    "warning": [],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 24,
+            "line_to": 24,
+            "type": "DeprecatedInterface",
+            "message": "Spryker\\Client\\Search\\Dependency\\Plugin\\QueryExpanderPluginInterface is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerCatalog/src/Spryker/Client/CustomerCatalog/Plugin/Search/ProductListQueryExpanderPlugin.php",
+            "snippet": "class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface",
+            "selected_text": "ProductListQueryExpanderPlugin",
+            "error_level": 2,
+            "shortcode": 152,
+            "taint_trace": null
+        }
+    ]
+}

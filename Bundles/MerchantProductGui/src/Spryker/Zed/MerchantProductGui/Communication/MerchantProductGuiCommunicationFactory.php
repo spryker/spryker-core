@@ -16,6 +16,7 @@ use Spryker\Zed\MerchantProductGui\Communication\Expander\MerchantProductViewDat
 use Spryker\Zed\MerchantProductGui\Dependency\Facade\MerchantProductGuiToMerchantProductFacadeInterface;
 use Spryker\Zed\MerchantProductGui\MerchantProductGuiDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \Spryker\Zed\MerchantProductGui\Persistence\MerchantProductGuiRepositoryInterface getRepository()
@@ -42,6 +43,8 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application
@@ -54,7 +57,15 @@ class MerchantProductGuiCommunicationFactory extends AbstractCommunicationFactor
      */
     public function getRequest(): Request
     {
-        return $this->getApplication()['request'];
+        return $this->getRequestStack()->getCurrentRequest();
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    public function getRequestStack(): RequestStack
+    {
+        return $this->getProvidedDependency(MerchantProductGuiDependencyProvider::SERVICE_REQUEST_STACK);
     }
 
     /**

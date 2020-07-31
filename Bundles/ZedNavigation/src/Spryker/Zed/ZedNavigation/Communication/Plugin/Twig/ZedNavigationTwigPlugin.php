@@ -39,6 +39,11 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
     protected $navigation;
 
     /**
+     * @var array
+     */
+    protected $navigations = [];
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -50,8 +55,10 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     public function extend(Environment $twig, ContainerInterface $container): Environment
     {
+        $this->navigation = null;
+
         $twig = $this->addTwigFunctions($twig, $container);
-        $twig = $this->addTwigGlobalVariables($twig);
+        $twig = $this->addTwigGlobalVariables($twig, $container);
 
         return $twig;
     }
@@ -75,12 +82,13 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      *   Also use `navigation()` and `breadcrumb()` functions in Twig instead of corespondent Twig global variables.
      *
      * @param \Twig\Environment $twig
+     * @param \Spryker\Service\Container\ContainerInterface $container
      *
      * @return \Twig\Environment
      */
-    protected function addTwigGlobalVariables(Environment $twig): Environment
+    protected function addTwigGlobalVariables(Environment $twig, ContainerInterface $container): Environment
     {
-        $navigation = $this->buildNavigation(Request::createFromGlobals());
+        $navigation = $this->buildNavigation($this->getRequest($container));
         $breadcrumbs = $navigation['path'];
 
         $twig->addGlobal(static::TWIG_GLOBAL_VARIABLE_NAME_NAVIGATION, $navigation);
@@ -130,7 +138,14 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function getRequest(ContainerInterface $container): Request
     {
-        return $this->getRequestStack($container)->getCurrentRequest();
+        if ($container->has(static::SERVICE_REQUEST_STACK)) {
+            $request = $this->getRequestStack($container)->getCurrentRequest();
+            if ($request) {
+                return $request;
+            }
+        }
+
+        return Request::createFromGlobals();
     }
 
     /**
@@ -140,16 +155,21 @@ class ZedNavigationTwigPlugin extends AbstractPlugin implements TwigPluginInterf
      */
     protected function buildNavigation(Request $request): array
     {
-        if ($this->navigation === null) {
-            $uri = $this->removeUriSuffix($request->getPathInfo());
-            $this->navigation = [];
-            if ($this->getConfig()->isNavigationEnabled()) {
-                $this->navigation = $this->getFacade()
-                    ->buildNavigation($uri);
-            }
+        $uri = $this->removeUriSuffix($request->getPathInfo());
+
+        if (isset($this->navigations[$uri])) {
+            return $this->navigations[$uri];
         }
 
-        return $this->navigation;
+        $navigation = [];
+
+        if ($this->getConfig()->isNavigationEnabled()) {
+            $navigation = $this->getFacade()->buildNavigation($uri);
+        }
+
+        $this->navigations[$uri] = $navigation;
+
+        return $navigation;
     }
 
     /**

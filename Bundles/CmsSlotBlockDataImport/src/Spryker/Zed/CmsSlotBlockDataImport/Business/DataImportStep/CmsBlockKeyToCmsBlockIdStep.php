@@ -46,6 +46,7 @@ class CmsBlockKeyToCmsBlockIdStep implements DataImportStepInterface
             return $this->idCmsBlockBuffer[$cmsBlockKey];
         }
 
+        /** @var int|null $idCmsBlock */
         $idCmsBlock = SpyCmsBlockQuery::create()
             ->filterByKey($cmsBlockKey)
             ->select([SpyCmsBlockTableMap::COL_ID_CMS_BLOCK])

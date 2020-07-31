@@ -6,7 +6,6 @@
   "require": {
     "php": ">=7.2",
     "spryker/application-extension": "^1.0.0",
-    "spryker/container": "^1.4.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/form-extension": "^1.0.0",
     "spryker/http-extension": "^1.0.0",
@@ -18,11 +17,13 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/container": "If you want to use Http plugins.",
     "spryker/event-dispatcher": "If you want to use Http plugins."
   },
   "autoload": {

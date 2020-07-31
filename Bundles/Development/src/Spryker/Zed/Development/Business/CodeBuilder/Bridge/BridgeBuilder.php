@@ -196,15 +196,15 @@ class BridgeBuilder
     protected function replacePlaceHolder(BridgeBuilderDataTransfer $bridgeBuilderDataTransfer, string $templateContent): string
     {
         $replacements = [
-            '{vendor}' => $bridgeBuilderDataTransfer->getVendor(),
-            '{application}' => $bridgeBuilderDataTransfer->getApplication(),
-            '{module}' => $bridgeBuilderDataTransfer->getModule(),
-            '{type}' => $bridgeBuilderDataTransfer->getType(),
+            '{vendor}' => (string)$bridgeBuilderDataTransfer->getVendor(),
+            '{application}' => (string)$bridgeBuilderDataTransfer->getApplication(),
+            '{module}' => (string)$bridgeBuilderDataTransfer->getModule(),
+            '{type}' => (string)$bridgeBuilderDataTransfer->getType(),
 
-            '{toVendor}' => $bridgeBuilderDataTransfer->getToVendor(),
-            '{toApplication}' => $bridgeBuilderDataTransfer->getToApplication(),
-            '{toModule}' => $bridgeBuilderDataTransfer->getToModule(),
-            '{toType}' => $bridgeBuilderDataTransfer->getToType(),
+            '{toVendor}' => (string)$bridgeBuilderDataTransfer->getToVendor(),
+            '{toApplication}' => (string)$bridgeBuilderDataTransfer->getToApplication(),
+            '{toModule}' => (string)$bridgeBuilderDataTransfer->getToModule(),
+            '{toType}' => (string)$bridgeBuilderDataTransfer->getToType(),
 
             '{toModuleLayer}' => '',
             '{toModuleVariable}' => lcfirst($bridgeBuilderDataTransfer->getToModule()),

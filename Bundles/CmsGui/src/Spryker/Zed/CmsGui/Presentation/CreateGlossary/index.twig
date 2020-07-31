@@ -14,7 +14,7 @@
 
 {% block action %}
     {% set redirectUrl = url('/cms-gui/create-glossary', {'id-cms-page' : idCmsPage}) %}
-    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}) }}
+    {{ include ('@CmsGui/_template/version-button.twig', { 'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl, 'publishForm': publishForm}) }}
     {% for buttonTransfer in viewActionButtons %}
         {{ viewActionButton(buttonTransfer.url, buttonTransfer.title | trans, buttonTransfer.defaultOptions) }}
     {% endfor %}

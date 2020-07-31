@@ -39,4 +39,16 @@ class NoValidateTypeExtension extends AbstractTypeExtension
     {
         return Form::class;
     }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @phpstan-return class-string<\Symfony\Component\Form\Form>[]
+     *
+     * @return string[]
+     */
+    public static function getExtendedTypes(): iterable
+    {
+        return [Form::class];
+    }
 }

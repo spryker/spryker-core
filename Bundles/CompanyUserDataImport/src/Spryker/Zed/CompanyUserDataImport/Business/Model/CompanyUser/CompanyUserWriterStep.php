@@ -69,6 +69,7 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
     protected function getIdCustomerByReference(string $customerReference): int
     {
         if (!isset($this->idCustomerListCache[$customerReference])) {
+            /** @var int|null $idCustomer */
             $idCustomer = $this->getCustomerQuery()
                 ->filterByCustomerReference($customerReference)
                 ->select(SpyCustomerTableMap::COL_ID_CUSTOMER)
@@ -94,6 +95,7 @@ class CompanyUserWriterStep extends PublishAwareStep implements DataImportStepIn
     protected function getIdCompanyByKey(string $companyKey): int
     {
         if (!isset($this->idCompanyListCache[$companyKey])) {
+            /** @var int|null $idCompany */
             $idCompany = $this->getCompanyQuery()
                 ->filterByKey($companyKey)
                 ->select(SpyCompanyTableMap::COL_ID_COMPANY)

@@ -18,6 +18,8 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
+use Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpander;
+use Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpanderInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
@@ -61,6 +63,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerFormDataProvider()
     {
         return new CustomerFormDataProvider($this->getQueryContainer());
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpanderInterface
+     */
+    public function createOrderItemsTableExpander(): OrderItemsTableExpanderInterface
+    {
+        return new OrderItemsTableExpander($this->getOrderItemsTableExpanderPlugins());
     }
 
     /**
@@ -237,5 +247,13 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
+     */
+    public function getOrderItemsTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_TABLE_EXPANDER);
     }
 }

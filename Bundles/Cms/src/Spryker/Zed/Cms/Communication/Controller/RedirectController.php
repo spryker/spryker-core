@@ -191,12 +191,20 @@ class RedirectController extends AbstractController
             throw new MethodNotAllowedHttpException([Request::METHOD_DELETE], 'This action requires a DELETE request.');
         }
 
+        $deleteForm = $this->getFactory()->createDeleteCmsRedirectForm()->handleRequest($request);
+
+        if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(static::REDIRECT_ADDRESS);
+        }
+
         $idUrlRedirect = $this->castId($request->request->get(static::REQUEST_ID_URL_REDIRECT));
 
         if ($idUrlRedirect === 0) {
             $this->addErrorMessage(static::MESSAGE_ID_REDIRECT_EXTRACT_ERROR);
 
-            return $this->redirectResponse('/cms/redirect');
+            return $this->redirectResponse(static::REDIRECT_ADDRESS);
         }
 
         $urlRedirectTransfer = new UrlRedirectTransfer();
@@ -206,6 +214,6 @@ class RedirectController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_REDIRECT_DELETE_SUCCESS);
 
-        return $this->redirectResponse('/cms/redirect');
+        return $this->redirectResponse(static::REDIRECT_ADDRESS);
     }
 }
