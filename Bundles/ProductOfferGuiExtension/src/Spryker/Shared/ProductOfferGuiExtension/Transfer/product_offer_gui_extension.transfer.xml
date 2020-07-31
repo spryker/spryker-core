@@ -6,4 +6,7 @@
     <transfer name="ProductOffer">
     </transfer>
 
+    <transfer name="QueryCriteria">
+    </transfer>
+
 </transfers>

@@ -12,4 +12,15 @@
         <property name="moneyValue" type="MoneyValue"/>
     </transfer>
 
+    <transfer name="MoneyValue">
+        <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
+        <property name="priceData" type="string"/>
+    </transfer>
+
+    <transfer name="PriceType">
+        <property name="name" type="string"/>
+        <property name="priceModeConfiguration" type="string"/>
+    </transfer>
+
 </transfers>

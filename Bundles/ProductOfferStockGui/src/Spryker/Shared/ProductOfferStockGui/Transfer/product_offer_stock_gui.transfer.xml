@@ -5,6 +5,7 @@
 
     <transfer name="ProductOfferStockRequest">
         <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="ProductOffer">
@@ -20,6 +21,11 @@
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

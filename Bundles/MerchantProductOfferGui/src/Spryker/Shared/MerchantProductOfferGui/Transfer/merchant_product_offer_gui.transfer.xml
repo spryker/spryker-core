@@ -13,6 +13,19 @@
     </transfer>
 
     <transfer name="Merchant">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantProductOfferCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="joinType" type="string"/>
+    </transfer>
+
+    <transfer name="QueryCriteria">
+        <property name="joins" type="QueryJoin[]" singular="join"/>
     </transfer>
 
 </transfers>

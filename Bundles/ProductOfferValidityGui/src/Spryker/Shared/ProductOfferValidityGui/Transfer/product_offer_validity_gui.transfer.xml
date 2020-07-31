@@ -5,6 +5,7 @@
 
     <transfer name="ProductOffer">
         <property name="idProductOffer" type="int"/>
+        <property name="productOfferValidity" type="ProductOfferValidity"/>
     </transfer>
 
     <transfer name="ProductOfferValidity">
