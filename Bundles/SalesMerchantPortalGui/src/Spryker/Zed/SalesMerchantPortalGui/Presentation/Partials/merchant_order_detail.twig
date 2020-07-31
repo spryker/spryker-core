@@ -14,8 +14,8 @@
         referenceTitle: 'Merchant Reference' | trans,
     } %}
 
-<web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
-    {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
+    <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
+        {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
         {% block stateTransitions %}
             {% if merchantOrder.manualEvents is not empty %}
@@ -247,7 +247,6 @@
                         {% endfor %}
                     </web-spy-tab>
                 {% endblock %}
-
             </web-spy-tabs>
         {% endblock %}
     </web-mp-manage-order>
