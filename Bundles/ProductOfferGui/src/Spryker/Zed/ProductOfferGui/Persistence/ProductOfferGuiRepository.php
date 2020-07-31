@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferGui\Persistence;
 
 use Generated\Shared\Transfer\QueryCriteriaTransfer;
-use Orm\Zed\Product\Persistence\SpyProductAbstract;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -34,18 +33,5 @@ class ProductOfferGuiRepository extends AbstractRepository implements ProductOff
         return $this->getFactory()
             ->createProductOfferQueryCriteriaMapper()
             ->mapQueryCriteriaTransferToModelCriteria($query, $queryCriteriaTransfer);
-    }
-
-    /**
-     * @param string $sku
-     *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstract|null
-     */
-    public function findProductAbstractBySku(string $sku): ?SpyProductAbstract
-    {
-        return $this->getFactory()
-            ->getProductAbstractPropelQuery()
-            ->filterBySku($sku)
-            ->findOne();
     }
 }
