@@ -40,10 +40,14 @@ interface KernelConstants
     public const AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER = 'AUTO_LOADER_UNRESOLVABLE_CACHE_PROVIDER';
     /**
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const AUTO_LOADER_CACHE_FILE_NO_LOCK = 'AUTO_LOADER_CACHE_FILE_NO_LOCK';
     /**
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const AUTO_LOADER_CACHE_FILE_PATH = 'KERNEL:AUTO_LOADER_CACHE_FILE_PATH';
 

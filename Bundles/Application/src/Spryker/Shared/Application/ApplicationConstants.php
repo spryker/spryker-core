@@ -16,6 +16,8 @@ interface ApplicationConstants
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
 
@@ -40,12 +42,16 @@ interface ApplicationConstants
     public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const STORE_PREFIX = 'STORE_PREFIX';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
@@ -125,27 +131,37 @@ interface ApplicationConstants
     public const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
 
     /**
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Will be removed without replacement
+     *
+     * @api.
      */
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
@@ -294,6 +310,8 @@ interface ApplicationConstants
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
      *
      * @deprecated Will be removed without replacement
+     *
+     * @api
      */
     public const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
 

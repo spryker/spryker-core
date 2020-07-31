@@ -14,6 +14,8 @@ interface SessionConstants
 {
     /**
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const SESSION_IS_TEST = 'SESSION:SESSION_IS_TEST';
 
