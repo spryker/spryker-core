@@ -2,6 +2,8 @@ Actions,Actions
 Active,Active
 Approved,Approved
 approved_offer_button,Approve
+Offer Approve,Approve
+Deny,Deny
 "Back to Offers","Back to Offers"
 denied_offer_button,Deny
 Denied,Denied
