@@ -11,7 +11,7 @@
         {% if applicableProductOfferStatus == 'denied' %}
             {{ removeActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), 'Deny' | trans, {'icon':'<i class="fa fa-trash"></i> '}) }}
         {% else %}
-            {{ createActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), 'Approve' | trans, {'icon':'<i class="fa fa-caret-right"></i> '}) }}
+            {{ createActionButton(url('/product-offer-gui/edit/update-approval-status', {'approval-status': applicableProductOfferStatus, 'id-product-offer': productOffer.idProductOffer}), 'Offer Approve' | trans, {'icon':'<i class="fa fa-caret-right"></i> '}) }}
         {%  endif %}
     {%  endfor %}
 {% endblock %}

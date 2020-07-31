@@ -1,7 +1,9 @@
 Actions,Aktionen
 Active,Aktiv
 Approved,Bestätigt
-approved_offer_button,Genehmigen
+approved_offer_button,Genehmigen,
+Offer Approve,Genehmigen
+Deny,Ablehnen
 "Back to Offers","Zurück zu Angeboten"
 denied_offer_button,Abgelehnt
 Denied,Abgelehnt
