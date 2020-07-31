@@ -20,7 +20,7 @@ interface ApplicationConstants
     public const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
 
     /**
-     * @deprecated Will be removed without replacement.
+     * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::DISPLAY_ERRORS} instead.
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
@@ -339,8 +339,6 @@ interface ApplicationConstants
 
     /**
      * Yves host name / domain without scheme and port (e.g. www.de.demoshop.local) (Required)
-     *
-     * @todo HOST_YVES is used in 2 places
      *
      * @api
      */
