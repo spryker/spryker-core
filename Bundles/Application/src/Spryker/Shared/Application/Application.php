@@ -52,11 +52,17 @@ class Application extends Container implements HttpKernelInterface, TerminableIn
     protected $booted = false;
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Service\Container\ContainerInterface|null $container
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $applicationPlugins
      */
-    public function __construct(ContainerInterface $container, array $applicationPlugins = [])
+    public function __construct(?ContainerInterface $container = null, array $applicationPlugins = [])
     {
+        parent::__construct();
+
+        if ($container === null) {
+            $container = new Container();
+        }
+
         $this->container = $container;
         $this->enableHttpMethodParameterOverride();
 
