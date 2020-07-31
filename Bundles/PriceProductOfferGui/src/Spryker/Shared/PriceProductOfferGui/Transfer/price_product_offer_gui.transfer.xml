@@ -24,9 +24,11 @@
     </transfer>
 
     <transfer name="Currency">
+        <property name="code" type="string"/>
     </transfer>
 
     <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>
