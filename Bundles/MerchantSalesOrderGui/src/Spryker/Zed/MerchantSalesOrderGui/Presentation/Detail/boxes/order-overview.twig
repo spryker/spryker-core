@@ -35,7 +35,7 @@
                 <div class="col-sm-2"><b>{{ merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode) }}</b></div>
             </div>
 
-            {% include '@@MerchantSalesOrderGui/Detail/boxes/shipment-expenses.twig' %}
+            {% include '@MerchantSalesOrderGui/Detail/boxes/shipment-expenses.twig' %}
             {% include '@MerchantSalesOrderThresholdGui/MerchantSalesOrder/boxes/threshold-expenses.twig' ignore missing %}
 
             <div class="row">
