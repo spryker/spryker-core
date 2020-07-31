@@ -200,7 +200,7 @@ interface ApplicationConstants
      * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
      * - @see http://elastica.io/ for details.
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -347,7 +347,7 @@ interface ApplicationConstants
     /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -356,7 +356,7 @@ interface ApplicationConstants
     /**
      * Port definition for Yves with leading colon (e.g. :8080)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -365,7 +365,7 @@ interface ApplicationConstants
     /**
      * Port definition for Zed with leading colon (e.g. :9080)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -374,7 +374,7 @@ interface ApplicationConstants
     /**
      * Secure port definition for Yves with leading colon (e.g. :8443)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -383,7 +383,7 @@ interface ApplicationConstants
     /**
      * Secure port definition for Zed with leading colon (e.g. :9443)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -406,7 +406,7 @@ interface ApplicationConstants
     /**
      * Base URL for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -415,7 +415,7 @@ interface ApplicationConstants
     /**
      * Base URL for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -442,7 +442,7 @@ interface ApplicationConstants
     /**
      * Secure base URL for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
@@ -451,7 +451,7 @@ interface ApplicationConstants
     /**
      * Secure base URL for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
-     * @deprecated Will be removes without replacement
+     * @deprecated Will be removed without replacement
      *
      * @api
      */
