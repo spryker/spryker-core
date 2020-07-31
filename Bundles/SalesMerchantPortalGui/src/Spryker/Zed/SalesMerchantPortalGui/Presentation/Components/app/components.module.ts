@@ -31,10 +31,7 @@ import { ManageOrderCollapsibleTotalsModule } from './manage-order-collapsible-t
 })
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
-        {
-            component: TabsComponent,
-            isRoot: true,
-        },
+        TabsComponent,
         OfferOrdersComponent,
         ManageOrderComponent,
         ManageOrderStatsBlockComponent,

@@ -27,7 +27,7 @@
         "@spryker/textarea": "^0.2.0-next.0",
         "@spryker/toggle": "^0.2.0-next.0",
         "@spryker/utils": "^0.2.0-next.0",
-        "@spryker/web-components": "^0.2.1-next.2",
+        "@spryker/web-components": "^0.2.1-next.3",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "zone.js": "^0.10.2"

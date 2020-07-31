@@ -38,10 +38,7 @@ import { ProfileModule } from './profile/profile.module';
 })
 export class ComponentsModule extends CustomElementModule {
     protected components: WebComponentDefs = [
-        {
-            component: TabsComponent,
-            isRoot: true,
-        },
+        TabsComponent,
         ProfileComponent,
         ButtonComponent,
         FormItemComponent,
