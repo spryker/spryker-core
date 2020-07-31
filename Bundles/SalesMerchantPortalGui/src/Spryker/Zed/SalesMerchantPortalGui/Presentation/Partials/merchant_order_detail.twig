@@ -8,246 +8,272 @@
 #}
 
 {% block body %}
+    {% set merchantData = merchantOrder.order %}
+
     {% set orderDetails = {
-        title: 'Order' | trans ~ ' ' ~ merchantOrder.order.orderReference,
+        title: 'Order' | trans ~ ' ' ~ merchantData.orderReference,
         reference: merchantOrder.merchantOrderReference,
         referenceTitle: 'Merchant Reference' | trans,
     } %}
 
-    <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
-        {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
+    {% block manageOrder %}
+        <web-mp-manage-order order-details="{{ orderDetails | json_encode()}}" cloak>
+            {% set idMerchantOrder = merchantOrder.idMerchantOrder %}
 
-        {% block stateTransitions %}
-            {% if merchantOrder.manualEvents is not empty %}
-                <div state-transitions class="mp-manage-order__transitions">
-                    {% for eventName in merchantOrder.manualEvents %}
-                        <web-spy-button-ajax
-                            url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
-                            class="mp-manage-order__transitions-col"
-                        >{{ eventName }}</web-spy-button-ajax>
+            {% block stateTransitions %}
+                {% set merchantEvent = merchantOrder.manualEvents %}
+
+                {% if merchantEvent is not empty %}
+                    <div state-transitions class="mp-manage-order__transitions">
+                        {% for eventName in merchantEvent %}
+                            <web-spy-button-ajax
+                                url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
+                                class="mp-manage-order__transitions-col"
+                            >{{ eventName }}</web-spy-button-ajax>
+                        {% endfor %}
+                    </div>
+
+                    <span state-transitions-meessage>{{ 'Only matching states items will be updated.' | trans }}</span>
+                {% endif %}
+            {% endblock %}
+
+            {% block itemStates %}
+                <span items-states-title>{{ "Order's Items state" | trans }}</span>
+
+                <div items-states class="mp-manage-order__states">
+                    {% for state in merchantOrder.itemStates %}
+                        <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
                     {% endfor %}
                 </div>
+            {% endblock %}
 
-                <span state-transitions-meessage>{{ 'Only matching states items will be updated.' | trans }}</span>
-            {% endif %}
-        {% endblock %}
+            {% block tabs %}
+                <web-spy-tabs class="mp-manage-order__content" cloak>
+                    {% block detailTab %}
+                        {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
-        {% block itemStates %}
-            <span items-states-title>{{ "Order's Items state" | trans }}</span>
-
-            <div items-states class="mp-manage-order__states">
-                {% for state in merchantOrder.itemStates %}
-                    <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
-                {% endfor %}
-            </div>
-        {% endblock %}
-
-        {% block tabs %}
-            <web-spy-tabs class="mp-manage-order__content" cloak>
-                {% block detailTab %}
-                    {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
-
-                    <web-spy-tab title="{{ 'Details' | trans }}">
-                        {% block overviewCard %}
-                            {% set overviewItems = [
-                                {
-                                    name: 'Order date' | trans,
-                                    info: merchantOrder.createdAt | date('d.m.Y, H:i'),
-                                },
-                                {
-                                    name: 'Number of products' | trans,
-                                    info: merchantOrder.uniqueProductsCount,
-                                },
-                                {
-                                    name: 'Items' | trans,
-                                    info: merchantOrderItemsCount,
-                                },
-                                {
-                                    name: 'Shipments' | trans,
-                                    info: shipmentsNumber,
-                                },
-                            ] %}
-
-                            <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
-                                <div class="mp-manage-order-grid">
-                                    {% for overviewItem in overviewItems %}
-                                        <web-mp-manage-order-stats-block
-                                            name="{{ overviewItem.name }}"
-                                            info="{{ overviewItem.info }}">
-                                        </web-mp-manage-order-stats-block>
-                                    {% endfor %}
-                                </div>
-                            </web-spy-card>
-                        {% endblock %}
-
-                        {% block totalsCard %}
-                            <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
-                                {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
-
-                                <web-mp-manage-order-collapsible-totals
-                                    url="{{ totalsUrl }}"
-                                    title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}"
-                                    class="mp-manage-order__card-column-item">
-                                </web-mp-manage-order-collapsible-totals>
-
-                                {% set subtotalTitleOrderTotals = [
+                        <web-spy-tab title="{{ 'Details' | trans }}">
+                            {% block overviewCard %}
+                                {% set overviewItems = [
                                     {
-                                        title: 'Subtotal' | trans,
-                                        value: merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode),
-                                        isTitle: true,
+                                        name: 'Order date' | trans,
+                                        info: merchantOrder.createdAt | date('d.m.Y, H:i'),
+                                    },
+                                    {
+                                        name: 'Number of products' | trans,
+                                        info: merchantOrder.uniqueProductsCount,
+                                    },
+                                    {
+                                        name: 'Items' | trans,
+                                        info: merchantOrderItemsCount,
+                                    },
+                                    {
+                                        name: 'Shipments' | trans,
+                                        info: shipmentsNumber,
                                     },
                                 ] %}
 
-                                {% set subtotalExpensesOrderTotals = merchantOrder.expenses | reduce((accumulator, expense) => (
-                                    accumulator | merge([{
-                                        title: 'Shipment' | trans ~ ' ' ~ expense.shipment.method.carrierName ?? '' ~ ' ' ~ expense.name,
-                                        value: expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode),
-                                    }])
-                                ), []) %}
+                                {% block overviewCardComponent %}
+                                    <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
+                                        <div class="mp-manage-order-grid">
+                                            {% for overviewItem in overviewItems %}
+                                                <web-mp-manage-order-stats-block
+                                                    name="{{ overviewItem.name }}"
+                                                    info="{{ overviewItem.info }}">
+                                                </web-mp-manage-order-stats-block>
+                                            {% endfor %}
+                                        </div>
+                                    </web-spy-card>
+                                {% endblock %}
+                            {% endblock %}
 
-                                {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
+                            {% block totalsCard %}
+                                <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
+                                    {% block collapsibleTotals %}
+                                        {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
 
-                                <web-mp-manage-order-totals
-                                    order-totals="{{ subtotalOrderTotals | json_encode() }}"
-                                    class="mp-manage-order__card-column-item">
-                                </web-mp-manage-order-totals>
-
-                                {% set grandTotalOrderTotals = [
-                                    {
-                                        title: 'Grand Total' | trans,
-                                        value: merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode),
-                                        isTitle: true,
-                                    },
-                                    {
-                                        title: 'Included Taxes' | trans,
-                                        value: merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode),
-                                    },
-                                ] %}
-
-                                <web-mp-manage-order-totals
-                                    order-totals="{{ grandTotalOrderTotals | json_encode() }}"
-                                    class="mp-manage-order__card-column-item">
-                                </web-mp-manage-order-totals>
-                            </web-spy-card>
-                        {% endblock %}
-
-                        {% block customerCard %}
-                            {% set customerItems = [
-                                {
-                                    name: 'Client name' | trans | upper,
-                                    info: merchantOrder.order.salutation ~ ' ' ~ merchantOrder.order.firstName ~ ' ' ~ merchantOrder.order.lastName,
-                                },
-                                {
-                                    name: 'Client email' | trans| upper,
-                                    info: merchantOrder.order.email,
-                                },
-                                {
-                                    name: 'Previous orders' | trans | upper,
-                                    info: customerMerchantOrderNumber,
-                                },
-                            ] %}
-
-                            <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
-                                <div class="mp-manage-order-grid">
-                                    {% for customerItem in customerItems %}
-                                        <web-mp-manage-order-stats-block
-                                            name="{{ customerItem.name }}"
-                                            info="{{ customerItem.info }}">
-                                        </web-mp-manage-order-stats-block>
-                                    {% endfor %}
-                                </div>
-                            </web-spy-card>
-                        {% endblock %}
-                    </web-spy-tab>
-                {% endblock %}
-
-                {% block itemsTab %}
-                    <web-spy-tab title="{{ 'Items' | trans }}">
-                        {% set configuration = guiTableConfiguration(merchantOrderItemTableConfiguration, false) %}
-                        {% set shipmentIds = [] %}
-
-                        {% for shipmentId, merchantOrderItemsByShipment in merchantOrderItemsIndexedByShipment %}
-                            {% set cardTitle = merchantOrderItemsIndexedByShipment | length > 0 and shipmentId
-                                ? 'Shipment' | trans ~  ' ' ~ loop.index ~  ' of' | trans ~ ' ' ~ merchantOrderItemsIndexedByShipment | length
-                                : 'Items' | trans
-                            %}
-
-                            {% block itemsCard %}
-                                {% set merchantOrderItemIds = [] %}
-                                {% for  merchantOrderItem in merchantOrderItemsByShipment %}
-                                    {% set merchantOrderItemIds = merchantOrderItemIds | merge([merchantOrderItem.idMerchantOrderItem]) %}
-                                {% endfor %}
-
-                                <web-spy-card title="{{ cardTitle }}" class="mp-manage-order__card">
-                                    {% block addressCard %}
-                                        {% set merchantOrderItem = merchantOrderItemsByShipment | first %}
-                                        {% set shipment = merchantOrderItem.orderItem.shipment %}
-                                        {% if shipmentId and shipmentId not in shipmentIds %}
-                                            {% set shipmentIds = shipmentIds | merge([shipment.idSalesShipment]) %}
-                                            {% set shippingAddress = shipment.shippingAddress %}
-                                            {% set fullName = shippingAddress.salutation ~ ' ' ~ shippingAddress.firstName ~ ' ' ~ shippingAddress.lastName %}
-                                            {% set address = shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 %}
-                                            {% set addressArray = [
-                                                fullName,
-                                                address,
-                                                shippingAddress.company,
-                                                shippingAddress.zipCode,
-                                                shippingAddress.city,
-                                                shippingAddress.country.name,
-                                            ] %}
-                                            {% set fullAddress = addressArray | join(', ') %}
-                                            {% set addressItems = [
-                                                {
-                                                    name: 'Delivery address' | trans | upper,
-                                                    info: fullAddress,
-                                                },
-                                                {
-                                                    name: 'carrier' | trans | upper,
-                                                    info: shipment.carrier.name,
-                                                },
-                                                {
-                                                    name: 'Method' | trans | upper,
-                                                    info: shipment.method.name,
-                                                },
-                                                {
-                                                    name: 'Requested Date' | trans | upper,
-                                                    info: shipment.requestedDeliveryDate | date('d.m.Y'),
-                                                },
-                                            ] %}
-
-                                            <web-spy-card class="mp-manage-order__card-inner">
-                                                <div class="mp-manage-order-grid">
-                                                    {% for addressItem in addressItems %}
-                                                        <web-mp-manage-order-stats-block
-                                                                name="{{ addressItem.name }}"
-                                                                info="{{ addressItem.info }}">
-                                                        </web-mp-manage-order-stats-block>
-                                                    {% endfor %}
-                                                </div>
-                                            </web-spy-card>
-                                        {% endif %}
+                                        {% block collapsibleTotalsComponent %}
+                                            <web-mp-manage-order-collapsible-totals
+                                                url="{{ totalsUrl }}"
+                                                title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}"
+                                                class="mp-manage-order__card-column-item">
+                                            </web-mp-manage-order-collapsible-totals>
+                                        {% endblock %}
                                     {% endblock %}
 
-                                    {% block table %}
-                                        {% set configurationByShipment = guiTableConfiguration(merchantOrderItemTableConfiguration, true, {
-                                            'dataSource' : {
-                                                'url': url(configuration.dataSource.url, {
-                                                    'merchant-order-item-ids': merchantOrderItemIds | join(','),
-                                                    'merchant-order-id': merchantOrder.idMerchantOrder,
-                                                }) | replace({'&amp;': '&'})
-                                            }
-                                        }) %}
+                                    {% block subtotals %}
+                                        {% set subtotalTitleOrderTotals = [
+                                            {
+                                                title: 'Subtotal' | trans,
+                                                value: merchantOrder.totals.subtotal | money(true, merchantData.currencyIsoCode),
+                                                isTitle: true,
+                                            },
+                                        ] %}
 
-                                        <web-spy-card class="mp-manage-order__card-inner">
-                                            <web-mp-order-items-table config='{{ configurationByShipment }}'></web-mp-order-items-table>
-                                        </web-spy-card>
+                                        {% set subtotalExpensesOrderTotals = merchantOrder.expenses | reduce((accumulator, expense) => (
+                                            accumulator | merge([{
+                                                title: 'Shipment' | trans ~ ' ' ~ expense.shipment.method.carrierName ?? '' ~ ' ' ~ expense.name,
+                                                value: expense.sumPrice | money(true, merchantData.currencyIsoCode),
+                                            }])
+                                        ), []) %}
+
+                                        {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
+
+                                        {% block subtotalsComponent %}
+                                            <web-mp-manage-order-totals
+                                                order-totals="{{ subtotalOrderTotals | json_encode() }}"
+                                                class="mp-manage-order__card-column-item">
+                                            </web-mp-manage-order-totals>
+                                        {% endblock %}
+                                    {% endblock %}
+
+                                    {% block totals %}
+                                        {% set grandTotalOrderTotals = [
+                                            {
+                                                title: 'Grand Total' | trans,
+                                                value: merchantOrder.totals.grandTotal | money(true, merchantData.currencyIsoCode),
+                                                isTitle: true,
+                                            },
+                                            {
+                                                title: 'Included Taxes' | trans,
+                                                value: merchantOrder.totals.taxTotal.amount | money(true, merchantData.currencyIsoCode),
+                                            },
+                                        ] %}
+
+                                        {% block totalsComponent %}
+                                            <web-mp-manage-order-totals
+                                                order-totals="{{ grandTotalOrderTotals | json_encode() }}"
+                                                class="mp-manage-order__card-column-item">
+                                            </web-mp-manage-order-totals>
+                                        {% endblock %}
                                     {% endblock %}
                                 </web-spy-card>
                             {% endblock %}
-                        {% endfor %}
-                    </web-spy-tab>
-                {% endblock %}
-            </web-spy-tabs>
-        {% endblock %}
-    </web-mp-manage-order>
+
+                            {% block customerCard %}
+                                {% set customerItems = [
+                                    {
+                                        name: 'Client name' | trans | upper,
+                                        info: merchantData.salutation ~ ' ' ~ merchantData.firstName ~ ' ' ~ merchantData.lastName,
+                                    },
+                                    {
+                                        name: 'Client email' | trans| upper,
+                                        info: merchantData.email,
+                                    },
+                                    {
+                                        name: 'Previous orders' | trans | upper,
+                                        info: customerMerchantOrderNumber,
+                                    },
+                                ] %}
+
+                                {% block customerCardComponent %}
+                                    <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
+                                        <div class="mp-manage-order-grid">
+                                            {% for customerItem in customerItems %}
+                                                <web-mp-manage-order-stats-block
+                                                    name="{{ customerItem.name }}"
+                                                    info="{{ customerItem.info }}">
+                                                </web-mp-manage-order-stats-block>
+                                            {% endfor %}
+                                        </div>
+                                    </web-spy-card>
+                                {% endblock %}
+                            {% endblock %}
+                        </web-spy-tab>
+                    {% endblock %}
+
+                    {% block itemsTab %}
+                        <web-spy-tab title="{{ 'Items' | trans }}">
+                            {% set configuration = guiTableConfiguration(merchantOrderItemTableConfiguration, false) %}
+                            {% set shipmentIds = [] %}
+
+                            {% for shipmentId, merchantOrderItemsByShipment in merchantOrderItemsIndexedByShipment %}
+                                {% set cardTitle = merchantOrderItemsIndexedByShipment | length and shipmentId
+                                    ? 'Shipment' | trans ~  ' ' ~ loop.index ~  ' of' | trans ~ ' ' ~ merchantOrderItemsIndexedByShipment | length
+                                    : 'Items' | trans
+                                %}
+
+                                {% block itemsCard %}
+                                    {% set merchantOrderItemIds = [] %}
+                                    {% for  merchantOrderItem in merchantOrderItemsByShipment %}
+                                        {% set merchantOrderItemIds = merchantOrderItemIds | merge([merchantOrderItem.idMerchantOrderItem]) %}
+                                    {% endfor %}
+
+                                    <web-spy-card title="{{ cardTitle }}" class="mp-manage-order__card">
+                                        {% block addressCard %}
+                                            {% set merchantOrderItem = merchantOrderItemsByShipment | first %}
+                                            {% set shipment = merchantOrderItem.orderItem.shipment %}
+                                            {% if shipmentId and shipmentId not in shipmentIds %}
+                                                {% set shipmentIds = shipmentIds | merge([shipment.idSalesShipment]) %}
+                                                {% set shippingAddress = shipment.shippingAddress %}
+                                                {% set fullName = shippingAddress.salutation ~ ' ' ~ shippingAddress.firstName ~ ' ' ~ shippingAddress.lastName %}
+                                                {% set address = shippingAddress.address1 ~ ' ' ~ shippingAddress.address2 %}
+                                                {% set addressArray = [
+                                                    fullName,
+                                                    address,
+                                                    shippingAddress.company,
+                                                    shippingAddress.zipCode,
+                                                    shippingAddress.city,
+                                                    shippingAddress.country.name,
+                                                ] %}
+                                                {% set fullAddress = addressArray | join(', ') %}
+                                                {% set addressItems = [
+                                                    {
+                                                        name: 'Delivery address' | trans | upper,
+                                                        info: fullAddress,
+                                                    },
+                                                    {
+                                                        name: 'carrier' | trans | upper,
+                                                        info: shipment.carrier.name,
+                                                    },
+                                                    {
+                                                        name: 'Method' | trans | upper,
+                                                        info: shipment.method.name,
+                                                    },
+                                                    {
+                                                        name: 'Requested Date' | trans | upper,
+                                                        info: shipment.requestedDeliveryDate | date('d.m.Y'),
+                                                    },
+                                                ] %}
+
+                                                {% block addressCardComponent %}
+                                                    <web-spy-card class="mp-manage-order__card-inner">
+                                                        <div class="mp-manage-order-grid">
+                                                            {% for addressItem in addressItems %}
+                                                                <web-mp-manage-order-stats-block
+                                                                    name="{{ addressItem.name }}"
+                                                                    info="{{ addressItem.info }}">
+                                                                </web-mp-manage-order-stats-block>
+                                                            {% endfor %}
+                                                        </div>
+                                                    </web-spy-card>
+                                                {% endblock %}
+                                            {% endif %}
+                                        {% endblock %}
+
+                                        {% block table %}
+                                            {% set configurationByShipment = guiTableConfiguration(merchantOrderItemTableConfiguration, true, {
+                                                'dataSource' : {
+                                                    'url': url(configuration.dataSource.url, {
+                                                        'merchant-order-item-ids': merchantOrderItemIds | join(','),
+                                                        'merchant-order-id': merchantOrder.idMerchantOrder,
+                                                    }) | replace({'&amp;': '&'})
+                                                }
+                                            }) %}
+
+                                            {% block tableComponent %}
+                                                <web-spy-card class="mp-manage-order__card-inner">
+                                                    <web-mp-order-items-table config='{{ configurationByShipment }}'></web-mp-order-items-table>
+                                                </web-spy-card>
+                                            {% endblock %}
+                                        {% endblock %}
+                                    </web-spy-card>
+                                {% endblock %}
+                            {% endfor %}
+                        </web-spy-tab>
+                    {% endblock %}
+                </web-spy-tabs>
+            {% endblock %}
+        </web-mp-manage-order>
+    {% endblock %}
 {% endblock %}

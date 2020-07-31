@@ -14,8 +14,7 @@ import { ManageOrderTotalsComponent } from './manage-order/manage-order-totals/m
 import { ManageOrderModule } from './manage-order/manage-order.module';
 import { OrderItemsTableComponent } from './order-items-table/order-items-table.component';
 import { OrderItemsTableModule } from './order-items-table/order-items-table.module';
-import { ManageOrderCollapsibleTotalsComponent } from './manage-order-collapsible-totals/manage-order-collapsible-totals.component';
-import { ManageOrderCollapsibleTotalsModule } from './manage-order-collapsible-totals/manage-order-collapsible-totals.module';
+import { ManageOrderCollapsibleTotalsComponent } from './manage-order/manage-order-collapsible-totals/manage-order-collapsible-totals.component';
 
 @NgModule({
     imports: [
@@ -26,7 +25,6 @@ import { ManageOrderCollapsibleTotalsModule } from './manage-order-collapsible-t
         TabsModule,
         ManageOrderModule,
         OrderItemsTableModule,
-        ManageOrderCollapsibleTotalsModule,
     ],
 })
 export class ComponentsModule extends CustomElementModule {
