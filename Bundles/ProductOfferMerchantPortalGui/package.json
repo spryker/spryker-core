@@ -23,7 +23,7 @@
         "@spryker/dropdown": "^0.2.0-next.0",
         "@spryker/form-item": "^0.2.0-next.0",
         "@spryker/headline": "^0.2.0-next.0",
-        "@spryker/html-renderer": "^0.1.0-next.2",
+        "@spryker/html-renderer": "^0.1.0-next.4",
         "@spryker/icon": "^0.2.0-next.0",
         "@spryker/input": "^0.2.0-next.0",
         "@spryker/notification": "^0.2.0-next.0",
