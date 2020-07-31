@@ -123,7 +123,7 @@ class ProductOfferTable extends AbstractTable
             SpyProductOfferTableMap::COL_IS_ACTIVE,
             SpyProductOfferStoreTableMap::COL_FK_STORE,
         ]);
-        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_ASC);
+        $config->setDefaultSortField(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
             SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER,
