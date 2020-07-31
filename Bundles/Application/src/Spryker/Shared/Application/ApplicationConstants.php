@@ -35,6 +35,7 @@ interface ApplicationConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     *
      * @api
      */
     public const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
