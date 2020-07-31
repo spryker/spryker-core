@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-offer-gui-extension",
+  "type": "library",
   "description": "ProductOfferGuiExtension module",
   "license": "proprietary",
   "require": {
@@ -9,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/gui": "*"
   },
+  "suggest": {
+    "spryker/gui": "If you want to use table expander plugin."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -17,8 +21,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/"
   },
   "extra": {
     "branch-alias": {
@@ -27,8 +31,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "suggest": {
-    "spryker/gui": "If you want to use table expander plugin."
   }
 }

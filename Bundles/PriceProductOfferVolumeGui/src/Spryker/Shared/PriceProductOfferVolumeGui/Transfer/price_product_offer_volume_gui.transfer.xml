@@ -17,6 +17,9 @@
     </transfer>
 
     <transfer name="MoneyValue">
+        <property name="priceData" type="string"/>
+        <property name="currency" type="Currency"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>

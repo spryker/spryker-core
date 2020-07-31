@@ -26,6 +26,7 @@
 
     <transfer name="QueryCriteria">
         <property name="joins" type="QueryJoin[]" singular="join"/>
+        <property name="withColumns" type="array" singular="withColumn"/>
     </transfer>
 
 </transfers>
