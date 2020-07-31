@@ -33,6 +33,7 @@ class ConfigurableBundleTemplateKeyToIdConfigurableBundleTemplate implements Dat
         $configurableBundleTemplateKey = $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_KEY];
 
         if (!isset(static::$idConfigurableBundleTemplateBuffer[$configurableBundleTemplateKey])) {
+            /** @var int|null $idConfigurableBundleTemplate */
             $idConfigurableBundleTemplate = $this->createConfigurableBundleTemplateQuery()
                 ->select([SpyConfigurableBundleTemplateTableMap::COL_ID_CONFIGURABLE_BUNDLE_TEMPLATE])
                 ->findOneByKey($configurableBundleTemplateKey);

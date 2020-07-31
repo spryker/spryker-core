@@ -38,6 +38,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function findCustomerOrderIdByOrderReference(string $customerReference, string $orderReference): ?int
     {
+        /** @var int|null $idSalesOrder */
         $idSalesOrder = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByCustomerReference($customerReference)

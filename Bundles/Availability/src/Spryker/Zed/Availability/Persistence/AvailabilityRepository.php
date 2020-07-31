@@ -134,6 +134,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     ): ?ProductAbstractAvailabilityTransfer {
         $storeTransfer->requireIdStore();
 
+        /** @var array|null $availabilityAbstractEntityArray */
         $availabilityAbstractEntityArray = $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
@@ -173,6 +174,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         string $abstractSku,
         StoreTransfer $storeTransfer
     ): int {
+        /** @var int|null $idAvailabilityAbstract */
         $idAvailabilityAbstract = $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
             ->filterByAbstractSku($abstractSku)

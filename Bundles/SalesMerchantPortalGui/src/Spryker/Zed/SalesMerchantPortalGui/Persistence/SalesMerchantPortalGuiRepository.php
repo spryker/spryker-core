@@ -134,6 +134,7 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
 
+        /** @var array $merchantOrderCounts */
         $merchantOrderCounts = $merchantSalesOrderQuery
             ->addAsColumn(MerchantOrderCountsTransfer::TOTAL, 'COUNT(*)')
             ->addAsColumn(

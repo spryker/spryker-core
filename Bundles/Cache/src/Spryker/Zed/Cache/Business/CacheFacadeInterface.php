@@ -66,4 +66,14 @@ interface CacheFacadeInterface
      * @return string[]
      */
     public function emptyAutoLoaderCache();
+
+    /**
+     * Specification:
+     * - Empties configured project specific cache directories.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function emptyProjectSpecificCache(): array;
 }
