@@ -526,9 +526,6 @@ interface ApplicationConstants
      */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
-    /**
-     * @api
-     */
     public const FORM_FACTORY = 'FORM_FACTORY';
 
     /**
