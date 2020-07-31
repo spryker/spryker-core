@@ -16,7 +16,6 @@ interface MerchantOrderExpanderPluginInterface
 {
     /**
      * Specification:
-     * - Executes after a merchant order is retrieved.
      * - Expands merchant order with additional data.
      *
      * @api

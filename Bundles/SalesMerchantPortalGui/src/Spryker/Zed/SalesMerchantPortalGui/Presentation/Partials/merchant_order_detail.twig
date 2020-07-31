@@ -27,7 +27,7 @@
                     <div state-transitions class="mp-manage-order__transitions">
                         {% for eventName in merchantEvent %}
                             <web-spy-button-ajax
-                                url="/sales-merchant-portal-gui/trigger-merchant-oms?id-merchant-order={{ idMerchantOrder }}&event-name={{ eventName }}"
+                                    url="/sales-merchant-portal-gui/trigger-merchant-oms?merchant-order-id={{ idMerchantOrder }}&event-name={{ eventName }}"
                                 class="mp-manage-order__transitions-col"
                             >{{ eventName }}</web-spy-button-ajax>
                         {% endfor %}
@@ -90,7 +90,7 @@
                             {% block totalsCard %}
                                 <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
                                     {% block collapsibleTotals %}
-                                        {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?id-merchant-order=' ~ idMerchantOrder %}
+                                        {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?merchant-order-id=' ~ idMerchantOrder %}
 
                                         {% block collapsibleTotalsComponent %}
                                             <web-mp-manage-order-collapsible-totals
@@ -189,7 +189,7 @@
 
                             {% for shipmentId, merchantOrderItemsByShipment in merchantOrderItemsIndexedByShipment %}
                                 {% set cardTitle = merchantOrderItemsIndexedByShipment | length and shipmentId
-                                    ? 'Shipment' | trans ~  ' ' ~ loop.index ~  ' of' | trans ~ ' ' ~ merchantOrderItemsIndexedByShipment | length
+                                    ? 'Shipment %index% of %total%' | trans({'%index%': loop.index, '%total%': merchantOrderItemsIndexedByShipment | length})
                                     : 'Items' | trans
                                 %}
 

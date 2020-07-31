@@ -18,6 +18,7 @@
     <transfer name="MerchantOrderItem">
         <property name="fkStateMachineItemState" type="int"/>
         <property name="idMerchantOrderItem" type="int"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
     </transfer>
 
     <transfer name="StateMachineProcess">

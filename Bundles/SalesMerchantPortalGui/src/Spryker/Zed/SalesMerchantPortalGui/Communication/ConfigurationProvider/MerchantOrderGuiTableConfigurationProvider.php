@@ -151,7 +151,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
             ->addTypeOption(
                 'url',
                 sprintf(
-                    '/sales-merchant-portal-gui/detail?id-merchant-order=${row.%s}',
+                    '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
                     MerchantOrderTransfer::ID_MERCHANT_ORDER
                 )
             );

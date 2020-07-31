@@ -29,7 +29,7 @@ Totals,Totals
 "Manage Orders","Manage Orders"
 New,New
 "Per Store","Per Store"
-"Status change triggered successfully.","Status change triggered successfully."
+"The state is updated successfully.","The state is updated successfully."
 "Only matching states items will be updated.","Only matching states items will be updated."
 "Order's Items state","Order's Items state"
 "Merchant order not found for id %d.","Merchant order not found for id %d."
@@ -45,4 +45,4 @@ Name,Name
 Quantity,Quantity
 State,State
 "There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
-of,of
+"Shipment %index% of %total%","Shipment %index% of %total%"
