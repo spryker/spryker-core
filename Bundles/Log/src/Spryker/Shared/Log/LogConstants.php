@@ -84,7 +84,7 @@ interface LogConstants
      * Specification:
      * - Absolute path to the installation log files directory.
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */

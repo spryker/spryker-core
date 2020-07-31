@@ -42,16 +42,16 @@ interface ApplicationConstants
     public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const STORE_PREFIX = 'STORE_PREFIX';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
@@ -131,16 +131,16 @@ interface ApplicationConstants
     public const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
 
@@ -152,16 +152,16 @@ interface ApplicationConstants
     public const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
     /**
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
-     * @api.
+     * @api
      */
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
@@ -216,7 +216,7 @@ interface ApplicationConstants
      * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
      * - @see http://elastica.io/ for details.
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -309,7 +309,7 @@ interface ApplicationConstants
     /**
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -365,7 +365,7 @@ interface ApplicationConstants
     /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -374,7 +374,7 @@ interface ApplicationConstants
     /**
      * Port definition for Yves with leading colon (e.g. :8080)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -383,7 +383,7 @@ interface ApplicationConstants
     /**
      * Port definition for Zed with leading colon (e.g. :9080)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -392,7 +392,7 @@ interface ApplicationConstants
     /**
      * Secure port definition for Yves with leading colon (e.g. :8443)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -401,7 +401,7 @@ interface ApplicationConstants
     /**
      * Secure port definition for Zed with leading colon (e.g. :9443)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -424,7 +424,7 @@ interface ApplicationConstants
     /**
      * Base URL for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -433,7 +433,7 @@ interface ApplicationConstants
     /**
      * Base URL for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -460,7 +460,7 @@ interface ApplicationConstants
     /**
      * Secure base URL for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -469,7 +469,7 @@ interface ApplicationConstants
     /**
      * Secure base URL for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */

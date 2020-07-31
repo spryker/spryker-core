@@ -103,7 +103,7 @@ interface PropelConstants
      *
      * @api
      *
-     * @deprecated Will be deleted without replacement
+     * @deprecated Will be deleted without replacement.
      */
     public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
 
@@ -113,7 +113,7 @@ interface PropelConstants
      *
      * @api
      *
-     * @deprecated Will be deleted without replacement
+     * @deprecated Will be deleted without replacement.
      */
     public const ZED_DB_SUPPORTED_ENGINES = 'ZED_DB_SUPPORTED_ENGINES';
 

@@ -49,7 +49,7 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Will be removed without replacement
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

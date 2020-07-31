@@ -170,7 +170,7 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Will be deleted without replacement
+     * @deprecated Will be deleted without replacement.
      *
      * @throws \Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException
      *
