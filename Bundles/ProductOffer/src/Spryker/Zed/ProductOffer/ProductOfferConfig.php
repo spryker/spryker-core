@@ -7,14 +7,11 @@
 
 namespace Spryker\Zed\ProductOffer;
 
+use Spryker\Shared\ProductOffer\ProductOfferConfig as SharedProductOfferConfig;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class ProductOfferConfig extends AbstractBundleConfig
 {
-    protected const STATUS_WAITING_FOR_APPROVAL = 'waiting_for_approval';
-    protected const STATUS_APPROVED = 'approved';
-    protected const STATUS_DENIED = 'denied';
-
     /**
      * Specification:
      * - Returns default status for product offer.
@@ -25,7 +22,7 @@ class ProductOfferConfig extends AbstractBundleConfig
      */
     public function getDefaultApprovalStatus(): string
     {
-        return static::STATUS_APPROVED;
+        return SharedProductOfferConfig::STATUS_APPROVED;
     }
 
     /**
@@ -39,15 +36,15 @@ class ProductOfferConfig extends AbstractBundleConfig
     public function getStatusTree(): array
     {
         return [
-            static::STATUS_WAITING_FOR_APPROVAL => [
-                static::STATUS_APPROVED,
-                static::STATUS_DENIED,
+            SharedProductOfferConfig::STATUS_WAITING_FOR_APPROVAL => [
+                SharedProductOfferConfig::STATUS_APPROVED,
+                SharedProductOfferConfig::STATUS_DENIED,
             ],
-            static::STATUS_APPROVED => [
-                static::STATUS_DENIED,
+            SharedProductOfferConfig::STATUS_APPROVED => [
+                SharedProductOfferConfig::STATUS_DENIED,
             ],
-            static::STATUS_DENIED => [
-                static::STATUS_APPROVED,
+            SharedProductOfferConfig::STATUS_DENIED => [
+                SharedProductOfferConfig::STATUS_APPROVED,
             ],
         ];
     }
