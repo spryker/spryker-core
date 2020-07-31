@@ -78,7 +78,7 @@ if (class_exists(Application::class)) {
         }
     }
 } else {
-    class ApplicationProxy
+    class ApplicationProxy extends \Spryker\Shared\Application\Application
     {
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application;
 
+use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\Routing\Loader\ClosureLoader;
 use Symfony\Component\Routing\Router;
 
-class Application implements HttpKernelInterface, TerminableInterface, ApplicationInterface
+class Application extends Container implements HttpKernelInterface, TerminableInterface, ApplicationInterface
 {
     /**
      * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
