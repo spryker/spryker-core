@@ -136,6 +136,7 @@
         <property name="actions" type="GuiTableBatchAction[]" singular="action"/>
         <property name="availableActionsPath" type="string"/>
         <property name="rowIdPath" type="string"/>
+        <property name="isEnabled" type="bool"/>
     </transfer>
 
     <transfer name="Store">

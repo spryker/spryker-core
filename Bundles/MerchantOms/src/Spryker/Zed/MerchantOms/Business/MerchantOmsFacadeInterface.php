@@ -98,8 +98,8 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
-     * - Expands MerchantOrderTransfer with Merchant OMS item states.
-     * - Expands MerchantOrderTransfer with Merchant OMS manual events.
+     * - Expands MerchantOrderTransfer with Merchant OMS unique item states.
+     * - Expands MerchantOrderTransfer with Merchant OMS unique item manual events.
      *
      * @api
      *

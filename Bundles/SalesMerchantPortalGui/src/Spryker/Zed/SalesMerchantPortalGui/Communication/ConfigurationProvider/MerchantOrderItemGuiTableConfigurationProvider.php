@@ -179,7 +179,7 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
                 ->addTypeOption(
                     'url',
                     sprintf(
-                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?id-merchant-order=%d&event-name=%s&merchant-order-ids=[${rowId}]',
+                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=[${rowId}]',
                         $merchantOrderTransfer->getIdMerchantOrder(),
                         $manualEvent
                     )
@@ -217,7 +217,7 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
                 ->addTypeOption(
                     'url',
                     sprintf(
-                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?id-merchant-order=%d&event-name=%s&merchant-order-ids=${rowIds}',
+                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=${rowIds}',
                         $merchantOrderTransfer->getIdMerchantOrder(),
                         $manualEvent
                     )
@@ -228,6 +228,7 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
 
         $guiTableConfigurationTransfer->setBatchActions(
             (new GuiTableBatchActionsConfigurationTransfer())
+                ->setIsEnabled(true)
                 ->setActions($guiTableBatchActionTransfers)
                 ->setRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
                 ->setAvailableActionsPath(static::COL_KEY_ACTION_IDS)

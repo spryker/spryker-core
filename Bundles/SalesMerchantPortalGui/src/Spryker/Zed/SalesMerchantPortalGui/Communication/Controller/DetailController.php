@@ -22,7 +22,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class DetailController extends AbstractController
 {
-    protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
+    protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
 
     /**
      * @uses \Spryker\Shared\Shipment\ShipmentConfig::SHIPMENT_EXPENSE_TYPE

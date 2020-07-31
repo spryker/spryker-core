@@ -26,6 +26,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 
 /**
@@ -177,6 +178,14 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     public function getSalesFacade(): SalesMerchantPortalGuiToSalesFacadeInterface
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): SalesMerchantPortalGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_TRANSLATOR);
     }
 
     /**

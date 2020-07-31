@@ -24,11 +24,11 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class TriggerMerchantOmsController extends AbstractController
 {
-    protected const PARAM_ID_MERCHANT_ORDER = 'id-merchant-order';
+    protected const PARAM_ID_MERCHANT_ORDER = 'merchant-order-id';
     protected const PARAM_MERCHANT_ORDER_IDS = 'merchant-order-ids';
     protected const PARAM_EVENT_NAME = 'event-name';
 
-    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'Status change triggered successfully.';
+    protected const MESSAGE_STATUS_CHANGED_SUCCESSFULLY = 'The state is updated successfully.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -70,7 +70,9 @@ class TriggerMerchantOmsController extends AbstractController
             'notifications' => [
                 [
                     'type' => 'success',
-                    'message' => static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY,
+                    'message' => $this->getFactory()
+                        ->getTranslatorFacade()
+                        ->trans(static::MESSAGE_STATUS_CHANGED_SUCCESSFULLY),
                 ],
             ],
         ];
@@ -194,7 +196,9 @@ class TriggerMerchantOmsController extends AbstractController
             'notifications' => [
                 [
                     'type' => 'error',
-                    'message' => $errorMessage,
+                    'message' => $this->getFactory()
+                        ->getTranslatorFacade()
+                        ->trans($errorMessage),
                 ],
             ],
         ]);

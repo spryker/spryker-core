@@ -21,6 +21,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeBridge;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeBridge;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Service\SalesMerchantPortalGuiToUtilEncodingServiceBridge;
 
 /**
@@ -37,6 +38,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
     public const FACADE_ROUTER = 'FACADE_ROUTER';
     public const FACADE_SALES = 'FACADE_SALES';
+    public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const SERVICE_TWIG = 'twig';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
@@ -65,6 +67,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addMerchantSalesOrderFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addMerchantOrderItemTableExpanderPlugins($container);
+        $container = $this->addTranslatorFacade($container);
 
         return $container;
     }
@@ -251,6 +254,22 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container->set(static::FACADE_ROUTER, function (Container $container) {
             return new SalesMerchantPortalGuiToRouterFacadeBridge(
                 $container->getLocator()->router()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addTranslatorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_TRANSLATOR, function (Container $container) {
+            return new SalesMerchantPortalGuiToTranslatorFacadeBridge(
+                $container->getLocator()->translator()->facade()
             );
         });
 
