@@ -14,7 +14,7 @@
         "@spryker/button": "^0.2.0-next.0",
         "@spryker/card": "^0.2.0-next.0",
         "@spryker/collapsible": "^0.2.0-next.1",
-        "@spryker/drawer": "^0.2.0-next.0",
+        "@spryker/drawer": "^0.2.0-next.2",
         "@spryker/form-item": "^0.2.0-next.0",
         "@spryker/headline": "^0.2.0-next.0",
         "@spryker/icon": "^0.2.0-next.0",
