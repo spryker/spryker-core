@@ -19,7 +19,7 @@
                     {% for productOfferStock in productOfferStocks %}
                         <tr>
                             <td>{{ productOfferStock.name }} <span class="label label-info">{{ productOfferStock.storeName }}</span></td>
-                            <td>{{ productOfferStock.quantity }}</td>
+                            <td>{{ productOfferStock.quantity.trim() }}</td>
 
                             {% for column in productOfferStock.additionalColumns.columns %}
                                 <td>{{ column | trans }}</td>
