@@ -11,6 +11,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Table\MyOrderTable;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface;
@@ -36,6 +37,16 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getCustomerFacade(),
             $this->getMerchantUserFacade()
         );
+    }
+
+    /**
+     * @phpstan-return array <string, string>
+     *
+     * @return array
+     */
+    public function getMerchantSalesOrderDetailExternalBlocksUrls()
+    {
+        return $this->getConfig()->getMerchantSalesOrderDetailExternalBlocksUrls();
     }
 
     /**
@@ -84,5 +95,13 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     public function getMerchantUserFacade(): MerchantSalesOrderGuiToMerchantUserFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MERCHANT_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface
+     */
+    public function getMerchantSalesOrderFacade(): MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
     }
 }

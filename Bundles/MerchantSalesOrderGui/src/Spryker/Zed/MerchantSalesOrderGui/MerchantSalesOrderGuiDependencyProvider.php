@@ -11,6 +11,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceBridge;
@@ -26,6 +27,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     public const FACADE_MONEY = 'FACADE_MONEY';
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
+    public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
@@ -45,6 +47,21 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
+        $container = $this->addMerchantSalesOrderFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantSalesOrderFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_SALES_ORDER, function (Container $container) {
+            return new MerchantSalesOrderGuiToMerchantSalesOrderFacadeBridge($container->getLocator()->merchantSalesOrder()->facade());
+        });
 
         return $container;
     }

@@ -10,3 +10,20 @@ Email,Email
 "Number of items","Number of items"
 Actions,Actions
 View,View
+"Merchant Order Overview","Merchant Order Overview"
+Reference,Reference
+Name,Name
+"Previous orders count","Previous orders count"
+"Billing address","Billing address"
+"Merchant Order Reference","Merchant Order Reference"
+"Marketplace Order Reference","Marketplace Order Reference"
+"Order date","Order date"
+Totals,Totals
+Option,Option
+Subtotal,Subtotal
+Discount,Discount
+"Cancelled amount","Cancelled amount"
+"GRAND TOTAL","GRAND TOTAL"
+"Total taxes","Total taxes"
+"Remuneration total","Remuneration total"
+"Merchant order doesn't exist.","Merchant order doesn't exist."
