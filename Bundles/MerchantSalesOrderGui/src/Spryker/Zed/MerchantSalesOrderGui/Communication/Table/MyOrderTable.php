@@ -12,7 +12,6 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
-use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -25,6 +24,11 @@ use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiConfig;
 
 class MyOrderTable extends AbstractTable
 {
+    /**
+     * @uses \Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap::COL_NAME
+     */
+    protected const COL_STATE_MACHINE_ITEM_SATATE_NAME = 'spy_state_machine_item_state.name';
+
     protected const MERCHANT_REFERENCE = 'MER000001';
 
     protected const REQUEST_ID_MERCHANT = 'id-order';
@@ -147,8 +151,8 @@ class MyOrderTable extends AbstractTable
     }
 
     /**
-     * @module MerchantOms
      * @module MerchantSalesOrder
+     * @module MerchantOms
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
@@ -180,7 +184,7 @@ class MyOrderTable extends AbstractTable
 
             ])
             ->withColumn(
-                sprintf('GROUP_CONCAT(%s)', SpyStateMachineItemStateTableMap::COL_NAME),
+                sprintf('GROUP_CONCAT(%s)', static::COL_STATE_MACHINE_ITEM_SATATE_NAME),
                 static::COL_ORDER_STATE
             )
             ->withColumn(
