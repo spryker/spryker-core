@@ -16,14 +16,13 @@ Name,Name
 "Previous orders count","Vorherige Bestellungen zählen"
 "Billing address",Rechnungsadresse
 "Merchant Order Reference",Händlerbestellreferenz
-"Marketplace Order Reference","Bestellreferenz für den Marktplatz"
 "Order date",Auftragsdatum
 Totals,Summen
 Option,Möglichkeit
 Subtotal,Zwischensumme
 Discount,Rabatt
- "Cancelled amount","Stornierter Betrag"
-"GRAND TOTAL","GESAMTSUMME"
-"Total taxes","Gesamtsteuern"
+"Cancelled amount","Stornierter Betrag"
+"GRAND TOTAL",GESAMTSUMME
+"Total taxes",Gesamtsteuern
 "Remuneration total","Vergütung insgesamt"
 "Merchant order doesn't exist.","Händlerbestellung existiert nicht."
