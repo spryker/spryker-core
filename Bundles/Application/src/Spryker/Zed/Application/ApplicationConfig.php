@@ -47,9 +47,9 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
-     * @api
-     *
      * @deprecated Will be removed without replacement.
+     *
+     * @api
      *
      * @return string
      */

@@ -23,6 +23,8 @@ interface ApplicationConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::DISPLAY_ERRORS} instead.
+     *
+     * @api
      */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
@@ -33,11 +35,14 @@ interface ApplicationConstants
 
     /**
      * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     * @api
      */
     public const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
 
     /**
      * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     *
+     * @api
      */
     public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
 

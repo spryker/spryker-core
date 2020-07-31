@@ -159,9 +159,9 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     /**
      * {@inheritDoc}
      *
-     * @api
+     * @deprecated Will be removed without replacement.
      *
-     * @deprecated Will be deleted without replacement.
+     * @api
      *
      * @return string
      */
