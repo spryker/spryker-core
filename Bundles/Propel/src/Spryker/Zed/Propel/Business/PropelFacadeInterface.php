@@ -116,9 +116,9 @@ interface PropelFacadeInterface
     public function getCurrentDatabaseEngine();
 
     /**
-     * @deprecated Will be removed without replacement.
-     *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
