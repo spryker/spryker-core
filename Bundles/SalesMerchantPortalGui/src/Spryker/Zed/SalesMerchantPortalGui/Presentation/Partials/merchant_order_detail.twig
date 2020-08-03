@@ -8,6 +8,7 @@
 #}
 
 {% block body %}
+    {% set mainClass = 'mp-manage-order' %}
     {% set merchantData = merchantOrder.order %}
 
     {% set orderDetails = {
@@ -24,11 +25,11 @@
                 {% set merchantEvent = merchantOrder.manualEvents %}
 
                 {% if merchantEvent is not empty %}
-                    <div state-transitions class="mp-manage-order__transitions">
+                    <div state-transitions class="{{ mainClass }}__transitions">
                         {% for eventName in merchantEvent %}
                             <web-spy-button-ajax
                                     url="/sales-merchant-portal-gui/trigger-merchant-oms?merchant-order-id={{ idMerchantOrder }}&event-name={{ eventName }}"
-                                class="mp-manage-order__transitions-col"
+                                class="{{ mainClass }}__transitions-col"
                             >{{ eventName }}</web-spy-button-ajax>
                         {% endfor %}
                     </div>
@@ -40,15 +41,15 @@
             {% block itemStates %}
                 <span items-states-title>{{ "Order's Items state" | trans }}</span>
 
-                <div items-states class="mp-manage-order__states">
+                <div items-states class="{{ mainClass }}__states">
                     {% for state in merchantOrder.itemStates %}
-                        <web-spy-chips max-width="none" class="mp-manage-order__states-col">{{ state }}</web-spy-chips>
+                        <web-spy-chips max-width="none" class="{{ mainClass }}__states-col">{{ state }}</web-spy-chips>
                     {% endfor %}
                 </div>
             {% endblock %}
 
             {% block tabs %}
-                <web-spy-tabs class="mp-manage-order__content" cloak>
+                <web-spy-tabs class="{{ mainClass }}__content" cloak>
                     {% block detailTab %}
                         {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
@@ -74,8 +75,8 @@
                                 ] %}
 
                                 {% block overviewCardComponent %}
-                                    <web-spy-card title="{{ 'Overview' | trans }}" class="mp-manage-order__card">
-                                        <div class="mp-manage-order-grid">
+                                    <web-spy-card title="{{ 'Overview' | trans }}" class="{{ mainClass }}__card">
+                                        <div class="{{ mainClass }}-grid">
                                             {% for overviewItem in overviewItems %}
                                                 <web-mp-manage-order-stats-block
                                                     name="{{ overviewItem.name }}"
@@ -88,7 +89,7 @@
                             {% endblock %}
 
                             {% block totalsCard %}
-                                <web-spy-card title="{{ 'Totals' | trans }}" class="mp-manage-order__card">
+                                <web-spy-card title="{{ 'Totals' | trans }}" class="{{ mainClass }}__card">
                                     {% block collapsibleTotals %}
                                         {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?merchant-order-id=' ~ idMerchantOrder %}
 
@@ -96,7 +97,7 @@
                                             <web-mp-manage-order-collapsible-totals
                                                 url="{{ totalsUrl }}"
                                                 title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}"
-                                                class="mp-manage-order__card-column-item">
+                                                class="{{ mainClass }}__card-column-item">
                                             </web-mp-manage-order-collapsible-totals>
                                         {% endblock %}
                                     {% endblock %}
@@ -122,7 +123,7 @@
                                         {% block subtotalsComponent %}
                                             <web-mp-manage-order-totals
                                                 order-totals="{{ subtotalOrderTotals | json_encode() }}"
-                                                class="mp-manage-order__card-column-item">
+                                                class="{{ mainClass }}__card-column-item">
                                             </web-mp-manage-order-totals>
                                         {% endblock %}
                                     {% endblock %}
@@ -143,7 +144,7 @@
                                         {% block totalsComponent %}
                                             <web-mp-manage-order-totals
                                                 order-totals="{{ grandTotalOrderTotals | json_encode() }}"
-                                                class="mp-manage-order__card-column-item">
+                                                class="{{ mainClass }}__card-column-item">
                                             </web-mp-manage-order-totals>
                                         {% endblock %}
                                     {% endblock %}
@@ -167,8 +168,8 @@
                                 ] %}
 
                                 {% block customerCardComponent %}
-                                    <web-spy-card title="{{ 'Customer' | trans }}" class="mp-manage-order__card">
-                                        <div class="mp-manage-order-grid">
+                                    <web-spy-card title="{{ 'Customer' | trans }}" class="{{ mainClass }}__card">
+                                        <div class="{{ mainClass }}-grid">
                                             {% for customerItem in customerItems %}
                                                 <web-mp-manage-order-stats-block
                                                     name="{{ customerItem.name }}"
@@ -199,7 +200,7 @@
                                         {% set merchantOrderItemIds = merchantOrderItemIds | merge([merchantOrderItem.idMerchantOrderItem]) %}
                                     {% endfor %}
 
-                                    <web-spy-card title="{{ cardTitle }}" class="mp-manage-order__card">
+                                    <web-spy-card title="{{ cardTitle }}" class="{{ mainClass }}__card">
                                         {% block addressCard %}
                                             {% set merchantOrderItem = merchantOrderItemsByShipment | first %}
                                             {% set shipment = merchantOrderItem.orderItem.shipment %}
@@ -237,8 +238,8 @@
                                                 ] %}
 
                                                 {% block addressCardComponent %}
-                                                    <web-spy-card class="mp-manage-order__card-inner">
-                                                        <div class="mp-manage-order-grid">
+                                                    <web-spy-card class="{{ mainClass }}__card-inner">
+                                                        <div class="{{ mainClass }}-grid">
                                                             {% for addressItem in addressItems %}
                                                                 <web-mp-manage-order-stats-block
                                                                     name="{{ addressItem.name }}"
@@ -262,7 +263,7 @@
                                             }) %}
 
                                             {% block tableComponent %}
-                                                <web-spy-card class="mp-manage-order__card-inner">
+                                                <web-spy-card class="{{ mainClass }}__card-inner">
                                                     <web-mp-order-items-table config='{{ configurationByShipment }}'></web-mp-order-items-table>
                                                 </web-spy-card>
                                             {% endblock %}
