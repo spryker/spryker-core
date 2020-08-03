@@ -11,12 +11,17 @@ use Codeception\Lib\Framework;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilder;
 use Spryker\Glue\GlueApplication\Session\Storage\MockArraySessionStorage;
-use Spryker\Glue\Kernel\Application;
-use Spryker\Glue\Kernel\Plugin\Pimple;
+use Spryker\Service\Container\Container;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Symfony\Component\HttpFoundation\Session\Session;
 
 class GlueBootstrap extends Framework
 {
+    /**
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
+     */
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
     /**
      * @return void
      */
@@ -30,10 +35,10 @@ class GlueBootstrap extends Framework
      */
     public function boot(): void
     {
-        $pimplePlugin = new Pimple();
-        $pimplePlugin->setApplication(new Application());
-
-        $pimplePlugin->getApplication()['resource_builder'] = new RestResourceBuilder();
+        $globalContainer = new GlobalContainer();
+        $globalContainer->setContainer(new Container([
+            static::SERVICE_RESOURCE_BUILDER => new RestResourceBuilder(),
+        ]));
 
         (new SessionClient())->setContainer(
             new Session(

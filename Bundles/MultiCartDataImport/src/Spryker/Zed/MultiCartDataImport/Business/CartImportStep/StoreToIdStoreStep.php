@@ -33,6 +33,7 @@ class StoreToIdStoreStep implements DataImportStepInterface
         $storeName = $dataSet[CartDataSetInterface::KEY_STORE];
         if (!isset($this->idStoreCache[$storeName])) {
             $storeQuery = new SpyStoreQuery();
+            /** @var int|null $idStore */
             $idStore = $storeQuery
                 ->select(SpyStoreTableMap::COL_ID_STORE)
                 ->findOneByName($storeName);

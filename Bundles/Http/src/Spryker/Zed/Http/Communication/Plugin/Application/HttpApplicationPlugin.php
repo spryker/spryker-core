@@ -34,7 +34,7 @@ class HttpApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected const SERVICE_RESOLVER = 'resolver';
 
     /**
-     * @uses \Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
+     * @uses \Spryker\Zed\Router\Communication\Plugin\Application\RouterApplicationPlugin::SERVICE_CONTROLLER_RESOLVER
      */
     protected const SERVICE_CONTROLLER_RESOLVER = 'controller-resolver';
 

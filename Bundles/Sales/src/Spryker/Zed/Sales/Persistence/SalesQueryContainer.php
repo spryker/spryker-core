@@ -345,6 +345,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->withColumn('COUNT(*)', 'Count')
             ->select(['Count'])
             ->groupBySku()
-            ->orderByCount();
+            ->orderBy('Count');
     }
 }

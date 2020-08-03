@@ -21,7 +21,8 @@
   },
   "bin": [
     "Bundles/Console/bin/console",
-    "Bundles/Console/bin/yves"
+    "Bundles/Console/bin/yves",
+    "Bundles/Console/bin/glue"
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
@@ -401,6 +402,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",

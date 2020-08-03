@@ -1,24 +1,35 @@
 <spy-layout>
-    <div class="mp-layout-main">
-        <div class="mp-layout-main__sidebar">
+    <div class="mp-layout-main-cnt">
+        <div class="mp-layout-main-cnt__sidebar">
             <spy-sidebar (collapsedChange)="updateCollapseHandler($event)">
-                <div class="mp-layout-main__logo" [class.mp-layout-main__logo--collapsed]="isCollapsed">
-                    <div class="mp-layout-main__logo-inner">
+                <div
+                    class="mp-layout-main-cnt__logo"
+                    [class.mp-layout-main-cnt__logo--collapsed]="isCollapsed"
+                >
+                    <div class="mp-layout-main-cnt__logo-inner">
                         <spy-logo></spy-logo>
                     </div>
                 </div>
 
-                <spy-navigation [items]="navigationConfig" [collapsed]="isCollapsed"></spy-navigation>
+                <spy-navigation
+                    [items]="navigationConfig"
+                    [collapsed]="isCollapsed"
+                ></spy-navigation>
             </spy-sidebar>
         </div>
 
-        <div class="mp-layout-main__main">
-            <spy-header class="mp-layout-main__header">
+        <div class="mp-layout-main-cnt__main">
+            <spy-header class="mp-layout-main-cnt__header">
                 <ng-content select="[name='header']"></ng-content>
             </spy-header>
 
-            <div class="mp-layout-main__content ctx-spy-bg-gray">
-                <ng-content></ng-content>
+            <div
+                class="mp-layout-main-cnt__content"
+                spyApplyContexts="spy-bg-gray"
+            >
+                <span spyCustomElementBoundary>
+                    <ng-content></ng-content>
+                </span>
             </div>
         </div>
     </div>

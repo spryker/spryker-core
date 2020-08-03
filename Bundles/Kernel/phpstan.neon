@@ -12,3 +12,4 @@ parameters:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Access to undefined constant .+ActiveRecordInterface::TABLE_MAP.#'
         - '#Method .+Abstract.+::resolveBundleConfig\(\) should return .+AbstractBundleConfig but returns Spryker\\Shared\\Kernel\\AbstractBundleConfig#'
+        - '#Unreachable statement - code above always terminates.#'

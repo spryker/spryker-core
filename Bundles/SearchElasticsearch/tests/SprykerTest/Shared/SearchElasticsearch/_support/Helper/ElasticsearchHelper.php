@@ -8,6 +8,7 @@
 namespace SprykerTest\Shared\SearchElasticsearch\Helper;
 
 use Codeception\Module;
+use Codeception\Stub;
 use Codeception\TestInterface;
 use Elastica\Client;
 use Elastica\Document;
@@ -16,13 +17,14 @@ use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Elastica\Request;
 use Elastica\Snapshot;
+use Elastica\Type;
 use RuntimeException;
 use Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig;
 use SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper;
 
 class ElasticsearchHelper extends Module
 {
-    public const DEFAULT_MAPPING_TYPE = 'page';
+    public const DEFAULT_MAPPING_TYPE = '_doc';
 
     protected const REPOSITORY_LOCATION_FILE_NAME = 'search_test_file';
     protected const REPOSITORY_TYPE_FILESYSTEM = 'fs';
@@ -106,7 +108,7 @@ class ElasticsearchHelper extends Module
         ];
 
         $index->addDocuments($documents);
-        $index->flush();
+        $index->refresh();
 
         return $index;
     }
@@ -128,14 +130,14 @@ class ElasticsearchHelper extends Module
      * @param string $documentId
      * @param string $indexName
      * @param array|string $expectedData
-     * @param string $typeName
+     * @param string $typeName Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
      *
      * @return void
      */
     public function assertDocumentExists(string $documentId, string $indexName, $expectedData = [], string $typeName = self::DEFAULT_MAPPING_TYPE): void
     {
         try {
-            $document = $this->getClient()->getIndex($indexName)->getType($typeName)->getDocument($documentId);
+            $document = $this->getDocument($documentId, $indexName, $typeName);
 
             if ($expectedData) {
                 $this->assertEquals($expectedData, $document->getData(), 'Document with id %s exists, but doesn\'t contain expected data.');
@@ -148,13 +150,29 @@ class ElasticsearchHelper extends Module
     /**
      * @param string $documentId
      * @param string $indexName
+     * @param string $mappingType Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Elastica\Document
+     */
+    protected function getDocument(string $documentId, string $indexName, string $mappingType): Document
+    {
+        if ($this->supportsMappingTypes()) {
+            return $this->getClient()->getIndex($indexName)->getType($mappingType)->getDocument($documentId);
+        }
+
+        return $this->getClient()->getIndex($indexName)->getDocument($documentId);
+    }
+
+    /**
+     * @param string $documentId
+     * @param string $indexName
      *
      * @return void
      */
     public function assertDocumentDoesNotExist(string $documentId, string $indexName): void
     {
         try {
-            $this->getClient()->getIndex($indexName)->getType(static::DEFAULT_MAPPING_TYPE)->getDocument($documentId);
+            $this->getDocument($documentId, $indexName, static::DEFAULT_MAPPING_TYPE);
             $this->fail(sprintf('Document with id %s was found in index %s.', $documentId, $indexName));
         } catch (NotFoundException $e) {
             return;
@@ -277,5 +295,63 @@ class ElasticsearchHelper extends Module
     public function getVirtualRepositoryLocation(): string
     {
         return $this->getModule('\\' . VirtualFilesystemHelper::class)->getVirtualDirectory() . static::REPOSITORY_LOCATION_FILE_NAME;
+    }
+
+    /**
+     * @param array $indexParams
+     * @param string $mappingTypeName
+     *
+     * @return \Elastica\Index|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createIndexMock(array $indexParams = [], string $mappingTypeName = self::DEFAULT_MAPPING_TYPE): Index
+    {
+        $indexMock = Stub::makeEmpty(Index::class, $indexParams);
+
+        if ($this->supportsMappingTypes()) {
+            $indexMock->method('getType')->willReturn(new Type($indexMock, $mappingTypeName));
+        }
+
+        return $indexMock;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @return \Elastica\Mapping|\Elastica\Type\Mapping|\PHPUnit\Framework\MockObject\MockObject
+     */
+    public function createMappingMock(array $params = [])
+    {
+        if ($this->supportsMappingTypes()) {
+            return Stub::makeEmpty('Elastica\Type\Mapping', $params);
+        }
+
+        return Stub::makeEmpty('Elastica\Mapping', $params);
+    }
+
+    /**
+     * @param string $documentId
+     * @param array $documentData
+     * @param string $index
+     * @param string $mappingType Deprecated: Will be removed once the support for Elasticsearch 6 and lower is dropped.
+     *
+     * @return \Elastica\Document
+     */
+    protected function createDocument(string $documentId, array $documentData, string $index = '', string $mappingType = self::DEFAULT_MAPPING_TYPE): Document
+    {
+        if ($this->supportsMappingTypes()) {
+            return new Document($documentId, $documentData, $mappingType);
+        }
+
+        return new Document($documentId, $documentData, $index);
+    }
+
+    /**
+     * @deprecated Will be removed once the support for Elasticsearch 6 and lower is dropped.
+     *
+     * @return bool
+     */
+    public function supportsMappingTypes(): bool
+    {
+        return method_exists(Index::class, 'getType');
     }
 }

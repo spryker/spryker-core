@@ -38,7 +38,8 @@ class StorageRedisCommunicationFactory extends AbstractCommunicationFactory
     {
         return new StorageRedisExporter(
             $this->getRedisFacade(),
-            $this->getConfig()->getRedisPort()
+            $this->getConfig()->getRedisPort(),
+            $this->getConfig()->getRedisHost()
         );
     }
 

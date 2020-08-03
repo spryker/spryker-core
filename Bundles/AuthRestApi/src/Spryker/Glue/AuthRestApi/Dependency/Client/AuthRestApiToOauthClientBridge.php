@@ -39,6 +39,8 @@ class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterfac
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Dependency\Client\AuthRestApiToOauthClientBridge::validateOauthAccessToken()} instead.
+     *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
@@ -47,6 +49,17 @@ class AuthRestApiToOauthClientBridge implements AuthRestApiToOauthClientInterfac
         OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
     ): OauthAccessTokenValidationResponseTransfer {
         return $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
+        return $this->oauthClient->validateOauthAccessToken($authAccessTokenValidationRequestTransfer);
     }
 
     /**

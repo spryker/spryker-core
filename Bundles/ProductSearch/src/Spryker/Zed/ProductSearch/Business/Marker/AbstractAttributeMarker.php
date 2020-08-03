@@ -113,12 +113,15 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
         );
         $join->setTableMap(new SpyProductAttributeKeyTableMap());
 
-        return $query
+        /** @var array $result */
+        $result = $query
             ->addJoinObject($join, SpyProductAttributeKeyTableMap::TABLE_NAME)
             ->select(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->setDistinct()
             ->find();
+
+        return $result;
     }
 
     /**
@@ -128,11 +131,14 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      */
     protected function getProductAbstractIdsByAttributeNames(array $attributeNames)
     {
-        return $this->productSearchQueryContainer
+        /** @var array $result */
+        $result = $this->productSearchQueryContainer
             ->queryProductAbstractByAttributeName($attributeNames)
             ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
+
+        return $result;
     }
 
     /**
@@ -164,11 +170,14 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      */
     protected function queryAttributeKeys($query)
     {
-        return $query
+        /** @var array $result */
+        $result = $query
             ->joinSpyProductAttributeKey(SpyProductAttributeKeyTableMap::TABLE_NAME)
             ->select(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->setDistinct()
             ->find();
+
+        return $result;
     }
 }
