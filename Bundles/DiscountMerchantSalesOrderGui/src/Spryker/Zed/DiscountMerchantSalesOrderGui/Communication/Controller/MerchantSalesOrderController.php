@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\DiscountMerchantSalesOrderGui\Communication\Controller;
 
-use ArrayObject;
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -19,39 +17,21 @@ use Symfony\Component\HttpFoundation\Request;
 class MerchantSalesOrderController extends AbstractController
 {
     /**
+     * @phpstan-return array<string, mixed>
+     *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\Response
+     * @return array
      */
-    public function listAction(Request $request)
+    public function listAction(Request $request): array
     {
         /**
          * @var \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
          */
         $merchantOrderTransfer = $request->request->get('merchantOrderTransfer');
 
-        $merchantOrderItemIds = [];
-        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
-        }
-
-        $calculatedDiscountTransfers = array_filter(
-            $merchantOrderTransfer->getOrder()->getCalculatedDiscounts()->getArrayCopy(),
-            function (CalculatedDiscountTransfer $calculatedDiscountTransfer) use ($merchantOrderItemIds) {
-                return $calculatedDiscountTransfer->getFkSalesOrderItem() === null || in_array($calculatedDiscountTransfer->getFkSalesOrderItem(), $merchantOrderItemIds);
-            }
-        );
-
-        $merchantOrderTransfer->getOrder()->setCalculatedDiscounts(
-            new ArrayObject($calculatedDiscountTransfers)
-        );
-        // END
-
-        return $this->renderView(
-            '@Discount/Sales/list.twig',
-            [
-                'order' => $merchantOrderTransfer->getOrder(),
-            ]
-        );
+        return [
+            'merchantOrder' => $merchantOrderTransfer,
+        ];
     }
 }

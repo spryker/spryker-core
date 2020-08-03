@@ -10,12 +10,6 @@
 {% block content %}
     <div id="order-overview">{% include '@MerchantSalesOrderGui/Detail/boxes/order-overview.twig' %}</div>
     <div id="customer">{% include '@MerchantSalesOrderGui/Detail/boxes/customer.twig' %}</div>
-    <div id="items">
-        {#{% include [#}
-            {#'@ShipmentGui/Sales/boxes/items.twig',#}
-            {#'@Sales/Detail/boxes/items.twig'#}
-            {#] %}#}
-    </div>
     {% for blockName, externalBlock in blocks %}
         {% if externalBlock %}
             <div id="{{ blockName }}">{{ externalBlock | raw }}</div>

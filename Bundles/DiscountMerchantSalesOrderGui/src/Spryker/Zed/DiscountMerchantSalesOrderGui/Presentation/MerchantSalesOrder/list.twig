@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-sm-12">
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discounts & Vouchers' } %}
+
+            {% block widget_content %}
+                {% if merchantOrder.order.calculatedDiscounts is defined and merchantOrder.order.calculatedDiscounts is not empty %}
+                    <table class="footable table table-striped toggle-arrow-tiny">
+                        <thead>
+                        <tr class="text-left">
+                            <th>{{ 'Type' | trans }}</th>
+                            <th>{{ 'Name' | trans }}</th>
+                            <th>{{ 'Code' | trans }}</th>
+                            <th>{{ 'Amount' | trans }}</th>
+                            <th>{{ 'Description' | trans }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for calculatedDiscount in merchantOrder.order.calculatedDiscounts %}
+                            <tr>
+                                <td>{{ calculatedDiscount.voucherCode ? 'Voucher' | trans : 'Discount' | trans }}</td>
+                                <td>{{ calculatedDiscount.displayName }}</td>
+                                <td>{{ calculatedDiscount.voucherCode ? calculatedDiscount.voucherCode : '-' }}</td>
+                                <td>{{ calculatedDiscount.sumAmount | money(true, merchantOrder.order.currencyIsoCode) }}</td>
+                                <td>{{ calculatedDiscount.description ? calculatedDiscount.description : '-' }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <span class="text-left">{{ 'No returns for this order' | trans }}</span>
+                {% endif %}
+            {% endblock %}
+
+        {% endembed %}
+    </div>
+</div>

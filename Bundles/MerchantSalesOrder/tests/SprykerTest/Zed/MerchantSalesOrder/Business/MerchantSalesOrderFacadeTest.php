@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 
@@ -180,12 +181,14 @@ class MerchantSalesOrderFacadeTest extends Unit
      *
      * @param array $merchantOrderCriteriaDataKeys
      * @param int $merchantOrderItemsCount
+     * @param bool $withOrder
      *
      * @return void
      */
     public function testFindMerchantOrderReturnsTransferWithCorrectCriteria(
         array $merchantOrderCriteriaDataKeys,
-        int $merchantOrderItemsCount
+        int $merchantOrderItemsCount,
+        bool $withOrder = false
     ): void {
         //Arrange
         $merchantTransfer = $this->tester->haveMerchant();
@@ -204,6 +207,12 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        if ($withOrder) {
+            $merchantOrderTransfer->setOrder(
+                (new OrderTransfer())->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            );
+        }
+
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
@@ -211,6 +220,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
+            MerchantOrderCriteriaTransfer::WITH_ORDER => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -230,6 +240,14 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderTransfer->getIdMerchantOrder(),
             $foundMerchantOrderTransfer->getIdMerchantOrder()
         );
+
+        if ($withOrder) {
+            $this->assertSame(
+                $merchantOrderTransfer->getOrder()->getIdSalesOrder(),
+                $foundMerchantOrderTransfer->getOrder()->getIdSalesOrder()
+            );
+        }
+
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
         $this->assertInstanceOf(TotalsTransfer::class, $foundMerchantOrderTransfer->getTotals());
     }
@@ -466,6 +484,74 @@ class MerchantSalesOrderFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetMerchantOrdersCountReturnsCorrectMerchantOrdersCount(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransferOne = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        $saveOrderTransferTwo = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+
+        $merchantOrderReferenceOne = $this->tester->getMerchantOrderReference(
+            $saveOrderTransferOne->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+
+        $merchantOrderReferenceTwo = $this->tester->getMerchantOrderReference(
+            $saveOrderTransferTwo->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+
+        $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReferenceOne,
+            MerchantOrderTransfer::ID_ORDER => $saveOrderTransferOne->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReferenceTwo,
+            MerchantOrderTransfer::ID_ORDER => $saveOrderTransferTwo->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setMerchantReference($merchantTransfer->getMerchantReference());
+
+        $expectedMerchantOrdersCount = 2;
+
+        //Act
+        $merchantOrdersCount = $this->tester
+            ->getFacade()
+            ->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+
+        //Assert
+        $this->assertEquals($expectedMerchantOrdersCount, $merchantOrdersCount);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetMerchantOrdersCountReturnsZeroForEmptyMerchantOrders(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setMerchantReference($merchantTransfer->getMerchantReference());
+
+        $expectedMerchantOrdersCount = 0;
+
+        //Act
+        $merchantOrdersCount = $this->tester
+            ->getFacade()
+            ->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+
+        //Assert
+        $this->assertEquals($expectedMerchantOrdersCount, $merchantOrdersCount);
+    }
+
+    /**
      * @return array
      */
     public function getMerchantOrderPositiveScenarioDataProvider(): array
@@ -503,6 +589,14 @@ class MerchantSalesOrderFacadeTest extends Unit
                     MerchantOrderCriteriaTransfer::WITH_ITEMS,
                 ],
                 'merchantOrderItemsCount' => 1,
+            ],
+            'with order' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaTransfer::WITH_ORDER,
+                ],
+                'merchantOrderItemsCount' => 0,
+                'withOrder' => true,
             ],
         ];
     }

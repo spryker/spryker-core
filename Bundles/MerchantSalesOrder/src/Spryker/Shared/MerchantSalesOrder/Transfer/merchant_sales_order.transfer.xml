@@ -30,6 +30,7 @@
         <property name="expenses" type="Expense[]" singular="expense"/>
         <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
         <property name="totals" type="Totals"/>
+        <property name="order" type="Order"/>
     </transfer>
 
     <transfer name="MerchantOrderCollection">
@@ -59,6 +60,7 @@
         <property name="withItems" type="bool"/>
         <property name="filter" type="Filter"/>
         <property name="pagination" type="Pagination"/>
+        <property name="withOrder" type="bool"/>
     </transfer>
 
     <transfer name="MerchantOrderItemResponse">
@@ -75,6 +77,7 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="totals" type="Totals"/>
         <property name="merchantReferences" type="string[]" singular="merchantReference"/>
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -112,6 +115,10 @@
 
     <transfer name="Message">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+        <property name="fkSalesOrderItem" type="int"/>
     </transfer>
 
 </transfers>

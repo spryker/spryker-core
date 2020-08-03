@@ -12,4 +12,10 @@
         <property name="fkSalesOrderItem" type="int"/>
     </transfer>
 
+    <transfer name="MerchantOrderItem">
+    </transfer>
+
+    <transfer name="Order">
+    </transfer>
+
 </transfers>

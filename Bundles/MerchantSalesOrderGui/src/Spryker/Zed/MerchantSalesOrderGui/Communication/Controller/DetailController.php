@@ -47,6 +47,7 @@ class DetailController extends AbstractController
                 ->setIdMerchantOrder($idMerchantSalesOrder)
                 ->setIdMerchant($idMerchant)
                 ->setWithItems(true)
+                ->setWithOrder(true)
         );
         if (!$merchantOrderTransfer) {
             throw new AccessDeniedHttpException(static::MASSAGE_MERCHANT_ORDER_EXIST);
