@@ -46,3 +46,5 @@ Quantity,Quantity
 State,State
 "There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
 "Shipment %index% of %total%","Shipment %index% of %total%"
+"Canceled Amount","Canceled Amount"
+"Discount Amount","Discount Amount"

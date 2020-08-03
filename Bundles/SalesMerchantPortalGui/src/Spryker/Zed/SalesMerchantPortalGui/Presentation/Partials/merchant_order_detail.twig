@@ -103,7 +103,7 @@
                                     {% endblock %}
 
                                     {% block subtotals %}
-                                        {% set subtotalTitleOrderTotals = [
+                                        {% set subtotalOrderTotals = [
                                             {
                                                 title: 'Subtotal' | trans,
                                                 value: merchantOrder.totals.subtotal | money(true, merchantData.currencyIsoCode),
@@ -118,7 +118,23 @@
                                             }])
                                         ), []) %}
 
-                                        {%  set subtotalOrderTotals = subtotalTitleOrderTotals | merge(subtotalExpensesOrderTotals) %}
+                                        {%  set subtotalOrderTotals = subtotalOrderTotals | merge(subtotalExpensesOrderTotals) | merge([
+                                                {
+                                                    title: 'Canceled Amount' | trans,
+                                                    value: merchantOrder.totals.canceledTotal | money(true, merchantData.currencyIsoCode),
+                                                },
+                                            ])
+                                        %}
+
+                                        {% if merchantOrder.totals.discountTotal > 0 %}
+                                            {% set subtotalOrderTotals = subtotalOrderTotals | merge([
+                                                    {
+                                                        title: 'Discount Amount' | trans,
+                                                        value: '-' ~ merchantOrder.totals.discountTotal | money(true, merchantData.currencyIsoCode),
+                                                    },
+                                                ])
+                                            %}
+                                        {% endif %}
 
                                         {% block subtotalsComponent %}
                                             <web-mp-manage-order-totals

@@ -46,3 +46,5 @@ Quantity,Menge
 State,State
 "There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
 "Shipment %index% of %total%","Versand %index% von %total%"
+"Canceled Amount","Stornierter Betrag"
+"Discount Amount",Rabattbetrag
