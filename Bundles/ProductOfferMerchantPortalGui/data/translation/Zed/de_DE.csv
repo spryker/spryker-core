@@ -21,7 +21,7 @@ Name,Name
 "Never out of stock","Immer auf Lager"
 "Offer is online","Angebot ist online"
 "Offer is offline","Angebot ist offline"
-Offers,Angeboten
+Offers,Angebote
 Offline,Offline
 "On Marketplace","On Marketplace"
 Online,Online
@@ -47,9 +47,9 @@ Valid,Gültig
 "Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Gültig Bis"
 Visibility,Sichtbarkeit
-"With Offers","Mit Angeboten"
+"With Offers","Mit Angebote"
 "With Stock","With Stock"
-"Without Offers","Ohne Angeboten"
+"Without Offers","Ohne Angebote"
 "Description & Details","Description & Details"
 "The first date cannot be later than the second one.","The first date cannot be later than the second one."
 "The first date is the same as the second one.","The first date is the same as the second one."
