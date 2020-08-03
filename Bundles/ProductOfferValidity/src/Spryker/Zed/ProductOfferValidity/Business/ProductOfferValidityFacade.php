@@ -75,18 +75,4 @@ class ProductOfferValidityFacade extends AbstractFacade implements ProductOfferV
             ->createProductOfferExpander()
             ->expandProductOfferWithProductOfferValidity($productOfferTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param int $idProductOffer
-     *
-     * @return \Generated\Shared\Transfer\ProductOfferValidityTransfer|null
-     */
-    public function findProductOfferValidityByIdProductOffer(int $idProductOffer): ?ProductOfferValidityTransfer
-    {
-        return $this->getRepository()->findProductOfferValidityByIdProductOffer($idProductOffer);
-    }
 }
