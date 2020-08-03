@@ -92,7 +92,7 @@
     <web-spy-chips
         product-status
         color="{{ product.isActive ? 'green' : 'red' }}"
-    >{{ product.isActive ? 'Active' | trans : 'Inactive' | trans }}</web-spy-chips>
+    >{{ product.isActive ? 'Online' | trans : 'Offline' | trans }}</web-spy-chips>
 
     <div product-details>
         {% for localizedAttribute in product.localizedAttributes %}
