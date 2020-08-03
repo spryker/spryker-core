@@ -27,6 +27,8 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
     public const COL_KEY_STORE = 'store';
 
+    protected const ROW_ACTION_ID_MERCHANT_ORDER_DETAIL = 'merchant-order-detail';
+
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
      */
@@ -112,6 +114,34 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             ]);
 
         return $guiTableConfigurationBuilder;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
+            ->setId(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
+            ->setTitle('Details')
+            ->setType('html-overlay')
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
+                    MerchantOrderTransfer::ID_MERCHANT_ORDER
+                )
+            );
+
+        $guiTableConfigurationTransfer->setRowActions(
+            (new GuiTableRowActionsConfigurationTransfer())
+                ->addAction($guiTableRowActionTransfer)
+                ->setClick(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
+        );
+
+        return $guiTableConfigurationTransfer;
     }
 
     /**

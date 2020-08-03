@@ -23,8 +23,12 @@ class GuiTableConfigurationFunction extends TwigFunction
     protected const CONFIG_FILTERS = 'filters';
     protected const CONFIG_ROW_ACTIONS = 'rowActions';
     protected const CONFIG_ROW_ACTIONS_CLICK = 'click';
+    protected const CONFIG_BATCH_ACTIONS = 'batchActions';
+    protected const CONFIG_BATCH_NO_ACTIONS_MESSAGE = 'noActionsMessage';
+    protected const CONFIG_AVAILABLE_ACTIONS_PATH = 'availableActionsPath';
+    protected const CONFIG_ROW_ID_PATH = 'rowIdPath';
     protected const CONFIG_SEARCH = 'search';
-    protected const CONFIG_ITEM_SELECTION = 'itemselection';
+    protected const CONFIG_ITEM_SELECTION = 'itemSelection';
     protected const CONFIG_SYNC_STATE_URL = 'syncStateUrl';
     protected const CONFIG_ENABLED = 'enabled';
     protected const CONFIG_ACTIONS = 'actions';
@@ -75,7 +79,7 @@ class GuiTableConfigurationFunction extends TwigFunction
      */
     protected function getFunction(): callable
     {
-        return function (GuiTableConfigurationTransfer $guiTableConfigurationTransfer, bool $jsonEncode = true) {
+        return function (GuiTableConfigurationTransfer $guiTableConfigurationTransfer, bool $jsonEncode = true, array $overwrite = []) {
             $guiTableConfigurationTransfer = $this->configurationDefaultValuesExpander->setDefaultValues($guiTableConfigurationTransfer);
             $guiTableConfigurationTransfer = $this->configurationTranslator->translateConfiguration($guiTableConfigurationTransfer);
 
@@ -85,10 +89,15 @@ class GuiTableConfigurationFunction extends TwigFunction
                 static::CONFIG_PAGINATION => $this->preparePaginationData($guiTableConfigurationTransfer),
                 static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
                 static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
+                static::CONFIG_BATCH_ACTIONS => $this->prepareBatchActions($guiTableConfigurationTransfer),
                 static::CONFIG_SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
                 static::CONFIG_ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
                 static::CONFIG_SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
             ];
+
+            if (count($overwrite)) {
+                $configuration = array_replace_recursive($configuration, $overwrite);
+            }
 
             return $jsonEncode ? $this->utilEncodingService->encodeJson($configuration) : $configuration;
         };
@@ -179,6 +188,32 @@ class GuiTableConfigurationFunction extends TwigFunction
         return [
             static::CONFIG_ENABLED => $guiTableRowActionsConfigurationTransfer->getIsEnabled(),
             static::CONFIG_ROW_ACTIONS_CLICK => $guiTableRowActionsConfigurationTransfer->getClick(),
+            static::CONFIG_AVAILABLE_ACTIONS_PATH => $guiTableRowActionsConfigurationTransfer->getAvailableActionsPath(),
+            static::CONFIG_ROW_ID_PATH => $guiTableRowActionsConfigurationTransfer->getRowIdPath(),
+            static::CONFIG_ACTIONS => $actions,
+        ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareBatchActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions();
+
+        $actions = [];
+
+        foreach ($guiTableBatchActionsConfigurationTransfer->getActions() as $batchActionTransfer) {
+            $actions[] = $batchActionTransfer->toArray(true, true);
+        }
+
+        return [
+            static::CONFIG_ENABLED => $guiTableBatchActionsConfigurationTransfer->getIsEnabled(),
+            static::CONFIG_AVAILABLE_ACTIONS_PATH => $guiTableBatchActionsConfigurationTransfer->getAvailableActionsPath(),
+            static::CONFIG_ROW_ID_PATH => $guiTableBatchActionsConfigurationTransfer->getRowIdPath(),
+            static::CONFIG_BATCH_NO_ACTIONS_MESSAGE => $guiTableBatchActionsConfigurationTransfer->getNoActionsMessage(),
             static::CONFIG_ACTIONS => $actions,
         ];
     }

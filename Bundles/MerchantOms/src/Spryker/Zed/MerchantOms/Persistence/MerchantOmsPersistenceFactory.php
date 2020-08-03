@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantOms\Persistence;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
+use Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\MerchantOmsMapper;
 use Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\StateMachineItemMapper;
 
 /**
@@ -32,5 +33,13 @@ class MerchantOmsPersistenceFactory extends AbstractPersistenceFactory
     public function createStateMachineItemMapper(): StateMachineItemMapper
     {
         return new StateMachineItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantOms\Persistence\Propel\Mapper\MerchantOmsMapper
+     */
+    public function createMerchantOmsMapper(): MerchantOmsMapper
+    {
+        return new MerchantOmsMapper();
     }
 }

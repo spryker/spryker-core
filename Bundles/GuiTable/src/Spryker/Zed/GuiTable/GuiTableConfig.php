@@ -34,7 +34,6 @@ class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInter
             'filters',
             'search',
             'rowActions',
-            'itemSelection',
             'syncStateUrl',
         ];
     }

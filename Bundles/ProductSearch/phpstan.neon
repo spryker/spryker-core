@@ -1,6 +1,4 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Method .+ProductSearchQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria.#'
     - '#Method .+AttributeReader::suggestUnusedKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'
     - '#Method .+AttributeReader::suggestKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'

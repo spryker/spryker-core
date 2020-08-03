@@ -103,10 +103,14 @@ class ItemType extends AbstractType
     protected function addUnitPriceField(FormBuilderInterface $builder, array $options)
     {
         if ($this->isDefaultPriceModeGross()) {
-            return $this->addUnitGrossPriceField($builder, $options);
+            $this->addUnitGrossPriceField($builder, $options);
+
+            return $this;
         }
 
-        return $this->addUnitNetPriceField($builder, $options);
+        $this->addUnitNetPriceField($builder, $options);
+
+        return $this;
     }
 
     /**
@@ -118,10 +122,14 @@ class ItemType extends AbstractType
     protected function addManualUnitPriceField(FormBuilderInterface $builder, array $options)
     {
         if ($this->isDefaultPriceModeGross()) {
-            return $this->addManualGrossPriceField($builder, $options);
+            $this->addManualGrossPriceField($builder, $options);
+
+            return $this;
         }
 
-        return $this->addManualNetPriceField($builder, $options);
+        $this->addManualNetPriceField($builder, $options);
+
+        return $this;
     }
 
     /**

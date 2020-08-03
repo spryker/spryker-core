@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantOms\Persistence;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
-use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderItemTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -23,25 +22,18 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
      */
     public function getStateMachineItemsByStateIds(array $stateIds): array
     {
-        $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
-
-        /** @var array $merchantSalesOrderItemEntities */
-        $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery->filterByFkStateMachineItemState_In($stateIds)
-            ->select([
-                SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM,
-                SpyMerchantSalesOrderItemTableMap::COL_FK_STATE_MACHINE_ITEM_STATE,
-            ])
+        $merchantSalesOrderItemEntities = $this->getFactory()
+            ->getMerchantSalesOrderItemPropelQuery()
+            ->joinWithStateMachineItemState()
+            ->useStateMachineItemStateQuery()
+                ->joinWithProcess()
+            ->endUse()
+            ->filterByFkStateMachineItemState_In($stateIds)
             ->find();
 
-        $stateMachineItemTransfers = [];
-
-        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
-            $stateMachineItemTransfers[] = (new StateMachineItemTransfer())
-                ->setIdentifier($merchantSalesOrderItemEntity[SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM])
-                ->setIdItemState($merchantSalesOrderItemEntity[SpyMerchantSalesOrderItemTableMap::COL_FK_STATE_MACHINE_ITEM_STATE]);
-        }
-
-        return $stateMachineItemTransfers;
+        return $this->getFactory()->createMerchantOmsMapper()->mapMerchantSalesOrderItemEntityCollectionToStateMachineItemTransfers(
+            $merchantSalesOrderItemEntities
+        );
     }
 
     /**
