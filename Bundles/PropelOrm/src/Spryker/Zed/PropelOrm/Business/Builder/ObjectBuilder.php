@@ -137,7 +137,7 @@ class ObjectBuilder extends PropelObjectBuilder
 ";
         }
 
-        $hasDefaultValue = $col->getDefaultValue() == null ? 'false' : 'true';
+        $hasDefaultValue = $col->getDefaultValue() === null ? 'false' : 'true';
 
         $script .= "
         // When this is true we will not check for value equality as we need to be able to set a value for this field
