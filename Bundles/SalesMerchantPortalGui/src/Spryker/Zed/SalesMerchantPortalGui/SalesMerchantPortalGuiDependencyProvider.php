@@ -40,9 +40,9 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableConfigurationBuilderApplicationPlugin::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableFactoryApplicationPlugin::SERVICE_GUI_TABLE_FACTORY
      */
-    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
+    public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER = 'PROPEL_QUERY_MERCHANT_SALES_ORDER';
 
@@ -61,7 +61,7 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
         $container = $this->addRouterFacade($container);
         $container = $this->addTwig($container);
         $container = $this->addGuiTableHttpDataRequestExecutor($container);
-        $container = $this->addGuiTableConfigurationBuilder($container);
+        $container = $this->addGuiTableFactory($container);
 
         return $container;
     }
@@ -221,10 +221,10 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGuiTableConfigurationBuilder(Container $container): Container
+    protected function addGuiTableFactory(Container $container): Container
     {
-        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function (Container $container) {
-            return $container->getApplicationService(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
+        $container->set(static::SERVICE_GUI_TABLE_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_GUI_TABLE_FACTORY);
         });
 
         return $container;

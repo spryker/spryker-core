@@ -9,16 +9,16 @@ namespace Spryker\Zed\GuiTable\Communication\Plugin\Application;
 
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
-use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method \Spryker\Zed\GuiTable\GuiTableConfig getConfig()
  * @method \Spryker\Zed\GuiTable\Communication\GuiTableCommunicationFactory getFactory()
  */
-class GuiTableConfigurationBuilderApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+class GuiTableFactoryApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
 {
-    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
+    public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
     /**
      * {@inheritDoc}
@@ -43,8 +43,8 @@ class GuiTableConfigurationBuilderApplicationPlugin extends AbstractPlugin imple
      */
     protected function addGuiTableConfigurationBuilderService(ContainerInterface $container): ContainerInterface
     {
-        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function (): GuiTableConfigurationBuilderInterface {
-            return $this->getFactory()->createGuiTableConfigurationBuilder();
+        $container->set(static::SERVICE_GUI_TABLE_FACTORY, function (): GuiTableFactoryInterface {
+            return $this->getFactory()->createGuiTableFactory();
         });
 
         return $container;

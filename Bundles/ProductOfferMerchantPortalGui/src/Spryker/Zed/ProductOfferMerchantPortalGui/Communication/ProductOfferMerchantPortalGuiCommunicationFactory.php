@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication;
 
 use Generated\Shared\Transfer\ProductOfferTransfer;
-use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilder;
@@ -60,7 +60,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     {
         return new ProductGuiTableConfigurationProvider(
             $this->getTranslatorFacade(),
-            $this->getGuiTableConfigurationBuilder()
+            $this->getGuiTableFactory()
         );
     }
 
@@ -72,7 +72,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
         return new ProductOfferGuiTableConfigurationProvider(
             $this->getStoreFacade(),
             $this->getTranslatorFacade(),
-            $this->getGuiTableConfigurationBuilder()
+            $this->getGuiTableFactory()
         );
     }
 
@@ -266,11 +266,11 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     * @return \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    public function getGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
+    public function getGuiTableFactory(): GuiTableFactoryInterface
     {
-        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
+        return $this->getProvidedDependency(ProductOfferMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_FACTORY);
     }
 
     /**

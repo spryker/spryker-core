@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication;
 
-use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
@@ -40,7 +40,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
             $this->getStoreFacade(),
             $this->getMerchantOmsFacade(),
             $this->getMerchantUserFacade(),
-            $this->getGuiTableConfigurationBuilder()
+            $this->getGuiTableFactory()
         );
     }
 
@@ -136,10 +136,10 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     * @return \\Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    public function getGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
+    public function getGuiTableFactory(): GuiTableFactoryInterface
     {
-        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_GUI_TABLE_FACTORY);
     }
 }

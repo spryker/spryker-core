@@ -21,8 +21,6 @@
         <property name="pagination" type="GuiTablePaginationConfiguration"/>
         <property name="search" type="GuiTableSearchConfiguration"/>
         <property name="filters" type="GuiTableFiltersConfiguration"/>
-        <property name="defaultSortColumn" type="string"/>
-        <property name="defaultSortDirection" type="string"/>
     </transfer>
 
     <transfer name="GuiTableDataSourceConfiguration">

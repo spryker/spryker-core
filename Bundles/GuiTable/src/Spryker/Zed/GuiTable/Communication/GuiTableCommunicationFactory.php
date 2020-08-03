@@ -7,13 +7,13 @@
 
 namespace Spryker\Zed\GuiTable\Communication;
 
-use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilder;
-use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpander;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
+use Spryker\Shared\GuiTable\GuiTableFactory;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilder;
 use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface;
 use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
@@ -64,11 +64,11 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
+     * @return \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    public function createGuiTableConfigurationBuilder(): GuiTableConfigurationBuilderInterface
+    public function createGuiTableFactory(): GuiTableFactoryInterface
     {
-        return new GuiTableConfigurationBuilder();
+        return new GuiTableFactory();
     }
 
     /**

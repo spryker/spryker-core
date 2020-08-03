@@ -55,9 +55,9 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableConfigurationBuilderApplicationPlugin::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableFactoryApplicationPlugin::SERVICE_GUI_TABLE_FACTORY
      */
-    public const SERVICE_GUI_TABLE_CONFIGURATION_BUILDER = 'gui_table_configuration_builder';
+    public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
     public const PROPEL_QUERY_PRODUCT_CONCRETE = 'PROPEL_QUERY_PRODUCT_CONCRETE';
     public const PROPEL_QUERY_PRODUCT_IMAGE = 'PROPEL_QUERY_PRODUCT_IMAGE';
@@ -84,7 +84,7 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
         $container = $this->addRouterFacade($container);
         $container = $this->addTwigEnvironment($container);
         $container = $this->addGuiTableHttpDataRequestHandler($container);
-        $container = $this->addGuiTableConfigurationBuilder($container);
+        $container = $this->addGuiTableFactory($container);
 
         return $container;
     }
@@ -315,10 +315,10 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addGuiTableConfigurationBuilder(Container $container): Container
+    protected function addGuiTableFactory(Container $container): Container
     {
-        $container->set(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER, function (Container $container) {
-            return $container->getApplicationService(static::SERVICE_GUI_TABLE_CONFIGURATION_BUILDER);
+        $container->set(static::SERVICE_GUI_TABLE_FACTORY, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_GUI_TABLE_FACTORY);
         });
 
         return $container;
