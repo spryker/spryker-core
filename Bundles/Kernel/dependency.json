@@ -1,0 +1,5 @@
+{
+  "exclude": {
+    "spryker/application": "Application is only needed for BC reasons no need for a hard dependency."
+  }
+}
