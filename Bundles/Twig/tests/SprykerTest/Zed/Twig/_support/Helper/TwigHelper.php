@@ -22,6 +22,7 @@ use Spryker\Zed\Twig\TwigDependencyProvider;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
+use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;
 
@@ -29,6 +30,7 @@ class TwigHelper extends Module
 {
     use ApplicationHelperTrait;
     use CommunicationHelperTrait;
+    use BusinessHelperTrait;
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
     use EventDispatcherHelperTrait;
@@ -78,7 +80,12 @@ class TwigHelper extends Module
 
         foreach ($this->defaultLoaderPlugins as $defaultLoaderPlugin) {
             if (!isset($this->loaderPlugins[$defaultLoaderPlugin])) {
-                $this->loaderPlugins[$defaultLoaderPlugin] = new $defaultLoaderPlugin();
+                $templatePaths = [rtrim(APPLICATION_VENDOR_DIR, '/') . '/spryker/spryker/Bundles/%2$s/src/Spryker/Zed/%1$s/Presentation/'];
+                $this->getConfigHelper()->mockConfigMethod('addCoreTemplatePaths', $templatePaths, static::MODULE_NAME);
+                $twigFactory = $this->getCommunicationHelper()->getFactory(static::MODULE_NAME);
+                $twigLoaderPlugin = new $defaultLoaderPlugin();
+                $twigLoaderPlugin->setFactory($twigFactory);
+                $this->loaderPlugins[$defaultLoaderPlugin] = $twigLoaderPlugin;
             }
         }
     }
