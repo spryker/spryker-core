@@ -6,7 +6,7 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "dev-bugfix/mp-3261-sniffer-removes-throw-annotation"
+    "spryker/code-sniffer": "dev-master"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -21,7 +21,8 @@
   },
   "bin": [
     "Bundles/Console/bin/console",
-    "Bundles/Console/bin/yves"
+    "Bundles/Console/bin/yves",
+    "Bundles/Console/bin/glue"
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"

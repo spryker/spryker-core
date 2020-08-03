@@ -15,12 +15,20 @@ interface TranslatorConstants
     /**
      * Specification:
      * - Defines paths to Project level translations. Glob pattern can be used.
+     *
+     * @deprecated Use {@link \Spryker\Zed\Translator\TranslatorConstants::getProjectTranslationFilePathPatterns()} instead.
+     *
+     * @api
      */
     public const TRANSLATION_ZED_FILE_PATH_PATTERNS = 'TRANSLATOR:TRANSLATION_ZED_FILE_PATH_PATTERNS';
 
     /**
      * Specification:
      * - Absolute path to the translation cache directory. E.g. /var/www/data/DE/cache/Zed/translation.
+     *
+     * @deprecated Use {@link \Spryker\Zed\Translator\TranslatorConstants::getTranslatorCacheDirectory()} instead.
+     *
+     * @api
      */
     public const TRANSLATION_ZED_CACHE_DIRECTORY = 'TRANSLATOR:TRANSLATION_ZED_CACHE_DIRECTORY';
 
@@ -39,4 +47,9 @@ interface TranslatorConstants
      * @api
      */
     public const TRANSLATION_ZED_DEBUG_ENABLED = 'TRANSLATOR:TRANSLATION_ZED_DEBUG_ENABLED';
+
+    /**
+     * @uses \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES
+     */
+    public const PROJECT_NAMESPACES = 'PROJECT_NAMESPACES';
 }

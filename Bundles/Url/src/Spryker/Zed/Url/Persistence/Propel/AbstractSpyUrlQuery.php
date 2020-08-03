@@ -34,7 +34,7 @@ abstract class AbstractSpyUrlQuery extends BaseSpyUrlQuery
      *
      * @throws \Spryker\Zed\Url\Persistence\Exception\UnknownResourceTypeException
      *
-     * @return $this
+     * @return static
      */
     public function filterByResourceTypeAndIds($resourceType, array $resourceIds)
     {

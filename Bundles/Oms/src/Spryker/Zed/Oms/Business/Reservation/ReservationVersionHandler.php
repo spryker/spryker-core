@@ -45,6 +45,7 @@ class ReservationVersionHandler implements ReservationVersionHandlerInterface
     {
         $currentStoreTransfer = $this->storeFacade->getCurrentStore();
 
+        /** @var int|null $idOmsProductReservation */
         $idOmsProductReservation = $this->omsQueryContainer
             ->queryProductReservationBySkuAndStore($sku, $currentStoreTransfer->getIdStore())
             ->select([SpyOmsProductReservationTableMap::COL_ID_OMS_PRODUCT_RESERVATION])

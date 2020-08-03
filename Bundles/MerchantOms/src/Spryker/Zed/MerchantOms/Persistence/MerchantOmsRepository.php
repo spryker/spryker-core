@@ -25,6 +25,7 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
     {
         $merchantSalesOrderItemQuery = $this->getFactory()->getMerchantSalesOrderItemPropelQuery();
 
+        /** @var array $merchantSalesOrderItemEntities */
         $merchantSalesOrderItemEntities = $merchantSalesOrderItemQuery->filterByFkStateMachineItemState_In($stateIds)
             ->select([
                 SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM,

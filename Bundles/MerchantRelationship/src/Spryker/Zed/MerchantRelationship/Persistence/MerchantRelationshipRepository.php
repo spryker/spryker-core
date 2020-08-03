@@ -97,7 +97,8 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
      */
     public function getMaxMerchantRelationshipId(): int
     {
-        return (int)$this->getFactory()
+        /** @var int|null $id */
+        $id = $this->getFactory()
             ->createMerchantRelationshipQuery()
             ->withColumn(
                 sprintf('MAX(%s)', SpyMerchantRelationshipTableMap::COL_ID_MERCHANT_RELATIONSHIP),
@@ -107,6 +108,8 @@ class MerchantRelationshipRepository extends AbstractRepository implements Merch
                 static::COL_MAX_ID,
             ])
             ->findOne();
+
+        return (int)$id;
     }
 
     /**
