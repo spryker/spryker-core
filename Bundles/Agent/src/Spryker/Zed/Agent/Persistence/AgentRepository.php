@@ -70,6 +70,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             $customersQuery->limit($limit);
         }
 
+        /** @var array $customers */
         $customers = $customersQuery->find();
 
         $customerTransferList = [];
