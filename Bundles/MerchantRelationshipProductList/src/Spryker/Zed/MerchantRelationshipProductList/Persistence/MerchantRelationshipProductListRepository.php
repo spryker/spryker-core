@@ -74,9 +74,12 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
                 ->endUse();
         }
 
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
+        $productListEntities = $productListQuery->find();
+
         return $this->getFactory()
             ->createMerchantRelationshipProductListMapper()
-            ->mapProductListCollection($productListQuery->find(), new ProductListCollectionTransfer());
+            ->mapProductListCollection($productListEntities, new ProductListCollectionTransfer());
     }
 
     /**

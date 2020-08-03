@@ -13,6 +13,7 @@ use Elastica\Exception\NotFoundException;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
@@ -27,11 +28,17 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     protected $searchCollectorConfiguration;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected $indexFactory;
+
+    /**
      * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
+     * @param \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface $indexFactory
      */
-    public function __construct(Client $searchClient, $indexName, $type)
+    public function __construct(Client $searchClient, $indexName, $type, IndexFactoryInterface $indexFactory)
     {
         $this->client = $searchClient;
 
@@ -39,6 +46,8 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         $this->searchCollectorConfiguration
             ->setIndexName($indexName)
             ->setTypeName($type);
+
+        $this->indexFactory = $indexFactory;
     }
 
     /**
@@ -55,7 +64,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         }
 
         $documents = $this->createDocuments($dataSet);
-        $this->getType()->addDocuments($documents);
+        $this->getIndex()->addDocuments($documents);
         $response = $this->getIndex()->refresh();
 
         return $response->isOk();
@@ -78,7 +87,7 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
         $keys = array_keys($dataSet);
         foreach ($keys as $key) {
             try {
-                $documents[] = $this->getType()
+                $documents[] = $this->getIndex()
                     ->getDocument($key, ['routing' => $key])
                     ->setRouting($key);
             } catch (NotFoundException $e) {
@@ -148,19 +157,11 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
     }
 
     /**
-     * @return \Elastica\Index
+     * @return \Elastica\Index|\Spryker\Zed\Collector\Business\Index\IndexAdapterInterface
      */
     protected function getIndex()
     {
-        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());
-    }
-
-    /**
-     * @return \Elastica\Type
-     */
-    protected function getType()
-    {
-        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());
+        return $this->indexFactory->createIndex($this->client, $this->getSearchCollectorConfiguration());
     }
 
     /**
@@ -189,6 +190,10 @@ class ElasticsearchWriter implements WriterInterface, ConfigurableSearchWriterIn
      */
     protected function setParent(Document $document, array $data)
     {
+        if (!method_exists($document, 'setParent')) {
+            return;
+        }
+
         if (isset($data['parent'])) {
             $document->setParent($data['parent']);
         }

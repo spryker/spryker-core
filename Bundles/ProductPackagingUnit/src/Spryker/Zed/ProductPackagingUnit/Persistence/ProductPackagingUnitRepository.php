@@ -402,6 +402,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      */
     public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array
     {
+        /** @var array $productPackagingUnitsData */
         $productPackagingUnitsData = $this->getFactory()
             ->createProductPackagingUnitQuery()
             ->filterByFkProduct_In($productConcreteIds)
