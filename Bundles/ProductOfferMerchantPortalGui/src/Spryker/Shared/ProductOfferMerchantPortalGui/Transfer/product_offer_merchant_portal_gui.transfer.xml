@@ -15,33 +15,6 @@
     </transfer>
 
     <transfer name="GuiTableConfiguration">
-        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
-        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
-        <property name="rowActions" type="GuiTableRowActionsConfiguration"/>
-        <property name="pagination" type="GuiTablePaginationConfiguration"/>
-        <property name="search" type="GuiTableSearchConfiguration"/>
-        <property name="filters" type="GuiTableFiltersConfiguration"/>
-    </transfer>
-
-    <transfer name="GuiTableDataSourceConfiguration">
-        <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableRowActionsConfiguration">
-        <property name="actions" type="GuiTableRowAction[]" singular="action"/>
-        <property name="click" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTablePaginationConfiguration">
-        <property name="defaultSize" type="int"/>
-    </transfer>
-
-    <transfer name="GuiTableSearchConfiguration">
-        <property name="search" type="array" associative="true" singular="searchOption"/>
-    </transfer>
-
-    <transfer name="GuiTableFiltersConfiguration">
-        <property name="items" type="GuiTableFilter[]" singular="item"/>
     </transfer>
 
     <transfer name="GuiTableRowAction">
@@ -49,9 +22,6 @@
         <property name="title" type="string"/>
         <property name="type" type="string"/>
         <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-    </transfer>
-
-    <transfer name="GuiTableColumnConfiguration">
     </transfer>
 
     <transfer name="GuiTableDataRequest">

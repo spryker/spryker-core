@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
@@ -61,14 +60,16 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
     public function getConfiguration(): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
-        $guiTableConfigurationBuilder->setDataSourceUrl(static::DATA_URL);
+
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
-        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
+        $guiTableConfigurationBuilder
+            ->setDataSourceUrl(static::DATA_URL)
+            ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
 
-        $guiTableConfigurationTransfer = $this->addSearchToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
 
         return $guiTableConfigurationTransfer;
     }
@@ -137,20 +138,5 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         )->setRowClickAction('create-offer');
 
         return $guiTableConfigurationBuilder;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
-    {
-        $guiTableConfigurationTransfer->setSearch(
-            (new GuiTableSearchConfigurationTransfer())
-                ->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER)
-        );
-
-        return $guiTableConfigurationTransfer;
     }
 }

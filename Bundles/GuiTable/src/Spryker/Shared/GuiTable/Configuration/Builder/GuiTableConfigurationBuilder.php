@@ -8,7 +8,6 @@
 namespace Spryker\Shared\GuiTable\Configuration\Builder;
 
 use ArrayObject;
-use Exception;
 use Generated\Shared\Transfer\DateRangeGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
@@ -18,8 +17,10 @@ use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
+use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
+use Spryker\Shared\GuiTable\Exception\InvalidConfigurationException;
 
 class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterface
 {
@@ -64,6 +65,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $defaultPageSize;
 
     /**
+     * @var string
+     */
+    protected $searchPlaceholder;
+
+    /**
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -77,14 +83,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         bool $isSortable,
         bool $isHideable
     ) {
-        //todo: check if column with the same id already exists
-
-        $this->columns[] = (new GuiTableColumnConfigurationTransfer())
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_TEXT)
             ->setSortable($isSortable)
             ->setHideable($isHideable);
+
+        $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
     }
@@ -103,12 +109,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         bool $isSortable,
         bool $isHideable
     ) {
-        $this->columns[] = (new GuiTableColumnConfigurationTransfer())
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_IMAGE)
             ->setSortable($isSortable)
             ->setHideable($isHideable);
+
+        $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
     }
@@ -129,13 +137,15 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         bool $isHideable,
         ?string $uiDateFormat = null
     ) {
-        $this->columns[] = (new GuiTableColumnConfigurationTransfer())
+        $guiTableColumnConfigurationTransfer = (new GuiTableColumnConfigurationTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType(static::COLUMN_TYPE_DATE)
             ->setSortable($isSortable)
             ->setHideable($isHideable)
             ->addTypeOption('format', $uiDateFormat ?? static::DEFAULT_UI_DATE_FORMAT);
+
+        $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
     }
@@ -173,7 +183,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableColumnConfigurationTransfer->addTypeOptionMapping($key, $typeOptionsMapping);
         }
 
-        $this->columns[] = $guiTableColumnConfigurationTransfer;
+        $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
     }
@@ -212,9 +222,27 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             $guiTableColumnConfigurationTransfer->addTypeOptionMapping($key, $typeOptionsMapping);
         }
 
-        $this->columns[] = $guiTableColumnConfigurationTransfer;
+        $this->addColumn($guiTableColumnConfigurationTransfer);
 
         return $this;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer
+     *
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return void
+     */
+    protected function addColumn(GuiTableColumnConfigurationTransfer $guiTableColumnConfigurationTransfer): void
+    {
+        $columnId = $guiTableColumnConfigurationTransfer->getId();
+
+        if (isset($this->columns[$columnId])) {
+            throw new InvalidConfigurationException(sprintf('Column with id "%s" already exists', $columnId));
+        }
+
+        $this->columns[$columnId] = $guiTableColumnConfigurationTransfer;
     }
 
     /**
@@ -290,8 +318,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addRowActionOpenFormOverlay(string $id, string $title, string $url)
     {
-        //todo: check if id is already in stack
-        $this->rowActions[] = $this->createRowAction($id, $title, static::ROW_ACTION_TYPE_FORM_OVERLAY, ['url' => $url]);
+        $this->addRowAction($id, $title, static::ROW_ACTION_TYPE_FORM_OVERLAY, ['url' => $url]);
 
         return $this;
     }
@@ -305,7 +332,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addRowActionOpenPageOverlay(string $id, string $title, string $url)
     {
-        $this->rowActions[] = $this->createRowAction($id, $title, static::ROW_ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
+        $this->addRowAction($id, $title, static::ROW_ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
 
         return $this;
     }
@@ -316,15 +343,23 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param string $type
      * @param string[] $options
      *
-     * @return \Generated\Shared\Transfer\GuiTableRowActionTransfer
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
+     *
+     * @return void
      */
-    protected function createRowAction(string $id, string $title, string $type, array $options): GuiTableRowActionTransfer
+    protected function addRowAction(string $id, string $title, string $type, array $options): void
     {
-        return (new GuiTableRowActionTransfer())
+        if (isset($this->rowActions[$id])) {
+            throw new InvalidConfigurationException(sprintf('Row action with id "%s" already exists', $id));
+        }
+
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
             ->setId($id)
             ->setTitle($title)
             ->setType($type)
             ->setTypeOptions($options);
+
+        $this->rowActions[$id] = $guiTableRowActionTransfer;
     }
 
     /**
@@ -352,39 +387,45 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
-     * @throws \Exception
+     * @param int $defaultPageSize
+     *
+     * @return $this
+     */
+    public function setDefaultPageSize(int $defaultPageSize)
+    {
+        $this->defaultPageSize = $defaultPageSize;
+
+        return $this;
+    }
+
+    /**
+     * @param string $searchPlaceholder
+     *
+     * @return $this
+     */
+    public function setSearchPlaceholder(string $searchPlaceholder)
+    {
+        $this->searchPlaceholder = $searchPlaceholder;
+
+        return $this;
+    }
+
+    /**
+     * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
         if (!$this->columns) {
-            //TODO: throw InvalidConfigurationException();
-            throw new Exception('Table must have at least one column');
+            throw new InvalidConfigurationException('Table must have at least one column');
         }
+
+        $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
+
         $guiTableConfigurationTransfer->setColumns(new ArrayObject($this->columns));
-
-        $guiTableConfigurationTransfer->setFilters(
-            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false)
-        );
-
-        if ($this->filters) {
-            $guiTableConfigurationTransfer->getFilters()
-                ->setIsEnabled(true)
-                ->setItems(new ArrayObject($this->filters));
-        }
-
-        $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false)
-        );
-
-        if ($this->rowActions) {
-            $guiTableConfigurationTransfer->getRowActions()
-                ->setIsEnabled(true)
-                ->setActions(new ArrayObject($this->rowActions))
-                ->setClick($this->rowOnClickIdAction);
-        }
+        $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
 
         if ($this->dataSourceUrl) {
             $guiTableConfigurationTransfer->setDataSource(
@@ -398,18 +439,54 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             );
         }
 
+        if ($this->searchPlaceholder) {
+            $guiTableConfigurationTransfer->setSearch(
+                (new GuiTableSearchConfigurationTransfer())
+                    ->addSearchOption('placeholder', $this->searchPlaceholder)
+            );
+        }
+
         return $guiTableConfigurationTransfer;
     }
 
     /**
-     * @param int $defaultPageSize
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
      *
-     * @return $this
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
-    public function setDefaultPageSize(int $defaultPageSize)
+    protected function setFilters(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
-        $this->defaultPageSize = $defaultPageSize;
+        $guiTableConfigurationTransfer->setFilters(
+            (new GuiTableFiltersConfigurationTransfer())->setIsEnabled(false)
+        );
 
-        return $this;
+        if ($this->filters) {
+            $guiTableConfigurationTransfer->getFilters()
+                ->setIsEnabled(true)
+                ->setItems(new ArrayObject($this->filters));
+        }
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setRowActions(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableConfigurationTransfer->setRowActions(
+            (new GuiTableRowActionsConfigurationTransfer())->setIsEnabled(false)
+        );
+
+        if ($this->rowActions) {
+            $guiTableConfigurationTransfer->getRowActions()
+                ->setIsEnabled(true)
+                ->setActions(new ArrayObject($this->rowActions))
+                ->setClick($this->rowOnClickIdAction);
+        }
+
+        return $guiTableConfigurationTransfer;
     }
 }

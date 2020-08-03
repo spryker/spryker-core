@@ -181,6 +181,13 @@ interface GuiTableConfigurationBuilderInterface
     public function setDefaultPageSize(int $defaultPageSize);
 
     /**
+     * @param string $searchPlaceholder
+     *
+     * @return $this
+     */
+    public function setSearchPlaceholder(string $searchPlaceholder);
+
+    /**
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;
