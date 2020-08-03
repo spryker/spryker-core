@@ -263,7 +263,9 @@ class Url
             }
         }
 
-        return $this->setPath($path);
+        $this->setPath($path);
+
+        return $this;
     }
 
     /**

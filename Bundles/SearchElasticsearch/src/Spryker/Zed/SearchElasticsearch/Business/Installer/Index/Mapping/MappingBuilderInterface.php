@@ -8,16 +8,14 @@
 namespace Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Mapping;
 
 use Elastica\Index;
-use Elastica\Type\Mapping;
 
 interface MappingBuilderInterface
 {
     /**
+     * @param array $mappings
      * @param \Elastica\Index $index
-     * @param string $mappingType
-     * @param array $mappingData
      *
-     * @return \Elastica\Type\Mapping
+     * @return \Elastica\Mapping|\Elastica\Type\Mapping
      */
-    public function buildMapping(Index $index, string $mappingType, array $mappingData): Mapping;
+    public function buildMapping(array $mappings, Index $index);
 }

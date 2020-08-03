@@ -177,7 +177,7 @@ class ProductListRepository extends AbstractRepository implements ProductListRep
             ->useSpyProductListQuery(null, Criteria::LEFT_JOIN)
                 ->filterByType($listType)
             ->endUse()
-            ->groupByFkProductList(SpyProductListProductConcreteTableMap::COL_FK_PRODUCT_LIST)
+            ->groupByFkProductList()
             ->find()
             ->toArray();
     }

@@ -240,6 +240,9 @@ class QuoteRequestRepository extends AbstractRepository implements QuoteRequestR
             ->setNextPage($paginationModel->getNextPage())
             ->setPreviousPage($paginationModel->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        /** @var \Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery $query */
+        $query = $paginationModel->getQuery();
+
+        return $query;
     }
 }

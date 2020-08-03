@@ -1,4 +1,3 @@
 parameters:
     ignoreErrors:
     - '#Function twig_escape_filter not found.#'
-    - '#Parameter \#1 \$attribute of method .+ConnectionInterface::getAttribute\(\) expects string, int given.#'
