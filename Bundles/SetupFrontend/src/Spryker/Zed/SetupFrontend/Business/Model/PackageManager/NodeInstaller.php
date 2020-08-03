@@ -12,6 +12,8 @@ use Symfony\Component\Process\Process;
 
 class NodeInstaller implements PackageManagerInstallerInterface
 {
+    protected const NODE_JS_MINIMUM_REQUIRED_VERSION = 'v12.6.1';
+
     /**
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -22,7 +24,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $nodeVersion = $this->getNodeJsVersion($logger);
         $nodeInstalled = true;
 
-        if (preg_match('/^v[0-7](\..+)?$/', $nodeVersion)) {
+        if (version_compare($nodeVersion, static::NODE_JS_MINIMUM_REQUIRED_VERSION) === -1) {
             $nodeInstalled = $this->installNodeJs($logger);
         }
 
@@ -92,7 +94,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     protected function getDownloadCommand()
     {
-        return 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -';
+        return 'curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -';
     }
 
     /**
