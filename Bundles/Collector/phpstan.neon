@@ -2,6 +2,10 @@ parameters:
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
     - '#Call to an undefined method .+Locator::store\(\).#'
+    - '#Method .+Type::addDocuments\(\) invoked with 2 parameters, 1 required.#'
+    - '#Property .*TypelessMappingAdapter::\$elasticaMapping has unknown class Elastica\\Mapping as its type.#'
+    - '#Instantiated class Elastica\\Mapping not found.#'
+    - '#Call to method send\(\) on an unknown class Elastica\\Mapping.#'
     -
         message: '#Call to method setMeta\(\) on an unknown class Elastica\\Type\\Mapping.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Collector/src/Spryker/Zed/Collector/Business/Exporter/Writer/Search/ElasticsearchMarkerWriter.php'
