@@ -22,6 +22,7 @@
 
     <transfer name="QueryJoin">
         <property name="joinType" type="string"/>
+        <property name="relation" type="string"/>
     </transfer>
 
     <transfer name="QueryCriteria">
