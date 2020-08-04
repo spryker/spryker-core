@@ -10,6 +10,7 @@ namespace Spryker\Zed\Collector\Business\Exporter\Reader\Search;
 use Elastica\Client;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderInterface
 {
@@ -26,11 +27,17 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
     protected $searchCollectorConfiguration;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected $indexFactory;
+
+    /**
      * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
+     * @param \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface $indexFactory
      */
-    public function __construct(Client $searchClient, $indexName, $type)
+    public function __construct(Client $searchClient, $indexName, $type, IndexFactoryInterface $indexFactory)
     {
         $this->client = $searchClient;
 
@@ -38,6 +45,8 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
         $this->searchCollectorConfiguration
             ->setIndexName($indexName)
             ->setTypeName($type);
+
+        $this->indexFactory = $indexFactory;
     }
 
     /**
@@ -48,7 +57,7 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
      */
     public function read($key, $type = '')
     {
-        return $this->getType()->getDocument($key);
+        return $this->getIndex()->getDocument($key);
     }
 
     /**
@@ -78,12 +87,10 @@ class ElasticsearchReader implements ReaderInterface, ConfigurableSearchReaderIn
     }
 
     /**
-     * @return \Elastica\Type
+     * @return \Elastica\Index|\Spryker\Zed\Collector\Business\Index\IndexAdapterInterface
      */
-    protected function getType()
+    protected function getIndex()
     {
-        return $this->client
-            ->getIndex($this->searchCollectorConfiguration->getIndexName())
-            ->getType($this->searchCollectorConfiguration->getTypeName());
+        return $this->indexFactory->createIndex($this->client, $this->getSearchCollectorConfiguration());
     }
 }

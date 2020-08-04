@@ -1,5 +1,2 @@
 parameters:
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Method .+ProductSetPageSearchQueryContainer::queryProductSetIdsByProductImageIds\(\) should return Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetToProductImageQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
-    - '#Method .+ProductSetPageSearchQueryContainer::queryProductSetIdsByProductImageSetToProductImageIds\(\) should return Orm\\Zed\\ProductImage\\Persistence\\SpyProductImageSetToProductImageQuery but returns Propel\\Runtime\\ActiveQuery\\Criteria#'
