@@ -19,10 +19,7 @@
                 x {{ orderItem.quantity }}
             </span>
 
-            {% set itemPriceToPay = orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0) %}
-            {% set priceToPay = itemPriceToPay * orderItem.quantity %}
-
-            <span class="mp-manage-order__totals-col">{{ priceToPay | money(true, orderItem.currencyIsoCode) }}</span>
+            <span class="mp-manage-order__totals-col">{{ orderItem.sumPrice | money(true, orderItem.currencyIsoCode) }}</span>
         </div>
 
         {% for productOption in orderItem.productOptions %}

@@ -157,7 +157,7 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setIdMerchant($idMerchant);
         $stateMachineProcessTransfer = $this->merchantOmsFacade->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
 
-        return $stateMachineProcessTransfer->getStateNames();
+        return array_map('ucfirst', $stateMachineProcessTransfer->getStateNames());
     }
 
     /**
