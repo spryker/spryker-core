@@ -10,7 +10,7 @@
     </div>
     
     <div class="mp-edit-offer__base">
-        <div class="mp-edit-offer__base-col">
+        <div class="mp-edit-offer__base-col" *ngIf="images?.length">
             <mp-image-slider [images]="images"></mp-image-slider>
         </div>
         
