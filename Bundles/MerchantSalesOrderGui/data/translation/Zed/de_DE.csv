@@ -10,3 +10,19 @@ Email,Email
 "Number of items","Anzahl der Teile"
 Actions,Aktionen
 View,Aussicht
+"Merchant Order Overview",Händlerbestellübersicht
+Reference,Referenz
+Name,Name
+"Previous orders count","Vorherige Bestellungen zählen"
+"Billing address",Rechnungsadresse
+"Merchant Order Reference",Händlerbestellreferenz
+"Order date",Auftragsdatum
+Totals,Summen
+Option,Möglichkeit
+Subtotal,Zwischensumme
+Discount,Rabatt
+"Cancelled amount","Stornierter Betrag"
+"GRAND TOTAL",GESAMTSUMME
+"Total taxes",Gesamtsteuern
+"Remuneration total","Vergütung insgesamt"
+"Merchant order doesn't exist.","Händlerbestellung existiert nicht."

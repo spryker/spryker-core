@@ -1,6 +1,6 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/layout/layout.twig' %}
 
-{% set page_title = 'View Offer' %}
+{% set page_title = 'Merchant Order Overview' %}
 {% block head_title page_title %}
 {% block section_title page_title %}
 
@@ -8,7 +8,15 @@
 {% endblock %}
 
 {% block content %}
+    <div id="order-overview">{% include '@MerchantSalesOrderGui/Detail/boxes/order-overview.twig' %}</div>
+    <div id="customer">{% include '@MerchantSalesOrderGui/Detail/boxes/customer.twig' %}</div>
+    {% for blockName, externalBlock in blocks %}
+        {% if externalBlock %}
+            <div id="{{ blockName }}">{{ externalBlock | raw }}</div>
+        {% endif %}
+    {% endfor %}
 {% endblock %}
-
-{% block footer_js %}
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-main.css') }}">
 {% endblock %}

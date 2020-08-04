@@ -1,0 +1,5 @@
+{
+  "include": {
+    "spryker/discount": "Provides a controller action."
+  }
+}

@@ -1,0 +1,73 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Overview' } %}
+    {% block widget_content %}
+
+    <div class="row">
+        <div class="col-xs-12 col-md-6">
+            <div class="bottom-indent">
+                <dl>
+                    <dt>{{ 'Merchant Order Reference' | trans }}</dt>
+                    <dd>{{ merchantOrder.merchantOrderReference }}</dd>
+                    <dt>{{ 'Marketplace Order Reference' | trans }}</dt>
+                    <dd>{{ merchantOrder.order.orderReference  }}</dd>
+                    <dt>{{ 'Order date' | trans }}</dt>
+                    <dd>{{ merchantOrder.createdAt | date }}</dd>
+                </dl>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6 bottom-indent">
+            <p><b>{{ 'Totals' | trans }}</b></p>
+
+            <div class="row">
+                {% for orderItem in merchantOrder.order.items %}
+                    <div class="col-sm-10"><p>{{ orderItem.name }} x {{ orderItem.quantity }}</p></div>
+                    <div class="col-sm-2">{{ orderItem.sumPrice | money(true, merchantOrder.order.currencyIsoCode) }}</div>
+
+                    {% for orderItemOption in orderItem.productOptions %}
+                        <div class="col-sm-10"><p>+ <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</p></div>
+                        <div class="col-sm-2">{{ orderItemOption.sumPrice | money(true, order.currencyIsoCode) }}</div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+
+            <div class="row subtotal-row">
+                <div class="col-sm-10"><b>{{ 'Subtotal' | trans }}</b></div>
+                <div class="col-sm-2"><b>{{ merchantOrder.totals.subtotal | money(true, merchantOrder.order.currencyIsoCode) }}</b></div>
+            </div>
+
+            {% include '@MerchantSalesOrderGui/Detail/boxes/shipment-expenses.twig' %}
+            {% include '@MerchantSalesOrderThresholdGui/MerchantSalesOrder/boxes/threshold-expenses.twig' ignore missing %}
+
+            <div class="row">
+                <div class="col-sm-10"><p>{{ 'Discount' | trans }}</p></div>
+                <div class="col-sm-2"><p>{{ merchantOrder.totals.discountTotal | default(0) | money(true, merchantOrder.order.currencyIsoCode) }}</p></div>
+            </div>
+
+
+            <div class="row">
+                <div class="col-sm-10"><p>{{ 'Cancelled amount' | trans }}</p></div>
+                <div class="col-sm-2">{{ merchantOrder.totals.canceledTotal | default(0) | money(true, merchantOrder.order.currencyIsoCode) }}</div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 grandTotal-row">
+                    <div class="row">
+                        <div class="col-sm-10"><p><b>{{ 'GRAND TOTAL' | trans }}</b></p></div>
+                        <div class="col-sm-2"><p><b>{{ merchantOrder.totals.grandTotal | money(true, merchantOrder.order.currencyIsoCode) }}</b></p></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-10"><p>{{ 'Total taxes' | trans }}</p></div>
+                        <div class="col-sm-2">{{ merchantOrder.totals.taxTotal.amount | money(true, merchantOrder.order.currencyIsoCode) }}</div>
+                    </div>
+                    {% if merchantOrder.totals.remunerationTotal is defined and merchantOrder.totals.remunerationTotal %}
+                        <div class="row">
+                            <div class="col-sm-10"><p>{{ 'Remuneration total' | trans }}</p></div>
+                            <div class="col-sm-2">- {{ merchantOrder.totals.remunerationTotal | money(true, merchantOrder.order.currencyIsoCode) }}</div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+{% endembed %}

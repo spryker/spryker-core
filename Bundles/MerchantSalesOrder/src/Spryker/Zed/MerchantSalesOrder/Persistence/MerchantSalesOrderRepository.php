@@ -43,6 +43,7 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
             $merchantSalesOrderQuery
         );
         $merchantSalesOrderQuery = $this->applyMerchantOrderFilters($merchantSalesOrderQuery, $merchantOrderCriteriaTransfer);
+
         /** @var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery $merchantSalesOrderQuery */
         $merchantSalesOrderQuery = $this->buildQueryFromCriteria(
             $merchantSalesOrderQuery,
@@ -277,6 +278,19 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
                 $merchantSalesOrderEntity,
                 new MerchantOrderItemTransfer()
             );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->applyMerchantOrderFilters(
+            $this->getFactory()->createMerchantSalesOrderQuery(),
+            $merchantOrderCriteriaTransfer
+        )->count();
     }
 
     /**

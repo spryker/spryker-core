@@ -68,7 +68,9 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function findMerchantOrder(
         MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
     ): ?MerchantOrderTransfer {
-        return $this->getRepository()->findMerchantOrder($merchantCriteriaTransfer);
+        return $this->getFactory()
+            ->createMerchantSalesOrderReader()
+            ->findMerchantOrder($merchantCriteriaTransfer);
     }
 
     /**
@@ -167,5 +169,19 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
         return $this->getFactory()
             ->createOrderExpander()
             ->expandOrderWithMerchantReferences($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->getRepository()->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
     }
 }

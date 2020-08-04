@@ -1,21 +1,26 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
-  <merchant-sales-order-gui>
-    <label>My orders</label>
-    <title>My orders</title>
-    <bundle>merchant-sales-order-gui</bundle>
-    <controller>index</controller>
-    <action>index</action>
-    <visible>1</visible>
-    <pages>
-      <merchant-sales-order-gui-detail>
-        <label>View order</label>
-        <title>View order</title>
-        <bundle>merchant-sales-order-gui</bundle>
-        <controller>Detail</controller>
-        <action>index</action>
-        <visible>0</visible>
-      </merchant-sales-order-gui-detail>
-    </pages>
-  </merchant-sales-order-gui>
+    <sales>
+        <pages>
+            <merchant-sales-order>
+                <label>My orders</label>
+                <title>My orders</title>
+                <bundle>merchant-sales-order-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <visible>1</visible>
+
+                <pages>
+                    <detail>
+                        <title>Merchant Order Overview</title>
+                        <bundle>merchant-sales-order-gui</bundle>
+                        <controller>detail</controller>
+                        <action>index</action>
+                        <visible>0</visible>
+                    </detail>
+                </pages>
+
+            </merchant-sales-order>
+        </pages>
+    </sales>
 </config>
