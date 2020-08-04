@@ -14,7 +14,7 @@ use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
-class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurationProviderInterface
+class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
     public const COL_KEY_NAME = 'name';
     public const COL_KEY_SKU = 'sku';
@@ -69,9 +69,7 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
             ->setDataSourceUrl(static::DATA_URL)
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
 
-        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder->createConfiguration();
     }
 
     /**

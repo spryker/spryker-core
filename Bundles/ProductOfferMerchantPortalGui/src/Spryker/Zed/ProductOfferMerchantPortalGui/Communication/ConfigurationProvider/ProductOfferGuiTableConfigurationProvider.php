@@ -15,7 +15,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\Product
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
-class ProductOfferGuiTableConfigurationProvider implements ProductOfferGuiTableConfigurationProviderInterface
+class ProductOfferGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
     public const COL_KEY_OFFER_REFERENCE = 'offerReference';
     public const COL_KEY_MERCHANT_SKU = 'merchantSku';

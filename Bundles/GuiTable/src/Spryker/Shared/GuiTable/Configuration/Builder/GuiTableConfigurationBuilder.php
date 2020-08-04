@@ -48,11 +48,6 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $rowActions = [];
 
     /**
-     * @var \Generated\Shared\Transfer\GuiTableBatchActionTransfer[]
-     */
-    protected $batchActions = [];
-
-    /**
      * @var string
      */
     protected $rowOnClickIdAction;
@@ -65,12 +60,17 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @var string
      */
-    protected $batchActionRowIdPath;
+    protected $availableRowActionsPath;
+
+    /**
+     * @var \Generated\Shared\Transfer\GuiTableBatchActionTransfer[]
+     */
+    protected $batchActions = [];
 
     /**
      * @var string
      */
-    protected $availableRowActionsPath;
+    protected $batchActionRowIdPath;
 
     /**
      * @var string
