@@ -36,7 +36,7 @@ class OmsMultiThreadFacadeTest extends Unit
     public function testCanExpandSpySalesOrderEntityTransferWithOmsProcessorId(): void
     {
         // Arrange
-        $omsMultiThreadFacade = $this->tester->getOmsMultiThreadFacade();
+        $omsMultiThreadFacade = $this->tester->getFacade();
 
         // Act
         $salesOrderEntityTransfer = $omsMultiThreadFacade->expandSalesOrderEntityTransferWithOmsProcessorIdentifier(

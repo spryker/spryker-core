@@ -831,24 +831,24 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $query
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
      * @param int[] $omsProcessorIdentifiers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     protected function addOmsProcessorIdentifierFilterToSalesOrderItemQuery(
-        SpySalesOrderItemQuery $query,
+        SpySalesOrderItemQuery $salesOrderItemQuery,
         array $omsProcessorIdentifiers
     ): SpySalesOrderItemQuery {
         if (!$omsProcessorIdentifiers) {
-            return $query;
+            return $salesOrderItemQuery;
         }
 
-        $query
+        $salesOrderItemQuery
             ->useOrderQuery()
                 ->filterByOmsProcessorIdentifier_In($omsProcessorIdentifiers)
             ->endUse();
 
-        return $query;
+        return $salesOrderItemQuery;
     }
 }

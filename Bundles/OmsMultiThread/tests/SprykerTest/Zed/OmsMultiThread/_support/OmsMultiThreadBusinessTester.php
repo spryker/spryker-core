@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\OmsMultiThread;
 
 use Codeception\Actor;
-use Spryker\Zed\OmsMultiThread\Business\OmsMultiThreadFacadeInterface;
 
 /**
  * Inherited Methods
@@ -30,12 +29,4 @@ use Spryker\Zed\OmsMultiThread\Business\OmsMultiThreadFacadeInterface;
 class OmsMultiThreadBusinessTester extends Actor
 {
     use _generated\OmsMultiThreadBusinessTesterActions;
-
-    /**
-     * @return \Spryker\Zed\OmsMultiThread\Business\OmsMultiThreadFacadeInterface
-     */
-    public function getOmsMultiThreadFacade(): OmsMultiThreadFacadeInterface
-    {
-        return $this->getFacade();
-    }
 }
