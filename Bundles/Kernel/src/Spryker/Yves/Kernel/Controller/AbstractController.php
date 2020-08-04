@@ -126,7 +126,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Controller\AbstractController::createRedirectResponseExternal} instead.
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Controller\AbstractController::createRedirectResponseExternal()} instead.
      *
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
