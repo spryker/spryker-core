@@ -143,10 +143,6 @@
         <property name="item" type="Item"/>
     </transfer>
 
-    <transfer name="GuiTableRowDataResponse">
-        <property name="responseData" type="array" singular="responseData"/>
-    </transfer>
-
     <transfer name="Money">
         <property name="amount" type="string"/>
         <property name="currency" type="Currency"/>
