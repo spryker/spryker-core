@@ -162,7 +162,7 @@ abstract class AbstractController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseExternal(string $absoluteUrl, int $code = 302)
+    protected function createRedirectResponseExternal(string $absoluteUrl, int $code = 302): RedirectResponse
     {
         return new RedirectResponse($absoluteUrl, $code);
     }
@@ -336,7 +336,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin} instead.
      *
      * @param string $absoluteUrl
      *
