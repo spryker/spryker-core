@@ -45,7 +45,7 @@ class OrdersController extends AbstractController
             $guiTableConfigurationTransfer
         );
         $guiTableDataResponseTransfer = $this->getFactory()
-            ->createMerchantOrderTableDataProvider()
+            ->createMerchantOrderGuiTableDataProvider()
             ->getData($guiTableDataRequestTransfer);
 
         return $this->jsonResponse(
