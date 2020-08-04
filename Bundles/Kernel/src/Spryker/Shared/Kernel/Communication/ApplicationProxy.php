@@ -12,6 +12,7 @@ use Silex\Application;
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;
 use Silex\Application\UrlGeneratorTrait;
+use Spryker\Shared\Application\Application as ContainerApplication;
 use Symfony\Cmf\Component\Routing\ChainRouter;
 use Symfony\Component\Routing\RouterInterface;
 
@@ -78,7 +79,7 @@ if (class_exists(Application::class)) {
         }
     }
 } else {
-    class ApplicationProxy
+    class ApplicationProxy extends ContainerApplication
     {
     }
 }
