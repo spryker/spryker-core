@@ -19,7 +19,6 @@
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/gui": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"

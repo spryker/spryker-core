@@ -12,7 +12,6 @@ use Codeception\Stub;
 use Codeception\TestInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\GuiTwigLoaderPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\EventDispatcher\TwigEventDispatcherPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin;
@@ -62,7 +61,6 @@ class TwigHelper extends Module
      */
     protected $defaultLoaderPlugins = [
         FilesystemTwigLoaderPlugin::class,
-        GuiTwigLoaderPlugin::class,
     ];
 
     /**
