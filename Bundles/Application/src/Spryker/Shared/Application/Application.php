@@ -7,6 +7,7 @@
 
 namespace Spryker\Shared\Application;
 
+use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\BootableApplicationPluginInterface;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpKernel\TerminableInterface;
 use Symfony\Component\Routing\Loader\ClosureLoader;
 use Symfony\Component\Routing\Router;
 
-class Application implements HttpKernelInterface, TerminableInterface, ApplicationInterface
+class Application extends Container implements HttpKernelInterface, TerminableInterface, ApplicationInterface
 {
     /**
      * @see \Symfony\Cmf\Component\Routing\ChainRouterInterface
@@ -51,11 +52,17 @@ class Application implements HttpKernelInterface, TerminableInterface, Applicati
     protected $booted = false;
 
     /**
-     * @param \Spryker\Service\Container\ContainerInterface $container
+     * @param \Spryker\Service\Container\ContainerInterface|null $container
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[] $applicationPlugins
      */
-    public function __construct(ContainerInterface $container, array $applicationPlugins = [])
+    public function __construct(?ContainerInterface $container = null, array $applicationPlugins = [])
     {
+        parent::__construct();
+
+        if ($container === null) {
+            $container = new Container();
+        }
+
         $this->container = $container;
         $this->enableHttpMethodParameterOverride();
 
