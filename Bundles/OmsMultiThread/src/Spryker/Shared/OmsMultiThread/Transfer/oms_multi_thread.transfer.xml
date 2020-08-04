@@ -11,4 +11,7 @@
         <property name="omsProcessorIdentifiers" type="int[]" singular="omsProcessorIdentifier"/>
     </transfer>
 
+    <transfer name="Quote">
+    </transfer>
+
 </transfers>
