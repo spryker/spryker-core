@@ -20,7 +20,7 @@ class OmsMultiThreadProcessorIdentifierOrderExpanderPreSavePlugin extends Abstra
 {
     /**
      * {@inheritDoc}
-     * - TBA
+     * - Expands SpySalesOrderEntityTransfer with OMS processor identifier.
      *
      * @api
      *

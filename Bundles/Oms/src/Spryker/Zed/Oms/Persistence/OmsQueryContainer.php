@@ -108,7 +108,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param int $idOmsOrderProcess
      * @param array $omsOrderItemStateIds
      * @param string|null $storeName
-     * @param array $omsProcessorIdentifiers
+     * @param int[] $omsProcessorIdentifiers
      * @param int|null $limit
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery

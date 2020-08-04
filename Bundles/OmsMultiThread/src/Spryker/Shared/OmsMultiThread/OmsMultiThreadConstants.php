@@ -14,7 +14,7 @@ interface OmsMultiThreadConstants
 {
     /**
      * Specification:
-     * - TBA
+     * - Defines the number of simultaneous OMS processors.
      *
      * @api
      */
