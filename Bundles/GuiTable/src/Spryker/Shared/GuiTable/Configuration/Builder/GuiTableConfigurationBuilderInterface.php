@@ -20,9 +20,9 @@ interface GuiTableConfigurationBuilderInterface
     public const FILTER_TYPE_SELECT = 'select';
     public const FILTER_TYPE_DATE_RANGE = 'date-range';
 
-    public const ROW_ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
-    public const ROW_ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
-    public const ROW_ACTION_TYPE_URL = 'url';
+    public const ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
+    public const ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
+    public const ACTION_TYPE_URL = 'url';
 
     /**
      * @param string $id

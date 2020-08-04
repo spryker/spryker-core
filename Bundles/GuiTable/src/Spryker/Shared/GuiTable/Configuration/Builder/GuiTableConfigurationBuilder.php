@@ -344,7 +344,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addRowActionOpenFormOverlay(string $id, string $title, string $url)
     {
-        $this->addRowAction($id, $title, static::ROW_ACTION_TYPE_FORM_OVERLAY, ['url' => $url]);
+        $this->addRowAction($id, $title, static::ACTION_TYPE_FORM_OVERLAY, ['url' => $url]);
 
         return $this;
     }
@@ -358,7 +358,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addRowActionOpenPageOverlay(string $id, string $title, string $url)
     {
-        $this->addRowAction($id, $title, static::ROW_ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
+        $this->addRowAction($id, $title, static::ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
 
         return $this;
     }
@@ -372,7 +372,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addRowActionUrl(string $id, string $title, string $url)
     {
-        $this->addRowAction($id, $title, static::ROW_ACTION_TYPE_URL, ['url' => $url]);
+        $this->addRowAction($id, $title, static::ACTION_TYPE_URL, ['url' => $url]);
 
         return $this;
     }
@@ -411,7 +411,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      */
     public function addBatchActionUrl(string $id, string $title, string $url)
     {
-        $this->addBatchAction($id, $title, static::ROW_ACTION_TYPE_HTML_OVERLAY, ['url' => $url]);
+        $this->addBatchAction($id, $title, static::ACTION_TYPE_URL, ['url' => $url]);
 
         return $this;
     }
