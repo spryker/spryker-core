@@ -46,7 +46,7 @@ class ProductOfferGuiTableConfigurationProvider implements ProductOfferGuiTableC
     protected $translatorFacade;
 
     /**
-     * @return \Spryker\Shared\GuiTable\GuiTableFactoryInterface
+     * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     protected $guiTableFactory;
 
@@ -95,21 +95,10 @@ class ProductOfferGuiTableConfigurationProvider implements ProductOfferGuiTableC
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
-            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
-                'limit' => 3,
-                'typeOptions' => [
-                    'color' => 'grey',
-                ],
-            ])
-            ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, [
-                'color' => 'grey',
-            ], [
-                'color' => [0 => 'red'],
-            ])
-            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, [
-                'color' => 'grey',
-            ], [
-                'color' => [$this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green'],
+            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 3, 'grey')
+            ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])
+            ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'grey', [
+                $this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
             ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true)

@@ -306,9 +306,9 @@ class SalesMerchantPortalGuiDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addGuiTableFactory(Container $container): Container
     {
-        $container->set(static::SERVICE_GUI_TABLE_FACTORY, $container->factory(function (Container $container) {
+        $container->set(static::SERVICE_GUI_TABLE_FACTORY, function (Container $container) {
             return $container->getApplicationService(static::SERVICE_GUI_TABLE_FACTORY);
-        }));
+        });
 
         return $container;
     }

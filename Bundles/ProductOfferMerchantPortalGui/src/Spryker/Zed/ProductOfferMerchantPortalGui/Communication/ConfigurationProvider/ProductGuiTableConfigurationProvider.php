@@ -84,16 +84,9 @@ class ProductGuiTableConfigurationProvider implements ProductGuiTableConfigurati
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, false)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
-                'limit' => 3,
-                'typeOptions' => [
-                    'color' => 'grey',
-                ],
-            ])
-            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, false, [
-                'color' => 'grey',
-            ], [
-                'color' => [$this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green'],
+            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 3, 'grey')
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, false, 'grey', [
+                $this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false)
             ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false)

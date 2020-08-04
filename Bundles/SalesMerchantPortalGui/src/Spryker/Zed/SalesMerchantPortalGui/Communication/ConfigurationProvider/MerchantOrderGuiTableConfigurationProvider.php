@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
@@ -50,7 +51,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     protected $merchantUserFacade;
 
     /**
-     * @var \\Spryker\Shared\GuiTable\GuiTableFactoryInterface
+     * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     protected $guiTableFactory;
 
@@ -81,6 +82,7 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
 
         $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
         $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
             ->setDataSourceUrl(static::DATA_URL)
@@ -101,47 +103,31 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
             ->addColumnDate(static::COL_KEY_CREATED, 'Created', true, false)
             ->addColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true)
             ->addColumnText(static::COL_KEY_EMAIL, 'Email', true, true)
-            ->addColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, [
-                'limit' => 3,
-                'typeOptions' => [
-                    'color' => 'green',
-                ],
-            ])
+            ->addColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, 3, 'green')
             ->addColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true)
             ->addColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true)
-            ->addColumnChip(static::COL_KEY_STORE, 'Store', false, true, [
-                'color' => 'grey',
-            ]);
+            ->addColumnChip(static::COL_KEY_STORE, 'Store', false, true, 'green');
 
         return $guiTableConfigurationBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
-            ->setId(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
-            ->setTitle('Details')
-            ->setType('html-overlay')
-            ->addTypeOption(
-                'url',
-                sprintf(
-                    '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
-                    MerchantOrderTransfer::ID_MERCHANT_ORDER
-                )
-            );
+        $guiTableConfigurationBuilder->addRowActionOpenPageOverlay(
+            static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL,
+            'Details',
+            sprintf(
+                '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
+                MerchantOrderTransfer::ID_MERCHANT_ORDER
+            )
+        )->setRowClickAction(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL);
 
-        $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())
-                ->addAction($guiTableRowActionTransfer)
-                ->setClick(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
-        );
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**

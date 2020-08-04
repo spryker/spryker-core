@@ -8,6 +8,7 @@
 namespace Spryker\Shared\GuiTable\Configuration\Translator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\GuiTableBatchActionTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
@@ -27,6 +28,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         $guiTableConfigurationTransfer = $this->translateColumns($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateRowActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateBatchActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateSearch($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
@@ -159,6 +161,48 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         }
 
         return $guiTableRowActionTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateBatchActions(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions();
+
+        if (!$guiTableBatchActionsConfigurationTransfer->getIsEnabled()) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $translatedGuiTableBatchActionTransfers = new ArrayObject();
+
+        foreach ($guiTableBatchActionsConfigurationTransfer->getActions() as $guiTableBatchActionTransfer) {
+            $translatedGuiTableBatchActionTransfers[] = $this->translateBatchAction($guiTableBatchActionTransfer);
+        }
+
+        $guiTableBatchActionsConfigurationTransfer->setActions($translatedGuiTableBatchActionTransfers);
+        $guiTableConfigurationTransfer->setBatchActions($guiTableBatchActionsConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableBatchActionTransfer $guiTableBatchActionTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableBatchActionTransfer
+     */
+    protected function translateBatchAction(GuiTableBatchActionTransfer $guiTableBatchActionTransfer): GuiTableBatchActionTransfer
+    {
+        $batchActionTitle = $guiTableBatchActionTransfer->getTitle();
+
+        if ($batchActionTitle) {
+            $guiTableBatchActionTransfer->setTitle($this->translate($batchActionTitle));
+        }
+
+        return $guiTableBatchActionTransfer;
     }
 
     /**

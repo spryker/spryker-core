@@ -26,13 +26,6 @@
     <transfer name="GuiTableConfiguration">
     </transfer>
 
-    <transfer name="GuiTableRowAction">
-        <property name="id" type="string"/>
-        <property name="title" type="string"/>
-        <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-    </transfer>
-
     <transfer name="GuiTableDataRequest">
     </transfer>
 

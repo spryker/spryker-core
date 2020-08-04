@@ -13,6 +13,10 @@ use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProviderInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProviderInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderGuiTableDataProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderItemGuiTableDataProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface;
@@ -54,6 +58,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
         return new MerchantOrderItemGuiTableConfigurationProvider(
             $this->getMerchantOmsFacade(),
             $this->getMerchantUserFacade(),
+            $this->getGuiTableFactory(),
             $this->getMerchantOrderItemTableExpanderPlugins()
         );
     }
@@ -72,15 +77,18 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return \Spryker\Shared\GuiTable\DataProvider\GuiTableDataProviderInterface
      */
-    public function createMerchantOrderItemGuiTableDataProvider(): GuiTableDataProviderInterface
+    public function createMerchantOrderItemGuiTableDataProvider(array $merchantOrderItemIds): GuiTableDataProviderInterface
     {
         return new MerchantOrderItemGuiTableDataProvider(
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getMerchantOmsFacade(),
             $this->getSalesFacade(),
+            $merchantOrderItemIds,
             $this->getMerchantOrderItemTableExpanderPlugins()
         );
     }
@@ -196,7 +204,7 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
-     * @return \\Spryker\Shared\GuiTable\GuiTableFactoryInterface
+     * @return \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
     public function getGuiTableFactory(): GuiTableFactoryInterface
     {

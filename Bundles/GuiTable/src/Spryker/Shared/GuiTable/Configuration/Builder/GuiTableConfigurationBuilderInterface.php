@@ -22,6 +22,7 @@ interface GuiTableConfigurationBuilderInterface
 
     public const ROW_ACTION_TYPE_FORM_OVERLAY = 'form-overlay';
     public const ROW_ACTION_TYPE_HTML_OVERLAY = 'html-overlay';
+    public const ROW_ACTION_TYPE_URL = 'url';
 
     /**
      * @param string $id
@@ -75,8 +76,8 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param array|null $typeOptions
-     * @param array|null $typeOptionsMappings
+     * @param string|null $color
+     * @param array|null $colorMapping
      *
      * @return $this
      */
@@ -85,8 +86,8 @@ interface GuiTableConfigurationBuilderInterface
         string $title,
         bool $isSortable,
         bool $isHideable,
-        ?array $typeOptions = [],
-        ?array $typeOptionsMappings = []
+        ?string $color,
+        ?array $colorMapping = []
     );
 
     /**
@@ -94,8 +95,8 @@ interface GuiTableConfigurationBuilderInterface
      * @param string $title
      * @param bool $isSortable
      * @param bool $isHideable
-     * @param array|null $typeOptions
-     * @param array|null $typeOptionsMappings
+     * @param int|null $limit
+     * @param string|null $color
      *
      * @return $this
      */
@@ -104,8 +105,8 @@ interface GuiTableConfigurationBuilderInterface
         string $title,
         bool $isSortable,
         bool $isHideable,
-        ?array $typeOptions = [],
-        ?array $typeOptionsMappings = []
+        ?int $limit,
+        ?string $color
     );
 
     /**
@@ -160,11 +161,68 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addRowActionUrl(
+        string $id,
+        string $title,
+        string $url
+    );
+
+    /**
+     * @param string $id
+     * @param string $title
+     * @param string $url
+     *
+     * @return $this
+     */
+    public function addBatchActionUrl(string $id, string $title, string $url);
+
+    /**
      * @param string $idAction
      *
      * @return $this
      */
     public function setRowClickAction(string $idAction);
+
+    /**
+     * @param string $idPath
+     *
+     * @return $this
+     */
+    public function setRowActionRowIdPath(string $idPath);
+
+    /**
+     * @param string $idPath
+     *
+     * @return $this
+     */
+    public function setBatchActionRowIdPath(string $idPath);
+
+    /**
+     * @param string $availableRowActionsPath
+     *
+     * @return $this
+     */
+    public function setAvailableRowActionsPath(string $availableRowActionsPath);
+
+    /**
+     * @param string $availableBatchActionsPath
+     *
+     * @return $this
+     */
+    public function setAvailableBatchActionsPath(string $availableBatchActionsPath);
+
+    /**
+     * @param string $noBatchActionsMessage
+     *
+     * @return $this
+     */
+    public function setNoBatchActionsMessage(string $noBatchActionsMessage);
 
     /**
      * @param string $url
@@ -186,6 +244,13 @@ interface GuiTableConfigurationBuilderInterface
      * @return $this
      */
     public function setSearchPlaceholder(string $searchPlaceholder);
+
+    /**
+     * @param bool $isItemSelectionEnabled
+     *
+     * @return $this
+     */
+    public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
