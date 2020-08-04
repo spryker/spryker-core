@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: .
+        path: Business
         class_name: OmsMultiThreadBusinessTester
         modules:
             enabled:

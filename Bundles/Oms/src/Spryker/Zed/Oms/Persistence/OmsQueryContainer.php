@@ -80,7 +80,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         $omsProcessorIdentifiers = $omsCheckConditionsQueryCriteriaTransfer->getOmsProcessorIdentifiers();
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $omsProcessorIdentifiers, $limit), 't', false)
+        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit, $omsProcessorIdentifiers), 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
             ->filterByFkOmsOrderProcess($idOmsOrderProcess)
@@ -108,8 +108,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param int $idOmsOrderProcess
      * @param array $omsOrderItemStateIds
      * @param string|null $storeName
-     * @param int[] $omsProcessorIdentifiers
      * @param int|null $limit
+     * @param int[] $omsProcessorIdentifiers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -117,8 +117,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         int $idOmsOrderProcess,
         array $omsOrderItemStateIds,
         ?string $storeName = null,
-        array $omsProcessorIdentifiers = [],
-        ?int $limit = null
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
     ) {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
@@ -227,7 +227,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             return $this->querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible($now);
         }
 
-        $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $omsProcessorIdentifiers, $limit);
+        $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $limit, $omsProcessorIdentifiers);
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $baseQuery
@@ -245,15 +245,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
     /**
      * @param string|null $storeName
-     * @param int[] $omsProcessorIdentifiers
      * @param int|null $limit
+     * @param int[] $omsProcessorIdentifiers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
     protected function buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery(
         ?string $storeName = null,
-        array $omsProcessorIdentifiers = [],
-        ?int $limit = null
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
     ): SpySalesOrderItemQuery {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery

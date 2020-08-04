@@ -24,13 +24,13 @@ class OmsMultiThreadProcessorIdentifierOrderExpanderPreSavePlugin extends Abstra
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expand(SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
+    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer
     {
-        return $this->getFacade()->expandSpySalesOrderEntityTransferWithOmsProcessorIdentifier($spySalesOrderEntityTransfer, $quoteTransfer);
+        return $this->getFacade()->expandSalesOrderEntityTransferWithOmsProcessorIdentifier($salesOrderEntityTransfer, $quoteTransfer);
     }
 }

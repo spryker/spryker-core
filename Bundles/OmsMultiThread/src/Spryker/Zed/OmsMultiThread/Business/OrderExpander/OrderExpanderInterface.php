@@ -13,13 +13,13 @@ use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 interface OrderExpanderInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expandSpySalesOrderEntityTransferWithOmsProcessorIdentifier(
-        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+    public function expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         QuoteTransfer $quoteTransfer
     ): SpySalesOrderEntityTransfer;
 }

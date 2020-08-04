@@ -5,12 +5,15 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0",
-    "spryker/sales": "^8.10.0"
+    "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
+    "spryker/sales": "*",
     "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/sales": "If you want to use OmsMultiThreadProcessorIdentifierOrderExpanderPreSave plugin."
   },
   "autoload": {
     "psr-4": {

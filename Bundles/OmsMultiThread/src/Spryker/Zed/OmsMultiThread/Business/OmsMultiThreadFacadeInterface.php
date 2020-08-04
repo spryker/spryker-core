@@ -14,17 +14,17 @@ interface OmsMultiThreadFacadeInterface
 {
     /**
      * Specification:
-     * - Adds OMS processor identifier to sales order entity transfer.
+     * - Adds an OMS processor identifier to the sales order entity transfer.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer
+     * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expandSpySalesOrderEntityTransferWithOmsProcessorIdentifier(
-        SpySalesOrderEntityTransfer $spySalesOrderEntityTransfer,
+    public function expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
         QuoteTransfer $quoteTransfer
     ): SpySalesOrderEntityTransfer;
 }

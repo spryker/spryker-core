@@ -35,16 +35,15 @@ class OmsMultiThreadFacadeTest extends Unit
      */
     public function testCanExpandSpySalesOrderEntityTransferWithOmsProcessorId(): void
     {
-        //Arrange
-        /** @var \Spryker\Zed\OmsMultiThread\Business\OmsMultiThreadFacadeInterface $omsMultiThreadFacade */
-        $omsMultiThreadFacade = $this->tester->getFacade();
+        // Arrange
+        $omsMultiThreadFacade = $this->tester->getOmsMultiThreadFacade();
 
         // Act
-        $spySalesOrderEntityTransfer = $omsMultiThreadFacade->expandSpySalesOrderEntityTransferWithOmsProcessorIdentifier(
+        $salesOrderEntityTransfer = $omsMultiThreadFacade->expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
             new SpySalesOrderEntityTransfer(),
             new QuoteTransfer()
         );
-        $omsProcessorId = $spySalesOrderEntityTransfer->getOmsProcessorIdentifier();
+        $omsProcessorId = $salesOrderEntityTransfer->getOmsProcessorIdentifier();
 
         // Assert
         $this->assertIsInt($omsProcessorId);
