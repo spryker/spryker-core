@@ -182,7 +182,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
                 ], Criteria::LEFT_JOIN)
             ->clearSelectColumns()
-            ->withColumn($idLocale, 'fk_locale')
+            ->withColumn((string)$idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
 
         $searchText = trim($searchText);

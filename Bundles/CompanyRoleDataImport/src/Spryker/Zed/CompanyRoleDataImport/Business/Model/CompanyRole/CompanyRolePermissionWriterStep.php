@@ -54,6 +54,7 @@ class CompanyRolePermissionWriterStep extends AbstractCompanyRoleWriterStep impl
     protected function getIdPermissionByKey(string $permissionKey): int
     {
         if (!isset($this->idPermissionListCache[$permissionKey])) {
+            /** @var int|null $idPermission */
             $idPermission = $this->getPermissionQuery()
                 ->filterByKey($permissionKey)
                 ->select(SpyPermissionTableMap::COL_ID_PERMISSION)

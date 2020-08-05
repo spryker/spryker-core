@@ -382,8 +382,11 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
                 ->endUse();
         }
 
+        /** @var array $salesOrderItemAggregations */
+        $salesOrderItemAggregations = $salesOrderItemQuery->find();
+
         $salesAggregationTransfers = [];
-        foreach ($salesOrderItemQuery->find() as $salesOrderItemAggregation) {
+        foreach ($salesOrderItemAggregations as $salesOrderItemAggregation) {
             $salesAggregationTransfers[] = (new SalesOrderItemStateAggregationTransfer())
                 ->fromArray($salesOrderItemAggregation, true)
                 ->setSku($sku);
@@ -399,6 +402,7 @@ class ProductPackagingUnitRepository extends AbstractRepository implements Produ
      */
     public function getProductPackagingUnitCountByProductConcreteIds(array $productConcreteIds): array
     {
+        /** @var array $productPackagingUnitsData */
         $productPackagingUnitsData = $this->getFactory()
             ->createProductPackagingUnitQuery()
             ->filterByFkProduct_In($productConcreteIds)

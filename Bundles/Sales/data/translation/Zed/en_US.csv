@@ -82,7 +82,7 @@ ship-return,"Send return back to customer"
 delivery-return,"Deliver return back to customer"
 cancel,Cancel
 "skip timeout","Skip timeout"
-"Cancelled amount","Cancelled amount"
+"Refund total","Refund total"
 "Comment successfully added","Comment successfully added."
 "Address Details","Address Details"
 "Middle name","Middle name"

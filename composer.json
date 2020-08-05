@@ -21,7 +21,8 @@
   },
   "bin": [
     "Bundles/Console/bin/console",
-    "Bundles/Console/bin/yves"
+    "Bundles/Console/bin/yves",
+    "Bundles/Console/bin/glue"
   ],
   "scripts": {
     "cs-check": "phpcs --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml -p --ignore=/node_modules/ Bundles/"
@@ -72,6 +73,7 @@
     "spryker/cart-extension": "*",
     "spryker/cart-note": "*",
     "spryker/cart-note-extension": "*",
+    "spryker/cart-note-merchant-portal-gui": "*",
     "spryker/cart-note-product-bundle-connector": "*",
     "spryker/cart-permission-connector": "*",
     "spryker/cart-permission-groups-rest-api": "*",
@@ -401,6 +403,7 @@
     "spryker/oauth": "*",
     "spryker/oauth-company-user": "*",
     "spryker/oauth-company-user-extension": "*",
+    "spryker/oauth-cryptography": "*",
     "spryker/oauth-customer-connector": "*",
     "spryker/oauth-customer-connector-extension": "*",
     "spryker/oauth-extension": "*",
@@ -535,6 +538,7 @@
     "spryker/product-option": "*",
     "spryker/product-option-cart-connector": "*",
     "spryker/product-option-extension": "*",
+    "spryker/product-option-merchant-portal-gui": "*",
     "spryker/product-option-storage": "*",
     "spryker/product-options-rest-api": "*",
     "spryker/product-packaging-unit": "*",
@@ -606,6 +610,7 @@
     "spryker/sales-invoice": "*",
     "spryker/sales-invoice-extension": "*",
     "spryker/sales-merchant-portal-gui": "*",
+    "spryker/sales-merchant-portal-gui-extension": "*",
     "spryker/sales-oms": "*",
     "spryker/sales-order-threshold": "*",
     "spryker/sales-order-threshold-data-import": "*",

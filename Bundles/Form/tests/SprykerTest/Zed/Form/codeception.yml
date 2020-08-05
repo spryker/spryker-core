@@ -24,3 +24,4 @@ suites:
         - \SprykerTest\Shared\Testify\Helper\DependencyHelper
         - \SprykerTest\Yves\Testify\Helper\DependencyProviderHelper
         - \SprykerTest\Yves\Testify\Helper\FactoryHelper
+        - \SprykerTest\Service\Container\Helper\ContainerHelper

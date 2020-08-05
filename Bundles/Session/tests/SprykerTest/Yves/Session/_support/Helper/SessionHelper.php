@@ -17,8 +17,8 @@ use Spryker\Yves\Session\SessionConfig;
 use Spryker\Yves\Session\SessionFactory;
 use SprykerTest\Client\Testify\Helper\ClientHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelperTrait;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 
 class SessionHelper extends Module

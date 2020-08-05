@@ -287,6 +287,8 @@ class SearchElasticsearchFacadeTest extends Unit
             $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
         );
 
+        $destIndex->refresh();
+
         // Assert
         $this->assertDocumentInIndexHasExpectedContent($destIndex, $documentId, $documentContent);
     }

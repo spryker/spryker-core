@@ -83,7 +83,7 @@ class CustomerConfig extends AbstractBundleConfig
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
-        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 

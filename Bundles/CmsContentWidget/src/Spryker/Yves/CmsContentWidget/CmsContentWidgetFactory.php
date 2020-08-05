@@ -36,6 +36,6 @@ class CmsContentWidgetFactory extends AbstractFactory
      */
     protected function getTwigEnvironment()
     {
-        return $this->getProvidedDependency(CmsContentWidgetDependencyProvider::TWIG_ENVIRONMENT);
+        return $this->getProvidedDependency(CmsContentWidgetDependencyProvider::SERVICE_TWIG);
     }
 }

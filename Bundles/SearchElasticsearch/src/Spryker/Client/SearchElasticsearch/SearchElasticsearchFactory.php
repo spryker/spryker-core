@@ -36,7 +36,8 @@ use Spryker\Client\SearchElasticsearch\Query\QueryBuilder;
 use Spryker\Client\SearchElasticsearch\Query\QueryBuilderInterface;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactory;
 use Spryker\Client\SearchElasticsearch\Query\QueryFactoryInterface;
-use Spryker\Client\SearchElasticsearch\Reader\DocumentReader;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactory;
+use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Reader\DocumentReaderInterface;
 use Spryker\Client\SearchElasticsearch\Search\Search;
 use Spryker\Client\SearchElasticsearch\Search\SearchInterface;
@@ -44,7 +45,8 @@ use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpand
 use Spryker\Client\SearchElasticsearch\SearchContextExpander\SearchContextExpanderInterface;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilder;
 use Spryker\Client\SearchElasticsearch\Suggest\SuggestBuilderInterface;
-use Spryker\Client\SearchElasticsearch\Writer\DocumentWriter;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactory;
+use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactoryInterface;
 use Spryker\Client\SearchElasticsearch\Writer\DocumentWriterInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToLocaleClientInterface;
@@ -53,6 +55,8 @@ use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactory;
 use Spryker\Shared\SearchElasticsearch\ElasticaClient\ElasticaClientFactoryInterface;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolver;
 use Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetector;
+use Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface;
 use Spryker\Shared\SearchExtension\SourceInterface;
 
 /**
@@ -308,9 +312,16 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createDocumentWriter(): DocumentWriterInterface
     {
-        return new DocumentWriter(
-            $this->getElasticaClient(),
-            $this->getConfig()
+        return $this->createDocumentWriterFactory()->createDocumentWriter($this->getElasticaClient());
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Writer\DocumentWriterFactoryInterface
+     */
+    public function createDocumentWriterFactory(): DocumentWriterFactoryInterface
+    {
+        return new DocumentWriterFactory(
+            $this->createMappingTypeSupportDetector()
         );
     }
 
@@ -319,9 +330,24 @@ class SearchElasticsearchFactory extends AbstractFactory
      */
     public function createDocumentReader(): DocumentReaderInterface
     {
-        return new DocumentReader(
-            $this->getElasticaClient(),
-            $this->getConfig()
+        return $this->createDocumentReaderFactory()->createDocumentReader($this->getElasticaClient());
+    }
+
+    /**
+     * @return \Spryker\Client\SearchElasticsearch\Reader\DocumentReaderFactoryInterface
+     */
+    public function createDocumentReaderFactory(): DocumentReaderFactoryInterface
+    {
+        return new DocumentReaderFactory(
+            $this->createMappingTypeSupportDetector()
         );
+    }
+
+    /**
+     * @return \Spryker\Shared\SearchElasticsearch\MappingType\MappingTypeSupportDetectorInterface
+     */
+    public function createMappingTypeSupportDetector(): MappingTypeSupportDetectorInterface
+    {
+        return new MappingTypeSupportDetector();
     }
 }
