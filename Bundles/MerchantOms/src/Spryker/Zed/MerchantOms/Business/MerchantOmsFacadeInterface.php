@@ -10,6 +10,7 @@ namespace Spryker\Zed\MerchantOms\Business;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerResponseTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
@@ -106,4 +107,18 @@ interface MerchantOmsFacadeInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
+
+    /**
+     * Specification:
+     * - Expands MerchantOrder.items with oms state history.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     **/
+    public function expandMerchantOrderItemsWithStateHistory(
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): MerchantOrderTransfer;
 }

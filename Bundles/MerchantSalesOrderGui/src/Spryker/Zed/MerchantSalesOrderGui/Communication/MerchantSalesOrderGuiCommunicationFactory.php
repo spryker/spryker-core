@@ -15,6 +15,7 @@ use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\EventTriggerForm;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Table\MyOrderTable;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface;
@@ -96,6 +97,8 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @phpstan-return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
+     *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
     public function getMerchantSalesOrderQuery(): SpyMerchantSalesOrderQuery
@@ -157,5 +160,13 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     public function getShipmentService(): MerchantSalesOrderGuiToShipmentServiceInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::SERVICE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantOmsFacadeInterface
+     */
+    public function getMerchantOmsFacade(): MerchantSalesOrderGuiToMerchantOmsFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MERCHANT_OMS);
     }
 }

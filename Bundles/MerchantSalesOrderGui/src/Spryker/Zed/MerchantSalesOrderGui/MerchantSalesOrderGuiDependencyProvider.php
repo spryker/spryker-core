@@ -11,6 +11,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantOmsFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeBridge;
@@ -29,6 +30,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
+    public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
@@ -50,6 +52,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addMerchantSalesOrderFacade($container);
+        $container = $this->addMerchantOmsFacade($container);
         $container = $this->addShipmentService($container);
 
         return $container;
@@ -148,6 +151,22 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return new MerchantSalesOrderGuiToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantOmsFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_MERCHANT_OMS, function (Container $container) {
+            return new MerchantSalesOrderGuiToMerchantOmsFacadeBridge(
+                $container->getLocator()->merchantOms()->facade()
+            );
         });
 
         return $container;
