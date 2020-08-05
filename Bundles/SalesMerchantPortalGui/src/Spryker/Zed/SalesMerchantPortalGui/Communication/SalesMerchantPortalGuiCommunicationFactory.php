@@ -7,20 +7,26 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication;
 
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
 use Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProvider;
-use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderTableDataProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProviderInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProviderInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderGuiTableDataProvider;
+use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\MerchantOrderItemGuiTableDataProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider\OrdersDashboardCardProviderInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToGuiTableFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
+use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 
 /**
@@ -30,9 +36,9 @@ use Spryker\Zed\SalesMerchantPortalGui\SalesMerchantPortalGuiDependencyProvider;
 class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderGuiTableConfigurationProviderInterface
      */
-    public function createMerchantOrderGuiTableConfigurationProvider(): GuiTableConfigurationProviderInterface
+    public function createMerchantOrderGuiTableConfigurationProvider(): MerchantOrderGuiTableConfigurationProviderInterface
     {
         return new MerchantOrderGuiTableConfigurationProvider(
             $this->getStoreFacade(),
@@ -42,15 +48,41 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProviderInterface
+     */
+    public function createMerchantOrderItemGuiTableConfigurationProvider(): MerchantOrderItemGuiTableConfigurationProviderInterface
+    {
+        return new MerchantOrderItemGuiTableConfigurationProvider(
+            $this->getMerchantOmsFacade(),
+            $this->getMerchantUserFacade(),
+            $this->getMerchantOrderItemTableExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface
      */
-    public function createMerchantOrderTableDataProvider(): GuiTableDataProviderInterface
+    public function createMerchantOrderGuiTableDataProvider(): GuiTableDataProviderInterface
     {
-        return new MerchantOrderTableDataProvider(
+        return new MerchantOrderGuiTableDataProvider(
             $this->getRepository(),
             $this->getMerchantUserFacade(),
             $this->getCurrencyFacade(),
             $this->getMoneyFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\GuiTable\Communication\DataProvider\GuiTableDataProviderInterface
+     */
+    public function createMerchantOrderItemGuiTableDataProvider(): GuiTableDataProviderInterface
+    {
+        return new MerchantOrderItemGuiTableDataProvider(
+            $this->getRepository(),
+            $this->getMerchantUserFacade(),
+            $this->getMerchantOmsFacade(),
+            $this->getSalesFacade(),
+            $this->getMerchantOrderItemTableExpanderPlugins()
         );
     }
 
@@ -117,6 +149,14 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     }
 
     /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
+     */
+    public function getMerchantSalesOrderFacade(): SalesMerchantPortalGuiToMerchantSalesOrderFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    /**
      * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToRouterFacadeInterface
      */
     public function getRouterFacade(): SalesMerchantPortalGuiToRouterFacadeInterface
@@ -130,5 +170,29 @@ class SalesMerchantPortalGuiCommunicationFactory extends AbstractCommunicationFa
     protected function getTwigEnvironment()
     {
         return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::SERVICE_TWIG);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface
+     */
+    public function getSalesFacade(): SalesMerchantPortalGuiToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToTranslatorFacadeInterface
+     */
+    public function getTranslatorFacade(): SalesMerchantPortalGuiToTranslatorFacadeInterface
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::FACADE_TRANSLATOR);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
+     */
+    public function getMerchantOrderItemTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesMerchantPortalGuiDependencyProvider::PLUGINS_MERCHANT_ORDER_ITEM_TABLE_EXPANDER);
     }
 }

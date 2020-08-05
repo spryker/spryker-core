@@ -9,7 +9,7 @@ namespace Spryker\Zed\GuiTable\Communication\Plugin\GuiTable;
 
 use DateTime;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
+use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
 use Spryker\Zed\GuiTableExtension\Dependency\Plugin\RequestFilterValueNormalizerPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -32,7 +32,7 @@ class DateRangeRequestFilterValueNormalizerPlugin extends AbstractPlugin impleme
      */
     public function getFilterType(): string
     {
-        return GuiTableConfigurationProviderInterface::FILTER_TYPE_DATE_RANGE;
+        return AbstractGuiTableConfigurationProvider::FILTER_TYPE_DATE_RANGE;
     }
 
     /**

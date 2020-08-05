@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantSalesOrder\Persistence\Propel\Mapper;
 
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
@@ -14,6 +15,7 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrder;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderTotals;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class MerchantSalesOrderMapper
 {
@@ -165,5 +167,27 @@ class MerchantSalesOrderMapper
         }
 
         return $merchantSalesOrderTotalsEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItem[]|\Propel\Runtime\Collection\ObjectCollection $merchantSalesOrderItemEntities
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function mapMerchantSalesOrderItemEntitiesToMerchantOrderItemCollectionTransfer(
+        ObjectCollection $merchantSalesOrderItemEntities,
+        MerchantOrderItemCollectionTransfer $merchantOrderItemCollectionTransfer
+    ): MerchantOrderItemCollectionTransfer {
+        foreach ($merchantSalesOrderItemEntities as $merchantSalesOrderItemEntity) {
+            $merchantOrderTransfer = $this->mapMerchantSalesOrderItemEntityToMerchantOrderItemTransfer(
+                $merchantSalesOrderItemEntity,
+                new MerchantOrderItemTransfer()
+            );
+
+            $merchantOrderItemCollectionTransfer->addMerchantOrderItem($merchantOrderTransfer);
+        }
+
+        return $merchantOrderItemCollectionTransfer;
     }
 }

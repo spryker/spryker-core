@@ -1,5 +1,5 @@
 Created,Erstellt
-Customer,Customer
+Customer,Kunde
 Email,E-Mail
 "Grand Total",Gesamtsumme
 "Items States","Items States"
@@ -11,7 +11,40 @@ Search,Suche
 States,States
 Store,Store
 Stores,Stores
+Details,Einzelheiten
+Order,Bestellung
+"Order date",Bestelldatum
+"Number of products","Anzahl der Produkte"
+Items,Artikel
+Shipments,Liefermethoden
+Subtotal,Zwischensumme
+Shipment,Versand
+"Included Taxes","Enthaltener Steuern"
+"Client name",Kundenname
+"Client email",Kunden-e-mail
+"Total orders","Gesamtzahl der Bestellungen"
+Overview,Überblick
+Totals,Summen
 "From the last %daysNumber% days","From the last %daysNumber% days"
 "Manage Orders","Manage Orders"
 New,New
 "Per Store","Per Store"
+"The state is updated successfully.","The state is updated successfully."
+"Only matching states items will be updated.","Es werden nur Elemente mit übereinstimmenden Status aktualisiert."
+"Order's Items state","Artikelstatus der Bestellung"
+"Merchant order not found for id %d.","Händlerbestellung für ID %d nicht gefunden"
+"Event name is empty.","Ereignisname ist leer."
+"Merchant order ids are empty.","Händlerbestell-IDs sind leer."
+Method,Methode
+Carrier,Träger
+"Delivery address",Lieferadresse
+"Requested Date",Wunschtermin
+SKU,SKU
+Image,Bild
+Name,Name
+Quantity,Menge
+State,State
+"There are no applicable actions for the selected items.","There are no applicable actions for the selected items."
+"Shipment %index% of %total%","Versand %index% von %total%"
+"Canceled Amount","Stornierter Betrag"
+"Discount Amount",Rabattbetrag

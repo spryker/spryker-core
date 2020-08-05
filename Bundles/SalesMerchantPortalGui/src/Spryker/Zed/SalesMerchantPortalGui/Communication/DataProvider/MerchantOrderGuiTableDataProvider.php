@@ -9,6 +9,7 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
+use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderTableCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\MoneyTransfer;
@@ -21,7 +22,7 @@ use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiT
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMoneyFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface;
 
-class MerchantOrderTableDataProvider extends AbstractGuiTableDataProvider
+class MerchantOrderGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
     /**
      * @var \Spryker\Zed\SalesMerchantPortalGui\Persistence\SalesMerchantPortalGuiRepositoryInterface
@@ -82,12 +83,13 @@ class MerchantOrderTableDataProvider extends AbstractGuiTableDataProvider
         $merchantOrderCollectionTransfer = $this->salesMerchantPortalGuiRepository
             ->getMerchantOrderTableData($criteriaTransfer);
 
-        $merchantOrderTableDataArray = [];
+        $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($merchantOrderCollectionTransfer->getMerchantOrders() as $merchantOrderTransfer) {
             $orderTransfer = $merchantOrderTransfer->getOrder();
 
-            $merchantOrderTableDataArray[] = [
+            $responseData = [
+                MerchantOrderTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_REFERENCE => $orderTransfer->getOrderReference(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_MERCHANT_REFERENCE => $merchantOrderTransfer->getMerchantOrderReference(),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_CREATED => $merchantOrderTransfer->getCreatedAt(),
@@ -98,11 +100,13 @@ class MerchantOrderTableDataProvider extends AbstractGuiTableDataProvider
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_GRAND_TOTAL => $this->getGrandTotalData($merchantOrderTransfer),
                 MerchantOrderGuiTableConfigurationProvider::COL_KEY_STORE => $orderTransfer->getStore(),
             ];
+
+            $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
         $paginationTransfer = $merchantOrderCollectionTransfer->getPagination();
 
-        return (new GuiTableDataResponseTransfer())->setData($merchantOrderTableDataArray)
+        return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());

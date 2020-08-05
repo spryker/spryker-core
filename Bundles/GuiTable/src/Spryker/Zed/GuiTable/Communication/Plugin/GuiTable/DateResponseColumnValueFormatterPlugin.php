@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\GuiTable\Communication\Plugin\GuiTable;
 
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\GuiTableConfigurationProviderInterface;
+use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
 use Spryker\Zed\GuiTableExtension\Dependency\Plugin\ResponseColumnValueFormatterPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
@@ -27,7 +27,7 @@ class DateResponseColumnValueFormatterPlugin extends AbstractPlugin implements R
      */
     public function getColumnType(): string
     {
-        return GuiTableConfigurationProviderInterface::COLUMN_TYPE_DATE;
+        return AbstractGuiTableConfigurationProvider::COLUMN_TYPE_DATE;
     }
 
     /**
