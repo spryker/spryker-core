@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\ProductConfiguration\Persistence"
+          package="src.Orm.Zed.ProductConfiguration.Persistence">
+    
+    <table name="spy_product_configuration">
+        <column name="id_product_configuration" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" type="INTEGER" required="true"/>
+        <column name="default_display_data" type="CLOB" required="false"/>
+        <column name="default_configuration" type="CLOB" required="false"/>
+        <column name="configurator_key" required="true" type="VARCHAR" size="255"/>
+        <column name="is_complete" required="true" default="false" type="BOOLEAN"/>
+
+        <index name="spy_product_configuration-fk_product">
+            <index-column name="fk_product"/>
+        </index>
+
+        <foreign-key name="spy_product_configuration-fk_product" foreignTable="spy_product">
+            <reference local="fk_product" foreign="id_product"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_product_configuration_pk_seq"/>
+    </table>
+</database>
