@@ -9,9 +9,12 @@ namespace Spryker\Zed\GuiTable\Business\ResponseFormatter;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
+use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 
 class DataResponseFormatter implements DataResponseFormatterInterface
 {
+    protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
+
     /**
      * @var \Spryker\Zed\GuiTableExtension\Dependency\Plugin\ResponseColumnValueFormatterPluginInterface[]
      */
@@ -36,6 +39,12 @@ class DataResponseFormatter implements DataResponseFormatterInterface
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): array {
         $guiTableDataResponseArray = $guiTableDataResponseTransfer->toArray(true, true);
+
+        $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = array_map(function (array $rowData): array {
+            return $rowData[GuiTableRowDataResponseTransfer::RESPONSE_DATA];
+        }, $guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
+        unset($guiTableDataResponseArray[GuiTableDataResponseTransfer::ROWS]);
+
         $guiTableDataResponseArray = $this->executeResponseColumnValueFormatterPlugins(
             $guiTableDataResponseArray,
             $guiTableConfigurationTransfer
@@ -55,7 +64,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
         GuiTableConfigurationTransfer $guiTableConfigurationTransfer
     ): array {
         $indexedPlugins = $this->indexPluginsByColumnIds($guiTableConfigurationTransfer);
-        $guiTableData = $guiTableDataResponseArray[GuiTableDataResponseTransfer::DATA];
+        $guiTableData = $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA];
 
         foreach ($guiTableData as $tableRowKey => $tableRowData) {
             foreach ($tableRowData as $columnId => $columnValue) {
@@ -65,7 +74,7 @@ class DataResponseFormatter implements DataResponseFormatterInterface
             }
         }
 
-        $guiTableDataResponseArray[GuiTableDataResponseTransfer::DATA] = $guiTableData;
+        $guiTableDataResponseArray[static::KEY_DATA_RESPONSE_ARRAY_DATA] = $guiTableData;
 
         return $guiTableDataResponseArray;
     }

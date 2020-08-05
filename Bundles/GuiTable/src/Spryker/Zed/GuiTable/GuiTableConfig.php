@@ -33,7 +33,6 @@ class GuiTableConfig extends AbstractBundleConfig
             'filters',
             'search',
             'rowActions',
-            'itemSelection',
             'syncStateUrl',
         ];
     }

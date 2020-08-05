@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
+use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 
 class MerchantOmsToMerchantSalesOrderFacadeBridge implements MerchantOmsToMerchantSalesOrderFacadeInterface
 {
@@ -44,5 +46,15 @@ class MerchantOmsToMerchantSalesOrderFacadeBridge implements MerchantOmsToMercha
     public function updateMerchantOrderItem(MerchantOrderItemTransfer $merchantOrderItemTransfer): MerchantOrderItemResponseTransfer
     {
         return $this->merchantSalesOrderFacade->updateMerchantOrderItem($merchantOrderItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
+     */
+    public function findMerchantOrder(MerchantOrderCriteriaTransfer $merchantCriteriaTransfer): ?MerchantOrderTransfer
+    {
+        return $this->merchantSalesOrderFacade->findMerchantOrder($merchantCriteriaTransfer);
     }
 }
