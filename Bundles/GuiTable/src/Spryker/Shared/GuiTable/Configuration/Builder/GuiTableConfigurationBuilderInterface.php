@@ -135,6 +135,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * Adds a new action with type form-overlay for rows.
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -148,6 +150,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * Adds a new action with type html-overlay for rows.
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -161,6 +165,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * Adds a new action with type url for rows.
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -174,6 +180,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * Adds a new batch action with type url for rows.
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -183,6 +191,8 @@ interface GuiTableConfigurationBuilderInterface
     public function addBatchActionUrl(string $id, string $title, string $url);
 
     /**
+     * Sets an action ID which will be triggered when clicking on a row.
+     *
      * @param string $idAction
      *
      * @return $this
@@ -190,6 +200,9 @@ interface GuiTableConfigurationBuilderInterface
     public function setRowClickAction(string $idAction);
 
     /**
+     * Sets ID of a row which will be used for replacing ${rowId} in URL (for row actions).
+     * For example: https://.../${rowId} - ${rowId} will be replaced by the specified column ID.
+     *
      * @param string $idPath
      *
      * @return $this
@@ -197,6 +210,9 @@ interface GuiTableConfigurationBuilderInterface
     public function setRowActionRowIdPath(string $idPath);
 
     /**
+     * Sets ID of a row which will be used for replacing ${rowId} in URL (for batch actions).
+     * For example: https://.../${rowId} - ${rowId} will be replaced by the specified column ID.
+     *
      * @param string $idPath
      *
      * @return $this
@@ -204,6 +220,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setBatchActionRowIdPath(string $idPath);
 
     /**
+     * Sets the name of a column which contains list of available row actions.
+     *
      * @param string $availableRowActionsPath
      *
      * @return $this
@@ -211,6 +229,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setAvailableRowActionsPath(string $availableRowActionsPath);
 
     /**
+     * Sets the name of a column which contains list of available batch actions.
+     *
      * @param string $availableBatchActionsPath
      *
      * @return $this
@@ -218,6 +238,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setAvailableBatchActionsPath(string $availableBatchActionsPath);
 
     /**
+     * Sets a message which will be displayed when there are no available actions for selected rows.
+     *
      * @param string $noBatchActionsMessage
      *
      * @return $this
@@ -225,6 +247,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setNoBatchActionsMessage(string $noBatchActionsMessage);
 
     /**
+     * Sets URL which will be used for receiving the table data.
+     *
      * @param string $url
      *
      * @return $this
@@ -232,6 +256,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setDataSourceUrl(string $url);
 
     /**
+     * Sets a number if rows which will be displayed by default.
+     *
      * @param int $defaultPageSize
      *
      * @return $this
@@ -239,6 +265,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setDefaultPageSize(int $defaultPageSize);
 
     /**
+     * Sets a placeholders for a search field.
+     *
      * @param string $searchPlaceholder
      *
      * @return $this
@@ -246,6 +274,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setSearchPlaceholder(string $searchPlaceholder);
 
     /**
+     * Enables/disables possibility to select rows by checkboxes (if enabled a new column with checkboxes will appear).
+     *
      * @param bool $isItemSelectionEnabled
      *
      * @return $this
