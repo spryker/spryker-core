@@ -3,7 +3,7 @@
 @edit-offer-padding: 30px;
 @edit-offer-common-blocks-indent: 7px;
 @edit-offer-common-padding-bottom: 30px;
-@edit-offer-base-content-padding-left: 30px;
+@edit-offer-base-content-padding-x: 15px;
 @edit-offer-sku-padding-bottom: 18px;
 @edit-offer-title-margin: 10px 0 0;
 @edit-offer-base-content-dates-base-width: 190px;
@@ -72,15 +72,16 @@
 
     &__base {
         display: flex;
+        margin: 0 -@edit-offer-base-content-padding-x;
         padding-bottom: @edit-offer-common-padding-bottom;
 
         &-col {
             flex-shrink: 0;
+            padding: 0 @edit-offer-base-content-padding-x;
 
             &--content {
                 flex-shrink: 1;
                 flex-grow: 1;
-                padding-left: @edit-offer-base-content-padding-left;
             }
         }
     }
