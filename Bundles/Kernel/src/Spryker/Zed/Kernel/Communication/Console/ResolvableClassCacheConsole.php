@@ -34,8 +34,22 @@ class ResolvableClassCacheConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
+        if (!$this->isSupportedPhpVersion()) {
+            $this->info('This command only works with PHP version 7.3 or higher.');
+
+            return static::CODE_SUCCESS;
+        }
+
         $this->getFacade()->buildResolvableClassCache();
 
         return static::CODE_SUCCESS;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isSupportedPhpVersion(): bool
+    {
+        return PHP_VERSION >= 7.3;
     }
 }
