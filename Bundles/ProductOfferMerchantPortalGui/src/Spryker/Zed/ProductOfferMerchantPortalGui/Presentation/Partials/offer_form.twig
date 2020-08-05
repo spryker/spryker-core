@@ -80,6 +80,7 @@
     images="{{ images | json_encode() }}"
     product-details-title="{{ productDetailsTitle }}"
     product="{{ productData | json_encode() }}"
+    cloak
 >
     <h3 title>
         {{ productOfferReference is defined ? 'Offer' | trans ~ ': ' ~ productOfferReference  : 'Create Offer' | trans }}
