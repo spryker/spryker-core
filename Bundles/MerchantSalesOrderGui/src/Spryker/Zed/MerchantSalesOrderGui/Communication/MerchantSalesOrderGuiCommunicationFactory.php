@@ -62,6 +62,8 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
@@ -72,6 +74,8 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     }
 
     /**
+     * @phpstan-param array<string, mixed> $options
+     *
      * @param array $options
      *
      * @return \Symfony\Component\Form\FormInterface
