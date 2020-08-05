@@ -18,17 +18,17 @@ class ProductBundleStorageRepository extends AbstractRepository implements Produ
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $concreteProductIds
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $concreteProductIds): array
+    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $productConcreteIds): array
     {
         $productBundleStoragePropelQuery = $this->getFactory()
             ->getProductBundleStoragePropelQuery();
 
-        if ($concreteProductIds) {
-            $productBundleStoragePropelQuery->filterByFkProduct_In($concreteProductIds);
+        if ($productConcreteIds) {
+            $productBundleStoragePropelQuery->filterByFkProduct_In($productConcreteIds);
         }
 
         return $this->buildQueryFromCriteria($productBundleStoragePropelQuery, $filterTransfer)

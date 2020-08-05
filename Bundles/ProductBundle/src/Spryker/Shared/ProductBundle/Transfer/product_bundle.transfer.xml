@@ -130,6 +130,7 @@
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
         <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="bundledProductIds" type="int[]" singular="idBundledProduct"/>
         <property name="filter" type="Filter"/>
         <property name="applyGrouped" type="bool"/>
     </transfer>

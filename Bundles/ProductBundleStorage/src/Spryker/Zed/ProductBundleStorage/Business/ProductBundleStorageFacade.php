@@ -71,12 +71,12 @@ class ProductBundleStorageFacade extends AbstractFacade implements ProductBundle
      * @api
      *
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param int[] $concreteProductIds
+     * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $concreteProductIds): array
+    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $productConcreteIds): array
     {
-        return $this->getRepository()->getPaginatedProductBundleStorageDataTransfers($filterTransfer, $concreteProductIds);
+        return $this->getRepository()->getPaginatedProductBundleStorageDataTransfers($filterTransfer, $productConcreteIds);
     }
 }
