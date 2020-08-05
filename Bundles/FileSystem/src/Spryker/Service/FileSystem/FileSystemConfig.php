@@ -19,6 +19,6 @@ class FileSystemConfig extends AbstractBundleConfig
      */
     public function getFilesystemConfig()
     {
-        return $this->get(FileSystemConstants::FILESYSTEM_SERVICE);
+        return $this->get(FileSystemConstants::FILESYSTEM_SERVICE, []);
     }
 }

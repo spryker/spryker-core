@@ -44,7 +44,7 @@ interface CollectorConstants
      *
      * @api
      */
-    public const ZED_DB_ENGINE_MYSQL = PropelConstants::ZED_DB_ENGINE_MYSQL;
+    public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
 
     /**
      * Specification:
@@ -52,7 +52,7 @@ interface CollectorConstants
      *
      * @api
      */
-    public const ZED_DB_ENGINE_PGSQL = PropelConstants::ZED_DB_ENGINE_PGSQL;
+    public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
 
     /**
      * Specification:

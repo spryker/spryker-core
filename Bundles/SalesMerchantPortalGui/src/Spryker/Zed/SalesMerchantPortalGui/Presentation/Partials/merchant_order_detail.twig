@@ -28,7 +28,8 @@
                     <div state-transitions class="{{ mainClass }}__transitions">
                         {% for eventName in merchantEvent %}
                             <web-spy-button-ajax
-                                    url="/sales-merchant-portal-gui/trigger-merchant-oms?merchant-order-id={{ idMerchantOrder }}&event-name={{ eventName }}"
+                                size="sm"
+                                url="/sales-merchant-portal-gui/trigger-merchant-oms?merchant-order-id={{ idMerchantOrder }}&event-name={{ eventName }}"
                                 class="{{ mainClass }}__transitions-col"
                             >{{ eventName }}</web-spy-button-ajax>
                         {% endfor %}
@@ -178,7 +179,7 @@
                                         info: merchantData.email,
                                     },
                                     {
-                                        name: 'Previous orders' | trans | upper,
+                                        name: 'Total orders' | trans | upper,
                                         info: customerMerchantOrderNumber,
                                     },
                                 ] %}

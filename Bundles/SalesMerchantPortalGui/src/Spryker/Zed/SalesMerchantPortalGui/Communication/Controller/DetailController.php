@@ -136,7 +136,7 @@ class DetailController extends AbstractController
                     ->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             );
 
-        return $customerMerchantOrderNumber - 1;
+        return $customerMerchantOrderNumber;
     }
 
     /**
