@@ -283,7 +283,7 @@
                                                 <web-spy-card class="{{ mainClass }}__card-inner">
                                                     <web-mp-order-items-table
                                                         config='{{ configurationByShipment }}'
-                                                        table-id="web-mp-order-items-table-{{ loop.index }}">
+                                                        table-id="web-mp-order-items-table-{{ merchantData.orderReference }}-{{ loop.index }}">
                                                     </web-mp-order-items-table>
                                                 </web-spy-card>
                                             {% endblock %}
