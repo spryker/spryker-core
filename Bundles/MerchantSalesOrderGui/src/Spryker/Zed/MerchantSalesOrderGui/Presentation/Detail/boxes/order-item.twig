@@ -77,9 +77,9 @@
     </div>
     {% if orderItem.stateHistory | length > 1 %}
         <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
-            {#{% for stateHistory in merchantOrderItemsWithOrderItemIdKey[orderItem.IdSalesOrderItem].stateHistory | slice(1) %}#}
-                {#<div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>#}
-            {#{% endfor %}#}
+            {% for stateHistory in merchantOrderItemsWithOrderItemIdKey[orderItem.IdSalesOrderItem].stateHistory | slice(1) %}
+                <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+            {% endfor %}
 
         <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
             <span class="show-more">{{ 'Show history' | trans }}</span>
