@@ -31,6 +31,9 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
+    settings = {
+        enabled: true,
+    };
 }
 
 @NgModule({
