@@ -50,6 +50,6 @@ class ResolvableClassCacheConsole extends Console
      */
     protected function isSupportedPhpVersion(): bool
     {
-        return PHP_VERSION >= 7.3;
+        return PHP_VERSION_ID >= 70300;
     }
 }

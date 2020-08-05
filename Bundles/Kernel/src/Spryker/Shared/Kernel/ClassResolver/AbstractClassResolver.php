@@ -362,7 +362,7 @@ abstract class AbstractClassResolver
     protected function isCacheEnabled(): bool
     {
         // For PHP versions lower 7.3 class resolver cache might not work because of bug https://bugs.php.net/bug.php?id=75765
-        if (PHP_VERSION < 7.3) {
+        if (PHP_VERSION_ID < 70300) {
             return false;
         }
 
