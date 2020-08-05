@@ -33,6 +33,7 @@ class CompanyUserKeyToIdCompanyUserStep implements DataImportStepInterface
         $companyUserKey = $dataSet[ShoppingListCompanyUserDataSetInterface::COLUMN_COMPANY_USER_KEY];
         if (!isset($this->idCompanyUserCache[$companyUserKey])) {
             $companyUserQuery = new SpyCompanyUserQuery();
+            /** @var int|null $idCompanyUser */
             $idCompanyUser = $companyUserQuery
                 ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
                 ->findOneByKey($companyUserKey);

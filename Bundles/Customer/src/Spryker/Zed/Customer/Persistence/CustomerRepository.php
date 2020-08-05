@@ -145,7 +145,10 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerQuery $customerQuery */
+        $customerQuery = $paginationModel->getQuery();
+
+        return $customerQuery;
     }
 
     /**

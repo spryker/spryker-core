@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\OauthRevoke\Communication\Plugin\Oauth\OauthRefreshTokenPersistencePlugin} instead.
+ *
  * @method \Spryker\Zed\OauthRevoke\Business\OauthRevokeFacadeInterface getFacade()
  * @method \Spryker\Zed\OauthRevoke\OauthRevokeConfig getConfig()
  */

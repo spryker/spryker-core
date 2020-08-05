@@ -104,6 +104,8 @@ class MerchantSalesOrderFacadeTest extends Unit
             $merchantOrderReference
         );
 
+        $orderTransfer = $this->tester->getLocator()->sales()->facade()->getOrderByIdSalesOrder($merchantOrderTransfer->getIdOrder());
+
         $merchantOrderCriteriaData = [
             MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
             MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
@@ -111,6 +113,8 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
+            MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => $orderTransfer->getCustomerReference(),
+            MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCTS_COUNT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -195,6 +199,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
         /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
         $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+        $expectedUniqueProductCount = $this->tester->getUniqueProductCount($saveOrderTransfer->getOrderItems());
 
         $merchantOrderReference = $this->tester->getMerchantOrderReference(
             $saveOrderTransfer->getOrderReference(),
@@ -221,6 +226,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             MerchantOrderCriteriaTransfer::ID_MERCHANT => $merchantTransfer->getIdMerchant(),
             MerchantOrderCriteriaTransfer::WITH_ITEMS => true,
             MerchantOrderCriteriaTransfer::WITH_ORDER => true,
+            MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCTS_COUNT => true,
         ];
         $merchantOrderCriteriaData = array_intersect_key(
             $merchantOrderCriteriaData,
@@ -246,6 +252,10 @@ class MerchantSalesOrderFacadeTest extends Unit
                 $merchantOrderTransfer->getOrder()->getIdSalesOrder(),
                 $foundMerchantOrderTransfer->getOrder()->getIdSalesOrder()
             );
+        }
+
+        if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
+            $this->assertEquals($expectedUniqueProductCount, $foundMerchantOrderTransfer->getUniqueProductsCount());
         }
 
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
@@ -552,6 +562,49 @@ class MerchantSalesOrderFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetMerchantOrderItemCollectionReturnsCorrectData(): void
+    {
+        //Arrange
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+
+        $merchantOrderReference = $this->tester->getMerchantOrderReference(
+            $saveOrderTransfer->getOrderReference(),
+            $merchantTransfer->getMerchantReference()
+        );
+
+        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
+            MerchantOrderTransfer::MERCHANT_ORDER_REFERENCE => $merchantOrderReference,
+            MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder(),
+            MerchantOrderTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
+        ]);
+
+        $expectedMerchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+        ]);
+
+        $merchantOrderItemCriteriaTransfer = (new MerchantOrderItemCriteriaTransfer())
+            ->setMerchantOrderItemIds([$expectedMerchantOrderItemTransfer->getIdMerchantOrderItem()]);
+        $expectedMerchantOrderItemsCount = 1;
+
+        //Act
+        $merchantOrderItemCollectionTransfer = $this->tester
+            ->getFacade()
+            ->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
+
+        //Assert
+        $this->assertCount($expectedMerchantOrderItemsCount, $merchantOrderItemCollectionTransfer->getMerchantOrderItems());
+        /** @var \Generated\Shared\Transfer\MerchantOrderItemTransfer $merchantOrderItemTransfer */
+        $merchantOrderItemTransfer = $merchantOrderItemCollectionTransfer->getMerchantOrderItems()->offsetGet(0);
+        $this->assertSame($expectedMerchantOrderItemTransfer->getIdMerchantOrderItem(), $merchantOrderItemTransfer->getIdMerchantOrderItem());
+    }
+
+    /**
      * @return array
      */
     public function getMerchantOrderPositiveScenarioDataProvider(): array
@@ -590,6 +643,13 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
                 'merchantOrderItemsCount' => 1,
             ],
+            'by customer reference' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_ORDER,
+                    MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE,
+                ],
+                'merchantOrderItemsCount' => 0,
+            ],
             'with order' => [
                 'merchantOrderCriteriaDataKeys' => [
                     MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
@@ -597,6 +657,13 @@ class MerchantSalesOrderFacadeTest extends Unit
                 ],
                 'merchantOrderItemsCount' => 0,
                 'withOrder' => true,
+            ],
+            'with unique products count' => [
+                'merchantOrderCriteriaDataKeys' => [
+                    MerchantOrderCriteriaTransfer::ID_MERCHANT_ORDER,
+                    MerchantOrderCriteriaTransfer::WITH_UNIQUE_PRODUCTS_COUNT,
+                ],
+                'merchantOrderItemsCount' => 0,
             ],
         ];
     }
@@ -627,6 +694,11 @@ class MerchantSalesOrderFacadeTest extends Unit
             'by merchant order reference' => [
                 'merchantOrderCriteriaData' => [
                     MerchantOrderCriteriaTransfer::MERCHANT_ORDER_REFERENCE => 'wrong_merchant_sales_order_reference',
+                ],
+            ],
+            'by customer reference' => [
+                'merchantOrderCriteriaData' => [
+                    MerchantOrderCriteriaTransfer::CUSTOMER_REFERENCE => 'wrong_customer_reference',
                 ],
             ],
         ];

@@ -48,6 +48,7 @@ class CompanyKeyToIdCompanyStep implements DataImportStepInterface
             return $this->idCompanyBuffer[$companyKey];
         }
 
+        /** @var int|null $idCompany */
         $idCompany = SpyCompanyQuery::create()
             ->select(SpyCompanyTableMap::COL_ID_COMPANY)
             ->findOneByKey($companyKey);

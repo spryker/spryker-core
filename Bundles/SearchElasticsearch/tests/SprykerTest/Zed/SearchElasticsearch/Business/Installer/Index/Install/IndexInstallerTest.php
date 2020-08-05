@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\Install;
 
 use Elastica\Request;
-use Generated\Shared\Transfer\IndexDefinitionTransfer;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 use Spryker\SearchElasticsearch\tests\SprykerTest\Zed\SearchElasticsearch\Business\Installer\Index\AbstractIndexTest;
@@ -51,10 +50,7 @@ class IndexInstallerTest extends AbstractIndexTest
             $mappingBuilder
         );
 
-        $indexDefinitionTransfer = new IndexDefinitionTransfer();
-        $indexDefinitionTransfer->setMappings([[]]);
-
-        $indexInstaller->run($indexDefinitionTransfer, new NullLogger());
+        $indexInstaller->run($this->createIndexDefinitionTransfer(), new NullLogger());
     }
 
     /**
@@ -79,7 +75,7 @@ class IndexInstallerTest extends AbstractIndexTest
             $mappingBuilder
         );
 
-        $indexInstaller->run(new IndexDefinitionTransfer(), $loggerMock);
+        $indexInstaller->run($this->createIndexDefinitionTransfer(), $loggerMock);
     }
 
     /**
@@ -101,7 +97,7 @@ class IndexInstallerTest extends AbstractIndexTest
             $this->createMappingBuilderMock()
         );
 
-        $isAccepted = $indexInstaller->accept(new IndexDefinitionTransfer());
+        $isAccepted = $indexInstaller->accept($this->createIndexDefinitionTransfer());
 
         $this->assertEquals($expectedIsAccepted, $isAccepted);
     }

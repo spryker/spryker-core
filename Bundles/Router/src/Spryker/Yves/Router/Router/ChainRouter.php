@@ -10,7 +10,7 @@ namespace Spryker\Yves\Router\Router;
 use Psr\Log\LoggerInterface;
 use Symfony\Cmf\Component\Routing\ChainRouter as SymfonyChainRouter;
 
-class ChainRouter extends SymfonyChainRouter
+class ChainRouter extends SymfonyChainRouter implements RouterInterface
 {
     /**
      * @param \Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface[] $routerPlugins

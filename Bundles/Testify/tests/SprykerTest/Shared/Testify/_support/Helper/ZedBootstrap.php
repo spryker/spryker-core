@@ -12,10 +12,12 @@ use Codeception\Lib\Framework;
 use Codeception\Lib\Interfaces\DependsOnModule;
 use Codeception\TestInterface;
 use Codeception\Util\Stub;
+use Spryker\Shared\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Testify\Bootstrap\ZedBootstrap as TestifyBootstrap;
 use Spryker\Zed\Twig\TwigConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Client;
+use Symfony\Component\HttpKernel\HttpKernelBrowser;
 
 class ZedBootstrap extends Framework implements DependsOnModule
 {
@@ -76,6 +78,12 @@ class ZedBootstrap extends Framework implements DependsOnModule
      */
     public function _before(TestInterface $test): void
     {
+        if (class_exists(HttpKernelBrowser::class)) {
+            $this->client = new HttpKernelBrowser($this->application->boot());
+
+            return;
+        }
+
         $this->client = new Client($this->application->boot());
     }
 
@@ -105,9 +113,9 @@ class ZedBootstrap extends Framework implements DependsOnModule
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|\PHPUnit\Framework\MockObject\InvocationMocker
+     * @return \Spryker\Shared\Kernel\AbstractBundleConfig
      */
-    private function getTwigBundleConfigMock()
+    private function getTwigBundleConfigMock(): AbstractBundleConfig
     {
         $twigConfig = new TwigConfig();
         /** @var \Spryker\Shared\Kernel\AbstractBundleConfig $twigBundleConfigMock */

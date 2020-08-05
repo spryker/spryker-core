@@ -21,6 +21,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
     public const FACADE_SALES = 'FACADE_SALES';
 
     public const PLUGINS_MERCHANT_ORDER_POST_CREATE = 'PLUGINS_MERCHANT_ORDER_POST_CREATE';
+    public const PLUGINS_MERCHANT_ORDER_EXPANDER = 'PLUGINS_MERCHANT_ORDER_EXPANDER';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +35,7 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
         $container = $this->addCalculationFacade($container);
         $container = $this->addSalesFacade($container);
         $container = $this->addMerchantOrderPostCreatePlugins($container);
+        $container = $this->addMerchantOrderExpanderPlugins($container);
 
         return $container;
     }
@@ -86,6 +88,28 @@ class MerchantSalesOrderDependencyProvider extends AbstractBundleDependencyProvi
      * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
      */
     protected function getMerchantOrderPostCreatePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addMerchantOrderExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_MERCHANT_ORDER_EXPANDER, function () {
+            return $this->getMerchantOrderExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[]
+     */
+    protected function getMerchantOrderExpanderPlugins(): array
     {
         return [];
     }

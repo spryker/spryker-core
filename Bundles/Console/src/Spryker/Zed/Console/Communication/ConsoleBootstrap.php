@@ -20,6 +20,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 /**
+ * @deprecated Will be removed in favor of `\Spryker\Zed\Console\Communication\Bootstrap\ConsoleBootstrap`.
+ *
  * @method \Spryker\Zed\Console\ConsoleConfig getConfig()
  */
 class ConsoleBootstrap extends Application

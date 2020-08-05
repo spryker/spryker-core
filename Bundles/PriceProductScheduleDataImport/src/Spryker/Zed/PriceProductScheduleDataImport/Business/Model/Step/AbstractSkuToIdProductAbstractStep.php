@@ -38,6 +38,7 @@ class AbstractSkuToIdProductAbstractStep implements DataImportStepInterface
         }
 
         if (!isset($this->idProductAbstractCache[$productAbstractSku])) {
+            /** @var int|null $idProduct */
             $idProduct = $this->createPriceProductScheduleListQuery()
                 ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
                 ->findOneBySku($productAbstractSku);

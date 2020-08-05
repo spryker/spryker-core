@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
@@ -76,6 +77,7 @@ interface MerchantSalesOrderFacadeInterface
      * Specification:
      * - Returns a merchant order found using MerchantOrderCriteriaTransfer.
      * - Returns NULL if merchant order is not found.
+     * - Executes MerchantOrderExpanderPluginInterface plugins.
      *
      * @api
      *
@@ -170,4 +172,16 @@ interface MerchantSalesOrderFacadeInterface
      * @return int
      */
     public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int;
+
+    /**
+     * Specification:
+     * - Returns a merchant order item collection found using provided criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function getMerchantOrderItemCollection(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): MerchantOrderItemCollectionTransfer;
 }

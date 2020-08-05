@@ -27,7 +27,7 @@ abstract class AbstractSpySalesOrderThresholdQuery extends BaseSpySalesOrderThre
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return $this
+     * @return static|$this
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
@@ -47,7 +47,7 @@ abstract class AbstractSpySalesOrderThresholdQuery extends BaseSpySalesOrderThre
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return $this
+     * @return static|$this
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
