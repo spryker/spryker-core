@@ -348,19 +348,6 @@ class MerchantSalesOrderRepository extends AbstractRepository implements Merchan
     }
 
     /**
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
-     *
-     * @return int
-     */
-    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
-    {
-        return $this->applyMerchantOrderFilters(
-            $this->getFactory()->createMerchantSalesOrderQuery(),
-            $merchantOrderCriteriaTransfer
-        )->count();
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
      * @param \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery $merchantSalesOrderItemQuery
      *
