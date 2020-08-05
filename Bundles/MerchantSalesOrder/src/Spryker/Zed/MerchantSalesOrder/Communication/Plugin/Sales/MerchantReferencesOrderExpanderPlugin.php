@@ -14,6 +14,7 @@ use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 /**
  * @method \Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesOrder\Business\MerchantSalesOrderFacadeInterface getFacade()
+ * @method \Spryker\Zed\MerchantSalesOrder\Communication\MerchantSalesOrderCommunicationFactory getFactory()
  */
 class MerchantReferencesOrderExpanderPlugin extends AbstractPlugin implements OrderExpanderPluginInterface
 {
