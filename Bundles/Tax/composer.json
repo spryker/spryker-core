@@ -16,8 +16,8 @@
   },
   "require-dev": {
     "spryker/application": "*",
-    "spryker/container": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/form": "*",
     "spryker/propel": "*",
