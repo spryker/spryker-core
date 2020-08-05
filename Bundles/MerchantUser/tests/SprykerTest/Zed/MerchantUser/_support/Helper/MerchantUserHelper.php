@@ -38,7 +38,8 @@ class MerchantUserHelper extends Module
 
         return (new MerchantUserTransfer())->setIdMerchantUser($merchantUserEntity->getIdMerchantUser())
             ->setIdMerchant($merchantUserEntity->getFkMerchant())
-            ->setIdUser($merchantUserEntity->getFkUser());
+            ->setIdUser($merchantUserEntity->getFkUser())
+            ->setMerchant($merchantTransfer);
     }
 
     /**

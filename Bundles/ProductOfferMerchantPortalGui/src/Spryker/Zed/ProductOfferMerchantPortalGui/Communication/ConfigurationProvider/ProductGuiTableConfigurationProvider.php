@@ -19,7 +19,7 @@ use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableCon
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
-class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider
+class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
     public const COL_KEY_NAME = 'name';
     public const COL_KEY_SKU = 'sku';

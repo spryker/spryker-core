@@ -3,6 +3,10 @@ import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
+    TableHtmlOverlayActionHandlerService,
+    TableHtmlOverlayActionHandlerModule,
+    TableUrlActionHandlerModule,
+    TableUrlActionHandlerService,
 } from '@spryker/table/action-handlers';
 import {
     TableColumnChipComponent,
@@ -61,6 +65,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
                 import('@spryker/table/features').then(
                     (m) => m.TableSelectableFeatureModule
                 ),
+            batchActions: () =>
+                import('@spryker/table/features').then(
+                    m => m.TableBatchActionsFeatureModule
+                ),
         }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
@@ -77,6 +85,8 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         }),
         TableModule.withActions({
             'form-overlay': TableFormOverlayActionHandlerService,
+            'html-overlay': TableHtmlOverlayActionHandlerService,
+            'url': TableUrlActionHandlerService,
         }),
 
         // Table Column Type Modules
@@ -89,6 +99,8 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
 
         // Table Action Handler Modules
         TableFormOverlayActionHandlerModule,
+        TableHtmlOverlayActionHandlerModule,
+        TableUrlActionHandlerModule,
     ],
     providers: [
         {
