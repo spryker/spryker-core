@@ -14,11 +14,6 @@
         <property name="quantity" type="int"/>
     </transfer>
 
-    <transfer name="ProductView">
-        <property name="idProductConcrete" type="int"/>
-        <property name="bundledProducts" type="ProductView[]" singular="bundledProduct"/>
-    </transfer>
-
     <transfer name="SynchronizationData">
         <property name="reference" type="string"/>
     </transfer>
@@ -36,15 +31,17 @@
 
     <transfer name="ProductBundle">
         <property name="bundledProducts" type="ProductForBundle[]" singular="bundledProduct"/>
-    </transfer>
-
-    <transfer name="ProductForBundle">
+        <property name="idProductConcreteBundle" type="int"/>
     </transfer>
 
     <transfer name="Filter">
         <property name="offset" type="int"/>
         <property name="orderBy" type="string"/>
         <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="ProductForBundle">
+        <property name="isActive" type="bool"/>
     </transfer>
 
 </transfers>

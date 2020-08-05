@@ -1,0 +1,6 @@
+{
+  "include": {
+    "spryker/product": "Defined for forward-compatibility reasons.",
+    "spryker/product-storage": "Defined for forward-compatibility reasons."
+  }
+}

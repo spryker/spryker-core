@@ -109,4 +109,52 @@ class GetProductBundleCollectionByCriteriaFilterTest extends Unit
         $this->assertCount(1, $productConcreteBundleTransfers);
         $this->assertCount(3, $productConcreteBundleTransfers->offsetGet(0)->getBundledProducts());
     }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterWithBundledProductIdFilter(): void
+    {
+        //Assign
+        $productConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
+        $idBundledProduct = $productConcreteBundleTransfer->getProductBundle()->getBundledProducts()->getIterator()->current()->getIdProductConcrete();
+
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->addIdBundledProduct($idBundledProduct)
+            ->setApplyGrouped(true);
+
+        //Act
+        $productConcreteBundleTransfers = $this->tester->getFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertCount(1, $productConcreteBundleTransfers);
+        $this->assertCount(1, $productConcreteBundleTransfers->getIterator()->current()->getBundledProducts());
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProductBundleCollectionByCriteriaFilterWithDifferentBundledProductIdsFilter(): void
+    {
+        //Assign
+        $firstProductConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
+        $secondProductConcreteBundleTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
+
+        $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
+            ->addIdBundledProduct($firstProductConcreteBundleTransfer->getProductBundle()->getBundledProducts()->getIterator()->current()->getIdProductConcrete())
+            ->addIdBundledProduct($secondProductConcreteBundleTransfer->getProductBundle()->getBundledProducts()->getIterator()->current()->getIdProductConcrete())
+            ->setApplyGrouped(true);
+
+        //Act
+        $productConcreteBundleTransfers = $this->tester->getFacade()
+            ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer)
+            ->getProductBundles();
+
+        //Assert
+        $this->assertCount(2, $productConcreteBundleTransfers);
+        $this->assertCount(1, $productConcreteBundleTransfers->getIterator()->offsetGet(0)->getBundledProducts());
+        $this->assertCount(1, $productConcreteBundleTransfers->getIterator()->offsetGet(1)->getBundledProducts());
+    }
 }
