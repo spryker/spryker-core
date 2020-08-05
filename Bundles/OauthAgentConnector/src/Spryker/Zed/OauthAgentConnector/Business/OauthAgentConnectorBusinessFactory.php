@@ -18,6 +18,8 @@ use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgent
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToOauthFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorDependencyProvider;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
  * @method \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig getConfig()
@@ -31,7 +33,8 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
     {
         return new AgentOauthUserProvider(
             $this->getAgentFacade(),
-            $this->getUtilEncodingService()
+            $this->getUtilEncodingService(),
+            $this->createNativePasswordEncoder()
         );
     }
 
@@ -52,6 +55,14 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
             $this->getOauthFacade(),
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     */
+    public function createNativePasswordEncoder(): PasswordEncoderInterface
+    {
+        return new NativePasswordEncoder();
     }
 
     /**
