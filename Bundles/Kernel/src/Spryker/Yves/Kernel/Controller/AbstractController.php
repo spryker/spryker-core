@@ -126,7 +126,7 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Yves\Kernel\Controller\AbstractController::createRedirectResponseExternal()} instead.
+     * //TODO Proper description.
      *
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
@@ -147,23 +147,32 @@ abstract class AbstractController
             return new RedirectResponse($absoluteUrl, $code);
         }
 
-        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
-            throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
-        }
+        //TODO Proper error message.
 
-        return new RedirectResponse($absoluteUrl, $code);
+        trigger_error('Error', E_USER_DEPRECATED);
+
+        return $this->deprecatedRedirectResponseExternal($absoluteUrl, $code);
     }
 
     /**
-     * @see \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin} instead.
+     *
+     * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
+     * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
      *
      * @param string $absoluteUrl
      * @param int $code
      *
+     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
+     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function createRedirectResponseExternal(string $absoluteUrl, int $code = 302): RedirectResponse
+    protected function deprecatedRedirectResponseExternal(string $absoluteUrl, int $code = 302)
     {
+        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+            throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
+        }
+
         return new RedirectResponse($absoluteUrl, $code);
     }
 
