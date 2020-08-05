@@ -69,6 +69,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
                 import('@spryker/table/features').then(
                     m => m.TableBatchActionsFeatureModule
                 ),
+            settings: () =>
+                import('@spryker/table/features').then(
+                    m => m.TableSettingsFeatureModule,
+                ),
         }),
         TableModule.withColumnComponents({
             text: TableColumnTextComponent,
