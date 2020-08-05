@@ -281,7 +281,10 @@
 
                                             {% block tableComponent %}
                                                 <web-spy-card class="{{ mainClass }}__card-inner">
-                                                    <web-mp-order-items-table config='{{ configurationByShipment }}'></web-mp-order-items-table>
+                                                    <web-mp-order-items-table
+                                                        config='{{ configurationByShipment }}'
+                                                        table-id="web-mp-order-items-table-{{ loop.index }}">
+                                                    </web-mp-order-items-table>
                                                 </web-spy-card>
                                             {% endblock %}
                                         {% endblock %}

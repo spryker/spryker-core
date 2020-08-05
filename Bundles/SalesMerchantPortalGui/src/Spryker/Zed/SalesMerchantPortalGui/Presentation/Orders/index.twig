@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <web-mp-offer-orders cloak table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
+    <web-mp-offer-orders
+        cloak
+        table-id="web-mp-offer-orders"
+        table-config='{{ guiTableConfiguration(merchantOrderTableConfiguration) }}'>
         <span title>{{ 'Orders' | trans }}</span>
     </web-mp-offer-orders>
 {% endblock %}

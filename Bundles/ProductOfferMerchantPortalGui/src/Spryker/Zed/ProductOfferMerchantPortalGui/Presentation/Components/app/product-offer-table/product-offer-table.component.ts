@@ -11,4 +11,5 @@ import { ToJson } from '@spryker/utils';
 })
 export class ProductOfferTableComponent {
     @Input() config: TableConfig;
+    @Input() tableId: string;
 }
