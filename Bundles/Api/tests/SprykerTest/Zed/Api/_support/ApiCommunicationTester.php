@@ -11,7 +11,7 @@ use Codeception\Actor;
 use Codeception\Stub;
 use Spryker\Zed\Api\Communication\Controller\RestController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\HttpKernel\KernelInterface;
 
@@ -38,11 +38,11 @@ class ApiCommunicationTester extends Actor
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpKernel\Event\FilterControllerEvent
+     * @return \Symfony\Component\HttpKernel\Event\ControllerEvent
      */
-    public function getFilterControllerEvent(Request $request): FilterControllerEvent
+    public function getControllerEvent(Request $request): ControllerEvent
     {
-        $filterControllerEvent = new FilterControllerEvent($this->getKernelMock(), $this->getController(), $request, Kernel::MASTER_REQUEST);
+        $filterControllerEvent = new ControllerEvent($this->getKernelMock(), $this->getController(), $request, Kernel::MASTER_REQUEST);
 
         return $filterControllerEvent;
     }

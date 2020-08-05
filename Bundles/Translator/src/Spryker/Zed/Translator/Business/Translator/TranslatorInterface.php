@@ -9,7 +9,7 @@ namespace Spryker\Zed\Translator\Business\Translator;
 
 use Symfony\Component\Translation\Loader\LoaderInterface;
 use Symfony\Component\Translation\TranslatorBagInterface;
-use Symfony\Component\Translation\TranslatorInterface as SymfonyTranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
 interface TranslatorInterface extends SymfonyTranslatorInterface, TranslatorBagInterface
 {

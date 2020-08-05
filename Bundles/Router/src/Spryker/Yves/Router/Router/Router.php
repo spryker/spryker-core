@@ -57,7 +57,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
 
         $compiled = is_a($this->options['matcher_class'], CompiledUrlMatcher::class, true);
 
-        if ($this->options['cache_dir'] === null || $this->options['matcher_cache_class'] === null) {
+        if ($this->options['cache_dir'] === null) {
             $routes = $this->getRouteCollection();
             if ($compiled) {
                 $routes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
@@ -69,16 +69,11 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
         }
 
         $cache = $this->getConfigCacheFactory()->cache(
-            $this->options['cache_dir'] . '/' . $this->options['matcher_cache_class'] . '.php',
+            $this->options['cache_dir'] . '/url_matching_routes.php',
             function (ConfigCacheInterface $cache) {
                 $dumper = $this->getMatcherDumperInstance();
 
-                $options = [
-                    'class' => $this->options['matcher_cache_class'],
-                    'base_class' => $this->options['matcher_base_class'],
-                ];
-
-                $cache->write($dumper->dump($options), $this->getRouteCollection()->getResources());
+                $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
             }
         );
 
@@ -125,7 +120,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
 
         $compiled = is_a($this->options['generator_class'], CompiledUrlGenerator::class, true);
 
-        if ($this->options['cache_dir'] === null || $this->options['generator_cache_class'] === null) {
+        if ($this->options['cache_dir'] === null) {
             $routes = $this->getRouteCollection();
             if ($compiled) {
                 $routes = (new CompiledUrlGeneratorDumper($routes))->getCompiledRoutes();
@@ -133,16 +128,11 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
             $this->generator = new $this->options['generator_class']($routes, $this->context, $this->logger, $this->defaultLocale);
         } else {
             $cache = $this->getConfigCacheFactory()->cache(
-                $this->options['cache_dir'] . '/' . $this->options['generator_cache_class'] . '.php',
+                $this->options['cache_dir'] . '/url_generating_routes.php',
                 function (ConfigCacheInterface $cache) {
                     $dumper = $this->getGeneratorDumperInstance();
 
-                    $options = [
-                        'class' => $this->options['generator_cache_class'],
-                        'base_class' => $this->options['generator_base_class'],
-                    ];
-
-                    $cache->write($dumper->dump($options), $this->getRouteCollection()->getResources());
+                    $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
                 }
             );
 
@@ -198,11 +188,13 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
     /**
      * @param string $cacheDir
      *
-     * @return void
+     * @return string[]
      */
-    public function warmUp($cacheDir): void
+    public function warmUp($cacheDir): array
     {
         $this->getGenerator();
         $this->getMatcher();
+
+        return [];
     }
 }

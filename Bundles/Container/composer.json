@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "psr/container": "^1.0.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "dev-beta/te-7001/te-7174/te-7175-create-beta-branch-for-spryker-container as 3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

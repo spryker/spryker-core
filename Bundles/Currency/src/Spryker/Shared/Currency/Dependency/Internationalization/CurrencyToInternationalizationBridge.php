@@ -7,6 +7,9 @@
 
 namespace Spryker\Shared\Currency\Dependency\Internationalization;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Currency\Dependency\Internationalization\CurrenciesToInternationalizationBridge} instead.
+ */
 class CurrencyToInternationalizationBridge implements CurrencyToInternationalizationInterface
 {
     /**

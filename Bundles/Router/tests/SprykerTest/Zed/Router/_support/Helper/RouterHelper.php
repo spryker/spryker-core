@@ -67,6 +67,11 @@ class RouterHelper extends Module
     protected $routeCollection;
 
     /**
+     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface|null
+     */
+    protected static $routerPlugin;
+
+    /**
      * @return void
      */
     public function _initialize(): void
@@ -76,8 +81,25 @@ class RouterHelper extends Module
         }
 
         if (!isset($this->routerPlugins[ZedRouterPlugin::class])) {
-            $this->routerPlugins[ZedRouterPlugin::class] = new ZedRouterPlugin();
+            $this->routerPlugins[ZedRouterPlugin::class] = $this->getRouterPlugin();
         }
+    }
+
+    /**
+     * @return \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface
+     */
+    protected function getRouterPlugin(): RouterPluginInterface
+    {
+        if (static::$routerPlugin === null) {
+            $controllerDirectories = [sprintf('%s/spryker/spryker/Bundles/*/src/Spryker/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR)];
+            $this->getConfigHelper()->mockConfigMethod('getControllerDirectories', $controllerDirectories, static::MODULE_NAME);
+            $routerPlugin = new ZedRouterPlugin();
+            $routerPlugin->setFacade($this->getBusinessHelper()->getFacade(static::MODULE_NAME));
+
+            static::$routerPlugin = $routerPlugin;
+        }
+
+        return static::$routerPlugin;
     }
 
     /**
@@ -109,7 +131,7 @@ class RouterHelper extends Module
         $defaults['_controller'] = $controller;
         $route = new Route($path, $defaults, $requirements, $options, $host, $schemes, $methods, $condition);
 
-        $this->getRouteCollection()->add($name, $route);
+        $this->getRouteCollection()->add($name, $route, 0);
 
         /** @var \Spryker\Zed\Router\Business\Router\ChainRouter $chainRouter */
         $chainRouter = $this->getContainer()->get(static::SERVICE_ROUTER);

@@ -11,7 +11,7 @@ use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\ZedHstsServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\ResponseHeaderBag;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 
 /**
  * Auto-generated group annotations
@@ -32,7 +32,7 @@ class HstsServiceProviderTest extends Unit
      */
     public function testDisabledHstsServiceProviderMustNotReturnHeader(): void
     {
-        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
+        $eventMock = $this->getMockBuilder(ResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
         $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
 
         $eventMock->expects($this->once())
@@ -54,7 +54,7 @@ class HstsServiceProviderTest extends Unit
      */
     public function testHstsServiceProviderGeneratesHeader(): void
     {
-        $eventMock = $this->getMockBuilder(FilterResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
+        $eventMock = $this->getMockBuilder(ResponseEvent::class)->setMethods(['isMasterRequest', 'getResponse'])->disableOriginalConstructor()->getMock();
         $hstsMock = $this->getMockBuilder(ZedHstsServiceProvider::class)->setMethods(['getIsHstsEnabled', 'getHstsConfig'])->getMock();
         $responseMock = $this->getMockBuilder(Response::class)->getMock();
         $headersMock = $this->getMockBuilder(ResponseHeaderBag::class)->setMethods(['set'])->getMock();

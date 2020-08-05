@@ -1470,7 +1470,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
 
                 $route->setDefault('_controller', $controller);
 
-                $routeCollection->add($name, $route);
+                $routeCollection->add($name, $route, 0);
             }
 
             return $routeCollection;

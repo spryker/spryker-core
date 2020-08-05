@@ -5,14 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Translator\Communication\Plugin;
+namespace Spryker\Zed\Translator\Communication\Plugin\Translator;
 
-use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
+use Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Translator\Communication\Plugin\Translator\TranslatorPlugin} instead.
- *
  * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
@@ -31,7 +29,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->getFacade()->trans($id, $parameters, $domain, $locale);
     }

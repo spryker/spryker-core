@@ -63,7 +63,9 @@ class RequestAttributeEventDispatcherPluginTest extends Unit
         string $expectedAction
     ): void {
         // Arrange
-        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
+        $controllerDirectories = sprintf('%s/spryker/spryker/Bundles/*/src/Spryker/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR);
+        $this->tester->mockConfigMethod('getControllerDirectories', $controllerDirectories);
+
         $this->tester->addRoute($givenUrl, $givenUrl, function () {
         });
 

@@ -183,7 +183,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
                 $route->setMethods('GET');
                 $route->setDefault('_controller', $controllerKey);
 
-                $routeCollection->add($routeName, $route);
+                $routeCollection->add($routeName, $route, 0);
             }
 
             return $routeCollection;
@@ -195,7 +195,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     /**
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return array
+     * @return array[]
      */
     protected function getRouteDefinitions(ContainerInterface $container): array
     {
@@ -241,7 +241,7 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
     }
 
     /**
-     * @return array
+     * @return array[]
      */
     protected function getDataCollectorPluginTemplates(): array
     {

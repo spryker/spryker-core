@@ -10,6 +10,7 @@ namespace SprykerTest\Shared\Currency\Builder;
 use Codeception\Test\Unit;
 use Spryker\Shared\Currency\Builder\CurrencyBuilder;
 use Spryker\Shared\Currency\Builder\CurrencyBuilderInterface;
+use Spryker\Shared\Currency\Dependency\Internationalization\CurrenciesToInternationalizationBridge;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
 use Symfony\Component\Intl\Intl;
@@ -53,7 +54,11 @@ class CurrencyBuilderTest extends Unit
      */
     protected function getCurrencyBuilder(): CurrencyBuilderInterface
     {
-        $currencyRepository = new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
+        if (method_exists(Intl::class, 'getCurrencyBundle')) {
+            $currencyRepository = new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
+        } else {
+            $currencyRepository = new CurrenciesToInternationalizationBridge();
+        }
 
         return new CurrencyBuilder(
             $currencyRepository,

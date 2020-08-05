@@ -10,7 +10,7 @@ namespace Spryker\Zed\Translator\Communication\Plugin\Validator;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ValidatorExtension\Dependency\Plugin\ValidatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Symfony\Component\Validator\ValidatorBuilderInterface;
+use Symfony\Component\Validator\ValidatorBuilder;
 
 /**
  * @method \Spryker\Zed\Translator\Business\TranslatorFacadeInterface getFacade()
@@ -31,12 +31,12 @@ class TranslatorValidatorPlugin extends AbstractPlugin implements ValidatorPlugi
      *
      * @api
      *
-     * @param \Symfony\Component\Validator\ValidatorBuilderInterface $validatorBuilder
+     * @param \Symfony\Component\Validator\ValidatorBuilder $validatorBuilder
      * @param \Spryker\Service\Container\ContainerInterface $container
      *
-     * @return \Symfony\Component\Validator\ValidatorBuilderInterface
+     * @return \Symfony\Component\Validator\ValidatorBuilder
      */
-    public function extend(ValidatorBuilderInterface $validatorBuilder, ContainerInterface $container): ValidatorBuilderInterface
+    public function extend(ValidatorBuilder $validatorBuilder, ContainerInterface $container): ValidatorBuilder
     {
         $validatorBuilder->setTranslator($container->get(static::SERVICE_TRANSLATOR));
         $validatorBuilder->setTranslationDomain(static::TRANSLATION_DOMAIN);

@@ -5,13 +5,10 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\TranslatorExtension\Dependency\Plugin;
+namespace Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator;
 
-use Spryker\Shared\Translator\TranslatorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @deprecated Use {@link \Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface} instead.
- */
 interface TranslatorPluginInterface extends TranslatorInterface
 {
     /**
@@ -27,7 +24,7 @@ interface TranslatorPluginInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
