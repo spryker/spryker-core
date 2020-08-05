@@ -25,6 +25,8 @@ interface GuiTableConfigurationBuilderInterface
     public const ACTION_TYPE_URL = 'url';
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -40,6 +42,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -55,6 +59,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -72,6 +78,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -91,6 +99,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -110,6 +120,8 @@ interface GuiTableConfigurationBuilderInterface
     );
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
@@ -120,6 +132,8 @@ interface GuiTableConfigurationBuilderInterface
     public function addFilterSelect(string $id, string $title, bool $isMultiselect, array $values);
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string|null $placeholderFrom
@@ -137,6 +151,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Adds a new action with type form-overlay for rows.
      *
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -151,6 +167,8 @@ interface GuiTableConfigurationBuilderInterface
 
     /**
      * Adds a new action with type html-overlay for rows.
+     *
+     * @api
      *
      * @param string $id
      * @param string $title
@@ -167,6 +185,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Adds a new action with type url for rows.
      *
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -182,6 +202,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Adds a new batch action with type url for rows.
      *
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -193,6 +215,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Sets an action ID which will be triggered when clicking on a row.
      *
+     * @api
+     *
      * @param string $idAction
      *
      * @return $this
@@ -202,6 +226,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Sets ID of a row which will be used for replacing ${rowId} in URL (for row actions).
      * For example: https://.../${rowId} - ${rowId} will be replaced by the specified column ID.
+     *
+     * @api
      *
      * @param string $idPath
      *
@@ -213,6 +239,8 @@ interface GuiTableConfigurationBuilderInterface
      * Sets ID of a row which will be used for replacing ${rowId} in URL (for batch actions).
      * For example: https://.../${rowId} - ${rowId} will be replaced by the specified column ID.
      *
+     * @api
+     *
      * @param string $idPath
      *
      * @return $this
@@ -221,6 +249,8 @@ interface GuiTableConfigurationBuilderInterface
 
     /**
      * Sets the name of a column which contains list of available row actions.
+     *
+     * @api
      *
      * @param string $availableRowActionsPath
      *
@@ -231,6 +261,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Sets the name of a column which contains list of available batch actions.
      *
+     * @api
+     *
      * @param string $availableBatchActionsPath
      *
      * @return $this
@@ -239,6 +271,8 @@ interface GuiTableConfigurationBuilderInterface
 
     /**
      * Sets a message which will be displayed when there are no available actions for selected rows.
+     *
+     * @api
      *
      * @param string $noBatchActionsMessage
      *
@@ -249,6 +283,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Sets URL which will be used for receiving the table data.
      *
+     * @api
+     *
      * @param string $url
      *
      * @return $this
@@ -257,6 +293,8 @@ interface GuiTableConfigurationBuilderInterface
 
     /**
      * Sets a number if rows which will be displayed by default.
+     *
+     * @api
      *
      * @param int $defaultPageSize
      *
@@ -267,6 +305,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Sets a placeholders for a search field.
      *
+     * @api
+     *
      * @param string $searchPlaceholder
      *
      * @return $this
@@ -276,6 +316,8 @@ interface GuiTableConfigurationBuilderInterface
     /**
      * Enables/disables possibility to select rows by checkboxes (if enabled a new column with checkboxes will appear).
      *
+     * @api
+     *
      * @param bool $isItemSelectionEnabled
      *
      * @return $this
@@ -283,6 +325,8 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
     public function createConfiguration(): GuiTableConfigurationTransfer;

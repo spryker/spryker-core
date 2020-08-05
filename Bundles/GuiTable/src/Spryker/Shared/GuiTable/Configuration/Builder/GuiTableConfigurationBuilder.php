@@ -103,6 +103,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     protected $isItemSelectionEnabled;
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -129,6 +131,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -155,6 +159,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -184,6 +190,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -216,6 +224,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isSortable
@@ -272,6 +282,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
@@ -304,6 +316,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string|null $placeholderFrom
@@ -336,6 +350,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -350,6 +366,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -364,6 +382,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -403,6 +423,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $id
      * @param string $title
      * @param string $url
@@ -442,6 +464,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $idAction
      *
      * @return $this
@@ -454,6 +478,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $idPath
      *
      * @return $this
@@ -466,6 +492,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $idPath
      *
      * @return $this
@@ -478,6 +506,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $availableRowActionsPath
      *
      * @return $this
@@ -490,6 +520,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $availableBatchActionsPath
      *
      * @return $this
@@ -502,6 +534,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $noBatchActionsMessage
      *
      * @return $this
@@ -514,6 +548,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $url
      *
      * @return $this
@@ -526,6 +562,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param int $defaultPageSize
      *
      * @return $this
@@ -538,6 +576,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param string $searchPlaceholder
      *
      * @return $this
@@ -550,6 +590,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @param bool $isItemSelectionEnabled
      *
      * @return $this
@@ -562,6 +604,8 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @api
+     *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer

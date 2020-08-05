@@ -13,6 +13,8 @@ use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderIn
 class GuiTableFactory implements GuiTableFactoryInterface
 {
     /**
+     * @api
+     *
      * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
     public function createConfigurationBuilder(): GuiTableConfigurationBuilderInterface
