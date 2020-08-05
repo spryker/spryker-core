@@ -33,6 +33,7 @@ class ProductListKeyToIdProductList implements DataImportStepInterface
         $productListKey = $dataSet[ConfigurableBundleTemplateSlotDataSetInterface::COLUMN_PRODUCT_LIST_KEY];
 
         if (!isset(static::$idProductListBuffer[$productListKey])) {
+            /** @var int|null $idProductList */
             $idProductList = $this->createProductListQuery()
                 ->select([SpyProductListTableMap::COL_ID_PRODUCT_LIST])
                 ->findOneByKey($productListKey);

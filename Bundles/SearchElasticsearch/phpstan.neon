@@ -9,3 +9,40 @@ parameters:
     -
         message: '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, .+ given.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Plugin/QueryExpander/FacetQueryExpanderPlugin.php'
+    -
+        message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Reader/MappingTypeAwareDocumentReader.php'
+    -
+        message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Writer/MappingTypeAwareDocumentWriter.php'
+    -
+        message: '#Call to an undefined method Elastica\\Document::getType\(\).#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Writer/MappingTypeAwareDocumentWriter.php'
+    -
+        message: '#Class Elastica\\Document constructor invoked with 4 parameters, 0-3 required.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Client/SearchElasticsearch/Writer/MappingTypeAwareDocumentWriter.php'
+    -
+        message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingTypeAwareMappingBuilder.php'
+    -
+        message: '#Call to method toArray\(\) on an unknown class Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Install/IndexInstaller.php'
+    -
+        message: '#Return typehint of method Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingBuilderInterface::buildMapping\(\) has invalid type Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingBuilderInterface.php'
+    -
+        message: '#Return typehint of method Spryker\\Zed\\SearchElasticsearch\\Business\\Installer\\Index\\Mapping\\MappingTypeAwareMappingBuilder::buildMapping\(\) has invalid type Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingTypeAwareMappingBuilder.php'
+    -
+        message: '#Instantiated class Elastica\\Type\\Mapping not found.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingTypeAwareMappingBuilder.php'
+    -
+        message: '#Call to method setParam\(\) on an unknown class Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Mapping/MappingTypeAwareMappingBuilder.php'
+    -
+        message: '#PHPDoc tag @var for variable \$mapping contains unknown class Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Update/MappingTypeAwareIndexUpdater.php'
+    -
+        message: '#Call to method send\(\) on an unknown class Elastica\\Type\\Mapping.#'
+        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Update/MappingTypeAwareIndexUpdater.php'
+

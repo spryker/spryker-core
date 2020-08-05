@@ -190,6 +190,7 @@ class GlossaryController extends AbstractController
     {
         $searchedItems = [];
         if ($value !== null) {
+            /** @var \Orm\Zed\Glossary\Persistence\SpyGlossaryKey[]|\Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation[] $searchedItems */
             $searchedItems = $this->getQueryContainer()
                 ->queryTranslationWithKeyByValue($value)
                 ->limit(self::SEARCH_LIMIT)

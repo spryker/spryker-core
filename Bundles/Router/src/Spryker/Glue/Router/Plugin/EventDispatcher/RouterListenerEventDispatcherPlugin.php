@@ -7,7 +7,6 @@
 
 namespace Spryker\Glue\Router\Plugin\EventDispatcher;
 
-use Silex\Provider\RoutingServiceProvider;
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\Router\Plugin\Application\RouterApplicationPlugin;
 use Spryker\Glue\Router\Router\ChainRouter;
@@ -23,6 +22,8 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
  */
 class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements EventDispatcherPluginInterface
 {
+    protected const BC_FEATURE_FLAG_ROUTER_LISTENER = 'BC_FEATURE_FLAG_ROUTER_LISTENER';
+
     /**
      * {@inheritDoc}
      * - Adds a RouteListener to the EventDispatcher.
@@ -36,11 +37,25 @@ class RouterListenerEventDispatcherPlugin extends AbstractPlugin implements Even
      */
     public function extend(EventDispatcherInterface $eventDispatcher, ContainerInterface $container): EventDispatcherInterface
     {
-        $container->set(RoutingServiceProvider::BC_FEATURE_FLAG_ROUTER_LISTENER, false); // disables Silex RouterListener
+        $container = $this->disableSilexRouter($container);
 
         $eventDispatcher = $this->addSubscriber($eventDispatcher, $container);
 
         return $eventDispatcher;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Service\Container\ContainerInterface $container
+     *
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function disableSilexRouter(ContainerInterface $container): ContainerInterface
+    {
+        $container->set(static::BC_FEATURE_FLAG_ROUTER_LISTENER, false);
+
+        return $container;
     }
 
     /**

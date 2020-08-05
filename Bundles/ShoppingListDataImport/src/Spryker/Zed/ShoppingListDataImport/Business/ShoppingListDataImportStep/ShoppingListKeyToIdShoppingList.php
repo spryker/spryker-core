@@ -34,6 +34,7 @@ class ShoppingListKeyToIdShoppingList implements DataImportStepInterface
 
         if (!isset($this->idShoppingListCache[$shoppingListKey])) {
             $shoppingListQuery = new SpyShoppingListQuery();
+            /** @var int|null $idShoppingList */
             $idShoppingList = $shoppingListQuery
                 ->select([SpyShoppingListTableMap::COL_ID_SHOPPING_LIST])
                 ->findOneByKey($shoppingListKey);

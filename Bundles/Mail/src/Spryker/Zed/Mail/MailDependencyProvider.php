@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Mail;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
@@ -32,6 +33,11 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     public const MAILER = 'mailer';
 
     protected const SWIFT_MAILER = 'SWIFT_MAILER';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -121,8 +127,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderer(Container $container)
     {
-        $container->set(static::RENDERER, function () {
-            $twig = $this->getTwigEnvironment();
+        $container->set(static::RENDERER, function (ContainerInterface $container) {
+            $twig = $container->getApplicationService(static::SERVICE_TWIG);
             if (!$twig->hasExtension(TwigTranslatorPlugin::class)) {
                 $translator = new TwigTranslatorPlugin();
                 $twig->addExtension($translator);
@@ -136,6 +142,8 @@ class MailDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()

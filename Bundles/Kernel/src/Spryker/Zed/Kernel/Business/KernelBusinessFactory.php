@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Kernel\Business;
 
-use Spryker\Shared\Kernel\SharedFactoryResolverAwareTrait;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheBuilder\CacheBuilder;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheBuilder\CacheBuilderInterface;
 use Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheWriter\CacheWriterInterface;
@@ -21,8 +20,6 @@ use Spryker\Zed\Kernel\Business\ModuleNamesFinder\ModuleNamesFinderInterface;
  */
 class KernelBusinessFactory extends AbstractBusinessFactory
 {
-    use SharedFactoryResolverAwareTrait;
-
     /**
      * @return \Spryker\Zed\Kernel\Business\ClassResolver\ResolvableCache\CacheBuilder\CacheBuilderInterface
      */

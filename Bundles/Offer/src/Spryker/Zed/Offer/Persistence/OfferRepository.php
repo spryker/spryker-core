@@ -111,8 +111,10 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
         $paginationTransfer->setLastPage($paginationModel->getLastPage());
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
+        /** @var \Orm\Zed\Offer\Persistence\SpyOfferQuery $query */
+        $query = $paginationModel->getQuery();
 
-        return $paginationModel->getQuery();
+        return $query;
     }
 
     /**

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { OfferOrdersTableComponent } from './offer-orders-table.component';
 import { By } from '@angular/platform-browser';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+
+import { OfferOrdersTableComponent } from './offer-orders-table.component';
 
 describe('OfferOrdersTableComponent', () => {
     let component: OfferOrdersTableComponent;
