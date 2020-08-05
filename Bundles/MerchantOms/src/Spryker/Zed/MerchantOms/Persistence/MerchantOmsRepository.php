@@ -67,4 +67,30 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
                 (new StateMachineItemTransfer())
             );
     }
+
+    /**
+     * @module StateMachine
+     * @module MerchantSalesOrder
+     *
+     * @param string $merchantOrderItemReference
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     */
+    public function findCurrentStateByMerchantOrderItemReference(string $merchantOrderItemReference): ?StateMachineItemTransfer
+    {
+        $merchantSalesOrderItemEntity = $this->getFactory()
+            ->getMerchantSalesOrderItemPropelQuery()
+            ->joinStateMachineItemState()
+            ->findOneByMerchantOrderItemReference($merchantOrderItemReference);
+        if ($merchantSalesOrderItemEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createStateMachineItemMapper()
+            ->mapStateMachineItemEntityToStateMachineItemTransfer(
+                $merchantSalesOrderItemEntity->getStateMachineItemState(),
+                (new StateMachineItemTransfer())
+            );
+    }
 }

@@ -17,7 +17,6 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderGui\Communication\MerchantSalesOrderGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\MerchantSalesOrderGui\Business\MerchantSalesOrderGuiFacadeInterface getFacade()
  */
 class DetailController extends AbstractController
 {
@@ -52,6 +51,10 @@ class DetailController extends AbstractController
         if (!$merchantOrderTransfer) {
             throw new AccessDeniedHttpException(static::MASSAGE_MERCHANT_ORDER_EXIST);
         }
+
+        $merchantOrderTransfer = $this->getFactory()
+            ->getMerchantOmsFacade()
+            ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
 
         $blockData = $this->renderMultipleActions(
             $request,
