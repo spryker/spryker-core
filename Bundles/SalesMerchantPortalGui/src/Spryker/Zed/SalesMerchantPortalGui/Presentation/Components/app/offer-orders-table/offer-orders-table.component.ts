@@ -10,5 +10,5 @@ import { TableConfig } from '@spryker/table';
 })
 export class OfferOrdersTableComponent {
     @Input() config: TableConfig;
-    @Input() tableId: string;
+    @Input() tableId?: string;
 }
