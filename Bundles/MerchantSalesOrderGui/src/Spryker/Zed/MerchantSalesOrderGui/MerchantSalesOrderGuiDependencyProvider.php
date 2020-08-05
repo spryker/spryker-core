@@ -14,6 +14,7 @@ use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToC
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToShipmentServiceBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeBridge;
 
@@ -31,6 +32,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -48,6 +50,7 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
         $container = $this->addDateTimeService($container);
         $container = $this->addMerchantUserFacade($container);
         $container = $this->addMerchantSalesOrderFacade($container);
+        $container = $this->addShipmentService($container);
 
         return $container;
     }
@@ -145,6 +148,20 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return new MerchantSalesOrderGuiToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentService(Container $container)
+    {
+        $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
+            return new MerchantSalesOrderGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());
         });
 
         return $container;

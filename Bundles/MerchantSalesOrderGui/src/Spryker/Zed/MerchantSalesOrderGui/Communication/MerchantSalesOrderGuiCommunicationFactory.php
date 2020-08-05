@@ -9,14 +9,20 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Communication;
 
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\DataProvider\EventTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\EventItemTriggerForm;
+use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\EventTriggerForm;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Table\MyOrderTable;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMoneyFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToShipmentServiceInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToUtilSanitizeInterface;
 use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderGui\Persistence\MerchantSalesOrderGuiQueryContainerInterface getQueryContainer()
@@ -37,6 +43,42 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
             $this->getCustomerFacade(),
             $this->getMerchantUserFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Communication\Form\DataProvider\EventTriggerFormDataProvider
+     */
+    public function createEventTriggerFormDataProvider(): EventTriggerFormDataProvider
+    {
+        return new EventTriggerFormDataProvider();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider
+     */
+    public function createEventItemTriggerFormDataProvider(): EventItemTriggerFormDataProvider
+    {
+        return new EventItemTriggerFormDataProvider();
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventTriggerForm::class, null, $options);
+    }
+
+    /**
+     * @param array $options
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEventItemTriggerForm(array $options = []): FormInterface
+    {
+        return $this->getFormFactory()->create(EventItemTriggerForm::class, null, $options);
     }
 
     /**
@@ -103,5 +145,13 @@ class MerchantSalesOrderGuiCommunicationFactory extends AbstractCommunicationFac
     public function getMerchantSalesOrderFacade(): MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::FACADE_MERCHANT_SALES_ORDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderGui\Dependency\Service\MerchantSalesOrderGuiToShipmentServiceInterface
+     */
+    public function getShipmentService(): MerchantSalesOrderGuiToShipmentServiceInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderGuiDependencyProvider::SERVICE_SHIPMENT);
     }
 }

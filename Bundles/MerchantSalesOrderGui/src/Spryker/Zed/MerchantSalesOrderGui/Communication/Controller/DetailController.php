@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -21,6 +22,10 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class DetailController extends AbstractController
 {
+    protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+
+    public const ROUTE_REDIRECT = '/merchant-sales-order-gui/detail';
+
     /**
      * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_SUB_REQUEST
      */
@@ -59,13 +64,35 @@ class DetailController extends AbstractController
             $merchantOrderTransfer
         );
 
+        $merchantOrderItemsWithOrderItemIdKey = [];
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
+            $merchantOrderItemsWithOrderItemIdKey[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
+        }
+
         return [
             'merchantOrder' => $merchantOrderTransfer,
+            'groupedMerchantOrderItemsByShipment' => $this->getFactory()->getShipmentService()->groupItemsByShipment($merchantOrderTransfer->getOrder()->getItems()),
             'totalMerchantOrderCount' => $this->getFactory()->getMerchantSalesOrderFacade()->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             ),
+            'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
+            'merchantOrderItemsWithOrderItemIdKey' => $merchantOrderItemsWithOrderItemIdKey,
             'blocks' => $blockData,
         ];
+    }
+
+    /**
+     * @param int $idMerchantSalesOrder
+     *
+     * @return string
+     */
+    protected function createRedirectLink(int $idMerchantSalesOrder): string
+    {
+        $redirectUrlParams = [
+            static::PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder,
+        ];
+
+        return Url::generate(static::ROUTE_REDIRECT, $redirectUrlParams);
     }
 
     /**
@@ -101,7 +128,7 @@ class DetailController extends AbstractController
      *
      * @return string|\Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function handleSubRequest(Request $request, $blockUrl)
+    protected function handleSubRequest(Request $request, string $blockUrl)
     {
         $blockResponse = $this->getApplication()->get(static::SERVICE_SUB_REQUEST)->handleSubRequest($request, $blockUrl);
         if ($blockResponse instanceof RedirectResponse) {

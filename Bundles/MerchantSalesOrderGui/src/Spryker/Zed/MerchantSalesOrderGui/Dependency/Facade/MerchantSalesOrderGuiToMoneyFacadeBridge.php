@@ -30,7 +30,7 @@ class MerchantSalesOrderGuiToMoneyFacadeBridge implements MerchantSalesOrderGuiT
      *
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
-    public function fromInteger($amount, $isoCode = null)
+    public function fromInteger(int $amount, ?string $isoCode = null)
     {
         return $this->moneyFacade->fromInteger($amount, $isoCode);
     }

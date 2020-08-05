@@ -18,6 +18,7 @@
 
     <transfer name="MerchantOrder">
         <property name="merchantReference" type="string"/>
+        <property name="stateHistory" type="StateMachineItemTransfer[]"/>
     </transfer>
 
     <transfer name="Order">

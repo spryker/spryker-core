@@ -1,0 +1,17 @@
+{% set items = shipmentOrderItems.items | filter(item => item.relatedBundleItemIdentifier is empty and item.salesOrderConfiguredBundleItem is empty) %}
+
+{% for orderItem in items %}
+    <tr>
+        {% include '@MerchantSalesOrderGui/Detail/boxes/order-item.twig' with {
+            orderItem: orderItem,
+            isBundleProduct: false,
+            displayImage: true,
+            displayTotals: true,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+        } %}
+    </tr>
+
+    {% include '@MerchantSalesOrderGui/Detail/boxes/order-item-option.twig' with {
+        orderItem: orderItem,
+    } %}
+{% endfor %}
