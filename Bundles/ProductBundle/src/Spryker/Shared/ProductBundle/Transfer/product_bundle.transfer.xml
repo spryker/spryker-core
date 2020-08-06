@@ -133,6 +133,8 @@
         <property name="bundledProductIds" type="int[]" singular="idBundledProduct"/>
         <property name="filter" type="Filter"/>
         <property name="applyGrouped" type="bool"/>
+        <property name="isBundleProductActive" type="bool"/>
+        <property name="isBundledProductActive" type="bool"/>
     </transfer>
 
     <transfer name="Filter">

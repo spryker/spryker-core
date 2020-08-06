@@ -94,6 +94,18 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             $productBundleQuery->filterByFkProduct_In($productBundleCriteriaFilterTransfer->getProductConcreteIds());
         }
 
+        if ($productBundleCriteriaFilterTransfer->getIsBundleProductActive() !== null) {
+            $productBundleQuery->useSpyProductRelatedByFkProductQuery()
+                ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsBundleProductActive())
+                ->endUse();
+        }
+
+        if ($productBundleCriteriaFilterTransfer->getIsBundledProductActive() !== null) {
+            $productBundleQuery->useSpyProductRelatedByFkBundledProductQuery()
+                ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsBundledProductActive())
+                ->endUse();
+        }
+
         if ($productBundleCriteriaFilterTransfer->getFilter()) {
             $productBundleQuery = $this->buildQueryFromCriteria(
                 $productBundleQuery,
