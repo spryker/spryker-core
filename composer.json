@@ -309,7 +309,6 @@
     "spryker/graphviz": "*",
     "spryker/gui": "*",
     "spryker/gui-table": "*",
-    "spryker/gui-table-extension": "*",
     "spryker/guzzle": "*",
     "spryker/health-check": "*",
     "spryker/health-check-extension": "*",
