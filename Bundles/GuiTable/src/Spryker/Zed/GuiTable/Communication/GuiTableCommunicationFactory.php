@@ -110,7 +110,7 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface
      */
-    public function createGuiTableDataRequestHandler(): GuiTableDataRequestExecutorInterface
+    public function createGuiTableDataRequestExecutor(): GuiTableDataRequestExecutorInterface
     {
         return new GuiTableDataRequestExecutor(
             $this->createDataRequestBuilder(),

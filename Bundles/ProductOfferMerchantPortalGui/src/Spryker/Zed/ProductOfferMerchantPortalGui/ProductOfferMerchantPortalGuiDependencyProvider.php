@@ -50,12 +50,12 @@ class ProductOfferMerchantPortalGuiDependencyProvider extends AbstractBundleDepe
     public const SERVICE_TWIG = 'twig';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableHttpDataRequestExecutorApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin::SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR
      */
     public const SERVICE_GUI_TABLE_HTTP_DATA_REQUEST_EXECUTOR = 'gui_table_http_data_request_executor';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableFactoryApplicationPlugin::SERVICE_GUI_TABLE_FACTORY
+     * @uses \Spryker\Zed\GuiTable\Communication\Plugin\Application\GuiTableApplicationPlugin::SERVICE_GUI_TABLE_FACTORY
      */
     public const SERVICE_GUI_TABLE_FACTORY = 'gui_table_factory';
 
