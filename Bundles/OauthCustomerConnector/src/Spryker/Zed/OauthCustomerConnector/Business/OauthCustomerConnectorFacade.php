@@ -49,6 +49,20 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
+    {
+        return $this->getFactory()->createScopeProvider()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @deprecated Will be removed in the next major.
      *
      * @return void

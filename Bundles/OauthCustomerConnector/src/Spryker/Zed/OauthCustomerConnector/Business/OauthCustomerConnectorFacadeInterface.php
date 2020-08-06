@@ -41,6 +41,18 @@ interface OauthCustomerConnectorFacadeInterface
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
 
     /**
+     * Specification:
+     *  - Reads customer impersonation scopes.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
+
+    /**
      * @api
      *
      * Specification:
@@ -55,7 +67,9 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Installs oauth customer scope data.
+     * - Installs customer-specific OAuth scopes.
+     * - Scopes are defined in `OauthCustomerConnectorConfig::getCustomerScopes()`, `OauthCustomerConnectorConfig::getCustomerImpersonationScopes()`.
+     * - Skips scope if it already exists in persistent storage.
      *
      * @api
      *

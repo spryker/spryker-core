@@ -29,4 +29,22 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_AGENT_ONLY = '4103';
     public const RESPONSE_DETAIL_AGENT_ONLY = 'Action is available to agent user only.';
+
+    /**
+     * @type string[]
+     */
+    protected const AGENT_RESOURCES = [];
+
+    /**
+     * Specification:
+     * - Returns resources which are accessible only for agents.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAgentResources(): array
+    {
+        return static::AGENT_RESOURCES;
+    }
 }
