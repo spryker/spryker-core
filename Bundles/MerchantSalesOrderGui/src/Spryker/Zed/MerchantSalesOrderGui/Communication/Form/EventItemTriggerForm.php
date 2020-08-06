@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantSalesOrderGui\Communication\Form;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Symfony\Component\Form\AbstractType;
+use Spryker\Zed\Kernel\Communication\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

@@ -26,3 +26,26 @@ Discount,Rabatt
 "Total taxes",Gesamtsteuern
 "Remuneration total","Vergütung insgesamt"
 "Merchant order doesn't exist.","Händlerbestellung existiert nicht."
+Shipment,Versand
+of,von
+"Delivery Address",Lieferadresse
+"Delivery Method",Versandart
+"Shipping Method",Versandart
+"Shipping Costs",Versandkosten
+"Request delivery date","Liefertermin anfordern"
+"Trigger all matching states of order inside this shipment","Lösen Sie alle übereinstimmenden Bestellzustände innerhalb dieser Sendung aus"
+"Merchant Order Items",Händlerbestellartikel
+Product,Produkt
+Quantity,Menge
+"Unit Price",Stückpreis
+"Item total","Artikel Gesamt"
+State,Zustand
+Trigger event,"Auslösendes Ereignis"
+"Variant Details",Variantendetails
+"Show less","Weniger anzeigen"
+"Show more","Mehr anzeigen"
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer",
+"Show history","Historie anzeigen"
+"Hide history","Historie ausblenden"
+Option,Option
+Sku,SKU

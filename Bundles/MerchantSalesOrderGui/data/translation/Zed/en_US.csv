@@ -26,3 +26,26 @@ Discount,Discount
 "Total taxes","Total taxes"
 "Remuneration total","Remuneration total"
 "Merchant order doesn't exist.","Merchant order doesn't exist."
+Shipment,Shipment
+of,of
+"Delivery Address","Delivery Address"
+"Delivery Method","Delivery Method"
+"Shipping Method","Shipping Method"
+"Shipping Costs","Shipping Costs"
+"Request delivery date","Request delivery date"
+"Trigger all matching states of order inside this shipment","Trigger all matching states of order inside this shipment"
+"Merchant Order Items","Merchant Order Items"
+Product,Product
+Quantity,Quantity
+"Unit Price","Unit Price"
+"Item total","Item total"
+State,State
+"Trigger event","Trigger event"
+"Variant Details","Variant Details"
+"Show less","Show less"
+"Show more","Show more"
+"incl. %tax_amount% % tax","incl. %tax_amount% % tax",
+"Show history","Show history"
+"Hide history","Hide history"
+Option,Option
+Sku,SKU
