@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrderGui\Communication\Controller;
 
+use ArrayObject;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -61,27 +63,70 @@ class DetailController extends AbstractController
             ->getMerchantOmsFacade()
             ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
 
+        $merchantOrderTransfer = $this->getFactory()
+            ->getMerchantOmsFacade()
+            ->expandMerchantOrderWithMerchantOmsData($merchantOrderTransfer);
+
+        $merchantOrderItemCollectionTransfer = $this->getFactory()
+            ->getMerchantOmsFacade()
+            ->expandMerchantOrderItemsWithManualEvents(
+                (new MerchantOrderItemCollectionTransfer())
+                ->setMerchantOrderItems($merchantOrderTransfer->getMerchantOrderItems())
+            );
+        $merchantOrderTransfer->setMerchantOrderItems($merchantOrderItemCollectionTransfer->getMerchantOrderItems());
+
         $blockData = $this->renderMultipleActions(
             $request,
             $this->getFactory()->getMerchantSalesOrderDetailExternalBlocksUrls(),
             $merchantOrderTransfer
         );
+        $groupedMerchantOrderItemsByShipment = $this->getFactory()->getShipmentService()->groupItemsByShipment($merchantOrderTransfer->getOrder()->getItems());
 
         $merchantOrderItemsWithOrderItemIdKey = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
             $merchantOrderItemsWithOrderItemIdKey[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
         }
 
+        $uniqueEventsGroupedByShipmentId = $this->extractUniqueEvents($groupedMerchantOrderItemsByShipment, $merchantOrderItemsWithOrderItemIdKey);
+
         return [
             'merchantOrder' => $merchantOrderTransfer,
-            'groupedMerchantOrderItemsByShipment' => $this->getFactory()->getShipmentService()->groupItemsByShipment($merchantOrderTransfer->getOrder()->getItems()),
+            'groupedMerchantOrderItemsByShipment' => $groupedMerchantOrderItemsByShipment,
             'totalMerchantOrderCount' => $this->getFactory()->getMerchantSalesOrderFacade()->getMerchantOrdersCount(
                 (new MerchantOrderCriteriaTransfer())->setMerchantReference($merchantOrderTransfer->getMerchantReference())
             ),
             'changeStatusRedirectUrl' => $this->createRedirectLink($idMerchantSalesOrder),
             'merchantOrderItemsWithOrderItemIdKey' => $merchantOrderItemsWithOrderItemIdKey,
+            'uniqueEventsGroupedByShipmentId' => $uniqueEventsGroupedByShipmentId,
             'blocks' => $blockData,
         ];
+    }
+
+    /**
+     * @phpstan-param \ArrayObject<int, \Generated\Shared\Transfer\ShipmentGroupTransfer> $groupedMerchantOrderItemsByShipment
+     * @phpstan-param array<int, \Generated\Shared\Transfer\MerchantOrderItemTransfer> $merchantOrderItemsWithOrderItemIdKey
+     *
+     * @phpstan-return array<int|string, array<int, string>>
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentGroupTransfer[] $groupedMerchantOrderItemsByShipment
+     * @param array $merchantOrderItemsWithOrderItemIdKey
+     *
+     * @return array
+     */
+    protected function extractUniqueEvents(ArrayObject $groupedMerchantOrderItemsByShipment, array $merchantOrderItemsWithOrderItemIdKey): array
+    {
+        $events = [];
+
+        foreach ($groupedMerchantOrderItemsByShipment as $shipmentGroupTransfer) {
+            $eventsForGroup = [];
+            foreach ($shipmentGroupTransfer->getItems() as $itemTransfer) {
+                $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
+                $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
+            }
+            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = $eventsForGroup;
+        }
+
+        return array_unique($events);
     }
 
     /**

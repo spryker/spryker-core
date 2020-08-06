@@ -26,9 +26,9 @@ interface MerchantOmsRepositoryInterface
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
 
     /**
-     * @param string $merchantOrderItemReference
+     * @param int[] $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function findCurrentStateByMerchantOrderItemReference(string $merchantOrderItemReference): ?StateMachineItemTransfer;
+    public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array;
 }

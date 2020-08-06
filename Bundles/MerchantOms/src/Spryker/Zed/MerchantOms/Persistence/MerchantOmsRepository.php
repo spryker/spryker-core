@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantOms\Persistence;
 
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantOms\Persistence\MerchantOmsPersistenceFactory getFactory()
@@ -63,27 +64,35 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
 
     /**
      * @module StateMachine
-     * @module MerchantSalesOrder
      *
-     * @param string $merchantOrderItemReference
+     * @param int[] $merchantOrderItemIds
      *
-     * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
      */
-    public function findCurrentStateByMerchantOrderItemReference(string $merchantOrderItemReference): ?StateMachineItemTransfer
+    public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array
     {
-        $merchantSalesOrderItemEntity = $this->getFactory()
-            ->getMerchantSalesOrderItemPropelQuery()
-            ->joinStateMachineItemState()
-            ->findOneByMerchantOrderItemReference($merchantOrderItemReference);
-        if ($merchantSalesOrderItemEntity === null) {
-            return null;
+        $stateMachineItemTransfers = [];
+
+        $stateMachineItemStateHistoryEntities = $this->getFactory()
+            ->getStateMachineItemStateHistoryPropelQuery()
+            ->joinState()
+            ->filterByIdentifier_In($merchantOrderItemIds)
+            ->orderByCreatedAt(Criteria::DESC)
+            ->find();
+
+        foreach ($stateMachineItemStateHistoryEntities as $stateMachineItemStateHistoryEntity) {
+            $stateMachineItemTransfer = $this->getFactory()
+                ->createStateMachineItemMapper()
+                ->mapStateMachineItemEntityToStateMachineItemTransfer(
+                    $stateMachineItemStateHistoryEntity->getState(),
+                    (new StateMachineItemTransfer())
+                );
+            $stateMachineItemTransfer->setCreatedAt($stateMachineItemStateHistoryEntity->getCreatedAt());
+            $stateMachineItemTransfer->setIdentifier($stateMachineItemStateHistoryEntity->getIdentifier());
+
+            $stateMachineItemTransfers[] = $stateMachineItemTransfer;
         }
 
-        return $this->getFactory()
-            ->createStateMachineItemMapper()
-            ->mapStateMachineItemEntityToStateMachineItemTransfer(
-                $merchantSalesOrderItemEntity->getStateMachineItemState(),
-                (new StateMachineItemTransfer())
-            );
+        return $stateMachineItemTransfers;
     }
 }

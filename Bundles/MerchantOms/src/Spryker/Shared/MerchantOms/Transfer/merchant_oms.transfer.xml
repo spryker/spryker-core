@@ -8,6 +8,7 @@
         <property name="merchantReference" type="string"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="process" type="string"/>
     </transfer>
 
     <transfer name="Merchant">

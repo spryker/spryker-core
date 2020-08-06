@@ -19,7 +19,7 @@ class OmsRenderFormController extends AbstractController
     protected const DEFAULT_REDIRECT_URL = 'redirectUrl';
     protected const URL_PARAM_EVENTS = 'events';
     protected const URL_PARAM_ID_MERCHANT_SALES_ORDER = 'idMerchantSalesOrder';
-    protected const URL_PARAM_ID_MERCHANT_SALES_ORDER_ITEM = 'idMerchantSalesOrderItem';
+    protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchantSalesOrderItemReference';
 
     /**
      * @phpstan-return array<string, mixed>
@@ -57,7 +57,7 @@ class OmsRenderFormController extends AbstractController
      */
     public function orderItemAction(Request $request): array
     {
-        $idMerchantSalesOrderItem = $this->castId($request->attributes->getInt(static::URL_PARAM_ID_MERCHANT_SALES_ORDER_ITEM));
+        $merchantSalesOrderItemReference = $request->attributes->get(static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE);
         $redirect = $request->attributes->get(static::DEFAULT_REDIRECT_URL);
         $events = $request->attributes->get(static::URL_PARAM_EVENTS);
 
@@ -66,7 +66,7 @@ class OmsRenderFormController extends AbstractController
         $eventTriggerFormCollection = [];
         foreach ($events as $event) {
             $eventTriggerFormCollection[$event] = $this->getFactory()
-                ->createEventItemTriggerForm($eventItemTriggerDataProvider->getOptions($idMerchantSalesOrderItem, $event, $redirect))
+                ->createEventItemTriggerForm($eventItemTriggerDataProvider->getOptions($merchantSalesOrderItemReference, $event, $redirect))
                 ->createView();
         }
 

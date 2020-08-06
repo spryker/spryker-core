@@ -14,28 +14,28 @@ class EventItemTriggerFormDataProvider
 {
     protected const SUBMIT_BUTTON_CLASS = 'btn btn-primary btn-sm trigger-order-single-event';
 
-    protected const URL_PARAM_ID_MERCHANT_SALES_ORDER_ITEM = 'id-merchant-sales-order-item';
+    protected const URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE = 'merchant-sales-order-item-reference';
     protected const URL_PARAM_REDIRECT = 'redirect';
     protected const URL_PARAM_EVENT_NAME = 'event';
 
     /**
      * @phpstan-return array<string, mixed>
      *
-     * @param int $idMerchantSalesOrderItem
+     * @param string $merchantSalesOrderItemReference
      * @param string $eventName
      * @param string $redirect
      *
      * @return array
      */
     public function getOptions(
-        int $idMerchantSalesOrderItem,
+        string $merchantSalesOrderItemReference,
         string $eventName,
         string $redirect
     ): array {
         return [
             EventItemTriggerForm::OPTION_EVENT => $eventName,
             EventItemTriggerForm::OPTION_ACTION_QUERY_PARAMETERS => [
-                static::URL_PARAM_ID_MERCHANT_SALES_ORDER_ITEM => $idMerchantSalesOrderItem,
+                static::URL_PARAM_MERCHANT_SALES_ORDER_ITEM_REFERENCE => $merchantSalesOrderItemReference,
                 static::URL_PARAM_EVENT_NAME => $eventName,
                 static::URL_PARAM_REDIRECT => $redirect,
             ],

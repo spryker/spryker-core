@@ -65,7 +65,7 @@
                         {% include '@MerchantSalesOrderGui/_partials/merchant-order-actions.twig' with {
                             redirectUrl: changeStatusRedirectUrl,
                             idMerchantSalesOrder: merchantOrder.idMerchantOrder,
-                            events: ['test'],
+                            events: uniqueEventsGroupedByShipmentId[shipmentOrderItems.shipment.idSalesShipment],
                         } only %}
                     </div>
                 {% endblock %}
