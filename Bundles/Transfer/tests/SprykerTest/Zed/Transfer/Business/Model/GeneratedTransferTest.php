@@ -50,7 +50,7 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
-    public function _before()
+    public function _before(): void
     {
         if (!$this->isTransferGenerated) {
             $this->generateTransfer();
@@ -561,7 +561,7 @@ class GeneratedTransferTest extends Unit
      */
     public function testAssociativeCollectionFromArray(array $input, array $expected): void
     {
-        // Prepare
+        // Arrange
         $generatedTransfer = new GeneratedTransfer();
 
         // Act
@@ -580,7 +580,7 @@ class GeneratedTransferTest extends Unit
      */
     public function testAssociativeCollectionAdder(): void
     {
-        // Prepare
+        // Arrange
         $generatedTransfer = new GeneratedTransfer();
 
         // Act

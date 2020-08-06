@@ -7,7 +7,7 @@
     "fzaninotto/faker": "^1.6",
     "php": ">=7.2",
     "spryker/decimal-object": "^1.0.0",
-    "spryker/kernel": "^3.42.1",
+    "spryker/kernel": "^3.55.0",
     "spryker/log": "^3.0.0",
     "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
