@@ -198,6 +198,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
         foreach ($arrayObject as $key => $arrayElement) {
             if (!is_array($arrayElement)) {
                 $result[$key] = new $elementType();
+
                 continue;
             }
 
