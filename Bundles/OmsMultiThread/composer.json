@@ -13,6 +13,7 @@
     "spryker/testify": "*"
   },
   "suggest": {
+    "spryker/oms": "If you want to have OMS multi-threading enabled, minimum required version: 11.13.0",
     "spryker/sales": "If you want to use OmsMultiThreadProcessorIdentifierOrderExpanderPreSave plugin."
   },
   "autoload": {
