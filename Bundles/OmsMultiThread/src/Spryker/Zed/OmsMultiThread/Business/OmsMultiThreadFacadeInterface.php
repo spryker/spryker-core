@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Dependency\Plugin;
+namespace Spryker\Zed\OmsMultiThread\Business;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
-interface OrderExpanderPreSavePluginInterface
+interface OmsMultiThreadFacadeInterface
 {
     /**
      * Specification:
-     *   - Its a plugin which hydrates SpySalesOrderEntityTransfer before order created
+     * - Adds an OMS processor identifier to the sales order entity transfer.
      *
      * @api
      *
@@ -23,5 +23,8 @@ interface OrderExpanderPreSavePluginInterface
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer;
+    public function expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
+        QuoteTransfer $quoteTransfer
+    ): SpySalesOrderEntityTransfer;
 }

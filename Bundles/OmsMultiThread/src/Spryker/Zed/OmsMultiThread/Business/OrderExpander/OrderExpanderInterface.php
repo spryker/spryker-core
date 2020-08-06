@@ -5,23 +5,21 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Sales\Dependency\Plugin;
+namespace Spryker\Zed\OmsMultiThread\Business\OrderExpander;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SpySalesOrderEntityTransfer;
 
-interface OrderExpanderPreSavePluginInterface
+interface OrderExpanderInterface
 {
     /**
-     * Specification:
-     *   - Its a plugin which hydrates SpySalesOrderEntityTransfer before order created
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\SpySalesOrderEntityTransfer $salesOrderEntityTransfer
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderEntityTransfer
      */
-    public function expand(SpySalesOrderEntityTransfer $salesOrderEntityTransfer, QuoteTransfer $quoteTransfer): SpySalesOrderEntityTransfer;
+    public function expandSalesOrderEntityTransferWithOmsProcessorIdentifier(
+        SpySalesOrderEntityTransfer $salesOrderEntityTransfer,
+        QuoteTransfer $quoteTransfer
+    ): SpySalesOrderEntityTransfer;
 }
