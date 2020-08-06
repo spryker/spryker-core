@@ -9,7 +9,7 @@ namespace Spryker\Yves\Security;
 
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Spryker\Yves\Kernel\AbstractFactory;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategy;
 use Symfony\Component\Security\Http\Session\SessionAuthenticationStrategyInterface;
@@ -32,7 +32,7 @@ class SecurityFactory extends AbstractFactory
      */
     public function createPasswordEncoder(): PasswordEncoderInterface
     {
-        return new BCryptPasswordEncoder($this->getConfig()->getBCryptCost());
+        return new NativePasswordEncoder(null, null, $this->getConfig()->getBCryptCost());
     }
 
     /**

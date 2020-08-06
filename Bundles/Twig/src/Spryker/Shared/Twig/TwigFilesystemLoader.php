@@ -11,6 +11,7 @@ use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
 use Twig\Error\LoaderError;
+use Twig\Source;
 
 class TwigFilesystemLoader implements FilesystemLoaderInterface
 {
@@ -66,6 +67,18 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
 
     /**
      * @param string $name
+     *
+     * @return \Twig\Source
+     */
+    public function getSourceContext($name)
+    {
+        $filePath = $this->findTemplate($name);
+
+        return new Source(file_get_contents($filePath), $name, $filePath);
+    }
+
+    /**
+     * @param string $name
      * @param int $time
      *
      * @return bool
@@ -73,6 +86,25 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
     public function isFresh($name, $time)
     {
         return filemtime($this->findTemplate($name)) <= $time;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return bool
+     */
+    public function exists($name)
+    {
+        try {
+            $filePath = $this->findTemplate($name);
+            if (!is_string($filePath)) {
+                return false;
+            }
+
+            return true;
+        } catch (LoaderError $loaderError) {
+            return false;
+        }
     }
 
     /**

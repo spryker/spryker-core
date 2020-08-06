@@ -18,8 +18,9 @@ interface TwigToUtilTextServiceInterface
 
     /**
      * @param string $string
+     * @param bool $upperCaseFirst
      *
      * @return string
      */
-    public function dashToCamelCase($string);
+    public function dashToCamelCase($string, $upperCaseFirst = false);
 }

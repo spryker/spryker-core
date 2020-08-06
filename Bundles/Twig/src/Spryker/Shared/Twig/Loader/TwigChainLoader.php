@@ -10,6 +10,9 @@ namespace Spryker\Shared\Twig\Loader;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Twig\Loader\ChainLoader;
 
+/**
+ * @deprecated Use {@link \Twig\Loader\ChainLoader} instead.
+ */
 class TwigChainLoader extends ChainLoader implements TwigChainLoaderInterface
 {
     /**
