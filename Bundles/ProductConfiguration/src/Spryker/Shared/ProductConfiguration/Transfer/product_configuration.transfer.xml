@@ -13,7 +13,7 @@
 
     <transfer name="ProductConfigurationInstance">
         <property name="displayData" type="string"/>
-        <property name="configuration" type="array"/>
+        <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
     </transfer>
