@@ -20,7 +20,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
 {
     /**
      * {@inheritDoc}
-     * -
+     * - Publishes product bundle data by publish product bundle event.
      *
      * @api
      *

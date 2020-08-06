@@ -20,6 +20,7 @@ class BundledProductWritePublisherPlugin extends AbstractPlugin implements Publi
 {
     /**
      * {@inheritDoc}
+     * - Publishes product bundle data by create, update and delete product bundle events.
      *
      * @api
      *

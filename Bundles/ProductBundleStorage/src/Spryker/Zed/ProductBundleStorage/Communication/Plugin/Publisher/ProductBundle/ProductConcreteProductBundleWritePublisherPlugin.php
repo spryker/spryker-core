@@ -20,6 +20,7 @@ class ProductConcreteProductBundleWritePublisherPlugin extends AbstractPlugin im
 {
     /**
      * {@inheritDoc}
+     * - Publishes product bundle data by update product event.
      *
      * @api
      *
