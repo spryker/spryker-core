@@ -23,6 +23,7 @@ use Spryker\Zed\Twig\Communication\Subscriber\TwigEventSubscriber;
 use Spryker\Zed\Twig\TwigDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Loader\ChainLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
@@ -51,9 +52,9 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig\Loader\ChainLoader
+     * @return \Twig\Loader\LoaderInterface
      */
-    public function createTwigChainLoader()
+    public function createTwigChainLoader(): LoaderInterface
     {
         return new ChainLoader($this->getLoaders(
             $this->getTwigLoaderPlugins()

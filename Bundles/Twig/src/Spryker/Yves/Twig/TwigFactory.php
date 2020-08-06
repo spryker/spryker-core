@@ -17,6 +17,7 @@ use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 use Twig\Loader\ChainLoader;
+use Twig\Loader\LoaderInterface;
 
 /**
  * @method \Spryker\Yves\Twig\TwigConfig getConfig()
@@ -93,9 +94,9 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Twig\Loader\ChainLoader
+     * @return \Twig\Loader\LoaderInterface
      */
-    public function createTwigChainLoader()
+    public function createTwigChainLoader(): LoaderInterface
     {
         return new ChainLoader($this->getLoaders(
             $this->getTwigLoaderPlugins()
