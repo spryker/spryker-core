@@ -27,6 +27,7 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
 
     /**
      * {@inheritDoc}
+     * - Retrieves `ProductBundleTransfer` collection by provided limit and offset.
      *
      * @api
      *
