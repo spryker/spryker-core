@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -34,6 +36,8 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -74,6 +78,8 @@ class CmsStorageQueryContainer extends AbstractQueryContainer implements CmsStor
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageIds

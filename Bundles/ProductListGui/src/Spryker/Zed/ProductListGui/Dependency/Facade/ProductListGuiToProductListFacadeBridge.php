@@ -28,16 +28,6 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
-     */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void
-    {
-        $this->productListFacade->deleteProductList($productListTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductListTransfer
      */
     public function getProductListById(ProductListTransfer $productListTransfer): ProductListTransfer
@@ -63,5 +53,15 @@ class ProductListGuiToProductListFacadeBridge implements ProductListGuiToProduct
     public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
         return $this->productListFacade->updateProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->productListFacade->removeProductList($productListTransfer);
     }
 }

@@ -5,16 +5,21 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.33.0",
-    "spryker/merchant": "^2.0.0",
-    "spryker/merchant-gui-extension": "^1.0.0",
+    "spryker/availability-gui-extension": "^1.0.0",
+    "spryker/gui": "^3.33.0",
+    "spryker/kernel": "^3.52.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/merchant": "^3.0.0",
+    "spryker/merchant-gui-extension": "^1.1.0",
+    "spryker/product-management-extension": "^1.4.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/store": "^1.1.0",
     "spryker/symfony": "^3.0.0",
+    "spryker/url": "^3.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
@@ -23,9 +28,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "3.0.x-dev"
     }
   },
   "config": {

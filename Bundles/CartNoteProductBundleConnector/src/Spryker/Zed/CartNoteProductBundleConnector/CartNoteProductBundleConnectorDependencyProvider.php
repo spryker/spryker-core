@@ -34,9 +34,9 @@ class CartNoteProductBundleConnectorDependencyProvider extends AbstractBundleDep
      */
     protected function addProductBundleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return new CartNoteProductBundleConnectorToProductBundleFacadeBridge($container->getLocator()->productBundle()->facade());
-        };
+        });
 
         return $container;
     }

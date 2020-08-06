@@ -25,7 +25,7 @@ class AvailabilityDataFeedToAvailabilityBridge implements AvailabilityDataFeedTo
     /**
      * @param int $idLocale
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function queryAvailabilityWithStockByIdLocale($idLocale)
     {

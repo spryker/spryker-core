@@ -125,8 +125,10 @@ class ProductOptionValueSaver implements ProductOptionValueSaverInterface
         SpyProductOptionValue $producOptionValueEntity,
         ProductOptionValueTransfer $productOptionValueTransfer
     ) {
-        if (!$producOptionValueEntity->getValue() &&
-            strpos($productOptionValueTransfer->getValue(), ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false) {
+        if (
+            !$producOptionValueEntity->getValue() &&
+            strpos($productOptionValueTransfer->getValue(), ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX) === false
+        ) {
             $productOptionValueTransfer->setValue(
                 ProductOptionConfig::PRODUCT_OPTION_TRANSLATION_PREFIX . $productOptionValueTransfer->getValue()
             );

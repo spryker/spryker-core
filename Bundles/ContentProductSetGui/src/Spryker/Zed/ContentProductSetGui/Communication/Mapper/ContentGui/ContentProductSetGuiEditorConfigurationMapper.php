@@ -46,6 +46,6 @@ class ContentProductSetGuiEditorConfigurationMapper implements ContentProductSet
      */
     public function getTwigFunctionTemplate(): string
     {
-        return "{{ " . $this->contentProductSetGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
+        return '{{ ' . $this->contentProductSetGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }

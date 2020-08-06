@@ -19,6 +19,11 @@ class ClientRepository implements ClientRepositoryInterface
     protected $oauthRepository;
 
     /**
+     * @var array
+     */
+    protected static $oauthClientEntityTransferCache = [];
+
+    /**
      * @param \Spryker\Zed\Oauth\Persistence\OauthRepositoryInterface $oauthRepository
      */
     public function __construct(OauthRepositoryInterface $oauthRepository)
@@ -28,33 +33,63 @@ class ClientRepository implements ClientRepositoryInterface
 
     /**
      * @param string $clientIdentifier The client's identifier
-     * @param string|null $grantType The grant type used (if sent)
-     * @param string|null $clientSecret The client's secret (if sent)
-     * @param bool $mustValidateSecret If true the client must attempt to validate the secret if the client
-     *                                        is confidential
      *
-     * @return \League\OAuth2\Server\Entities\ClientEntityInterface
+     * @return \League\OAuth2\Server\Entities\ClientEntityInterface|null
      */
-    public function getClientEntity($clientIdentifier, $grantType = null, $clientSecret = null, $mustValidateSecret = true)
+    public function getClientEntity($clientIdentifier)
     {
-        $oauthClientEntityTransfer = $this->oauthRepository->findClientByIdentifier($clientIdentifier);
-        $clientEntity = new ClientEntity();
+        $oauthClientEntityTransfer = $this->findOauthClientEntityTransfer($clientIdentifier);
 
         if (!$oauthClientEntityTransfer) {
-            return;
+            return null;
         }
 
-        if ($mustValidateSecret === true
-            && $oauthClientEntityTransfer->getIsConfidential() === true
-            && password_verify($clientSecret, $oauthClientEntityTransfer->getSecret()) === false
-        ) {
-            return;
-        }
+        $clientEntity = new ClientEntity();
 
         $clientEntity->setIdentifier($oauthClientEntityTransfer->getIdentifier());
         $clientEntity->setName($oauthClientEntityTransfer->getName());
         $clientEntity->setRedirectUri($oauthClientEntityTransfer->getRedirectUri());
 
         return $clientEntity;
+    }
+
+    /**
+     * @param string $clientIdentifier The client's identifier
+     * @param string|null $clientSecret The client's secret (if sent)
+     * @param string|null $grantType The type of grant the client is using (if sent)
+     *
+     * @return bool
+     */
+    public function validateClient($clientIdentifier, $clientSecret, $grantType)
+    {
+        $oauthClientEntityTransfer = $this->findOauthClientEntityTransfer($clientIdentifier);
+
+        if (!$oauthClientEntityTransfer) {
+            return false;
+        }
+
+        if (
+            $oauthClientEntityTransfer->getIsConfidential() === true
+            && password_verify($clientSecret, $oauthClientEntityTransfer->getSecret()) === false
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param string $clientIdentifier The client's identifier
+     *
+     * @return \Generated\Shared\Transfer\SpyOauthClientEntityTransfer|null
+     */
+    protected function findOauthClientEntityTransfer($clientIdentifier)
+    {
+        if (!isset(static::$oauthClientEntityTransferCache[$clientIdentifier])) {
+            static::$oauthClientEntityTransferCache[$clientIdentifier] = $this->oauthRepository
+                ->findClientByIdentifier($clientIdentifier);
+        }
+
+        return static::$oauthClientEntityTransferCache[$clientIdentifier];
     }
 }

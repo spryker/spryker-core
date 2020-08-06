@@ -9,6 +9,18 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="ConfiguredBundle">
+        <property name="template" type="ConfigurableBundleTemplate"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ConfiguredBundleItem">
+        <property name="slot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="quantityPerSlot" type="int"/>
+    </transfer>
+
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
@@ -17,20 +29,17 @@
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
+    <transfer name="CreateConfiguredBundleRequest">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="configuredBundle" type="ConfiguredBundle"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
     <transfer name="Item">
         <property name="quantity" type="int"/>
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
-    </transfer>
-
-    <transfer name="ConfiguredBundle">
-        <property name="quantity" type="int"/>
         <property name="groupKey" type="string"/>
-        <property name="items" type="Item[]" singular="item"/>
-    </transfer>
-
-    <transfer name="ConfiguredBundleItem">
-        <property name="quantityPerSlot" type="int"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -41,6 +50,24 @@
 
     <transfer name="QuoteError">
         <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplate">
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlot">
+        <property name="uuid" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 
 </transfers>

@@ -1,12 +1,69 @@
 {% set itemCount = items | length  %}
 
 {% for orderItem in items %}
-  <tr>
-    {% if loop.index == 1 %}
-      {% embed '@Sales/Detail/boxes/order-item.twig' with {orderItem: orderItem, displayImage: true, displayTotals: true, group: true, rowCount: rowCount, bundleItem: bundleItem, itemCount: itemCount} %}{% endembed %}
-    {% else %}
-      {% embed '@Sales/Detail/boxes/order-item.twig' with {orderItem: orderItem, displayImage: false, displayTotals: false, group: false} %}{% endembed %}
+    <tr class="addition-row">
+        <td></td>
+        <td></td>
+        <td>
+            <div class="bundle-item">
+                <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
+                <div class="image-wrap">
+                    <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+                </div>
+                <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
+                    {{ orderItem.name }}
+                </a>
+            </div>
+        </td>
+        <td>x {{ orderItem.quantity }}</td>
+        <td>
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: orderItem.sumPrice,
+                priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+                order: order,
+            } %}
+
+            <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+        </td>
+        <td></td>
+        <td class="state-history">
+            <div>
+                <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+            </div>
+            {% if orderItem.stateHistory | length > 1 %}
+                <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                    {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                        <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                    {% endfor %}
+                </div>
+
+                <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show history' | trans }}</span>
+                    <span class="show-less">{{ 'Hide history' | trans }}</span>
+                </a>
+            {% endif %}
+        </td>
+        <td>
+            {% if eventsGroupedByItem[orderItem.idSalesOrderItem] is defined %}
+                {% include '@Oms/RenderForm/_partial/order-item-actions.twig' with {
+                    redirectUrl: changeStatusRedirectUrl,
+                    idSalesOrderItem: orderItem.idSalesOrderItem,
+                    eventsGroupedByItem: eventsGroupedByItem[orderItem.idSalesOrderItem],
+                } %}
+            {% endif %}
+        </td>
+    </tr>
+
+    {# Fallback product options display is kept for BC reasons. #}
+    {% if not (bundleItem.productOptions | length) %}
+        {% include '@Sales/Detail/boxes/order-item-option.twig' with {
+            orderItem: orderItem,
+            order: order,
+        } %}
     {% endif %}
-  </tr>
-  {% embed '@Sales/Detail/boxes/order-item-option.twig' with {orderItem: orderItem} %} {% endembed %}
 {% endfor %}
+
+{% include '@Sales/Detail/boxes/order-item-option.twig' with {
+    orderItem: bundleItem,
+    order: order,
+} %}

@@ -66,7 +66,7 @@ class ItemByShipmentMethodPlugin extends AbstractPlugin implements CollectorPlug
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getQueryStringValueOptions()
     {

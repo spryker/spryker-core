@@ -16,6 +16,9 @@ use Spryker\Zed\Search\Business\Exception\PluginNotFoundException;
 use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
 use Zend\Filter\Word\UnderscoreToDash;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class PageDataMapper implements PageDataMapperInterface
 {
     public const FACET_NAME = 'facet-name';
@@ -71,7 +74,7 @@ class PageDataMapper implements PageDataMapperInterface
     }
 
     /**
-     * @deprecated Use transferDataByMapperName() instead.
+     * @deprecated Use {@link transferDataByMapperName()} instead.
      *
      * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $pageMap
      * @param array $data
@@ -158,21 +161,27 @@ class PageDataMapper implements PageDataMapperInterface
         switch ($normalizedKey) {
             case PageIndexMap::SEARCH_RESULT_DATA:
                 $result = $this->transformSearchResultData($result, $pageMapTransfer->getSearchResultData());
+
                 break;
             case PageIndexMap::STRING_FACET:
                 $result = $this->transformStringFacet($result, $pageMapTransfer->getStringFacet());
+
                 break;
             case PageIndexMap::INTEGER_FACET:
                 $result = $this->transformIntegerFacet($result, $pageMapTransfer->getIntegerFacet());
+
                 break;
             case PageIndexMap::STRING_SORT:
                 $result = $this->transformStringSort($result, $pageMapTransfer->getStringSort());
+
                 break;
             case PageIndexMap::INTEGER_SORT:
                 $result = $this->transformIntegerSort($result, $pageMapTransfer->getIntegerSort());
+
                 break;
             case PageIndexMap::CATEGORY:
                 $result = $this->transformCategory($result, $pageMapTransfer->getCategory());
+
                 break;
             default:
                 $result = $this->transformOther($result, $normalizedKey, $value);

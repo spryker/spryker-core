@@ -1,6 +1,6 @@
 # ProductAlternative Module
 [![Build Status](https://travis-ci.org/spryker/product-alternative.svg)](https://travis-ci.org/spryker/product-alternative)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-alternative/badge.svg)](https://coveralls.io/github/spryker/product-alternative)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductAlternative module manages adding and removing product alternatives for concrete products.
 

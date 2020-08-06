@@ -8,6 +8,8 @@
 namespace Spryker\Glue\CatalogSearchRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionAbstractProductsTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionCategoriesTransfer;
+use Generated\Shared\Transfer\RestCatalogSearchSuggestionCmsPagesTransfer;
 use Generated\Shared\Transfer\RestCatalogSearchSuggestionsAttributesTransfer;
 
 class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestionsResourceMapperInterface
@@ -18,8 +20,8 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
     protected const SEARCH_RESPONSE_PRODUCT_ABSTRACT_IMAGES_KEY = 'images';
     protected const SEARCH_RESPONSE_CATEGORY_KEY = 'category';
     protected const SEARCH_RESPONSE_CMS_PAGE_KEY = 'cms_page';
-
     protected const SEARCH_RESPONSE_NAME_KEY = 'name';
+    protected const SEARCH_RESPONSE_URL_KEY = 'url';
 
     /**
      * @return array
@@ -95,9 +97,15 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         array $restSearchResponse
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         $suggestionName = static::SEARCH_RESPONSE_CATEGORY_KEY;
-        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
+        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY];
         $categoriesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCategories($categoriesSuggestions);
+
+        foreach ($categoriesSuggestions as $categoriesSuggestion) {
+            $restSearchSuggestionsAttributesTransfer->addCategory(
+                (new RestCatalogSearchSuggestionCategoriesTransfer())->fromArray($categoriesSuggestion, true)
+            );
+        }
 
         return $restSearchSuggestionsAttributesTransfer;
     }
@@ -113,9 +121,15 @@ class CatalogSearchSuggestionsResourceMapper implements CatalogSearchSuggestions
         array $restSearchResponse
     ): RestCatalogSearchSuggestionsAttributesTransfer {
         $suggestionName = static::SEARCH_RESPONSE_CMS_PAGE_KEY;
-        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY];
+        $suggestionKeysRequired = [static::SEARCH_RESPONSE_NAME_KEY, static::SEARCH_RESPONSE_URL_KEY];
         $cmsPagesSuggestions = $this->mapSuggestions($restSearchResponse, $suggestionName, $suggestionKeysRequired);
         $restSearchSuggestionsAttributesTransfer->setCmsPages($cmsPagesSuggestions);
+
+        foreach ($cmsPagesSuggestions as $cmsPagesSuggestion) {
+            $restSearchSuggestionsAttributesTransfer->addCmsPage(
+                (new RestCatalogSearchSuggestionCmsPagesTransfer())->fromArray($cmsPagesSuggestion, true)
+            );
+        }
 
         return $restSearchSuggestionsAttributesTransfer;
     }

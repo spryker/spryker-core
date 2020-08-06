@@ -21,13 +21,50 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      * @api
      *
      * @param int $idConfigurableBundleTemplate
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate): ?ConfigurableBundleTemplateStorageTransfer
+    public function findConfigurableBundleTemplateStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
     {
         return $this->getFactory()
             ->createConfigurableBundleStorageReader()
-            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate);
+            ->findConfigurableBundleTemplateStorage($idConfigurableBundleTemplate, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $configurableBundleTemplateUuid
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
+     */
+    public function findConfigurableBundleTemplateStorageByUuid(
+        string $configurableBundleTemplateUuid,
+        string $localeName
+    ): ?ConfigurableBundleTemplateStorageTransfer {
+        return $this->getFactory()
+            ->createConfigurableBundleStorageReader()
+            ->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $skus
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer[]
+     */
+    public function getProductConcretesBySkusAndLocale(array $skus, string $localeName): array
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageReader()
+            ->getProductConcretesBySkusAndLocale($skus, $localeName);
     }
 }

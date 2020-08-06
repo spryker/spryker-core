@@ -39,4 +39,12 @@ class ProductToSalesProductConnectorQueryContainerBridge implements ProductToSal
     {
         return $this->ProductQueryContainer->queryProductAttributeKey();
     }
+
+    /**
+     * @return \Orm\Zed\Product\Persistence\SpyProductQuery
+     */
+    public function queryProduct()
+    {
+        return $this->ProductQueryContainer->queryProduct();
+    }
 }

@@ -59,6 +59,10 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
      */
     public function setNavigation(array $navigation)
     {
+        if (!is_dir(dirname($this->cacheFile))) {
+            mkdir(dirname($this->cacheFile), 0777, true);
+        }
+
         file_put_contents($this->cacheFile, $this->utilEncodingService->encodeJson($navigation));
     }
 
@@ -95,5 +99,15 @@ class ZedNavigationCache implements ZedNavigationCacheInterface
         $cacheFileSized = filesize($this->cacheFile);
 
         return !empty($cacheFileSized);
+    }
+
+    /**
+     * @return void
+     */
+    public function removeCache(): void
+    {
+        if (file_exists($this->cacheFile)) {
+            unlink($this->cacheFile);
+        }
     }
 }

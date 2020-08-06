@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductPackagingUnit\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitChecker;
+use Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheck;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCartPreCheckInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Availability\PreCheck\ProductPackagingUnitCheckoutPreCheck;
@@ -54,6 +56,8 @@ use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackaging
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Reservation\ProductPackagingUnitReservationHandlerInterface;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidator;
 use Spryker\Zed\ProductPackagingUnit\Business\Model\Validator\ProductPackagingUnitAmountRestrictionValidatorInterface;
+use Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReader;
+use Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReaderInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface;
@@ -130,6 +134,14 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Reader\ProductPackagingUnitReaderInterface
+     */
+    public function createProductPackagingUnitReader(): ProductPackagingUnitReaderInterface
+    {
+        return new ProductPackagingUnitReader($this->getRepository());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductPackagingUnit\Dependency\Facade\ProductPackagingUnitToLocaleFacadeInterface
      */
     public function getLocaleFacade(): ProductPackagingUnitToLocaleFacadeInterface
@@ -179,6 +191,14 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
         return new ProductPackagingUnitCheckoutPreCheck(
             $this->getAvailabilityFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPackagingUnit\Business\Checker\CartItemProductPackagingUnitCheckerInterface
+     */
+    public function createCartItemProductPackagingUnitChecker(): CartItemProductPackagingUnitCheckerInterface
+    {
+        return new CartItemProductPackagingUnitChecker($this->getRepository());
     }
 
     /**
@@ -280,7 +300,11 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->getProductFacade(),
+            $this->getProductMeasurementUnitFacade()
+        );
     }
 
     /**
@@ -336,6 +360,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountLeadProductHydrateOrderInterface
      */
     public function createAmountLeadProductHydrateOrder(): AmountLeadProductHydrateOrderInterface
@@ -347,6 +373,8 @@ class ProductPackagingUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductPackagingUnit\Business\Model\Hydrator\AmountSalesUnitHydrateOrderInterface
      */
     public function createAmountSalesUnitHydrateOrder(): AmountSalesUnitHydrateOrderInterface

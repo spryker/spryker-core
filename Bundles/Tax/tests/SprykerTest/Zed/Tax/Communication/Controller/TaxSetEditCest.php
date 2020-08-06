@@ -32,7 +32,7 @@ class TaxSetEditCest
     {
         $i->listDataTable(TaxSetListPage::DATA_TABLE_URL);
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Taxes / Tax Sets / Edit Tax Set');
+        $i->seeBreadcrumbNavigation('Administration / Tax Sets / Edit Tax Set');
     }
 
     /**

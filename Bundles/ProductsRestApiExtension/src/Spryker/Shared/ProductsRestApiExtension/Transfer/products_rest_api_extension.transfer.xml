@@ -6,4 +6,7 @@
     <transfer name="ConcreteProductsRestAttributes">
     </transfer>
 
+    <transfer name="AbstractProductsRestAttributes">
+    </transfer>
+
 </transfers>

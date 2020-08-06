@@ -1,3 +1,6 @@
 parameters:
+    dynamicConstantNames:
+        - APPLICATION_CODE_BUCKET
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - '#Call to an undefined method Spryker\\Zed\\Kernel\\AbstractBundleConfig::shouldCatchExceptions#'
+        - '#Call to an undefined method Spryker\\Zed\\Kernel\\Business\\AbstractFacade.+#'

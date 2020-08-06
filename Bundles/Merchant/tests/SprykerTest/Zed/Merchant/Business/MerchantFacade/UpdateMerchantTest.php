@@ -8,8 +8,11 @@
 namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Merchant\MerchantConfig;
 
@@ -38,8 +41,8 @@ class UpdateMerchantTest extends Unit
     {
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant([
-            'one-key',
-            'One Company',
+            MerchantTransfer::MERCHANT_KEY => 'one-key',
+            MerchantTransfer::NAME => 'One Company',
         ]);
 
         $expectedIdMerchant = $merchantTransfer->getIdMerchant();
@@ -135,6 +138,35 @@ class UpdateMerchantTest extends Unit
 
         // Assert
         $this->assertFalse($merchantResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateMerchantStores(): void
+    {
+        // Arrange
+        $storeTransfer1 = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeTransfer2 = $this->tester->haveStore([StoreTransfer::NAME => 'AT']);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer1->getIdStore()],
+        ])->build();
+        $merchantTransfer = $this->tester->haveMerchant([ MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
+        $storesIds = [
+            $storeTransfer1->getIdStore(),
+            $storeTransfer2->getIdStore(),
+        ];
+        $merchantTransfer->getStoreRelation()->setIdStores($storesIds);
+
+        // Act
+        $merchantResponseTransfer = $this->tester->getFacade()->updateMerchant($merchantTransfer);
+        $merchantTransfer = $merchantResponseTransfer->getMerchant();
+
+        // Assert
+        $this->assertCount(count($storesIds), $merchantTransfer->getStoreRelation()->getStores());
+        foreach ($merchantTransfer->getStoreRelation()->getIdStores() as $idStore) {
+            $this->assertTrue(in_array($idStore, $storesIds));
+        }
     }
 
     /**

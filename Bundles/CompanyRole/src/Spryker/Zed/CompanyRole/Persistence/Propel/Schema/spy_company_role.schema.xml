@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CompanyRole\Persistence" package="src.Orm.Zed.CompanyRole.Persistence">
 
-    <table name="spy_company_role" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRole">
+    <table name="spy_company_role" idMethod="native" allowPkInsert="true">
         <column name="id_company_role" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="is_default" type="BOOLEAN" required="true" defaultValue="false"/>
@@ -14,7 +14,7 @@
         <id-method-parameter value="spy_company_role_pk_seq"/>
     </table>
 
-    <table name="spy_company_role_to_permission" idMethod="native" allowPkInsert="true" isCrossRef="true" phpName="SpyCompanyRoleToPermission">
+    <table name="spy_company_role_to_permission" idMethod="native" allowPkInsert="true" isCrossRef="true">
         <column name="id_company_role_to_permission" type="INTEGER" autoIncrement="true" required="true" primaryKey="true"/>
         <column name="fk_company_role" type="INTEGER" required="true" primaryKey="true"/>
         <column name="fk_permission" type="INTEGER" required="true" primaryKey="true"/>
@@ -31,7 +31,7 @@
         <id-method-parameter value="spy_company_role_to_permission_pk_seq"/>
     </table>
 
-    <table name="spy_company_role_to_company_user" idMethod="native" allowPkInsert="true" phpName="SpyCompanyRoleToCompanyUser" isCrossRef="true">
+    <table name="spy_company_role_to_company_user" idMethod="native" allowPkInsert="true" isCrossRef="true">
         <column name="id_company_role_to_company_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_company_role" required="true" type="INTEGER"/>
         <column name="fk_company_user" required="true" type="INTEGER"/>

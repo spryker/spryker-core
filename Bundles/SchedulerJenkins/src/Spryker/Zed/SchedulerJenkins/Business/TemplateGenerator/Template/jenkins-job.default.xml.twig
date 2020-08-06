@@ -14,7 +14,7 @@
     <properties/>
     <scm class='hudson.scm.NullSCM'/>
     <canRoam>true</canRoam>
-    <disabled>{% block disable %}{{ not job.enable }}{% endblock disable %}</disabled>
+    <disabled>{% block disable %}{% if not job.enable %}true{% else %}false{% endif %}{% endblock disable %}</disabled>
     <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
     <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
     {% block triggers %}

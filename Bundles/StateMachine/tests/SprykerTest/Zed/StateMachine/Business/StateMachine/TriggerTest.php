@@ -324,7 +324,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\PersistenceInterface
      */
-    protected function createTriggerPersistenceMock()
+    protected function createTriggerPersistenceMock(): PersistenceInterface
     {
         $stateMachinePersistenceMock = $this->createPersistenceMock();
         $stateMachinePersistenceMock->expects($this->once())
@@ -341,7 +341,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\FinderInterface
      */
-    protected function createTrigerFinderMock()
+    protected function createTrigerFinderMock(): FinderInterface
     {
         $finderMock = $this->createFinderMock();
         $finderMock->expects($this->once())
@@ -362,7 +362,7 @@ class TriggerTest extends StateMachineMocks
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\StateMachine\ConditionInterface
      */
-    protected function createTriggerConditionMock()
+    protected function createTriggerConditionMock(): ConditionInterface
     {
         $conditionMock = $this->createConditionMock();
         $targetState = new State();
@@ -375,9 +375,9 @@ class TriggerTest extends StateMachineMocks
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLog
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\StateMachine\Business\Logger\TransitionLogInterface
      */
-    protected function createTriggerTransitionLog()
+    protected function createTriggerTransitionLog(): TransitionLogInterface
     {
         $transitionLogMock = $this->createTransitionLogMock();
         $transitionLogMock->expects($this->once())->method('init');

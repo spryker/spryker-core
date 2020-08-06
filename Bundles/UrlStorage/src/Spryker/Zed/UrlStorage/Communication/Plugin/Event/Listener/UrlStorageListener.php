@@ -13,7 +13,8 @@ use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 use Spryker\Zed\Url\Dependency\UrlEvents;
 
 /**
- * @deprecated Use `\Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStoragePublishListener` and `\Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStoragePublishListener}
+ *   and {@link \Spryker\Zed\UrlStorage\Communication\Plugin\Event\Listener\UrlStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\UrlStorage\Persistence\UrlStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\UrlStorage\Communication\UrlStorageCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class UrlStorageListener extends AbstractPlugin implements EventBulkHandlerInter
         $this->preventTransaction();
         $urlIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
+        if (
+            $eventName === UrlEvents::ENTITY_SPY_URL_DELETE ||
             $eventName === UrlEvents::URL_UNPUBLISH
         ) {
             $this->getFacade()->unpublishUrl($urlIds);

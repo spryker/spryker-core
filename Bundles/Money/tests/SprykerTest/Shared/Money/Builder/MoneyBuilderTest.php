@@ -161,9 +161,9 @@ class MoneyBuilderTest extends Unit
     }
 
     /**
-     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapper|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Shared\Money\Mapper\MoneyToTransferMapperInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMoneyToTransferConverterMock()
+    protected function getMoneyToTransferConverterMock(): MoneyToTransferMapperInterface
     {
         $moneyToTransferConverterMock = $this->getMockBuilder(MoneyToTransferMapperInterface::class)->getMock();
         $moneyToTransferConverterMock->method('convert')->willReturnCallback([$this, 'convert']);

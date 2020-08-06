@@ -194,6 +194,7 @@ class GeneralFormType extends AbstractType
             $url = $localizedGeneralForm[LocalizedGeneralFormType::FIELD_URL];
             if (in_array($url, $uniqueUrls)) {
                 $context->addViolation('URLs must be different for each locale.');
+
                 break;
             }
             $uniqueUrls[] = $url;

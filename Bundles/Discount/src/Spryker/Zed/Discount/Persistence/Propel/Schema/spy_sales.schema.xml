@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd">
 
-    <table name="spy_sales_discount" phpName="SpySalesDiscount">
+    <table name="spy_sales_discount">
         <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item" type="INTEGER" required="false"/>
@@ -33,7 +33,7 @@
         <id-method-parameter value="spy_sales_discount_pk_seq"/>
     </table>
 
-    <table name="spy_sales_discount_code" phpName="SpySalesDiscountCode">
+    <table name="spy_sales_discount_code">
         <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_discount" type="INTEGER" required="true"/>
 

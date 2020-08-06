@@ -3,8 +3,8 @@
           namespace="Orm\Zed\Merchant\Persistence"
           package="src.Orm.Zed.Merchant.Persistence">
 
-    <table name="spy_merchant" phpName="SpyMerchant" identifierQuoting="true">
-        <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+    <table name="spy_merchant" identifierQuoting="true">
+        <column name="id_merchant" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
 
         <behavior name="timestampable"/>
@@ -12,7 +12,8 @@
         <column name="registration_number" type="VARCHAR" size="255"/>
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="status" required="true" size="64" type="VARCHAR"/>
-        <column name="merchant_reference" size="255" type="VARCHAR"/>
+        <column name="merchant_reference" required="true" size="255" type="VARCHAR"/>
+        <column name="is_active" default="false" type="BOOLEAN"/>
 
         <unique name="spy_merchant-unique-email">
             <unique-column name="email"/>
@@ -23,6 +24,27 @@
         </unique>
 
         <id-method-parameter value="spy_merchant_pk_seq"/>
+    </table>
+
+    <table name="spy_merchant_store" idMethod="native" allowPkInsert="true" identifierQuoting="true">
+        <column name="id_merchant_store" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+
+        <column name="fk_merchant" required="true" type="INTEGER"/>
+        <column name="fk_store" required="true" type="INTEGER"/>
+
+        <unique name="spy_merchant_store-fk_merchant-fk_store">
+            <unique-column name="fk_merchant"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <foreign-key name="spy_merchant_store-fk_merchant" foreignTable="spy_merchant">
+            <reference local="fk_merchant" foreign="id_merchant"/>
+        </foreign-key>
+        <foreign-key name="spy_merchant_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <id-method-parameter value="id_merchant_store_pk_seq"/>
     </table>
 
 </database>

@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\DataImport\Business\Model\DataSet;
 
+use Spryker\Zed\DataImport\Business\Exception\DataSetBrokerTransactionFailedException;
 use Spryker\Zed\DataImport\Business\Exception\TransactionException;
 use Spryker\Zed\DataImport\Dependency\Propel\DataImportToPropelConnectionInterface;
+use Throwable;
 
 class DataSetStepBrokerTransactionAware extends DataSetStepBroker
 {
@@ -40,15 +42,33 @@ class DataSetStepBrokerTransactionAware extends DataSetStepBroker
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataSetBrokerTransactionFailedException
+     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet)
     {
         $this->beforeDataSetExecution();
 
-        parent::execute($dataSet);
+        try {
+            parent::execute($dataSet);
+        } catch (Throwable $exception) {
+            $rolledBackRowsCount = $this->count;
+            $this->rollbackTransaction();
+
+            throw new DataSetBrokerTransactionFailedException($rolledBackRowsCount, $exception->getMessage(), $exception->getCode(), $exception);
+        }
 
         $this->afterDataSetExecution();
+    }
+
+    /**
+     * @return void
+     */
+    protected function rollbackTransaction(): void
+    {
+        $this->propelConnection->rollBack();
+        $this->count = 0;
     }
 
     /**

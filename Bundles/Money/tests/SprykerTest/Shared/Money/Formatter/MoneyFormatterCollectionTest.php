@@ -72,7 +72,7 @@ class MoneyFormatterCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Money\Formatter\MoneyFormatterInterface
      */
-    protected function getFormatterMock()
+    protected function getFormatterMock(): MoneyFormatterInterface
     {
         return $this->getMockBuilder(MoneyFormatterInterface::class)->getMock();
     }

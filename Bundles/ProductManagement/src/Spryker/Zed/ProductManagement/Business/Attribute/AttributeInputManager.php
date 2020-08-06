@@ -28,10 +28,11 @@ class AttributeInputManager
         switch ($inputType) {
             case 'textarea':
                 $input = TextareaType::class;
-                break;
 
+                break;
             case 'select2':
                 $input = Select2ComboBoxType::class;
+
                 break;
         }
 

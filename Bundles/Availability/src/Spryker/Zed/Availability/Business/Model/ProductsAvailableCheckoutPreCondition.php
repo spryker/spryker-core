@@ -10,8 +10,8 @@ namespace Spryker\Zed\Availability\Business\Model;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\Availability\AvailabilityConfig;
 
@@ -48,18 +48,20 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $quoteTransfer->requireStore();
-
         $isPassed = true;
-
         $storeTransfer = $quoteTransfer->getStore();
-        $filteredItems = $this->filterItemsWithAmount($quoteTransfer->getItems()->getArrayCopy());
-        $groupedItemQuantities = $this->groupItemsBySku($filteredItems);
 
-        foreach ($groupedItemQuantities as $sku => $quantity) {
-            if ($this->isProductSellable($sku, $quantity, $storeTransfer) === true) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $quantity = $this->getAccumulatedItemQuantityForGivenItemSku($quoteTransfer, $itemTransfer->getSku());
+
+            $productAvailabilityCriteriaTransfer = (new ProductAvailabilityCriteriaTransfer())
+                ->fromArray($itemTransfer->toArray(), true);
+
+            if ($this->sellable->isProductSellableForStore($itemTransfer->getSku(), $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer)) {
                 continue;
             }
-            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $sku);
+
+            $this->addAvailabilityErrorToCheckoutResponse($checkoutResponse, $itemTransfer->getSku());
             $isPassed = false;
         }
 
@@ -67,37 +69,24 @@ class ProductsAvailableCheckoutPreCondition implements ProductsAvailableCheckout
     }
 
     /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $sku
-     * @param \Spryker\DecimalObject\Decimal $quantity
-     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return bool
+     * @return \Spryker\DecimalObject\Decimal
      */
-    protected function isProductSellable(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
+    protected function getAccumulatedItemQuantityForGivenItemSku(QuoteTransfer $quoteTransfer, string $sku): Decimal
     {
-        return $this->sellable->isProductSellableForStore($sku, $quantity, $storeTransfer);
-    }
+        $quantity = new Decimal(0);
 
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
-     *
-     * @return \Spryker\DecimalObject\Decimal[] [string, \Spryker\DecimalObject\Decimal]
-     */
-    protected function groupItemsBySku(array $itemTransfers): array
-    {
-        /** @var \Spryker\DecimalObject\Decimal[] $result */
-        $result = [];
-        foreach ($itemTransfers as $itemTransfer) {
-            $sku = $itemTransfer->getSku();
-
-            if (!isset($result[$sku])) {
-                $result[$sku] = new Decimal(0);
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku() !== $sku) {
+                continue;
             }
 
-            $result[$sku] = $result[$sku]->add($itemTransfer->getQuantity());
+            $quantity = $quantity->add($itemTransfer->getQuantity());
         }
 
-        return $result;
+        return $quantity;
     }
 
     /**

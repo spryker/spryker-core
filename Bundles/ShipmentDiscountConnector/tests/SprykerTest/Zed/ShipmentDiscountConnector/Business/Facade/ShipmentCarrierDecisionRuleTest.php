@@ -160,8 +160,10 @@ class ShipmentCarrierDecisionRuleTest extends Test
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function addNewItemWithShipmentCarrierIntoQuoteTransfer(QuoteTransfer $quoteTransfer, ShipmentCarrierTransfer $shipmentCarrierTransfer): ItemTransfer
-    {
+    protected function addNewItemWithShipmentCarrierIntoQuoteTransfer(
+        QuoteTransfer $quoteTransfer,
+        ShipmentCarrierTransfer $shipmentCarrierTransfer
+    ): ItemTransfer {
         $itemTransfer = (new ItemBuilder())
             ->withShipment()
             ->build();

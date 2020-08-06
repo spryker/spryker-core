@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsPageBeforeDeleteNavigationPlugin extends AbstractPlugin implements CmsPageBeforeDeletePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Removes all Navigation nodes related to provided CMS Page.
      *

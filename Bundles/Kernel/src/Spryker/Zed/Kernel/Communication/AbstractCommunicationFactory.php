@@ -85,6 +85,6 @@ abstract class AbstractCommunicationFactory extends AbstractFactory
     {
         $container = $this->createContainerWithProvidedDependencies();
 
-        return $container[self::FORM_FACTORY];
+        return $container->get(static::FORM_FACTORY);
     }
 }

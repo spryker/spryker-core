@@ -20,9 +20,11 @@ use Spryker\Shared\Kernel\Store;
 class SearchDependencyProvider extends AbstractDependencyProvider
 {
     public const SEARCH_CONFIG_BUILDER = 'search config builder';
+    public const PLUGINS_CLIENT_ADAPTER = 'PLUGINS_CLIENT_ADAPTER';
     public const SEARCH_CONFIG_EXPANDER_PLUGINS = 'search config expander plugins';
     public const STORE = 'store';
     public const PLUGIN_MONEY = 'money plugin';
+    public const PLUGINS_SEARCH_CONTEXT_EXPANDER = 'PLUGINS_SOURCE_IDENTIFIER_MAPPER';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,16 +36,18 @@ class SearchDependencyProvider extends AbstractDependencyProvider
         $container = parent::provideServiceLayerDependencies($container);
 
         $container = $this->provideStore($container);
+        $container = $this->addClientAdapterPlugins($container);
 
-        $container[static::SEARCH_CONFIG_BUILDER] = function (Container $container) {
+        $container->set(static::SEARCH_CONFIG_BUILDER, function (Container $container) {
             return $this->createSearchConfigBuilderPlugin($container);
-        };
+        });
 
-        $container[static::SEARCH_CONFIG_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::SEARCH_CONFIG_EXPANDER_PLUGINS, function (Container $container) {
             return $this->createSearchConfigExpanderPlugins($container);
-        };
+        });
 
         $container = $this->addMoneyPlugin($container);
+        $container = $this->addSearchContextExpanderPlugins($container);
 
         return $container;
     }
@@ -55,9 +59,9 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMoneyPlugin(Container $container)
     {
-        $container[static::PLUGIN_MONEY] = function () {
+        $container->set(static::PLUGIN_MONEY, function () {
             return new MoneyPlugin();
-        };
+        });
 
         return $container;
     }
@@ -80,7 +84,7 @@ class SearchDependencyProvider extends AbstractDependencyProvider
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
      */
     protected function createSearchConfigExpanderPlugins(Container $container)
     {
@@ -94,10 +98,54 @@ class SearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addClientAdapterPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CLIENT_ADAPTER, function () {
+            return $this->getClientAdapterPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     */
+    protected function getClientAdapterPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSearchContextExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SEARCH_CONTEXT_EXPANDER, function () {
+            return $this->getSearchContextExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
+     */
+    protected function getSearchContextExpanderPlugins(): array
+    {
+        return [];
     }
 }

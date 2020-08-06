@@ -33,18 +33,26 @@ class OrderExpander implements OrderExpanderInterface
     protected $itemTransformerStrategyPlugins;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[]
+     */
+    protected $itemPreTransformerPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCalculationInterface $calculationFacade
      * @param \Spryker\Zed\Sales\Business\Model\OrderItem\OrderItemTransformerInterface $orderItemTransformer
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[] $itemTransformerStrategyPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemPreTransformerPluginInterface[] $itemPreTransformerPlugins
      */
     public function __construct(
         SalesToCalculationInterface $calculationFacade,
         OrderItemTransformerInterface $orderItemTransformer,
-        array $itemTransformerStrategyPlugins
+        array $itemTransformerStrategyPlugins,
+        array $itemPreTransformerPlugins
     ) {
         $this->calculationFacade = $calculationFacade;
         $this->orderItemTransformer = $orderItemTransformer;
         $this->itemTransformerStrategyPlugins = $itemTransformerStrategyPlugins;
+        $this->itemPreTransformerPlugins = $itemPreTransformerPlugins;
     }
 
     /**
@@ -56,7 +64,8 @@ class OrderExpander implements OrderExpanderInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($quoteTransfer->toArray(), true);
-        $orderTransfer->setItems($this->transformItems($quoteTransfer->getItems()));
+        $orderTransfer = $this->executeItemPreTransformerPlugins($orderTransfer, $quoteTransfer);
+        $orderTransfer->setItems($this->transformItems($orderTransfer->getItems()));
 
         $this->groupOrderDiscountsByGroupKey($orderTransfer->getItems());
         $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
@@ -126,10 +135,10 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param array $calculatedDiscountsByGroupKey
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[][] $calculatedDiscountsByGroupKey
      * @param string $groupKey
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
     protected function getGroupedCalculatedDiscounts(array &$calculatedDiscountsByGroupKey, $groupKey)
     {
@@ -148,5 +157,20 @@ class OrderExpander implements OrderExpanderInterface
         $calculatedDiscountsByGroupKey[$groupKey] = $discountCollection;
 
         return new ArrayObject($appliedDiscounts);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function executeItemPreTransformerPlugins(OrderTransfer $orderTransfer, QuoteTransfer $quoteTransfer): OrderTransfer
+    {
+        foreach ($this->itemPreTransformerPlugins as $itemPreTransformerPlugin) {
+            $orderTransfer = $itemPreTransformerPlugin->execute($orderTransfer, $quoteTransfer);
+        }
+
+        return $orderTransfer;
     }
 }

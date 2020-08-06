@@ -32,8 +32,11 @@ class SynchronizationKeyBuilder implements SynchronizationKeyBuilderInterface
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $storageSyncKeyGeneratorPlugins
      * @param \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[] $searchSyncKeyGeneratorPlugins
      */
-    public function __construct(SynchronizationKeyGeneratorPluginInterface $defaultKeyGeneratorPlugin, array $storageSyncKeyGeneratorPlugins, array $searchSyncKeyGeneratorPlugins)
-    {
+    public function __construct(
+        SynchronizationKeyGeneratorPluginInterface $defaultKeyGeneratorPlugin,
+        array $storageSyncKeyGeneratorPlugins,
+        array $searchSyncKeyGeneratorPlugins
+    ) {
         $this->defaultKeyGeneratorPlugin = $defaultKeyGeneratorPlugin;
         $this->storageSyncKeyGeneratorPlugins = $storageSyncKeyGeneratorPlugins;
         $this->searchSyncKeyGeneratorPlugins = $searchSyncKeyGeneratorPlugins;

@@ -38,6 +38,8 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -47,6 +49,22 @@ class MultiCartClient extends AbstractClient implements MultiCartClientInterface
         return $this->getFactory()
             ->createCartUpdater()
             ->setDefaultQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartUpdater()
+            ->markQuoteAsDefault($quoteTransfer);
     }
 
     /**

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -60,5 +61,41 @@ class ProductAlternativeStorageFacade extends AbstractFacade implements ProductA
         $this->getFactory()
             ->createProductReplacementPublisher()
             ->publishConcreteReplacements($productIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productAlternativeStorageIds = []
+    ): array {
+        return $this->getRepository()
+            ->getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds($filterTransfer, $productAlternativeStorageIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productReplacementForStorageIds = []
+    ): array {
+        return $this->getRepository()
+            ->getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds($filterTransfer, $productReplacementForStorageIds);
     }
 }

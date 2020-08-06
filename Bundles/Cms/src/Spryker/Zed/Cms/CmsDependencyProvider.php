@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cms;
 
-use Propel\Runtime\Propel;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToGlossaryFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToLocaleFacadeBridge;
 use Spryker\Zed\Cms\Dependency\Facade\CmsToTouchFacadeBridge;
@@ -30,7 +29,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public const QUERY_CONTAINER_CATEGORY = 'QUERY_CONTAINER_CATEGORY';
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
 
-    public const PLUGIN_PROPEL_CONNECTION = 'PLUGIN_PROPEL_CONNECTION';
     public const PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS = 'PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS';
     public const PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS = 'PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS';
     public const PLUGINS_CMS_PAGE_DATA_EXPANDER = 'PLUGINS_CMS_PAGE_DATA_EXPANDER';
@@ -60,7 +58,6 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $this->addPropelPluginConnection($container);
         $this->addTouchFacade($container);
         $this->addGlossaryFacade($container);
         $this->addUrlFacade($container);
@@ -97,9 +94,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlFacade(Container $container): void
     {
-        $container[self::FACADE_URL] = function (Container $container) {
+        $container->set(static::FACADE_URL, function (Container $container) {
             return new CmsToUrlFacadeBridge($container->getLocator()->url()->facade());
-        };
+        });
     }
 
     /**
@@ -109,9 +106,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): void
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -121,9 +118,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryFacade(Container $container): void
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CmsToGlossaryFacadeBridge($container->getLocator()->glossary()->facade());
-        };
+        });
     }
 
     /**
@@ -133,21 +130,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container): void
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new CmsToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return void
-     */
-    protected function addPropelPluginConnection(Container $container): void
-    {
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return Propel::getConnection();
-        };
+        });
     }
 
     /**
@@ -157,9 +142,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): void
     {
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
     }
 
     /**
@@ -169,9 +154,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsVersionPostSavePlugins(Container $container): void
     {
-        $container[self::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_VERSION_POST_SAVE_PLUGINS, function (Container $container) {
             return $this->getPostSavePlugins($container);
-        };
+        });
     }
 
     /**
@@ -181,9 +166,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsVersionTransferExpanderPlugins(Container $container): void
     {
-        $container[self::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_VERSION_TRANSFER_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getTransferExpanderPlugins($container);
-        };
+        });
     }
 
     /**
@@ -193,9 +178,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsPagePostActivatorPlugins(Container $container): void
     {
-        $container[self::PLUGINS_CMS_PAGE_POST_ACTIVATOR] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_PAGE_POST_ACTIVATOR, function (Container $container) {
             return $this->getCmsPagePostActivatorPlugins();
-        };
+        });
     }
 
     /**
@@ -205,9 +190,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsPageBeforeDeletePlugins(Container $container): void
     {
-        $container[self::PLUGINS_CMS_PAGE_BEFORE_DELETE] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_PAGE_BEFORE_DELETE, function (Container $container) {
             return $this->getCmsPageBeforeDeletePlugins();
-        };
+        });
     }
 
     /**
@@ -217,9 +202,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsPageDataExpanderPlugins(Container $container): void
     {
-        $container[static::PLUGINS_CMS_PAGE_DATA_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_PAGE_DATA_EXPANDER, function (Container $container) {
             return $this->getCmsPageDataExpanderPlugins();
-        };
+        });
     }
 
     /**
@@ -273,9 +258,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleQueryContainer(Container $container): void
     {
-        $container[self::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return $container->getLocator()->locale()->queryContainer();
-        };
+        });
     }
 
     /**
@@ -285,9 +270,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCategoryQueryContainer(Container $container): void
     {
-        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return $container->getLocator()->category()->queryContainer();
-        };
+        });
     }
 
     /**
@@ -297,9 +282,9 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUrlQueryContainer(Container $container): void
     {
-        $container[self::QUERY_CONTAINER_URL] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_URL, function (Container $container) {
             return $container->getLocator()->url()->queryContainer();
-        };
+        });
     }
 
     /**
@@ -309,8 +294,8 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryQueryContainer(Container $container): void
     {
-        $container[self::QUERY_CONTAINER_GLOSSARY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_GLOSSARY, function (Container $container) {
             return $container->getLocator()->glossary()->queryContainer();
-        };
+        });
     }
 }

@@ -14,6 +14,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 class GiftCardFactory extends AbstractFactory
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\GiftCard\CartCode\GiftCardCartCodeInterface
      */
     public function createGiftCardCartCode(): GiftCardCartCodeInterface

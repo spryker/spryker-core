@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\Aggregation;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Aggregation\CategoryFacetAggregation} instead.
+ */
 class CategoryFacetAggregation extends AbstractTermsFacetAggregation
 {
     /**

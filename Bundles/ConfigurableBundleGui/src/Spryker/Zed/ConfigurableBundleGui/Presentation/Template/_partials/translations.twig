@@ -1,0 +1,14 @@
+{% for translation in translations %}
+
+    {% set localeName = translation.vars.value.locale.localeName %}
+    {% set collapsed = currentLocale.localeName != localeName %}
+
+    {% embed '@Gui/Partials/localized-ibox.twig' with {
+        localeName: localeName,
+        collapsed: collapsed
+    } %}
+        {% block content %}
+            {{ form_widget(translation) }}
+        {% endblock %}
+    {% endembed %}
+{% endfor %}

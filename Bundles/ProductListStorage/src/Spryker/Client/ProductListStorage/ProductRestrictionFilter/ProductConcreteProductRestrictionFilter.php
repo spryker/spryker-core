@@ -25,8 +25,10 @@ class ProductConcreteProductRestrictionFilter extends AbstractProductRestriction
      * @param \Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface $customerClient
      * @param \Spryker\Client\ProductListStorage\ProductListProductConcreteStorage\ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader
      */
-    public function __construct(ProductListStorageToCustomerClientInterface $customerClient, ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader)
-    {
+    public function __construct(
+        ProductListStorageToCustomerClientInterface $customerClient,
+        ProductListProductConcreteStorageReaderInterface $productListProductConcreteStorageReader
+    ) {
         parent::__construct($customerClient);
         $this->productListProductConcreteStorageReader = $productListProductConcreteStorageReader;
     }

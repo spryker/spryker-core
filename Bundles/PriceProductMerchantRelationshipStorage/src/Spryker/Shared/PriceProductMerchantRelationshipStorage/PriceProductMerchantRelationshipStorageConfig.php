@@ -32,6 +32,8 @@ class PriceProductMerchantRelationshipStorageConfig extends AbstractSharedConfig
     public const PRICE_GROSS_MODE = 'GROSS_MODE';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionMerchantRelationship(): string

@@ -14,6 +14,8 @@ var SlotTable = function (options) {
     this.ownershipColumnId = '';
     this.slotTableClass = '';
     this.slotTable = {};
+    this.dataTableInit = false;
+    this.dataTableInitCallback = function () {};
 
     $.extend(this, options);
 
@@ -23,47 +25,90 @@ var SlotTable = function (options) {
 
     this.loadSlotTableByIdTemplate = function (idTemplate) {
         var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + idTemplate;
-        _self.slotTable.data('ajax', ajaxUrl);
 
-        _self.slotTable.DataTable({
-            destroy: true,
-            ajax: {
-                cache: false
-            },
-            autoWidth: false,
-            language: dataTable.defaultConfiguration.language,
-            drawCallback: function() {
-                _self.activationHandler();
-            },
-        });
+        if (!_self.dataTableInit) {
+            _self.slotTable.data('ajax', ajaxUrl);
+
+            _self.slotTable.DataTable({
+                ajax: {
+                    cache: false
+                },
+                autoWidth: false,
+                language: dataTable.defaultConfiguration.language,
+                drawCallback: function() {
+                    _self.activationHandler();
+                },
+            });
+
+            _self.dataTableInit = true;
+            this.dataTableInitCallback();
+            return;
+        }
+
+        _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
     };
 
     this.activationHandler = function () {
-        $('.js-slot-activation').on('click', function(event) {
+        _self.slotTable.find('.js-slot-activation').on('click', function (event) {
             event.preventDefault();
-            var url = $(this).attr('href');
+            var $that = $(this);
 
-            $.get(url, function (response) {
-                if (response.success) {
-                    _self.slotTable.DataTable().ajax.reload(null, false);
+            if ($that.data('processing') === true) {
+                return false;
+            }
 
-                    return;
+            $that.data('processing', true);
+
+            $.ajax({
+                url: $that.closest('form')[0].action,
+                type: 'POST',
+                data: $that.closest('form').serialize(),
+                success: function(response) {
+                    if (response.success) {
+                        _self.slotTable.DataTable().ajax.reload(null, false);
+
+                        return false;
+                    }
+
+                    $that.data('processing', false);
+                    window.sweetAlert({
+                        title: 'Error',
+                        text: response.message,
+                        html: true,
+                        type: 'error'
+                    });
+                },
+                error: function(response) {
+                    $that.data('processing', false);
+                    window.sweetAlert({
+                        title: 'Error',
+                        text: response.status + ' ' + response.statusText,
+                        html: true,
+                        type: 'error'
+                    });
                 }
-
-                window.sweetAlert({
-                    title: 'Error',
-                    text: response.message,
-                    html: true,
-                    type: 'error'
-                });
             });
 
             return false;
         });
+    };
+
+    this.toggleTableRow = function (state) {
+        if (!state) {
+            _self.slotTable.closest('.wrapper > .row').hide();
+
+            if ($.fn.dataTable.isDataTable(_self.slotTable)) {
+                var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=0';
+                _self.slotTable.data('ajax', ajaxUrl);
+                _self.slotTable.attr('data-ajax', ajaxUrl);
+                _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
+            }
+
+            return;
+        }
+
+        _self.slotTable.closest('.wrapper > .row').show();
     }
 };
 
-/**
- * Open public methods
- */
 module.exports = SlotTable;

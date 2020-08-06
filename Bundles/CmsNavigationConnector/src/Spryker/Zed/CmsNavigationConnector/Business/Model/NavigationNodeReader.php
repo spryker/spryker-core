@@ -27,8 +27,10 @@ class NavigationNodeReader implements NavigationNodeReaderInterface
      * @param \Spryker\Zed\CmsNavigationConnector\Dependency\QueryContainer\CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer
      * @param \Spryker\Zed\CmsNavigationConnector\Dependency\QueryContainer\CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer
      */
-    public function __construct(CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer, CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer)
-    {
+    public function __construct(
+        CmsNavigationConnectorToCmsQueryContainerInterface $cmsQueryContainer,
+        CmsNavigationConnectorToNavigationQueryContainerInterface $navigationQueryContainer
+    ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->navigationQueryContainer = $navigationQueryContainer;
     }

@@ -1,6 +1,6 @@
 # QuoteApprovalExtension Module
-[![Build Status](https://travis-ci.org/spryker/QuoteApprovalExtension.svg)](https://travis-ci.org/spryker/QuoteApprovalExtension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/QuoteApprovalExtension/badge.svg)](https://coveralls.io/github/spryker/QuoteApprovalExtension)
+[![Build Status](https://travis-ci.org/spryker/quote-approval-extension.svg)](https://travis-ci.org/spryker/quote-approval-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides module provides plugin interfaces used by QuoteApproval module.
 

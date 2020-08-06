@@ -68,7 +68,7 @@ class ViewControllerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductManagement\Communication\Controller\ViewController|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getViewControllerMock()
+    protected function getViewControllerMock(): ViewController
     {
         $vieControllerMock = $this->getMockBuilder(ViewController::class)
             ->disableOriginalConstructor()

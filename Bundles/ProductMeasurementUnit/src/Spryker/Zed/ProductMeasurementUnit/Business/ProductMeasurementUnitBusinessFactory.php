@@ -10,6 +10,8 @@ namespace Spryker\Zed\ProductMeasurementUnit\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\CartChangeSalesUnitExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitChecker;
+use Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitCheckerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstaller;
 use Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\CartChange\CartChangeExpander;
@@ -26,6 +28,8 @@ use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUni
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\ProductMeasurementSalesUnit\ProductMeasurementSalesUnitValueInterface;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpander;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
+use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReader;
+use Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReaderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToEventFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToGlossaryFacadeInterface;
 use Spryker\Zed\ProductMeasurementUnit\Dependency\Facade\ProductMeasurementUnitToStoreFacadeInterface;
@@ -101,6 +105,17 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\CartChange\Checker\ItemProductMeasurementSalesUnitCheckerInterface
+     */
+    public function createItemProductMeasurementSalesUnitChecker(): ItemProductMeasurementSalesUnitCheckerInterface
+    {
+        return new ItemProductMeasurementSalesUnitChecker(
+            $this->getRepository(),
+            $this->getStoreFacade()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Installer\ProductMeasurementUnitInstallerInterface
      */
     public function createProductMeasurementUnitInstaller(): ProductMeasurementUnitInstallerInterface
@@ -113,6 +128,8 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Zed\ProductMeasurementUnit\Business\Model\Order\OrderExpanderInterface
      */
     public function createOrderExpander(): OrderExpanderInterface
@@ -128,7 +145,10 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
      */
     public function createOrderItemExpander(): OrderItemExpanderInterface
     {
-        return new OrderItemExpander();
+        return new OrderItemExpander(
+            $this->getRepository(),
+            $this->createProductMeasurementUnitTranslationExpander()
+        );
     }
 
     /**
@@ -150,6 +170,14 @@ class ProductMeasurementUnitBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductMeasurementUnit\Business\Reader\ProductMeasurementUnitReaderInterface
+     */
+    public function createProductMeasurementUnitReader(): ProductMeasurementUnitReaderInterface
+    {
+        return new ProductMeasurementUnitReader($this->getRepository());
     }
 
     /**

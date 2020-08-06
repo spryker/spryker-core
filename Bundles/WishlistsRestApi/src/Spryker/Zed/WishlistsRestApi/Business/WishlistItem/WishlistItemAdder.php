@@ -81,8 +81,10 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      *
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
-    protected function createWishlistItemTransfer(WishlistTransfer $wishlistTransfer, WishlistItemRequestTransfer $wishlistItemRequestTransfer): WishlistItemTransfer
-    {
+    protected function createWishlistItemTransfer(
+        WishlistTransfer $wishlistTransfer,
+        WishlistItemRequestTransfer $wishlistItemRequestTransfer
+    ): WishlistItemTransfer {
         return (new WishlistItemTransfer())
             ->setFkWishlist($wishlistTransfer->getIdWishlist())
             ->setWishlistName($wishlistTransfer->getName())

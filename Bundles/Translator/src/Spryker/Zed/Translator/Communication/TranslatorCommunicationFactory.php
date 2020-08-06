@@ -22,11 +22,21 @@ use Twig\Extension\AbstractExtension;
 class TranslatorCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
+     * @deprecated Use {@link \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory::getTranslator()} instead.
+     *
      * @return \Spryker\Shared\Kernel\Communication\Application
      */
     public function getApplication(): Application
     {
         return $this->getProvidedDependency(TranslatorDependencyProvider::APPLICATION);
+    }
+
+    /**
+     * @return \Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface
+     */
+    public function getTranslator(): TranslatorPluginInterface
+    {
+        return $this->getProvidedDependency(TranslatorDependencyProvider::SERVICE_TRANSLATOR);
     }
 
     /**

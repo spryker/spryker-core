@@ -48,9 +48,11 @@ class ProductReviewTouch implements ProductReviewTouchInterface
             case SpyProductReviewTableMap::COL_STATUS_PENDING:
             case SpyProductReviewTableMap::COL_STATUS_REJECTED:
                 $this->touchProductReviewDeleted($productReviewTransfer);
+
                 break;
             case SpyProductReviewTableMap::COL_STATUS_APPROVED:
                 $this->touchProductReviewActive($productReviewTransfer);
+
                 break;
         }
     }

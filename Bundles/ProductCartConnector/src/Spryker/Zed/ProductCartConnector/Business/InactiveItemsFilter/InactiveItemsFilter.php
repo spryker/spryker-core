@@ -8,10 +8,11 @@
 namespace Spryker\Zed\ProductCartConnector\Business\InactiveItemsFilter;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface;
 
 class InactiveItemsFilter implements InactiveItemsFilterInterface
 {
@@ -24,19 +25,27 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
     protected $productFacade;
 
     /**
+     * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface
      */
     protected $messengerFacade;
 
     /**
      * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface $productFacade
+     * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeInterface $storeFacade
      * @param \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeInterface $messengerFacade
      */
     public function __construct(
         ProductCartConnectorToProductInterface $productFacade,
+        ProductCartConnectorToStoreFacadeInterface $storeFacade,
         ProductCartConnectorToMessengerFacadeInterface $messengerFacade
     ) {
         $this->productFacade = $productFacade;
+        $this->storeFacade = $storeFacade;
         $this->messengerFacade = $messengerFacade;
     }
 
@@ -47,26 +56,25 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
      */
     public function filterInactiveItems(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
+        $skus = $this->getProductSkusFromQuoteTransfer($quoteTransfer);
+        $productCriteriaTransfer = (new ProductCriteriaTransfer())
+            ->setSkus($skus)
+            ->setIsActive(true)
+            ->setIdStore(
+                $this->storeFacade->getStoreByName($quoteTransfer->getStore()->getName())->getIdStore()
+            );
+
+        $productConcreteTransfers = $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
+        $indexedProductConcreteTransfers = $this->indexProductConcreteTransfersBySku($productConcreteTransfers);
+
         foreach ($quoteTransfer->getItems() as $key => $itemTransfer) {
-            if (!$this->isProductConcreteActive($itemTransfer->getSku())) {
+            if (!isset($indexedProductConcreteTransfers[$itemTransfer->getSku()])) {
                 $quoteTransfer->getItems()->offsetUnset($key);
                 $this->addFilterMessage($itemTransfer->getSku());
             }
         }
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param string $concreteSku
-     *
-     * @return bool
-     */
-    protected function isProductConcreteActive(string $concreteSku): bool
-    {
-        return $this->productFacade->isProductConcreteActive(
-            (new ProductConcreteTransfer())->setSku($concreteSku)
-        );
     }
 
     /**
@@ -83,5 +91,37 @@ class InactiveItemsFilter implements InactiveItemsFilterInterface
         ]);
 
         $this->messengerFacade->addInfoMessage($messageTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductSkusFromQuoteTransfer(QuoteTransfer $quoteTransfer): array
+    {
+        $skus = [];
+
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+            $skus[] = $itemTransfer->getSku();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function indexProductConcreteTransfersBySku(array $productConcreteTransfers): array
+    {
+        $indexedProductConcreteTransfers = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $indexedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $indexedProductConcreteTransfers;
     }
 }

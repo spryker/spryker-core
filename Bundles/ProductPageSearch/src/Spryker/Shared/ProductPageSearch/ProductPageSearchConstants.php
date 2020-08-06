@@ -45,9 +45,11 @@ class ProductPageSearchConstants
     public const PRODUCT_CONCRETE_RESOURCE_NAME = 'product_concrete';
 
     /**
-     * @uses SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     * @uses \Spryker\Shared\Search\SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      *
      * @api
+     *
+     * @deprecated Use {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      */
     public const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 }

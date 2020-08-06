@@ -40,11 +40,11 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
      */
     protected function addProductClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT, function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToProductClientBridge(
                 $container->getLocator()->product()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -56,11 +56,11 @@ class CmsContentWidgetProductSearchConnectorDependencyProvider extends AbstractB
      */
     protected function addSearchClient(Container $container): Container
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new CmsContentWidgetProductSearchConnectorToSearchClientBridge(
                 $container->getLocator()->search()->client()
             );
-        };
+        });
 
         return $container;
     }

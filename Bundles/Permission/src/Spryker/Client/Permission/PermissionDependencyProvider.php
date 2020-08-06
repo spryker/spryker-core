@@ -40,9 +40,9 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPermissionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PERMISSION] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION, function (Container $container) {
             return $this->getPermissionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new PermissionToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class PermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPermissionStoragePlugins($container): Container
     {
-        $container[static::PLUGINS_PERMISSION_STORAGE] = function (Container $container) {
+        $container->set(static::PLUGINS_PERMISSION_STORAGE, function (Container $container) {
             return $this->getPermissionStoragePlugins();
-        };
+        });
 
         return $container;
     }

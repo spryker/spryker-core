@@ -79,7 +79,7 @@ class ResponseFormatterTest extends Unit
         $this->assertNotEmpty($responseObject->errors);
         $this->assertEquals(($responseObject->errors[0])->status, 400);
         $this->assertEquals(($responseObject->errors[0])->code, 1);
-        $this->assertEquals(($responseObject->errors[0])->detail, "error");
+        $this->assertEquals(($responseObject->errors[0])->detail, 'error');
     }
 
     /**

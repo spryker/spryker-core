@@ -12,6 +12,8 @@ use Spryker\Zed\ProductListGuiExtension\Dependency\Plugin\ProductListOwnerTypeFo
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\Communication\MerchantRelationshipProductListGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantRelationshipProductListGui\MerchantRelationshipProductListGuiConfig getConfig()
  */

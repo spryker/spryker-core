@@ -13,10 +13,12 @@ use Spryker\Shared\FileSystem\FileSystemConstants;
 class FileSystemConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getFilesystemConfig()
     {
-        return $this->get(FileSystemConstants::FILESYSTEM_SERVICE);
+        return $this->get(FileSystemConstants::FILESYSTEM_SERVICE, []);
     }
 }

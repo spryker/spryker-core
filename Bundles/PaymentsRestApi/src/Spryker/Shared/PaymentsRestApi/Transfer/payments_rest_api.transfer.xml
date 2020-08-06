@@ -21,4 +21,51 @@
         <property name="paymentMethodName" type="string" restRequestParameter="required"/>
     </transfer>
 
+    <transfer name="RestPaymentMethodsAttributes">
+        <property name="paymentMethodName" type="string"/>
+        <property name="paymentProviderName" type="string"/>
+        <property name="priority" type="int"/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+    </transfer>
+
+    <transfer name="RestCheckout">
+        <property name="paymentProviders" type="PaymentProviderCollection"/>
+        <property name="availablePaymentMethods" type="PaymentMethods"/>
+    </transfer>
+
+    <transfer name="PaymentMethod">
+        <property name="methodName" type="string"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="idPaymentMethod" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentProvider">
+        <property name="name" type="string"/>
+        <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
+        <property name="paymentProviderKey" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethods">
+        <property name="methods" type="PaymentMethod[]" singular="method"/>
+    </transfer>
+
+    <transfer name="RestCheckoutData">
+        <property name="paymentProviders" type="PaymentProviderCollection"/>
+        <property name="availablePaymentMethods" type="PaymentMethods"/>
+    </transfer>
+
+    <transfer name="PaymentProviderCollection">
+        <property name="paymentProviders" type="PaymentProvider[]" singular="paymentProvider"/>
+    </transfer>
+
+    <transfer name="RestCheckoutDataResponseAttributes">
+        <property name="selectedPaymentMethods" type="RestPaymentMethod[]" singular="selectedPaymentMethod"/>
+    </transfer>
+
+    <transfer name="RestPaymentMethod">
+        <property name="paymentMethodName" type="string"/>
+        <property name="paymentProviderName" type="string"/>
+        <property name="requiredRequestData" type="array" singular="requiredRequestData"/>
+    </transfer>
 </transfers>

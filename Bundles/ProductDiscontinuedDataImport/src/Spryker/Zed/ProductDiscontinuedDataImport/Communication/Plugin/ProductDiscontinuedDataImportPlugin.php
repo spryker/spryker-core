@@ -19,6 +19,8 @@ use Spryker\Zed\ProductDiscontinuedDataImport\ProductDiscontinuedDataImportConfi
 class ProductDiscontinuedDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -31,6 +33,8 @@ class ProductDiscontinuedDataImportPlugin extends AbstractPlugin implements Data
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

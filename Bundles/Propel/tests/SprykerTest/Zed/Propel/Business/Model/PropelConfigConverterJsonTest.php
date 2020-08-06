@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\Propel\Business\Model;
 use Codeception\Test\Unit;
 use Spryker\Zed\Propel\Business\Exception\ConfigFileNotCreatedException;
 use Spryker\Zed\Propel\Business\Exception\ConfigMissingPropertyException;
+use Spryker\Zed\Propel\Business\Model\PropelConfigConverterInterface;
 use Spryker\Zed\Propel\Business\Model\PropelConfigConverterJson;
 
 /**
@@ -135,7 +136,7 @@ class PropelConfigConverterJsonTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelConfigConverterInterface
      */
-    protected function getPropelConfigConvertJsonMock()
+    protected function getPropelConfigConvertJsonMock(): PropelConfigConverterInterface
     {
         $propelConfigConverterJsonMock = $this->getMockBuilder(PropelConfigConverterJson::class)
             ->setMethods(['writeToFile'])

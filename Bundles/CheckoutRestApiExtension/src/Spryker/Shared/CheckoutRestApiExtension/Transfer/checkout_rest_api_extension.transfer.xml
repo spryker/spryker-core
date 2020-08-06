@@ -24,4 +24,10 @@
     <transfer name="CheckoutResponse">
     </transfer>
 
+    <transfer name="RestCheckoutDataResponseAttributes">
+    </transfer>
+
+    <transfer name="RestCheckoutData">
+    </transfer>
+
 </transfers>

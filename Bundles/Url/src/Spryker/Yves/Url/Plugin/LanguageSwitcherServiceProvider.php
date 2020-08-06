@@ -95,6 +95,7 @@ class LanguageSwitcherServiceProvider extends AbstractPlugin implements ServiceP
             foreach ($localeUrls as $localeUrl) {
                 if (preg_match('/^\/' . $language . '\//', $localeUrl->getUrl())) {
                     $languages[$language] = $localeUrl->getUrl() . '?' . $request->getQueryString();
+
                     break;
                 }
             }

@@ -1,6 +1,6 @@
 # CategoryImage Module
 [![Build Status](https://travis-ci.org/spryker/category-image.svg)](https://travis-ci.org/spryker/category-image)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/category-image/badge.svg)](https://coveralls.io/github/spryker/category-image)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides functionality for adding image sets to categories, which are used later in Yves.
 

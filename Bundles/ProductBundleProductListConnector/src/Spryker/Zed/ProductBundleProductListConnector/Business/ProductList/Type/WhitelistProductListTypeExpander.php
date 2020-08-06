@@ -77,8 +77,10 @@ class WhitelistProductListTypeExpander implements ProductListTypeExpanderInterfa
      *
      * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    protected function expandProductListByIdProductConcrete(int $idProductConcrete, ProductListResponseTransfer $productListResponseTransfer): ProductListResponseTransfer
-    {
+    protected function expandProductListByIdProductConcrete(
+        int $idProductConcrete,
+        ProductListResponseTransfer $productListResponseTransfer
+    ): ProductListResponseTransfer {
         $productForBundleTransfers = $this->productBundleFacade->findBundledProductsByIdProductConcrete($idProductConcrete);
 
         if (!$productForBundleTransfers->count()) {

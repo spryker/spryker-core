@@ -34,4 +34,12 @@ class ConfigurableBundleStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const CONFIGURABLE_BUNDLE_TEMPLATE_RESOURCE_NAME = 'configurable_bundle_template';
+
+    /**
+     * Specification:
+     * - Resource name, will be used for key generating.
+     *
+     * @api
+     */
+    public const CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE_RESOURCE_NAME = 'configurable_bundle_template_image';
 }

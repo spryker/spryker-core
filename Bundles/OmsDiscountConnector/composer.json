@@ -9,6 +9,7 @@
     "spryker/kernel": "^3.30.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/oms": "*",
     "spryker/sales": "*"
   },
@@ -23,6 +24,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

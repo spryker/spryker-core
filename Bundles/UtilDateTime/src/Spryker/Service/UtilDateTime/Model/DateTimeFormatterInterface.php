@@ -29,4 +29,11 @@ interface DateTimeFormatterInterface
      * @return string
      */
     public function formatDateTime($dateTime);
+
+    /**
+     * @param \DateTime|string $dateTime
+     *
+     * @return string
+     */
+    public function formatDateTimeToIso8601($dateTime): string;
 }

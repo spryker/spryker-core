@@ -3,7 +3,7 @@
           name="zed"
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\Merchant\Persistence" package="src.Orm.Zed.Merchant.Persistence">
-    <table name="spy_merchant" phpName="SpyMerchant">
+    <table name="spy_merchant">
         <column name="merchant_key" type="VARCHAR" size="255"  description="Identifier for existing entities. It should never be changed."/>
     </table>
 

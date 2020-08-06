@@ -8,6 +8,8 @@
 namespace Spryker\Zed\User\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\User\Business\Expander\MailExpander;
+use Spryker\Zed\User\Business\Expander\MailExpanderInterface;
 use Spryker\Zed\User\Business\Model\Installer;
 use Spryker\Zed\User\Business\Model\User;
 use Spryker\Zed\User\UserDependencyProvider;
@@ -19,6 +21,14 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
  */
 class UserBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\User\Business\Expander\MailExpanderInterface
+     */
+    public function createMailExpander(): MailExpanderInterface
+    {
+        return new MailExpander($this->createUserModel());
+    }
+
     /**
      * @return \Spryker\Zed\User\Business\Model\UserInterface
      */

@@ -29,8 +29,10 @@ class ProductCategoryFilterDeleter implements ProductCategoryFilterDeleterInterf
      * @param \Spryker\Zed\ProductCategoryFilter\Persistence\ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      */
-    public function __construct(ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer, ProductCategoryFilterTouchInterface $productCategoryFilterTouch)
-    {
+    public function __construct(
+        ProductCategoryFilterQueryContainerInterface $productCategoryFilterQueryContainer,
+        ProductCategoryFilterTouchInterface $productCategoryFilterTouch
+    ) {
         $this->productCategoryFilterQueryContainer = $productCategoryFilterQueryContainer;
         $this->productCategoryFilterTouch = $productCategoryFilterTouch;
     }

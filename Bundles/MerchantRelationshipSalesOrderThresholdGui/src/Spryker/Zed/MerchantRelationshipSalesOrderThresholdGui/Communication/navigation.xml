@@ -7,11 +7,17 @@
                 <title>Merchant relationships</title>
                 <uri>/merchant-relationship-sales-order-threshold-gui</uri>
                 <icon>fa-angle-double-right</icon>
+                <bundle>merchant-relationship-sales-order-threshold-gui</bundle>
+                <controller>index</controller>
+                <action>index</action>
             </sales-order-threshold-merchant-relationship>
             <sales-order-threshold-merchant-relationship-edit>
                 <label>Edit Merchant Relationship Threshold</label>
                 <title>Edit Merchant Relationship Threshold</title>
                 <uri>/merchant-relationship-sales-order-threshold-gui/edit</uri>
+                <bundle>merchant-relationship-sales-order-threshold-gui</bundle>
+                <controller>edit</controller>
+                <action>index</action>
                 <visible>0</visible>
             </sales-order-threshold-merchant-relationship-edit>
         </pages>

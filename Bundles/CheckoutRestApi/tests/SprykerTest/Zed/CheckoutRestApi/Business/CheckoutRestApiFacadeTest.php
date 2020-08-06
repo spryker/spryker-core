@@ -14,7 +14,6 @@ use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
 use Generated\Shared\Transfer\RestCheckoutResponseTransfer;
 use Generated\Shared\Transfer\ShipmentMethodsTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Calculation\Business\CalculationFacade;
 use Spryker\Zed\Cart\Business\CartFacade;
 use Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade;
@@ -169,9 +168,9 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function initMockCheckoutRestApiFactory(): MockObject
+    protected function initMockCheckoutRestApiFactory(): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory = $this->createPartialMock(
             CheckoutRestApiBusinessFactory::class,
@@ -200,9 +199,9 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCheckoutRestApiFactory(): MockObject
+    protected function getMockCheckoutRestApiFactory(): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
@@ -213,9 +212,9 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCheckoutRestApiFactoryWithFailingValidation(): MockObject
+    protected function getMockCheckoutRestApiFactoryWithFailingValidation(): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacade($mockCheckoutRestApiFactory);
@@ -226,9 +225,9 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getMockCheckoutRestApiFactoryForGuest(): MockObject
+    protected function getMockCheckoutRestApiFactoryForGuest(): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory = $this->initMockCheckoutRestApiFactory();
         $mockCheckoutRestApiFactory = $this->addMockCustomerFacadeForGuest($mockCheckoutRestApiFactory);
@@ -239,11 +238,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockShipmentFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockShipmentFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockShipmentFacade = $this->createPartialMock(
             ShipmentFacade::class,
@@ -265,11 +264,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCartFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCartFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCartFacade = $this->createPartialMock(
             CartFacade::class,
@@ -291,11 +290,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCartsRestApiFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCartsRestApiFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CartsRestApiFacade::class,
@@ -317,11 +316,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCartsRestApiFacadeForGuest(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCartsRestApiFacadeForGuest(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CartsRestApiFacade::class,
@@ -343,11 +342,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCalculationFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCalculationFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCartsRestApiFacade = $this->createPartialMock(
             CalculationFacade::class,
@@ -369,11 +368,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCartFacadeWithFailingValidation(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCartFacadeWithFailingValidation(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCartFacade = $this->createPartialMock(
             CartFacade::class,
@@ -395,11 +394,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCheckoutFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCheckoutFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutFacade = $this->createPartialMock(
             CheckoutFacade::class,
@@ -421,21 +420,21 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockPaymentFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockPaymentFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockPaymentFacade = $this->createPartialMock(
             PaymentFacade::class,
             [
-                'getAvailablePaymentProviders',
+                'getAvailablePaymentProvidersForStore',
                 'getAvailableMethods',
             ]
         );
         $mockPaymentFacade
-            ->method('getAvailablePaymentProviders')
+            ->method('getAvailablePaymentProvidersForStore')
             ->willReturn($this->tester->createPaymentProviderCollectionTransfer());
         $mockPaymentFacade
             ->method('getAvailableMethods')
@@ -453,11 +452,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCustomerFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCustomerFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
@@ -481,11 +480,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockCustomerFacadeForGuest(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockCustomerFacadeForGuest(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCustomerFacade = $this->createPartialMock(
             CustomerFacade::class,
@@ -507,11 +506,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockQuoteFacade(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockQuoteFacade(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockQuoteFacade = $this->createPartialMock(
             QuoteFacade::class,
@@ -533,11 +532,11 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
+     * @param \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockCheckoutRestApiFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApi\Business\CheckoutRestApiBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockQuoteMapperPlugins(MockObject $mockCheckoutRestApiFactory): MockObject
+    protected function addMockQuoteMapperPlugins(CheckoutRestApiBusinessFactory $mockCheckoutRestApiFactory): CheckoutRestApiBusinessFactory
     {
         $mockCheckoutRestApiFactory
             ->method('getQuoteMapperPlugins')
@@ -551,9 +550,9 @@ class CheckoutRestApiFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\CheckoutRestApiExtension\Dependency\Plugin\QuoteMapperPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockCustomerMapperPlugin(): MockObject
+    protected function createMockCustomerMapperPlugin(): QuoteMapperPluginInterface
     {
         $mockCustomerMapperPlugin = $this->createPartialMock(
             QuoteMapperPluginInterface::class,

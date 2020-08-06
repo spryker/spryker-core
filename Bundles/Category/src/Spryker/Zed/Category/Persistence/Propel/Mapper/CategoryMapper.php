@@ -63,8 +63,10 @@ class CategoryMapper implements CategoryMapperInterface
      *
      * @return \Generated\Shared\Transfer\CategoryCollectionTransfer
      */
-    public function mapCategoryCollection(ObjectCollection $categoryEntities, CategoryCollectionTransfer $categoryCollectionTransfer): CategoryCollectionTransfer
-    {
+    public function mapCategoryCollection(
+        ObjectCollection $categoryEntities,
+        CategoryCollectionTransfer $categoryCollectionTransfer
+    ): CategoryCollectionTransfer {
         foreach ($categoryEntities as $categoryEntity) {
             $categoryTransfer = $this->mapCategory($categoryEntity, new CategoryTransfer());
             $categoryTransfer = $this->mapLocalizedAttributes($categoryEntity, $categoryTransfer);

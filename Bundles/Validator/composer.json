@@ -1,0 +1,44 @@
+{
+  "name": "spryker/validator",
+  "type": "library",
+  "description": "Validator module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/application-extension": "^1.0.0",
+    "spryker/container": "^1.4.0",
+    "spryker/form-extension": "^1.0.0",
+    "spryker/kernel": "^3.52.0",
+    "spryker/symfony": "^3.2.2",
+    "spryker/validator-extension": "^1.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\Validator\\Helper\\": "tests/SprykerTest/Zed/Validator/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

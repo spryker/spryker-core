@@ -73,6 +73,8 @@ class ElasticsearchWriterTest extends Unit
      */
     protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
@@ -115,7 +117,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Client
      */
-    protected function getMockClient()
+    protected function getMockClient(): Client
     {
         $mockClient = $this->getMockBuilder(Client::class)
             ->disableOriginalConstructor()
@@ -129,7 +131,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index
      */
-    protected function getMockIndex()
+    protected function getMockIndex(): Index
     {
         $mockIndex = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
@@ -144,7 +146,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
-    protected function getMockType()
+    protected function getMockType(): Type
     {
         $mockType = $this->getMockBuilder(Type::class)
             ->disableOriginalConstructor()
@@ -158,7 +160,7 @@ class ElasticsearchWriterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Response
      */
-    protected function getResponse()
+    protected function getResponse(): Response
     {
         $mockResponse = $this->getMockBuilder(Response::class)
             ->disableOriginalConstructor()
@@ -167,5 +169,15 @@ class ElasticsearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
 
         return $mockResponse;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }

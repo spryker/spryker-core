@@ -1,4 +1,6 @@
 # Discount Module
+[![Build Status](https://travis-ci.org/spryker/discount.svg)](https://travis-ci.org/spryker/discount)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Discount module allows to create dynamic rules with which discounts can be applied to cart items. 
 Discounts can be exclusive or nonexclusive. Exclusive discounts cannot be combined with other discounts. In case if multiple exclusive discounts are applicable, only the one with the highest discounted value will be applied.

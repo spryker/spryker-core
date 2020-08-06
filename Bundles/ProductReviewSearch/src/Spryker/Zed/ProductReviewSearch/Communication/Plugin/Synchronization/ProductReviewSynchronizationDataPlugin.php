@@ -73,7 +73,7 @@ class ProductReviewSynchronizationDataPlugin extends AbstractPlugin implements S
      */
     public function getParams(): array
     {
-        return ["type" => "product-review"];
+        return ['type' => 'product-review'];
     }
 
     /**

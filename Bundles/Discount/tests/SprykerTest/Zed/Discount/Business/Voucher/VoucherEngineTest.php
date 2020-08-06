@@ -272,7 +272,7 @@ class VoucherEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\DiscountConfig
      */
-    protected function createDiscountConfigMock()
+    protected function createDiscountConfigMock(): DiscountConfig
     {
         return $this->getMockBuilder(DiscountConfig::class)->getMock();
     }
@@ -280,7 +280,7 @@ class VoucherEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Persistence\DiscountQueryContainerInterface
      */
-    protected function createDiscountQueryContainerMock()
+    protected function createDiscountQueryContainerMock(): DiscountQueryContainerInterface
     {
         return $this->getMockBuilder(DiscountQueryContainerInterface::class)->getMock();
     }
@@ -288,7 +288,7 @@ class VoucherEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucher
      */
-    protected function createDiscountVoucherEntityMock()
+    protected function createDiscountVoucherEntityMock(): SpyDiscountVoucher
     {
         return $this->getMockBuilder(SpyDiscountVoucher::class)->getMock();
     }
@@ -296,7 +296,7 @@ class VoucherEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
-    protected function createDiscountVoucherQueryMock()
+    protected function createDiscountVoucherQueryMock(): SpyDiscountVoucherQuery
     {
         return $this->getMockBuilder(SpyDiscountVoucherQuery::class)
             ->setMethods([
@@ -311,7 +311,7 @@ class VoucherEngineTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
-    protected function createConnectionMock()
+    protected function createConnectionMock(): ConnectionInterface
     {
         return $this->getMockBuilder(ConnectionInterface::class)->getMock();
     }

@@ -1,0 +1,26 @@
+{#
+@var merchantOrderCounts \Generated\Shared\Transfer\MerchantOrderCountsTransfer
+#}
+<web-mp-dashboard-stats>
+    <span title>{{ 'Per Store' | trans }}</span>
+
+    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
+        {% for store,total in merchantOrderCounts.totalPerStore %}
+            <web-mp-dashboard-stats-block
+                name="{{ store }}"
+                count="{{ total }}"
+            ></web-mp-dashboard-stats-block>
+        {% endfor %}
+    </div>
+</web-mp-dashboard-stats>
+
+<web-mp-dashboard-stats>
+    <span title>{{ 'New' | trans }}</span>
+
+    <div class="mp-dashboard-grid mp-dashboard-grid--stats">
+        <web-mp-dashboard-stats-block
+            name="{{ 'From the last %daysNumber% days' | trans({ '%daysNumber%': newOrdersDaysThreshold }) }}"
+            count="{{ merchantOrderCounts.new }}"
+        ></web-mp-dashboard-stats-block>
+    </div>
+</web-mp-dashboard-stats>

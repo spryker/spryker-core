@@ -17,10 +17,11 @@
     "spryker/propel-orm": "^1.0.0",
     "spryker/sales": "^11.0.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
-    "spryker/shipment-extension": "^1.0.0",
+    "spryker/shipment-extension": "^1.1.0",
     "spryker/store": "^1.4.0",
     "spryker/symfony": "^3.0.0",
     "spryker/tax": "^5.0.0",
+    "spryker/util-encoding": "^2.0.0",
     "spryker/zed-request": "^3.0.0"
   },
   "require-dev": {
@@ -50,9 +51,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "4.0.x-dev"
+      "dev-master": "8.0.x-dev"
     }
   },
   "config": {

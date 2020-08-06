@@ -40,6 +40,9 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="MerchantCriteria">
+    </transfer>
+
     <transfer name="MerchantCriteriaFilter">
     </transfer>
 

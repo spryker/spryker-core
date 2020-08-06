@@ -117,8 +117,8 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     } else {
                         $compositeNode = $this->createCompositeNode($lastLogicalComparator, $leftNode, $childTree, $compositeNode);
                     }
-                    break;
 
+                    break;
                 case $token === self::CLOSE_PARENTHESIS:
                     $parenthesisDepth--;
 
@@ -127,24 +127,23 @@ class SpecificationBuilder implements SpecificationBuilderInterface
                     }
 
                     return $compositeNode;
-
                 case $this->isLogicalComparator($token):
                     $lastLogicalComparator = $token;
-                    break;
 
+                    break;
                 case $this->isField($token):
                     $clauseTransfer = new ClauseTransfer();
                     $this->setClauseField($token, $clauseTransfer);
-                    break;
 
+                    break;
                 case $this->isComparator($token):
                     if ($clauseTransfer->getOperator()) {
                         $token = $clauseTransfer->getOperator() . ' ' . $token;
                     }
 
                     $clauseTransfer->setOperator($token);
-                    break;
 
+                    break;
                 case $this->isValue($token):
                      $value = $this->clearQuotes($token);
                      $clauseTransfer->setValue($value);

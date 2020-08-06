@@ -39,5 +39,7 @@ class GenerateTranslationCacheConsole extends Console
     {
         $this->getFacade()->cleanTranslationCache();
         $this->getFacade()->generateTranslationCache();
+
+        return static::CODE_SUCCESS;
     }
 }

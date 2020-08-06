@@ -20,6 +20,8 @@ use Spryker\Zed\Url\Dependency\Plugin\UrlUpdatePluginInterface;
 class TouchNavigationAfterUrlUpdatePlugin extends AbstractPlugin implements UrlUpdatePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer

@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Exception;
 
 use Exception;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Exception\InvalidSearchResultTypeException} instead.
+ */
 class InvalidSearchResultTypeException extends Exception
 {
 }

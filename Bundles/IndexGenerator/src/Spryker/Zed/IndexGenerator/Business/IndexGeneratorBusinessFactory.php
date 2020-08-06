@@ -15,6 +15,8 @@ use Spryker\Zed\IndexGenerator\Business\IndexRemover\PostgresIndexRemover;
 use Spryker\Zed\IndexGenerator\Business\IndexRemover\PostgresIndexRemoverInterface;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinder;
 use Spryker\Zed\IndexGenerator\Business\SchemaFinder\MergedSchemaFinderInterface;
+use Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeInterface;
+use Spryker\Zed\IndexGenerator\IndexGeneratorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -60,7 +62,15 @@ class IndexGeneratorBusinessFactory extends AbstractBusinessFactory
     protected function createFinder(): MergedSchemaFinderInterface
     {
         return new MergedSchemaFinder(
-            $this->getConfig()
+            $this->getPropelFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\IndexGenerator\Dependency\Facade\IndexGeneratorToPropelFacadeInterface
+     */
+    public function getPropelFacade(): IndexGeneratorToPropelFacadeInterface
+    {
+        return $this->getProvidedDependency(IndexGeneratorDependencyProvider::FACADE_PROPEL);
     }
 }

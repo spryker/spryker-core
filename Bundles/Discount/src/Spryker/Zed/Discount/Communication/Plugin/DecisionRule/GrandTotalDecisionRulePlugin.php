@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -36,12 +38,12 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isQuoteGrandTotalSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -54,11 +56,12 @@ class GrandTotalDecisionRulePlugin extends AbstractPlugin implements DecisionRul
     }
 
     /**
+     * {@inheritDoc}
      * Data types used by this field. (string, integer, list)
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

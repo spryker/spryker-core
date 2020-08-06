@@ -33,9 +33,9 @@ class BarcodeDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBarcodeGeneratorPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_BARCODE_GENERATOR] = function (Container $container) {
+        $container->set(static::PLUGINS_BARCODE_GENERATOR, function (Container $container) {
             return $this->getBarcodeGeneratorPlugins();
-        };
+        });
 
         return $container;
     }

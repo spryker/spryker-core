@@ -77,6 +77,7 @@ interface CompanyBusinessUnitClientInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
+     * - Executes CompanyBusinessUnitExpanderPluginInterface plugins if CompanyBusinessUnitCriteriaFilterTransfer::withoutExpanders=false.
      *
      * @api
      *

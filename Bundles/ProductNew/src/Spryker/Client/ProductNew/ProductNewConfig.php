@@ -13,6 +13,8 @@ use Spryker\Shared\ProductNew\ProductNewConfig as SprykerSharedProductNewConfig;
 class ProductNewConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getLabelNewName()

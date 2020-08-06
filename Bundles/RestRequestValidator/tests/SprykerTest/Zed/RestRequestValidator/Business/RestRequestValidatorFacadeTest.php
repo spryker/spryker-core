@@ -9,7 +9,6 @@ namespace SprykerTest\Zed\RestRequestValidator\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\StoreTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapter;
 use Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFinderAdapter;
@@ -73,10 +72,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createMockFactory(): MockObject
+    protected function createMockFactory(): RestRequestValidatorBusinessFactory
     {
+        /** @var \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory */
         $mockFactory = $this->createPartialMock(
             RestRequestValidatorBusinessFactory::class,
             [
@@ -98,11 +98,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockFactory
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockConfig(MockObject $mockFactory): MockObject
+    protected function addMockConfig(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
     {
         $mockConfig = $this->createPartialMock(
             RestRequestValidatorConfig::class,
@@ -142,11 +142,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockFactory
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addStore(MockObject $mockFactory): MockObject
+    protected function addStore(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
     {
         $mockStore = $this->createPartialMock(
             RestRequestValidatorToStoreBridge::class,
@@ -192,11 +192,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockFactory
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockFinderAdapter(MockObject $mockFactory): MockObject
+    protected function addMockFinderAdapter(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
     {
         $mockFactory
             ->method('getFinderAdapter')
@@ -208,11 +208,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockFactory
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockFilesystemAdapter(MockObject $mockFactory): MockObject
+    protected function addMockFilesystemAdapter(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
     {
         $mockFactory
             ->method('getFilesystemAdapter')
@@ -224,11 +224,11 @@ class RestRequestValidatorFacadeTest extends Unit
     }
 
     /**
-     * @param \PHPUnit\Framework\MockObject\MockObject $mockFactory
+     * @param \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject $mockFactory
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Zed\RestRequestValidator\Business\RestRequestValidatorBusinessFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function addMockYamlAdapter(MockObject $mockFactory): MockObject
+    protected function addMockYamlAdapter(RestRequestValidatorBusinessFactory $mockFactory): RestRequestValidatorBusinessFactory
     {
         $mockFactory
             ->method('getYamlAdapter')

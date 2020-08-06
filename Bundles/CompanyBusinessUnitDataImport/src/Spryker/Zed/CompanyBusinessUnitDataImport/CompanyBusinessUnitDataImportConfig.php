@@ -17,6 +17,8 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMPANY_BUSINESS_UNIT_ADDRESS = 'company-business-unit-address';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyBusinessUnitDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -25,6 +27,8 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyBusinessUnitUserDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -33,6 +37,8 @@ class CompanyBusinessUnitDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyBusinessUnitAddressDataImporterConfiguration(): DataImporterConfigurationTransfer

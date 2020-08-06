@@ -281,7 +281,7 @@ class OmsFacadeReservationsTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\Oms\Business\OmsFacadeInterface
+     * @return \Spryker\Zed\Oms\Business\OmsFacadeInterface
      */
     protected function getOmsFacade()
     {

@@ -46,6 +46,8 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     protected $store;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -100,7 +102,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     }
 
     /**
-     * @param array $navigationTreeTransfers
+     * @param \Generated\Shared\Transfer\NavigationTreeTransfer[][] $navigationTreeTransfers
      * @param array $spyNavigationMenuTranslationStorageEntities
      *
      * @return void
@@ -147,7 +149,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param array $navigationIds
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\NavigationTreeTransfer[][]
      */
     protected function getNavigationTreeTransfer(array $navigationIds)
     {
@@ -159,7 +161,12 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
             $navigationTransfer->setIdNavigation($navigationId);
             foreach ($locales as $locale) {
                 $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray(), true);
-                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
+                $navigationTreeTransfer = $this->navigationFacade->findNavigationTree($navigationTransfer, $localeTransfer);
+                if (!$navigationTreeTransfer) {
+                    continue;
+                }
+                
+                $navigationTrees[$navigationId][$localeTransfer->getLocaleName()] = $navigationTreeTransfer;
             }
         }
 
@@ -219,7 +226,7 @@ class NavigationStorageWriter implements NavigationStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\NavigationTreeNodeTransfer[]|\ArrayObject $navigationTreeNodeTransfers
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\NavigationNodeStorageTransfer[]
      */
     protected function mapToNavigationNodeStorageTransfer(ArrayObject $navigationTreeNodeTransfers)
     {

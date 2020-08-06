@@ -56,6 +56,8 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->filterByLastName_Like($queryPattern)
             ->_or()
             ->filterByFirstName_Like($queryPattern)
+            ->_or()
+            ->filterByCustomerReference($query)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
                 SpyCustomerTableMap::COL_FIRST_NAME,
@@ -68,6 +70,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             $customersQuery->limit($limit);
         }
 
+        /** @var array $customers */
         $customers = $customersQuery->find();
 
         $customerTransferList = [];

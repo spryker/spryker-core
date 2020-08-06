@@ -63,7 +63,8 @@ class ProductBundleDiscontinuedWriter implements ProductBundleDiscontinuedWriter
     {
         $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productConcreteTransfer);
 
-        if (!$bundledProductConcreteIds
+        if (
+            !$bundledProductConcreteIds
             || !$this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($bundledProductConcreteIds)
         ) {
             return $productConcreteTransfer;

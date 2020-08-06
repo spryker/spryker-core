@@ -59,9 +59,9 @@ class CmsBlockCollectorFacadeTest extends Unit
     protected $cmsBlockCollector;
 
     /**
-     * @uses CmsBlockCollectorFacadeInterface::getFactory()
-     * @uses CmsBlockCollectorBusinessFactory::getCollectorFacade()
-     * @uses CmsBlockCollectorBusinessFactory::createStorageCmsBlockCollector()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorFacade::getFactory()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory::getCollectorFacade()
+     * @uses \Spryker\Zed\CmsBlockCollector\Business\CmsBlockCollectorBusinessFactory::createStorageCmsBlockCollector()
      *
      * @return void
      */

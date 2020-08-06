@@ -1,6 +1,6 @@
 # Uuid Module
 [![Build Status](https://travis-ci.org/spryker/uuid.svg)](https://travis-ci.org/spryker/uuid)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/uuid/badge.svg)](https://coveralls.io/github/spryker/uuid)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Uuid modules provides UUID management functionality.
 

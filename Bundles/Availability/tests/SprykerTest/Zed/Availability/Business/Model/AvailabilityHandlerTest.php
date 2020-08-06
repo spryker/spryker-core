@@ -156,7 +156,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface
      */
-    protected function createOmsFacadeMock()
+    protected function createOmsFacadeMock(): AvailabilityToOmsFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToOmsFacadeInterface::class)
             ->getMock();
@@ -165,7 +165,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToTouchFacadeInterface
      */
-    protected function createTouchFacadeMock()
+    protected function createTouchFacadeMock(): AvailabilityToTouchFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToTouchFacadeInterface::class)
             ->getMock();
@@ -174,7 +174,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Business\Model\ProductAvailabilityCalculatorInterface
      */
-    protected function createAvailabilityCalculatorMock()
+    protected function createAvailabilityCalculatorMock(): ProductAvailabilityCalculatorInterface
     {
         return $this->getMockBuilder(ProductAvailabilityCalculatorInterface::class)
             ->getMock();
@@ -183,7 +183,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityRepositoryInterface
      */
-    protected function createAvailabilityRepositoryMock()
+    protected function createAvailabilityRepositoryMock(): AvailabilityRepositoryInterface
     {
         return $this->getMockBuilder(AvailabilityRepositoryInterface::class)
             ->getMock();
@@ -192,7 +192,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Persistence\AvailabilityEntityManagerInterface
      */
-    protected function createAvailabilityEntityManagerMock()
+    protected function createAvailabilityEntityManagerMock(): AvailabilityEntityManagerInterface
     {
         return $this->getMockBuilder(AvailabilityEntityManagerInterface::class)
             ->getMock();
@@ -201,7 +201,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToEventFacadeInterface
      */
-    protected function createAvailabilityToEventFacade()
+    protected function createAvailabilityToEventFacade(): AvailabilityToEventFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToEventFacadeInterface::class)
             ->getMock();
@@ -210,7 +210,7 @@ class AvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Availability\Dependency\Facade\AvailabilityToStockFacadeInterface
      */
-    protected function createAvailabilityToStockFacadeMock()
+    protected function createAvailabilityToStockFacadeMock(): AvailabilityToStockFacadeInterface
     {
         return $this->getMockBuilder(AvailabilityToStockFacadeInterface::class)
             ->getMock();

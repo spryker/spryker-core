@@ -66,7 +66,7 @@ class DataContainerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Checkout\Dependency\Client\CheckoutToQuoteInterface
      */
-    private function getQuoteClientMock()
+    private function getQuoteClientMock(): CheckoutToQuoteInterface
     {
         return $this->getMockBuilder(CheckoutToQuoteInterface::class)->getMock();
     }

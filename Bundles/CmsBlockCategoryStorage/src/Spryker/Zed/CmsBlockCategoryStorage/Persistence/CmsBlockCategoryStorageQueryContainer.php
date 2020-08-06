@@ -25,6 +25,8 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     protected const BLOCK_KEY = 'block_key';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryIds
@@ -39,6 +41,8 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryIds
@@ -68,9 +72,11 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()` instead.
+     * @deprecated Use {@link \Spryker\Zed\CmsBlockCategoryStorage\Persistence\CmsBlockCategoryStorageQueryContainer::queryCmsBlockCategoriesByCmsCategoryIds()} instead.
      *
      * @param int[] $cmsBlockCategoriesIds
      *
@@ -111,11 +117,13 @@ class CmsBlockCategoryStorageQueryContainer extends AbstractQueryContainer imple
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $idPositions
      *
-     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery
+     * @return \Orm\Zed\CmsBlockCategoryConnector\Persistence\SpyCmsBlockCategoryConnectorQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryCategoryIdsByPositionIds(array $idPositions)
     {

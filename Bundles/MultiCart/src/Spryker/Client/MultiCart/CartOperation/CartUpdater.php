@@ -86,6 +86,8 @@ class CartUpdater implements CartUpdaterInterface
     }
 
     /**
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -125,6 +127,20 @@ class CartUpdater implements CartUpdaterInterface
             ->setExpenses(new ArrayObject());
 
         return $this->persistentCartClient->updateQuote($quoteUpdateRequestTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteTransfer->setIsDefault(true);
+        $quoteResponseTransfer = $this->updateQuote($quoteTransfer);
+        $this->zedRequestClient->addResponseMessagesToMessenger();
+
+        return $quoteResponseTransfer;
     }
 
     /**

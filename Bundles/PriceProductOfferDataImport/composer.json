@@ -4,18 +4,18 @@
   "description": "PriceProductOfferDataImport module",
   "license": "MIT",
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.2",
     "spryker/currency": "^3.0.0",
     "spryker/data-import": "^1.0.0",
     "spryker/kernel": "^3.33.0",
     "spryker/price-product": "^4.9.0",
-    "spryker/price-product-offer": "^0.1.0",
-    "spryker/product-offer": "^0.1.0",
+    "spryker/price-product-offer": "^0.6.0",
+    "spryker/product": "^6.0.0",
+    "spryker/product-offer": "^0.4.0",
     "spryker/store": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -31,6 +31,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

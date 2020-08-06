@@ -17,6 +17,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 class DiscontinuedProductConcreteEditFormExpanderPlugin extends AbstractPlugin implements ProductConcreteEditFormExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Expands ProductConcreteEditForm with DiscontinueProductForm form.
      *

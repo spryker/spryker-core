@@ -15,7 +15,7 @@ class MerchantProductOfferDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableIsEmpty(): void
+    public function assertProductOfferDatabaseTableIsEmpty(): void
     {
         $query = $this->getProductOfferPropelQuery();
 
@@ -25,7 +25,7 @@ class MerchantProductOfferDataImportHelper extends Module
     /**
      * @return void
      */
-    public function assertDatabaseTableContainsData(): void
+    public function assertProductOfferDatabaseTableContainsData(): void
     {
         $query = $this->getProductOfferPropelQuery();
 

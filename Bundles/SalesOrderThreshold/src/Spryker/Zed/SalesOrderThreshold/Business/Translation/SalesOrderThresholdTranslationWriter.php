@@ -84,8 +84,10 @@ class SalesOrderThresholdTranslationWriter implements SalesOrderThresholdTransla
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createKeyTranslationTransfer(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $translationsByLocale): KeyTranslationTransfer
-    {
+    protected function createKeyTranslationTransfer(
+        SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer,
+        array $translationsByLocale
+    ): KeyTranslationTransfer {
         return (new KeyTranslationTransfer())
             ->setGlossaryKey($salesOrderThresholdValueTransfer->getMessageGlossaryKey())
             ->setLocales($translationsByLocale);

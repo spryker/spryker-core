@@ -57,6 +57,8 @@ use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcher;
 use Spryker\Glue\GlueApplication\Rest\Serialize\EncoderMatcherInterface;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParser;
 use Spryker\Glue\GlueApplication\Rest\Uri\UriParserInterface;
+use Spryker\Glue\GlueApplication\Rest\User\RestUserValidator;
+use Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface;
 use Spryker\Glue\GlueApplication\Rest\User\UserProvider;
 use Spryker\Glue\GlueApplication\Rest\User\UserProviderInterface;
 use Spryker\Glue\GlueApplication\Rest\Version\VersionResolver;
@@ -67,7 +69,10 @@ use Spryker\Glue\GlueApplication\Serialize\Encoder\EncoderInterface;
 use Spryker\Glue\GlueApplication\Serialize\Encoder\JsonEncoder;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
-use Spryker\Glue\Kernel\Application;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Application\Application as ApplicationApplication;
+use Spryker\Shared\Application\ApplicationInterface;
+use Spryker\Shared\Kernel\Container\ContainerProxy;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -85,6 +90,7 @@ class GlueApplicationFactory extends AbstractFactory
             $this->createRestResponseHeaders(),
             $this->createRestHttpRequestValidator(),
             $this->createRestRequestValidator(),
+            $this->createRestUserValidator(),
             $this->createRestResourceBuilder(),
             $this->createRestControllerCallbacks(),
             $this->getConfig(),
@@ -235,7 +241,7 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use `\Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin` instead.
+     * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\EventDispatcher\GlueRestControllerListenerEventDispatcherPlugin} instead.
      *
      * @return \Spryker\Glue\GlueApplication\Plugin\Rest\GlueControllerListenerPlugin
      */
@@ -313,7 +319,7 @@ class GlueApplicationFactory extends AbstractFactory
      */
     public function createRestResponsePagination(): ResponsePaginationInterface
     {
-        return new ResponsePagination($this->getConfig()->getGlueDomainName());
+        return new ResponsePagination($this->getConfig());
     }
 
     /**
@@ -346,6 +352,16 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplication\Rest\User\RestUserValidatorInterface
+     */
+    public function createRestUserValidator(): RestUserValidatorInterface
+    {
+        return new RestUserValidator(
+            $this->getRestUserValidatorPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\Request\PaginationParametersHttpRequestValidatorInterface
      */
     public function createPaginationParametersRequestValidator(): PaginationParametersHttpRequestValidatorInterface
@@ -362,6 +378,14 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestUserValidatorPluginInterface[]
+     */
+    public function getRestUserValidatorPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_VALIDATE_REST_USER);
+    }
+
+    /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
      */
     public function getRestRequestValidatorPlugins(): array
@@ -370,9 +394,9 @@ class GlueApplicationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\Kernel\Application
+     * @return \Spryker\Service\Container\ContainerInterface
      */
-    public function getGlueApplication(): Application
+    public function getGlueApplication(): ContainerInterface
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::APPLICATION_GLUE);
     }
@@ -463,5 +487,29 @@ class GlueApplicationFactory extends AbstractFactory
     public function getRestUserFinderPlugins(): array
     {
         return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_REST_USER_FINDER);
+    }
+
+    /**
+     * @return \Spryker\Shared\Application\ApplicationInterface
+     */
+    public function createApplication(): ApplicationInterface
+    {
+        return new ApplicationApplication($this->createServiceContainer(), $this->getApplicationPlugins());
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    public function createServiceContainer(): ContainerInterface
+    {
+        return new ContainerProxy(['logger' => null, 'debug' => $this->getConfig()->isDebugModeEnabled(), 'charset' => 'UTF-8']);
+    }
+
+    /**
+     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
+     */
+    public function getApplicationPlugins(): array
+    {
+        return $this->getProvidedDependency(GlueApplicationDependencyProvider::PLUGINS_APPLICATION);
     }
 }

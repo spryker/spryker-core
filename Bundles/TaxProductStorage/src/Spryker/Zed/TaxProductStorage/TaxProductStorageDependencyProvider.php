@@ -54,9 +54,9 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addProductAbstractQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_ABSTRACT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_ABSTRACT, $container->factory(function () {
             return SpyProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -68,11 +68,11 @@ class TaxProductStorageDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new TaxProductStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }

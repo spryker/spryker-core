@@ -77,6 +77,47 @@ interface ProductMeasurementUnitStorageClientInterface
 
     /**
      * Specification:
+     * - Searches for product base units within Storage with given product IDs.
+     * - Returns found product base units.
+     * - Returned data is indexed by product concrete IDs.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * Specification:
+     * - Searches for product sales units within Storage with given product IDs.
+     * - Returns found product sales units.
+     *
+     * @api
+     *
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
+
+    /**
+     * Specification:
+     * - Searches for product measurement unit storage transfers using a given mapping type and identifiers.
+     * - Returns found product measurement unit storage transfers.
+     *
+     * @api
+     *
+     * @param string $mappingType
+     * @param string[] $identifiers
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
+
+    /**
+     * Specification:
      * - Expands array of ProductConcreteTransfers with base measurement unit data using given product ID.
      * - Returns the unchanged provided ProductConcreteTransfers when no base measurement unit is defined for the product.
      *

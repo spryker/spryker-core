@@ -54,11 +54,13 @@ class ProductPackagingUnitCartOperation implements ProductPackagingUnitCartOpera
 
                 if ($newQuantity < 1 || $newAmount->lessThan(1)) {
                     $quoteTransfer->getItems()->offsetUnset($itemIndex);
+
                     break;
                 }
 
                 $currentItemTransfer->setQuantity($newQuantity);
                 $currentItemTransfer->setAmount($newAmount);
+
                 break;
             }
         }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\UrlRedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\Url\Persistence\SpyUrlRedirect;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Exception\MissingRedirectException;
 use Spryker\Zed\Url\Business\Exception\MissingUrlException;
 use Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface;
@@ -19,6 +20,8 @@ use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -39,8 +42,11 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
      * @param \Spryker\Zed\Url\Business\Url\UrlActivatorInterface $urlActivator
      * @param \Spryker\Zed\Url\Business\Redirect\UrlRedirectActivatorInterface $urlRedirectActivator
      */
-    public function __construct(UrlQueryContainerInterface $urlQueryContainer, UrlActivatorInterface $urlActivator, UrlRedirectActivatorInterface $urlRedirectActivator)
-    {
+    public function __construct(
+        UrlQueryContainerInterface $urlQueryContainer,
+        UrlActivatorInterface $urlActivator,
+        UrlRedirectActivatorInterface $urlRedirectActivator
+    ) {
         $this->urlQueryContainer = $urlQueryContainer;
         $this->urlActivator = $urlActivator;
         $this->urlRedirectActivator = $urlRedirectActivator;
@@ -53,15 +59,9 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
      */
     public function deleteUrl(UrlTransfer $urlTransfer)
     {
-        $urlEntity = $this->getUrlEntityToDelete($urlTransfer);
-
-        $this->urlQueryContainer->getConnection()->beginTransaction();
-
-        $this->notifyBeforeDeleteObservers($urlTransfer);
-        $this->deleteUrlEntity($urlEntity);
-        $this->notifyAfterDeleteObservers($urlTransfer);
-
-        $this->urlQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer): void {
+            $this->executeDeleteUrlTransaction($urlTransfer);
+        });
     }
 
     /**
@@ -71,13 +71,35 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
      */
     public function deleteUrlRedirect(UrlRedirectTransfer $urlRedirectTransfer)
     {
+        $this->getTransactionHandler()->handleTransaction(function () use ($urlRedirectTransfer): void {
+            $this->executeDeleteUrlRedirectTransaction($urlRedirectTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteUrlTransaction(UrlTransfer $urlTransfer): void
+    {
+        $urlEntity = $this->getUrlEntityToDelete($urlTransfer);
+
+        $this->notifyBeforeDeleteObservers($urlTransfer);
+        $this->deleteUrlEntity($urlEntity);
+        $this->notifyAfterDeleteObservers($urlTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteUrlRedirectTransaction(UrlRedirectTransfer $urlRedirectTransfer): void
+    {
         $urlRedirectEntity = $this->getRedirectEntity($urlRedirectTransfer);
 
-        $this->urlQueryContainer->getConnection()->beginTransaction();
-
         $this->deleteUrlRedirectEntity($urlRedirectEntity);
-
-        $this->urlQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -85,7 +107,7 @@ class UrlDeleter extends AbstractUrlDeleterSubject implements UrlDeleterInterfac
      *
      * @throws \Spryker\Zed\Url\Business\Exception\MissingUrlException
      *
-     * @return \Orm\Zed\Url\Persistence\SpyUrl|null
+     * @return \Orm\Zed\Url\Persistence\SpyUrl
      */
     protected function getUrlEntityToDelete(UrlTransfer $urlTransfer)
     {

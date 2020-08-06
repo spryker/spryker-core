@@ -9,12 +9,15 @@
     "spryker/gui": "^3.26.0",
     "spryker/kernel": "^3.30.0",
     "spryker/session": "^3.0.0 || ^4.0.0",
+    "spryker/session-redis-extension": "^1.0.0",
     "spryker/symfony": "^3.0.0",
+    "spryker/transfer": "^3.8.0",
     "spryker/user": "^3.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
     "spryker/discount": "*",
@@ -41,6 +44,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

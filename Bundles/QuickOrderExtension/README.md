@@ -1,6 +1,6 @@
 # QuickOrderExtension Module
 [![Build Status](https://travis-ci.org/spryker/quick-order-extension.svg)](https://travis-ci.org/spryker/quick-order-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/quick-order-extension/badge.svg)](https://coveralls.io/github/spryker/quick-order-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides interfaces for plugins used to extend QuickOrderPage module.
 

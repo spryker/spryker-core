@@ -20,7 +20,7 @@ class Slug implements SlugInterface
             $value = iconv('UTF-8', 'ASCII//TRANSLIT', $value);
         }
 
-        $value = preg_replace("/[^a-zA-Z0-9 -]/", "", trim($value));
+        $value = preg_replace('/[^a-zA-Z0-9 -]/', '', trim($value));
         $value = mb_strtolower($value);
         $value = str_replace(' ', '-', $value);
         $value = preg_replace('/(\-)\1+/', '$1', $value);

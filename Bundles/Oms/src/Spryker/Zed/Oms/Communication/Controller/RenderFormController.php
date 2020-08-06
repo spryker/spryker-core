@@ -23,6 +23,7 @@ class RenderFormController extends AbstractController
     protected const KEY_REDIRECT_URL = 'redirectUrl';
     protected const KEY_EVENTS_GROUPED_BY_ITEM = 'eventsGroupedByItem';
     protected const KEY_ID_SALES_ORDER_ITEM = 'idSalesOrderItem';
+    protected const PARAM_SALES_ORDER_ITEM_IDS = 'salesOrderItemIds';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -56,6 +57,26 @@ class RenderFormController extends AbstractController
         $orderItemOmsTriggerFormCollection = $this->getFactory()
             ->createOmsTriggerFormCollectionBuilder()
             ->buildOrderItemOmsTriggerFormCollection($redirectUrl, $eventsGroupedByItem, $idSalesOrderItem);
+
+        return $this->viewResponse([
+            'formCollection' => $orderItemOmsTriggerFormCollection,
+        ]);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array
+     */
+    public function orderItemsAction(Request $request): array
+    {
+        $redirectUrl = $request->attributes->get(static::KEY_REDIRECT_URL);
+        $events = $request->attributes->get(static::KEY_EVENTS);
+        $salesOrderItemIds = $request->attributes->get(static::PARAM_SALES_ORDER_ITEM_IDS);
+
+        $orderItemOmsTriggerFormCollection = $this->getFactory()
+            ->createOmsTriggerFormCollectionBuilder()
+            ->buildOrderItemsOmsTriggerFormCollection($redirectUrl, $events, $salesOrderItemIds);
 
         return $this->viewResponse([
             'formCollection' => $orderItemOmsTriggerFormCollection,

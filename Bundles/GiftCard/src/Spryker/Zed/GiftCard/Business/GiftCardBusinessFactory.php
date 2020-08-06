@@ -10,6 +10,14 @@ namespace Spryker\Zed\GiftCard\Business;
 use Spryker\Zed\GiftCard\Business\ActualValueHydrator\GiftCardActualValueHydrator;
 use Spryker\Zed\GiftCard\Business\Calculation\GiftCardCalculator;
 use Spryker\Zed\GiftCard\Business\Cart\MetadataExpander;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdder;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearer;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearerInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinder;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinderInterface;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemover;
+use Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemoverInterface;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsChecker;
 use Spryker\Zed\GiftCard\Business\Checker\GiftCardItemsCheckerInterface;
 use Spryker\Zed\GiftCard\Business\Discount\GiftCardDiscountableItemFilter;
@@ -44,6 +52,7 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 /**
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardBusinessFactory extends AbstractBusinessFactory
 {
@@ -55,7 +64,8 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
         return new GiftCardReader(
             $this->getQueryContainer(),
             $this->createGiftCardActualValueHydrator(),
-            $this->getEncodingService()
+            $this->getEncodingService(),
+            $this->getRepository()
         );
     }
 
@@ -92,6 +102,38 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
             $this->getGiftCardAttributePlugins(),
             $this->getEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeAdderInterface
+     */
+    public function createGiftCardCartCodeAdder(): GiftCardCartCodeAdderInterface
+    {
+        return new GiftCardCartCodeAdder();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeRemoverInterface
+     */
+    public function createGiftCardCartCodeRemover(): GiftCardCartCodeRemoverInterface
+    {
+        return new GiftCardCartCodeRemover();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeClearerInterface
+     */
+    public function createGiftCardCartCodeClearer(): GiftCardCartCodeClearerInterface
+    {
+        return new GiftCardCartCodeClearer();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Business\CartCode\GiftCardCartCodeOperationMessageFinderInterface
+     */
+    public function createGiftCardCartCodeOperationMessageFinder(): GiftCardCartCodeOperationMessageFinderInterface
+    {
+        return new GiftCardCartCodeOperationMessageFinder();
     }
 
     /**
@@ -236,7 +278,7 @@ class GiftCardBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createShipmentGroupMethodFilter() instead.
+     * @deprecated Use {@link createShipmentGroupMethodFilter()} instead.
      *
      * @return \Spryker\Zed\GiftCard\Business\Shipment\ShipmentMethodFilterInterface
      */

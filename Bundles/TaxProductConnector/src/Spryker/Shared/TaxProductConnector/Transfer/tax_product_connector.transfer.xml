@@ -43,4 +43,9 @@
 
     <transfer name="Country">
     </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+    </transfer>
 </transfers>

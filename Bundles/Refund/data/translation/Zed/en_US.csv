@@ -1,9 +1,10 @@
 Amount,Amount
 Comment,Comment
 "List of refunds","List of refunds"
+"No returns for this order","No returns for this order"
 "Overview of Refunds","Overview of Refunds"
+Refunds,Refunds
 "Refund date","Refund date"
 "Refund Id","Refund Id"
 "Sales Order Id","Sales Order Id"
 Time,Time
-"No returns for this order","No returns for this order"

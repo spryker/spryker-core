@@ -194,6 +194,7 @@ class Process implements ProcessInterface
                 return $process->getState($stateId);
             }
         }
+
         throw new Exception('Unknown state: ' . $stateId);
     }
 

@@ -247,4 +247,18 @@ class Role implements RoleInterface
 
         return $roleTransfer;
     }
+
+    /**
+     * @param string $name
+     *
+     * @return \Generated\Shared\Transfer\RoleTransfer|null
+     */
+    public function findRoleByName(string $name): ?RoleTransfer
+    {
+        if (!$this->hasRoleName($name)) {
+            return null;
+        }
+
+        return $this->getByName($name);
+    }
 }

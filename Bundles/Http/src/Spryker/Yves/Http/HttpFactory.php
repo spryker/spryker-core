@@ -11,6 +11,8 @@ use Spryker\Yves\Http\Dependency\Client\HttpToLocaleClientInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Symfony\Bridge\Twig\Extension\HttpKernelExtension;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\Extension\HttpFoundation\Type\FormTypeHttpFoundationExtension;
+use Symfony\Component\Form\FormTypeExtensionInterface;
 use Symfony\Component\HttpKernel\EventListener\FragmentListener;
 use Symfony\Component\HttpKernel\UriSigner;
 use Twig\Extension\AbstractExtension;
@@ -58,5 +60,13 @@ class HttpFactory extends AbstractFactory
     public function createHttpFragmentListener(): EventSubscriberInterface
     {
         return new FragmentListener($this->createUriSigner(), $this->getConfig()->getHttpFragmentPath());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormTypeExtensionInterface
+     */
+    public function createFormTypeHttpFoundationExtension(): FormTypeExtensionInterface
+    {
+        return new FormTypeHttpFoundationExtension();
     }
 }

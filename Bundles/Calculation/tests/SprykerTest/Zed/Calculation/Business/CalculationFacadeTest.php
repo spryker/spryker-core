@@ -35,6 +35,7 @@ use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundableAmountCalc
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\RefundTotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\SubtotalCalculatorPlugin;
 use Spryker\Zed\Calculation\Communication\Plugin\Calculator\TaxTotalCalculatorPlugin;
+use Spryker\Zed\Calculation\Dependency\Service\CalculationToUtilTextBridge;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -95,7 +96,7 @@ class CalculationFacadeTest extends Unit
         $calculatedItemProductOptionTransfer = $calculatedItemTransfer->getProductOptions()[0];
         $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumGrossPrice());
         $this->assertSame($calculatedItemProductOptionTransfer->getUnitPrice(), $calculatedItemProductOptionTransfer->getUnitPrice());
-        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), "Product option sum price is not set.");
+        $this->assertNotEmpty($calculatedItemProductOptionTransfer->getSumPrice(), 'Product option sum price is not set.');
         $this->assertSame($calculatedItemProductOptionTransfer->getSumPrice(), $calculatedItemProductOptionTransfer->getSumGrossPrice());
 
         //order.expense
@@ -611,6 +612,10 @@ class CalculationFacadeTest extends Unit
         $container[CalculationDependencyProvider::PLUGINS_QUOTE_POST_RECALCULATE] = function () {
             return [];
         };
+
+        $container->set(CalculationDependencyProvider::SERVICE_UTIL_TEXT, function (Container $container) {
+            return new CalculationToUtilTextBridge($container->getLocator()->utilText()->service());
+        });
 
         $calculationBusinessFactory->setContainer($container);
         $calculationFacade->setFactory($calculationBusinessFactory);

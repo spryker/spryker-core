@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\CartsRestApi\Business\QuoteItem;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
+use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
+use Spryker\Shared\CartsRestApi\CartsRestApiConfig as CartsRestApiSharedConfig;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteCreatorInterface;
 use Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface;
 use Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToStoreFacadeInterface;
@@ -59,7 +62,7 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
     }
 
     /**
-     * @deprecated Use addToGuestCart() instead.
+     * @deprecated Use {@link addToGuestCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -90,18 +93,30 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
 
         $cartItemRequestTransfer->getCustomer()->requireCustomerReference();
 
-        $guestQuoteCollection = $this->quoteReader->getQuoteCollection(
+        $quoteCollectionTransfer = $this->quoteReader->getQuoteCollection(
             (new QuoteCriteriaFilterTransfer())
                 ->setCustomerReference($cartItemRequestTransfer->getCustomer()->getCustomerReference())
         );
 
-        $customerQuotes = $guestQuoteCollection->getQuotes();
+        $customerQuoteTransfers = $quoteCollectionTransfer->getQuotes();
 
-        if (!$customerQuotes->count()) {
+        if ($cartItemRequestTransfer->getQuoteUuid() && !$customerQuoteTransfers->count()) {
+            return $this->createCartNotFoundError();
+        }
+
+        if (!$customerQuoteTransfers->count()) {
             return $this->createGuestQuote($cartItemRequestTransfer);
         }
 
-        $cartItemRequestTransfer->setQuoteUuid($customerQuotes[0]->getUuid());
+        $customerQuoteTransfer = $this->findQuoteInQuoteCollection(
+            $customerQuoteTransfers,
+            $cartItemRequestTransfer->getQuoteUuid()
+        );
+        if (!$customerQuoteTransfer) {
+            return $this->createCartNotFoundError();
+        }
+
+        $cartItemRequestTransfer->setQuoteUuid($customerQuoteTransfer->getUuid());
 
         return $this->addItem($cartItemRequestTransfer);
     }
@@ -152,5 +167,41 @@ class GuestQuoteItemAdder implements GuestQuoteItemAdderInterface
             ->setStore($currentStore)
             ->setCurrency((new CurrencyTransfer())
                 ->setCode($currentStore->getDefaultCurrencyIsoCode()));
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createCartNotFoundError(): QuoteResponseTransfer
+    {
+        return (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->addError(
+                (new QuoteErrorTransfer())
+                    ->setErrorIdentifier(CartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND)
+            );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer[]|\ArrayObject $customerQuoteTransfers
+     * @param string|null $quoteUuid
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer|null
+     */
+    protected function findQuoteInQuoteCollection(
+        ArrayObject $customerQuoteTransfers,
+        ?string $quoteUuid
+    ): ?QuoteTransfer {
+        if (!$quoteUuid && $customerQuoteTransfers->offsetExists(0)) {
+            return $customerQuoteTransfers->offsetGet(0);
+        }
+
+        foreach ($customerQuoteTransfers as $customerQuoteTransfer) {
+            if ($customerQuoteTransfer->getUuid() === $quoteUuid) {
+                return $customerQuoteTransfer;
+            }
+        }
+
+        return null;
     }
 }

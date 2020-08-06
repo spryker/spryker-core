@@ -12,4 +12,13 @@
     <transfer name="OauthUser">
     </transfer>
 
+    <transfer name="OauthRefreshTokenCollection">
+    </transfer>
+
+    <transfer name="OauthTokenCriteriaFilter">
+    </transfer>
+
+    <transfer name="OauthRefreshToken">
+    </transfer>
+
 </transfers>

@@ -1,6 +1,6 @@
 # ProductStorageExtension Module
 [![Build Status](https://travis-ci.org/spryker/product-storage-extension.svg)](https://travis-ci.org/spryker/product-storage-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-storage-extension/badge.svg)](https://coveralls.io/github/spryker/product-storage-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductStorageExtension provides interfaces for extending ProductStorage module with plugins.
 

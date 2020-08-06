@@ -84,9 +84,23 @@ class ConsoleLogPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testOnConsoleExceptionWithoutCommandShouldCallLogger(): void
+    {
+        $loggerMock = $this->getLoggerMock();
+        $loggerMock->expects($this->once())->method('error');
+
+        $consoleLogPlugin = $this->getConsoleLogPluginMock($loggerMock);
+        $event = new ConsoleErrorEvent(new ArrayInput([]), new ConsoleOutput(), new Exception());
+
+        $consoleLogPlugin->onConsoleError($event);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $lockerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -98,7 +112,7 @@ class ConsoleLogPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Console\Communication\Plugin\ConsoleLogPlugin
      */
-    protected function getConsoleLogPluginMock(LoggerInterface $loggerMock)
+    protected function getConsoleLogPluginMock(LoggerInterface $loggerMock): ConsoleLogPlugin
     {
         $consoleLogPluginMock = $this->getMockBuilder(ConsoleLogPlugin::class)
             ->setMethods(['getLogger'])

@@ -1,6 +1,6 @@
 # UtilDataReader Module
-[![Build Status](https://travis-ci.org/spryker/UtilDataReader.svg)](https://travis-ci.org/spryker/UtilDataReader)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/UtilDataReader/badge.svg)](https://coveralls.io/github/spryker/UtilDataReader)
+[![Build Status](https://travis-ci.org/spryker/util-data-reader.svg)](https://travis-ci.org/spryker/util-data-reader)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 UtilDataReader contains several data readers for csv, xml and other formats.
 

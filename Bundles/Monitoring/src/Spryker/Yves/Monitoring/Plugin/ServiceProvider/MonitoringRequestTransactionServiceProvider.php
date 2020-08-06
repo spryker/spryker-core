@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
- * @deprecated Use `\Spryker\Yves\Monitoring\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Monitoring\Plugin\EventDispatcher\MonitoringRequestTransactionEventDispatcherPlugin} instead.
  *
  * @method \Spryker\Yves\Monitoring\MonitoringFactory getFactory()
  */

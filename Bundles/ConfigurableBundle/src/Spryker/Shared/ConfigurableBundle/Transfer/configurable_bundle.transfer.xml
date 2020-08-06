@@ -3,6 +3,10 @@
            xmlns="spryker:transfer-01"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
     <transfer name="Item">
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
@@ -22,11 +26,121 @@
         <property name="idConfigurableBundleTemplate" type="int"/>
         <property name="uuid" type="string"/>
         <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="translations" type="ConfigurableBundleTemplateTranslation[]" singular="translation"/>
+        <property name="productImageSets" type="ProductImageSet[]" singular="productImageSet"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="locale" type="Locale"/>
+        <property name="fkResourceConfigurableBundleTemplate" type="int"/>
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="idProductImage" type="int"/>
+        <property name="idProductImageSetToProductImage" type="int"/>
+        <property name="sortOrder" type="int"/>
+        <property name="externalUrlSmall" type="string"/>
+        <property name="externalUrlLarge" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateTranslation">
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
         <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="name" type="string"/>
         <property name="uuid" type="string"/>
+        <property name="fkConfigurableBundleTemplate" type="int"/>
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="productList" type="ProductList"/>
+        <property name="translations" type="ConfigurableBundleTemplateSlotTranslation[]" singular="translation"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotTranslation">
+        <property name="name" type="string"/>
+        <property name="locale" type="Locale"/>
+    </transfer>
+
+    <transfer name="ProductListResponse">
+        <property name="productList" type="ProductList"/>
+        <property name="messages" type="Message[]" singular="message"/>
+        <property name="isSuccessful" type="bool"/>
+    </transfer>
+
+    <transfer name="ProductList">
+        <property name="idProductList" type="int"/>
+        <property name="type" type="string"/>
+        <property name="title" type="string"/>
+        <property name="productListCategoryRelation" type="ProductListCategoryRelation"/>
+        <property name="productListProductConcreteRelation" type="ProductListProductConcreteRelation"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateFilter">
+        <property name="idConfigurableBundleTemplate" type="int"/>
+        <property name="configurableBundleTemplateIds" type="int[]" singular="configurableBundleTemplateId"/>
+        <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateCollection">
+        <property name="configurableBundleTemplates" type="ConfigurableBundleTemplate[]" singular="configurableBundleTemplate"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotCollection">
+        <property name="configurableBundleTemplateSlots" type="ConfigurableBundleTemplateSlot[]" singular="configurableBundleTemplateSlot"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotFilter">
+        <property name="productList" type="ProductList"/>
+        <property name="idConfigurableBundleTemplateSlot" type="int"/>
+        <property name="translationLocales" type="Locale[]" singular="translationLocale"/>
+        <property name="idConfigurableBundleTemplate" type="int"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateResponse">
+        <property name="configurableBundleTemplate" type="ConfigurableBundleTemplate"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="ConfigurableBundleTemplateSlotResponse">
+        <property name="configurableBundleTemplateSlot" type="ConfigurableBundleTemplateSlot"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+        <property name="localeName" type="string"/>
+    </transfer>
+
+    <transfer name="ProductListProductConcreteRelation">
+    </transfer>
+
+    <transfer name="ProductListCategoryRelation">
+    </transfer>
+
+    <transfer name="Translation">
+        <property name="value" type="string"/>
+        <property name="fkLocale" type="int"/>
+    </transfer>
+
+    <transfer name="EventEntity">
     </transfer>
 
 </transfers>

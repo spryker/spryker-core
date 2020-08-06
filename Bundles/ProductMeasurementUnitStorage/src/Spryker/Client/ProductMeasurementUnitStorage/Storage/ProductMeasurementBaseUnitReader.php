@@ -53,6 +53,39 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
     }
 
     /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementBaseUnitsByProductConcreteIds(array $productConcreteIds): array
+    {
+        if (!$productConcreteIds) {
+            return [];
+        }
+
+        $productConcreteMeasurementUnitStorageTransfers = $this->productConcreteMeasurementUnitStorageReader
+            ->getProductConcreteMeasurementUnitStorageCollection($productConcreteIds);
+
+        if (!$productConcreteMeasurementUnitStorageTransfers) {
+            return [];
+        }
+
+        $productMeasurementUnitIds = [];
+        foreach ($productConcreteMeasurementUnitStorageTransfers as $idProductConcrete => $productConcreteMeasurementUnitStorageTransfer) {
+            $productMeasurementUnitIds[$idProductConcrete] = $productConcreteMeasurementUnitStorageTransfer->getBaseUnit()->getIdProductMeasurementUnit();
+        }
+
+        if (!$productMeasurementUnitIds) {
+            return [];
+        }
+
+        $productMeasurementUnitTransfers = $this->productMeasurementUnitReader
+            ->getProductMeasurementUnits($productMeasurementUnitIds);
+
+        return $this->getIndexedProductMeasurementUnitTransfers($productMeasurementUnitTransfers, $productMeasurementUnitIds);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
@@ -72,5 +105,24 @@ class ProductMeasurementBaseUnitReader implements ProductMeasurementBaseUnitRead
         }
 
         return $productConcreteTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[] $productMeasurementUnitTransfers
+     * @param array $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    protected function getIndexedProductMeasurementUnitTransfers(
+        array $productMeasurementUnitTransfers,
+        array $productMeasurementUnitIds
+    ): array {
+        $indexedProductMeasurementUnitTransfers = [];
+        foreach ($productMeasurementUnitTransfers as $productMeasurementUnitTransfer) {
+            $idProductConcrete = array_search($productMeasurementUnitTransfer->getIdProductMeasurementUnit(), $productMeasurementUnitIds);
+            $indexedProductMeasurementUnitTransfers[$idProductConcrete] = $productMeasurementUnitTransfer;
+        }
+
+        return $indexedProductMeasurementUnitTransfers;
     }
 }

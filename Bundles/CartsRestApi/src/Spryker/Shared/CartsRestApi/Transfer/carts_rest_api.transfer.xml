@@ -57,6 +57,7 @@
         <property name="taxTotal" type="int"/>
         <property name="subtotal" type="int"/>
         <property name="grandTotal" type="int"/>
+        <property name="priceToPay" type="int"/>
     </transfer>
 
     <transfer name="RestCartItemCalculations">
@@ -108,6 +109,7 @@
 
     <transfer name="QuoteUpdateRequestAttributes">
         <property name="customerReference" type="string"/>
+        <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
     </transfer>
 
     <transfer name="AssignGuestQuoteRequest">
@@ -117,6 +119,7 @@
 
     <transfer name="CartItemRequest">
         <property name="sku" type="string"/>
+        <property name="groupKey" type="string"/>
         <property name="quantity" type="int"/>
         <property name="quoteUuid" type="string"/>
         <property name="customer" type="Customer"/>

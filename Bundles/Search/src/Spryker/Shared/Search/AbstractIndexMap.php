@@ -15,7 +15,7 @@ class AbstractIndexMap implements IndexMapInterface
     protected $metadata = [];
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getProperties()
     {

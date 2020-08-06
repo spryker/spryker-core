@@ -1,6 +1,6 @@
 # AlternativeProductsRestApi Module
 [![Build Status](https://travis-ci.org/spryker/alternative-products-rest-api.svg)](https://travis-ci.org/spryker/alternative-products-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/alternative-products-rest-api/badge.svg)](https://coveralls.io/github/spryker/alternative-products-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 AlternativeProductsRestApi Module provides REST API endpoints for retrieving alternative products data.
 

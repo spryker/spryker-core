@@ -121,7 +121,7 @@ class ProductBundlesSalesOrderHydrate implements ProductBundlesSalesOrderHydrate
             $productGroup = new ProductBundleGroupTransfer();
             $rowCount = 0;
             foreach ($items as $itemTransfer) {
-                if ((int)$itemTransfer->getRelatedBundleItemIdentifier() === $bundleId) {
+                if ($itemTransfer->getRelatedBundleItemIdentifier() === $bundleGroupItem->getBundleItemIdentifier()) {
                     $associatedItems[] = $itemTransfer;
                     $rowCount += count($itemTransfer->getProductOptions()) + 1;
                 }

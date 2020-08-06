@@ -1,12 +1,27 @@
 {% for group in groups if not group.groupItems[0].salesOrderConfiguredBundleItem | default %}
-  {% if (group.isBundle) %}
-    <tr>
-      <td colspan="7">
-        <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': group.bundleItem.idProductAbstract, 'id-product': group.bundleItem.id, 'type': 'regular'}) }}">{{ group.bundleItem.name }}</a> ({{ 'Sku' | trans }}: {{ group.bundleItem.sku }})
-      </td>
-    </tr>
-    {% embed '@Sales/Detail/boxes/bundle-group.twig' with {items: group.groupItems, image: group.groupImage, rowCount: group.rowCount, bundleItem: group.bundleItem} %}{% endembed %}
-  {% else %}
-      {% embed '@Sales/Detail/boxes/single-item.twig' with {item: group.groupItems | first} %}{% endembed %}
-  {% endif %}
+    {% if group.isBundle %}
+        {% include '@Sales/Detail/boxes/order-item.twig' with {
+            orderItem: group.bundleItem,
+            isBundleProduct: true,
+            displayImage: true,
+            displayTotals: true,
+            order: order,
+            tableColumnCellsContent: tableColumnCellsContent,
+        } %}
+
+        {% include '@Sales/Detail/boxes/bundle-group.twig' with {
+            items: group.groupItems,
+            bundleItem: group.bundleItem,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            eventsGroupedByItem: eventsGroupedByItem,
+            order: order,
+        } %}
+    {% else %}
+        {% include '@Sales/Detail/boxes/single-item.twig' with {
+            item: group.groupItems | first,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            eventsGroupedByItem: eventsGroupedByItem,
+            order: order,
+        } %}
+    {% endif %}
 {% endfor %}

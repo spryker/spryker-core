@@ -19,6 +19,7 @@ use Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPlugi
 class GiftCardShipmentGroupSanitizerPlugin extends AbstractPlugin implements ShipmentGroupsSanitizerPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Sanitize shipment group collection.
      *

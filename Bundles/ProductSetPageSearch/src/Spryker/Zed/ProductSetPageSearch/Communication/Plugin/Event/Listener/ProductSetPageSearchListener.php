@@ -13,7 +13,8 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener` and `\Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener}
+ *   and {@link \Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchUnpublishListener} instead.
  *
  * @method \Spryker\Zed\ProductSetPageSearch\Persistence\ProductSetPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetPageSearch\Communication\ProductSetPageSearchCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class ProductSetPageSearchListener extends AbstractPlugin implements EventBulkHa
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE ||
+        if (
+            $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE ||
             $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE ||
             $eventName === ProductSetEvents::PRODUCT_SET_UNPUBLISH
         ) {

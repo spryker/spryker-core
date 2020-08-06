@@ -40,7 +40,8 @@ interface CmsBlockProductStorageQueryContainerInterface extends QueryContainerIn
     public function queryCmsBlockProductsByIds(array $cmsBlockProductIds): SpyCmsBlockProductConnectorQuery;
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Returns a a query for the table `spy_cms_block_product_connector` filtered by cms block product ids.
      *
      * @api
      *

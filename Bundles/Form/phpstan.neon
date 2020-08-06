@@ -1,0 +1,4 @@
+parameters:
+    checkMissingIterableValueType: false
+    ignoreErrors:
+        - '#Parameter \#2 \$translator of class Symfony\\Component\\Form\\Extension\\Csrf\\CsrfExtension constructor expects Symfony\\Contracts\\Translation\\TranslatorInterface|null, Symfony\\Component\\Translation\\TranslatorInterface\|null given.#'

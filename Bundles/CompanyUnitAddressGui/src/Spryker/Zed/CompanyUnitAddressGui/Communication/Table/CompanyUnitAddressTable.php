@@ -9,53 +9,73 @@ namespace Spryker\Zed\CompanyUnitAddressGui\Communication\Table;
 
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\CompanyUnitAddress\Persistence\Map\SpyCompanyUnitAddressTableMap;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress;
+use Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery;
 use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
+use Propel\Runtime\Map\TableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface;
-use Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CompanyUnitAddressTable extends AbstractTable
 {
-    public const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
-    public const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
-    public const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
-    public const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
-    public const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
-    public const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
-    public const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
-    public const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
+    protected const COL_ID_COMPANY_UNIT_ADDRESS = SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS;
+    protected const COL_ADDRESS1 = SpyCompanyUnitAddressTableMap::COL_ADDRESS1;
+    protected const COL_ADDRESS2 = SpyCompanyUnitAddressTableMap::COL_ADDRESS2;
+    protected const COL_ADDRESS3 = SpyCompanyUnitAddressTableMap::COL_ADDRESS3;
+    protected const COL_CITY = SpyCompanyUnitAddressTableMap::COL_CITY;
+    protected const COL_ZIPCODE = SpyCompanyUnitAddressTableMap::COL_ZIP_CODE;
+    protected const COL_COUNTRY_NAME = SpyCountryTableMap::COL_NAME;
+    protected const COL_COMPANY_NAME = SpyCompanyTableMap::COL_NAME;
 
-    public const COL_COUNTRY_RELATION = 'Country';
-    public const COL_COMPANY_RELATION = 'Company';
+    protected const COL_COUNTRY_RELATION = 'Country';
+    protected const COL_COMPANY_RELATION = 'Company';
 
-    public const COL_ACTIONS = 'Actions';
+    protected const COL_ACTIONS = 'Actions';
 
-    public const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
-
-    public const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
+    protected const REQUEST_ID_COMPANY_UNIT_ADDRESS = 'id-company-unit-address';
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface
+     * @uses \Spryker\Zed\CompanyUnitAddressGui\Communication\Controller\EditCompanyUnitAddressController::indexAction()
      */
-    protected $companyUnitAddressQueryContainer;
+    protected const URL_COMPANY_UNIT_ADDRESS_EDIT = '/company-unit-address-gui/edit-company-unit-address';
 
     /**
-     * @var \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface
+     * @var \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery
      */
-    protected $companyUnitAddressTablePluginsExecutor;
+    protected $companyUnitAddressQuery;
 
     /**
-     * @param \Spryker\Zed\CompanyUnitAddressGui\Dependency\QueryContainer\CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer
-     * @param \Spryker\Zed\CompanyUnitAddressGui\Communication\Table\PluginExecutor\CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
+     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface[]
+     */
+    protected $companyUnitAddressTableConfigExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface[]
+     */
+    protected $companyUnitAddressTableHeaderExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface[]
+     */
+    protected $companyUnitAddressTableDataExpanderPlugins;
+
+    /**
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddressQuery $companyUnitAddressQuery
+     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableConfigExpanderPluginInterface[] $companyTableConfigExpanderPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableHeaderExpanderPluginInterface[] $companyTableHeaderExpanderPlugins
+     * @param \Spryker\Zed\CompanyUnitAddressGuiExtension\Dependency\Plugin\CompanyUnitAddressTableDataExpanderPluginInterface[] $companyTableDataExpanderPlugins
      */
     public function __construct(
-        CompanyUnitAddressGuiToCompanyUnitAddressQueryContainerInterface $companyUnitAddressQueryContainer,
-        CompanyUnitAddressTablePluginExecutorInterface $companyUnitAddressTablePluginsExecutor
+        SpyCompanyUnitAddressQuery $companyUnitAddressQuery,
+        array $companyTableConfigExpanderPlugins,
+        array $companyTableHeaderExpanderPlugins,
+        array $companyTableDataExpanderPlugins
     ) {
-        $this->companyUnitAddressQueryContainer = $companyUnitAddressQueryContainer;
-        $this->companyUnitAddressTablePluginsExecutor = $companyUnitAddressTablePluginsExecutor;
+        $this->companyUnitAddressQuery = $companyUnitAddressQuery;
+        $this->companyUnitAddressTableConfigExpanderPlugins = $companyTableConfigExpanderPlugins;
+        $this->companyUnitAddressTableHeaderExpanderPlugins = $companyTableHeaderExpanderPlugins;
+        $this->companyUnitAddressTableDataExpanderPlugins = $companyTableDataExpanderPlugins;
     }
 
     /**
@@ -63,7 +83,7 @@ class CompanyUnitAddressTable extends AbstractTable
      *
      * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
      */
-    protected function configure(TableConfiguration $config)
+    protected function configure(TableConfiguration $config): TableConfiguration
     {
         $config = $this->setHeader($config);
 
@@ -89,7 +109,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_COUNTRY_NAME,
             static::COL_COMPANY_NAME,
         ]);
-        $config = $this->companyUnitAddressTablePluginsExecutor->executeTableConfigExpanderPlugins($config);
+        $config = $this->executeTableConfigExpanderPlugins($config);
 
         return $config;
     }
@@ -99,10 +119,12 @@ class CompanyUnitAddressTable extends AbstractTable
      *
      * @return array
      */
-    protected function prepareData(TableConfiguration $config)
+    protected function prepareData(TableConfiguration $config): array
     {
-        $query = $this->companyUnitAddressQueryContainer->queryCompanyUnitAddressWithCompanyAndCountry();
-        $queryResults = $this->runQuery($query, $config);
+        $this->companyUnitAddressQuery->leftJoinWithCompany()
+            ->leftJoinWithCountry();
+
+        $queryResults = $this->runQuery($this->companyUnitAddressQuery, $config, true);
         $results = [];
 
         foreach ($queryResults as $item) {
@@ -131,7 +153,7 @@ class CompanyUnitAddressTable extends AbstractTable
             static::COL_ADDRESS3 => 'Addition to address',
         ];
 
-        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableHeaderExpanderPlugins();
+        $externalData = $this->executeTableHeaderExpanderPlugins();
 
         $actions = [static::COL_ACTIONS => static::COL_ACTIONS];
 
@@ -141,42 +163,43 @@ class CompanyUnitAddressTable extends AbstractTable
     }
 
     /**
-     * @param array $item
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
      *
      * @return array
      */
-    protected function prepareRowData(array $item): array
+    protected function prepareRowData(SpyCompanyUnitAddress $companyUnitAddressEntity): array
     {
         $baseData = [
-            static::COL_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
-            static::COL_COUNTRY_RELATION => $this->getCountryName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-            static::COL_CITY => $item[static::COL_CITY],
-            static::COL_ZIPCODE => $item[static::COL_ZIPCODE],
-            static::COL_COMPANY_RELATION => $this->getCompanyName((int)$item[static::COL_ID_COMPANY_UNIT_ADDRESS]),
-            static::COL_ADDRESS1 => $item[static::COL_ADDRESS1],
-            static::COL_ADDRESS2 => $item[static::COL_ADDRESS2],
-            static::COL_ADDRESS3 => $item[static::COL_ADDRESS3],
+            static::COL_ID_COMPANY_UNIT_ADDRESS => $companyUnitAddressEntity->getIdCompanyUnitAddress(),
+            static::COL_COUNTRY_RELATION => $this->getCountryName($companyUnitAddressEntity),
+            static::COL_CITY => $companyUnitAddressEntity->getCity(),
+            static::COL_ZIPCODE => $companyUnitAddressEntity->getZipCode(),
+            static::COL_COMPANY_RELATION => $this->getCompanyName($companyUnitAddressEntity),
+            static::COL_ADDRESS1 => $companyUnitAddressEntity->getAddress1(),
+            static::COL_ADDRESS2 => $companyUnitAddressEntity->getAddress2(),
+            static::COL_ADDRESS3 => $companyUnitAddressEntity->getAddress3(),
         ];
 
-        $externalData = $this->companyUnitAddressTablePluginsExecutor->executeTableDataExpanderPlugins($item);
+        $item = $companyUnitAddressEntity->toArray(TableMap::TYPE_COLNAME, false);
+        $externalData = $this->executeTableDataExpanderPlugins($item);
 
-        $actions = [static::COL_ACTIONS => $this->buildLinks($item)];
+        $actions = [static::COL_ACTIONS => $this->buildLinks($companyUnitAddressEntity)];
 
         return $baseData + $externalData + $actions;
     }
 
     /**
-     * @param array $item
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
      *
      * @return string
      */
-    protected function buildLinks(array $item)
+    protected function buildLinks(SpyCompanyUnitAddress $companyUnitAddressEntity): string
     {
         $buttons = [];
 
         $buttons[] = $this->generateEditButton(
             Url::generate(static::URL_COMPANY_UNIT_ADDRESS_EDIT, [
-                static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $item[static::COL_ID_COMPANY_UNIT_ADDRESS],
+                static::REQUEST_ID_COMPANY_UNIT_ADDRESS => $companyUnitAddressEntity->getIdCompanyUnitAddress(),
             ]),
             'Edit Company Unit Address'
         );
@@ -185,32 +208,72 @@ class CompanyUnitAddressTable extends AbstractTable
     }
 
     /**
-     * @param int $idCompanyUnitAddress
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
      *
      * @return string
      */
-    protected function getCountryName(int $idCompanyUnitAddress): string
+    protected function getCountryName(SpyCompanyUnitAddress $companyUnitAddressEntity): string
     {
-        $companyUnitAddress = $this->companyUnitAddressQueryContainer
-            ->queryCompanyUnitAddressWithCountryById($idCompanyUnitAddress)
-            ->findOne();
-        if ($companyUnitAddress) {
-            return $companyUnitAddress->getCountry()->getName();
+        if ($companyUnitAddressEntity->getFkCountry()) {
+            return $companyUnitAddressEntity->getCountry()->getName();
         }
+
+        return '';
     }
 
     /**
-     * @param int $idCompanyUnitAddress
+     * @param \Orm\Zed\CompanyUnitAddress\Persistence\SpyCompanyUnitAddress $companyUnitAddressEntity
      *
      * @return string
      */
-    protected function getCompanyName(int $idCompanyUnitAddress): string
+    protected function getCompanyName(SpyCompanyUnitAddress $companyUnitAddressEntity): string
     {
-        $companyUnitAddress = $this->companyUnitAddressQueryContainer
-            ->queryCompanyUnitAddressWithCompanyById($idCompanyUnitAddress)
-            ->findOne();
-        if ($companyUnitAddress) {
-            return $companyUnitAddress->getCompany()->getName();
+        if ($companyUnitAddressEntity->getFkCompany()) {
+            return $companyUnitAddressEntity->getCompany()->getName();
         }
+
+        return '';
+    }
+
+    /**
+     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
+     *
+     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
+     */
+    protected function executeTableConfigExpanderPlugins(TableConfiguration $config): TableConfiguration
+    {
+        foreach ($this->companyUnitAddressTableConfigExpanderPlugins as $companyTableConfigExpanderPlugin) {
+            $config = $companyTableConfigExpanderPlugin->expandConfig($config);
+        }
+
+        return $config;
+    }
+
+    /**
+     * @return array
+     */
+    protected function executeTableHeaderExpanderPlugins(): array
+    {
+        $expandedData = [];
+        foreach ($this->companyUnitAddressTableHeaderExpanderPlugins as $companyTableHeaderExpanderPlugin) {
+            $expandedData += $companyTableHeaderExpanderPlugin->expandHeader();
+        }
+
+        return $expandedData;
+    }
+
+    /**
+     * @param array $item
+     *
+     * @return array
+     */
+    protected function executeTableDataExpanderPlugins(array $item): array
+    {
+        $expandedData = [];
+        foreach ($this->companyUnitAddressTableDataExpanderPlugins as $companyTableDataExpanderPlugin) {
+            $expandedData += $companyTableDataExpanderPlugin->expandData($item);
+        }
+
+        return $expandedData;
     }
 }

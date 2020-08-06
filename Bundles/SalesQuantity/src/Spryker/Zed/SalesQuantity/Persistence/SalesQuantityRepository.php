@@ -28,4 +28,36 @@ class SalesQuantityRepository extends AbstractRepository implements SalesQuantit
             ->select(SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE)
             ->findOne();
     }
+
+    /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return bool[]
+     */
+    public function getIsProductQuantitySplittableByProductConcreteSkus(array $productConcreteSkus): array
+    {
+        $result = $this->getFactory()
+            ->getProductPropelQuery()
+            ->filterBySku_In($productConcreteSkus)
+            ->select([SpyProductTableMap::COL_SKU, SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE])
+            ->find()
+            ->getArrayCopy();
+
+        return $this->indexIsProductQuantitySplittableByProductConcreteSkus($result);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return bool[]
+     */
+    protected function indexIsProductQuantitySplittableByProductConcreteSkus(array $data): array
+    {
+        $indexedData = [];
+        foreach ($data as $item) {
+            $indexedData[$item[SpyProductTableMap::COL_SKU]] = $item[SpyProductTableMap::COL_IS_QUANTITY_SPLITTABLE];
+        }
+
+        return $indexedData;
+    }
 }

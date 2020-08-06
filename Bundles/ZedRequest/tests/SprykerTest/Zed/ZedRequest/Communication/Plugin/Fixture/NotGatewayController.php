@@ -11,10 +11,6 @@ use Spryker\Shared\Kernel\Transfer\TransferInterface;
 
 class NotGatewayController
 {
-    public function __construct()
-    {
-    }
-
     /**
      * @return string
      */

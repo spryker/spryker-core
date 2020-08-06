@@ -1,6 +1,6 @@
 # ErrorHandler Module
-[![Build Status](https://travis-ci.org/spryker/ErrorHandler.svg)](https://travis-ci.org/spryker/ErrorHandler)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ErrorHandler/badge.svg)](https://coveralls.io/github/spryker/ErrorHandler)
+[![Build Status](https://travis-ci.org/spryker/error-handler.svg)](https://travis-ci.org/spryker/error-handler)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ErrorHandler is Spryker OS's dedicated error handling mechanism that collects detailed error related information. ErrorHandler handles notices, warnings and other types of minor issues usually not thrown as strict exceptions like more serious errors.
 

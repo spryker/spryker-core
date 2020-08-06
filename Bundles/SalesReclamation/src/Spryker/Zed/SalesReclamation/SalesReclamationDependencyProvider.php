@@ -38,7 +38,6 @@ class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvide
     public function providePersistenceLayerDependencies(Container $container)
     {
         //TODO Provide dependencies
-
         return $container;
     }
 
@@ -49,9 +48,9 @@ class SalesReclamationDependencyProvider extends AbstractBundleDependencyProvide
      */
     protected function addSalesFacade(Container $container): Container
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new SalesReclamationToSalesFacadeBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }

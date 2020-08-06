@@ -128,7 +128,7 @@ class GraphPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Graph\Communication\Plugin\GraphPlugin
      */
-    protected function getPluginMock()
+    protected function getPluginMock(): GraphPlugin
     {
         $graphMock = $this->getMockBuilder(GraphInterface::class)->setMethods(['create', 'addNode', 'addEdge', 'addCluster', 'render'])->getMock();
         $graphMock->method('render')->willReturn('');

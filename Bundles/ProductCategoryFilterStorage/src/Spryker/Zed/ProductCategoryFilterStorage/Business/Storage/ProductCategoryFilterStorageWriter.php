@@ -28,6 +28,8 @@ class ProductCategoryFilterStorageWriter implements ProductCategoryFilterStorage
     protected $utilEncodingService;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;

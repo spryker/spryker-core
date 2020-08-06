@@ -12,7 +12,7 @@ use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
-use Spryker\Zed\MerchantProfile\Dependency\MerchantProfileEvents;
+use Spryker\Zed\Merchant\Dependency\MerchantEvents;
 use Spryker\Zed\MerchantProfileDataImport\Business\Address\DataSet\MerchantProfileAddressDataSetInterface;
 
 class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataImportStepInterface
@@ -54,7 +54,7 @@ class MerchantProfileAddressWriterStep extends PublishAwareStep implements DataI
             ->setFkCountry($dataSet[MerchantProfileAddressDataSetInterface::ID_COUNTRY])
             ->save();
 
-        $this->addPublishEvents(MerchantProfileEvents::ENTITY_SPY_MERCHANT_PROFILE_PUBLISH, $merchantProfileAddressEntity->getFkMerchantProfile());
+        $this->addPublishEvents(MerchantEvents::MERCHANT_PUBLISH, $merchantProfileAddressEntity->getSpyMerchantProfile()->getFkMerchant());
     }
 
     /**

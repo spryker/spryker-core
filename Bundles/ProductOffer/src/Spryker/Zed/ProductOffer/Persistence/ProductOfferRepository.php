@@ -7,11 +7,15 @@
 
 namespace Spryker\Zed\ProductOffer\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductOffer\Persistence\Map\SpyProductOfferTableMap;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -27,17 +31,23 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
      */
     public function find(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ProductOfferCollectionTransfer
     {
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
         $productOfferCollectionTransfer = new ProductOfferCollectionTransfer();
         $productOfferQuery = $this->getFactory()->createProductOfferPropelQuery();
 
         $productOfferQuery = $this->applyFilters($productOfferQuery, $productOfferCriteriaFilter);
 
-        $productOfferEntities = $productOfferQuery->find();
+        $productOfferEntities = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
 
         foreach ($productOfferEntities as $productOfferEntity) {
-            $productOfferTransfer = $this->getFactory()
-                ->createPropelProductOfferMapper()
-                ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, (new ProductOfferTransfer()));
+            $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+                $productOfferEntity,
+                new ProductOfferTransfer()
+            );
+            $productOfferTransfer->setStores(new ArrayObject(
+                $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+            ));
+
             $productOfferCollectionTransfer->addProductOffer($productOfferTransfer);
         }
 
@@ -60,8 +70,59 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             return null;
         }
 
-        return $this->getFactory()->createPropelProductOfferMapper()
-            ->mapProductOfferEntityToProductOfferTransfer($productOfferEntity, new ProductOfferTransfer());
+        $productOfferMapper = $this->getFactory()->createProductOfferMapper();
+        $productOfferTransfer = $productOfferMapper->mapProductOfferEntityToProductOfferTransfer(
+            $productOfferEntity,
+            new ProductOfferTransfer()
+        );
+        $productOfferTransfer->setStores(new ArrayObject(
+            $productOfferMapper->mapProductOfferStoreEntitiesToStoreTransfers($productOfferEntity->getSpyProductOfferStores())
+        ));
+
+        return $productOfferTransfer;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxIdProductOffer(): int
+    {
+        $idProductOffer = $this->getFactory()->createProductOfferPropelQuery()
+            ->orderByIdProductOffer(Criteria::DESC)
+            ->select(SpyProductOfferTableMap::COL_ID_PRODUCT_OFFER)
+            ->findOne();
+
+        return $idProductOffer ?: 0;
+    }
+
+    /**
+     * @param int $idProductOffer
+     *
+     * @return \Generated\Shared\Transfer\StoreTransfer[]
+     */
+    public function getProductOfferStores(int $idProductOffer): array
+    {
+        $productOfferStoreEntities = $this->getFactory()
+            ->createProductOfferStoreQuery()
+            ->filterByFkProductOffer($idProductOffer)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductOfferMapper()
+            ->mapProductOfferStoreEntitiesToStoreTransfers($productOfferStoreEntities);
+    }
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return bool
+     */
+    public function isProductOfferReferenceUsed(string $productOfferReference): bool
+    {
+        return $this->getFactory()
+            ->createProductOfferPropelQuery()
+            ->filterByProductOfferReference($productOfferReference)
+            ->exists();
     }
 
     /**
@@ -82,6 +143,14 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference($productOfferCriteriaFilter->getProductOfferReference());
         }
 
+        if ($productOfferCriteriaFilter->getIdProductOffer()) {
+            $productOfferQuery->filterByIdProductOffer($productOfferCriteriaFilter->getIdProductOffer());
+        }
+
+        if ($productOfferCriteriaFilter->getProductOfferIds()) {
+            $productOfferQuery->filterByIdProductOffer_In($productOfferCriteriaFilter->getProductOfferIds());
+        }
+
         if ($productOfferCriteriaFilter->getConcreteSkus()) {
             $productOfferQuery->filterByConcreteSku_In($productOfferCriteriaFilter->getConcreteSkus());
         }
@@ -90,8 +159,27 @@ class ProductOfferRepository extends AbstractRepository implements ProductOfferR
             $productOfferQuery->filterByProductOfferReference_In($productOfferCriteriaFilter->getProductOfferReferences());
         }
 
-        if ($productOfferCriteriaFilter->getPagination()) {
-            $productOfferQuery = $this->getPaginatedCollection($productOfferQuery, $productOfferCriteriaFilter->getPagination());
+        if ($productOfferCriteriaFilter->getIsActive() !== null) {
+            $productOfferQuery->filterByIsActive($productOfferCriteriaFilter->getIsActive());
+        }
+
+        if ($productOfferCriteriaFilter->getApprovalStatuses()) {
+            $productOfferQuery->filterByApprovalStatus_In($productOfferCriteriaFilter->getApprovalStatuses());
+        }
+
+        if ($productOfferCriteriaFilter->getIdStore()) {
+            $productOfferQuery->useSpyProductOfferStoreQuery()
+                ->filterByFkStore($productOfferCriteriaFilter->getIdStore())
+            ->endUse();
+        }
+
+        if ($productOfferCriteriaFilter->getIsActiveConcreteProduct() !== null) {
+            $productOfferQuery->addJoin(
+                SpyProductOfferTableMap::COL_CONCRETE_SKU,
+                SpyProductTableMap::COL_SKU,
+                Criteria::INNER_JOIN
+            );
+            $productOfferQuery->where(SpyProductTableMap::COL_IS_ACTIVE, $productOfferCriteriaFilter->getIsActiveConcreteProduct());
         }
 
         return $productOfferQuery;

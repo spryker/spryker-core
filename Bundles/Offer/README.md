@@ -1,6 +1,6 @@
 # Offer Module
 [![Build Status](https://travis-ci.org/spryker/offer.svg)](https://travis-ci.org/spryker/offer)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/offer/badge.svg)](https://coveralls.io/github/spryker/offer)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Module provides an ability to convert offer to order and retrieve offers from the database.
 

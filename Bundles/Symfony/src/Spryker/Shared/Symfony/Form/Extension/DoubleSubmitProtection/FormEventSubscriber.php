@@ -14,6 +14,9 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Form\DoubleSubmitProtection\Subscriber\FormEventSubscriber} instead.
+ */
 class FormEventSubscriber implements EventSubscriberInterface
 {
     public const DEFAULT_ERROR_MESSAGE = 'This form has been already submitted.';

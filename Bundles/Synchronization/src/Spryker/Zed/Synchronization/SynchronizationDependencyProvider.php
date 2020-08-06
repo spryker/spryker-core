@@ -60,9 +60,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new SynchronizationToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -74,9 +74,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSearchClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new SynchronizationToSearchClientBridge($container->getLocator()->search()->client());
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueueClient(Container $container)
     {
-        $container[self::CLIENT_QUEUE] = function (Container $container) {
+        $container->set(static::CLIENT_QUEUE, function (Container $container) {
             return new SynchronizationToQueueClientBridge($container->getLocator()->queue()->client());
-        };
+        });
 
         return $container;
     }
@@ -102,9 +102,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container)
     {
-        $container[self::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new SynchronizationToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -116,9 +116,9 @@ class SynchronizationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSynchronizationDataPlugins($container)
     {
-        $container[self::PLUGINS_SYNCHRONIZATION_DATA] = function (Container $container) {
+        $container->set(static::PLUGINS_SYNCHRONIZATION_DATA, function (Container $container) {
             return $this->getSynchronizationDataPlugins();
-        };
+        });
 
         return $container;
     }

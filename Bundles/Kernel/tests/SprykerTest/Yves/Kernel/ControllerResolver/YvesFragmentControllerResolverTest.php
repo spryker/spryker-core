@@ -71,7 +71,7 @@ class YvesFragmentControllerResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\Kernel\ControllerResolver\YvesFragmentControllerResolver
      */
-    protected function getFragmentControllerProvider(Request $request)
+    protected function getFragmentControllerProvider(Request $request): YvesFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(YvesFragmentControllerResolver::class)
             ->setMethods(['resolveController', 'getCurrentRequest'])

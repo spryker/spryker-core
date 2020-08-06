@@ -12,10 +12,15 @@ use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 interface MerchantProductOfferMapperInterface
 {
     /**
-     * @param array $data
+     * @phpstan-param array<mixed> $merchantProductOfferStorageData
+     *
+     * @param array $merchantProductOfferStorageData
      * @param \Generated\Shared\Transfer\ProductOfferStorageTransfer $productOfferStorageTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer
      */
-    public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(array $data, ProductOfferStorageTransfer $productOfferStorageTransfer): ProductOfferStorageTransfer;
+    public function mapMerchantProductOfferStorageDataToProductOfferStorageTransfer(
+        array $merchantProductOfferStorageData,
+        ProductOfferStorageTransfer $productOfferStorageTransfer
+    ): ProductOfferStorageTransfer;
 }

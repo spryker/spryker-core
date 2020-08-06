@@ -59,7 +59,7 @@ class AttributeMap implements AttributeMapInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param array $localeIds
      *
      * @throws \Spryker\Zed\ProductStorage\Exception\InvalidArgumentException

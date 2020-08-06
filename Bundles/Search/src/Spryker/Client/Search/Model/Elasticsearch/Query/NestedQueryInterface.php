@@ -7,6 +7,9 @@
 
 namespace Spryker\Client\Search\Model\Elasticsearch\Query;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\NestedQueryInterface} instead.
+ */
 interface NestedQueryInterface
 {
     /**

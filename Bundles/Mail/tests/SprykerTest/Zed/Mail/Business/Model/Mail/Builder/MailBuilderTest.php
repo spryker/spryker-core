@@ -33,11 +33,13 @@ use Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface;
  */
 class MailBuilderTest extends Unit
 {
-    public const SUBJECT = 'subject';
-    public const TEMPLATE_NAME_HTML = 'html.template.name';
-    public const TEMPLATE_NAME_TEXT = 'text.template.name';
-    public const EMAIL = 'email';
-    public const NAME = 'name';
+    protected const SUBJECT = 'subject';
+    protected const TEMPLATE_NAME_HTML = 'html.template.name';
+    protected const TEMPLATE_NAME_TEXT = 'text.template.name';
+    protected const EMAIL = 'email';
+    protected const NAME = 'name';
+    protected const BCC_EMAIL = 'bcc@email.com';
+    protected const BCC_NAME = 'bccName';
 
     /**
      * @return void
@@ -186,6 +188,23 @@ class MailBuilderTest extends Unit
     /**
      * @return void
      */
+    public function testAddRecipientBccAddsBccToMailTransfer(): void
+    {
+        // Assign
+        $mailBuilder = $this->getMailBuilder();
+        $expectedBccCount = 1;
+
+        // Act
+        $mailBuilder->addRecipientBcc(static::BCC_EMAIL, static::BCC_NAME);
+
+        // Assert
+        $actualBccCount = $mailBuilder->getMailTransfer()->getRecipientBccs()->count();
+        $this->assertSame($expectedBccCount, $actualBccCount);
+    }
+
+    /**
+     * @return void
+     */
     public function testBuildWillReturnMailTransfer(): void
     {
         $mailBuilder = $this->getMailBuilder();
@@ -226,7 +245,7 @@ class MailBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface
      */
-    protected function getGlossaryFacadeMock()
+    protected function getGlossaryFacadeMock(): MailToGlossaryInterface
     {
         $glossaryFacadeMock = $this->getMockBuilder(MailToGlossaryInterface::class)->setMethods(['hasTranslation', 'translate'])->getMock();
         $glossaryFacadeMock->method('hasTranslation')->willReturn(true);

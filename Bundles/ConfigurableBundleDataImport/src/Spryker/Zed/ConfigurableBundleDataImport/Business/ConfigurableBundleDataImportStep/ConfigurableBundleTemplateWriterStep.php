@@ -30,6 +30,7 @@ class ConfigurableBundleTemplateWriterStep extends PublishAwareStep implements D
         $configurableBundleTemplateEntity
             ->setUuid($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_UUID] ?: null)
             ->setName($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_NAME])
+            ->setIsActive($dataSet[ConfigurableBundleTemplateDataSetInterface::COLUMN_CONFIGURABLE_BUNDLE_TEMPLATE_IS_ACTIVE])
             ->save();
 
         $this->addPublishEvents(

@@ -5,15 +5,18 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/cms-slot": "^0.5.0",
-    "spryker/gui": "^3.24.0",
+    "spryker/cms-slot": "^1.0.0",
+    "spryker/gui": "^3.33.0",
     "spryker/kernel": "^3.37.0",
     "spryker/symfony": "^3.3.0",
+    "spryker/translator": "^1.1.0",
     "spryker/util-text": "^1.2.1"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
+  },
+  "suggest": {
+    "spryker/cms-slot-block-gui": "If you want to assign CMS Blocks to CMS Slots"
   },
   "autoload": {
     "psr-4": {
@@ -22,6 +25,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

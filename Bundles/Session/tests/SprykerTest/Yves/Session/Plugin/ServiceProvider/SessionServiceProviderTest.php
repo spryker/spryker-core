@@ -96,7 +96,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Silex\Application
      */
-    private function getApplicationMock()
+    private function getApplicationMock(): Application
     {
         $sessionMock = $this->getMockBuilder(SessionInterface::class)->getMock();
         $dispatcherMock = $this->getMockBuilder(EventDispatcher::class)->getMock();
@@ -219,7 +219,7 @@ class SessionServiceProviderTest extends Unit
     /**
      * @return \Spryker\Yves\Session\SessionFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSessionFactoryMock()
+    protected function createSessionFactoryMock(): SessionFactory
     {
         $sessionFactoryMock = $this->getMockBuilder(SessionFactory::class)
             ->setMethods([

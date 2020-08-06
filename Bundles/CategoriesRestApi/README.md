@@ -1,6 +1,6 @@
 # CategoriesRestApi Module
 [![Build Status](https://travis-ci.org/spryker/categories-rest-api.svg)](https://travis-ci.org/spryker/categories-rest-api)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/categories-rest-api/badge.svg)](https://coveralls.io/github/spryker/categories-rest-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 CategoriesRestApi module provides rest API endpoints to fetch categories tree and category node by node id.
 

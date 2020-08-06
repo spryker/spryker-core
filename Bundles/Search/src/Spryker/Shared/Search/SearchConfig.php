@@ -7,7 +7,9 @@
 
 namespace Spryker\Shared\Search;
 
-interface SearchConfig
+use Spryker\Shared\Kernel\AbstractSharedConfig;
+
+class SearchConfig extends AbstractSharedConfig
 {
     /**
      * Available facet types

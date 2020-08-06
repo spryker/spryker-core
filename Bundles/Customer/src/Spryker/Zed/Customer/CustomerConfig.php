@@ -13,10 +13,19 @@ use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\SequenceNumber\SequenceNumberConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Customer\CustomerConfig getSharedConfig()
+ */
 class CustomerConfig extends AbstractBundleConfig
 {
     public const ERROR_CODE_CUSTOMER_ALREADY_REGISTERED = 4001;
     public const ERROR_CODE_CUSTOMER_INVALID_EMAIL = 4002;
+
+    /**
+     * @uses \Spryker\Zed\Customer\Communication\Plugin\Mail\CustomerRegistrationMailTypePlugin::MAIL_TYPE
+     */
+    public const CUSTOMER_REGISTRATION_MAIL_TYPE = 'customer registration mail';
+    public const CUSTOMER_REGISTRATION_WITH_CONFIRMATION_MAIL_TYPE = 'customer registration confirmation mail';
 
     protected const MIN_LENGTH_CUSTOMER_PASSWORD = 1;
 
@@ -28,6 +37,8 @@ class CustomerConfig extends AbstractBundleConfig
     protected const MAX_LENGTH_CUSTOMER_PASSWORD = 72;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostYves()
@@ -36,6 +47,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return string
@@ -46,6 +59,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $token
      *
      * @return string
@@ -56,6 +71,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SequenceNumberSettingsTransfer
      */
     public function getCustomerReferenceDefaults()
@@ -66,7 +83,7 @@ class CustomerConfig extends AbstractBundleConfig
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
-        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
@@ -82,7 +99,9 @@ class CustomerConfig extends AbstractBundleConfig
      *    'sales' => '/sales/customer/customer-orders',
      * ]
      *
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getCustomerDetailExternalBlocksUrls()
     {
@@ -90,6 +109,8 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMinLength(): int
@@ -98,11 +119,25 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCustomerPasswordMaxLength(): int
     {
         return static::MAX_LENGTH_CUSTOMER_PASSWORD;
+    }
+
+    /**
+     * @api
+     *
+     * @uses \Spryker\Shared\Customer\CustomerConfig::isDoubleOptInEnabled()
+     *
+     * @return bool
+     */
+    public function isDoubleOptInEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDoubleOptInEnabled();
     }
 
     /**

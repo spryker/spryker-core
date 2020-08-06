@@ -38,6 +38,7 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
         }
 
         if (!isset($this->idProductCache[$productConcreteSku])) {
+            /** @var int|null $idProduct */
             $idProduct = $this->createProductQuery()
                 ->select(SpyProductTableMap::COL_ID_PRODUCT)
                 ->findOneBySku($productConcreteSku);

@@ -23,7 +23,6 @@ use Spryker\Zed\DataImport\Business\DataImportFacade;
  * @group Facade
  * @group DataImportFacadeTest
  * Add your own group annotations below this line
- * @property \SprykerTest\Zed\DataImport\BusinessTester $tester
  */
 class DataImportFacadeTest extends Unit
 {
@@ -31,6 +30,11 @@ class DataImportFacadeTest extends Unit
     public const IMPORT_GROUP_FULL = 'FULL';
     public const IMPORT_TYPE_SPECIFIC_A = 'specific-importer-a';
     public const IMPORT_TYPE_SPECIFIC_B = 'specific-importer-b';
+
+    /**
+     * @var \SprykerTest\Zed\DataImport\DataImportBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -100,13 +104,13 @@ class DataImportFacadeTest extends Unit
      */
     private function getFacade(): DataImportFacade
     {
-        return $this->tester->getLocator()->dataImport()->facade();
+        return $this->tester->getFacade();
     }
 
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\DataImportBusinessFactory
      */
-    private function createDataImportBusinessFactoryMock()
+    private function createDataImportBusinessFactoryMock(): DataImportBusinessFactory
     {
         $mockBuilder = $this->getMockBuilder(DataImportBusinessFactory::class)
             ->setMethods(['createDataImporterCollection']);

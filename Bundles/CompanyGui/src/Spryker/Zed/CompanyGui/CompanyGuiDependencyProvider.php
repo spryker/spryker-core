@@ -48,9 +48,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelCompanyQuery(Container $container): Container
     {
-        $container[static::PROPEL_COMPANY_QUERY] = function (Container $container) {
+        $container->set(static::PROPEL_COMPANY_QUERY, $container->factory(function () {
             return SpyCompanyQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -62,9 +62,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyGuiToCompanyFacadeBridge($container->getLocator()->company()->facade());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +76,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_TABLE_CONFIG_EXPANDER, function (Container $container) {
             return $this->getCompanyTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyTableHeaderExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_TABLE_HEADER_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_TABLE_HEADER_EXPANDER, function (Container $container) {
             return $this->getCompanyTableHeaderExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -120,9 +120,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_TABLE_DATA_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_TABLE_DATA_EXPANDER, function (Container $container) {
             return $this->getCompanyTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -142,9 +142,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyTableActionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_TABLE_ACTION_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_TABLE_ACTION_EXPANDER, function (Container $container) {
             return $this->getCompanyTableActionExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -164,9 +164,9 @@ class CompanyGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFormPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_FORM_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGINS_COMPANY_FORM_EXPANDER, function (Container $container) {
             return $this->getCompanyFormPlugins();
-        };
+        });
 
         return $container;
     }

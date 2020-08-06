@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsBlockCollectorParameterMapExpanderPlugin extends AbstractPlugin implements CmsBlockCollectorDataExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $collectedData

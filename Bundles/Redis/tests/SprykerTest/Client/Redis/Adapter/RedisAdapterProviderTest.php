@@ -123,7 +123,7 @@ class RedisAdapterProviderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Redis\Adapter\Factory\RedisAdapterFactoryInterface
      */
-    protected function createClientAdapterFactoryMock()
+    protected function createClientAdapterFactoryMock(): RedisAdapterFactoryInterface
     {
         $clientAdapterFactory = ($this->createMock(RedisAdapterFactoryInterface::class));
         $clientAdapterFactory->method('create')

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
 use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
@@ -90,7 +91,7 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @deprecated Use getCategoryQueryContainer() instead.
+     * @deprecated Use {@link getCategoryQueryContainer()} instead.
      *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerInterface
      */
@@ -121,5 +122,13 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     public function getProductSearchQuery(): SpyProductSearchQuery
     {
         return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRODUCT_SEARCH);
+    }
+
+    /**
+     * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
+     */
+    public function getPriceProductPropelQuery(): SpyPriceProductQuery
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PROPEL_QUERY_PRICE_PRODUCT);
     }
 }

@@ -254,8 +254,11 @@ class NavigationNodeCRUDTest extends Unit
      *
      * @return \Generated\Shared\Transfer\NavigationNodeLocalizedAttributesTransfer
      */
-    protected function createNavigationNodeLocalizedAttributesTransfer(int $idLocale, string $nodeTitle, string $externalUrl): NavigationNodeLocalizedAttributesTransfer
-    {
+    protected function createNavigationNodeLocalizedAttributesTransfer(
+        int $idLocale,
+        string $nodeTitle,
+        string $externalUrl
+    ): NavigationNodeLocalizedAttributesTransfer {
         $navigationNodeLocalizedAttributesTransfer = new NavigationNodeLocalizedAttributesTransfer();
         $navigationNodeLocalizedAttributesTransfer
             ->setFkLocale($idLocale)

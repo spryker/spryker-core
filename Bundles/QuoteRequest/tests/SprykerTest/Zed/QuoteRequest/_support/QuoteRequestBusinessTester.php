@@ -8,13 +8,17 @@
 namespace SprykerTest\Zed\QuoteRequest;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\MoneyValueBuilder;
+use Generated\Shared\DataBuilder\ShipmentBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\MoneyValueTransfer;
 use Generated\Shared\Transfer\QuoteRequestTransfer;
 use Generated\Shared\Transfer\QuoteRequestVersionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
  * Inherited Methods
@@ -115,5 +119,19 @@ class QuoteRequestBusinessTester extends Actor
                 CompanyBusinessUnitTransfer::FK_COMPANY => $companyTransfer->getIdCompany(),
             ]
         );
+    }
+
+    /**
+     * @param int $sourcePrice
+     *
+     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     */
+    public function createShipmentWithSourcePrice(int $sourcePrice): ShipmentTransfer
+    {
+        $shipmentMethodTransfer = $this->haveShipmentMethod();
+        $shipmentMethodTransfer->setSourcePrice((new MoneyValueBuilder([MoneyValueTransfer::GROSS_AMOUNT => $sourcePrice]))->build());
+        $shipmentTransfer = (new ShipmentBuilder())->build();
+
+        return $shipmentTransfer->setMethod($shipmentMethodTransfer);
     }
 }

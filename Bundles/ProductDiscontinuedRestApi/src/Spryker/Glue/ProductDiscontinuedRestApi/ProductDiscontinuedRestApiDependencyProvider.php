@@ -39,11 +39,11 @@ class ProductDiscontinuedRestApiDependencyProvider extends AbstractBundleDepende
      */
     public function addProductDiscontinuedStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_DISCONTINUED_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_DISCONTINUED_STORAGE, function (Container $container) {
             return new ProductDiscontinuedRestApiToProductDiscontinuedStorageClientBridge(
                 $container->getLocator()->productDiscontinuedStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

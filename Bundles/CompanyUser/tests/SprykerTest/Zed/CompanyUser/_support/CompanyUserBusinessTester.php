@@ -35,10 +35,6 @@ class CompanyUserBusinessTester extends Actor
 
     protected const STATUS_APPROVED = 'approved';
 
-   /**
-    * Define custom actions here
-    */
-
     /**
      * @param array $seedData
      * @param array $companySeedData

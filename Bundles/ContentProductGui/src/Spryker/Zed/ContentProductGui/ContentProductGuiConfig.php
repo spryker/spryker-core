@@ -22,6 +22,8 @@ class ContentProductGuiConfig extends AbstractBundleConfig
     public const MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST = 30;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getContentWidgetTemplates(): array
@@ -30,6 +32,8 @@ class ContentProductGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

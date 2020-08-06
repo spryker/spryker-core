@@ -142,8 +142,7 @@ class ProductOptionGroupSaverTest extends MockProvider
         ?TranslationSaverInterface $translationSaverMock = null,
         ?ProductOptionValueSaverInterface $productOptionValueSaverMock = null,
         ?AbstractProductOptionSaverInterface $abstractProductOptionSaver = null
-    ) {
-
+    ): ProductOptionGroupSaver {
         if (!$productOptionContainerMock) {
             $productOptionContainerMock = $this->createProductOptionQueryContainerMock();
         }
@@ -185,7 +184,7 @@ class ProductOptionGroupSaverTest extends MockProvider
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\ProductOption\Persistence\SpyProductOptionGroup
      */
-    protected function createProductOptionGroupEntityMock()
+    protected function createProductOptionGroupEntityMock(): SpyProductOptionGroup
     {
         return $this->getMockBuilder(SpyProductOptionGroup::class)
             ->setMethods(['save'])

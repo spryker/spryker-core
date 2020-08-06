@@ -9,14 +9,15 @@
     "spryker/decimal-object": "^1.0.0",
     "spryker/kernel": "^3.42.1",
     "spryker/log": "^3.0.0",
+    "spryker/propel": "^3.21.0",
     "spryker/symfony": "^3.0.0",
     "spryker/twig": "^3.0.0",
+    "spryker/util-glob": "^1.0.0",
     "spryker/zend": "^2.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "^3.7.0"
+    "spryker/testify": "*"
   },
   "autoload": {
     "psr-4": {
@@ -31,6 +32,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

@@ -10,7 +10,6 @@ namespace SprykerTest\Glue\GlueApplication\Rest\Request;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidator;
 use Spryker\Glue\GlueApplication\Rest\Request\RestRequestValidatorInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface;
@@ -90,9 +89,9 @@ class RestRequestValidatorTest extends Unit
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createValidateRestRequestPluginMock(): MockObject
+    protected function createValidateRestRequestPluginMock(): ValidateRestRequestPluginInterface
     {
         return $this->getMockBuilder(ValidateRestRequestPluginInterface::class)
            ->setMethods(['validate'])
@@ -102,7 +101,7 @@ class RestRequestValidatorTest extends Unit
     /**
      * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createRestRequestValidatorPluginMock(): MockObject
+    protected function createRestRequestValidatorPluginMock(): RestRequestValidatorPluginInterface
     {
         return $this->getMockBuilder(RestRequestValidatorPluginInterface::class)
            ->setMethods(['validate'])

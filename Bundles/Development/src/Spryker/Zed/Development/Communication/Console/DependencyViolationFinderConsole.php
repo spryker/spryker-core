@@ -142,8 +142,12 @@ class DependencyViolationFinderConsole extends AbstractCoreModuleAwareConsole
      *
      * @return void
      */
-    protected function printDependencyViolationErrors(string $moduleToValidate, ArrayObject $moduleDependencyTransferCollection, OutputInterface $output, ?string $dependencyType = null): void
-    {
+    protected function printDependencyViolationErrors(
+        string $moduleToValidate,
+        ArrayObject $moduleDependencyTransferCollection,
+        OutputInterface $output,
+        ?string $dependencyType = null
+    ): void {
         $tableRows = [];
         foreach ($moduleDependencyTransferCollection as $moduleDependencyTransfer) {
             if ($dependencyType !== null && !in_array($dependencyType, $moduleDependencyTransfer->getDependencyTypes())) {

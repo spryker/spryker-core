@@ -79,9 +79,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductFacade(Container $container)
     {
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductSearchToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
     }
 
     /**
@@ -91,9 +91,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideLocaleFacade(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductSearchToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
     }
 
     /**
@@ -103,9 +103,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideGlossaryFacade(Container $container)
     {
-        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new ProductSearchToGlossaryBridge($container->getLocator()->glossary()->facade());
-        };
+        });
     }
 
     /**
@@ -115,9 +115,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideTouchFacade(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new ProductSearchToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
     }
 
     /**
@@ -127,9 +127,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideEventFacade(Container $container)
     {
-        $container[self::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ProductSearchToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
     }
 
     /**
@@ -139,9 +139,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new ProductSearchToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
     }
 
     /**
@@ -151,9 +151,9 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideTouchQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_TOUCH] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_TOUCH, function (Container $container) {
             return $container->getLocator()->touch()->queryContainer();
-        };
+        });
     }
 
     /**
@@ -163,8 +163,8 @@ class ProductSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideUtilDataReaderService(Container $container)
     {
-        $container[static::SERVICE_DATA] = function (Container $container) {
+        $container->set(static::SERVICE_DATA, function (Container $container) {
             return $container->getLocator()->utilDataReader()->service();
-        };
+        });
     }
 }

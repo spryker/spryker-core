@@ -14,6 +14,8 @@ class ProductListGuiConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/product-list-gui';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedirectUrl(): string

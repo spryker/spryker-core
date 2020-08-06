@@ -22,6 +22,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     public const ID_CATEGORY_NODE = 'idCategoryNode';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -37,6 +39,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -60,6 +64,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $categoryNodeIds
@@ -77,6 +83,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idLocale
@@ -101,6 +109,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Category\Persistence\SpyCategoryNodeQuery
@@ -114,6 +124,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CategoryStorage\Persistence\SpyCategoryTreeStorageQuery
@@ -125,6 +137,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryIds
@@ -142,6 +156,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryNodeIds
@@ -156,6 +172,8 @@ class CategoryStorageQueryContainer extends AbstractQueryContainer implements Ca
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryTemplateIds

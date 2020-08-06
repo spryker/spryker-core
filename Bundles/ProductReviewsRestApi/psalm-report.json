@@ -1,0 +1,223 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductReviewsRestApi\\Processor\\Expander\\ProductAbstractReviewResourceRelationshipExpander::getAllSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductAbstractReviewResourceRelationshipExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 137,
+            "line_to": 137,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductReviewsRestApi\\Processor\\Expander\\ProductAbstractReviewResourceRelationshipExpander::getAllSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductAbstractReviewResourceRelationshipExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 127,
+            "line_to": 127,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductReviewsRestApi\\Processor\\Expander\\ProductConcreteReviewResourceRelationshipExpander::getAllSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductConcreteReviewResourceRelationshipExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 136,
+            "line_to": 136,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductReviewsRestApi\\Processor\\Expander\\ProductConcreteReviewResourceRelationshipExpander::getAllSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductConcreteReviewResourceRelationshipExpander.php",
+            "snippet": "        return $skus;",
+            "selected_text": "$skus",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 75,
+            "line_to": 75,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductReviewsRestApi\\Dependency\\Client\\ProductReviewsRestApiToProductStorageClientInterface::findProductAbstractStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Creator/ProductReviewCreator.php",
+            "snippet": "            $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 97,
+            "line_to": 97,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductReviewsRestApi\\Processor\\RestResponseBuilder\\ProductReviewRestResponseBuilderInterface::createProductReviewRestResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Creator/ProductReviewCreator.php",
+            "snippet": "            ->createProductReviewRestResponse($productReviewResponseTransfer->getProductReview());",
+            "selected_text": "$productReviewResponseTransfer->getProductReview()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 115,
+            "line_to": 115,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getNaturalIdentifier on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Creator/ProductReviewCreator.php",
+            "snippet": "            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());",
+            "selected_text": "getNaturalIdentifier",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArrayAccess",
+            "message": "Cannot access array value on possibly null variable $productConcreteData of type array<array-key, mixed>|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductReviewsConcreteProductsResourceExpander.php",
+            "snippet": "            ->findProductAbstractReview($productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT]);",
+            "selected_text": "$productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT]",
+            "error_level": 3,
+            "shortcode": 79
+        },
+        {
+            "severity": "info",
+            "line_from": 62,
+            "line_to": 62,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductReviewsRestApi\\Dependency\\Client\\ProductReviewsRestApiToProductReviewStorageClientInterface::findProductAbstractReview cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Expander/ProductReviewsConcreteProductsResourceExpander.php",
+            "snippet": "            ->findProductAbstractReview($productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT]);",
+            "selected_text": "$productConcreteData[static::KEY_ID_PRODUCT_ABSTRACT]",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Glue\\ProductReviewsRestApi\\Dependency\\Client\\ProductReviewsRestApiToProductStorageClientInterface::findProductAbstractStorageDataByMapping cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Reader/ProductReviewReader.php",
+            "snippet": "            $parentResource->getId(),",
+            "selected_text": "$parentResource->getId()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 108,
+            "line_to": 108,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getLimit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Reader/ProductReviewReader.php",
+            "snippet": "            $restRequest->getPage()->getLimit()",
+            "selected_text": "getLimit",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 128,
+            "line_to": 128,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $indexedProductReviewTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Reader/ProductReviewReader.php",
+            "snippet": "            $indexedProductReviewTransfers[$productReviewTransfer->getFkProductAbstract()][] = $productReviewTransfer;",
+            "selected_text": "$indexedProductReviewTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 150,
+            "line_to": 150,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductReviewsRestApi\\Processor\\Reader\\ProductReviewReader::createRequestParamsWithPaginationParameters cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/Reader/ProductReviewReader.php",
+            "snippet": "        $requestParams = $this->createRequestParamsWithPaginationParameters($page);",
+            "selected_text": "$page",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 141,
+            "line_to": 141,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productReviewErrorTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductReviewErrorTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/RestResponseBuilder/ProductReviewRestResponseBuilder.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductReviewErrorTransfer[] $productReviewErrorTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductReviewErrorTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $productReviewErrorTransfers has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ProductReviewErrorTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/Processor/RestResponseBuilder/ProductReviewRestResponseBuilderInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ProductReviewErrorTransfer[] $productReviewErrorTransfers",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ProductReviewErrorTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productReviewStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productStorage()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductReviewsRestApi/src/Spryker/Glue/ProductReviewsRestApi/ProductReviewsRestApiDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productReview()->client()",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

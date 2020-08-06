@@ -15,7 +15,7 @@ interface ShipmentMethodCollectionRemoverInterface
      * @param \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[] $shipmentMethodsTransferList
      * @param int[] $shipmentMethodsTransferForRemoveIndexes
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function remove(
         ArrayObject $shipmentMethodsTransferList,

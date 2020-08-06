@@ -12,6 +12,7 @@
     "spryker/product-image": "^3.3.0",
     "spryker/propel-orm": "^1.1.0",
     "spryker/search": "^6.0.0 || ^7.0.0 || ^8.0.0",
+    "spryker/search-extension": "^1.0.0",
     "spryker/storage": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/url": "^3.2.1"
@@ -19,7 +20,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/elastica": "*",
-    "spryker/propel": "^3.0.0",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -38,6 +39,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

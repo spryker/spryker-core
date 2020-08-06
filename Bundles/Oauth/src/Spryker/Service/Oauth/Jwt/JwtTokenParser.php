@@ -110,7 +110,8 @@ class JwtTokenParser implements JwtTokenParserInterface
      */
     protected function decodeBase64Url(string $data): string
     {
-        if ($remainder = strlen($data) % 4) {
+        $remainder = strlen($data) % 4;
+        if ($remainder) {
             $data .= str_repeat('=', 4 - $remainder);
         }
 

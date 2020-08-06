@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundle\Communication;
 
+use Spryker\Zed\ConfigurableBundle\ConfigurableBundleDependencyProvider;
+use Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
@@ -17,4 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ConfigurableBundleCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\ConfigurableBundle\Dependency\Facade\ConfigurableBundleToLocaleFacadeInterface
+     */
+    public function getLocaleFacade(): ConfigurableBundleToLocaleFacadeInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleDependencyProvider::FACADE_LOCALE);
+    }
 }

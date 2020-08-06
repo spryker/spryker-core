@@ -223,8 +223,10 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer
      */
-    protected function createProductSearchAttributeEntity(ProductSearchAttributeTransfer $productSearchAttributeTransfer, ProductAttributeKeyTransfer $productAttributeKeyTransfer)
-    {
+    protected function createProductSearchAttributeEntity(
+        ProductSearchAttributeTransfer $productSearchAttributeTransfer,
+        ProductAttributeKeyTransfer $productAttributeKeyTransfer
+    ) {
         $productSearchAttributeEntity = new SpyProductSearchAttribute();
         $productSearchAttributeEntity->fromArray($productSearchAttributeTransfer->modifiedToArray());
         $productSearchAttributeEntity->setFkProductAttributeKey($productAttributeKeyTransfer->getIdProductAttributeKey());
@@ -241,8 +243,10 @@ class AttributeWriter implements AttributeWriterInterface
      *
      * @return \Generated\Shared\Transfer\ProductSearchAttributeTransfer
      */
-    protected function updateProductSearchAttributeEntity(ProductSearchAttributeTransfer $productSearchAttributeTransfer, ProductAttributeKeyTransfer $productAttributeKeyTransfer)
-    {
+    protected function updateProductSearchAttributeEntity(
+        ProductSearchAttributeTransfer $productSearchAttributeTransfer,
+        ProductAttributeKeyTransfer $productAttributeKeyTransfer
+    ) {
         $productSearchAttributeEntity = $this->productSearchQueryContainer
             ->queryProductSearchAttribute()
             ->findOneByIdProductSearchAttribute($productSearchAttributeTransfer->getIdProductSearchAttribute());

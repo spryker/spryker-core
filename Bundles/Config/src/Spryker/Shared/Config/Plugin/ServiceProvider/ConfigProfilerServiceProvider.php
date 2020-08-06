@@ -17,7 +17,7 @@ use Spryker\Shared\Config\Profiler\ConfigProfilerCollectorFactory;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 
 /**
- * @deprecated Please use the specific ConfigProfilerServiceProvider for your application.
+ * @deprecated Use the specific ConfigProfilerServiceProvider for your application.
  *
  * This will be removed with the next major.
  */

@@ -44,8 +44,10 @@ class CartHandler implements CartHandlerInterface
      *
      * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
      */
-    protected function getWishlistRequestCollectionToCartDiff(WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer, QuoteTransfer $quoteTransfer)
-    {
+    protected function getWishlistRequestCollectionToCartDiff(
+        WishlistMoveToCartRequestCollectionTransfer $requestCollectionTransfer,
+        QuoteTransfer $quoteTransfer
+    ) {
         $wishlistRequestCollectionDiff = new WishlistMoveToCartRequestCollectionTransfer();
 
         $existingSkuIndex = $this->createExistingSkuIndex($quoteTransfer);

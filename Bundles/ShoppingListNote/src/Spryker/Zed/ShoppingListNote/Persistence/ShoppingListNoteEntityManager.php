@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
+use Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -48,5 +51,52 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
             ->createShoppingListItemNoteQuery()
             ->filterByIdShoppingListItemNote($idShoppingListItemNote)
             ->delete();
+    }
+
+    /**
+     * @param int[] $shoppingListItemNoteIds
+     *
+     * @return void
+     */
+    public function deleteShoppingListItemNoteByShoppingListItemNoteIds(array $shoppingListItemNoteIds): void
+    {
+        $this->getFactory()
+            ->createShoppingListItemNoteQuery()
+            ->filterByIdShoppingListItemNote_In($shoppingListItemNoteIds)
+            ->delete();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemNoteInBulk(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemNoteObjectCollection = new ObjectCollection();
+        $shoppingListItemNoteObjectCollection->setModel(SpyShoppingListItemNote::class);
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemNoteTransfer = $shoppingListItemTransfer->getShoppingListItemNote();
+            if (!$shoppingListItemNoteTransfer) {
+                continue;
+            }
+
+            $shoppingListItemNoteTransfer->setFkShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
+
+            $shoppingListItemNoteEntity = $this->getFactory()
+                ->createShoppingListItemNoteMapper()
+                ->mapShoppingListItemNoteTransferToEntity($shoppingListItemNoteTransfer, new SpyShoppingListItemNote());
+
+            $shoppingListItemNoteObjectCollection->append($shoppingListItemNoteEntity);
+        }
+
+        $shoppingListItemNoteObjectCollection->save();
+
+        return $this->getFactory()
+            ->createShoppingListItemNoteMapper()
+            ->mapShoppingListItemNoteEntityCollectionToShoppingListItemCollectionTransfer(
+                $shoppingListItemNoteObjectCollection,
+                $shoppingListItemCollectionTransfer
+            );
     }
 }

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="{{ app.locale }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            [cloak]:not([ng-version]) {
+                display: none;
+            }
+        </style>
+        <title>
+            {% block headTitle %}{% endblock %}
+        </title>
+
+        {% block headCss %}
+            <link rel="stylesheet" href="{{ assetsPath('js/mp/styles.css') }}">
+        {% endblock %}
+    </head>
+    <body>
+        {% block globalBody %}
+            <web-spy-locale-switcher locale="{{ app.locale | split('_') | first }}"></web-spy-locale-switcher>
+        {% endblock %}
+
+        {% block body %}{% endblock %}
+
+        {% block polyfillsJs %}
+            <script src="{{ assetsPath('js/mp/runtime-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/runtime-es5.js') }}" nomodule defer></script>
+            <script src="{{ assetsPath('js/mp/polyfills-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/polyfills-es5.js') }}" nomodule defer></script>
+        {% endblock %}
+
+        {% block globalJs %}
+            <script src="{{ assetsPath('js/mp/vendor-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/vendor-es5.js') }}" nomodule defer></script>
+            <script src="{{ assetsPath('js/mp/main-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/main-es5.js') }}" nomodule defer></script>
+        {% endblock %}
+
+        {% block layoutJs %}
+            <script src="{{ assetsPath('js/mp/spy/zed-ui-es2015.js') }}" type="module"></script>
+            <script src="{{ assetsPath('js/mp/spy/zed-ui-es5.js') }}" nomodule defer></script>
+        {% endblock %}
+
+        {% block footerJs %}
+        {% endblock %}
+    </body>
+</html>

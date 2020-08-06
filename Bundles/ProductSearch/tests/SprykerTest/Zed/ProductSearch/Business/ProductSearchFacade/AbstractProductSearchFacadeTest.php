@@ -74,8 +74,12 @@ abstract class AbstractProductSearchFacadeTest extends Unit
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
-    protected function createProduct(array $abstractAttrs, array $abstractLocalizedAttrs, array $concreteAttrs, array $concreteLocalizedAttrs): SpyProductAbstract
-    {
+    protected function createProduct(
+        array $abstractAttrs,
+        array $abstractLocalizedAttrs,
+        array $concreteAttrs,
+        array $concreteLocalizedAttrs
+    ): SpyProductAbstract {
         $productAbstractEntity = new SpyProductAbstract();
         $productAbstractEntity
             ->setSku('touchProductAbstractByAsynchronousAttributesOnCreate')

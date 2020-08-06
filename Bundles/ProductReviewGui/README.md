@@ -1,6 +1,6 @@
 # ProductReviewGui Module
-[![Build Status](https://travis-ci.org/spryker/ProductReviewGui.svg)](https://travis-ci.org/spryker/ProductReviewGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductReviewGui/badge.svg)](https://coveralls.io/github/spryker/ProductReviewGui)
+[![Build Status](https://travis-ci.org/spryker/product-review-gui.svg)](https://travis-ci.org/spryker/product-review-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductReviewGui is a user interface module to manage product reviews in the Zed Administration Interface.
 

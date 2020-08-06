@@ -87,7 +87,7 @@ class AbstractQueueWriterPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Communication\Plugin\AbstractQueueWriterPlugin
      */
-    protected function getAbstractQueueDataWriterPluginMock(int $chunkSize)
+    protected function getAbstractQueueDataWriterPluginMock(int $chunkSize): AbstractQueueWriterPlugin
     {
         $abstractQueueDataWriterPluginMock = $this->getMockForAbstractClass(AbstractQueueWriterPlugin::class);
         $abstractQueueDataWriterPluginMock->method('getQueueName')->willReturn(static::DUMMY_QUEUE_NAME);
@@ -102,7 +102,7 @@ class AbstractQueueWriterPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Business\DataImportFacade
      */
-    protected function getDataImportFacadeMock(int $expectedChunkSizeToWrite, int $expectedNumberOfFacadeCalls)
+    protected function getDataImportFacadeMock(int $expectedChunkSizeToWrite, int $expectedNumberOfFacadeCalls): DataImportFacade
     {
         $queueDataWriterFacadeMock = $this->createMock(DataImportFacade::class);
         $queueDataWriterFacadeMock->expects($this->exactly($expectedNumberOfFacadeCalls))

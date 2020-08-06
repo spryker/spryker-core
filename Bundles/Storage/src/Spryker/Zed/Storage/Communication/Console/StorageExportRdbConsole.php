@@ -13,7 +13,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole` instead.
+ * @deprecated Use {@link \Spryker\Zed\StorageRedis\Communication\Console\StorageRedisExportRdbConsole} instead.
  *
  * @method \Spryker\Zed\Storage\Business\StorageFacadeInterface getFacade()
  * @method \Spryker\Zed\Storage\Communication\StorageCommunicationFactory getFactory()

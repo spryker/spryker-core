@@ -44,8 +44,11 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      * @param \Spryker\Zed\ProductSearch\Dependency\Facade\ProductSearchToEventFacadeInterface $eventFacade
      * @param \Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface $productSearchQuery
      */
-    public function __construct(ProductSearchToTouchInterface $touchFacade, ProductSearchToEventFacadeInterface $eventFacade, ProductSearchQueryContainerInterface $productSearchQuery)
-    {
+    public function __construct(
+        ProductSearchToTouchInterface $touchFacade,
+        ProductSearchToEventFacadeInterface $eventFacade,
+        ProductSearchQueryContainerInterface $productSearchQuery
+    ) {
         $this->touchFacade = $touchFacade;
         $this->eventFacade = $eventFacade;
         $this->productSearchQueryContainer = $productSearchQuery;
@@ -110,12 +113,15 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
         );
         $join->setTableMap(new SpyProductAttributeKeyTableMap());
 
-        return $query
+        /** @var array $result */
+        $result = $query
             ->addJoinObject($join, SpyProductAttributeKeyTableMap::TABLE_NAME)
             ->select(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->setDistinct()
             ->find();
+
+        return $result;
     }
 
     /**
@@ -125,15 +131,18 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      */
     protected function getProductAbstractIdsByAttributeNames(array $attributeNames)
     {
-        return $this->productSearchQueryContainer
+        /** @var array $result */
+        $result = $this->productSearchQueryContainer
             ->queryProductAbstractByAttributeName($attributeNames)
             ->select(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT)
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
+
+        return $result;
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -143,7 +152,7 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -161,11 +170,14 @@ abstract class AbstractAttributeMarker implements AttributeMarkerInterface
      */
     protected function queryAttributeKeys($query)
     {
-        return $query
+        /** @var array $result */
+        $result = $query
             ->joinSpyProductAttributeKey(SpyProductAttributeKeyTableMap::TABLE_NAME)
             ->select(SpyProductAttributeKeyTableMap::COL_KEY)
             ->setFormatter(new PropelArraySetFormatter())
             ->setDistinct()
             ->find();
+
+        return $result;
     }
 }

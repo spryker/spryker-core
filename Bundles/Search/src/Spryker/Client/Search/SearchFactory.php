@@ -9,6 +9,10 @@ namespace Spryker\Client\Search;
 
 use Generated\Shared\Search\PageIndexMap;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapter;
+use Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface;
+use Spryker\Client\Search\Delegator\SearchDelegator;
+use Spryker\Client\Search\Delegator\SearchDelegatorInterface;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilder;
 use Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactory;
 use Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactory;
@@ -27,6 +31,8 @@ use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchKeysQuery;
 use Spryker\Client\Search\Plugin\Elasticsearch\Query\SearchStringQuery;
 use Spryker\Client\Search\Provider\IndexClientProvider;
 use Spryker\Client\Search\Provider\SearchClientProvider;
+use Spryker\Client\Search\SearchContext\SearchContextExpander;
+use Spryker\Client\Search\SearchContext\SearchContextExpanderInterface;
 
 /**
  * @method \Spryker\Client\Search\SearchConfig getConfig()
@@ -44,6 +50,55 @@ class SearchFactory extends AbstractFactory
     protected static $searchClient;
 
     /**
+     * @return \Spryker\Client\Search\Delegator\SearchDelegatorInterface
+     */
+    public function createSearchDelegator(): SearchDelegatorInterface
+    {
+        return new SearchDelegator(
+            $this->getClientAdapterPlugins(),
+            $this->createSearchContextExpander()
+        );
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @return \Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
+     */
+    public function createSearchDelegatorAdapter(): SearchDelegatorAdapterInterface
+    {
+        return new SearchDelegatorAdapter($this->createSearchDelegator(), $this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Client\Search\SearchContext\SearchContextExpanderInterface
+     */
+    public function createSearchContextExpander(): SearchContextExpanderInterface
+    {
+        return new SearchContextExpander(
+            $this->getSearchContextExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchAdapterPluginInterface[]
+     */
+    public function getClientAdapterPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_CLIENT_ADAPTER);
+    }
+
+    /**
+     * @return \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextExpanderPluginInterface[]
+     */
+    public function getSearchContextExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SearchDependencyProvider::PLUGINS_SEARCH_CONTEXT_EXPANDER);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function getSearchConfig()
@@ -56,6 +111,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface
      */
     public function createSearchConfig()
@@ -64,6 +121,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
      */
     public function getSearchConfigBuilder()
@@ -72,6 +131,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Elastica\Client
      */
     public function getElasticsearchClient()
@@ -91,12 +152,18 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface
+     * @deprecated Use {@link \Spryker\Client\Search\SearchFactory::createSearchDelegator()} instead.
+     *
+     * @return \Spryker\Client\Search\Model\Handler\SearchHandlerInterface|\Spryker\Client\Search\Delegator\SearchDelegatorInterface
      */
     public function createElasticsearchSearchHandler()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegator();
+        }
+
         return new ElasticsearchSearchHandler(
-            $this->createIndexClientProvider()->getClient()
+            $this->createIndexClientProvider()
         );
     }
 
@@ -109,6 +176,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\FacetAggregationFactoryInterface
      */
     public function createFacetAggregationFactory()
@@ -121,6 +190,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface
      */
     public function createFacetConfigBuilder()
@@ -129,6 +200,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface
      */
     public function createSortConfigBuilder()
@@ -137,6 +210,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface
      */
     public function createPaginationConfigBuilder()
@@ -145,6 +220,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryFactoryInterface
      */
     public function createQueryFactory()
@@ -161,6 +238,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface
      */
     public function createAggregationExtractorFactory()
@@ -169,6 +248,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Generated\Shared\Search\PageIndexMap
      */
     protected function createPageIndexMap()
@@ -177,6 +258,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Query\QueryBuilderInterface
      */
     public function createQueryBuilder()
@@ -185,6 +268,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Aggregation\AggregationBuilderInterface
      */
     public function createAggregationBuilder()
@@ -193,6 +278,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\Suggest\SuggestBuilderInterface
      */
     public function createSuggestBuilder()
@@ -201,6 +288,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor\FacetValueTransformerFactoryInterface
      */
     public function createFacetValueTransformerFactory()
@@ -209,11 +298,13 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createSearchKeysQuery($searchString, $limit = null, $offset = null)
     {
@@ -221,11 +312,13 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $searchString
      * @param int|null $limit
      * @param int|null $offset
      *
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
     public function createSearchStringQuery($searchString, $limit = null, $offset = null)
     {
@@ -233,6 +326,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigExpanderPluginInterface[]
      */
     public function getSearchConfigExpanderPlugins()
@@ -241,6 +336,8 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Spryker\Shared\Kernel\Store
      */
     public function getStore()
@@ -249,10 +346,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Writer\WriterInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createWriter()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegatorAdapter();
+        }
+
         return new Writer(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),
@@ -261,10 +362,14 @@ class SearchFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface
+     * @return \Spryker\Client\Search\Model\Elasticsearch\Reader\ReaderInterface|\Spryker\Client\Search\Delegator\Adapter\SearchDelegatorAdapterInterface
      */
     public function createReader()
     {
+        if (count($this->getClientAdapterPlugins()) > 0) {
+            return $this->createSearchDelegatorAdapter();
+        }
+
         return new Reader(
             $this->createCachedElasticsearchClient(),
             $this->getConfig()->getSearchIndexName(),

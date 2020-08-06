@@ -110,7 +110,7 @@ class ProductListStorageListenerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductListStorage\ProductListStorageConfig|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getConfigMock()
+    protected function getConfigMock(): ProductListStorageConfig
     {
         $configMock = $this->getMockBuilder(ProductListStorageConfig::class)
             ->setMethods(['isSendingToQueue'])

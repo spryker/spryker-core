@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\ProductPackagingUnit\Persistence" package="src.Orm.Zed.ProductPackagingUnit.Persistence">
 
-    <table name="spy_product_packaging_unit" phpName="SpyProductPackagingUnit">
+    <table name="spy_product_packaging_unit">
         <column name="id_product_packaging_unit" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="fk_lead_product" type="INTEGER" required="true"/>
@@ -37,7 +37,7 @@
         <id-method-parameter value="spy_product_packaging_unit_pk_seq"/>
     </table>
 
-    <table name="spy_product_packaging_unit_type" phpName="SpyProductPackagingUnitType">
+    <table name="spy_product_packaging_unit_type">
         <column name="id_product_packaging_unit_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 

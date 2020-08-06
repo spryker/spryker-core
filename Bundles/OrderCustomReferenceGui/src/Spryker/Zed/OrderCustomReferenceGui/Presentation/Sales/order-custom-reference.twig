@@ -1,0 +1,31 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Custom Order Reference' } %}
+    {% block widget_content %}
+        <div class="js-customer-order-reference">
+            <div class="row js-toggle-target">
+                <div class="col-sm-9">
+                    {{ data.order.orderCustomReference }}
+                </div>
+                <div class="col-sm-3 text-right">
+                    <button class="btn btn-default js-toggle-trigger">
+                        {{ 'Edit Reference' | trans }}
+                    </button>
+                </div>
+            </div>
+
+            <div class="js-toggle-target hide">
+                <form action="{{ url('/order-custom-reference-gui/sales/save') }}" method="POST">
+                    <div class="form-group">
+                        <label for="orderCustomReference" class="control-label">{{ 'Custom Order Reference' | trans }}</label>
+                        <input class="form-control" id="orderCustomReference" name="orderCustomReference" value="{{ data.order.orderCustomReference }}">
+                    </div>
+                    <input type="hidden" required="required" name="idSalesOrder" id="idSalesOrder" value="{{ data.order.idSalesOrder }}">
+                    <input type="hidden" required="required" name="backUrl" id="backUrl" value="{{ data.backUrl }}">
+                    <button type="submit" class="btn btn-primary safe-submit">{{ 'Save' | trans }}</button>
+                    <button type="button" class="btn btn-default js-toggle-trigger">{{ 'Cancel' | trans }}</button>
+                </form>
+            </div>
+        </div>
+
+        <script src="{{ assetsPath('js/spryker-zed-order-reference-toggler.js') }}"></script>
+    {% endblock %}
+{% endembed %}

@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Propel\Business\Model\PropelDatabase;
 
 use Codeception\Test\Unit;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator;
 use Spryker\Zed\Propel\PropelConfig;
 
@@ -67,7 +66,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\Business\Model\PropelDatabase\PostgreSqlDatabaseCreator
      */
-    protected function getPostgreSqlDatabaseCreatorMock(array $methods = [])
+    protected function getPostgreSqlDatabaseCreatorMock(array $methods = []): PostgreSqlDatabaseCreator
     {
         return $this->getMockBuilder(PostgreSqlDatabaseCreator::class)
             ->disableOriginalConstructor()
@@ -78,7 +77,7 @@ class PostgreSqlDatabaseCreatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Propel\PropelConfig
      */
-    protected function getConfigMock(): MockObject
+    protected function getConfigMock(): PropelConfig
     {
         $configMock = $this->createMock(PropelConfig::class);
         $configMock->method('getProcessTimeout')->willReturn(null);

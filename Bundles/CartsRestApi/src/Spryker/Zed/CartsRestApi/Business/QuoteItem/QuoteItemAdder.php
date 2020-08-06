@@ -44,25 +44,33 @@ class QuoteItemAdder implements QuoteItemAdderInterface
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
+     */
+    protected $cartItemMapperPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Dependency\Facade\CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
      * @param \Spryker\Zed\CartsRestApi\Business\PermissionChecker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[] $cartItemMapperPlugins
      */
     public function __construct(
         CartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         QuoteReaderInterface $quoteReader,
         QuoteItemMapperInterface $quoteItemMapper,
-        QuotePermissionCheckerInterface $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        array $cartItemMapperPlugins
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->cartItemMapperPlugins = $cartItemMapperPlugins;
     }
 
     /**
-     * @deprecated Use addToCart() instead.
+     * @deprecated Use {@link addToCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -139,12 +147,34 @@ class QuoteItemAdder implements QuoteItemAdderInterface
         QuoteTransfer $quoteTransfer,
         CartItemRequestTransfer $cartItemRequestTransfer
     ): PersistentCartChangeTransfer {
-        return (new PersistentCartChangeTransfer())
+        $persistentCartChangeTransfer = (new PersistentCartChangeTransfer())
             ->fromArray($quoteTransfer->toArray(), true)
             ->setItems(new ArrayObject([
                 (new ItemTransfer())
                     ->setSku($cartItemRequestTransfer->getSku())
                     ->setQuantity($cartItemRequestTransfer->getQuantity()),
             ]));
+
+        return $this->executeCartItemMapperPlugins($cartItemRequestTransfer, $persistentCartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    protected function executeCartItemMapperPlugins(
+        CartItemRequestTransfer $cartItemRequestTransfer,
+        PersistentCartChangeTransfer $persistentCartChangeTransfer
+    ): PersistentCartChangeTransfer {
+        foreach ($this->cartItemMapperPlugins as $cartItemMapperPlugin) {
+            $persistentCartChangeTransfer = $cartItemMapperPlugin->mapCartItemRequestTransferToPersistentCartChangeTransfer(
+                $cartItemRequestTransfer,
+                $persistentCartChangeTransfer
+            );
+        }
+
+        return $persistentCartChangeTransfer;
     }
 }

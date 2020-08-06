@@ -29,9 +29,9 @@ class ProductGroupStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductGroupStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -43,13 +43,13 @@ class ProductGroupStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_GROUP] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_GROUP, function (Container $container) {
             return new ProductGroupStorageToProductGroupQueryContainerBridge($container->getLocator()->productGroup()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductGroupStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }

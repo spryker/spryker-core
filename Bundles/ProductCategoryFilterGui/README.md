@@ -1,6 +1,6 @@
 # ProductCategoryFilterGui Module
-[![Build Status](https://travis-ci.org/spryker/ProductCategoryFilterGui.svg)](https://travis-ci.org/spryker/ProductCategoryFilterGui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductCategoryFilterGui/badge.svg)](https://coveralls.io/github/spryker/ProductCategoryFilterGui)
+[![Build Status](https://travis-ci.org/spryker/product-category-filter-gui.svg)](https://travis-ci.org/spryker/product-category-filter-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductCategoryFilterGui is a user interface module to manage product category filters in the Zed Administration Interface.
 

@@ -16,6 +16,10 @@ use Symfony\Component\Form\FormRenderer;
 use Twig\Environment;
 use Twig\RuntimeLoader\FactoryRuntimeLoader;
 
+/**
+ * @deprecated Use {@link \Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin} instead.
+ * @deprecated Use {@link \Spryker\Zed\Form\Communication\Plugin\Application\FormApplicationPlugin} instead.
+ */
 class FormFactoryServiceProvider implements ServiceProviderInterface
 {
     /**

@@ -12,9 +12,13 @@
     </transfer>
 
     <transfer name="Url">
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="UrlCollectorStorage">
+        <property name="localeUrls" type="Url[]" singular="localeUrls"/>
+        <property name="referenceKey" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
 </transfers>

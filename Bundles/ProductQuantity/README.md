@@ -1,6 +1,6 @@
 # ProductQuantity Module
 [![Build Status](https://travis-ci.org/spryker/product-quantity.svg)](https://travis-ci.org/spryker/product-quantity)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/product-quantity/badge.svg)](https://coveralls.io/github/spryker/product-quantity)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Provides basic operations over the product quantity entities.
 

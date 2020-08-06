@@ -1,6 +1,6 @@
 # OauthCustomerConnectorExtension Module
 [![Build Status](https://travis-ci.org/spryker/oauth-customer-connector-extension.svg)](https://travis-ci.org/spryker/oauth-customer-connector-extension)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/oauth-customer-connector-extension/badge.svg)](https://coveralls.io/github/spryker/oauth-customer-connector-extension)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 Provides extension plugins for module OauthCustomerConnector.
 

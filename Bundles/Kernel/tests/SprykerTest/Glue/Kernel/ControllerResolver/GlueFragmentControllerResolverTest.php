@@ -71,7 +71,7 @@ class GlueFragmentControllerResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\Kernel\ControllerResolver\GlueFragmentControllerResolver
      */
-    protected function getFragmentControllerProvider(Request $request)
+    protected function getFragmentControllerProvider(Request $request): GlueFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(GlueFragmentControllerResolver::class)
             ->setMethods(['resolveController', 'getCurrentRequest'])

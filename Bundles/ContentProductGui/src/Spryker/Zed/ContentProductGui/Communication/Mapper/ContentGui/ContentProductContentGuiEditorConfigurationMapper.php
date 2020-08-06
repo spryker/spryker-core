@@ -26,7 +26,7 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
     }
 
     /**
-     * @return array
+     * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[]
      */
     public function getTemplates(): array
     {
@@ -46,6 +46,6 @@ class ContentProductContentGuiEditorConfigurationMapper implements ContentProduc
      */
     public function getTwigFunctionTemplate(): string
     {
-        return "{{ " . $this->contentProductGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
+        return '{{ ' . $this->contentProductGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }

@@ -32,6 +32,6 @@ class CmsBlockGuiViewCest
     {
         $i->listDataTable(CmsBlockGuiListPage::URL . '/table');
         $i->clickDataTableButton('View Block');
-        $i->seeBreadcrumbNavigation('Content Management / Blocks / View CMS Block');
+        $i->seeBreadcrumbNavigation('Content / Blocks / View CMS Block');
     }
 }

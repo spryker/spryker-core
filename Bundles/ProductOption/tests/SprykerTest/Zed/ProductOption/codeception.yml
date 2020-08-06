@@ -30,6 +30,10 @@ suites:
                 - \SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
                 - \SprykerTest\Shared\Tax\Helper\TaxSetDataHelper
+                - \SprykerTest\Zed\Oms\Helper\OmsHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Communication:
         path: Communication

@@ -36,6 +36,8 @@ class ApiControllerListenerPlugin extends AbstractPlugin implements ApiControlle
     protected const REQUEST_URI = 'REQUEST_URI';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event

@@ -16,6 +16,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\IsActiveQueryExpanderPlugin} instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
@@ -62,7 +64,7 @@ class IsActiveQueryExpanderPlugin extends AbstractPlugin implements QueryExpande
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
             throw new InvalidArgumentException(sprintf(
-                'Localized query expander available only with %s, got: %s',
+                'Is Active query expander available only with %s, got: %s',
                 BoolQuery::class,
                 get_class($boolQuery)
             ));

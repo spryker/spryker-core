@@ -18,6 +18,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsPageSearchQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeNames
@@ -33,6 +35,8 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageIds
@@ -73,6 +77,8 @@ class CmsPageSearchQueryContainer extends AbstractQueryContainer implements CmsP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsPageIds

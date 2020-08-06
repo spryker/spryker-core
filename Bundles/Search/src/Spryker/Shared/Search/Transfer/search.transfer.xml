@@ -129,11 +129,32 @@
     <transfer name="SearchDocument">
         <property name="id" type="string"/>
         <property name="data" type="array" singular="data"/>
-        <property name="type" type="string"/>
-        <property name="index" type="string"/>
+        <property name="type" type="string" deprecated="Use searchContext instead."/>
+        <property name="index" type="string" deprecated="Use searchContext instead."/>
+        <property name="searchContext" type="SearchContext"/>
     </transfer>
 
     <transfer name="Locale">
+    </transfer>
+
+    <transfer name="SearchContext">
+        <property name="sourceIdentifier" type="string"/>
+    </transfer>
+
+    <transfer name="HealthCheckServiceResponse">
+        <property name="status" type="bool"/>
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="IndexDefinitionFile">
+        <property name="fileName" type="string"/>
+        <property name="storePrefix" type="string"/>
+        <property name="content" type="array" singular="content"/>
+        <property name="realPath" type="string"/>
     </transfer>
 
 </transfers>

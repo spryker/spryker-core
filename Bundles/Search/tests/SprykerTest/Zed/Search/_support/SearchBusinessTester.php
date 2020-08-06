@@ -22,14 +22,12 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Search\Business\SearchBusinessFactory getFactory()
+ * @method \Spryker\Zed\Search\Business\SearchFacade getFacade()()
  *
  * @SuppressWarnings(PHPMD)
  */
 class SearchBusinessTester extends Actor
 {
     use _generated\SearchBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

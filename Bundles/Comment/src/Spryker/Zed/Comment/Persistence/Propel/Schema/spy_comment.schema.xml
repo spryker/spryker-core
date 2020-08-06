@@ -5,7 +5,7 @@
           package="src.Orm.Zed.Comment.Persistence"
 >
 
-    <table name="spy_comment_thread" idMethod="native" allowPkInsert="true" phpName="SpyCommentThread">
+    <table name="spy_comment_thread" idMethod="native" allowPkInsert="true">
         <column name="id_comment_thread" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
         <column name="owner_type" required="true" type="VARCHAR" size="64"/>
@@ -30,7 +30,7 @@
 
     </table>
 
-    <table name="spy_comment" idMethod="native" allowPkInsert="true" phpName="SpyComment">
+    <table name="spy_comment" idMethod="native" allowPkInsert="true">
         <column name="id_comment" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_comment_thread" required="true" type="INTEGER"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
@@ -69,7 +69,7 @@
 
     </table>
 
-    <table name="spy_comment_tag" idMethod="native" allowPkInsert="true" phpName="SpyCommentTag">
+    <table name="spy_comment_tag" idMethod="native" allowPkInsert="true">
         <column name="id_comment_tag" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" required="true" type="VARCHAR" size="255"/>
         <column name="uuid" required="false" type="VARCHAR" size="36"/>
@@ -91,7 +91,7 @@
         <id-method-parameter value="id_comment_tag_pk_seq"/>
     </table>
 
-    <table name="spy_comment_to_comment_tag" idMethod="native" allowPkInsert="true" phpName="SpyCommentToCommentTag" isCrossRef="true">
+    <table name="spy_comment_to_comment_tag" idMethod="native" allowPkInsert="true" isCrossRef="true">
         <column name="fk_comment" type="INTEGER" primaryKey="true"/>
         <column name="fk_comment_tag" type="INTEGER" primaryKey="true"/>
 

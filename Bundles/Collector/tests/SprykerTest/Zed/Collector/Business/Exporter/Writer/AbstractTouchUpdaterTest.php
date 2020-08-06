@@ -145,7 +145,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\SprykerTest\Zed\Collector\Business\Fixture\TouchUpdaterStub
      */
-    protected function createTouchUpdater()
+    protected function createTouchUpdater(): TouchUpdaterStub
     {
         return new TouchUpdaterStub($this->createBulkTouchUpdateQuery(), $this->createBulkTouchDeleteQuery());
     }
@@ -183,7 +183,7 @@ class AbstractTouchUpdaterTest extends Unit
     /**
      * @return \Propel\Runtime\Connection\ConnectionInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createConnectionMock()
+    protected function createConnectionMock(): ConnectionInterface
     {
         return $this->getMockForAbstractClass(ConnectionInterface::class, [], '', true, true, true, ['exec']);
     }

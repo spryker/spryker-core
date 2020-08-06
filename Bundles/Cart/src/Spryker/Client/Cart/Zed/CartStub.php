@@ -7,7 +7,6 @@
 
 namespace Spryker\Client\Cart\Zed;
 
-use Generated\Shared\Transfer\CartChangeQuantityTransfer;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -95,19 +94,6 @@ class CartStub extends ZedRequestStub implements CartStubInterface
         $quoteTransfer = $this->zedStub->call('/cart/gateway/reload-items', $quoteTransfer);
 
         return $quoteTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeQuantityTransfer $cartChangeQuantityTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function changeItemQuantity(CartChangeQuantityTransfer $cartChangeQuantityTransfer): QuoteResponseTransfer
-    {
-        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
-        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/change-item-quantity', $cartChangeQuantityTransfer);
-
-        return $quoteResponseTransfer;
     }
 
     /**

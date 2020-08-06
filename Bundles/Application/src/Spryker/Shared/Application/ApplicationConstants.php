@@ -14,23 +14,60 @@ use Spryker\Shared\Kernel\KernelConstants;
  */
 interface ApplicationConstants
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::DISPLAY_ERRORS} instead.
+     *
+     * @api
+     */
     public const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
+    /**
+     * @api
+     */
     public const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     *
+     * @api
+     */
     public const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
 
-    public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR'; // Deprecated: Will be removed with the next major.
+    /**
+     * @deprecated Use {@link \Spryker\Shared\WebProfiler\WebProfilerConstants::IS_WEB_PROFILER_ENABLED} instead.
+     *
+     * @api
+     */
+    public const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const STORE_PREFIX = 'STORE_PREFIX';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const BACKTRACE_USER_PATH = 'BACKTRACE_USER_PATH';
 
     /**
-     * @deprecated Use `TwigConstants::YVES_THEME` instead.
+     * @deprecated Use {@link \Spryker\Shared\Twig\TwigConstants::YVES_THEME} instead.
      */
     public const YVES_THEME = 'YVES_THEME';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_IS_SSL_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::YVES_IS_SSL_ENABLED} instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -42,7 +79,7 @@ interface ApplicationConstants
     public const YVES_SSL_ENABLED = 'YVES_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES} instead.
      *
      * Specification:
      * - An array of HTTPS Excluded resources when ssl is enabled.
@@ -53,7 +90,7 @@ interface ApplicationConstants
     public const YVES_SSL_EXCLUDED = 'YVES_SSL_EXCLUDED';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_PROXIES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_PROXIES} instead.
      *
      * Specification:
      * - IP address (or range) of your proxy.
@@ -64,7 +101,7 @@ interface ApplicationConstants
     public const YVES_TRUSTED_PROXIES = 'YVES_TRUSTED_PROXIES';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HEADER` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HEADER} instead.
      *
      * Specification:
      * - A bit field of trusted Request::HEADER_*, to set which headers to trust from your proxies.
@@ -74,7 +111,7 @@ interface ApplicationConstants
     public const YVES_TRUSTED_HEADER = 'YVES_TRUSTED_HEADER';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HOSTS` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_TRUSTED_HOSTS} instead.
      *
      * Specification:
      * - List of trusted hosts managed by regexp.
@@ -84,69 +121,98 @@ interface ApplicationConstants
     public const YVES_TRUSTED_HOSTS = 'YVES_TRUSTED_HOSTS';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED} instead.
      */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG} instead.
      */
     public const YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'YVES_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
     /**
-     * @deprecated Use only `YVES_SSL_ENABLED` in combination with `YVES_SSL_EXCLUDED`. If `YVES_SSL_EXCLUDED` is empty the page is complete ssl enabled then.
+     * @deprecated Use `YVES_SSL_ENABLED` only in combination with `YVES_SSL_EXCLUDED`.
+     *   If `YVES_SSL_EXCLUDED` is empty the page is completely SSL enabled then.
      */
     public const YVES_COMPLETE_SSL_ENABLED = 'YVES_COMPLETE_SSL_ENABLED';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const YVES_COOKIE_VISITOR_ID_NAME = 'YVES_COOKIE_VISITOR_ID_NAME';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const YVES_COOKIE_VISITOR_ID_VALID_FOR = 'YVES_COOKIE_VISITOR_ID_VALID_FOR';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const YVES_COOKIE_DEVICE_ID_NAME = 'YVES_COOKIE_DEVICE_ID_NAME';
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const YVES_COOKIE_DEVICE_ID_VALID_FOR = 'YVES_COOKIE_DEVICE_ID_VALID_FOR';
 
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
+     */
     public const YVES_AUTH_SETTINGS = 'YVES_AUTH_SETTINGS';
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACES} instead.
      */
     public const PROJECT_NAMESPACES = KernelConstants::PROJECT_NAMESPACES;
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES} instead.
      */
     public const CORE_NAMESPACES = KernelConstants::CORE_NAMESPACES;
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__HOST} instead.
      */
     public const ELASTICA_PARAMETER__HOST = 'ELASTICA_PARAMETER__HOST';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__PORT} instead.
      */
     public const ELASTICA_PARAMETER__PORT = 'ELASTICA_PARAMETER__PORT';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__TRANSPORT} instead.
      */
     public const ELASTICA_PARAMETER__TRANSPORT = 'ELASTICA_PARAMETER__TRANSPORT';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__INDEX_NAME} instead.
      */
     public const ELASTICA_PARAMETER__INDEX_NAME = 'ELASTICA_PARAMETER__INDEX_NAME';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER} instead.
      */
     public const ELASTICA_PARAMETER__AUTH_HEADER = 'ELASTICA_PARAMETER__AUTH_HEADER';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE} instead.
      */
     public const ELASTICA_PARAMETER__DOCUMENT_TYPE = 'ELASTICA_PARAMETER__DOCUMENT_TYPE';
 
     /**
-     * @deprecated Use `Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA` instead.
+     * @deprecated Use {@link \Spryker\Shared\Search\SearchConstants::ELASTICA_PARAMETER__EXTRA} instead.
      */
     public const ELASTICA_PARAMETER__EXTRA = 'ELASTICA_PARAMETER__EXTRA';
 
@@ -156,12 +222,14 @@ interface ApplicationConstants
      * - This configuration is used exclusively when set, e.g. no other Elastica configuration will be used for the client.
      * - @see http://elastica.io/ for details.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ELASTICA_CLIENT_CONFIGURATION = 'ELASTICA_CLIENT_CONFIGURATION';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_IS_SSL_ENABLED} instead.
      *
      * Specification:
      * - If option set to true, the application will check if the request is secure and not excluded from https.
@@ -173,7 +241,7 @@ interface ApplicationConstants
     public const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Router\RouterConstants::ZED_SSL_EXCLUDED_ROUTE_NAMES} instead.
      *
      * Specification:
      * - An array of HTTPS Excluded module/controller pairs when ssl is enabled.
@@ -184,7 +252,7 @@ interface ApplicationConstants
     public const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_PROXIES` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_PROXIES} instead.
      *
      * Specification:
      * - IP address (or range) of your proxy.
@@ -195,7 +263,7 @@ interface ApplicationConstants
     public const ZED_TRUSTED_PROXIES = 'ZED_TRUSTED_PROXIES';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_HOSTS` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_TRUSTED_HOSTS} instead.
      *
      * Specification:
      * - List of trusted hosts managed by regexp.
@@ -205,12 +273,12 @@ interface ApplicationConstants
     public const ZED_TRUSTED_HOSTS = 'ZED_TRUSTED_HOSTS';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED} instead.
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_ENABLED';
 
     /**
-     * @deprecated Use `Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG` instead.
+     * @deprecated Use {@link \Spryker\Shared\Http\HttpConstants::ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG} instead.
      */
     public const ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG = 'ZED_HTTP_STRICT_TRANSPORT_SECURITY_CONFIG';
 
@@ -246,17 +314,18 @@ interface ApplicationConstants
 
     /**
      * Global timezone used to for underlying data, timezones for presentation layer can be changed in stores configuration
+     *
+     * @deprecated Will be removed without replacement.
+     *
+     * @api
      */
     public const PROJECT_TIMEZONE = 'PROJECT_TIMEZONE';
 
     /**
-     * @deprecated Use `Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE` instead.
+     * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::PROJECT_NAMESPACE} instead.
      */
     public const PROJECT_NAMESPACE = KernelConstants::PROJECT_NAMESPACE;
 
-    /**
-     * Cloud
-     */
     /**
      * @deprecated Unused, will be removed with next major release.
      */
@@ -302,12 +371,16 @@ interface ApplicationConstants
     /**
      * Zed host name / domain without scheme and port (e.g. zed.de.demoshop.local) (Required)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const HOST_ZED = 'APPLICATION:HOST_ZED';
 
     /**
      * Port definition for Yves with leading colon (e.g. :8080)
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -316,6 +389,8 @@ interface ApplicationConstants
     /**
      * Port definition for Zed with leading colon (e.g. :9080)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const PORT_ZED = 'APPLICATION:PORT_ZED';
@@ -323,12 +398,16 @@ interface ApplicationConstants
     /**
      * Secure port definition for Yves with leading colon (e.g. :8443)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const PORT_SSL_YVES = 'APPLICATION:PORT_SSL_YVES';
 
     /**
      * Secure port definition for Zed with leading colon (e.g. :9443)
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -351,12 +430,16 @@ interface ApplicationConstants
     /**
      * Base URL for static assets including scheme and port (e.g. http://static.de.demoshop.local:8080)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const BASE_URL_STATIC_ASSETS = 'APPLICATION:BASE_URL_STATIC_ASSETS';
 
     /**
      * Base URL for static media including scheme and port (e.g. http://static.de.demoshop.local:8080)
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -365,12 +448,16 @@ interface ApplicationConstants
     /**
      * Secure base URL for Yves including scheme and port (e.g. https://www.de.demoshop.local:8443)
      *
+     * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_YVES} instead.
+     *
      * @api
      */
     public const BASE_URL_SSL_YVES = 'APPLICATION:BASE_URL_SSL_YVES';
 
     /**
      * Secure base URL for Zed including scheme and port (e.g. https://www.de.demoshop.local:8443)
+     *
+     * @deprecated Use {@link \Spryker\Shared\Application\ApplicationConstants::BASE_URL_ZED} instead.
      *
      * @api
      */
@@ -379,6 +466,8 @@ interface ApplicationConstants
     /**
      * Secure base URL for static assets including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const BASE_URL_SSL_STATIC_ASSETS = 'APPLICATION:BASE_URL_SSL_STATIC_ASSETS';
@@ -386,32 +475,34 @@ interface ApplicationConstants
     /**
      * Secure base URL for static media including scheme and port (e.g. https://static.de.demoshop.local:8443)
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const BASE_URL_SSL_STATIC_MEDIA = 'APPLICATION:BASE_URL_SSL_STATIC_MEDIA';
 
     /**
-     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_GUI = 'HOST_ZED_GUI';
 
     /**
-     * @deprecated Please use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
+     * @deprecated Use ApplicationConstants::HOST_ZED or ApplicationConstants::BASE_URL_ZED instead.
      */
     public const HOST_ZED_API = 'HOST_ZED_API';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_STATIC_ASSETS instead.
      */
     public const HOST_STATIC_ASSETS = 'HOST_STATIC_ASSETS';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_STATIC_MEDIA instead.
      */
     public const HOST_STATIC_MEDIA = 'HOST_STATIC_MEDIA';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_YVES instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_YVES instead.
      */
     public const HOST_SSL_YVES = 'HOST_SSL_YVES';
 
@@ -426,12 +517,12 @@ interface ApplicationConstants
     public const HOST_SSL_ZED_API = 'HOST_SSL_ZED_API';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS instead.
      */
     public const HOST_SSL_STATIC_ASSETS = 'HOST_SSL_STATIC_ASSETS';
 
     /**
-     * @deprecated Please use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
+     * @deprecated Use ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA instead.
      */
     public const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
@@ -451,7 +542,7 @@ interface ApplicationConstants
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Shared\ErrorHandler\ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED` instead.
+     * @deprecated Use {@link \Spryker\Shared\ErrorHandler\ErrorHandlerConstants::IS_PRETTY_ERROR_HANDLER_ENABLED} instead.
      */
     public const ENABLE_PRETTY_ERROR_HANDLER = 'APPLICATION:ENABLE_PRETTY_ERROR_HANDLER';
 }

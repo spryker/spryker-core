@@ -77,7 +77,7 @@ class ProductListSearchFacadeTest extends Unit
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface
+     * @return \Spryker\Zed\ProductListSearch\Business\ProductListSearchFacadeInterface
      */
     protected function getFacade()
     {

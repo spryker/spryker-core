@@ -13,11 +13,12 @@
     "symfony/form": "^3.0.0 || ^4.0.0",
     "symfony/http-kernel": "^3.0.0 || ^4.0.0",
     "symfony/intl": "^3.0.0 || ^4.0.0",
+    "symfony/mime": "^4.0.0 || ^5.0.0",
     "symfony/options-resolver": "^3.0.0 || ^4.0.0",
     "symfony/process": "^3.0.0 || ^4.0.0",
     "symfony/property-access": "^3.0.0 || ^4.0.0",
     "symfony/routing": "^3.0.0 || ^4.0.0",
-    "symfony/security": "^3.0.0 || ^4.0.0",
+    "symfony/security": "^3.4.26 <4.0.0 || ^4.1.12 <4.2.0 || ^4.2.7 < 4.4.0 || ^4.4.7",
     "symfony/serializer": "^3.0.0 || ^4.0.0",
     "symfony/stopwatch": "^3.4.0 || ^4.0.0",
     "symfony/translation": "^3.0.0 || ^4.0.0",
@@ -26,6 +27,7 @@
     "symfony/yaml": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
@@ -41,6 +43,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

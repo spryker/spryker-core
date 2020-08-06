@@ -12,8 +12,9 @@ interface ProductAbstractRelationDeleterInterface
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function removeRelations($idProductLabel, array $idsProductAbstract);
+    public function removeRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true);
 }

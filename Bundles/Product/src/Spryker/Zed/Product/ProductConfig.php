@@ -14,6 +14,8 @@ class ProductConfig extends AbstractBundleConfig
     protected const FILTERED_PRODUCTS_LIMIT_DEFAULT = 10;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFilteredProductsLimitDefault(): int

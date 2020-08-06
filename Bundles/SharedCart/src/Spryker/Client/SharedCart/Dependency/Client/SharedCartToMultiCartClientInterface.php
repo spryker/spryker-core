@@ -37,5 +37,5 @@ interface SharedCartToMultiCartClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 }

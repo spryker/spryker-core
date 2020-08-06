@@ -34,8 +34,9 @@ class MerchantRelationshipSalesOrderThresholdTranslationWriter implements Mercha
      *
      * @return \Generated\Shared\Transfer\MerchantRelationshipSalesOrderThresholdTransfer
      */
-    public function saveLocalizedMessages(MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer): MerchantRelationshipSalesOrderThresholdTransfer
-    {
+    public function saveLocalizedMessages(
+        MerchantRelationshipSalesOrderThresholdTransfer $merchantRelationshipSalesOrderThresholdTransfer
+    ): MerchantRelationshipSalesOrderThresholdTransfer {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer(
             $merchantRelationshipSalesOrderThresholdTransfer->getSalesOrderThresholdValue(),
             $this->createTranslationsLocaleMap($merchantRelationshipSalesOrderThresholdTransfer->getLocalizedMessages())
@@ -84,8 +85,10 @@ class MerchantRelationshipSalesOrderThresholdTranslationWriter implements Mercha
      *
      * @return \Generated\Shared\Transfer\KeyTranslationTransfer
      */
-    protected function createKeyTranslationTransfer(SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer, array $translationsByLocale): KeyTranslationTransfer
-    {
+    protected function createKeyTranslationTransfer(
+        SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer,
+        array $translationsByLocale
+    ): KeyTranslationTransfer {
         return (new KeyTranslationTransfer())
             ->setGlossaryKey($salesOrderThresholdValueTransfer->getMessageGlossaryKey())
             ->setLocales($translationsByLocale);

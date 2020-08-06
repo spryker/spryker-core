@@ -78,7 +78,8 @@ class CompanyUserRoleFormDataProvider
             $roleKey = $this->generateCompanyRoleName($companyRoleTransfer);
 
             $companyRoleAttributes = [static::OPTION_ATTRIBUTE_DATA => $companyRoleTransfer->getFkCompany()];
-            if ($companyRoleTransfer->getIsDefault()
+            if (
+                $companyRoleTransfer->getIsDefault()
                 && $companyUserTransfer->getCompanyRoleCollection() === null
             ) {
                 $companyRoleAttributes[static::OPTION_IS_DEFAULT] = true;

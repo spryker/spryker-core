@@ -18,7 +18,7 @@ interface DataImporterPublisherInterface
     public static function addEvent($eventName, $entityId): void;
 
     /**
-     * @deprecated use addEvent() instead.
+     * @deprecated Use {@link addEvent()} instead.
      *
      * @param array $events
      *

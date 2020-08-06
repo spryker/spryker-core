@@ -10,6 +10,9 @@ namespace Spryker\Zed\Search\Dependency\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 interface PageMapInterface
 {
     /**

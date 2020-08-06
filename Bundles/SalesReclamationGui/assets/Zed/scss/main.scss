@@ -102,12 +102,6 @@ $chat-box-background-color: #f0f0f0;
   }
 }
 
-.is-hidden .show-less,
-.is-shown .show-more {
-  display: none;
-}
-
-
 .addition-row {
   td {
     border-top: none !important;
@@ -115,16 +109,6 @@ $chat-box-background-color: #f0f0f0;
 }
 .subtotal-row, .grandTotal-row {
   background-color: #e7eaec;
-}
-
-img.product-image {
-  width: 150px;
-  border: 1px solid #e7eaec;
-}
-
-span.discounted {
-  text-decoration: line-through;
-  color: #AAAAAA;
 }
 
 .table > tbody.single-item {
@@ -136,15 +120,6 @@ span.discounted {
   border-top: none;
 }
 
-.state-history {
-  width: 300px;
-}
-
-.sku {
-  color: #AAAAAA;
-  font-size: 10px;
-}
-
 .variant-details {
   margin-top: 10px;
 
@@ -154,7 +129,17 @@ span.discounted {
   }
 }
 
-.tax-info {
-  color: #AAAAAA;
-  font-size: 10px;
+.addition-row {
+  td {
+    border-top: none !important;
+  }
+}
+
+.bundle-item {
+    display: flex;
+
+    .image-wrap {
+        margin: 0 16px;
+        flex-shrink: 0;
+    }
 }

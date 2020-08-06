@@ -1,7 +1,6 @@
 # AvailabilityStorage Module
-[![Build Status](https://travis-ci.org/spryker/AvailabilityStorage.svg)](https://travis-ci.org/spryker/AvailabilityStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/AvailabilityStorage/badge.svg)](https://coveralls.io/github/spryker/AvailabilityStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/AvailabilityStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/AvailabilityStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/availability-storage.svg)](https://travis-ci.org/spryker/availability-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ## Installation
 

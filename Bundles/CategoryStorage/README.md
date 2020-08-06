@@ -1,7 +1,6 @@
 # CategoryStorage Module
-[![Build Status](https://travis-ci.org/spryker/CategoryStorage.svg)](https://travis-ci.org/spryker/CategoryStorage)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/CategoryStorage/badge.svg)](https://coveralls.io/github/spryker/CategoryStorage)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/spryker/CategoryStorage/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/spryker/CategoryStorage/?branch=master)
+[![Build Status](https://travis-ci.org/spryker/category-storage.svg)](https://travis-ci.org/spryker/category-storage)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ## Installation
 

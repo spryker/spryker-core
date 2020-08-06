@@ -64,7 +64,7 @@ class GiftCardFacadeTest extends Test
         ]))->build();
 
         $this->expectException(RequiredTransferPropertyException::class);
-        $this->expectExceptionMessageRegExp('/^Missing required property "value" for transfer/');
+        $this->expectExceptionMessageMatches('/^Missing required property "value" for transfer/');
         $this->getFacade()->create($giftCardTransfer);
     }
 
@@ -125,6 +125,85 @@ class GiftCardFacadeTest extends Test
             'shipment group: only gift card items; expected: only NoShipment method' => $this->getDataWithOnlyGiftCardItems(),
             'shipment group: not only gift card items; expected: all methods except NoShipment method' => $this->getDataWithNotOnlyGiftCardItems(),
         ];
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeAddsGiftCardToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithoutGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getGiftCards());
+        $this->assertEquals(
+            $this->tester::GIFT_CARD_CODE,
+            $resultQuoteTransfer->getGiftCards()[0]->getCode()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddCartCodeCantAddGiftCardToQuoteWithGiftCardAlreadyAddedToQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->addCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(1, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testRemoveCartCodeRemovesGiftCardFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->removeCartCode($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testClearCartCodesRemovesGiftCardsFromQuote(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $resultQuoteTransfer = $this->getFacade()->clearCartCodes($quoteTransfer);
+
+        // Assert
+        $this->assertCount(0, $resultQuoteTransfer->getGiftCards());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindOperationResponseMessageReturnsMessageTransfer(): void
+    {
+        // Arrange
+        $quoteTransfer = $this->tester->createQuoteTransferWithGiftCard();
+
+        // Act
+        $messageTransfer = $this->getFacade()->findOperationResponseMessage($quoteTransfer, $this->tester::GIFT_CARD_CODE);
+
+        // Assert
+        $this->assertNotNull($messageTransfer);
     }
 
     /**

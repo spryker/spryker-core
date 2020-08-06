@@ -35,9 +35,9 @@ class CustomerNoteGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerNoteFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER_NOTE] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER_NOTE, function (Container $container) {
             return new CustomerNoteGuiToCustomerNoteFacadeBridge($container->getLocator()->customerNote()->facade());
-        };
+        });
 
         return $container;
     }

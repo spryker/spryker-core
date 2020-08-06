@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CountryFacade extends AbstractFacade implements CountryFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -29,6 +31,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $iso2Code
@@ -45,7 +49,7 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
      *
      * @api
      *
-     * @deprecated Use getCountryByIso2Code() instead.
+     * @deprecated Use {@link getCountryByIso2Code()} instead.
      *
      * @param string $iso2Code
      *
@@ -85,6 +89,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $iso3Code
@@ -97,6 +103,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CountryCollectionTransfer
@@ -111,6 +119,8 @@ class CountryFacade extends AbstractFacade implements CountryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $countryName

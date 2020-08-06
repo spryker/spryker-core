@@ -32,7 +32,7 @@ interface CountryFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use getCountryByIso2Code() instead.
+     * @deprecated Use {@link getCountryByIso2Code()} instead.
      *
      * @param string $iso2Code
      *

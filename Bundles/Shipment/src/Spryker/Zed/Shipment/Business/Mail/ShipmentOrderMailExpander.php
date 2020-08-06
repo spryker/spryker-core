@@ -21,9 +21,8 @@ class ShipmentOrderMailExpander implements ShipmentOrderMailExpanderInterface
     /**
      * @param \Spryker\Service\Shipment\ShipmentServiceInterface $shipmentService
      */
-    public function __construct(
-        ShipmentServiceInterface $shipmentService
-    ) {
+    public function __construct(ShipmentServiceInterface $shipmentService)
+    {
         $this->shipmentService = $shipmentService;
     }
 

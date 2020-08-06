@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer implements ProductCustomerPermissionQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -30,6 +32,8 @@ class ProductCustomerPermissionQueryContainer extends AbstractQueryContainer imp
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer

@@ -18,4 +18,19 @@ interface CacheClearerInterface
      * @return string[]
      */
     public function clearAutoLoaderCache();
+
+    /**
+     * @return string
+     */
+    public function clearCodeBucketCache(): string;
+
+    /**
+     * @return string
+     */
+    public function clearDefaultCodeBucketCache(): string;
+
+    /**
+     * @return string[]
+     */
+    public function clearProjectSpecificCache(): array;
 }

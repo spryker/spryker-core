@@ -9,7 +9,9 @@ namespace Spryker\Yves\CmsContentWidgetCmsBlockConnector\Plugin\CmsContentWidget
 
 use ArrayObject;
 use DateTime;
-use Generated\Shared\Transfer\SpyCmsBlockEntityTransfer;
+use Generated\Shared\Transfer\CmsBlockGlossaryPlaceholderTransfer;
+use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface;
 use Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
@@ -20,6 +22,11 @@ use Twig\Environment;
  */
 class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
+    protected const STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS = 'SpyCmsBlockGlossaryKeyMappings';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER = 'placeholder';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY = 'GlossaryKey';
+    protected const CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY = 'key';
+
     /**
      * @var \Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
@@ -56,17 +63,20 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     public function contentWidgetFunction(Environment $twig, array $context, array $blockNames, $templateIdentifier = null): string
     {
         $blocks = $this->getBlockDataByNames($blockNames);
-        $templatePath = $this->resolveTemplatePath($templateIdentifier);
         $rendered = '';
 
         foreach ($blocks as $block) {
-            $blockData = $this->getCmsBlockTransfer($block);
+            $cmsBlockTransfer = $this->mapCmsBlockToTransfer($block);
 
-            $isActive = $this->validateBlock($blockData) && $this->validateDates($blockData);
+            $isActive = $this->validateBlock($cmsBlockTransfer) && $this->validateDates($cmsBlockTransfer);
 
             if ($isActive) {
+                $templatePath = !$templateIdentifier && $cmsBlockTransfer->getCmsBlockTemplate() ?
+                    $cmsBlockTransfer->getCmsBlockTemplate()->getTemplatePath() :
+                    $this->resolveTemplatePath($templateIdentifier);
+
                 $rendered .= $twig->render($templatePath, [
-                    'placeholders' => $this->getPlaceholders($blockData->getSpyCmsBlockGlossaryKeyMappings()),
+                    'placeholders' => $this->getPlaceholders($cmsBlockTransfer),
                     'cmsContent' => $block,
                 ]);
             }
@@ -99,27 +109,27 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     {
         $blocks = $this->getFactory()
             ->getCmsBlockStorageClient()
-            ->findBlocksByNames($blockNames, $this->getLocale(), $this->getApplication()['store']);
+            ->findBlocksByNames($blockNames, $this->getLocale(), $this->getContainer()->get('store'));
 
         return $blocks;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockData
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockData
      *
      * @return bool
      */
-    protected function validateBlock(SpyCmsBlockEntityTransfer $cmsBlockData): bool
+    protected function validateBlock(CmsBlockTransfer $cmsBlockData): bool
     {
         return $cmsBlockData->getCmsBlockTemplate()->getTemplatePath() !== null;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer $cmsBlockTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return bool
      */
-    protected function validateDates(SpyCmsBlockEntityTransfer $cmsBlockTransfer): bool
+    protected function validateDates(CmsBlockTransfer $cmsBlockTransfer): bool
     {
         $dateToCompare = new DateTime();
 
@@ -143,27 +153,42 @@ class CmsBlockContentWidgetPlugin extends AbstractPlugin implements CmsContentWi
     }
 
     /**
-     * @param \ArrayObject $mappings
+     * @param \Generated\Shared\Transfer\CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
-    protected function getPlaceholders(ArrayObject $mappings): array
+    protected function getPlaceholders(CmsBlockTransfer $cmsBlockTransfer): array
     {
         $placeholders = [];
-        foreach ($mappings as $mapping) {
-            $placeholders[$mapping->getPlaceholder()] = $mapping->getGlossaryKey()->getKey();
+        foreach ($cmsBlockTransfer->getGlossary()->getGlossaryPlaceholders() as $cmsBlockGlossaryPlaceholderTransfer) {
+            $placeholders[$cmsBlockGlossaryPlaceholderTransfer->getPlaceholder()] = $cmsBlockGlossaryPlaceholderTransfer->getTranslationKey();
         }
 
         return $placeholders;
     }
 
     /**
-     * @param array $data
+     * @param array $cmsBlock
      *
-     * @return \Generated\Shared\Transfer\SpyCmsBlockEntityTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockTransfer
      */
-    protected function getCmsBlockTransfer(array $data): SpyCmsBlockEntityTransfer
+    protected function mapCmsBlockToTransfer(array $cmsBlock): CmsBlockTransfer
     {
-        return (new SpyCmsBlockEntityTransfer())->fromArray($data, true);
+        $cmsBlockTransfer = (new CmsBlockTransfer())->fromArray($cmsBlock, true);
+        $cmsBlockGlossaryPlaceholderTransfers = new ArrayObject();
+
+        foreach ($cmsBlock[static::STORAGE_DATA_KEY_CMS_BLOCK_GLOSSARY_KEY_MAPPINGS] as $mapping) {
+            $cmsBlockGlossaryPlaceholderTransfer = (new CmsBlockGlossaryPlaceholderTransfer())
+                ->setPlaceholder($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_PLACEHOLDER])
+                ->setTranslationKey($mapping[static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_GLOSSARY_KEY][static::CMS_BLOCK_GLOSSARY_KEY_MAPPING_KEY]);
+            $cmsBlockGlossaryPlaceholderTransfers->append($cmsBlockGlossaryPlaceholderTransfer);
+        }
+
+        $cmsBlockTransfer->setGlossary(
+            (new CmsBlockGlossaryTransfer())
+                ->setGlossaryPlaceholders($cmsBlockGlossaryPlaceholderTransfers)
+        );
+
+        return $cmsBlockTransfer;
     }
 }

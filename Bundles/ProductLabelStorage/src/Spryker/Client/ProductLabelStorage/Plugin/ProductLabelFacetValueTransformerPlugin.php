@@ -24,7 +24,7 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     {
         $productLabelDictionaryItemTransfer = $this->getFactory()
             ->createLabelDictionaryReader()
-            ->findLabelByIdProductLabel($value, $this->getCurrentLocale());
+            ->findLabelByIdProductLabel($value, $this->getCurrentLocale(), APPLICATION_STORE);
 
         if (!$productLabelDictionaryItemTransfer) {
             return $value;
@@ -42,7 +42,7 @@ class ProductLabelFacetValueTransformerPlugin extends AbstractPlugin implements 
     {
         $productLabelDictionaryItemTransfer = $this->getFactory()
             ->createLabelDictionaryReader()
-            ->findLabelByLocalizedName($value, $this->getCurrentLocale());
+            ->findLabelByLocalizedName($value, $this->getCurrentLocale(), APPLICATION_STORE);
 
         if (!$productLabelDictionaryItemTransfer) {
             return $value;

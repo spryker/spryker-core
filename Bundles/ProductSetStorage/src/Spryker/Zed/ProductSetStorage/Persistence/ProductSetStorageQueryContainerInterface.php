@@ -15,7 +15,7 @@ interface ProductSetStorageQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @deprecated Use queryProductSetDataByProductSetIds() instead.
+     * @deprecated Use {@link queryProductSetDataByProductSetIds()} instead.
      *
      * @param array $productSetIds
      *

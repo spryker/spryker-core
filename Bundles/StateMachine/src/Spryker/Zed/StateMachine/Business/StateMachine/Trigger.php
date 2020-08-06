@@ -271,6 +271,7 @@ class Trigger implements TriggerInterface
                 $this->transitionLog->setIsError(true);
                 $this->transitionLog->setErrorMessage(get_class($commandPlugin) . ' - ' . $e->getMessage());
                 $this->transitionLog->saveAll();
+
                 throw $e;
             }
         }

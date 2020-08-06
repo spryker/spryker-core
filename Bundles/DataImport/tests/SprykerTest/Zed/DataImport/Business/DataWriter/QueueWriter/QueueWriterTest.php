@@ -99,7 +99,7 @@ class QueueWriterTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface
      */
-    protected function getQueueClientMock(int $messageBufferCount = 1)
+    protected function getQueueClientMock(int $messageBufferCount = 1): DataImportToQueueClientInterface
     {
         $queueClientMock = $this->createMock(DataImportToQueueClientInterface::class);
         $queueClientMock->method('sendMessages')

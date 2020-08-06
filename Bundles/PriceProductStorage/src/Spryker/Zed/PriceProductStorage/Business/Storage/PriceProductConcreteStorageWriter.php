@@ -35,6 +35,8 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     protected $queryContainer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -63,7 +65,7 @@ class PriceProductConcreteStorageWriter implements PriceProductConcreteStorageWr
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return void
      */

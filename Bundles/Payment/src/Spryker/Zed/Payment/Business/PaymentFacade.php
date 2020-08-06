@@ -10,6 +10,8 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
@@ -142,13 +144,13 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @return void
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function installSalesPaymentMethodType(): void
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer
     {
-        $this->getFactory()
-            ->createSalesPaymentMethodTypeInstaller()
-            ->install();
+        return $this->getRepository()->getAvailablePaymentProvidersForStore($storeName);
     }
 
     /**
@@ -156,12 +158,50 @@ class PaymentFacade extends AbstractFacade implements PaymentFacadeInterface
      *
      * @api
      *
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
      */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer
+    public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer
     {
         return $this->getFactory()
-            ->createPaymentProviderReader()
-            ->getAvailablePaymentProviders();
+            ->createPaymentMethodFinder()
+            ->findPaymentMethodById($idPaymentMethod);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodResponseTransfer {
+        return $this->getFactory()
+            ->createPaymentMethodUpdater()
+            ->updatePaymentMethod($paymentMethodTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuotePaymentMethodValid(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool {
+        return $this->getFactory()
+            ->createPaymentMethodValidator()
+            ->isQuotePaymentMethodValid($quoteTransfer, $checkoutResponseTransfer);
     }
 }

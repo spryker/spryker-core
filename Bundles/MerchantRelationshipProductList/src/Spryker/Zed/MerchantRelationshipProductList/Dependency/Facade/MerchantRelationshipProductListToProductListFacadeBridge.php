@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Dependency\Facade;
 
+use Generated\Shared\Transfer\ProductListResponseTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
 
 class MerchantRelationshipProductListToProductListFacadeBridge implements MerchantRelationshipProductListToProductListFacadeInterface
@@ -27,10 +28,20 @@ class MerchantRelationshipProductListToProductListFacadeBridge implements Mercha
     /**
      * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
      */
-    public function deleteProductList(ProductListTransfer $productListTransfer): void
+    public function updateProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
     {
-        $this->productListFacade->deleteProductList($productListTransfer);
+        return $this->productListFacade->updateProductList($productListTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductListTransfer $productListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListResponseTransfer
+     */
+    public function removeProductList(ProductListTransfer $productListTransfer): ProductListResponseTransfer
+    {
+        return $this->productListFacade->removeProductList($productListTransfer);
     }
 }

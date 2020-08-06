@@ -6,36 +6,22 @@
           package="src.Orm.Zed.PriceProductOffer.Persistence"
 >
   <table name="spy_price_product_offer" identifierQuoting="true" class="SpyPriceProductOffer">
-    <column name="id_price_product_offer" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+    <column name="id_price_product_offer" type="BIGINT" required="true" primaryKey="true" autoIncrement="true"/>
     <column name="fk_product_offer" type="INTEGER" required="true"/>
-    <column name="fk_price_type" type="INTEGER" required="true"/>
-    <column name="fk_store" type="INTEGER" required="true"/>
-    <column name="fk_currency" type="INTEGER" required="true"/>
-    <column name="net_price" type="INTEGER"/>
-    <column name="gross_price" type="INTEGER"/>
+    <column name="fk_price_product_store" type="BIGINT" required="true"/>
 
-    <foreign-key name="spy_price_product_offer-fk_product_offer" foreignTable="spy_product_offer">
+    <foreign-key name="spy_price_product_offer-fk_product_offer" onDelete="CASCADE" foreignTable="spy_product_offer">
       <reference foreign="id_product_offer" local="fk_product_offer"/>
     </foreign-key>
 
-    <foreign-key name="spy_price_product_offer-fk_price_type" foreignTable="spy_price_type">
-      <reference foreign="id_price_type" local="fk_price_type"/>
-    </foreign-key>
-
-    <foreign-key name="spy_price_product_offer-fk_store" foreignTable="spy_store">
-      <reference foreign="id_store" local="fk_store"/>
-    </foreign-key>
-
-    <foreign-key name="spy_price_product_offer-fk_currency" foreignTable="spy_currency">
-      <reference foreign="id_currency" local="fk_currency"/>
+    <foreign-key name="spy_price_product_offer-fk_price_product_store" foreignTable="spy_price_product_store">
+      <reference foreign="id_price_product_store" local="fk_price_product_store"/>
     </foreign-key>
 
 
-    <unique name="spy_price_product_offer-unique-fk_p_o-fk_p_t-fk_s-fk_c">
+    <unique name="spy_price_product_offer-unique-fk_p_o-fk_p_p_s">
       <unique-column name="fk_product_offer"/>
-      <unique-column name="fk_price_type"/>
-      <unique-column name="fk_store"/>
-      <unique-column name="fk_currency"/>
+      <unique-column name="fk_price_product_store"/>
     </unique>
 
     <id-method-parameter value="spy_price_product_offer_pk_seq"/>

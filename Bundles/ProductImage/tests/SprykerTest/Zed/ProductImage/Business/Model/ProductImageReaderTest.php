@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductImage\Business\Model;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Spryker\Zed\Locale\Business\LocaleFacade;
 use Spryker\Zed\ProductImage\Business\Model\Reader;
 use Spryker\Zed\ProductImage\Business\Transfer\ProductImageTransferMapper;
@@ -48,10 +49,17 @@ class ProductImageReaderTest extends Unit
     protected $transferGenerator;
 
     /**
+     * @var \SprykerTest\Zed\ProductImage\ProductImageBusinessTester
+     */
+    protected $tester;
+
+    /**
      * @return void
      */
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->queryContainer = new ProductImageQueryContainer();
         $this->localeFacade = new LocaleFacade();
         $this->transferGenerator = new ProductImageTransferMapper(
@@ -70,9 +78,17 @@ class ProductImageReaderTest extends Unit
      */
     public function testGetProductImagesByProductAbstractId(): void
     {
-        $imageCollection = $this->reader
-            ->getProductImagesSetCollectionByProductAbstractId(1);
+        // Arrange
+        $productAbstractTransfer = $this->tester->haveProductAbstract();
+        $this->tester->haveProductImageSet([
+            ProductImageSetTransfer::ID_PRODUCT_ABSTRACT => $productAbstractTransfer->getIdProductAbstract(),
+        ]);
 
+        // Act
+        $imageCollection = $this->reader
+            ->getProductImagesSetCollectionByProductAbstractId($productAbstractTransfer->getIdProductAbstract());
+
+        // Assert
         $this->assertNotEmpty($imageCollection);
     }
 }

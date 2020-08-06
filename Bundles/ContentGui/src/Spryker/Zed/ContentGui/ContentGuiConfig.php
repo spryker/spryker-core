@@ -24,6 +24,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     protected const DOM_PATH_WIDGET_QUERY = '//span[@contenteditable="false"][@data-key][@data-twig-expression][@data-template][@data-type]';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEditorContentWidgetTemplate(): string
@@ -41,6 +43,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getWidgetXpathQuery(): string
@@ -49,6 +53,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterId(): string
@@ -57,6 +63,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterKey(): string
@@ -65,6 +73,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterType(): string
@@ -73,6 +83,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterDisplayType(): string
@@ -81,6 +93,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterTemplate(): string
@@ -89,6 +103,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterTwigExpression(): string
@@ -97,6 +113,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterName(): string
@@ -105,6 +123,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getParameterTemplateDisplayName(): string
@@ -113,6 +133,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getEditorContentWidgetWrapper(): string
@@ -121,6 +143,8 @@ class ContentGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxWidgetNumber(): int

@@ -18,6 +18,7 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface as ProductSearchExtensionPageMapBuilderInterface;
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -27,12 +28,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeInterface
 {
     /**
-     * Specification:
-     * - Iterates through the given product attribute associative array where the key is the name and the value is the value of the attributes.
-     * - If an attribute is configured to be mapped in the page map builder, then it's value will be added to the page map.
-     * - The data of the returned page map represents a hydrated Elasticsearch document with all the necessary attribute values.
+     * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link mapDynamicProductAttributesToSearchData()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -51,8 +51,28 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Marks the given product to be searchable.
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Spryker\Zed\ProductPageSearchExtension\Dependency\PageMapBuilderInterface $pageMapBuilder
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param array $attributes
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ): PageMapTransfer {
+        return $this->getFactory()
+            ->createProductSearchAttributeMapper()
+            ->mapDynamicProductAttributesToSearchData($pageMapBuilder, $pageMapTransfer, $attributes);
+    }
+
+    /**
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,8 +89,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Marks the given product to not to be searchable.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -87,8 +106,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Marks the given concrete product searchable or not searchable based on the provided localized attributes.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -104,10 +122,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - If the given product attribute key does not exists then it will be created.
-     * - For the given product attribute the search preferences will be created.
-     * - Returns a transfer that also contains the ids of the created entities.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -124,8 +139,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - For the given product attribute the search preferences will be updated.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -142,9 +156,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Removes all product search preferences for the given product attribute.
-     * - The product attribute itself is not removed.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -161,9 +173,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted
-     * product search attribute list
+     * {@inheritDoc}
      *
      * @api
      *
@@ -180,8 +190,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Returns a filtered list of keys that exists in the persisted product attribute key list
+     * {@inheritDoc}
      *
      * @api
      *
@@ -198,11 +207,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist.
-     * - Creates a new product search attribute entity with the given data and the found/created attribute key entity.
-     * - Creates a glossary key for the search attribute key if does not exist already.
-     * - Returns a transfer that also contains the ids of the created entities.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -219,10 +224,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Searches for an existing product attribute key entity by the provided key in database or create it if does not exist.
-     * - Updates an existing product search attribute entity by id with the given data and the found/created attribute key entity.
-     * - Creates a glossary key for the product attribute key if does not exist already.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -239,9 +241,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Removes the product search attribute entity by id.
-     * - The product attribute itself is not removed.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -258,9 +258,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Reads a product search attribute entity from the database and returns a fully hydrated transfer representation.
-     * - Return null if the entity is not found by id.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -277,9 +275,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Reads all product search attribute entities from the database and returns a list of their fully hydrated transfer representations.
-     * - The returned list is ordered ascending by position.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -294,8 +290,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Updates the positions of the provided product search attribute entities.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -312,10 +307,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Touches abstract products which has an attribute that has not been synchronized yet.
-     * - Asynchronous attribute means a product search attribute entity had been created/modified/deleted since last synchronization.
-     * - After touch, product search attribute entities are marked as synchronized.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -330,10 +322,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Touches abstract products which has an attribute that has not been synchronized yet.
-     * - Asynchronous attribute means a product search attribute map entity had been created/modified/deleted since last synchronization.
-     * - After touch, product search attribute map entities are marked as synchronized.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -348,8 +337,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Touches the "product_search_config_extension" resource which will indicate the responsible collector to run next time collectors are executed.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -364,11 +352,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Executes the product search config extension collector.
-     * - The collected data is compatible with \Generated\Shared\Transfer\SearchConfigExtensionTransfer.
-     * - The collected data contains all the facet configurations provided by the database.
-     * - The facet configurations are stored in their defined order.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -400,10 +384,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Checks if any of the given product abstract's variant is marked searchable or not in the given locale.
-     * - If no locale is provided, then the current locale will be used.
-     * - Returns true if at least one variant is searchable, false otherwise.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -420,9 +401,7 @@ class ProductSearchFacade extends AbstractFacade implements ProductSearchFacadeI
     }
 
     /**
-     * Specification:
-     * - Checks if the concrete product is marked as searchable in the given locale.
-     * - If no locale is provided, then the current locale will be used.
+     * {@inheritDoc}
      *
      * @api
      *

@@ -21,6 +21,8 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     public const FIELD_COUNT = ProductPageSearchTransfer::REVIEW_COUNT;
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productReviewIds
@@ -36,6 +38,8 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productReviewIds
@@ -51,6 +55,8 @@ class ProductReviewSearchQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idAbstractProduct

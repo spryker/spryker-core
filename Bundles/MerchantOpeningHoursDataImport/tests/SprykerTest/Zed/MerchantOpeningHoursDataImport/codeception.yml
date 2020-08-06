@@ -1,0 +1,30 @@
+namespace: SprykerTest\Zed\MerchantOpeningHoursDataImport
+
+paths:
+    tests: .
+    data: ../../../_data
+    support: _support
+    log: ../../../_output
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Communication:
+     path: Communication
+     class_name: MerchantOpeningHoursDataImportCommunicationTester
+     modules:
+         enabled:
+             - Asserts
+             - \SprykerTest\Shared\Testify\Helper\Environment
+             - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+             - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+             - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+             - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+             - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+             - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
+             - \SprykerTest\Zed\Merchant\Helper\MerchantHelper
+             - \SprykerTest\Zed\MerchantDataImport\Helper\MerchantDataImportHelper
+             - \SprykerTest\Zed\MerchantOpeningHoursDataImport\Helper\MerchantOpeningHoursDataImportHelper

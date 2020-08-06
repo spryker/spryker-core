@@ -119,7 +119,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\Validation\ValidatorInterface
      */
-    protected function createValidatorMock()
+    protected function createValidatorMock(): ValidatorInterface
     {
         $validatorMock = $this
             ->getMockBuilder(ValidatorInterface::class)
@@ -132,7 +132,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
      */
-    protected function createQueryContainerMock()
+    protected function createQueryContainerMock(): SalesQueryContainerInterface
     {
         return $this
             ->getMockBuilder(SalesQueryContainerInterface::class)
@@ -142,7 +142,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Orm\Zed\Sales\Persistence\SpySalesOrderQuery
      */
-    protected function createSalesOrderMock()
+    protected function createSalesOrderMock(): SpySalesOrderQuery
     {
         $salesOrderItemQueryMock = $this
             ->getMockBuilder(SpySalesOrderQuery::class)
@@ -156,7 +156,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\SalesSplit\Business\Model\CalculatorInterface
      */
-    protected function createCalculatorMock()
+    protected function createCalculatorMock(): CalculatorInterface
     {
         $calculatorMock = $this
             ->getMockBuilder(CalculatorInterface::class)
@@ -169,7 +169,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Propel\Runtime\Connection\ConnectionInterface
      */
-    protected function createDatabaseConnectionMock()
+    protected function createDatabaseConnectionMock(): ConnectionInterface
     {
         $databaseConnectionMock = $this
             ->getMockBuilder(ConnectionInterface::class)

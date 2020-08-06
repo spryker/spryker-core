@@ -9,6 +9,7 @@ namespace Spryker\Zed\Availability\Business;
 
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -31,14 +32,19 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      * @param string $sku
      * @param \Spryker\DecimalObject\Decimal $quantity
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return bool
      */
-    public function isProductSellableForStore(string $sku, Decimal $quantity, StoreTransfer $storeTransfer): bool
-    {
+    public function isProductSellableForStore(
+        string $sku,
+        Decimal $quantity,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): bool {
         return $this->getFactory()
             ->createSellableModel()
-            ->isProductSellableForStore($sku, $quantity, $storeTransfer);
+            ->isProductSellableForStore($sku, $quantity, $storeTransfer, $productAvailabilityCriteriaTransfer);
     }
 
     /**
@@ -131,7 +137,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacade::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -150,7 +156,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacade::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -170,7 +176,7 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @api
      *
-     * @deprecated Use `AvailabilityFacade::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\AvailabilityFacadeInterface::findOrCreateProductConcreteAvailabilityBySkuForStore()} instead.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -208,14 +214,18 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
      *
      * @param string $sku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productAvailabilityCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findOrCreateProductConcreteAvailabilityBySkuForStore(string $sku, StoreTransfer $storeTransfer): ?ProductConcreteAvailabilityTransfer
-    {
+    public function findOrCreateProductConcreteAvailabilityBySkuForStore(
+        string $sku,
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productAvailabilityCriteriaTransfer = null
+    ): ?ProductConcreteAvailabilityTransfer {
         return $this->getFactory()
             ->createProductAvailabilityReader()
-            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer);
+            ->findOrCreateProductConcreteAvailabilityBySkuForStore($sku, $storeTransfer, $productAvailabilityCriteriaTransfer);
     }
 
     /**
@@ -265,5 +275,21 @@ class AvailabilityFacade extends AbstractFacade implements AvailabilityFacadeInt
     {
         return $this->getRepository()
             ->getStoresWhereProductAvailabilityIsDefined($concreteSku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterAvailableProducts(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createAvailabilityReader()
+            ->filterAvailableProducts($productConcreteTransfers);
     }
 }

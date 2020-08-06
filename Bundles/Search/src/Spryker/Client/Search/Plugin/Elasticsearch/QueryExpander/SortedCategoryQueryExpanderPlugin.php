@@ -15,6 +15,8 @@ use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SortedCategoryQueryExpanderPlugin} instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
@@ -42,7 +44,8 @@ class SortedCategoryQueryExpanderPlugin extends AbstractPlugin implements QueryE
     {
         $searchConfig = $this->getFactory()->getSearchConfig();
 
-        if ($this->isFullTextSearch($searchQuery)
+        if (
+            $this->isFullTextSearch($searchQuery)
             || $this->hasActiveSortParam($requestParameters, $searchConfig)
             || !$this->hasActiveCategoryFacet($requestParameters, $searchConfig)
         ) {

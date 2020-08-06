@@ -122,7 +122,7 @@ class MailProviderCollectionTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Mail\Dependency\Plugin\MailProviderPluginInterface
      */
-    protected function getMailProviderMock()
+    protected function getMailProviderMock(): MailProviderPluginInterface
     {
         $mailProviderMock = $this->getMockBuilder(MailProviderPluginInterface::class)->getMock();
 

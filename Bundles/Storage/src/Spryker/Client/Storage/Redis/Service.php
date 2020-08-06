@@ -11,7 +11,7 @@ use Exception;
 use Predis\ClientInterface;
 
 /**
- * @deprecated Use `Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface` implementation instead.
+ * @deprecated Use {@link \Spryker\Client\StorageExtension\Dependency\Plugin\StoragePluginInterface} implementation instead.
  */
 class Service implements ServiceInterface
 {

@@ -99,11 +99,36 @@ class TableConfiguration
     protected $ordering = true;
 
     /**
+     * @var bool
+     */
+    protected $hasSearchableFieldsWithAggregateFunctions = false;
+
+    /**
      * @return array
      */
     public function getRawColumns()
     {
         return $this->rawColumns;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getHasSearchableFieldsWithAggregateFunctions(): bool
+    {
+        return $this->hasSearchableFieldsWithAggregateFunctions;
+    }
+
+    /**
+     * @param bool $hasSearchableFieldsWithAggregateFunctions
+     *
+     * @return $this
+     */
+    public function setHasSearchableFieldsWithAggregateFunctions(bool $hasSearchableFieldsWithAggregateFunctions)
+    {
+        $this->hasSearchableFieldsWithAggregateFunctions = $hasSearchableFieldsWithAggregateFunctions;
+
+        return $this;
     }
 
     /**
@@ -296,7 +321,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use setDefaultSortField() instead.
+     * @deprecated Use {@link setDefaultSortField()} instead.
      *
      * @param int $columnIndex
      *
@@ -308,7 +333,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use getDefaultSortField() instead.
+     * @deprecated Use {@link getDefaultSortField()} instead.
      *
      * @return int
      */
@@ -318,7 +343,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use setDefaultSortField() instead.
+     * @deprecated Use {@link setDefaultSortField()} instead.
      *
      * @param string $direction
      *
@@ -330,7 +355,7 @@ class TableConfiguration
     }
 
     /**
-     * @deprecated Use getDefaultSortField() instead.
+     * @deprecated Use {@link getDefaultSortField()} instead.
      *
      * @return string
      */

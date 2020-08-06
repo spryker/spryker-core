@@ -7,17 +7,27 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Table;
 
+use Orm\Zed\Merchant\Persistence\Map\SpyMerchantStoreTableMap;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
+use Orm\Zed\Store\Persistence\Map\SpyStoreTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\MerchantGui\Communication\Controller\EditMerchantController;
+use Spryker\Zed\MerchantGui\Communication\Form\MerchantStatusForm;
+use Spryker\Zed\MerchantGui\Communication\Form\ToggleActiveMerchantForm;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiConfig;
 
 class MerchantTable extends AbstractTable
 {
+    protected const REQUEST_ID_MERCHANT = 'id-merchant';
+
+    public const COL_ACTIONS = 'actions';
+    public const COL_STORES = 'stores';
+
     protected const STATUS_CLASS_LABEL_MAPPING = [
         MerchantGuiConfig::STATUS_WAITING_FOR_APPROVAL => 'label-warning',
         MerchantGuiConfig::STATUS_APPROVED => 'label-info',
@@ -28,6 +38,8 @@ class MerchantTable extends AbstractTable
         MerchantGuiConfig::STATUS_APPROVED => 'btn-create',
         MerchantGuiConfig::STATUS_DENIED => 'btn-remove',
     ];
+
+    protected const STORE_CLASS_LABEL = 'label-info';
 
     /**
      * @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
@@ -93,21 +105,23 @@ class MerchantTable extends AbstractTable
         $config = $this->setHeader($config);
 
         $config->setSortable([
-            MerchantTableConstants::COL_ID_MERCHANT,
-            MerchantTableConstants::COL_NAME,
-            MerchantTableConstants::COL_STATUS,
+            SpyMerchantTableMap::COL_ID_MERCHANT,
+            SpyMerchantTableMap::COL_NAME,
+            SpyMerchantTableMap::COL_STATUS,
         ]);
 
         $config->setRawColumns([
-            MerchantTableConstants::COL_ACTIONS,
-            MerchantTableConstants::COL_STATUS,
+            static::COL_ACTIONS,
+            SpyMerchantTableMap::COL_STATUS,
+            SpyMerchantTableMap::COL_IS_ACTIVE,
+            SpyMerchantStoreTableMap::COL_FK_STORE,
         ]);
-        $config->setDefaultSortField(MerchantTableConstants::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
+        $config->setDefaultSortField(SpyMerchantTableMap::COL_ID_MERCHANT, TableConfiguration::SORT_DESC);
 
         $config->setSearchable([
-            MerchantTableConstants::COL_ID_MERCHANT,
-            MerchantTableConstants::COL_NAME,
-            MerchantTableConstants::COL_STATUS,
+            SpyMerchantTableMap::COL_ID_MERCHANT,
+            SpyMerchantTableMap::COL_NAME,
+            SpyMerchantTableMap::COL_STATUS,
         ]);
 
         $config = $this->executeConfigExpanderPlugins($config);
@@ -152,13 +166,15 @@ class MerchantTable extends AbstractTable
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $baseData = [
-            MerchantTableConstants::COL_ID_MERCHANT => 'Merchant Id',
-            MerchantTableConstants::COL_NAME => 'Name',
-            MerchantTableConstants::COL_STATUS => 'Status',
+            SpyMerchantTableMap::COL_ID_MERCHANT => 'Merchant Id',
+            SpyMerchantTableMap::COL_NAME => 'Name',
+            SpyMerchantTableMap::COL_STATUS => 'Status',
+            SpyMerchantTableMap::COL_IS_ACTIVE => 'active',
+            SpyMerchantStoreTableMap::COL_FK_STORE => 'Stores',
         ];
         $externalData = $this->executeTableHeaderExpanderPlugins();
 
-        $actions = [MerchantTableConstants::COL_ACTIONS => 'Actions'];
+        $actions = [static::COL_ACTIONS => 'Actions'];
 
         $config->setHeader(array_merge($baseData, $externalData, $actions));
 
@@ -179,22 +195,42 @@ class MerchantTable extends AbstractTable
     }
 
     /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function prepareQuery(): SpyMerchantQuery
+    {
+        $this->merchantQuery
+            ->groupByIdMerchant()
+            ->useSpyMerchantStoreQuery(null, Criteria::LEFT_JOIN)
+                ->leftJoinSpyStore()
+                ->withColumn(
+                    sprintf('GROUP_CONCAT(%s)', SpyStoreTableMap::COL_NAME),
+                    static::COL_STORES
+                )
+            ->endUse();
+
+        return $this->merchantQuery;
+    }
+
+    /**
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
      *
      * @return array
      */
     protected function prepareData(TableConfiguration $config): array
     {
-        $queryResults = $this->runQuery($this->merchantQuery, $config);
+        $queryResults = $this->runQuery($this->prepareQuery(), $config);
         $results = [];
 
         foreach ($queryResults as $item) {
             $rowData = array_merge([
-                MerchantTableConstants::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
-                MerchantTableConstants::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
-                MerchantTableConstants::COL_STATUS => $this->createStatusLabel($item),
+                SpyMerchantTableMap::COL_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT],
+                SpyMerchantTableMap::COL_NAME => $item[SpyMerchantTableMap::COL_NAME],
+                SpyMerchantTableMap::COL_STATUS => $this->createStatusLabel($item),
+                SpyMerchantTableMap::COL_IS_ACTIVE => $this->getActiveLabel($item[SpyMerchantTableMap::COL_IS_ACTIVE]),
+                SpyMerchantStoreTableMap::COL_FK_STORE => $this->createStoresLabel($item),
             ], $this->executeDataExpanderPlugins($item));
-            $rowData[MerchantTableConstants::COL_ACTIONS] = $this->buildLinks($item);
+            $rowData[static::COL_ACTIONS] = $this->buildLinks($item);
             $results[] = $rowData;
         }
         unset($queryResults);
@@ -211,9 +247,12 @@ class MerchantTable extends AbstractTable
     {
         $buttons = [];
         $buttons[] = $this->generateEditButton(
-            Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT]]),
+            Url::generate(MerchantGuiConfig::URL_MERCHANT_EDIT, [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT]]),
             'Edit'
         );
+        $buttons[] = ($item[SpyMerchantTableMap::COL_IS_ACTIVE]) ?
+            $this->createDeactivateButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]) :
+            $this->createActivateButton($item[SpyMerchantTableMap::COL_ID_MERCHANT]);
 
         $buttons = array_merge(
             $buttons,
@@ -232,19 +271,62 @@ class MerchantTable extends AbstractTable
     protected function buildAvailableStatusButtons(array $item): array
     {
         $availableStatusButtons = [];
-        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[MerchantTableConstants::COL_STATUS]);
+        $availableStatuses = $this->merchantFacade->getApplicableMerchantStatuses($item[SpyMerchantTableMap::COL_STATUS]);
         foreach ($availableStatuses as $availableStatus) {
-            $availableStatusButtons[] = $this->generateButton(
+            $availableStatusButtons[] = $this->generateFormButton(
                 Url::generate(
                     MerchantGuiConfig::URL_MERCHANT_STATUS,
-                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[MerchantTableConstants::COL_ID_MERCHANT], 'status' => $availableStatus]
+                    [EditMerchantController::REQUEST_ID_MERCHANT => $item[SpyMerchantTableMap::COL_ID_MERCHANT], 'status' => $availableStatus]
                 ),
                 $availableStatus . '_button',
+                MerchantStatusForm::class,
                 ['icon' => 'fa fa-key', 'class' => static::STATUS_CLASS_BUTTON_MAPPING[$availableStatus]]
             );
         }
 
         return $availableStatusButtons;
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createActivateButton(int $idMerchant): string
+    {
+        return $this->generateFormButton(
+            Url::generate(
+                MerchantGuiConfig::URL_MERCHANT_ACTIVATE,
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+            ),
+            'Activate',
+            ToggleActiveMerchantForm::class,
+            [
+                'class' => 'btn-view',
+                'icon' => 'fa fa-caret-right',
+            ]
+        );
+    }
+
+    /**
+     * @param int $idMerchant
+     *
+     * @return string
+     */
+    protected function createDeactivateButton(int $idMerchant): string
+    {
+        return $this->generateFormButton(
+            Url::generate(
+                MerchantGuiConfig::URL_MERCHANT_DEACTIVATE,
+                [EditMerchantController::REQUEST_ID_MERCHANT => $idMerchant]
+            ),
+            'Deactivate',
+            ToggleActiveMerchantForm::class,
+            [
+                    'class' => 'btn-remove',
+                    'icon' => 'fa fa-trash',
+            ]
+        );
     }
 
     /**
@@ -298,5 +380,32 @@ class MerchantTable extends AbstractTable
         }
 
         return $this->generateLabel($currentStatus, static::STATUS_CLASS_LABEL_MAPPING[$currentStatus]);
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return string
+     */
+    public function getActiveLabel(bool $isActive): string
+    {
+        return $isActive ? $this->generateLabel('Active', 'label-info') : $this->generateLabel('Inactive', 'label-danger');
+    }
+
+    /**
+     * @param array $merchant
+     *
+     * @return string
+     */
+    protected function createStoresLabel(array $merchant): string
+    {
+        $storeNames = explode(',', $merchant[static::COL_STORES]);
+
+        $storeLabels = [];
+        foreach ($storeNames as $storeName) {
+            $storeLabels[] = $this->generateLabel($storeName, static::STORE_CLASS_LABEL);
+        }
+
+        return implode(' ', $storeLabels);
     }
 }

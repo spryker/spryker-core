@@ -33,8 +33,11 @@ abstract class AbstractFacetQueryExpanderPluginAggregationTest extends AbstractQ
      *
      * @return void
      */
-    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(SearchConfigInterface $searchConfig, array $expectedAggregations, array $params = []): void
-    {
+    public function testFacetQueryExpanderShouldCreateAggregationsBasedOnSearchConfig(
+        SearchConfigInterface $searchConfig,
+        array $expectedAggregations,
+        array $params = []
+    ): void {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
         $queryExpander = new FacetQueryExpanderPlugin();

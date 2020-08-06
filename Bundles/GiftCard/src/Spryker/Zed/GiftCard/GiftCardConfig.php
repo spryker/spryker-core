@@ -14,6 +14,8 @@ class GiftCardConfig extends AbstractBundleConfig
     public const PROVIDER_NAME = 'GiftCard';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentProviderName()
@@ -22,6 +24,8 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPaymentMethodName()
@@ -30,6 +34,8 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCodePrefix()
@@ -38,6 +44,8 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCodeSuffix()
@@ -46,6 +54,8 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getCodeRandomPartLength()
@@ -54,7 +64,9 @@ class GiftCardConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use getGiftCardPaymentMethodBlacklist() instead.
+     * @api
+     *
+     * @deprecated Use {@link getGiftCardPaymentMethodBlacklist()} instead.
      *
      * @return array
      */
@@ -66,7 +78,9 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * Provides a list of payment method names that are disabled to use when the quote contains gift card item(s) to purchase.
      *
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getGiftCardPaymentMethodBlacklist(): array
     {
@@ -76,7 +90,9 @@ class GiftCardConfig extends AbstractBundleConfig
     /**
      * Provides a list of shipment method names that should be available in case there are only gift card items in the quote.
      *
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getGiftCardOnlyShipmentMethods(): array
     {

@@ -39,5 +39,8 @@
         <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
+    <transfer name="ProductAvailabilityCriteria">
+    </transfer>
+
 </transfers>
 

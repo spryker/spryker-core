@@ -8,6 +8,7 @@
         <property name="idProductAbstract" type="int"/>
         <property name="abstractSku" type="string"/>
         <property name="name" type="string"/>
+        <property name="url" type="string"/>
         <property name="taxRate" type="float"/>
         <property name="sku" type="string"/>
         <property name="productConcrete" type="ProductConcrete"/>
@@ -21,6 +22,7 @@
         <property name="fkProductAbstract" type="int"/>
         <property name="taxRate" type="float"/>
         <property name="attributes" type="array" singular="attribute"/>
+        <property name="isActive" type="bool"/>
     </transfer>
 
     <transfer name="CartChange">
@@ -29,6 +31,7 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="CartPreCheckResponse">
@@ -42,6 +45,27 @@
     </transfer>
 
     <transfer name="Locale">
+        <property name="idLocale" type="int"/>
     </transfer>
 
+    <transfer name="ProductUrlCriteriaFilter">
+        <property name="productAbstractIds" type="int[]" singular="productAbstractId"/>
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="url" type="string"/>
+        <property name="fkResourceProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductCriteria">
+        <property name="idStore" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="skus" type="string[]" singular="sku"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

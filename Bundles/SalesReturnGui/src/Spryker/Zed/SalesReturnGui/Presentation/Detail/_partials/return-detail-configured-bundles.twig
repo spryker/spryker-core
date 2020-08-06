@@ -1,0 +1,63 @@
+{% set returnItems = return.returnItems | filter(returnItem => returnItem.orderItem.salesOrderConfiguredBundle) %}
+{% set mappedReturnItems = [] %}
+{% set configuredBundles = [] %}
+
+{% for returnItem in returnItems %}
+    {% set bundleId = returnItem.orderItem.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+
+    {% if mappedReturnItems['_' ~ bundleId] is defined %}
+        {% set bundleReturnItems = mappedReturnItems['_' ~ bundleId] | merge([returnItem]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ bundleId): bundleReturnItems}) %}
+    {% else %}
+        {% set configuredBundles = configuredBundles | merge([returnItem.orderItem.salesOrderConfiguredBundle]) %}
+        {% set mappedReturnItems = mappedReturnItems | merge({('_' ~ bundleId): [returnItem]}) %}
+    {% endif %}
+{% endfor %}
+
+{% set changeStatusRedirectUrl = url('/sales-return-gui/detail', {'id-return': return.idSalesReturn}) %}
+
+{% for bundle in configuredBundles %}
+    <tr>
+        <td colspan="5">
+            <strong>{{ (bundle.translations[0].name ?? bundle.name) | trans }}</strong> {# Fallback name display is kept for BC reasons. #}
+            ({{ 'ID:' | trans }} {{ bundle.configurableBundleTemplateUuid }})
+        </td>
+        <td>
+            {% set bundleSumSubtotalAggregation = 0 %}
+            {% set bundleSumPriceToPayAggregation = 0 %}
+
+            {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
+                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + returnItem.orderItem.sumSubtotalAggregation %}
+                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + returnItem.orderItem.sumPriceToPayAggregation %}
+            {% endfor %}
+
+            {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+                subtotal: bundleSumSubtotalAggregation,
+                priceToPay: bundleSumPriceToPayAggregation,
+                order: order,
+            } %}
+        </td>
+        <td colspan="2"></td>
+    </tr>
+
+    {% for returnItem in mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] %}
+        {% include '@SalesReturnGui/Detail/_partials/return-detail-item.twig' with {
+            returnItem: returnItem,
+            orderItem: returnItem.orderItem,
+            order: order,
+            eventsGroupedByItem: eventsGroupedByItem,
+            changeStatusRedirectUrl: changeStatusRedirectUrl,
+            isBundleProduct: false,
+        } only %}
+    {% endfor %}
+
+    <tr>
+        <td colspan="1"></td>
+        <td colspan="7">
+            {{ 'Items' | trans }}: {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }} / {{ mappedReturnItems['_' ~ bundle.idSalesOrderConfiguredBundle] | length }}
+        </td>
+    </tr>
+    <tr>
+        <td colspan="8"></td>
+    </tr>
+{% endfor %}

@@ -11,7 +11,7 @@ use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @deprecated Use Spryker\Zed\Cache\Business\Model\CacheClearer instead.
+ * @deprecated Use {@link \Spryker\Zed\Cache\Business\Model\CacheClearer} instead.
  */
 class CacheDelete
 {
@@ -31,7 +31,7 @@ class CacheDelete
     /**
      * Deletes all cache files for all stores
      *
-     * @return array
+     * @return string[]
      */
     public function deleteAllFiles()
     {

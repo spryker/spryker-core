@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\Exception\MissingWidgetPluginException;
 use Spryker\Yves\Kernel\Exception\ReadOnlyException;
 
 /**
- * @deprecated Use \Spryker\Yves\Kernel\Widget\AbstractWidget instead.
+ * @deprecated Use {@link \Spryker\Yves\Kernel\Widget\AbstractWidget} instead.
  */
 abstract class AbstractWidgetPlugin extends AbstractPlugin implements WidgetPluginInterface, ArrayAccess
 {

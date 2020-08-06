@@ -42,5 +42,7 @@ class ConvertConfigConsole extends Console
     {
         $this->info('Write propel config');
         $this->getFacade()->convertConfig();
+
+        return static::CODE_SUCCESS;
     }
 }

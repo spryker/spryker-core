@@ -1,0 +1,41 @@
+{
+  "name": "spryker/cms-slot-block-product-category-gui",
+  "type": "library",
+  "description": "CmsSlotBlockProductCategoryGui module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/category": "^4.6.0",
+    "spryker/cms-slot-block-gui-extension": "^1.0.0",
+    "spryker/gui": "^3.24.0",
+    "spryker/kernel": "^3.30.0",
+    "spryker/locale": "^1.0.0 || ^2.0.0 || ^3.0.0",
+    "spryker/product": "^6.12.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
+    "spryker/translator": "^1.0.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

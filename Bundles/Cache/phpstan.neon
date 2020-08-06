@@ -1,0 +1,5 @@
+parameters:
+    dynamicConstantNames:
+        - APPLICATION_CODE_BUCKET
+    checkMissingIterableValueType: false
+    ignoreErrors:

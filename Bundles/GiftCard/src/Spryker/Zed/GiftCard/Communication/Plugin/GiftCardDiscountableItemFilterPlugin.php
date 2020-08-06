@@ -20,6 +20,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class GiftCardDiscountableItemFilterPlugin extends AbstractPlugin implements DiscountableItemFilterPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *
      * This is additional filter applied to discountable items, the plugins are triggered after discount collectors run

@@ -17,4 +17,11 @@ interface ProductConcreteMeasurementUnitStorageReaderInterface
      * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer|null
      */
     public function findProductConcreteMeasurementUnitStorage(int $idProduct): ?ProductConcreteMeasurementUnitStorageTransfer;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteMeasurementUnitStorageTransfer[]
+     */
+    public function getProductConcreteMeasurementUnitStorageCollection(array $productConcreteIds): array;
 }

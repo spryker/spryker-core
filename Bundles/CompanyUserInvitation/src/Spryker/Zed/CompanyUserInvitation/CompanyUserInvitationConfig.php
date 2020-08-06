@@ -14,6 +14,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CompanyUserInvitationConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return array
      */
     public function getCompanyUserInvitationStatusKeys(): array
@@ -27,6 +29,8 @@ class CompanyUserInvitationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getBaseUrl(): string

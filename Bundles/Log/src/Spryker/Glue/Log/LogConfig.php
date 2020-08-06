@@ -13,6 +13,8 @@ use Spryker\Shared\Log\LogConstants;
 class LogConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getChannelName(): string
@@ -21,6 +23,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSanitizerFieldNames(): array
@@ -29,6 +33,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSanitizedFieldValue(): string
@@ -37,6 +43,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLogFilePath(): string
@@ -49,6 +57,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int|string
      */
     public function getLogLevel()
@@ -57,6 +67,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getExceptionLogFilePath(): string
@@ -69,6 +81,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueName(): string

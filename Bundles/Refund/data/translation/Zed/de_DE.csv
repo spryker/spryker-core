@@ -1,9 +1,10 @@
 Amount,Betrag
 Comment,Kommentar
 "List of refunds","Liste der Rückerstattungen"
+"No returns for this order","Keine Rücksendungen für diese Bestellung"
 "Overview of Refunds","Übersicht der Rückerstattungen"
+Refunds,Rückerstattungen
 "Refund date",Rückerstattungsdatum
 "Refund Id",Rückerstattungs-ID
 "Sales Order Id","Bestell ID"
 Time,Time
-"No returns for this order","Keine Rücksendungen für diese Bestellung"

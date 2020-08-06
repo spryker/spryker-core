@@ -57,7 +57,7 @@ class CategoryImageStorageCommunicationTester extends Actor
     /**
      * @param int $idCategory
      *
-     * @return array[]
+     * @return array
      */
     public function getCategoryImages(int $idCategory): array
     {

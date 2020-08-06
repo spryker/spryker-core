@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'General' | trans }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ form_row(productRelationForm.productRelationKey) }}
+        {{ form_row(productRelationForm.productRelationType) }}
+        {{ form_row(productRelationForm.isRebuildScheduled) }}
+        {{ form_row(productRelationForm.isActive) }}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'Product owning the relation' | trans }}</h3>
+    </div>
+    <div class="panel-body">
+        <h4>{{ 'Selected product' | trans }}</h4>
+        {% if productRelationForm.vars.data.fkProductAbstract is empty %}
+            <div id="select-product-notice" class="form-group">
+                {{ "Please select product from the list below *" | trans  }}
+            </div>
+        {% endif %}
+
+        <div style="display:none">
+            {{ form_widget(productRelationForm.fkProductAbstract) }}
+        </div>
+
+        <div class="{% if productRelationForm.fkProductAbstract.vars.errors|length > 0 %}has-error{% endif %}">
+            {{ form_errors(productRelationForm.fkProductAbstract) }}
+        </div>
+
+        <div class="ibox-content product-box" id="selected-product" style="display:none;">
+            <div class="product-desc">
+                <img height="100" id="product-img" src="{{ productAbstractData['spy_product_image.external_url_small'] ?? '' }}"/> <br />
+                <small class="text-muted" id="product-category">{{ productAbstractData['assignedCategories'] ?? '' }}</small>
+                <span class="product-name">{{ productAbstractData['spy_product_abstract_localized_attributes.name'] ?? '' }}</span>
+
+                <div class="small m-t-xs" id="product-description">{{ productAbstractData['spy_product_abstract_localized_attributes.description'] ?? '' }}</div>
+            </div>
+        </div>
+
+        {% if productTable is defined %}
+            <br />
+            <h4>{{ 'Select product' | trans }}</h4>
+            {{ productTable | raw }}
+        {% endif %}
+    </div>
+</div>
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ 'Store relation' | trans }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ form_row(productRelationForm.storeRelation.id_stores, { 'label': 'Select Stores' | trans }) }}
+    </div>
+</div>
+
+{{ form_row(productRelationForm.idProductRelation) }}
+

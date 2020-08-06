@@ -7,10 +7,8 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence\Propel\Mapper;
 
-use ArrayObject;
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
-use Generated\Shared\Transfer\UrlTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfile;
 
 class MerchantProfileMapper implements MerchantProfileMapperInterface
@@ -44,13 +42,7 @@ class MerchantProfileMapper implements MerchantProfileMapperInterface
         );
 
         $merchantProfileTransfer->setMerchantName($merchantProfileEntity->getSpyMerchant()->getName());
-
-        $urlTransfers = new ArrayObject();
-        foreach ($merchantProfileEntity->getSpyUrls() as $urlEntity) {
-            $urlTransfers->append((new UrlTransfer())->fromArray($urlEntity->toArray(), true));
-        }
-
-        $merchantProfileTransfer->setUrlCollection($urlTransfers);
+        $merchantProfileTransfer->setMerchantReference($merchantProfileEntity->getSpyMerchant()->getMerchantReference());
 
         $merchantProfileAddressCollectionTransfer = $this->merchantProfileAddressMapper->mapMerchantProfileAddressEntityCollectionToMerchantProfileAddressCollectionTransfer(
             $merchantProfileEntity->getSpyMerchantProfileAddresses(),

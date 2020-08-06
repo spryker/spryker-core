@@ -16,8 +16,13 @@ class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements So
 {
     public const NAME = 'rating';
     public const PARAMETER_NAME = 'rating';
+    protected const UNMAPPED_TYPE = 'integer';
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function build()
@@ -26,6 +31,7 @@ class RatingSortConfigTransferBuilderPlugin extends AbstractPlugin implements So
             ->setName(static::NAME)
             ->setParameterName(static::PARAMETER_NAME)
             ->setFieldName(PageIndexMap::INTEGER_SORT)
-            ->setIsDescending(true);
+            ->setIsDescending(true)
+            ->setUnmappedType(static::UNMAPPED_TYPE);
     }
 }

@@ -18,6 +18,8 @@ class OfferConfig extends AbstractBundleConfig
     public const PRICE_MODE_NET = 'NET_MODE';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStatusPending(): string
@@ -31,6 +33,8 @@ class OfferConfig extends AbstractBundleConfig
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getInitialStatus(): string
@@ -39,6 +43,8 @@ class OfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getIncompleteOfferStatuses(): array
@@ -52,6 +58,8 @@ class OfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getConvertedStatus(): string
@@ -60,6 +68,8 @@ class OfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeNet()
@@ -68,6 +78,8 @@ class OfferConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeGross()

@@ -13,6 +13,7 @@ use Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroup
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionGroupForm;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionTranslationForm;
 use Spryker\Zed\ProductOption\Communication\Form\ProductOptionValueForm;
+use Spryker\Zed\ProductOption\Communication\Form\ToggleActiveProductOptionForm;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\ArrayToArrayObjectTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\PriceTransformer;
 use Spryker\Zed\ProductOption\Communication\Form\Transformer\StringToArrayTransformer;
@@ -32,7 +33,7 @@ use Symfony\Component\Form\FormInterface;
 class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @deprecated Use `getProductOptionGroupType()` instead.
+     * @deprecated Use {@link getProductOptionGroupType()} instead.
      *
      * @param \Spryker\Zed\ProductOption\Communication\Form\DataProvider\ProductOptionGroupDataProvider $productOptionGroupDataProvider
      *
@@ -175,7 +176,7 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Please use `createPriceTransformer()` instead.
+     * @deprecated Use {@link createPriceTransformer()} instead.
      *
      * @return \Symfony\Component\Form\DataTransformerInterface
      */
@@ -190,6 +191,14 @@ class ProductOptionCommunicationFactory extends AbstractCommunicationFactory
     public function createPriceTransformer()
     {
         return new PriceTransformer($this->getMoneyFacade());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActiveProductOptionForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveProductOptionForm::class);
     }
 
     /**

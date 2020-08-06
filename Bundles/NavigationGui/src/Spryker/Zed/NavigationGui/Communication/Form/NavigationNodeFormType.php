@@ -35,6 +35,7 @@ class NavigationNodeFormType extends AbstractType
     public const FIELD_VALID_FROM = 'valid_from';
     public const FIELD_VALID_TO = 'valid_to';
 
+    public const NODE_TYPE_LABEL = 'label';
     public const NODE_TYPE_CATEGORY = 'category';
     public const NODE_TYPE_CMS_PAGE = 'cms_page';
     public const NODE_TYPE_LINK = 'link';
@@ -85,12 +86,12 @@ class NavigationNodeFormType extends AbstractType
         $builder
             ->add(self::FIELD_NODE_TYPE, ChoiceType::class, [
                 'label' => 'Type',
-                'placeholder' => 'Label',
                 'choices' => array_flip([
-                    self::NODE_TYPE_CATEGORY => 'Category',
-                    self::NODE_TYPE_CMS_PAGE => 'CMS page',
-                    self::NODE_TYPE_LINK => 'Link',
-                    self::NODE_TYPE_EXTERNAL_URL => 'External URL',
+                    static::NODE_TYPE_LABEL => 'Label',
+                    static::NODE_TYPE_CATEGORY => 'Category',
+                    static::NODE_TYPE_CMS_PAGE => 'CMS page',
+                    static::NODE_TYPE_LINK => 'Link',
+                    static::NODE_TYPE_EXTERNAL_URL => 'External URL',
                 ]),
                 'choice_attr' => [
                     'Category' => ['data-url' => '/search-for-category'],
@@ -266,7 +267,7 @@ class NavigationNodeFormType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

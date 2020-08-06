@@ -21,6 +21,8 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginInterface;
 class GiftCardOrderSaverPlugin extends AbstractPlugin implements CheckoutPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

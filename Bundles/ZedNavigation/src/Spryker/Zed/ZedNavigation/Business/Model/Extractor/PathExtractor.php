@@ -46,6 +46,7 @@ class PathExtractor implements PathExtractorInterface
                 if (isset($child[MenuFormatter::CHILDREN])) {
                     $this->extractActiveNodes($child[MenuFormatter::CHILDREN], $path);
                 }
+
                 break;
             }
         }

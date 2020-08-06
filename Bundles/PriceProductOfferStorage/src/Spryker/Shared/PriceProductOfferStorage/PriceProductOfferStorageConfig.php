@@ -17,8 +17,10 @@ class PriceProductOfferStorageConfig
      * - Dimension type as used for product offer price.
      *
      * @api
+     *
+     * @uses \Spryker\Shared\PriceProductOffer\PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER
      */
-    public const DIMENSION_TYPE_PRODUCT_OFFER = 'OFFER';
+    public const DIMENSION_TYPE_PRODUCT_OFFER = 'PRODUCT_OFFER';
 
     /**
      * Specification:

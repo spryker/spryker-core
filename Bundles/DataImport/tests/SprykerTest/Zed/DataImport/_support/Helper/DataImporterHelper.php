@@ -32,8 +32,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterMock(string $importType, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null): DataImporterInterface
-    {
+    public function getDataImporterMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImporterInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
@@ -59,17 +62,21 @@ class DataImporterHelper extends Module
      * @param bool $isCalled
      * @param \Generated\Shared\Transfer\DataImporterReportTransfer|null $dataImporterReportTransfer
      *
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\DataImporter\DataImporterImportGroupAwareInterface
+     * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
      */
-    public function getDataImporterImportGroupAwareMock(string $importType, string $importGroup, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null)
-    {
+    public function getDataImporterImportGroupAwareMock(
+        string $importType,
+        string $importGroup,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ) {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)
                 ->setImportedDataSetCount(0);
         }
 
-        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporter $dataImporterStub */
+        /** @var \Spryker\Zed\DataImport\Business\Model\DataImporterInterface $dataImporterStub */
         $dataImporterStub = Stub::makeEmpty(DataImporter::class, [
             'import' => Expected::exactly(($isCalled ? 1 : 0), function () use ($dataImporterReportTransfer) {
                 return $dataImporterReportTransfer;
@@ -92,8 +99,11 @@ class DataImporterHelper extends Module
      *
      * @return \Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface
      */
-    public function getDataImporterPluginMock(string $importType, bool $isCalled = false, ?DataImporterReportTransfer $dataImporterReportTransfer = null): DataImportPluginInterface
-    {
+    public function getDataImporterPluginMock(
+        string $importType,
+        bool $isCalled = false,
+        ?DataImporterReportTransfer $dataImporterReportTransfer = null
+    ): DataImportPluginInterface {
         if (!$dataImporterReportTransfer) {
             $dataImporterReportTransfer = new DataImporterReportTransfer();
             $dataImporterReportTransfer->setImportType($importType)

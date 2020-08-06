@@ -196,7 +196,7 @@ class AutoloadUpdaterTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\Composer\Updater\AutoloadUpdater
      */
-    protected function getAutoloadUpdaterMock()
+    protected function getAutoloadUpdaterMock(): AutoloadUpdater
     {
         $autoloadUpdaterMock = $this->getMockBuilder(AutoloadUpdater::class)
             ->setMethods(['pathExists', 'getPath'])

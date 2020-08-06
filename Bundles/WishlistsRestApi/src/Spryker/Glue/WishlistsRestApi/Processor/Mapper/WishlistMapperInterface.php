@@ -25,5 +25,8 @@ interface WishlistMapperInterface
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
      */
-    public function mapWishlistAttributesToWishlistTransfer(RestWishlistsAttributesTransfer $attributesTransfer, WishlistTransfer $wishlistTransfer): WishlistTransfer;
+    public function mapWishlistAttributesToWishlistTransfer(
+        RestWishlistsAttributesTransfer $attributesTransfer,
+        WishlistTransfer $wishlistTransfer
+    ): WishlistTransfer;
 }

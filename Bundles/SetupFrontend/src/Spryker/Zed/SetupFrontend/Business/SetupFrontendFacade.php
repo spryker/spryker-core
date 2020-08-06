@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SetupFrontend\Business;
 
+use Generated\Shared\Transfer\SetupFrontendConfigurationTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -61,18 +62,28 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildYvesFrontend(LoggerInterface $logger)
+    public function buildYvesFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
-        return $this->getFactory()->createYvesBuilder()->build($logger);
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
+        return $this->getFactory()->createYvesBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
     /**
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
      *
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -100,6 +111,8 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      *
      * @api
      *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
      * @param \Psr\Log\LoggerInterface $logger
      *
      * @return bool
@@ -115,12 +128,20 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
      * @api
      *
      * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
      *
      * @return bool
      */
-    public function buildZedFrontend(LoggerInterface $logger)
+    public function buildZedFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null)
     {
-        return $this->getFactory()->createZedBuilder()->build($logger);
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
+        return $this->getFactory()->createZedBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 
     /**
@@ -133,5 +154,43 @@ class SetupFrontendFacade extends AbstractFacade implements SetupFrontendFacadeI
     public function removeZedAssets()
     {
         return $this->getFactory()->createZedAssetsCleaner()->clean();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated In next major all dependencies will be installed via single command {@see $this->installProjectDependencies()}
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     *
+     * @return bool
+     */
+    public function installMerchantPortalDependencies(LoggerInterface $logger): bool
+    {
+        return $this->getFactory()->createMerchantPortalDependencyInstaller()->install($logger);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Generated\Shared\Transfer\SetupFrontendConfigurationTransfer|null $setupFrontendConfigurationTransfer
+     *
+     * @return bool
+     */
+    public function buildMerchantPortalFrontend(LoggerInterface $logger, ?SetupFrontendConfigurationTransfer $setupFrontendConfigurationTransfer = null): bool
+    {
+        if ($setupFrontendConfigurationTransfer === null) {
+            $setupFrontendConfigurationTransfer = new SetupFrontendConfigurationTransfer();
+            $message = 'For forward compatibility with next major version use "SetupFrontendConfigurationTransfer" to configure build process.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
+
+        return $this->getFactory()->createMerchantPortalBuilder()->build($logger, $setupFrontendConfigurationTransfer);
     }
 }

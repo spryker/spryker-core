@@ -10,6 +10,7 @@ Back,Zurück
 City,Stadt
 Company,Firma
 Country,Land
+Customers,Kunden
 "Customer deletion confirmation","Löschen des Kunden bestätigt"
 "Customer does not exist","Kunde existiert nicht"
 "Customer Reference",Kundenreferenz
@@ -18,6 +19,7 @@ Country,Land
 "Customer was not created.","Kunde wurde nicht erstellt."
 "Customer was not updated.","Kunde wurde nicht aktualisiert."
 "Customer was updated successfully.","Kunde wurde erfolgreich aktualisiert."
+"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
 "Date of birth",Geburtsdatum
 Delete,Löschen
 "Delete account","Konto löschen"
@@ -26,10 +28,11 @@ Delete,Löschen
 Email,E-Mail
 "First Name",Vorname
 "First name",Vorname
+"Form was not submitted.","Der Formular wurde nicht eingereicht."
 Gender,Geschlecht
 "Last name",Nachname
 "List Customers","Liste der Kunden"
-Locale,Locale
+Locale,Gebietsschema
 Phone,Telefon
 "Registered at","Eingetragen bei"
 Salutation,Anrede
@@ -40,4 +43,11 @@ View,Ansicht
 "View Customer","Kunden anzeigen"
 "Zed Account Reference",Zed-Konto-Referenz
 ZipCode,Postleitzahl
-"Customer with id `%s` does not exist","Die Kunde mit der ID `%s` ist nicht vorhanden"
+"Registration Date",Registrierungsdatum
+"Billing Address",Rechnungsadresse
+"Shipping Address",Lieferanschrift
+"Attach to company","Einem Unternehmen zuordnen"
+"Add a customer","Kunde hinzufügen"
+"Comment successfully added","Kommentar erfolgreich hinzugefügt."
+"Address (2nd line)","Adresse (zweite Zeile)"
+"Address (3rd line)","Adresse (dritte Zeile)"

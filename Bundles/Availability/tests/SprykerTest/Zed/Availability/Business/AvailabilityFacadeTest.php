@@ -490,6 +490,124 @@ class AvailabilityFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithNeverOutOfStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['is_never_out_of_stock' => true],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithZeroQuantity(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+        $this->createProductWithStock(
+            static::ABSTRACT_SKU,
+            static::CONCRETE_SKU,
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithoutStock(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->haveProduct([ProductConcreteTransfer::SKU => static::CONCRETE_SKU]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$productConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(0, $productConcreteTransfers);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFilterAvailableProductsWithSeveralItems(): void
+    {
+        // Arrange
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => static::STORE_NAME_DE]);
+
+        $firstProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 0],
+            $storeTransfer
+        );
+
+        $secondProductConcreteTransfer = $this->tester->haveProduct();
+        $this->createProductWithStock(
+            $firstProductConcreteTransfer->getAbstractSku(),
+            $firstProductConcreteTransfer->getSku(),
+            ['quantity' => 2],
+            $storeTransfer
+        );
+
+        // Act
+        $productConcreteTransfers = $this->getAvailabilityFacade()
+            ->filterAvailableProducts([$firstProductConcreteTransfer, $secondProductConcreteTransfer]);
+
+        // Assert
+        $this->assertCount(1, $productConcreteTransfers);
+    }
+
+    /**
      * @return \Spryker\Zed\Availability\Business\AvailabilityFacade
      */
     protected function getAvailabilityFacade(): AvailabilityFacade

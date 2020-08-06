@@ -8,6 +8,8 @@
 namespace Spryker\Client\CartCode;
 
 use Generated\Shared\Transfer\CartCodeOperationResultTransfer;
+use Generated\Shared\Transfer\CartCodeRequestTransfer;
+use Generated\Shared\Transfer\CartCodeResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -20,6 +22,8 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link addCartCode()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
@@ -36,6 +40,8 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link removeCartCode()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string $code
      *
@@ -51,6 +57,8 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link clearAllCartCodes()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\CartCodeOperationResultTransfer
@@ -58,5 +66,53 @@ class CartCodeClient extends AbstractClient implements CartCodeClientInterface
     public function clearAllCodes(QuoteTransfer $quoteTransfer): CartCodeOperationResultTransfer
     {
         return $this->getFactory()->createCodeClearer()->clearAllCodes($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function addCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartCodeZedStub()
+            ->addCartCode($cartCodeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCode(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartCodeZedStub()
+            ->removeCartCode($cartCodeRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function clearCartCodes(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartCodeZedStub()
+            ->clearCartCodes($cartCodeRequestTransfer);
     }
 }

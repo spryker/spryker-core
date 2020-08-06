@@ -65,9 +65,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesFacade(Container $container)
     {
-        $container[static::FACADE_SALES] = function (Container $container) {
+        $container->set(static::FACADE_SALES, function (Container $container) {
             return new RefundToSalesBridge($container->getLocator()->sales()->facade());
-        };
+        });
 
         return $container;
     }
@@ -79,9 +79,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationFacade(Container $container)
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new RefundToCalculationBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -93,9 +93,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemRefundCalculatorPlugin(Container $container)
     {
-        $container[static::PLUGIN_ITEM_REFUND_CALCULATOR] = function () {
+        $container->set(static::PLUGIN_ITEM_REFUND_CALCULATOR, function () {
             return new RefundableItemAmountCalculatorPlugin();
-        };
+        });
 
         return $container;
     }
@@ -107,9 +107,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addExpenseRefundCalculatorPlugin(Container $container)
     {
-        $container[static::PLUGIN_EXPENSE_REFUND_CALCULATOR] = function () {
+        $container->set(static::PLUGIN_EXPENSE_REFUND_CALCULATOR, function () {
             return new RefundableExpenseAmountCalculatorPlugin();
-        };
+        });
 
         return $container;
     }
@@ -121,9 +121,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_SALES] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_SALES, function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
-        };
+        });
 
         return $container;
     }
@@ -135,9 +135,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyFacade(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new RefundToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -149,9 +149,9 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateFormatter(Container $container)
     {
-        $container[static::SERVICE_DATE_TIME] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_TIME, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }

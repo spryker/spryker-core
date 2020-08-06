@@ -75,7 +75,7 @@ class CurrencyPersistenceTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Currency\Dependency\Client\CurrencyToSessionInterface
      */
-    protected function createSessionClientMock()
+    protected function createSessionClientMock(): CurrencyToSessionInterface
     {
         return $this->getMockBuilder(CurrencyToSessionInterface::class)->getMock();
     }
@@ -83,7 +83,7 @@ class CurrencyPersistenceTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\Store
      */
-    protected function createStoreMock()
+    protected function createStoreMock(): Store
     {
         return $this->getMockBuilder(Store::class)
             ->disableOriginalConstructor()

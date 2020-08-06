@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\ProductManagement\Business\ProductManagementFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class AddController extends AbstractController
 {
@@ -39,10 +40,12 @@ class AddController extends AbstractController
 
         $type = $request->query->get('type');
 
+        /** @var array|null $priceDimension */
+        $priceDimension = $request->query->get(static::PARAM_PRICE_DIMENSION);
         $form = $this
             ->getFactory()
             ->createProductFormAdd(
-                $dataProvider->getData($request->query->get(static::PARAM_PRICE_DIMENSION)),
+                $dataProvider->getData($priceDimension),
                 $dataProvider->getOptions()
             )
             ->handleRequest($request);
@@ -181,6 +184,11 @@ class AddController extends AbstractController
         $attributeValues = $this->getFactory()
             ->createProductFormTransferGenerator()
             ->generateVariantAttributeArrayFromData($form->getData(), $attributeCollection);
+
+        $productAbstractTransfer = (new ProductAbstractTransfer())
+            ->setIdProductAbstract($productAbstractTransfer->getIdProductAbstract())
+            ->setSku($productAbstractTransfer->getSku())
+            ->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
         $concreteProductCollection = $this->getFactory()
             ->getProductFacade()

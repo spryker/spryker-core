@@ -24,7 +24,13 @@
             <div class="row">
                 <div class="col-sm-12">
                     <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Back' | trans }}</a>
-                    <a href="{{ url('/product-list-gui/delete/confirm', {'id-product-list': idProductList}) }}" class="btn btn-danger safe-submit">{{ 'Remove List' | trans }}</a>
+                    {{ form_start(deleteForm, {
+                        'action': url('/product-list-gui/delete/confirm', {'id-product-list': idProductList})
+                    }) }}
+                        <input type="submit"
+                               class="btn btn-danger safe-submit"
+                               value="{{ 'Remove List' | trans }}"/>
+                    {{ form_end(deleteForm) }}
                 </div>
             </div>
 

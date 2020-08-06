@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductAbstractCategoryStorage">
+        <property name="categories" singular="category" type="ProductCategoryStorage[]"/>
+    </transfer>
+
+    <transfer name="ProductCategoryStorage">
+        <property name="categoryId" type="int"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlock">
+        <property name="conditions" type="CmsSlotBlockCondition[]" singular="condition" associative="true"/>
+    </transfer>
+
+    <transfer name="CmsSlotBlockCondition">
+        <property name="all" type="bool"/>
+        <property name="productIds" type="int[]" singular="idProduct"/>
+        <property name="categoryIds" type="int[]" singular="idCategory"/>
+    </transfer>
+
+    <transfer name="CmsSlotParams">
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+</transfers>

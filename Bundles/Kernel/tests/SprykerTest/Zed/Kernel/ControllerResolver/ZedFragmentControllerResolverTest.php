@@ -71,7 +71,7 @@ class ZedFragmentControllerResolverTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\ControllerResolver\ZedFragmentControllerResolver
      */
-    protected function getFragmentControllerProvider(Request $request)
+    protected function getFragmentControllerProvider(Request $request): ZedFragmentControllerResolver
     {
         $controllerResolverMock = $this->getMockBuilder(ZedFragmentControllerResolver::class)
             ->setMethods(['resolveController', 'getCurrentRequest'])

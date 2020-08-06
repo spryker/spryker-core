@@ -6,7 +6,7 @@
 >
 
     <transfer name="CompanyBusinessUnit">
-        <property name="key" dataBuilderRule="word"/>
+        <property name="key" dataBuilderRule="unique()->numerify('#######')"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="email" dataBuilderRule="email"/>
         <property name="phone" dataBuilderRule="e164PhoneNumber"/>

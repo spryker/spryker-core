@@ -202,7 +202,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface
      */
-    protected function createMockedCmsContentWidgetFunction()
+    protected function createMockedCmsContentWidgetFunction(): CmsContentWidgetParameterMapperPluginInterface
     {
         return $this->getMockBuilder(CmsContentWidgetParameterMapperPluginInterface::class)
             ->getMock();
@@ -235,7 +235,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig
      */
-    protected function createCmsConfigMock()
+    protected function createCmsConfigMock(): CmsContentWidgetConfig
     {
         return $this->getMockBuilder(CmsContentWidgetConfig::class)->getMock();
     }
@@ -243,7 +243,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface
      */
-    protected function createCmsContentWidgetConfigurationProviderMock()
+    protected function createCmsContentWidgetConfigurationProviderMock(): CmsContentWidgetConfigurationProviderInterface
     {
         return $this->getMockBuilder(CmsContentWidgetConfigurationProviderInterface::class)->getMock();
     }
@@ -251,7 +251,7 @@ class CmsContentWidgetFacadeTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\CmsContentWidget\Dependency\Facade\CmsContentWidgetToGlossaryInterface
      */
-    protected function createGlossaryFacadeMock()
+    protected function createGlossaryFacadeMock(): CmsContentWidgetToGlossaryInterface
     {
         return $this->getMockBuilder(CmsContentWidgetToGlossaryInterface::class)->getMock();
     }

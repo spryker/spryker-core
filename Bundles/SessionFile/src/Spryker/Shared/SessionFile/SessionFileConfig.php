@@ -14,6 +14,8 @@ class SessionFileConfig extends AbstractBundleConfig
     public const SESSION_HANDLER_FILE = 'file';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerFileName(): string

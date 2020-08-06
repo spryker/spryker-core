@@ -1,6 +1,6 @@
 # SalesQuantity Module
 [![Build Status](https://travis-ci.org/spryker/sales-quantity.svg)](https://travis-ci.org/spryker/sales-quantity)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/sales-quantity/badge.svg)](https://coveralls.io/github/spryker/sales-quantity)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 This module provides support for handling and configuring quantity for sales orders and items.
 

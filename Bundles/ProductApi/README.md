@@ -1,6 +1,6 @@
 # ProductApi Module
-[![Build Status](https://travis-ci.org/spryker/ProductApi.svg)](https://travis-ci.org/spryker/ProductApi)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/ProductApi/badge.svg)](https://coveralls.io/github/spryker/ProductApi)
+[![Build Status](https://travis-ci.org/spryker/product-api.svg)](https://travis-ci.org/spryker/product-api)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ProductApi provides REST API connection towards product functionality. Our API modules expose CRUD facade methods (find, get, add, update, remove) that can be mapped to a URL via REST resource/action resolution.
 

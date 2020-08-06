@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestProductMeasurementUnitsAttributes">
+        <property name="name" type="string"/>
+        <property name="defaultPrecision" type="int"/>
+    </transfer>
+
+    <transfer name="RestSalesUnitsAttributes">
+        <property name="conversion" type="int"/>
+        <property name="precision" type="int"/>
+        <property name="isDisplayed" type="bool"/>
+        <property name="isDefault" type="bool"/>
+        <property name="productMeasurementUnitCode" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementUnit">
+        <property name="code" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductMeasurementSalesUnit">
+        <property name="code" type="string"/>
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="value" type="int"/>
+        <property name="productMeasurementUnit" type="ProductMeasurementUnit"/>
+    </transfer>
+
+    <transfer name="CartItemRequest">
+        <property name="sku" type="string"/>
+        <property name="idProductMeasurementSalesUnit" type="int"/>
+        <property name="amount" type="decimal"/>
+    </transfer>
+
+    <transfer name="RestCartItemsAttributes">
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
+    </transfer>
+
+    <transfer name="RestCartItemsSalesUnitAttributes">
+        <property name="id" type="int"/>
+        <property name="amount" type="decimal"/>
+    </transfer>
+
+    <transfer name="RestOrdersProductMeasurementUnitsAttributes">
+        <property name="name" type="string"/>
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="RestOrdersSalesUnitAttributes">
+        <property name="conversion" type="int"/>
+        <property name="precision" type="int"/>
+        <property name="productMeasurementUnit" type="RestOrdersProductMeasurementUnitsAttributes"/>
+    </transfer>
+
+    <transfer name="PersistentCartChange">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+        <property name="amountSalesUnit" type="ProductMeasurementSalesUnit"/>
+        <property name="amount" type="decimal"/>
+        <property name="quantitySalesUnit" type="ProductMeasurementSalesUnit"/>
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="salesUnit" type="RestCartItemsSalesUnitAttributes"/>
+        <property name="sku" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+        <property name="amount" type="decimal"/>
+        <property name="salesUnit" type="RestOrdersSalesUnitAttributes"/>
+    </transfer>
+
+    <transfer name="ProductConcreteProductMeasurementSalesUnit">
+        <property name="idProductConcrete" type="int"/>
+        <property name="productMeasurementSalesUnits" type="ProductMeasurementSalesUnit[]" singular="productMeasurementSalesUnit"/>
+    </transfer>
+
+    <transfer name="ConcreteProductsRestAttributes">
+        <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="status" type="int"/>
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+    </transfer>
+
+</transfers>

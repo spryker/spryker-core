@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductMeasurementUnitStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Client\ProductMeasurementUnitStorageToStorageClientInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReader;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductConcreteMeasurementUnitStorageReaderInterface;
 use Spryker\Client\ProductMeasurementUnitStorage\Storage\ProductMeasurementBaseUnitReader;
@@ -30,7 +31,8 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     {
         return new ProductMeasurementUnitStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -42,7 +44,8 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
         return new ProductConcreteMeasurementUnitStorageReader(
             $this->getStorageClient(),
             $this->getStore(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -92,6 +95,14 @@ class ProductMeasurementUnitStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductMeasurementUnitStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductMeasurementUnitStorage\Dependency\Service\ProductMeasurementUnitStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductMeasurementUnitStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductMeasurementUnitStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 
     /**

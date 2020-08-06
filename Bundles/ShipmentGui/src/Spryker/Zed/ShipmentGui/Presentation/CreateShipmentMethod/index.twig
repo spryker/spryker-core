@@ -7,7 +7,7 @@
 
 {% block content %}
 
-    {{ form_start(shipmentMethodForm) }}
+    {{ form_start(shipmentMethodForm, {attr: {novalidate: 'novalidate'}}) }}
 
     {{ tabs(shipmentMethodTabs, {
         shipmentMethodForm: shipmentMethodForm

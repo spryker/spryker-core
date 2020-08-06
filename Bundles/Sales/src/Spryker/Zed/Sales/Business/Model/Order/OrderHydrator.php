@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\Sales\Business\Model\Order;
 
+use ArrayObject;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -20,12 +22,15 @@ use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Exception\PropelException;
 use Spryker\Zed\Sales\Business\Exception\InvalidSalesOrderException;
+use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use Spryker\Zed\Sales\SalesConfig;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydrator instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderHydrator} instead.
  */
 class OrderHydrator implements OrderHydratorInterface
 {
@@ -40,23 +45,55 @@ class OrderHydrator implements OrderHydratorInterface
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\Sales\SalesConfig
+     */
+    protected $salesConfig;
+
+    /**
+     * @var \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
+     */
+    protected $customerFacade;
+
+    /**
      * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[]
      */
     protected $hydrateOrderPlugins;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[]
+     */
+    protected $orderItemExpanderPlugins;
+
+    /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
+     */
+    protected $customerOrderAccessCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\Sales\SalesConfig $salesConfig
+     * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface $customerFacade
      * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface[] $hydrateOrderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemExpanderPluginInterface[] $orderItemExpanderPlugins
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[] $customerOrderAccessCheckPlugins
      */
     public function __construct(
         SalesQueryContainerInterface $queryContainer,
         SalesToOmsInterface $omsFacade,
-        array $hydrateOrderPlugins = []
+        SalesConfig $salesConfig,
+        SalesToCustomerInterface $customerFacade,
+        array $hydrateOrderPlugins = [],
+        array $orderItemExpanderPlugins = [],
+        array $customerOrderAccessCheckPlugins = []
     ) {
         $this->queryContainer = $queryContainer;
         $this->omsFacade = $omsFacade;
+        $this->salesConfig = $salesConfig;
+        $this->customerFacade = $customerFacade;
         $this->hydrateOrderPlugins = $hydrateOrderPlugins;
+        $this->orderItemExpanderPlugins = $orderItemExpanderPlugins;
+        $this->customerOrderAccessCheckPlugins = $customerOrderAccessCheckPlugins;
     }
 
     /**
@@ -87,12 +124,13 @@ class OrderHydrator implements OrderHydratorInterface
         $orderTransfer->requireIdSalesOrder()
             ->requireFkCustomer();
 
+        $customerTransfer = $this->getCustomerByFkCustomer($orderTransfer);
+
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetails($orderTransfer->getIdSalesOrder())
-            ->filterByFkCustomer($orderTransfer->getFkCustomer())
             ->findOne();
 
-        if ($orderEntity === null) {
+        if (!$this->isOrderApplicableForRetrieval($orderTransfer, $customerTransfer, $orderEntity)) {
             throw new InvalidSalesOrderException(sprintf(
                 'Order could not be found for ID %s and customer reference %s',
                 $orderTransfer->getIdSalesOrder(),
@@ -101,6 +139,33 @@ class OrderHydrator implements OrderHydratorInterface
         }
 
         return $orderEntity;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder|null $orderEntity
+     *
+     * @return bool
+     */
+    protected function isOrderApplicableForRetrieval(
+        OrderTransfer $orderTransfer,
+        CustomerTransfer $customerTransfer,
+        ?SpySalesOrder $orderEntity
+    ): bool {
+        if (!$orderEntity) {
+            return false;
+        }
+
+        if ($customerTransfer->getCustomerReference() === $orderEntity->getCustomerReference()) {
+            return true;
+        }
+
+        if (!$orderTransfer->getCustomer()) {
+            return false;
+        }
+
+        return $this->isCustomerOrderAccessGranted($orderEntity, $orderTransfer->getCustomer());
     }
 
     /**
@@ -113,7 +178,7 @@ class OrderHydrator implements OrderHydratorInterface
     public function hydrateOrderTransferFromPersistenceByIdSalesOrder($idSalesOrder)
     {
         $orderEntity = $this->queryContainer
-            ->querySalesOrderDetails($idSalesOrder)
+            ->querySalesOrderDetailsWithoutShippingAddress($idSalesOrder)
             ->findOne();
 
         if ($orderEntity === null) {
@@ -198,12 +263,17 @@ class OrderHydrator implements OrderHydratorInterface
      */
     public function hydrateOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
+        $itemTransfers = [];
+
         $criteria = new Criteria();
-        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_FK_SALES_SHIPMENT);
+        $criteria->addAscendingOrderByColumn(SpySalesOrderItemTableMap::COL_ID_SALES_ORDER_ITEM);
+
         foreach ($orderEntity->getItems($criteria) as $orderItemEntity) {
-            $itemTransfer = $this->hydrateOrderItemTransfer($orderItemEntity);
-            $orderTransfer->addItem($itemTransfer);
+            $itemTransfers[] = $this->hydrateOrderItemTransfer($orderItemEntity);
         }
+
+        $itemTransfers = $this->executeOrderItemExpanderPlugins($itemTransfers);
+        $orderTransfer->setItems(new ArrayObject($itemTransfers));
     }
 
     /**
@@ -247,6 +317,7 @@ class OrderHydrator implements OrderHydratorInterface
         $itemTransfer->setSumPriceToPayAggregation($orderItemEntity->getPriceToPayAggregation());
 
         $itemTransfer->setIsOrdered(true);
+        $itemTransfer->setIsReturnable(true);
 
         $this->deriveOrderItemUnitPrices($itemTransfer);
 
@@ -254,6 +325,20 @@ class OrderHydrator implements OrderHydratorInterface
         $this->hydrateCurrentSalesOrderItemState($orderItemEntity, $itemTransfer);
 
         return $itemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeOrderItemExpanderPlugins(array $itemTransfers): array
+    {
+        foreach ($this->orderItemExpanderPlugins as $orderItemExpanderPlugin) {
+            $itemTransfers = $orderItemExpanderPlugin->expand($itemTransfers);
+        }
+
+        return $itemTransfers;
     }
 
     /**
@@ -338,7 +423,7 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        foreach ($orderEntity->getExpenses() as $expenseEntity) {
+        foreach ($orderEntity->getExpenses(new Criteria()) as $expenseEntity) {
             $expenseTransfer = new ExpenseTransfer();
             $expenseTransfer->fromArray($expenseEntity->toArray(), true);
 
@@ -399,6 +484,8 @@ class OrderHydrator implements OrderHydratorInterface
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oms\Communication\Plugin\Sales\StateHistoryOrderItemExpanderPlugin} instead.
+     *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItemEntity
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
@@ -406,6 +493,11 @@ class OrderHydrator implements OrderHydratorInterface
      */
     protected function hydrateStateHistory(SpySalesOrderItem $orderItemEntity, ItemTransfer $itemTransfer)
     {
+        // For BC reasons
+        if (!$this->salesConfig->isHydrateOrderHistoryToItems()) {
+            return;
+        }
+
         foreach ($orderItemEntity->getStateHistories() as $stateHistoryEntity) {
             $itemStateTransfer = new ItemStateTransfer();
             $itemStateTransfer->fromArray($stateHistoryEntity->toArray(), true);
@@ -487,5 +579,46 @@ class OrderHydrator implements OrderHydratorInterface
             // Deprecated: Using FK to customer is obsolete, but needed to prevent BC break.
             $orderTransfer->setFkCustomer(null);
         }
+    }
+
+    /**
+     * @deprecated Exists for Backward Compatibility reasons only.
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerByFkCustomer(OrderTransfer $orderTransfer): CustomerTransfer
+    {
+        $customerTransfer = $this->customerFacade->findCustomerById(
+            (new CustomerTransfer())->setIdCustomer($orderTransfer->getFkCustomer())
+        );
+
+        if (!$customerTransfer) {
+            throw new PropelException('Customer not found');
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCustomerOrderAccessGranted(SpySalesOrder $orderEntity, CustomerTransfer $customerTransfer): bool
+    {
+        $orderTransfer = (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+
+        foreach ($this->customerOrderAccessCheckPlugins as $customerOrderAccessCheckPlugin) {
+            if ($customerOrderAccessCheckPlugin->check($orderTransfer, $customerTransfer)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

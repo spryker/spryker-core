@@ -11,6 +11,9 @@
         <property name="customer" type="Customer"/>
         <property name="items" type="Item[]" singular="item"/>
         <property name="customerReference" type="string"/>
+        <property name="totals" type="Totals"/>
+        <property name="currency" type="Currency"/>
+        <property name="priceMode" type="string"/>
     </transfer>
 
     <transfer name="QuoteResponse">
@@ -77,6 +80,12 @@
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="Currency">
     </transfer>
 
 </transfers>

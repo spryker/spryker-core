@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveInactiveItemsPreReloadPlugin extends AbstractPlugin implements PreReloadItemsPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *   - This plugin is execute before reloading cart items, with this plugin you can modify quote before reloading it.
      *

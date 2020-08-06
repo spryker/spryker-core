@@ -130,6 +130,14 @@ class SearchPreferencesController extends AbstractController
      */
     public function cleanAction(Request $request)
     {
+        $form = $this->getFactory()->createCleanSearchPreferencesForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
+        }
+
         $idAttributeKey = $this->castId($request->query->get(self::PARAM_ID));
 
         $productSearchPreferencesTransfer = new ProductSearchPreferencesTransfer();
@@ -139,7 +147,7 @@ class SearchPreferencesController extends AbstractController
 
         $this->addSuccessMessage('Attribute to search was successfully deactivated.');
 
-        return $this->redirectResponse('/product-search/search-preferences');
+        return $this->redirectResponse(static::REDIRECT_URL_DEFAULT);
     }
 
     /**

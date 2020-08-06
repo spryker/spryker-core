@@ -19,6 +19,8 @@ class QuoteConfig extends AbstractBundleConfig
     protected const DEFAULT_GUEST_QUOTE_LIFETIME = 'P01M';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageStrategy()
@@ -27,7 +29,9 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return array
+     * @api
+     *
+     * @return string[]
      */
     public function getQuoteFieldsAllowedForSaving()
     {
@@ -40,6 +44,22 @@ class QuoteConfig extends AbstractBundleConfig
     }
 
     /**
+     * Specification:
+     * - Returns item properties that should be stored in the quote table.
+     * - Leave an empty array if you want to store all the Item transfer properties.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getQuoteItemFieldsAllowedForSaving(): array
+    {
+        return [];
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getGuestQuoteLifetime(): string

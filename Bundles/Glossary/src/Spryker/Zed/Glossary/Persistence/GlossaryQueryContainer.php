@@ -33,6 +33,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public const VALUE = 'value';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -48,6 +50,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -63,6 +67,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery
@@ -73,6 +79,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -96,6 +104,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery
@@ -106,6 +116,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idKey
@@ -124,6 +136,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSpyGlossaryTranslation
@@ -139,6 +153,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $localeName
@@ -157,6 +173,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $localeId
@@ -174,6 +192,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkGlossaryKeyId
@@ -189,6 +209,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $keyName
@@ -207,6 +229,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery $query
@@ -228,6 +252,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $localeIds
@@ -262,6 +288,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $relevantLocales
@@ -278,6 +306,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $relevantLocales
@@ -304,7 +334,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $keyLocaleCrossJoin = new ModelJoin();
         $keyLocaleCrossJoin->setJoinType(Criteria::JOIN);
 
-        /*
+        /**
          * @param string $value
          *
          * @return string
@@ -337,6 +367,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -354,6 +386,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $query
@@ -371,6 +405,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idKey
@@ -399,6 +435,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $key
@@ -414,6 +452,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $value
@@ -429,6 +469,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkGlossaryKey
@@ -451,6 +493,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $idGlossaryKeys
@@ -464,6 +508,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $idGlossaryKeys

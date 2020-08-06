@@ -1,3 +1,4 @@
+Actions,Actions
 "Add list","Add list"
 "Are you sure you want to remove this list? Removing this list will also remove all associated functionalities.","Are you sure you want to remove this list? Removing this list will also remove all associated functionalities."
 "Assign Categories","Assign Categories"
@@ -6,8 +7,11 @@ Back,Back
 "Back to Product Lists","Back to Product Lists"
 Blacklist,Blacklist
 "Business Unit Owner Name","Business Unit Owner Name"
+Cancel,Cancel
+"Confirm action","Confirm action"
 "Create a Product List","Create a Product List"
 "Edit List","Edit List"
+"Edit Product List","Edit Product List"
 Export,Export
 ID,ID
 "ID Merchant Relation","ID Merchant Relation"
@@ -18,17 +22,22 @@ ID,ID
 Name,Name
 "Overview of Product lists","Overview of Product lists"
 "Owner Type","Owner Type"
+"Please ensure you saved information","Please ensure you saved information"
 "Product label #%d successfully created.","Product label #%d successfully created."
 "Product List ""%s"" has been successfully created.","Product List ""%s"" has been successfully created."
 "Product List ""%s"" has been successfully updated.","Product List ""%s"" has been successfully updated."
 "Product List has been successfully removed.","Product List has been successfully removed."
 "Product List removal confirmation","Product List was successfully removed"
+"Product Lists","Product Lists"
 "Products in this list","Products in this list"
 "Remove List","Remove List"
 Save,Save
 "Select Products to assign","Select Products to assign"
 Selected,Selected
 SKU,SKU
+Title,Title
 Type,Type
+"Used By","Used By"
 Whitelist,Whitelist
-"Edit Product List","Edit Product List"
+Сonfirm,Сonfirm
+"Add List","Add List"

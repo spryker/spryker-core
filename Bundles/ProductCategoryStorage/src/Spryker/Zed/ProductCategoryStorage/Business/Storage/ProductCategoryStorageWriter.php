@@ -35,6 +35,8 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     protected $queryContainer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -66,7 +68,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -95,7 +97,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -138,8 +140,11 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity, array $categories, ?SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null)
-    {
+    protected function storeDataSet(
+        SpyProductAbstractLocalizedAttributes $spyProductAbstractLocalizedEntity,
+        array $categories,
+        ?SpyProductAbstractCategoryStorage $spyProductAbstractCategoryStorageEntity = null
+    ) {
         if ($spyProductAbstractCategoryStorageEntity === null) {
             $spyProductAbstractCategoryStorageEntity = new SpyProductAbstractCategoryStorage();
         }
@@ -177,7 +182,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -240,7 +245,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -250,7 +255,7 @@ class ProductCategoryStorageWriter implements ProductCategoryStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

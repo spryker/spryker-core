@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\CmsBlockStorage\Business;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Business\Storage\CmsBlockStorageWriter;
 use Spryker\Zed\CmsBlockStorage\Business\Storage\CmsBlockStorageWriterInterface;
 use Spryker\Zed\CmsBlockStorage\CmsBlockStorageDependencyProvider;
+use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToStoreFacadeInterface;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
@@ -29,7 +29,7 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getUtilSanitize(),
             $this->getContentWidgetDataExpanderPlugins(),
-            $this->getStore(),
+            $this->getStoreFacade(),
             $this->getConfig()->isSendingToQueue()
         );
     }
@@ -51,10 +51,10 @@ class CmsBlockStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Shared\Kernel\Store
+     * @return \Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToStoreFacadeInterface
      */
-    protected function getStore(): Store
+    public function getStoreFacade(): CmsBlockStorageToStoreFacadeInterface
     {
-        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::STORE);
+        return $this->getProvidedDependency(CmsBlockStorageDependencyProvider::FACADE_STORE);
     }
 }

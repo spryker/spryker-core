@@ -8,7 +8,6 @@
 namespace Spryker\Glue\AuthRestApi\Processor\AccessTokens;
 
 use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
-use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AuthRestApi\AuthRestApiConfig;
@@ -17,6 +16,9 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @deprecated Use {@link \Spryker\Glue\AuthRestApi\Processor\AccessTokens\OauthAccessTokenRestRequestValidator} instead.
+ */
 class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
 {
     protected const REQUEST_ATTRIBUTE_IS_PROTECTED = 'is-protected';
@@ -59,9 +61,7 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             return null;
         }
 
-        $authAccessTokenValidationResponseTransfer = $this->validateAccessToken((string)$authorizationToken);
-
-        if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
+        if (!$this->validateAccessToken($authorizationToken)) {
             return (new RestErrorCollectionTransfer())->addRestError(
                 $this->createErrorMessageTransfer(
                     AuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN,
@@ -92,21 +92,35 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
     /**
      * @param string $authorizationToken
      *
-     * @return array
+     * @return string|null
      */
-    protected function extractToken(string $authorizationToken): array
+    protected function extractToken(string $authorizationToken): ?string
     {
-        return preg_split('/\s+/', $authorizationToken);
+        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
     }
 
     /**
      * @param string $authorizationToken
      *
-     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     * @return string|null
      */
-    protected function validateAccessToken(string $authorizationToken): OauthAccessTokenValidationResponseTransfer
+    protected function extractTokenType(string $authorizationToken): ?string
     {
-        [$type, $accessToken] = $this->extractToken($authorizationToken);
+        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
+    }
+
+    /**
+     * @param string $authorizationToken
+     *
+     * @return bool
+     */
+    protected function validateAccessToken(string $authorizationToken): bool
+    {
+        $accessToken = $this->extractToken($authorizationToken);
+        $type = $this->extractTokenType($authorizationToken);
+        if (!$accessToken || !$type) {
+            return false;
+        }
 
         $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
         $authAccessTokenValidationRequestTransfer
@@ -117,6 +131,6 @@ class OauthAccessTokenValidator implements OauthAccessTokenValidatorInterface
             $authAccessTokenValidationRequestTransfer
         );
 
-        return $authAccessTokenValidationResponseTransfer;
+        return $authAccessTokenValidationResponseTransfer->getIsValid();
     }
 }

@@ -7,9 +7,13 @@
 
 namespace Spryker\Zed\ProductOffer\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
+use Generated\Shared\Transfer\ProductOfferResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -44,7 +48,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
-        return $this->getRepository()->findOne($productOfferCriteriaFilter);
+        return $this->getFactory()->createProductOfferReader()->findOne($productOfferCriteriaFilter);
     }
 
     /**
@@ -58,6 +62,56 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getEntityManager()->createProductOffer($productOfferTransfer);
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->create($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferResponseTransfer
+     */
+    public function update(ProductOfferTransfer $productOfferTransfer): ProductOfferResponseTransfer
+    {
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->update($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function filterInactiveProductOfferItems(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createInactiveProductOfferItemsFilter()
+            ->filterInactiveProductOfferItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createItemProductOfferChecker()
+            ->checkItemProductOffer($cartChangeTransfer);
     }
 }

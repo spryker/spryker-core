@@ -20,6 +20,8 @@ use Spryker\Zed\Product\Dependency\Plugin\ProductConcretePluginReadInterface;
 class ProductSearchProductConcreteReadPlugin extends AbstractPlugin implements ProductConcretePluginReadInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer

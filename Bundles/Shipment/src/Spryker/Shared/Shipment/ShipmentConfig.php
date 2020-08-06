@@ -22,6 +22,8 @@ class ShipmentConfig extends AbstractSharedConfig
     public const SHIPMENT_EXPENSE_TYPE = 'SHIPMENT_EXPENSE_TYPE';
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isMultiShipmentSelectionEnabled(): bool

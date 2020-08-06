@@ -24,7 +24,6 @@ use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Discount\Persistence\SpyDiscountStore;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
-use Propel\Runtime\Propel;
 use Spryker\Shared\Discount\DiscountConstants;
 use Spryker\Zed\Discount\Business\DiscountBusinessFactory;
 use Spryker\Zed\Discount\Business\DiscountFacade;
@@ -33,6 +32,7 @@ use Spryker\Zed\Discount\Business\QueryString\ComparatorOperators;
 use Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface;
 use Spryker\Zed\Discount\DiscountDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 /**
@@ -49,6 +49,7 @@ use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 class DiscountFacadeCalculateTest extends Unit
 {
     use LocatorHelperTrait;
+    use InstancePoolingHelperTrait;
 
     /**
      * @return void
@@ -182,7 +183,7 @@ class DiscountFacadeCalculateTest extends Unit
      */
     public function testWhenMultipleVouchersFromSamePoolUsedShouldUseOnlyOnce(): void
     {
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
 
         $discountEntity = $this->createDiscountEntity(
             '',
@@ -257,6 +258,33 @@ class DiscountFacadeCalculateTest extends Unit
 
         $discountTransfer = $cartRuleDiscounts[0];
         $this->assertSame($discountEntity->getAmount(), $discountTransfer->getAmount());
+    }
+
+    /**
+     * @return void
+     */
+    public function testWhenQuoteHaveUsedNotAppliedVoucherCodes(): void
+    {
+        // Arrange
+        $discountEntity = $this->createDiscountEntity(
+            '',
+            'sku = "*"',
+            DiscountConstants::TYPE_VOUCHER
+        );
+
+        $code1 = 'code1';
+        $this->createVoucherCode($code1, $discountEntity);
+
+        $quoteTransfer = $this->createQuoteTransfer();
+        $quoteTransfer->addUsedNotAppliedVoucherCode($code1);
+
+        // Act
+        $quoteTransfer = $this->getFacade()->calculateDiscounts($quoteTransfer);
+
+        // Assert
+        $this->assertCount(1, $quoteTransfer->getVoucherDiscounts());
+        $this->assertCount(1, $quoteTransfer->getUsedNotAppliedVoucherCodes());
+        $this->assertEquals($code1, $quoteTransfer->getVoucherDiscounts()[0]->getVoucherCode());
     }
 
     /**
@@ -443,7 +471,7 @@ class DiscountFacadeCalculateTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface
      */
-    protected function createDiscountableItemFilterPluginMock()
+    protected function createDiscountableItemFilterPluginMock(): DiscountableItemFilterPluginInterface
     {
         return $this->getMockBuilder(DiscountableItemFilterPluginInterface::class)->getMock();
     }

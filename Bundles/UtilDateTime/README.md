@@ -1,6 +1,6 @@
 # UtilDateTime Module
-[![Build Status](https://travis-ci.org/spryker/UtilDateTime.svg)](https://travis-ci.org/spryker/UtilDateTime)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/UtilDateTime/badge.svg)](https://coveralls.io/github/spryker/UtilDateTime)
+[![Build Status](https://travis-ci.org/spryker/util-date-time.svg)](https://travis-ci.org/spryker/util-date-time)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 UtilDateTime provides low level date time handling functionality.
 

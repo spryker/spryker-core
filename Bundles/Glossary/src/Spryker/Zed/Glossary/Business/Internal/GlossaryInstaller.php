@@ -8,13 +8,15 @@
 namespace Spryker\Zed\Glossary\Business\Internal;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Glossary\Business\Key\KeyManagerInterface;
 use Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller implements GlossaryInstallerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Glossary\Business\Translation\TranslationManagerInterface
      */
@@ -80,9 +82,18 @@ class GlossaryInstaller implements GlossaryInstallerInterface
      */
     protected function installKeysAndTranslations(array $translations)
     {
-        Propel::getConnection()
-            ->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($translations): array {
+            return $this->executeInstallKeysAndTranslationsTransaction($translations);
+        });
+    }
 
+    /**
+     * @param array $translations
+     *
+     * @return array
+     */
+    protected function executeInstallKeysAndTranslationsTransaction(array $translations): array
+    {
         $results = [];
         foreach ($translations as $keyName => $data) {
             $results[$keyName]['created'] = false;
@@ -107,9 +118,6 @@ class GlossaryInstaller implements GlossaryInstallerInterface
                 }
             }
         }
-
-        Propel::getConnection()
-            ->commit();
 
         return $results;
     }

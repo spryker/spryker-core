@@ -12,6 +12,9 @@ use Spryker\Zed\RestRequestValidator\Business\Merger\RestRequestValidatorSchemaM
 use Spryker\Zed\RestRequestValidator\Business\Saver\RestRequestValidatorCacheSaverInterface;
 use Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\RestRequestValidator\Business\Builder\RestRequestValidatorCodeBucketCacheBuilder} instead.
+ */
 class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuilderInterface
 {
     /**
@@ -60,6 +63,7 @@ class RestRequestValidatorCacheBuilder implements RestRequestValidatorCacheBuild
         foreach ($this->store->getAllowedStores() as $storeName) {
             $config = $this->restRequestValidatorCacheCollector->collect($storeName);
             $config = $this->restRequestValidatorSchemaMerger->merge($config);
+
             $this->restRequestValidatorCacheSaver->save($config, $storeName);
         }
     }

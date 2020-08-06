@@ -372,8 +372,10 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductConcreteMerchantRelationshipStorageEntityTransfer[]
      */
-    public function findFilteredPriceProductConcreteMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductConcreteMerchantRelationshipStorageIds = []): array
-    {
+    public function findFilteredPriceProductConcreteMerchantRelationshipStorageEntities(
+        FilterTransfer $filterTransfer,
+        array $priceProductConcreteMerchantRelationshipStorageIds = []
+    ): array {
         $query = $this->getFactory()->createPriceProductConcreteMerchantRelationshipStorageQuery();
 
         if ($priceProductConcreteMerchantRelationshipStorageIds) {
@@ -389,8 +391,10 @@ class PriceProductMerchantRelationshipStorageRepository extends AbstractReposito
      *
      * @return \Generated\Shared\Transfer\SpyPriceProductAbstractMerchantRelationshipStorageEntityTransfer[]
      */
-    public function findFilteredPriceProductAbstractMerchantRelationshipStorageEntities(FilterTransfer $filterTransfer, array $priceProductAbstractMerchantRelationshipStorageIds = []): array
-    {
+    public function findFilteredPriceProductAbstractMerchantRelationshipStorageEntities(
+        FilterTransfer $filterTransfer,
+        array $priceProductAbstractMerchantRelationshipStorageIds = []
+    ): array {
         $query = $this->getFactory()->createPriceProductAbstractMerchantRelationshipStorageQuery();
 
         if ($priceProductAbstractMerchantRelationshipStorageIds) {

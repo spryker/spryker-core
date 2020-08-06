@@ -137,6 +137,7 @@ class TransferValidator implements TransferValidatorInterface
                 continue;
             }
 
+            $singulars = [];
             foreach ($transfer['property'] as $property) {
                 $type = $property['type'];
 
@@ -201,6 +202,20 @@ class TransferValidator implements TransferValidatorInterface
 
                     continue;
                 }
+                if ($this->hasSingularName($property)) {
+                    $singulars[] = $property['singular'];
+                }
+            }
+
+            if ($this->hasDuplicate($singulars)) {
+                $isValid = false;
+                $this->messenger->warning(sprintf(
+                    '%s.%s: has same singular name used for different properties',
+                    $module,
+                    $transfer['name']
+                ));
+
+                continue;
             }
         }
 
@@ -380,5 +395,15 @@ class TransferValidator implements TransferValidatorInterface
         }
 
         return $this->isValidPropertyName($property['singular']);
+    }
+
+    /**
+     * @param string[] $singulars
+     *
+     * @return bool
+     */
+    protected function hasDuplicate(array $singulars): bool
+    {
+        return count(array_unique($singulars)) < count($singulars);
     }
 }

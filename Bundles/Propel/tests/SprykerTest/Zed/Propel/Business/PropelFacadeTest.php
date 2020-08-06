@@ -8,8 +8,6 @@
 namespace SprykerTest\Zed\Propel\Business;
 
 use Codeception\Test\Unit;
-use Spryker\Zed\Propel\Business\PropelFacade;
-use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
@@ -25,33 +23,24 @@ use Spryker\Zed\Propel\PropelConfig;
 class PropelFacadeTest extends Unit
 {
     /**
-     * @return \Spryker\Zed\Propel\Business\PropelFacade
+     * @var \SprykerTest\Zed\Propel\PropelBusinessTester
      */
-    private function getFacade(): PropelFacade
-    {
-        return new PropelFacade();
-    }
-
-    /**
-     * @return \Spryker\Zed\Propel\PropelConfig
-     */
-    private function getConfig(): PropelConfig
-    {
-        return new PropelConfig();
-    }
+    protected $tester;
 
     /**
      * @return void
      */
     public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt(): void
     {
-        if (!is_dir($this->getConfig()->getSchemaDirectory())) {
-            mkdir($this->getConfig()->getSchemaDirectory(), 755, true);
-        }
+        $schemaDirectory = $this->tester->getVirtualDirectory();
 
-        $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
-        $this->getFacade()->cleanPropelSchemaDirectory();
-        $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));
+        $this->tester->mockConfigMethod('getSchemaDirectory', function () use ($schemaDirectory) {
+            return $schemaDirectory;
+        });
+
+        $this->assertTrue(is_dir($schemaDirectory));
+        $this->tester->getFacade()->cleanPropelSchemaDirectory();
+        $this->assertFalse(is_dir($schemaDirectory));
     }
 
     /**
@@ -59,7 +48,13 @@ class PropelFacadeTest extends Unit
      */
     public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory(): void
     {
-        $this->getFacade()->copySchemaFilesToTargetDirectory();
-        $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
+        $schemaDirectory = $this->tester->getVirtualDirectory();
+
+        $this->tester->mockConfigMethod('getSchemaDirectory', function () use ($schemaDirectory) {
+            return $schemaDirectory;
+        });
+
+        $this->tester->getFacade()->copySchemaFilesToTargetDirectory();
+        $this->assertTrue(is_dir($schemaDirectory));
     }
 }

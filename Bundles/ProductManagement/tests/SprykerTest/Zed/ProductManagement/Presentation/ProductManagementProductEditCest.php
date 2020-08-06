@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\ProductManagement\Presentation;
 
+use PHPUnit\Framework\Assert;
 use SprykerTest\Zed\ProductManagement\PageObject\ProductManagementProductListPage;
 use SprykerTest\Zed\ProductManagement\ProductManagementPresentationTester;
 
@@ -37,7 +38,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Product');
     }
 
     /**
@@ -47,6 +48,7 @@ class ProductManagementProductEditCest
      */
     public function canSaveProductWithoutEditing(ProductManagementPresentationTester $i): void
     {
+        Assert::markTestSkipped('Re-enable when GLUE-9675 is done');
         $i->registerProductManagementStoreRelationFormTypePlugin();
         $i->registerMoneyCollectionFormTypePlugin();
 
@@ -55,7 +57,7 @@ class ProductManagementProductEditCest
         $i->waitForElementVisible('.dataTables_scrollBody');
 
         $i->clickDataTableEditButton();
-        $i->seeBreadcrumbNavigation('Products / Products / Edit Product');
+        $i->seeBreadcrumbNavigation('Catalog / Products / Edit Product');
         $i->click('Save');
 
         $i->waitForJS('return document.readyState == "complete"');

@@ -176,5 +176,8 @@
     <transfer name="Order">
     </transfer>
 
+    <transfer name="Currency">
+    </transfer>
+
 </transfers>
 

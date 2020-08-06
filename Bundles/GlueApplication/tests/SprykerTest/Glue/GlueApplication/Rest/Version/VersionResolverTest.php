@@ -120,7 +120,7 @@ class VersionResolverTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Glue\GlueApplication\Rest\ContentType\ContentTypeResolverInterface
      */
-    protected function createContentTypeResolverMock()
+    protected function createContentTypeResolverMock(): ContentTypeResolverInterface
     {
         $contentTypeResolverMock = $this->getMockBuilder(ContentTypeResolverInterface::class)
             ->setMethods(['matchContentType', 'addResponseHeaders'])

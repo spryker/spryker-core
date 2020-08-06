@@ -26,7 +26,7 @@ class QuoteRepository extends AbstractRepository implements QuoteRepositoryInter
     /**
      * {@inheritDoc}
      *
-     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     * @deprecated Use {@link findQuoteByCustomerReferenceAndIdStore()} instead.
      *
      * @param string $customerReference
      *

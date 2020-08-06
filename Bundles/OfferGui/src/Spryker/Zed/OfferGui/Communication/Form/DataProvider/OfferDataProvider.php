@@ -167,11 +167,11 @@ class OfferDataProvider
     protected function getStatusList()
     {
         return [
-            "Pending",
-            "On overview",
-            "Sent to customer",
-            "Confirmed by customer",
-            "Close",
+            'Pending',
+            'On overview',
+            'Sent to customer',
+            'Confirmed by customer',
+            'Close',
         ];
     }
 }

@@ -17,9 +17,11 @@ $(document).ready(function() {
     });
 
     slotTable.init();
+    global.CmsSlotGui_SlotTable = slotTable;
 
     var templateTable = new TemplateTable({
         templateTableId: '#template-list-table',
+        slotTemplateNameClass: '.js-slot-template-name',
         slotTable: slotTable
     });
 

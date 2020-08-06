@@ -1,0 +1,66 @@
+Actions,Actions
+Activate,Activate
+Active,Active
+"Add General Information","Add General Information"
+"Add Slot","Add Slot"
+"Are you sure you want to delete template","Are you sure you want to delete template"
+"Are you sure you want to delete this slot?","Are you sure you want to delete this slot?"
+"At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them."
+Back,Back
+"Back to Template list","Back to Template list"
+"Below you can edit the name of your slot for different locales (in different languages).","Below you can edit the name of your slot for different locales (in different languages)."
+Cancel,Cancel
+"Configurable Bundle Template","Configurable Bundle Template"
+"Configurable bundle template has been successfully created.","Configurable bundle template has been successfully created."
+"Configurable bundle template has been successfully deleted.","Configurable bundle template has been successfully deleted."
+"Configurable bundle template has been successfully updated.","Configurable bundle template has been successfully updated."
+"Configurable bundle template has not been created.","Configurable bundle template has not been created."
+"Configurable bundle template has not been deleted.","Configurable bundle template has not been deleted."
+"Configurable bundle template has not been updated.","Configurable bundle template has not been updated."
+"Configurable bundle template slot has not been created.","Configurable bundle template slot has not been created."
+"Configurable bundle template slot has not been deleted.","Configurable bundle template slot has not been deleted."
+"Configurable bundle template slot has not been updated.","Configurable bundle template slot has not been updated."
+"Configurable bundle template slot was successfully created.","Configurable bundle template slot was successfully created."
+"Configurable bundle template slot was successfully deleted.","Configurable bundle template slot was successfully deleted."
+"Configurable bundle template slot was successfully updated.","Configurable bundle template slot was successfully updated."
+"Configurable bundle template slot with id ""%id%"" was not found.","Configurable bundle template slot with id ""%id%"" was not found."
+"Configurable bundle template with id ""%id%"" was not found.","Configurable bundle template with id ""%id%"" was not found."
+"Configurable Bundle Templates","Configurable Bundle Templates"
+Confirm,Confirm
+"Confirm action","Confirm action"
+"Create Configurable Bundle Template","Create Configurable Bundle Template"
+"Create New Template","Create New Template"
+"Create Slot","Create Slot"
+Deactivate,Deactivate
+Delete,Delete
+"Delete Configurable Bundle Template","Delete Configurable Bundle Template"
+"Delete Template","Delete Template"
+Edit,Edit
+"Edit Configurable Bundle Template","Edit Configurable Bundle Template"
+"Edit Slot","Edit Slot"
+"Edit Slot for","Edit Slot for"
+for,for
+General,General
+Inactive,Inactive
+Name,Name
+Next,Next
+"Note: you can assign products and categories for a slot in the respective tabs.","Note: you can assign products and categories for a slot in the respective tabs."
+"Nr. of Slots","Nr. of Slots"
+"Number of Items","Number of Items"
+"Product ID","Product ID"
+Save,Save
+SKU,SKU
+"Slot details","Slot details"
+"Slot ID","Slot ID"
+"Slot Name","Slot Name"
+Slots,Slots
+Status,Status
+"Template ""%template_name%"" has been activated.","Template ""%template_name%"" has been activated."
+"Template ""%template_name%"" has deactivated.","Template ""%template_name%"" has deactivated."
+"Template ""%template_name%"" has not been activated.","Template ""%template_name%"" has not been activated."
+"Template ""%template_name%"" has not been deactivated.","Template ""%template_name%"" has not been deactivated."
+"Template ""%template_name%"" was activated.","Template ""%template_name%"" was activated."
+"Template ""%template_name%"" was deactivated.","Template ""%template_name%"" was deactivated."
+"Template details","Template details"
+"You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories."
+"You can change name and define locals on this page.","You can change name and define locals on this page."

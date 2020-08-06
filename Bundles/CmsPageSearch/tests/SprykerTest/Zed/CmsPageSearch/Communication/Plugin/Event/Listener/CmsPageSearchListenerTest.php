@@ -13,14 +13,10 @@ use Orm\Zed\Cms\Persistence\Map\SpyCmsVersionTableMap;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearchQuery;
 use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
 use Spryker\Zed\Cms\Dependency\CmsEvents;
-use Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacade;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageSearchListener;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageUrlSearchListener;
 use Spryker\Zed\CmsPageSearch\Communication\Plugin\Event\Listener\CmsPageVersionSearchListener;
-use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchBridge;
 use Spryker\Zed\Url\Dependency\UrlEvents;
-use SprykerTest\Zed\CmsPageSearch\Business\CmsPageSearchBusinessFactoryMock;
-use SprykerTest\Zed\CmsPageSearch\CmsPageSearchConfigMock;
 
 /**
  * Auto-generated group annotations
@@ -34,11 +30,20 @@ use SprykerTest\Zed\CmsPageSearch\CmsPageSearchConfigMock;
  * @group Listener
  * @group CmsPageSearchListenerTest
  * Add your own group annotations below this line
+ *
+ * @property \SprykerTest\Zed\CmsPageSearch\CmsPageSearchCommunicationTester $tester
  */
 class CmsPageSearchListenerTest extends Unit
 {
-    public const NUMBER_OF_LOCALES = 2;
-    public const NUMBER_OF_STORES = 3;
+    /**
+     * @return void
+     */
+    protected function _setUp(): void
+    {
+        parent::_setUp();
+
+        $this->tester->mockConfigMethod('isSendingToQueue', false);
+    }
 
     /**
      * @return void
@@ -50,7 +55,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Act
         $cmsPageVersionSearchListener = new CmsPageVersionSearchListener();
-        $cmsPageVersionSearchListener->setFacade($this->getCmsPageSearchFacade());
+        $cmsPageVersionSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -62,8 +67,7 @@ class CmsPageSearchListenerTest extends Unit
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
 
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
-
+        $this->assertGreaterThan($beforeCount, $afterCount);
         $this->assertCmsPageSearch();
     }
 
@@ -77,7 +81,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Act
         $cmsPageUrlSearchListener = new CmsPageUrlSearchListener();
-        $cmsPageUrlSearchListener->setFacade($this->getCmsPageSearchFacade());
+        $cmsPageUrlSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setForeignKeys([
@@ -89,7 +93,7 @@ class CmsPageSearchListenerTest extends Unit
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
 
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
 
         $this->assertCmsPageSearch();
     }
@@ -104,7 +108,7 @@ class CmsPageSearchListenerTest extends Unit
 
         // Act
         $cmsPageSearchListener = new CmsPageSearchListener();
-        $cmsPageSearchListener->setFacade($this->getCmsPageSearchFacade());
+        $cmsPageSearchListener->setFacade($this->tester->getFacade());
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId(1),
@@ -114,25 +118,9 @@ class CmsPageSearchListenerTest extends Unit
         // Assert
         $afterCount = SpyCmsPageSearchQuery::create()->count();
 
-        $this->assertSame($beforeCount + static::NUMBER_OF_LOCALES * static::NUMBER_OF_STORES, $afterCount);
+        $this->assertGreaterThan($beforeCount, $afterCount);
 
         $this->assertCmsPageSearch();
-    }
-
-    /**
-     * @return \Spryker\Zed\CmsPageSearch\Business\CmsPageSearchFacade
-     */
-    protected function getCmsPageSearchFacade(): CmsPageSearchFacade
-    {
-        $searchFacadeMock = $this->getMockBuilder(CmsPageSearchToSearchBridge::class)->disableOriginalConstructor()->getMock();
-        $searchFacadeMock->method('transformPageMapToDocumentByMapperName')->willReturn([]);
-        $factory = new CmsPageSearchBusinessFactoryMock($searchFacadeMock);
-        $factory->setConfig(new CmsPageSearchConfigMock());
-
-        $facade = new CmsPageSearchFacade();
-        $facade->setFactory($factory);
-
-        return $facade;
     }
 
     /**

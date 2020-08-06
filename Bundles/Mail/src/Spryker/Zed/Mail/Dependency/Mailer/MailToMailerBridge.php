@@ -62,6 +62,17 @@ class MailToMailerBridge implements MailToMailerInterface
     }
 
     /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return void
+     */
+    public function addBcc(string $email, ?string $name = null): void
+    {
+        $this->message->addBcc($email, $name);
+    }
+
+    /**
      * @param string $content
      *
      * @return void

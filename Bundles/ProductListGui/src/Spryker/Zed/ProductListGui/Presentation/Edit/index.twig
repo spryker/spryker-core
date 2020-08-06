@@ -9,3 +9,8 @@
         {{ removeActionButton(url('/product-list-gui/delete', {'id-product-list': idProductList}), 'Remove List' | trans) }}
     {% endif %}
 {% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/assets/js/spryker-zed-product-list-used-by-tab.js"></script>
+{% endblock %}

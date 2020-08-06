@@ -69,10 +69,11 @@ class StoreQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
     }
 
     /**
-     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\LocalizedQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject
+     * @return \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStoreQueryExpanderPluginMock()
+    protected function createStoreQueryExpanderPluginMock(): StoreQueryExpanderPlugin
     {
+        /** @var \Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\StoreQueryExpanderPlugin|\PHPUnit\Framework\MockObject\MockObject $queryExpander */
         $queryExpander = $this->getMockBuilder(StoreQueryExpanderPlugin::class)
             ->setMethods(['getStore'])
             ->getMock();

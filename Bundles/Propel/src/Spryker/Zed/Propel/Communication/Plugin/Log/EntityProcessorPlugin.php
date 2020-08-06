@@ -24,6 +24,8 @@ class EntityProcessorPlugin extends AbstractPlugin implements LogProcessorPlugin
     public const RECORD_EXTRA = 'extra';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $record

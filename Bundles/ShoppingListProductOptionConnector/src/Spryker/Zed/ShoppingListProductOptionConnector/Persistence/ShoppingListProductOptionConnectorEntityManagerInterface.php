@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
+use ArrayObject;
+
 interface ShoppingListProductOptionConnectorEntityManagerInterface
 {
     /**
@@ -18,11 +20,25 @@ interface ShoppingListProductOptionConnectorEntityManagerInterface
     public function saveShoppingListItemProductOption(int $idShoppingListItem, int $idProductOption): void;
 
     /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return void
+     */
+    public function saveShoppingListItemProductOptionInBulk(ArrayObject $shoppingListItemTransfers): void;
+
+    /**
      * @param int $idShoppingListItem
      *
      * @return void
      */
     public function removeShoppingListItemProductOptions(int $idShoppingListItem): void;
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return void
+     */
+    public function removeShoppingListItemProductOptionsByShoppingListItemIds(array $shoppingListItemIds): void;
 
     /**
      * @param int[] $productOptionValueIds

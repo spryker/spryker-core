@@ -10,7 +10,6 @@ namespace Spryker\Zed\CmsPageSearch;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToCmsQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\QueryContainer\CmsPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingBridge;
@@ -27,7 +26,6 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SYNCHRONIZATION = 'SERVICE_UTIL_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const FACADE_CMS = 'FACADE_CMS';
-    public const FACADE_SEARCH = 'FACADE_SEARCH';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const STORE = 'store';
@@ -39,9 +37,9 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -53,21 +51,17 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
-        $container[static::FACADE_CMS] = function (Container $container) {
+        $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsPageSearchToCmsBridge($container->getLocator()->cms()->facade());
-        };
+        });
 
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
-
-        $container[self::FACADE_SEARCH] = function (Container $container) {
-            return new CmsPageSearchToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
 
         return $container;
     }
@@ -79,13 +73,13 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_PAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_PAGE, function (Container $container) {
             return new CmsPageSearchToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CmsPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
 
         return $container;
     }

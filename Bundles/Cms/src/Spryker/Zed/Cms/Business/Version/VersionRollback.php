@@ -71,7 +71,7 @@ class VersionRollback implements VersionRollbackInterface
         if ($originVersionEntity === null || $targetVersionEntity === null) {
             throw new MissingPageException(
                 sprintf(
-                    "There is no valid Cms page with this id: %d or Cms version with this version: %d for rollback",
+                    'There is no valid Cms page with this id: %d or Cms version with this version: %d for rollback',
                     $idCmsPage,
                     $version
                 )
@@ -104,8 +104,12 @@ class VersionRollback implements VersionRollbackInterface
      *
      * @return \Generated\Shared\Transfer\CmsVersionTransfer
      */
-    public function executeMigrateVersion(SpyCmsVersion $originVersionEntity, SpyCmsVersion $targetVersionEntity, int $idCmsPage, int $version): CmsVersionTransfer
-    {
+    public function executeMigrateVersion(
+        SpyCmsVersion $originVersionEntity,
+        SpyCmsVersion $targetVersionEntity,
+        int $idCmsPage,
+        int $version
+    ): CmsVersionTransfer {
         $this->versionMigration->migrate($originVersionEntity->getData(), $targetVersionEntity->getData());
 
         $newVersion = $this->versionGenerator->generateNewCmsVersion($idCmsPage);
@@ -132,7 +136,7 @@ class VersionRollback implements VersionRollbackInterface
         if ($versionEntity === null) {
             throw new MissingPageException(
                 sprintf(
-                    "There is no valid Cms version with this id: %d for reverting",
+                    'There is no valid Cms version with this id: %d for reverting',
                     $idCmsPage
                 )
             );

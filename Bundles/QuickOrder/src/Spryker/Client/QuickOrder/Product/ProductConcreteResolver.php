@@ -63,6 +63,7 @@ class ProductConcreteResolver implements ProductConcreteResolverInterface
 
             if ($productConcreteTransfer === null) {
                 unset($quickOrderTransfer->getItems()[$index]);
+
                 continue;
             }
 

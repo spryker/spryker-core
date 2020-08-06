@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class CategoryExporterClient extends AbstractClient implements CategoryExporterClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $locale
@@ -27,6 +29,8 @@ class CategoryExporterClient extends AbstractClient implements CategoryExporterC
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $categoryNode

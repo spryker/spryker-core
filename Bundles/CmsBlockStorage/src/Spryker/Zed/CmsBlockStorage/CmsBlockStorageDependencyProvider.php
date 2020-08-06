@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsBlockStorage;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\CmsBlockStorage\Dependency\Facade\CmsBlockStorageToStoreFacadeBridge;
 use Spryker\Zed\CmsBlockStorage\Dependency\Service\CmsBlockStorageToUtilSanitizeServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -21,7 +21,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const PLUGIN_CONTENT_WIDGET_DATA_EXPANDER = 'PLUGIN_CONTENT_WIDGET_DATA_EXPANDER';
-    public const STORE = 'store';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -44,7 +44,7 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = $this->addUtilSanitizeService($container);
         $container = $this->addContentWidgetDataExpanderPlugin($container);
-        $container = $this->addStore($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -96,10 +96,10 @@ class CmsBlockStorageDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addStore(Container $container): Container
+    protected function addStoreFacade(Container $container): Container
     {
-        $container->set(static::STORE, function () {
-            return Store::getInstance();
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CmsBlockStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

@@ -70,6 +70,7 @@ class ProductBundleWriter implements ProductBundleWriterInterface
             $this->productBundleQueryContainer->getConnection()->commit();
         } catch (Throwable $exception) {
             $this->productBundleQueryContainer->getConnection()->rollBack();
+
             throw $exception;
         }
         $productBundleTransfer->setBundlesToRemove([]);

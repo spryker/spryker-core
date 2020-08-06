@@ -23,6 +23,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\Acl\Communication\AclCommunicationFactory getFactory()
  * @method \Spryker\Zed\Acl\Persistence\AclQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\Acl\AclConfig getConfig()
+ * @method \Spryker\Zed\Acl\Persistence\AclRepositoryInterface getRepository()
  */
 class GroupForm extends AbstractType
 {
@@ -47,7 +48,8 @@ class GroupForm extends AbstractType
                 $defaultData = $form->getConfig()->getData();
                 $submittedData = $form->getData();
 
-                if (array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
+                if (
+                    array_key_exists(self::FIELD_TITLE, $defaultData) === false ||
                     $defaultData[self::FIELD_TITLE] !== $submittedData[self::FIELD_TITLE]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_GROUP_CHECK];
@@ -59,7 +61,7 @@ class GroupForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `configureOptions()` instead.
+     * @deprecated Use {@link configureOptions()} instead.
      *
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
@@ -130,7 +132,7 @@ class GroupForm extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

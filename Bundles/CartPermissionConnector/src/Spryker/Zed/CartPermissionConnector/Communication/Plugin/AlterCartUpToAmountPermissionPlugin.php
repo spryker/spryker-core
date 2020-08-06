@@ -33,6 +33,8 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     ];
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $terminationEventName
@@ -55,6 +57,8 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $configuration
@@ -80,6 +84,8 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -92,6 +98,8 @@ class AlterCartUpToAmountPermissionPlugin extends AbstractPlugin implements Exec
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

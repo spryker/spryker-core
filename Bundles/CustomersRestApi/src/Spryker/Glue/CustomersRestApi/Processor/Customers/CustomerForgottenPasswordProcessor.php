@@ -51,8 +51,9 @@ class CustomerForgottenPasswordProcessor implements CustomerForgottenPasswordPro
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function sendPasswordRestoreMail(RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface
-    {
+    public function sendPasswordRestoreMail(
+        RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
+    ): RestResponseInterface {
         $customerTransfer = $this->customerForgottenPasswordResourceMapper
             ->mapCustomerForgottenPasswordAttributesToCustomerTransfer($restCustomerForgottenPasswordAttributesTransfer);
         $this->customerClient->sendPasswordRestoreMail($customerTransfer);

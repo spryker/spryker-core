@@ -5,13 +5,14 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "ruflin/elastica": "~5.3.0"
+    "ruflin/elastica": "^7.0.0"
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {},
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "6.0.x-dev"
     }
   },
   "config": {

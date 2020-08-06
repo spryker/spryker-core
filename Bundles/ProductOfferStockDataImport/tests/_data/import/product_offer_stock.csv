@@ -1,2 +1,2 @@
-product_offer_reference,stock_name,quantity
-offer-1,stock-name-1,10
+product_offer_reference,stock_name,quantity,is_never_out_of_stock
+offer-1,stock-name-1,10,0

@@ -48,9 +48,11 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     public function postSave(?ConnectionInterface $con = null)
     {
         if ($this->statusChanged) {
+            /** @var \Orm\Zed\Sales\Persistence\SpySalesOrderItem $salesOrderItemEntity */
+            $salesOrderItemEntity = $this;
             // FIXME Wrong dependency direction
             $omsOrderItemStateHistoryEntity = $this->createOmsOrderItemStateHistoryEntity();
-            $omsOrderItemStateHistoryEntity->setOrderItem($this);
+            $omsOrderItemStateHistoryEntity->setOrderItem($salesOrderItemEntity);
             $omsOrderItemStateHistoryEntity->setState($this->getState());
             $omsOrderItemStateHistoryEntity->save();
         }

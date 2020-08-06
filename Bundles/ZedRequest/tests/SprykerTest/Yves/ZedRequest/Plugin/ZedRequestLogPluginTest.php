@@ -67,7 +67,7 @@ class ZedRequestLogPluginTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $lockerMock = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
@@ -79,7 +79,7 @@ class ZedRequestLogPluginTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\ZedRequest\Plugin\ZedRequestLogPlugin
      */
-    protected function getZedRequestLogPluginMock(LoggerInterface $loggerMock)
+    protected function getZedRequestLogPluginMock(LoggerInterface $loggerMock): ZedRequestLogPlugin
     {
         $zedRequestLogPluginMock = $this->getMockBuilder(ZedRequestLogPlugin::class)
             ->setMethods(['getLogger'])

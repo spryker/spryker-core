@@ -7,20 +7,29 @@
 
 namespace Spryker\Client\ProductOptionStorage\Storage;
 
+use Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer;
+
 interface ProductOptionStorageReaderInterface
 {
     /**
      * @param int $idProductAbstract
-     * @param string $locale
+     * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
-    public function getProductOptions($idProductAbstract, $locale);
+    public function getProductOptions(int $idProductAbstract, string $localeName): ?ProductAbstractOptionStorageTransfer;
 
     /**
      * @param int $idProductAbstract
      *
      * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer|null
      */
-    public function getProductOptionsForCurrentStore($idProductAbstract);
+    public function getProductOptionsForCurrentStore(int $idProductAbstract): ?ProductAbstractOptionStorageTransfer;
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractOptionStorageTransfer[]
+     */
+    public function getBulkProductOptions(array $productAbstractIds): array;
 }

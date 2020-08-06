@@ -18,6 +18,8 @@ class CmsConfig extends AbstractBundleConfig
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPlaceholderPattern(): string
@@ -26,6 +28,8 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPlaceholderValuePattern(): string
@@ -34,7 +38,9 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use getTemplateRealPaths() instead.
+     * @api
+     *
+     * @deprecated Use {@link getTemplateRealPaths()} instead.
      *
      * @param string $templateRelativePath
      *
@@ -46,6 +52,8 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $templateRelativePath
      *
      * @return array
@@ -63,6 +71,8 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function appendPrefixToCmsPageUrl(): bool
@@ -92,6 +102,8 @@ class CmsConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getThemeNames(): array

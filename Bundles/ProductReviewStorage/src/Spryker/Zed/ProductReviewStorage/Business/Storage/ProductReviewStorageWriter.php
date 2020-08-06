@@ -19,6 +19,8 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     protected $queryContainer;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -36,7 +38,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -53,7 +55,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -118,7 +120,7 @@ class ProductReviewStorageWriter implements ProductReviewStorageWriterInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */

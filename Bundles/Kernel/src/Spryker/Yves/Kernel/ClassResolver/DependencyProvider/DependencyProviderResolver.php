@@ -11,7 +11,7 @@ use Spryker\Yves\Kernel\ClassResolver\AbstractClassResolver;
 
 class DependencyProviderResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Yves\\%2$s%3$s\\%2$sDependencyProvider';
+    protected const RESOLVABLE_TYPE = 'YvesDependencyProvider';
 
     /**
      * @param object|string $callerClass
@@ -22,12 +22,10 @@ class DependencyProviderResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Yves\Kernel\AbstractBundleDependencyProvider $class */
-            $class = $this->getResolvedClassInstance();
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new DependencyProviderNotFoundException($this->getClassInfo());
@@ -35,37 +33,22 @@ class DependencyProviderResolver extends AbstractClassResolver
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => $this->getClassInfo()->getBundle(),
-            self::KEY_STORE => $store,
+            static::KEY_CODE_BUCKET => $codeBucket,
         ];
 
-        $className = str_replace(
+        return str_replace(
             array_keys($searchAndReplace),
             array_values($searchAndReplace),
             $this->getClassPattern()
-        );
-
-        return $className;
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
         );
     }
 }

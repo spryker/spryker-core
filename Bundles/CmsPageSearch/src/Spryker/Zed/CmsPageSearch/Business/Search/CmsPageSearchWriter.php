@@ -12,10 +12,9 @@ use Generated\Shared\Transfer\LocaleCmsPageDataTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use Orm\Zed\CmsPageSearch\Persistence\SpyCmsPageSearch;
-use Spryker\Shared\CmsPageSearch\CmsPageSearchConstants;
 use Spryker\Shared\Kernel\Store;
+use Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface;
 use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface;
-use Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface;
 use Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface;
 use Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface;
 
@@ -37,9 +36,9 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $cmsFacade;
 
     /**
-     * @var \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface
+     * @var \Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface
      */
-    protected $searchFacade;
+    protected $cmsPageSearchDataMapper;
 
     /**
      * @var \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface
@@ -52,6 +51,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     protected $store;
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
+     *
      * @var bool
      */
     protected $isSendingToQueue = true;
@@ -59,7 +60,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     /**
      * @param \Spryker\Zed\CmsPageSearch\Persistence\CmsPageSearchQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToCmsInterface $cmsFacade
-     * @param \Spryker\Zed\CmsPageSearch\Dependency\Facade\CmsPageSearchToSearchInterface $searchFacade
+     * @param \Spryker\Zed\CmsPageSearch\Business\Search\DataMapper\CmsPageSearchDataMapperInterface $cmsPageSearchDataMapper
      * @param \Spryker\Zed\CmsPageSearch\Dependency\Service\CmsPageSearchToUtilEncodingInterface $utilEncodingService
      * @param \Spryker\Shared\Kernel\Store $store
      * @param bool $isSendingToQueue
@@ -67,14 +68,14 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
     public function __construct(
         CmsPageSearchQueryContainerInterface $queryContainer,
         CmsPageSearchToCmsInterface $cmsFacade,
-        CmsPageSearchToSearchInterface $searchFacade,
+        CmsPageSearchDataMapperInterface $cmsPageSearchDataMapper,
         CmsPageSearchToUtilEncodingInterface $utilEncodingService,
         Store $store,
         $isSendingToQueue
     ) {
         $this->queryContainer = $queryContainer;
         $this->cmsFacade = $cmsFacade;
-        $this->searchFacade = $searchFacade;
+        $this->cmsPageSearchDataMapper = $cmsPageSearchDataMapper;
         $this->utilEncodingService = $utilEncodingService;
         $this->store = $store;
         $this->isSendingToQueue = $isSendingToQueue;
@@ -120,7 +121,8 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             $cmsPageEntity = $pair[static::CMS_PAGE_ENTITY];
             $cmsPageSearchEntity = $pair[static::CMS_PAGE_SEARCH_ENTITY];
 
-            if (!$cmsPageSearchEntity->isNew() && ($cmsPageEntity === null
+            if (
+                !$cmsPageSearchEntity->isNew() && ($cmsPageEntity === null
                     || !$cmsPageEntity->getIsActive() || !$cmsPageEntity->getIsSearchable())
             ) {
                 $this->deleteSearchEntity($cmsPageSearchEntity);
@@ -148,7 +150,7 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
             return;
         }
 
-        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->delete();
+        $this->queryContainer->queryCmsPageSearchEntities($cmsPageIds)->find()->delete();
     }
 
     /**
@@ -199,12 +201,10 @@ class CmsPageSearchWriter implements CmsPageSearchWriterInterface
      */
     public function mapToSearchData(LocaleCmsPageDataTransfer $cmsPageDataTransfer, string $localeName): array
     {
-        return $this->searchFacade
-            ->transformPageMapToDocumentByMapperName(
-                $cmsPageDataTransfer->toArray(),
-                (new LocaleTransfer())->setLocaleName($localeName),
-                CmsPageSearchConstants::CMS_PAGE_RESOURCE_NAME
-            );
+        return $this->cmsPageSearchDataMapper->mapCmsDataToSearchData(
+            $cmsPageDataTransfer->toArray(),
+            (new LocaleTransfer())->setLocaleName($localeName)
+        );
     }
 
     /**

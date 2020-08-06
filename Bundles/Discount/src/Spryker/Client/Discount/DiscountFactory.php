@@ -14,6 +14,8 @@ use Spryker\Client\Kernel\AbstractFactory;
 class DiscountFactory extends AbstractFactory
 {
     /**
+     * @deprecated Will be removed in the next major version.
+     *
      * @return \Spryker\Client\Discount\CartCode\VoucherCartCodeInterface
      */
     public function createVoucherCartCode(): VoucherCartCodeInterface

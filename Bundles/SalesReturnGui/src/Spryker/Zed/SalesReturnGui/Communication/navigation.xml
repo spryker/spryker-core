@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+<sales>
+    <pages>
+        <returns>
+            <label>Returns</label>
+            <title>Returns</title>
+            <bundle>sales-return-gui</bundle>
+            <controller>index</controller>
+            <action>index</action>
+            <visible>1</visible>
+            <pages>
+                <return-detail>
+                    <label>Return Overview</label>
+                    <title>Return Overview</title>
+                    <bundle>sales-return-gui</bundle>
+                    <controller>detail</controller>
+                    <action>index</action>
+                    <visible>0</visible>
+                </return-detail>
+                <sales-create>
+                    <label>Create Return</label>
+                    <title>Create Return</title>
+                    <bundle>sales-return-gui</bundle>
+                    <controller>create</controller>
+                    <action>index</action>
+                    <visible>0</visible>
+                </sales-create>
+            </pages>
+        </returns>
+    </pages>
+</sales>
+</config>

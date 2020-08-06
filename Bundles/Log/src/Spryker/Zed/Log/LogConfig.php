@@ -39,10 +39,11 @@ class LogConfig extends AbstractBundleConfig
         LogConstants::EXCEPTION_LOG_FILE_PATH_ZED,
         LogConstants::EXCEPTION_LOG_FILE_PATH_GLUE,
         LogConstants::EXCEPTION_LOG_FILE_PATH,
-        LogConstants::LOG_FOLDER_PATH_INSTALLATION,
     ];
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getChannelName()
@@ -51,6 +52,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSanitizerFieldNames()
@@ -59,6 +62,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSanitizedFieldValue()
@@ -67,6 +72,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getLogFilePath()
@@ -79,6 +86,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int|string Level or level name
      */
     public function getLogLevel()
@@ -87,6 +96,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getExceptionLogFilePath()
@@ -99,6 +110,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getLogFileDirectories()
@@ -115,6 +128,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQueueName()
@@ -123,6 +138,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getBufferLimit(): int
@@ -131,6 +148,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getIsBubble(): bool
@@ -139,6 +158,8 @@ class LogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getIsFlushOnOverflow(): bool

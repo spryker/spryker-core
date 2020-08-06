@@ -17,8 +17,9 @@ class CustomerRestorePasswordResourceMapper implements CustomerRestorePasswordRe
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
-    public function mapCustomerRestorePasswordAttributesToCustomerTransfer(RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer): CustomerTransfer
-    {
+    public function mapCustomerRestorePasswordAttributesToCustomerTransfer(
+        RestCustomerRestorePasswordAttributesTransfer $restCustomerRestorePasswordAttributesTransfer
+    ): CustomerTransfer {
         return (new CustomerTransfer())->fromArray($restCustomerRestorePasswordAttributesTransfer->toArray(), true);
     }
 }

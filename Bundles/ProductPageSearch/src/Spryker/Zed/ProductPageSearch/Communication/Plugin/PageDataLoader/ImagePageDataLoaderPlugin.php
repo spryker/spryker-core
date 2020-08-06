@@ -21,6 +21,8 @@ use Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductPageDataLoad
 class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDataLoaderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductPageLoadTransfer $loadTransfer
@@ -67,7 +69,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
      *
-     * @return array[]
+     * @return array
      */
     protected function getImageSets(ObjectCollection $productImageSetCollection): array
     {
@@ -83,7 +85,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
     /**
      * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet[]|\Propel\Runtime\Collection\ObjectCollection $productImageSetCollection
      *
-     * @return array[]
+     * @return array
      */
     protected function getDefaultProductImageSets(ObjectCollection $productImageSetCollection): array
     {
@@ -104,7 +106,7 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
      * @param array[] $imageSets
      * @param array[] $defaultProductImageSets
      *
-     * @return array[]
+     * @return array
      */
     protected function setDefaultImageSetsToMissedImageSets(array $imageSets, array $defaultProductImageSets): array
     {
@@ -122,7 +124,9 @@ class ImagePageDataLoaderPlugin extends AbstractPlugin implements ProductPageDat
                 continue;
             }
 
-            $imageSets[$productAbstractId][$localeId] = $defaultProductImageSets[$productAbstractId];
+            if (isset($defaultProductImageSets[$productAbstractId])) {
+                $imageSets[$productAbstractId][$localeId] = $defaultProductImageSets[$productAbstractId];
+            }
         }
 
         return $imageSets;

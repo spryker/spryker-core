@@ -8,20 +8,31 @@
 namespace Spryker\Client\MerchantProductOfferStorage\Storage;
 
 use Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer;
+use Generated\Shared\Transfer\ProductOfferStorageTransfer;
 
 interface ProductOfferStorageReaderInterface
 {
     /**
-     * @param string $productSku
-     *
-     * @return string[]
-     */
-    public function getProductOfferReferences(string $productSku): array;
-
-    /**
-     * @param string $productSku
+     * @param \Generated\Shared\Transfer\ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOfferStorageCollectionTransfer
      */
-    public function getProductOfferStorageCollection(string $productSku): ProductOfferStorageCollectionTransfer;
+    public function getProductOffersBySkus(
+        ProductOfferStorageCriteriaTransfer $productOfferStorageCriteriaTransfer
+    ): ProductOfferStorageCollectionTransfer;
+
+    /**
+     * @param string $productOfferReference
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer|null
+     */
+    public function findProductOfferStorageByReference(string $productOfferReference): ?ProductOfferStorageTransfer;
+
+    /**
+     * @param string[] $productOfferReferences
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStorageTransfer[]
+     */
+    public function getProductOfferStorageByReferences(array $productOfferReferences): array;
 }

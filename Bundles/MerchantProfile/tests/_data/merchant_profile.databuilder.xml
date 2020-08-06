@@ -6,40 +6,38 @@
 >
 
     <transfer name="Merchant">
-        <property name="merchantProfile" type="MerchantProfile" />
+        <property name="merchantProfile" type="MerchantProfile"/>
     </transfer>
 
     <transfer name="MerchantProfile">
-        <property name="contactPersonRole" dataBuilderRule="word" />
-        <property name="contactPersonTitle" dataBuilderRule="=Mr" />
-        <property name="contactPersonFirstName" dataBuilderRule="firstName" />
-        <property name="contactPersonLastName" dataBuilderRule="lastName" />
-        <property name="contactPersonPhone" dataBuilderRule="word" />
-        <property name="logoUrl" dataBuilderRule="word" />
-        <property name="publicEmail" dataBuilderRule="email" />
-        <property name="publicPhone" dataBuilderRule="word" />
-        <property name="descriptionGlossaryKey" dataBuilderRule="word" />
-        <property name="bannerUrlGlossaryKey" dataBuilderRule="word" />
-        <property name="deliveryTimeGlossaryKey" dataBuilderRule="word" />
-        <property name="termsConditionsGlossaryKey" dataBuilderRule="word" />
-        <property name="cancellationPolicyGlossaryKey" dataBuilderRule="word" />
-        <property name="imprintGlossaryKey" dataBuilderRule="word" />
-        <property name="dataPrivacyGlossaryKey" dataBuilderRule="word" />
-        <property name="fkMerchant" dataBuilderRule="randomNumber(5)" />
-        <property name="isActive" dataBuilderRule="boolean(100)" />
-        <property name="addressCollection" type="MerchantProfileAddressCollection" />
-        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" />
+        <property name="contactPersonRole" dataBuilderRule="word"/>
+        <property name="contactPersonTitle" dataBuilderRule="=Mr"/>
+        <property name="contactPersonFirstName" dataBuilderRule="firstName"/>
+        <property name="contactPersonLastName" dataBuilderRule="lastName"/>
+        <property name="contactPersonPhone" dataBuilderRule="word"/>
+        <property name="logoUrl" dataBuilderRule="word"/>
+        <property name="publicEmail" dataBuilderRule="email"/>
+        <property name="publicPhone" dataBuilderRule="word"/>
+        <property name="descriptionGlossaryKey" dataBuilderRule="word"/>
+        <property name="bannerUrlGlossaryKey" dataBuilderRule="word"/>
+        <property name="deliveryTimeGlossaryKey" dataBuilderRule="word"/>
+        <property name="termsConditionsGlossaryKey" dataBuilderRule="word"/>
+        <property name="cancellationPolicyGlossaryKey" dataBuilderRule="word"/>
+        <property name="imprintGlossaryKey" dataBuilderRule="word"/>
+        <property name="dataPrivacyGlossaryKey" dataBuilderRule="word"/>
+        <property name="fkMerchant" dataBuilderRule="randomNumber(5)"/>
+        <property name="addressCollection" type="MerchantProfileAddressCollection"/>
+        <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]"/>
     </transfer>
 
     <transfer name="MerchantProfileAddress">
-        <property name="key" dataBuilderRule="unique()->sentence" />
-        <property name="fkCountry" dataBuilderRule="=60" />
-        <property name="address1" dataBuilderRule="word" />
-        <property name="address2" dataBuilderRule="word" />
-        <property name="address3" dataBuilderRule="word" />
-        <property name="city" dataBuilderRule="word" />
-        <property name="zipCode" dataBuilderRule="word" />
-        <property name="fkMerchantProfile" dataBuilderRule="=" />
+        <property name="fkCountry" dataBuilderRule="=60"/>
+        <property name="address1" dataBuilderRule="word"/>
+        <property name="address2" dataBuilderRule="word"/>
+        <property name="address3" dataBuilderRule="word"/>
+        <property name="city" dataBuilderRule="word"/>
+        <property name="zipCode" dataBuilderRule="word"/>
+        <property name="fkMerchantProfile" dataBuilderRule="="/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">
@@ -47,23 +45,23 @@
     </transfer>
 
     <transfer name="MerchantProfileLocalizedGlossaryAttributes">
-        <property name="locale" type="Locale" />
-        <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues" />
+        <property name="locale" type="Locale"/>
+        <property name="merchantProfileGlossaryAttributeValues" type="MerchantProfileGlossaryAttributeValues"/>
     </transfer>
 
     <transfer name="MerchantProfileGlossaryAttributeValues">
-        <property name="descriptionGlossaryKey" dataBuilderRule="word" />
-        <property name="bannerUrlGlossaryKey" dataBuilderRule="word" />
-        <property name="deliveryTimeGlossaryKey" dataBuilderRule="word" />
-        <property name="termsConditionsGlossaryKey" dataBuilderRule="word" />
-        <property name="cancellationPolicyGlossaryKey" dataBuilderRule="word" />
-        <property name="imprintGlossaryKey" dataBuilderRule="word" />
-        <property name="dataPrivacyGlossaryKey" dataBuilderRule="word" />
+        <property name="descriptionGlossaryKey" dataBuilderRule="word"/>
+        <property name="bannerUrlGlossaryKey" dataBuilderRule="word"/>
+        <property name="deliveryTimeGlossaryKey" dataBuilderRule="word"/>
+        <property name="termsConditionsGlossaryKey" dataBuilderRule="word"/>
+        <property name="cancellationPolicyGlossaryKey" dataBuilderRule="word"/>
+        <property name="imprintGlossaryKey" dataBuilderRule="word"/>
+        <property name="dataPrivacyGlossaryKey" dataBuilderRule="word"/>
     </transfer>
 
     <transfer name="Url">
-        <property name="fkLocale" type="int" dataBuilderRule="=66" />
-        <property name="url" type="string" dataBuilderRule="url" />
+        <property name="fkLocale" type="int" dataBuilderRule="=66"/>
+        <property name="url" type="string" dataBuilderRule="url"/>
     </transfer>
-    
+
 </transfers>

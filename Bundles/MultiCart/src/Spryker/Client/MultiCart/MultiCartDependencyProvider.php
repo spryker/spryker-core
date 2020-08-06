@@ -37,6 +37,7 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container): Container
     {
+        $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addCustomerClient($container);
         $container = $this->addMessengerClient($container);
         $container = $this->addPersistentCartClient($container);
@@ -55,9 +56,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new MultiCartToSessionClientBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -69,9 +70,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCustomerClient(Container $container): Container
     {
-        $container[static::CLIENT_CUSTOMER] = function (Container $container) {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
             return new MultiCartToCustomerClientBridge($container->getLocator()->customer()->client());
-        };
+        });
 
         return $container;
     }
@@ -83,9 +84,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new MultiCartToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -97,9 +98,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new MultiCartToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -111,9 +112,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addPersistentCartClient(Container $container): Container
     {
-        $container[static::CLIENT_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::CLIENT_PERSISTENT_CART, function (Container $container) {
             return new MultiCartToPersistentCartClientBridge($container->getLocator()->persistentCart()->client());
-        };
+        });
 
         return $container;
     }
@@ -125,9 +126,9 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addMessengerClient(Container $container): Container
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new MultiCartToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
+        });
 
         return $container;
     }
@@ -139,11 +140,11 @@ class MultiCartDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDateTimeService(Container $container): Container
     {
-        $container[static::SERVICE_DATETIME] = function (Container $container) {
+        $container->set(static::SERVICE_DATETIME, function (Container $container) {
             return new MultiCartToUtilDateTimeServiceBridge(
                 $container->getLocator()->utilDateTime()->service()
             );
-        };
+        });
 
         return $container;
     }

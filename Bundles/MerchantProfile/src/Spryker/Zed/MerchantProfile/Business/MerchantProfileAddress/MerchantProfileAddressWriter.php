@@ -52,8 +52,10 @@ class MerchantProfileAddressWriter implements MerchantProfileAddressWriterInterf
      *
      * @return \Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer
      */
-    public function saveMerchantProfileAddressCollection(MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer, int $idMerchantProfile): MerchantProfileAddressCollectionTransfer
-    {
+    public function saveMerchantProfileAddressCollection(
+        MerchantProfileAddressCollectionTransfer $merchantProfileAddressCollectionTransfer,
+        int $idMerchantProfile
+    ): MerchantProfileAddressCollectionTransfer {
         $savedMerchantProfileAddressCollectionTransfer = new MerchantProfileAddressCollectionTransfer();
 
         foreach ($merchantProfileAddressCollectionTransfer->getAddresses() as $merchantProfileAddressTransfer) {

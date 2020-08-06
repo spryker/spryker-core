@@ -24,6 +24,20 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     protected const PAGINATION_ITEMS_PER_PAGE_PARAMETER_NAME = 'ipp';
 
     /**
+     * @deprecated For BC compatibility only. Use {@link \Spryker\Client\CmsPageSearch\CmsPageSearchConfig::FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
+     *
+     * @uses \Spryker\Shared\Search\SearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     */
+    protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED = 'FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
+     */
+    protected const FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
+
+    /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getCmsPagePaginationConfigTransfer(): PaginationConfigTransfer
@@ -36,6 +50,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function getAscendingNameSortConfigTransfer(): SortConfigTransfer
@@ -48,6 +64,8 @@ class CmsPageSearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\SortConfigTransfer
      */
     public function getDescendingNameSortConfigTransfer(): SortConfigTransfer
@@ -57,5 +75,18 @@ class CmsPageSearchConfig extends AbstractBundleConfig
             ->setParameterName(static::SORT_PARAMETER_NAME_DESC)
             ->setFieldName(PageIndexMap::STRING_SORT)
             ->setIsDescending(true);
+    }
+
+    /**
+     * @api
+     *
+     * @return int
+     */
+    public function getFullTextBoostedBoostingValue(): int
+    {
+        return $this->get(
+            static::FULL_TEXT_BOOSTED_BOOSTING_VALUE,
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE_DEPRECATED)
+        );
     }
 }

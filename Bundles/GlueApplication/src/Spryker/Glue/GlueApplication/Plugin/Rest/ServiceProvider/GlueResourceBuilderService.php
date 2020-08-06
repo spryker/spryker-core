@@ -12,6 +12,8 @@ use Silex\ServiceProviderInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin} instead.
+ *
  * @method \Spryker\Glue\GlueApplication\GlueApplicationFactory getFactory()
  */
 class GlueResourceBuilderService extends AbstractPlugin implements ServiceProviderInterface

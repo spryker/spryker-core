@@ -10,14 +10,22 @@ namespace SprykerTest\Zed\ProductPackagingUnit;
 use ArrayObject;
 use Codeception\Actor;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OmsProcessTransfer;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\OmsStateTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductMeasurementBaseUnitTransfer;
 use Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer;
+use Generated\Shared\Transfer\ProductMeasurementUnitTransfer;
+use Generated\Shared\Transfer\ProductPackagingUnitTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
+use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitEntityTransfer;
 use Generated\Shared\Transfer\SpyProductPackagingUnitTypeEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -36,6 +44,7 @@ use Spryker\DecimalObject\Decimal;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductPackagingUnit\Business\ProductPackagingUnitFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -124,14 +133,54 @@ class ProductPackagingUnitBusinessTester extends Actor
     }
 
     /**
+     * @param string $sku
+     * @param int $amount
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function createCartChangeTransferWithItem(string $sku, int $amount): CartChangeTransfer
+    {
+        return (new CartChangeTransfer())->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setAmount($amount)
+                ->setProductPackagingUnit(new ProductPackagingUnitTransfer())
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     * @param string $sku
+     * @param int $idProductPackagingUnit
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function addProductPackagingUnitToCartChangeTransfer(
+        CartChangeTransfer $cartChangeTransfer,
+        string $sku,
+        int $idProductPackagingUnit
+    ): CartChangeTransfer {
+        $cartChangeTransfer->addItem(
+            (new ItemTransfer())
+                ->setSku($sku)
+                ->setProductPackagingUnit((new ProductPackagingUnitTransfer())->setIdProductPackagingUnit($idProductPackagingUnit))
+        );
+
+        return $cartChangeTransfer;
+    }
+
+    /**
      * @param string $dummyGroupKey
      * @param int $dummyAmount
      * @param int $dummyQuantity
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummyQuantity): CartChangeTransfer
-    {
+    public function createCartChangeTransferWithountAmountSalesUnitForGroupKeyGeneration(
+        string $dummyGroupKey,
+        int $dummyAmount,
+        int $dummyQuantity
+    ): CartChangeTransfer {
         return (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
@@ -150,8 +199,12 @@ class ProductPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(string $dummyGroupKey, int $dummyAmount, int $dummyQuantity, int $dummySalesUnitId): CartChangeTransfer
-    {
+    public function createCartChangeTransferWithAmountSalesUnitForGroupKeyGeneration(
+        string $dummyGroupKey,
+        int $dummyAmount,
+        int $dummyQuantity,
+        int $dummySalesUnitId
+    ): CartChangeTransfer {
         return (new CartChangeTransfer())
             ->addItem(
                 (new ItemTransfer())
@@ -232,8 +285,13 @@ class ProductPackagingUnitBusinessTester extends Actor
      *
      * @return \Generated\Shared\Transfer\OmsStateCollectionTransfer
      */
-    public function haveSalesOrderWithItems(int $itemsCount, int $quantity, string $sku, ?Decimal $amount = null, ?string $amountSku = null): OmsStateCollectionTransfer
-    {
+    public function haveSalesOrderWithItems(
+        int $itemsCount,
+        int $quantity,
+        string $sku,
+        ?Decimal $amount = null,
+        ?string $amountSku = null
+    ): OmsStateCollectionTransfer {
         $this->haveStore([StoreTransfer::NAME => 'DE']);
         $itemTransfer = (new ItemBuilder([
             ItemTransfer::SKU => $sku,
@@ -266,6 +324,105 @@ class ProductPackagingUnitBusinessTester extends Actor
         }
 
         return $stateCollectionTransfer;
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderWithProductPackagingUnits(string $stateMachineProcessName): OrderTransfer
+    {
+        $quoteTransfer = (new QuoteBuilder())
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer
+            ->addItem($this->createItemWithProductPackagingUnit())
+            ->addItem($this->createItemWithProductPackagingUnit());
+
+        $quoteTransfer
+            ->setCustomer($this->haveCustomer())
+            ->setStore($this->haveStore([StoreTransfer::NAME => 'DE']));
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function createItemWithProductPackagingUnit(): ItemTransfer
+    {
+        $productConcreteTransfer = $this->haveProduct();
+        $boxProductConcreteTransfer = $this->haveProduct([
+            SpyProductEntityTransfer::FK_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+        ], [
+            SpyProductAbstractEntityTransfer::ID_PRODUCT_ABSTRACT => $productConcreteTransfer->getFkProductAbstract(),
+        ]);
+
+        $boxProductPackagingUnitType = $this->haveProductPackagingUnitType([
+            SpyProductPackagingUnitTypeEntityTransfer::NAME => 'box',
+        ]);
+
+        $this->haveProductPackagingUnit(
+            [
+                SpyProductPackagingUnitEntityTransfer::FK_PRODUCT => $boxProductConcreteTransfer->getIdProductConcrete(),
+                SpyProductPackagingUnitEntityTransfer::FK_PRODUCT_PACKAGING_UNIT_TYPE => $boxProductPackagingUnitType->getIdProductPackagingUnitType(),
+                SpyProductPackagingUnitEntityTransfer::FK_LEAD_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
+            ],
+            [
+                SpyProductPackagingUnitEntityTransfer::DEFAULT_AMOUNT => 1,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_MIN => 1,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_MAX => null,
+                SpyProductPackagingUnitEntityTransfer::AMOUNT_INTERVAL => 1,
+                SpyProductPackagingUnitEntityTransfer::IS_AMOUNT_VARIABLE => true,
+            ]
+        );
+
+        $productMeasurementUnitTransfer = (new ProductMeasurementUnitTransfer())->fromArray(
+            $this->haveProductMeasurementUnit([
+                SpyProductMeasurementUnitEntityTransfer::CODE => 'MYCODE' . random_int(1, 100),
+            ])->toArray(),
+            true
+        );
+
+        $productMeasurementBaseUnitTransfer = (new ProductMeasurementBaseUnitTransfer())->fromArray(
+            $this->haveProductMeasurementBaseUnit(
+                $productConcreteTransfer->getFkProductAbstract(),
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit()
+            )->toArray(),
+            true
+        )
+            ->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        $productMeasurementSalesUnitTransfer = (new ProductMeasurementSalesUnitTransfer())->fromArray(
+            $this->haveProductMeasurementSalesUnit(
+                $boxProductConcreteTransfer->getIdProductConcrete(),
+                $productMeasurementUnitTransfer->getIdProductMeasurementUnit(),
+                $productMeasurementBaseUnitTransfer->getIdProductMeasurementBaseUnit()
+            )->toArray(),
+            true
+        );
+
+        $productMeasurementSalesUnitTransfer
+            ->setProductMeasurementBaseUnit($productMeasurementBaseUnitTransfer)
+            ->setProductMeasurementUnit($productMeasurementUnitTransfer);
+
+        return (new ItemBuilder())->build()
+            ->setQuantity(1)
+            ->setSku($productConcreteTransfer->getSku())
+            ->setAmount(2)
+            ->setAmountSalesUnit($productMeasurementSalesUnitTransfer);
     }
 
     /**

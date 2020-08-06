@@ -18,6 +18,8 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\IsActiveInDateRangeQueryExpanderPlugin} instead.
+ *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
 class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
@@ -62,7 +64,7 @@ class IsActiveInDateRangeQueryExpanderPlugin extends AbstractPlugin implements Q
         $boolQuery = $query->getQuery();
         if (!$boolQuery instanceof BoolQuery) {
             throw new InvalidArgumentException(sprintf(
-                'Localized query expander available only with %s, got: %s',
+                'Is Active query expander available only with %s, got: %s',
                 BoolQuery::class,
                 get_class($boolQuery)
             ));

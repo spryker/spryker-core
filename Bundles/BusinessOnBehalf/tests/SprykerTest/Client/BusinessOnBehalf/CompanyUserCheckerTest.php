@@ -66,7 +66,7 @@ class CompanyUserCheckerTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\BusinessOnBehalf\Checker\CompanyUserChecker
      */
-    protected function createCompanyUserCheckerMock(array $companyUserChangeAllowedCheckPlugins = [])
+    protected function createCompanyUserCheckerMock(array $companyUserChangeAllowedCheckPlugins = []): CompanyUserChecker
     {
         return $this->getMockBuilder(CompanyUserChecker::class)
             ->setConstructorArgs([

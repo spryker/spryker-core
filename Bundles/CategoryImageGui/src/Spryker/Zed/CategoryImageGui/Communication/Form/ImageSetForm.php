@@ -159,6 +159,7 @@ class ImageSetForm extends AbstractType
                         foreach ($images as $valueSet) {
                             if (!empty($valueSet['value'])) {
                                 $selectedAttributes[] = $valueSet['value'];
+
                                 break;
                             }
                         }

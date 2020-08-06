@@ -10,6 +10,8 @@ namespace Spryker\Zed\Payment\Business;
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentMethodResponseTransfer;
+use Generated\Shared\Transfer\PaymentMethodTransfer;
 use Generated\Shared\Transfer\PaymentProviderCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesPaymentTransfer;
@@ -97,16 +99,6 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Finds available payment providers.
-     *
-     * @api
-     *
-     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
-     */
-    public function getAvailablePaymentProviders(): PaymentProviderCollectionTransfer;
-
-    /**
-     * Specification:
      * - Distributes total price to payment methods
      * - Calculates price to pay
      *
@@ -120,11 +112,60 @@ interface PaymentFacadeInterface
 
     /**
      * Specification:
-     * - Populates the database with sales payment method types from config.
+     * - Finds payment providers which has available payment methods for the given store.
      *
      * @api
      *
-     * @return void
+     * @param string $storeName
+     *
+     * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
-    public function installSalesPaymentMethodType(): void;
+    public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Finds payment method by the provided id.
+     *
+     * @api
+     *
+     * @param int $idPaymentMethod
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function findPaymentMethodById(int $idPaymentMethod): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Updates payment method in database using provided PaymentMethod transfer object data.
+     * - Updates or creates payment method store relations using 'storeRelation' collection in the PaymentMethod transfer object.
+     * - Returns PaymentMethodResponse transfer object.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodResponseTransfer
+     */
+    public function updatePaymentMethod(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): PaymentMethodResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if selected payment methods exist.
+     * - Checks `QuoteTransfer.payments` and `QuoteTransfer.payment` for BC reasons.
+     * - Returns `false` and add an error in case at least one of the payment methods
+     *  does not exist or is not available for `QuoteTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuotePaymentMethodValid(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer
+    ): bool;
 }

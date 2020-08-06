@@ -249,8 +249,12 @@ class CsvReaderTest extends Unit
      *
      * @return \Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer
      */
-    protected function getCsvReaderConfigurationTransfer(string $fileName, bool $hasHeader = true, ?int $offset = null, ?int $limit = null): DataImporterReaderConfigurationTransfer
-    {
+    protected function getCsvReaderConfigurationTransfer(
+        string $fileName,
+        bool $hasHeader = true,
+        ?int $offset = null,
+        ?int $limit = null
+    ): DataImporterReaderConfigurationTransfer {
         $dataImporterReaderConfiguration = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfiguration
             ->setFileName($fileName)

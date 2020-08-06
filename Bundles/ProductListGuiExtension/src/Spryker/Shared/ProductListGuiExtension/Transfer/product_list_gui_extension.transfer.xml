@@ -9,4 +9,10 @@
     <transfer name="Button">
     </transfer>
 
+    <transfer name="ProductListUsedByTable">
+    </transfer>
+
+    <transfer name="ButtonCollection">
+    </transfer>
+
 </transfers>

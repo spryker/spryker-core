@@ -6,7 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/gui": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.52.0",
     "spryker/key-builder": "^1.0.0",
     "spryker/locale": "^3.0.0",
     "spryker/messenger": "^3.0.0",
@@ -19,6 +19,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
@@ -31,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Glossary\\Helper\\": "tests/SprykerTest/Shared/Glossary/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -41,6 +43,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "3.0.x-dev"

@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Kernel\Store;
-
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver} instead.
+ */
 class BundleNameResolver
 {
     /**
@@ -18,11 +19,12 @@ class BundleNameResolver
      */
     public function resolve($bundleName)
     {
-        $storeIdentifierLength = mb_strlen($this->getStoreName());
-        $storeSuffix = mb_substr($bundleName, -$storeIdentifierLength);
+        $codeBucket = $this->getCodeBucket();
+        $codeBucketIdentifierLength = mb_strlen($codeBucket);
+        $bundleNameSuffix = mb_substr($bundleName, -$codeBucketIdentifierLength);
 
-        if ($storeSuffix === $this->getStoreName()) {
-            $bundleName = mb_substr($bundleName, 0, -$storeIdentifierLength);
+        if ($bundleNameSuffix === $codeBucket) {
+            $bundleName = mb_substr($bundleName, 0, -$codeBucketIdentifierLength);
         }
 
         return $bundleName;
@@ -31,8 +33,8 @@ class BundleNameResolver
     /**
      * @return string
      */
-    protected function getStoreName()
+    protected function getCodeBucket(): string
     {
-        return Store::getInstance()->getStoreName();
+        return APPLICATION_CODE_BUCKET;
     }
 }

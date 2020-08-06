@@ -425,7 +425,7 @@ class PriceProductScheduleRemoveAndApplyTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductSchedule\PriceProductScheduleConfig
      */
-    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName)
+    protected function getConfigMock(string $priceTypeName, string $fallbackPriceTypeName): PriceProductScheduleConfig
     {
         $configMock = $this->getMockBuilder(PriceProductScheduleConfig::class)
             ->setMethods(['getFallbackPriceTypeList'])

@@ -33,7 +33,7 @@ class MerchantRelationshipKeyGenerator implements MerchantRelationshipKeyGenerat
     {
         $index = $this->repository->getMaxMerchantRelationshipId();
         do {
-            $candidate = sprintf("%s-%d", $this->getKeyPrefix(), ++$index);
+            $candidate = sprintf('%s-%d', $this->getKeyPrefix(), ++$index);
         } while ($this->repository->hasKey($candidate));
 
         return $candidate;

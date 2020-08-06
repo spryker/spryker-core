@@ -13,9 +13,9 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
-use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -125,7 +125,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
         ?ProductBundleToAvailabilityFacadeInterface $availabilityFacadeMock = null,
         ?ProductBundleToStoreFacadeInterface $storeFacadeMock = null,
         ?ProductBundleToStockFacadeInterface $stockFacadeMock = null
-    ) {
+    ): ProductBundleAvailabilityHandlerInterface {
         $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
 
         if ($availabilityFacadeMock === null) {
@@ -151,7 +151,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface
      */
-    protected function createAvailabilityFacadeMock()
+    protected function createAvailabilityFacadeMock(): ProductBundleToAvailabilityFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToAvailabilityFacadeInterface::class)->getMock();
     }
@@ -159,7 +159,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface
      */
-    protected function createProductBundleQueryContainerMock()
+    protected function createProductBundleQueryContainerMock(): ProductBundleQueryContainerInterface
     {
         return $this->getMockBuilder(ProductBundleQueryContainerInterface::class)->getMock();
     }
@@ -167,7 +167,7 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStockFacadeInterface
      */
-    protected function createStockFacadeMock()
+    protected function createStockFacadeMock(): ProductBundleToStockFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToStockFacadeInterface::class)->getMock();
     }
@@ -175,12 +175,15 @@ class ProductBundleAvailabilityHandlerTest extends Unit
     /**
      * @param int $bundleQuantity
      * @param string $bundledItemSku
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct(int $bundleQuantity, string $bundledItemSku, MockObject $productBundleAvailabilityHandlerMock): void
-    {
+    protected function setupGetBundleItemsByIdProduct(
+        int $bundleQuantity,
+        string $bundledItemSku,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
         $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
@@ -196,12 +199,14 @@ class ProductBundleAvailabilityHandlerTest extends Unit
 
     /**
      * @param \Spryker\DecimalObject\Decimal $bundledItemAvailability
-     * @param \PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandlerInterface|\PHPUnit\Framework\MockObject\MockObject $productBundleAvailabilityHandlerMock
      *
      * @return void
      */
-    protected function setupProductBundleAvailability(Decimal $bundledItemAvailability, MockObject $productBundleAvailabilityHandlerMock): void
-    {
+    protected function setupProductBundleAvailability(
+        Decimal $bundledItemAvailability,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability($bundledItemAvailability);
 

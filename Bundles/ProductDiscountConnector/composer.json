@@ -11,6 +11,7 @@
     "spryker/product": "^5.0.0 || ^6.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/tax": "*",
     "spryker/testify": "*"
@@ -27,9 +28,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "3.0.x-dev"
+      "dev-master": "5.0.x-dev"
     }
   },
   "config": {

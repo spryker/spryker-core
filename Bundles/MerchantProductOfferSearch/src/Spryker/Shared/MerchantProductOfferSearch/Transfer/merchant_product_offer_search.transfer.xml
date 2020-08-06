@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductPageSearch">
+        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
+    </transfer>
+
+    <transfer name="ProductPayload">
+        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+    <transfer name="ProductPageLoad">
+        <property name="productAbstractIds" type="array" singular="productAbstractIds"/>
+        <property name="payloadTransfers" type="array" singular="payloadTransfers"/>
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="StringFacetMap">
+        <property name="name" type="string"/>
+        <property name="value" type="array" singular="value"/>
+    </transfer>
+
+    <transfer name="PageMap">
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
+        <property name="store" type="string"/>
+        <property name="stringFacet" type="StringFacetMap[]" singular="stringFacet"/>
+    </transfer>
+
+    <transfer name="FacetConfig">
+        <property name="name" type="string"/>
+        <property name="parameterName" type="string"/>
+        <property name="fieldName" type="string"/>
+        <property name="type" type="string"/>
+        <property name="isMultiValued" type="bool"/>
+    </transfer>
+
+    <transfer name="SearchConfigExtension">
+        <property name="facetConfigs" type="FacetConfig[]" singular="facetConfig"/>
+    </transfer>
+
+    <transfer name="ProductAbstractMerchant">
+        <property name="merchantNames" type="array" singular="merchantName"/>
+        <property name="merchantReferences" type="array" singular="merchantReference"/>
+        <property name="idProductAbstract" type="int"/>
+    </transfer>
+
+</transfers>

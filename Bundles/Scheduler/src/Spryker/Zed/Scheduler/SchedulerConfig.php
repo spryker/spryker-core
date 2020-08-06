@@ -38,6 +38,8 @@ class SchedulerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRoles(): array
@@ -50,6 +52,8 @@ class SchedulerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRole(): string
@@ -58,6 +62,8 @@ class SchedulerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getEnabledSchedulers(): array

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Availability\Business\Model;
 
 use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
+use Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
@@ -27,11 +28,13 @@ interface ProductAvailabilityReaderInterface
     /**
      * @param string $concreteSku
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * @param \Generated\Shared\Transfer\ProductAvailabilityCriteriaTransfer|null $productConcreteAvailabilityTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
     public function findOrCreateProductConcreteAvailabilityBySkuForStore(
         string $concreteSku,
-        StoreTransfer $storeTransfer
+        StoreTransfer $storeTransfer,
+        ?ProductAvailabilityCriteriaTransfer $productConcreteAvailabilityTransfer = null
     ): ?ProductConcreteAvailabilityTransfer;
 }

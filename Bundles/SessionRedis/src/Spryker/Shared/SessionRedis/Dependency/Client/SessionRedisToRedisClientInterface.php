@@ -39,7 +39,14 @@ interface SessionRedisToRedisClientInterface
      *
      * @return bool
      */
-    public function set(string $connectionKey, string $key, string $value, ?string $expireResolution = null, ?int $expireTTL = null, ?string $flag = null): bool;
+    public function set(
+        string $connectionKey,
+        string $key,
+        string $value,
+        ?string $expireResolution = null,
+        ?int $expireTTL = null,
+        ?string $flag = null
+    ): bool;
 
     /**
      * @param string $connectionKey

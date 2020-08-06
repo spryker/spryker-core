@@ -28,6 +28,8 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpKernel\Event\FilterControllerEvent $event
@@ -66,6 +68,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         };
 
         $event->setController($newController);
+
+        return null;
     }
 
     /**

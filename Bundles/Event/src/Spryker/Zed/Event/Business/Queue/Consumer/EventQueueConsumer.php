@@ -76,6 +76,7 @@ class EventQueueConsumer implements EventQueueConsumerInterface
 
             if (!$this->isMessageBodyValid($eventQueueSentMessageBodyTransfer)) {
                 $this->markMessageAsFailed($queueMessageTransfer, 'Message body is not valid');
+
                 continue;
             }
 

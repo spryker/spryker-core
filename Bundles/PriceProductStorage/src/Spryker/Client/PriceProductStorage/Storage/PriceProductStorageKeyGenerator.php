@@ -10,6 +10,7 @@ namespace Spryker\Client\PriceProductStorage\Storage;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface;
 use Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 
 class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGeneratorInterface
 {
@@ -22,6 +23,16 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
      * @var \Spryker\Client\PriceProductStorage\Dependency\Client\PriceProductStorageToStoreClientInterface
      */
     protected $storeClient;
+
+    /**
+     * @var string
+     */
+    protected static $currentStoreName;
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface[]
+     */
+    protected static $storageKeyBuilders = [];
 
     /**
      * @param \Spryker\Client\PriceProductStorage\Dependency\Service\PriceProductStorageToSynchronizationServiceInterface $synchronizationService
@@ -46,8 +57,34 @@ class PriceProductStorageKeyGenerator implements PriceProductStorageKeyGenerator
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
         $synchronizationDataTransfer
             ->setReference($resourceId)
-            ->setStore($this->storeClient->getCurrentStore()->getName());
+            ->setStore($this->getCurrentStoreName());
 
-        return $this->synchronizationService->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder($resourceName)->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @param string $resourceName
+     *
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(string $resourceName): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (!isset(static::$storageKeyBuilders[$resourceName])) {
+            static::$storageKeyBuilders[$resourceName] = $this->synchronizationService->getStorageKeyBuilder($resourceName);
+        }
+
+        return static::$storageKeyBuilders[$resourceName];
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentStoreName(): string
+    {
+        if (!static::$currentStoreName) {
+            static::$currentStoreName = $this->storeClient->getCurrentStore()->getName();
+        }
+
+        return static::$currentStoreName;
     }
 }

@@ -30,3 +30,4 @@ suites:
                 - \SprykerTest\Zed\CompanyBusinessUnit\Helper\CompanyBusinessUnitHelper
                 - \SprykerTest\Shared\Quote\Helper\PersistentQuoteHelper
                 - \SprykerTest\Shared\QuoteRequest\Helper\QuoteRequestHelper
+                - \SprykerTest\Shared\Shipment\Helper\ShipmentMethodDataHelper

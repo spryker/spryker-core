@@ -4,7 +4,7 @@
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\SalesConfigurableBundle\Persistence" package="src.Orm.Zed.SalesConfigurableBundle.Persistence"
 >
-    <table name="spy_sales_order_configured_bundle" phpName="SpySalesOrderConfiguredBundle">
+    <table name="spy_sales_order_configured_bundle">
         <column name="id_sales_order_configured_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="configurable_bundle_template_uuid" required="true" type="VARCHAR" size="255"/>
         <column name="quantity" required="true" type="INTEGER" default="1"/>
@@ -15,7 +15,7 @@
         <id-method-parameter value="spy_sales_order_configured_bundle_pk_seq"/>
     </table>
 
-    <table name="spy_sales_order_configured_bundle_item" phpName="SpySalesOrderConfiguredBundleItem">
+    <table name="spy_sales_order_configured_bundle_item">
         <column name="id_sales_order_configured_bundle_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_configured_bundle" type="INTEGER" required="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>

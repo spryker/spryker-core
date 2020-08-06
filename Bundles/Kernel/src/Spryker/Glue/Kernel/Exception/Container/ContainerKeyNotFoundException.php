@@ -41,7 +41,7 @@ class ContainerKeyNotFoundException extends Exception
         $message .= sprintf(
             'You can fix this by adding the key "%s" to your "%sDependencyProvider"',
             $key,
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         );
 
         return $message;

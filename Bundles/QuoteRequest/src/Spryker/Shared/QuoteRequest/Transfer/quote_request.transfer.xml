@@ -76,11 +76,14 @@
         <property name="customer" type="Customer"/>
         <property name="customerReference" type="string"/>
         <property name="idQuote" type="int"/>
+        <property name="shipment" type="Shipment" deprecated="Use item level shipment details (item.shipment) instead."/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
     </transfer>
 
     <transfer name="Item">
         <property name="sourceUnitGrossPrice" type="int"/>
         <property name="sourceUnitNetPrice" type="int"/>
+        <property name="shipment" type="Shipment"/>
     </transfer>
 
     <transfer name="CompanyUser">
@@ -129,6 +132,22 @@
     </transfer>
 
     <transfer name="Company">
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="sourcePrice" type="MoneyValue"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
+    <transfer name="MoneyValue">
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="shipment" type="Shipment"/>
+        <property name="type" type="string"/>
     </transfer>
 
 </transfers>

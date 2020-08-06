@@ -24,13 +24,14 @@ class AccessTokensResourceController extends AbstractController
      *              "Creates access token for user."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestTokenResponseAttributesTransfer",
      *          "responses": {
+     *              "400": "Bad request",
      *              "401": "Failed to authenticate user.",
-     *              "403": "Unauthorized request."
+     *              "403": "Unauthorized request.",
+     *              "422": "Unprocessable entity."
      *          },
      *          "isIdNullable": true
      *     }

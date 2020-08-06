@@ -39,11 +39,11 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container): AgentToZedRequestClientInterface {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container): AgentToZedRequestClientInterface {
             return new AgentToZedRequestClientBridge(
                 $container->getLocator()->zedRequest()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -55,11 +55,11 @@ class AgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container): AgentToSessionClientInterface {
+        $container->set(static::CLIENT_SESSION, function (Container $container): AgentToSessionClientInterface {
             return new AgentToSessionClientBridge(
                 $container->getLocator()->session()->client()
             );
-        };
+        });
 
         return $container;
     }

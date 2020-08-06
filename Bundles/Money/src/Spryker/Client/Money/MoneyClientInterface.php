@@ -37,4 +37,17 @@ interface MoneyClientInterface
      * @return \Generated\Shared\Transfer\MoneyTransfer
      */
     public function fromInteger(int $amount, ?string $isoCode): MoneyTransfer;
+
+    /**
+     * Specification:
+     * - Returns MoneyTransfer object created from a given float value.
+     *
+     * @api
+     *
+     * @param float $amount
+     * @param string|null $isoCode
+     *
+     * @return \Generated\Shared\Transfer\MoneyTransfer
+     */
+    public function fromFloat(float $amount, ?string $isoCode = null): MoneyTransfer;
 }

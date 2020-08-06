@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\CmsSlotStorage;
 
 use Codeception\Actor;
+use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage;
 use Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorageQuery;
 
 /**
@@ -32,19 +33,20 @@ class CmsSlotStorageBusinessTester extends Actor
     use _generated\CmsSlotStorageBusinessTesterActions;
 
     /**
-     * @param int $idCmsSlotStorage
      * @param string $key
      * @param array $data
      *
-     * @return void
+     * @return \Orm\Zed\CmsSlotStorage\Persistence\SpyCmsSlotStorage
      */
-    public function haveCmsSlotStorageInDb(int $idCmsSlotStorage, string $key, array $data = []): void
+    public function haveCmsSlotStorageInDb(string $key, array $data = []): SpyCmsSlotStorage
     {
         $cmsSlotStorageEntity = SpyCmsSlotStorageQuery::create()
-            ->filterByIdCmsSlotStorage($idCmsSlotStorage)
+            ->filterByCmsSlotKey($key)
+            ->filterByKey($key)
             ->findOneOrCreate();
-        $cmsSlotStorageEntity->setKey($key);
         $cmsSlotStorageEntity->setData($data);
         $cmsSlotStorageEntity->save();
+
+        return $cmsSlotStorageEntity;
     }
 }

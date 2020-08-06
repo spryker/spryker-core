@@ -56,6 +56,7 @@ class CartsRestApiBusinessTester extends Actor
     public const TEST_QUANTITY = '3';
 
     public const TEST_SKU = 'test-sku';
+    public const TEST_SKU2 = 'test-sku2';
 
     public const COLLECTION_QUOTES = [
         [
@@ -110,9 +111,14 @@ class CartsRestApiBusinessTester extends Actor
             'idQuote' => static::TEST_ID_QUOTE,
         ];
         $itemOverride = ['groupKey' => static::TEST_SKU, 'sku' => static::TEST_SKU];
+        $item2Override = ['groupKey' => static::TEST_SKU2, 'sku' => static::TEST_SKU2];
 
         return (new QuoteResponseBuilder(['isSuccessful' => true]))
-            ->withQuoteTransfer((new QuoteBuilder($quoteOverride))->withItem($itemOverride))
+            ->withQuoteTransfer(
+                (new QuoteBuilder($quoteOverride))
+                    ->withItem($itemOverride)
+                    ->withAnotherItem($item2Override)
+            )
             ->build();
     }
 
@@ -227,9 +233,31 @@ class CartsRestApiBusinessTester extends Actor
     {
         $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
             [
-                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quoteUuid' => static::COLLECTION_QUOTES[0]['uuid'],
                 'customerReference' => static::TEST_CUSTOMER_REFERENCE,
                 'sku' => static::TEST_SKU,
+                'groupKey' => static::TEST_SKU,
+                'quantity' => static::TEST_QUANTITY,
+            ]
+        ))->build();
+
+        $restCartItemsAttributesTransfer
+            ->setCustomer((new CustomerTransfer())->setCustomerReference($restCartItemsAttributesTransfer->getCustomerReference()));
+
+        return $restCartItemsAttributesTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\RestCartItemsAttributesTransfer
+     */
+    public function prepareRestCartItemsAttributesTransferForSecondItem(): RestCartItemsAttributesTransfer
+    {
+        $restCartItemsAttributesTransfer = (new RestCartItemsAttributesBuilder(
+            [
+                'quoteUuid' => static::COLLECTION_QUOTES[0]['uuid'],
+                'customerReference' => static::TEST_CUSTOMER_REFERENCE,
+                'sku' => static::TEST_SKU2,
+                'groupKey' => static::TEST_SKU2,
                 'quantity' => static::TEST_QUANTITY,
             ]
         ))->build();
@@ -261,7 +289,7 @@ class CartsRestApiBusinessTester extends Actor
     {
         return (new CartItemRequestBuilder(
             [
-                'quoteUuid' => static::TEST_QUOTE_UUID,
+                'quoteUuid' => static::COLLECTION_QUOTES[0]['uuid'],
                 'quantity' => static::TEST_QUANTITY,
                 'customer' => (new CustomerTransfer())->setCustomerReference(static::TEST_CUSTOMER_REFERENCE),
                 'sku' => static::TEST_SKU,

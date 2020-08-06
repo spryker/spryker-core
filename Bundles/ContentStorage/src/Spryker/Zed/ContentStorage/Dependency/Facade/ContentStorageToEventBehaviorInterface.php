@@ -10,14 +10,14 @@ namespace Spryker\Zed\ContentStorage\Dependency\Facade;
 interface ContentStorageToEventBehaviorInterface
 {
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      *
      * @return array
      */
     public function getEventTransferIds(array $eventTransfers);
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param string $foreignKeyColumnName
      *
      * @return array

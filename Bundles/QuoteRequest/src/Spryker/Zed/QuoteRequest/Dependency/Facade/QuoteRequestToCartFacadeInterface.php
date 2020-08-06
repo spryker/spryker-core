@@ -16,5 +16,5 @@ interface QuoteRequestToCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function reloadItems(QuoteTransfer $quoteTransfer);
+    public function reloadItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }

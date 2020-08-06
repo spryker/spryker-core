@@ -72,9 +72,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
             return SpyProductQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -86,9 +86,9 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPackagingUnitPropelQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT, function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_PACKAGING_UNIT, $container->factory(function () {
             return SpyProductPackagingUnitQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -100,11 +100,11 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addProductPackagingUnitFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_PACKAGING_UNIT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_PACKAGING_UNIT, function (Container $container) {
             return new ProductPackagingUnitStorageToProductPackagingUnitFacadeBridge(
                 $container->getLocator()->productPackagingUnit()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -116,11 +116,11 @@ class ProductPackagingUnitStorageDependencyProvider extends AbstractBundleDepend
      */
     protected function addEventBehaviorFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new ProductPackagingUnitStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }

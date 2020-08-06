@@ -9,6 +9,9 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AbstractAggregationExtractor\AbstractAggregationExtractor} instead.
+ */
 abstract class AbstractAggregationExtractor implements AggregationExtractorInterface
 {
     public const PATH_SEPARATOR = '.';

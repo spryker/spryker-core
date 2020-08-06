@@ -230,8 +230,13 @@ class RouterResource implements ResourceInterface
      *
      * @return \Spryker\Zed\Router\Business\Route\RouteCollection
      */
-    protected function addRouteToCollection(ReflectionMethod $method, RouteCollection $routeCollection, string $pathCandidate, string $controllerClassName, string $template): RouteCollection
-    {
+    protected function addRouteToCollection(
+        ReflectionMethod $method,
+        RouteCollection $routeCollection,
+        string $pathCandidate,
+        string $controllerClassName,
+        string $template
+    ): RouteCollection {
         $route = new Route($pathCandidate);
 
         $route->addDefaults([

@@ -14,6 +14,9 @@ use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Shared\Kernel\Store;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+ */
 class File implements StorageInterface
 {
     /**
@@ -26,7 +29,7 @@ class File implements StorageInterface
      *
      * @return void
      */
-    public function persist(array $data)
+    public function persist(array $data): void
     {
         try {
             $string = var_export($data, true);
@@ -58,7 +61,7 @@ class File implements StorageInterface
     /**
      * @return array
      */
-    public function getData()
+    public function getData(): array
     {
         try {
             $cache = include $this->getCacheFilename();
@@ -72,14 +75,36 @@ class File implements StorageInterface
     /**
      * @return string
      */
-    protected function getCacheFilename()
+    protected function getCacheFilename(): string
     {
         if (!$this->cacheFilePath) {
             $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
 
             $this->cacheFilePath = Config::get(KernelConstants::AUTO_LOADER_CACHE_FILE_PATH, $defaultPath);
+
+            $this->assertForwardCompatibility($defaultPath, $this->cacheFilePath);
         }
 
         return $this->cacheFilePath;
+    }
+
+    /**
+     * Assert that projects have overridden the cache file path to be able to safely refactor the default path.
+     *
+     * @deprecated Will be removed when `ucfirst(strtolower(APPLICATION))` is replaced with `APPLICATION` in the default cache file path.
+     *
+     * @param string $defaultCacheFilePath
+     * @param string $cacheFilePath
+     *
+     * @return void
+     */
+    protected function assertForwardCompatibility(string $defaultCacheFilePath, string $cacheFilePath): void
+    {
+        if ($defaultCacheFilePath === $cacheFilePath) {
+            $message = 'The default cache file path will use upper case application names in the feature. '
+                . 'For forward compatibility use "KernelConstants::AUTO_LOADER_CACHE_FILE_PATH" to configure the cache file path accordingly.';
+
+            trigger_error($message, E_USER_DEPRECATED);
+        }
     }
 }

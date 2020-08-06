@@ -5,12 +5,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/calculation": "^4.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/sales": "^11.0.0"
+    "spryker/merchant": "^3.0.0",
+    "spryker/merchant-sales-order-extension": "^0.1.1",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/sales": "^11.0.0",
+    "spryker/sales-extension": "^1.1.0",
+    "spryker/shipment-extension": "^1.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
     "spryker/oms": "*",
     "spryker/product-offer": "*",
     "spryker/propel": "*",
@@ -18,7 +23,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\MerchantSalesOrder\\Helper\\": "tests/SprykerTest/Zed/MerchantSalesOrder/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -28,6 +34,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

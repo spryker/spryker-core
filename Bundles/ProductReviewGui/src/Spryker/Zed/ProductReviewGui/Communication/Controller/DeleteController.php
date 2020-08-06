@@ -27,6 +27,16 @@ class DeleteController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $form = $this->getFactory()->createDeleteProductReviewForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(
+                Url::generate('/product-review-gui')->build()
+            );
+        }
+
         $idProductReview = $this->castId($request->query->get(static::PARAM_ID));
 
         $productSetTransfer = new ProductReviewTransfer();
@@ -36,8 +46,8 @@ class DeleteController extends AbstractController
             ->getProductReviewFacade()
             ->deleteProductReview($productSetTransfer);
 
-        $this->addSuccessMessage('Product Review #%d deleted successfully.', [
-            '%d' => $productSetTransfer->getIdProductReview(),
+        $this->addSuccessMessage('Product Review #%id% deleted successfully.', [
+            '%id%' => $productSetTransfer->getIdProductReview(),
         ]);
 
         return $this->redirectResponse(

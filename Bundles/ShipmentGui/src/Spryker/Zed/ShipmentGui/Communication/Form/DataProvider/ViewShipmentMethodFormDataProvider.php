@@ -25,9 +25,8 @@ class ViewShipmentMethodFormDataProvider
     /**
      * @param \Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToTaxFacadeInterface $taxFacade
      */
-    public function __construct(
-        ShipmentGuiToTaxFacadeInterface $taxFacade
-    ) {
+    public function __construct(ShipmentGuiToTaxFacadeInterface $taxFacade)
+    {
         $this->taxFacade = $taxFacade;
     }
 

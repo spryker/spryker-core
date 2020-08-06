@@ -461,7 +461,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\MetaData\MetaDataProviderInterface
      */
-    protected function createMetaDataProviderMock()
+    protected function createMetaDataProviderMock(): MetaDataProviderInterface
     {
         return $this->getMockBuilder(MetaDataProviderInterface::class)->getMock();
     }
@@ -469,7 +469,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ClauseValidatorInterface
      */
-    protected function createClauseValidatorMock()
+    protected function createClauseValidatorMock(): ClauseValidatorInterface
     {
         return $this->getMockBuilder(ClauseValidatorInterface::class)->getMock();
     }
@@ -477,7 +477,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\ComparatorOperatorsInterface
      */
-    protected function createComparatorOperatorsMock()
+    protected function createComparatorOperatorsMock(): ComparatorOperatorsInterface
     {
         $createComparatorOperatorsMock = $this->getMockBuilder(ComparatorOperatorsInterface::class)->getMock();
 
@@ -489,7 +489,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\SpecificationProviderInterface
      */
-    protected function createSpecificationProviderMock()
+    protected function createSpecificationProviderMock(): SpecificationProviderInterface
     {
         $specificationProviderMock = $this->getMockBuilder(SpecificationProviderInterface::class)->getMock();
 
@@ -499,7 +499,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleContext
      */
-    protected function createDecisionRuleContextMock()
+    protected function createDecisionRuleContextMock(): DecisionRuleContext
     {
         return $this->getMockBuilder(DecisionRuleContext::class)
             ->disableOriginalConstructor()
@@ -509,7 +509,7 @@ class SpecificationBuilderTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleSpecificationInterface
      */
-    protected function createDecisionRuleSpecificationMock()
+    protected function createDecisionRuleSpecificationMock(): DecisionRuleSpecificationInterface
     {
         return $this->getMockBuilder(DecisionRuleSpecificationInterface::class)->getMock();
     }

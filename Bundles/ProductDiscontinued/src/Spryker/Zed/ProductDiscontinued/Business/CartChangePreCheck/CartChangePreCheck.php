@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer;
+use Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer;
 use Spryker\Zed\ProductDiscontinued\Persistence\ProductDiscontinuedRepositoryInterface;
 
 class CartChangePreCheck implements CartChangePreCheckInterface
@@ -58,8 +60,14 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         CartPreCheckResponseTransfer $cartPreCheckResponseTransfer,
         CartChangeTransfer $cartChangeTransfer
     ): CartPreCheckResponseTransfer {
+        $skus = $this->getSkusFromCartChangeTransfer($cartChangeTransfer);
+        $productDiscontinuedCollectionTransfer = $this
+            ->productDiscontinuedRepository
+            ->findProductDiscontinuedCollection($this->createProductDiscontinuedCriteriaFilterTransfer($skus));
+        $indexedProductDiscontinuedTransfers = $this->indexProductDiscontinuedTransfersBySku($productDiscontinuedCollectionTransfer);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if ($this->isProductDiscontinued($itemTransfer)) {
+            if ($this->isProductDiscontinued($itemTransfer, $indexedProductDiscontinuedTransfers)) {
                 $cartPreCheckResponseTransfer->addMessage(
                     $this->createItemIsDiscontinuedMessageTransfer($itemTransfer)
                 );
@@ -75,12 +83,13 @@ class CartChangePreCheck implements CartChangePreCheckInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedTransfer[] $indexedProductDiscontinuedTransfers
      *
      * @return bool
      */
-    protected function isProductDiscontinued(ItemTransfer $itemTransfer): bool
+    protected function isProductDiscontinued(ItemTransfer $itemTransfer, array $indexedProductDiscontinuedTransfers): bool
     {
-        return $this->productDiscontinuedRepository->checkIfProductDiscontinuedBySku($itemTransfer->getSku());
+        return isset($indexedProductDiscontinuedTransfers[$itemTransfer->getSku()]);
     }
 
     /**
@@ -98,5 +107,50 @@ class CartChangePreCheck implements CartChangePreCheckInterface
         ]);
 
         return $messageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = [];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $skus[] = $itemTransfer->getSku();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedTransfer[]
+     */
+    protected function indexProductDiscontinuedTransfersBySku(ProductDiscontinuedCollectionTransfer $productDiscontinuedCollectionTransfer): array
+    {
+        $indexedProductDiscontinuedTransfers = [];
+
+        foreach ($productDiscontinuedCollectionTransfer->getDiscontinuedProducts() as $productDiscontinuedTransfer) {
+            $indexedProductDiscontinuedTransfers[$productDiscontinuedTransfer->getSku()] = $productDiscontinuedTransfer;
+        }
+
+        return $indexedProductDiscontinuedTransfers;
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductDiscontinuedCriteriaFilterTransfer
+     */
+    protected function createProductDiscontinuedCriteriaFilterTransfer(array $skus): ProductDiscontinuedCriteriaFilterTransfer
+    {
+        $productDiscontinuedCriteriaFilterTransfer = new ProductDiscontinuedCriteriaFilterTransfer();
+        $productDiscontinuedCriteriaFilterTransfer->setSkus($skus);
+
+        return $productDiscontinuedCriteriaFilterTransfer;
     }
 }

@@ -17,4 +17,19 @@ interface ProductMeasurementUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer|null
      */
     public function findProductMeasurementUnit(int $idProductMeasurementUnit): ?ProductMeasurementUnitTransfer;
+
+    /**
+     * @param int[] $productMeasurementUnitIds
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementUnits(array $productMeasurementUnitIds): array;
+
+    /**
+     * @param string $mappingType
+     * @param string[] $identifiers
+     *
+     * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer[]
+     */
+    public function getProductMeasurementUnitsByMapping(string $mappingType, array $identifiers): array;
 }

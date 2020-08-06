@@ -7,7 +7,7 @@
         package="src.Orm.Zed.Sales.Persistence"
 >
 
-    <table name="spy_sales_order_item_gift_card" phpName="SpySalesOrderItemGiftCard">
+    <table name="spy_sales_order_item_gift_card">
         <column name="id_sales_order_item_gift_card" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="pattern" type="VARCHAR" size="40" required="false"/>
         <column name="value" type="INTEGER" required="false"/>

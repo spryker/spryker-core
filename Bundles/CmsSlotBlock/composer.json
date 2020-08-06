@@ -1,0 +1,48 @@
+{
+  "name": "spryker/cms-slot-block",
+  "type": "library",
+  "description": "CmsSlotBlock module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/cms-block": "^2.0.0 || ^3.0.0",
+    "spryker/cms-slot": "^1.0.0",
+    "spryker/cms-slot-block-extension": "^1.0.0",
+    "spryker/event": "^2.3.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/propel-orm": "^1.0.0",
+    "spryker/transfer": "^3.8.0",
+    "spryker/util-encoding": "^1.0.0 || ^2.0.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/propel": "*",
+    "spryker/store": "*",
+    "spryker/testify": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\CmsSlotBlock\\Helper\\": "tests/SprykerTest/Zed/CmsSlotBlock/_support/Helper/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

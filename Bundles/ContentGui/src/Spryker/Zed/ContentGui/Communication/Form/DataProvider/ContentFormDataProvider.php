@@ -39,8 +39,11 @@ class ContentFormDataProvider implements ContentFormDataProviderInterface
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToContentFacadeInterface $contentFacade
      * @param \Spryker\Zed\ContentGui\Dependency\Facade\ContentGuiToLocaleFacadeInterface $localeFacade
      */
-    public function __construct(ContentResolverInterface $contentResolver, ContentGuiToContentFacadeInterface $contentFacade, ContentGuiToLocaleFacadeInterface $localeFacade)
-    {
+    public function __construct(
+        ContentResolverInterface $contentResolver,
+        ContentGuiToContentFacadeInterface $contentFacade,
+        ContentGuiToLocaleFacadeInterface $localeFacade
+    ) {
         $this->contentResolver = $contentResolver;
         $this->contentFacade = $contentFacade;
         $this->localeFacade = $localeFacade;

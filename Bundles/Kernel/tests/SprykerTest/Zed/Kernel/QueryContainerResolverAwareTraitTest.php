@@ -46,7 +46,7 @@ class QueryContainerResolverAwareTraitTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Persistence\AbstractQueryContainer
      */
-    private function getAbstractQueryContainerMock()
+    private function getAbstractQueryContainerMock(): AbstractQueryContainer
     {
         return $this->getMockForAbstractClass(AbstractQueryContainer::class);
     }

@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\MerchantRelationshipSalesOrderThreshold\Business;
 
+use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantRelationshipSalesOrderThreshold\Business\MerchantRelationshipSalesOrderThresholdFacadeInterface;
@@ -25,7 +26,7 @@ use Spryker\Zed\SalesOrderThreshold\SalesOrderThresholdDependencyProvider;
  * @group MerchantRelationshipSalesOrderThresholdFacadeTest
  * Add your own group annotations below this line
  */
-class MerchantRelationshipSalesOrderThresholdFacadeTest extends MerchantRelationshipSalesOrderThresholdMocks
+class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
 {
     protected const HARD_STRATEGY_KEY = 'hard-minimum-threshold';
     protected const SOFT_STRATEGY_KEY = 'soft-minimum-threshold';

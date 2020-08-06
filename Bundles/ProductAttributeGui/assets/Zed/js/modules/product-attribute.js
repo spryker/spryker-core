@@ -124,7 +124,10 @@ function AttributeManager() {
         key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
 
         if (key === '' || !idAttribute) {
-            alert('Please select attribute key first');
+            var $messageInput = $('#empty-attribute-key-message');
+
+            alert($messageInput ? $messageInput.val() : 'Please select attribute key first');
+
             return false;
         }
 
@@ -460,22 +463,22 @@ $(document).ready(function() {
         }
     });
 
-    $('#saveButton').on('click', function(event, ui) {
-        attributeManager.save();
-    });
-
     $("#attribute_values_form").submit(function(e) {
         e.preventDefault();
         return false;
     });
 
-
-    $('#productAttributesTable').DataTable({
+    var productAttributesTable = $('#productAttributesTable').DataTable({
         'columnDefs': [{
             'targets': -1,
             'orderable': false
         }],
         destroy: true
+    });
+
+    $('#saveButton').on('click', function() {
+        productAttributesTable.search('').draw(false);
+        attributeManager.save();
     });
 
     $('#attribute_form').on('keypress', function(e) {

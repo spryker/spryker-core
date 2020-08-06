@@ -278,6 +278,7 @@ class AbstractProductFormDataProvider
             foreach ($imageSetTransferCollection as $imageSetTransfer) {
                 if ($imageSetTransfer->getLocale() === null) {
                     $defaults[$imageSetTransfer->getIdProductImageSet()] = $this->convertProductImageSet($imageSetTransfer);
+
                     continue;
                 }
 
@@ -462,7 +463,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */
@@ -492,8 +493,10 @@ class AbstractProductFormDataProvider
      *
      * @return array
      */
-    protected function convertAbstractLocalizedAttributesToFormOptions(?ProductAbstractTransfer $productAbstractTransfer = null, ?LocaleTransfer $localeTransfer = null)
-    {
+    protected function convertAbstractLocalizedAttributesToFormOptions(
+        ?ProductAbstractTransfer $productAbstractTransfer = null,
+        ?LocaleTransfer $localeTransfer = null
+    ) {
         $values = [];
         foreach ($this->attributeTransferCollection as $type => $attributeTransfer) {
             $isProductSpecificAttribute = false;
@@ -573,7 +576,7 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param bool|false $isNew
+     * @param bool $isNew
      *
      * @return array
      */
@@ -681,7 +684,7 @@ class AbstractProductFormDataProvider
             $values[$type] = [
                 self::FORM_FIELD_ID => $id,
                 self::FORM_FIELD_VALUE => $value,
-                self::FORM_FIELD_NAME => isset($value),
+                self::FORM_FIELD_NAME => $value !== null,
                 self::FORM_FIELD_PRODUCT_SPECIFIC => $isProductSpecificAttribute,
                 self::FORM_FIELD_LABEL => $this->getLocalizedAttributeMetadataKey($type),
                 self::FORM_FIELD_SUPER => $attributeTransfer->getIsSuper(),
@@ -776,7 +779,7 @@ class AbstractProductFormDataProvider
     {
         $url = $baseUrl;
 
-        if (preg_match("#^\/(?!/).*$#", $url) === 1) {
+        if (preg_match("#^/(?!/)[\w/-]*\.[A-Za-z]{3,4}$#", $url) === 1) {
             $url = $this->imageUrlPrefix . $url;
         }
 

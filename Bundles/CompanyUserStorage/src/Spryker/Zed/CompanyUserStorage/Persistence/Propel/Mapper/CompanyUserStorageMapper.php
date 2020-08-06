@@ -8,7 +8,9 @@
 namespace Spryker\Zed\CompanyUserStorage\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\CompanyUserStorageTransfer;
+use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
 {
@@ -26,5 +28,37 @@ class CompanyUserStorageMapper implements CompanyUserStorageMapperInterface
         $spyCompanyUserEntityTransfer->setData($companyUserStorageTransfer->toArray());
 
         return $spyCompanyUserEntityTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[] $companyUserStorageEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers(ObjectCollection $companyUserStorageEntityCollection): array
+    {
+        $synchronizationDataTransfers = [];
+
+        foreach ($companyUserStorageEntityCollection as $companyUserStorageEntity) {
+            $synchronizationDataTransfers[] = $this->mapCompanyUserStorageEntityToSynchronizationDataTransfer(
+                $companyUserStorageEntity,
+                new SynchronizationDataTransfer()
+            );
+        }
+
+        return $synchronizationDataTransfers;
+    }
+
+    /**
+     * @param \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage $companyUserStorageEntity
+     * @param \Generated\Shared\Transfer\SynchronizationDataTransfer $synchronizationDataTransfer
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
+     */
+    public function mapCompanyUserStorageEntityToSynchronizationDataTransfer(
+        SpyCompanyUserStorage $companyUserStorageEntity,
+        SynchronizationDataTransfer $synchronizationDataTransfer
+    ): SynchronizationDataTransfer {
+        return $synchronizationDataTransfer->fromArray($companyUserStorageEntity->toArray(), true);
     }
 }

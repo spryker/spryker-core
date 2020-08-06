@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardCommunicationFactory extends AbstractCommunicationFactory
 {

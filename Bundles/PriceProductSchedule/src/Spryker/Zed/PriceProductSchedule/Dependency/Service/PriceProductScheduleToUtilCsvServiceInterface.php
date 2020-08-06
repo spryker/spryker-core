@@ -7,14 +7,14 @@
 
 namespace Spryker\Zed\PriceProductSchedule\Dependency\Service;
 
-use Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 interface PriceProductScheduleToUtilCsvServiceInterface
 {
     /**
-     * @param \Spryker\Zed\PriceProductSchedule\Communication\File\UploadedFile $fileUploadTransfer
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return array
+     * @return string[][]
      */
-    public function readUploadedFile(UploadedFile $fileUploadTransfer): array;
+    public function readUploadedFile(UploadedFile $file): array;
 }

@@ -12,7 +12,9 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\StorageAvailabilityTransfer;
 use Spryker\Client\AvailabilityStorage\AvailabilityStorageClient;
+use Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface;
 use Spryker\Client\Product\ProductClient;
+use Spryker\Client\Product\ProductClientInterface;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridge;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToAvailabilityStorageClientBridgeInterface;
 use Spryker\Yves\CartVariant\Dependency\Client\CartVariantToProductClientBridge;
@@ -35,7 +37,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Product\ProductClientInterface
      */
-    protected function buildProductClientMock(string $jsonFileToLoad)
+    protected function buildProductClientMock(string $jsonFileToLoad): ProductClientInterface
     {
         $mock = $this->getMockBuilder(ProductClient::class)
             ->disableOriginalConstructor()
@@ -62,7 +64,7 @@ class CartItemsMapperBaseTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\AvailabilityStorage\AvailabilityStorageClientInterface
      */
-    protected function buildProductAvailabilityClientMock(string $jsonFileToLoad)
+    protected function buildProductAvailabilityClientMock(string $jsonFileToLoad): AvailabilityStorageClientInterface
     {
         $mock = $this->getMockBuilder(AvailabilityStorageClient::class)
             ->disableOriginalConstructor()
@@ -101,7 +103,7 @@ class CartItemsMapperBaseTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(): ArrayObject
     {
@@ -117,7 +119,7 @@ class CartItemsMapperBaseTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getNestedItems(): ArrayObject
     {

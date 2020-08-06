@@ -14,11 +14,14 @@ use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use Throwable;
+use Spryker\Zed\Touch\TouchConfig;
 
 class TouchRecord implements TouchRecordInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface
      */
@@ -35,18 +38,26 @@ class TouchRecord implements TouchRecordInterface
     protected $connection;
 
     /**
+     * @var \Spryker\Zed\Touch\TouchConfig
+     */
+    protected $touchConfig;
+
+    /**
      * @param \Spryker\Service\UtilDataReader\UtilDataReaderServiceInterface $utilDataReaderService
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
      * @param \Propel\Runtime\Connection\ConnectionInterface $connection
+     * @param \Spryker\Zed\Touch\TouchConfig $touchConfig
      */
     public function __construct(
         UtilDataReaderServiceInterface $utilDataReaderService,
         TouchQueryContainerInterface $queryContainer,
-        ConnectionInterface $connection
+        ConnectionInterface $connection,
+        TouchConfig $touchConfig
     ) {
         $this->utilDataReaderService = $utilDataReaderService;
         $this->touchQueryContainer = $queryContainer;
         $this->connection = $connection;
+        $this->touchConfig = $touchConfig;
     }
 
     /**
@@ -63,8 +74,25 @@ class TouchRecord implements TouchRecordInterface
         $idItem,
         $keyChange = false
     ) {
-        $this->connection->beginTransaction();
+        if ($this->touchConfig->isTouchEnabled()) {
+            $this->getTransactionHandler()->handleTransaction(function () use ($itemType, $itemEvent, $idItem, $keyChange): void {
+                $this->executeSaveTouchRecordTransaction($itemType, $itemEvent, $idItem, $keyChange);
+            });
+        }
 
+        return true;
+    }
+
+    /**
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param int $idItem
+     * @param bool $keyChange
+     *
+     * @return void
+     */
+    protected function executeSaveTouchRecordTransaction(string $itemType, string $itemEvent, int $idItem, bool $keyChange = false): void
+    {
         if ($keyChange) {
             $this->insertKeyChangeRecord($itemType, $idItem);
 
@@ -89,10 +117,6 @@ class TouchRecord implements TouchRecordInterface
 
             $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
         }
-
-        $this->connection->commit();
-
-        return true;
     }
 
     /**
@@ -259,22 +283,26 @@ class TouchRecord implements TouchRecordInterface
      */
     public function removeTouchEntriesMarkedAsDeleted()
     {
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-
-        try {
-            $touchListQuery = $this->touchQueryContainer
-                ->queryTouchListByItemEvent(
-                    SpyTouchTableMap::COL_ITEM_EVENT_DELETED
-                );
-            $deletedCount = $this->removeTouchEntries($touchListQuery);
-        } catch (Throwable $throwable) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $throwable;
+        if (!$this->touchConfig->isTouchEnabled()) {
+            return 0;
         }
 
-        $this->touchQueryContainer->getConnection()->commit();
+        return $this->getTransactionHandler()->handleTransaction(function (): int {
+            return $this->executeRemoveTouchEntriesMarkedAsDeletedTransaction();
+        });
+    }
 
-        return $deletedCount;
+    /**
+     * @return int
+     */
+    protected function executeRemoveTouchEntriesMarkedAsDeletedTransaction(): int
+    {
+        $touchListQuery = $this->touchQueryContainer
+            ->queryTouchListByItemEvent(
+                SpyTouchTableMap::COL_ITEM_EVENT_DELETED
+            );
+
+        return $this->removeTouchEntries($touchListQuery);
     }
 
     /**

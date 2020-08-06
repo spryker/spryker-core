@@ -7,8 +7,10 @@
 
 namespace Spryker\Zed\ProductImage\Business;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductImageFilterTransfer;
 use Generated\Shared\Transfer\ProductImageSetTransfer;
 use Generated\Shared\Transfer\ProductImageTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -20,9 +22,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInterface
 {
     /**
-     * Specification:
-     * - Creates a new product image entity or updates an existing one if the ID is provided and the entity already exists.
-     * - Returns a ProductImageTransfer with the ID of the persisted entity.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -38,10 +38,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Creates a new product image set entity or updates an existing one if the ID is provided and the entity already exists.
-     * - Creates new product image entities or update existing ones if their ID is provided and the entities already exists.
-     * - Returns a ProductImageSetTransfer with the IDs of the persisted entities.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -57,8 +54,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Returns all product image sets from database for the given abstract product id.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -74,8 +70,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Returns all product image sets from database for the given concrete product id.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,9 +102,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given abstract product.
-     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -125,9 +118,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given abstract product.
-     * - Returns ProductAbstractTransfer along with the data from the persisted ProductImageSetTransfers.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -143,8 +134,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Expands the ProductAbstractTransfer with the product's image sets from database.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -160,9 +150,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given concrete product.
-     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -178,9 +166,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Persists all provided image sets to database for the given concrete product.
-     * - Returns ProductConcreteTransfer along with the data from the persisted ProductImageSetTransfers.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -196,8 +182,7 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
     }
 
     /**
-     * Specification:
-     * - Expands the ProductConcreteTransfer with the product's image sets from database.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -294,5 +279,36 @@ class ProductImageFacade extends AbstractFacade implements ProductImageFacadeInt
         return $this->getFactory()
             ->createProductImageBulkReader()
             ->getProductImagesByProductIdsAndProductImageSetName($productIds, $productImageSetName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductImageFilterTransfer $productImageFilterTransfer
+     *
+     * @return int[]
+     */
+    public function getProductConcreteIds(ProductImageFilterTransfer $productImageFilterTransfer): array
+    {
+        return $this->getRepository()->getProductConcreteIds($productImageFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[] $productImageSetTransfers
+     * @param string $localeName
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductImageSetTransfer[]
+     */
+    public function resolveProductImageSetsForLocale(ArrayObject $productImageSetTransfers, string $localeName): ArrayObject
+    {
+        return $this->getFactory()
+            ->createProductImageSetResolver()
+            ->resolveProductImageSetsForLocale($productImageSetTransfers, $localeName);
     }
 }

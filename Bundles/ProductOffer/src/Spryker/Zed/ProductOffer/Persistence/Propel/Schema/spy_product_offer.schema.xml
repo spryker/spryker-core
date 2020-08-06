@@ -4,10 +4,12 @@
           xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
           namespace="Orm\Zed\ProductOffer\Persistence" package="src.Orm.Zed.ProductOffer.Persistence">
 
-    <table name="spy_product_offer" phpName="SpyProductOffer">
+    <table name="spy_product_offer">
         <column name="id_product_offer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="concrete_sku" required="true" type="VARCHAR" size="255"/>
         <column name="product_offer_reference" required="true" type="VARCHAR" size="255"/>
+        <column name="is_active" default="true" type="BOOLEAN"/>
+        <column name="approval_status" type="VARCHAR" size="64" required="true"/>
 
         <unique name="spy_product_offer-product_offer_reference">
             <unique-column name="product_offer_reference"/>
@@ -16,6 +18,19 @@
         <behavior name="timestampable"/>
 
         <id-method-parameter value="spy_product_offer_pk_seq"/>
+    </table>
+
+    <table name="spy_product_offer_store" isCrossRef="true">
+        <column name="fk_product_offer" required="true" type="INTEGER" primaryKey="true"/>
+        <column name="fk_store" required="true" type="INTEGER" primaryKey="true"/>
+
+        <foreign-key name="spy_product_offer_store-fk_product_offer" foreignTable="spy_product_offer">
+            <reference local="fk_product_offer" foreign="id_product_offer"/>
+        </foreign-key>
+
+        <foreign-key name="spy_product_offer_store_store-fk_store" foreignTable="spy_store">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
     </table>
 
 </database>

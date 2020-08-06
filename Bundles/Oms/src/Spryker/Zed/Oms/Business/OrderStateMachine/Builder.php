@@ -271,6 +271,7 @@ class Builder implements BuilderInterface
                 $event->setManual($this->getAttributeBoolean($xmlEvent, 'manual'));
                 $event->setOnEnter($this->getAttributeBoolean($xmlEvent, 'onEnter'));
                 $event->setTimeout($this->getAttributeString($xmlEvent, 'timeout'));
+                $event->setTimeoutProcessor($this->getAttributeString($xmlEvent, 'timeoutProcessor'));
                 if ($eventId === null) {
                     continue;
                 }
@@ -535,6 +536,6 @@ class Builder implements BuilderInterface
      */
     protected function createSubProcessPathPattern($fileName)
     {
-        return '/\b' . dirname($fileName) . '\b/';
+        return '/\b' . preg_quote(dirname($fileName), '/') . '\b/';
     }
 }

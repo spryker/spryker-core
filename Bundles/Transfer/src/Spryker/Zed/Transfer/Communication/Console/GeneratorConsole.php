@@ -12,8 +12,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\Transfer\Communication\Console\TransferGeneratorConsole` instead to generate data transfers.
- * @deprecated Use `Spryker\Zed\Propel\Communication\Console\EntityTransferGeneratorConsole` instead to generate entity transfers.
+ * @deprecated Use {@link \Spryker\Zed\Transfer\Communication\Console\TransferGeneratorConsole} instead to generate data transfers.
+ * @deprecated Use {@link \Spryker\Zed\Propel\Communication\Console\EntityTransferGeneratorConsole} instead to generate entity transfers.
  *
  * @method \Spryker\Zed\Transfer\Business\TransferFacadeInterface getFacade()
  * @method \Spryker\Zed\Transfer\Communication\TransferCommunicationFactory getFactory()

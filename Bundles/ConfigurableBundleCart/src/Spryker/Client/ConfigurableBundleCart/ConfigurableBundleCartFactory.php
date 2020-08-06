@@ -7,7 +7,11 @@
 
 namespace Spryker\Client\ConfigurableBundleCart;
 
+use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdder;
+use Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdderInterface;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
+use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGenerator;
+use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReader;
 use Spryker\Client\ConfigurableBundleCart\Reader\QuoteItemReaderInterface;
 use Spryker\Client\ConfigurableBundleCart\Updater\QuoteItemUpdater;
@@ -49,6 +53,25 @@ class ConfigurableBundleCartFactory extends AbstractFactory
     public function createQuoteItemReader(): QuoteItemReaderInterface
     {
         return new QuoteItemReader();
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface
+     */
+    public function createConfiguredBundleGroupKeyGenerator(): ConfiguredBundleGroupKeyGeneratorInterface
+    {
+        return new ConfiguredBundleGroupKeyGenerator();
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleCart\Adder\ConfiguredBundleCartAdderInterface
+     */
+    public function createConfiguredBundleCartAdder(): ConfiguredBundleCartAdderInterface
+    {
+        return new ConfiguredBundleCartAdder(
+            $this->getCartClient(),
+            $this->createConfiguredBundleGroupKeyGenerator()
+        );
     }
 
     /**

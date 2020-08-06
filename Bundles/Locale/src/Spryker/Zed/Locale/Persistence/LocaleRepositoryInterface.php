@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Locale\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+
 interface LocaleRepositoryInterface
 {
     /**
@@ -15,4 +17,11 @@ interface LocaleRepositoryInterface
      * @return \Generated\Shared\Transfer\LocaleTransfer[]
      */
     public function getLocaleTransfersByLocaleNames(array $localeNames): array;
+
+    /**
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\LocaleTransfer|null
+     */
+    public function findLocaleTransferByLocaleName(string $localeName): ?LocaleTransfer;
 }

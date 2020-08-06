@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
@@ -36,9 +36,9 @@ class UniqueEmailValidator extends ConstraintValidator
             throw new UnexpectedTypeException($uniqueEmailConstraint, UniqueEmail::class);
         }
 
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setEmail($email);
-        $merchantTransfer = $uniqueEmailConstraint->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setEmail($email);
+        $merchantTransfer = $uniqueEmailConstraint->getMerchantFacade()->findOne($merchantCriteriaTransfer);
         if ($merchantTransfer === null) {
             return;
         }

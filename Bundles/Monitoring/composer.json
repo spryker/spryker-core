@@ -10,21 +10,19 @@
     "spryker/locale": "^3.0.0",
     "spryker/monitoring-extension": "^1.0.0",
     "spryker/store": "^1.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/util-network": "^1.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "^2.0.0",
-    "spryker/symfony": "^3.0.0",
-    "spryker/testify": "*"
+    "spryker/silex": "^2.0.0"
   },
   "suggest": {
     "spryker/container": "Add this module when you want to use the EventDispatcher plugins.",
     "spryker/event-dispatcher": "Add this module when you want to use the EventDispatcher plugins.",
-    "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex.",
-    "spryker/symfony": "If you want to use the Monitoring ServiceProvider, please add spryker/symfony."
+    "spryker/silex": "If you want to use the Monitoring ServiceProvider, please add spryker/silex."
   },
   "autoload": {
     "psr-4": {
@@ -33,9 +31,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

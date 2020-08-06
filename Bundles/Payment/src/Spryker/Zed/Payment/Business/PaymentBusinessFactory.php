@@ -10,13 +10,19 @@ namespace Spryker\Zed\Payment\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Payment\Business\Calculation\PaymentCalculator;
 use Spryker\Zed\Payment\Business\Checkout\PaymentPluginExecutor;
-use Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstaller;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodFinder;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodReader;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdater;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodValidator;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
-use Spryker\Zed\Payment\Business\Provider\PaymentProviderReader;
-use Spryker\Zed\Payment\Business\Provider\PaymentProviderReaderInterface;
+use Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface;
 use Spryker\Zed\Payment\PaymentDependencyProvider;
 
 /**
@@ -87,8 +93,18 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     {
         return new PaymentMethodReader(
             $this->getPaymentMethodFilterPlugins(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getStoreFacade(),
+            $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodValidator($this->createPaymentMethodReader());
     }
 
     /**
@@ -100,24 +116,32 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Installer\SalesPaymentMethodTypeInstallerInterface
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodFinderInterface
      */
-    public function createSalesPaymentMethodTypeInstaller()
+    public function createPaymentMethodFinder(): PaymentMethodFinderInterface
     {
-        return new SalesPaymentMethodTypeInstaller(
+        return new PaymentMethodFinder($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface
+     */
+    public function createPaymentMethodStoreRelationUpdater(): PaymentMethodStoreRelationUpdaterInterface
+    {
+        return new PaymentMethodStoreRelationUpdater(
             $this->getEntityManager(),
-            $this->getConfig()
+            $this->getRepository()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Payment\Business\Provider\PaymentProviderReaderInterface
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface
      */
-    public function createPaymentProviderReader(): PaymentProviderReaderInterface
+    public function createPaymentMethodUpdater(): PaymentMethodUpdaterInterface
     {
-        return new PaymentProviderReader(
-            $this->getRepository(),
-            $this->createPaymentMethodReader()
+        return new PaymentMethodUpdater(
+            $this->getEntityManager(),
+            $this->createPaymentMethodStoreRelationUpdater()
         );
     }
 
@@ -127,5 +151,13 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
     protected function getPaymentMethodFilterPlugins()
     {
         return $this->getProvidedDependency(PaymentDependencyProvider::PAYMENT_METHOD_FILTER_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Facade\PaymentToStoreFacadeInterface
+     */
+    protected function getStoreFacade(): PaymentToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(PaymentDependencyProvider::FACADE_STORE);
     }
 }

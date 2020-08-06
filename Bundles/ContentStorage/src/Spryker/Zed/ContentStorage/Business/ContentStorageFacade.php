@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ContentStorage\Business;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,5 +29,20 @@ class ContentStorageFacade extends AbstractFacade implements ContentStorageFacad
     public function publish(array $contentIds): void
     {
         $this->getFactory()->createContentStorage()->publish($contentIds);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ContentTransfer[]
+     */
+    public function getContentTransfersByFilter(FilterTransfer $filterTransfer): array
+    {
+        return $this->getRepository()
+            ->getContentTransfersByFilter($filterTransfer);
     }
 }

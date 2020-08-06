@@ -1,5 +1,6 @@
 parameters:
     ignoreErrors:
-    - '#Constant T_SEMICOLON not found.#'
-    - '#Constant T_OPEN_PARENTHESIS not found.#'
-    - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
+        - '#Constant T_SEMICOLON not found.#'
+        - '#Constant T_OPEN_PARENTHESIS not found.#'
+        - '#Constant T_OPEN_SQUARE_BRACKET not found.#'
+        - '#Call to an undefined method ReflectionType::getName\(\)#'

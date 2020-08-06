@@ -31,11 +31,26 @@ interface MultiCartClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link markQuoteAsDefault()} instead.
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function setDefaultQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes zed request.
+     * - Marks quote as default for the current customer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function markQuoteAsDefault(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

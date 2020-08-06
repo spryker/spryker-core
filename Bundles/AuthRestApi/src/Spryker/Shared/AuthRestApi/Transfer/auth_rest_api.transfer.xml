@@ -69,4 +69,14 @@
         <property name="oauthUserId" type="string"/>
     </transfer>
 
+    <transfer name="RevokeRefreshTokenResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="RevokeRefreshTokenRequest">
+        <property name="refreshToken" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
 </transfers>

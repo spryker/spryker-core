@@ -1,6 +1,4 @@
 namespace: TaxStorage
-actor: Tester
-
 include:
     - tests/SprykerTest/Zed/TaxStorage
 
@@ -16,8 +14,3 @@ settings:
     colors: true
     memory_limit: 1024M
     log: true
-coverage:
-    enabled: true
-    whitelist:
-        include:
-            - 'src/*.php'

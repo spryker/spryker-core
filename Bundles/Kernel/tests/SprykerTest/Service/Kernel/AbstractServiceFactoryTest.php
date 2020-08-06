@@ -80,9 +80,9 @@ class AbstractServiceFactoryTest extends Unit
     /**
      * @param array $methods
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\AbstractFactory
+     * @return \SprykerTest\Service\Kernel\Fixtures\ServiceFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function getFactoryMock(array $methods)
+    protected function getFactoryMock(array $methods): ServiceFactory
     {
         $factoryMock = $this->getMockBuilder(ServiceFactory::class)->setMethods($methods)->getMock();
 

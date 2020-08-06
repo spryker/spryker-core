@@ -7,33 +7,51 @@
 
 namespace Spryker\Zed\Kernel\Communication\Plugin;
 
-use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
  * @method \Spryker\Zed\Kernel\Communication\KernelCommunicationFactory getFactory()
+ * @method \Spryker\Zed\Kernel\KernelConfig getConfig()
+ * @method \Spryker\Zed\Kernel\Business\KernelFacadeInterface getFacade()
+ *
+ * @deprecated Use {@link \Spryker\Shared\Kernel\Container\GlobalContainerInterface} instead.
  */
-class Pimple extends AbstractPlugin
+class Pimple extends GlobalContainer
 {
     /**
-     * @var \Spryker\Service\Container\Container
+     * @var \Silex\Application
      */
     protected static $application;
 
     /**
-     * @param \Spryker\Service\Container\Container $application
+     * @param \Spryker\Service\Container\ContainerInterface|\Silex\Application $application
      *
      * @return void
      */
-    public static function setApplication($application)
+    public static function setApplication($application): void
     {
-        self::$application = $application;
+        if ($application instanceof ContainerInterface) {
+            parent::setContainer($application);
+
+            return;
+        }
+
+        static::$application = $application;
     }
 
     /**
-     * @return \Spryker\Service\Container\Container
+     * @return \Silex\Application|\Spryker\Service\Container\Container
      */
     public function getApplication()
     {
-        return self::$application;
+        if (static::$application === null) {
+            /** @var \Spryker\Service\Container\Container $container */
+            $container = parent::getContainer();
+
+            return $container;
+        }
+
+        return static::$application;
     }
 }

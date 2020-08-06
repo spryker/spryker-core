@@ -12,7 +12,7 @@ use Spryker\Shared\Log\Sanitizer\SanitizerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `RequestProcessorPlugin` from Log module instead.
+ * @deprecated Use `RequestProcessorPlugin`s from Log module instead.
  */
 class RequestProcessor
 {

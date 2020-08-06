@@ -14,6 +14,8 @@ class ProductDiscontinuedConfig extends AbstractBundleConfig
     protected const DEFAULT_DAYS_AMOUNT_BEFORE_PRODUCT_DEACTIVATE = 180;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDaysAmountBeforeProductDeactivate(): int

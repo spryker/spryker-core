@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\CartNote;
 
+use Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface;
 use Spryker\Client\CartNote\QuoteStorageStrategy\DatabaseQuoteStorageStrategy;
 use Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface;
 use Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyProvider;
@@ -42,7 +43,7 @@ class CartNoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartNote\QuoteStorageStrategy\QuoteStorageStrategyInterface[]
      */
-    protected function getQuoteStorageStrategyProviders(): array
+    public function getQuoteStorageStrategyProviders(): array
     {
         return [
             $this->createSessionQuoteStorageStrategy(),
@@ -80,7 +81,7 @@ class CartNoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartNote\Dependency\Client\CartNoteToQuoteClientInterface
      */
-    public function getQuoteClient()
+    public function getQuoteClient(): CartNoteToQuoteClientInterface
     {
         return $this->getProvidedDependency(CartNoteDependencyProvider::CLIENT_QUOTE);
     }
@@ -96,7 +97,7 @@ class CartNoteFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\CartNoteExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
      */
-    protected function getQuoteItemsFinderPlugin(): QuoteItemFinderPluginInterface
+    public function getQuoteItemsFinderPlugin(): QuoteItemFinderPluginInterface
     {
         return $this->getProvidedDependency(CartNoteDependencyProvider::PLUGIN_QUOTE_ITEMS_FINDER);
     }

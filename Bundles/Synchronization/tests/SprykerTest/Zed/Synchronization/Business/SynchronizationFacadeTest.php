@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\SearchDocumentTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use PHPUnit\Framework\SkippedTestError;
 use Spryker\Service\UtilEncoding\UtilEncodingService;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\AvailabilityStorage\Communication\Plugin\Synchronization\AvailabilitySynchronizationDataPlugin;
 use Spryker\Zed\CategoryPageSearch\Communication\Plugin\Synchronization\CategoryPageSynchronizationDataPlugin;
 use Spryker\Zed\CategoryStorage\Communication\Plugin\Synchronization\CategoryNodeSynchronizationDataPlugin;
@@ -34,8 +35,8 @@ use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Synchronization\Prod
 use Spryker\Zed\ProductGroupStorage\Communication\Plugin\Synchronization\ProductGroupSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductAbstractImageSynchronizationDataPlugin;
 use Spryker\Zed\ProductImageStorage\Communication\Plugin\Synchronization\ProductConcreteImageSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataPlugin;
-use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductAbstractLabelSynchronizationDataRepositoryPlugin;
+use Spryker\Zed\ProductLabelStorage\Communication\Plugin\Synchronization\ProductLabelDictionarySynchronizationDataRepositoryPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductConcreteMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductMeasurementUnitStorage\Communication\Plugin\Synchronization\ProductMeasurementUnitSynchronizationDataPlugin;
 use Spryker\Zed\ProductOptionStorage\Communication\Plugin\Synchronization\ProductOptionSynchronizationDataPlugin;
@@ -76,6 +77,11 @@ class SynchronizationFacadeTest extends Unit
     protected const PARAM_PROJECT = 'PROJECT';
 
     protected const PROJECT_SUITE = 'suite';
+
+    /**
+     * @var \SprykerTest\Zed\Synchronization\SynchronizationBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Synchronization\Business\SynchronizationFacadeInterface
@@ -363,6 +369,8 @@ class SynchronizationFacadeTest extends Unit
             throw new SkippedTestError('Warning: not in suite environment');
         }
 
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
+
         $container = new Container();
         $container[SynchronizationDependencyProvider::CLIENT_QUEUE] = function (Container $container) {
             $queueMock = $this->createQueueClientBridge();
@@ -403,7 +411,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToQueueClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createQueueClientBridge()
+    protected function createQueueClientBridge(): SynchronizationToQueueClientInterface
     {
         return $this->getMockBuilder(SynchronizationToQueueClientInterface::class)
             ->disableOriginalConstructor()
@@ -442,8 +450,8 @@ class SynchronizationFacadeTest extends Unit
             new ProductGroupSynchronizationDataPlugin(),
             new ProductAbstractImageSynchronizationDataPlugin(),
             new ProductConcreteImageSynchronizationDataPlugin(),
-            new ProductAbstractLabelSynchronizationDataPlugin(),
-            new ProductLabelDictionarySynchronizationDataPlugin(),
+            new ProductAbstractLabelSynchronizationDataRepositoryPlugin(),
+            new ProductLabelDictionarySynchronizationDataRepositoryPlugin(),
             new ProductMeasurementUnitSynchronizationDataPlugin(),
             new ProductConcreteMeasurementUnitSynchronizationDataPlugin(),
             new ProductQuantitySynchronizationDataPlugin(),
@@ -462,7 +470,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToStorageClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createStorageClientBridge()
+    protected function createStorageClientBridge(): SynchronizationToStorageClientInterface
     {
         return $this->getMockBuilder(SynchronizationToStorageClientInterface::class)
             ->disableOriginalConstructor()
@@ -479,7 +487,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Client\SynchronizationToSearchClientInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createSearchClientBridge()
+    protected function createSearchClientBridge(): SynchronizationToSearchClientInterface
     {
         return $this->getMockBuilder(SynchronizationToSearchClientInterface::class)
             ->disableOriginalConstructor()
@@ -496,7 +504,7 @@ class SynchronizationFacadeTest extends Unit
     /**
      * @return \Spryker\Zed\Synchronization\Dependency\Service\SynchronizationToUtilEncodingServiceInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createUtilEncodingServiceBridgeMock()
+    protected function createUtilEncodingServiceBridgeMock(): SynchronizationToUtilEncodingServiceInterface
     {
         return $this->getMockBuilder(SynchronizationToUtilEncodingServiceInterface::class)
             ->disableOriginalConstructor()

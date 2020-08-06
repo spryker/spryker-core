@@ -7,9 +7,12 @@
 
 namespace Spryker\Zed\MerchantRelationshipProductList\Persistence;
 
+use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 use Generated\Shared\Transfer\ProductListCollectionTransfer;
 use Generated\Shared\Transfer\ProductListTransfer;
+use Orm\Zed\ProductList\Persistence\Map\SpyProductListTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
  * @method \Spryker\Zed\MerchantRelationshipProductList\Persistence\MerchantRelationshipProductListPersistenceFactory getFactory()
@@ -49,6 +52,37 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
     }
 
     /**
+     * @param \Generated\Shared\Transfer\MerchantRelationshipTransfer $merchantRelationshipTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductListCollectionTransfer
+     */
+    public function getAvailableProductListsForMerchantRelationship(MerchantRelationshipTransfer $merchantRelationshipTransfer): ProductListCollectionTransfer
+    {
+        $productListQuery = $this->getFactory()
+            ->getProductListQuery()
+            ->useSpyMerchantRelationshipQuery()
+                ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
+            ->endUse();
+
+        if ($merchantRelationshipTransfer->getIdMerchantRelationship()) {
+            $productListQuery = $this->getFactory()
+                ->getProductListQuery()
+                ->useSpyMerchantRelationshipQuery()
+                    ->filterByIdMerchantRelationship(null, Criteria::ISNULL)
+                    ->_or()
+                    ->filterByIdMerchantRelationship($merchantRelationshipTransfer->getIdMerchantRelationship())
+                ->endUse();
+        }
+
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductList\Persistence\SpyProductList[] $productListEntities */
+        $productListEntities = $productListQuery->find();
+
+        return $this->getFactory()
+            ->createMerchantRelationshipProductListMapper()
+            ->mapProductListCollection($productListEntities, new ProductListCollectionTransfer());
+    }
+
+    /**
      * @module ProductList
      *
      * @param int $idMerchantRelationship
@@ -70,5 +104,20 @@ class MerchantRelationshipProductListRepository extends AbstractRepository imple
             );
 
         return $productListCollectionTransfer;
+    }
+
+    /**
+     * @param int $idProductList
+     *
+     * @return int[]
+     */
+    public function getMerchantRelationshipIdsByProductListId(int $idProductList): array
+    {
+        return $this->getFactory()
+            ->getProductListQuery()
+            ->filterByIdProductList($idProductList)
+            ->select(SpyProductListTableMap::COL_FK_MERCHANT_RELATIONSHIP)
+            ->find()
+            ->toArray();
     }
 }

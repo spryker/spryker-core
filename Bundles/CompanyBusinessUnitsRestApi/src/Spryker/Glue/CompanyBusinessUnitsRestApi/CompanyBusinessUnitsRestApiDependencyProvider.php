@@ -41,11 +41,11 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
      */
     protected function addCompanyBusinessUnitClient(Container $container): Container
     {
-        $container[static::CLIENT_COMPANY_BUSINESS_UNIT] = function (Container $container) {
+        $container->set(static::CLIENT_COMPANY_BUSINESS_UNIT, function (Container $container) {
             return new CompanyBusinessUnitsRestApiToCompanyBusinessUnitClientBridge(
                 $container->getLocator()->companyBusinessUnit()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -57,9 +57,9 @@ class CompanyBusinessUnitsRestApiDependencyProvider extends AbstractBundleDepend
      */
     protected function addCompanyBusinessUnitMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER] = function () {
+        $container->set(static::PLUGINS_COMPANY_BUSINESS_UNIT_MAPPER, function () {
             return $this->getCompanyBusinessUnitMapperPlugins();
-        };
+        });
 
         return $container;
     }

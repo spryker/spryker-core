@@ -20,7 +20,6 @@ class CreateMerchantController extends AbstractController
     protected const PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const MESSAGE_MERCHANT_CREATE_SUCCESS = 'Merchant created successfully.';
-    protected const MESSAGE_MERCHANT_CREATE_ERROR = 'Merchant has not been created.';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -31,7 +30,7 @@ class CreateMerchantController extends AbstractController
     {
         $dataProvider = $this->getFactory()->createMerchantFormDataProvider();
         $merchantForm = $this->getFactory()
-            ->getMerchantForm(
+            ->getMerchantCreateForm(
                 $dataProvider->getData(),
                 $dataProvider->getOptions()
             )
@@ -67,7 +66,9 @@ class CreateMerchantController extends AbstractController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $this->addErrorMessage(static::MESSAGE_MERCHANT_CREATE_ERROR);
+        foreach ($merchantResponseTransfer->getErrors() as $merchantErrorTransfer) {
+            $this->addErrorMessage($merchantErrorTransfer->getMessage());
+        }
 
         return $this->viewResponse([
             'form' => $merchantForm->createView(),

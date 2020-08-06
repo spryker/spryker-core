@@ -9,6 +9,7 @@ namespace Spryker\Glue\CheckoutRestApi\Processor\CheckoutData;
 
 use Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer;
 use Generated\Shared\Transfer\RestCheckoutDataResponseTransfer;
+use Generated\Shared\Transfer\RestCheckoutDataTransfer;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -84,9 +85,15 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function getCheckoutData(RestRequestInterface $restRequest, RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): RestResponseInterface
-    {
-        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest($restRequest, $restCheckoutRequestAttributesTransfer);
+    public function getCheckoutData(
+        RestRequestInterface $restRequest,
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+    ): RestResponseInterface {
+        $restErrorCollectionTransfer = $this->checkoutRequestValidator->validateCheckoutRequest(
+            $restRequest,
+            $restCheckoutRequestAttributesTransfer
+        );
+
         if ($restErrorCollectionTransfer->getRestErrors()->count()) {
             return $this->createValidationErrorResponse($restErrorCollectionTransfer);
         }
@@ -94,29 +101,40 @@ class CheckoutDataReader implements CheckoutDataReaderInterface
         $restCheckoutRequestAttributesTransfer = $this->checkoutRequestAttributesExpander
             ->expandCheckoutRequestAttributes($restRequest, $restCheckoutRequestAttributesTransfer);
 
-        $restCheckoutDataResponseTransfer = $this->checkoutRestApiClient->getCheckoutData($restCheckoutRequestAttributesTransfer);
+        $restCheckoutDataResponseTransfer = $this
+            ->checkoutRestApiClient
+            ->getCheckoutData($restCheckoutRequestAttributesTransfer);
+
         if (!$restCheckoutDataResponseTransfer->getIsSuccess()) {
             return $this->createCheckoutDataErrorResponse($restCheckoutDataResponseTransfer);
         }
 
         $restCheckoutResponseAttributesTransfer = $this->checkoutDataMapper
-            ->mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer($restCheckoutDataResponseTransfer->getCheckoutData(), $restCheckoutRequestAttributesTransfer);
+            ->mapRestCheckoutDataTransferToRestCheckoutDataResponseAttributesTransfer(
+                $restCheckoutDataResponseTransfer->getCheckoutData(),
+                $restCheckoutRequestAttributesTransfer
+            );
 
-        return $this->createRestResponse($restCheckoutResponseAttributesTransfer);
+        return $this->createRestResponse($restCheckoutResponseAttributesTransfer, $restCheckoutDataResponseTransfer->getCheckoutData());
     }
 
     /**
      * @param \Generated\Shared\Transfer\RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer
+     * @param \Generated\Shared\Transfer\RestCheckoutDataTransfer $restCheckoutDataTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createRestResponse(RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer): RestResponseInterface
-    {
+    protected function createRestResponse(
+        RestCheckoutDataResponseAttributesTransfer $restCheckoutResponseAttributesTransfer,
+        RestCheckoutDataTransfer $restCheckoutDataTransfer
+    ): RestResponseInterface {
         $checkoutDataResource = $this->restResourceBuilder->createRestResource(
             CheckoutRestApiConfig::RESOURCE_CHECKOUT_DATA,
             null,
             $restCheckoutResponseAttributesTransfer
         );
+
+        $checkoutDataResource->setPayload($restCheckoutDataTransfer);
 
         $restResponse = $this->restResourceBuilder
             ->createRestResponse()

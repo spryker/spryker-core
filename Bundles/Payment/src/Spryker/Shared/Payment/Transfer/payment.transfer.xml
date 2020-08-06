@@ -16,6 +16,7 @@
     <transfer name="Quote">
         <property name="payment" type="Payment" deprecated="Use payments property instead."/>
         <property name="payments" type="Payment[]" singular="payment"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Order">
@@ -50,12 +51,41 @@
     </transfer>
 
     <transfer name="PaymentProvider">
+        <property name="idPaymentProvider" type="int"/>
+        <property name="paymentProviderKey" type="string"/>
         <property name="name" type="string"/>
         <property name="paymentMethods" singular="paymentMethod" type="PaymentMethod[]"/>
     </transfer>
 
     <transfer name="PaymentMethod">
         <property name="methodName" type="string"/>
+        <property name="idPaymentMethod" type="int"/>
+        <property name="idPaymentProvider" type="int"/>
+        <property name="name" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="paymentProvider" type="PaymentProvider"/>
+        <property name="storeRelation" type="StoreRelation"/>
+    </transfer>
+
+    <transfer name="StoreRelation">
+        <property name="idEntity" type="int"/>
+        <property name="idStores" type="int[]" singular="idStores"/>
+        <property name="stores" type="Store[]" singular="stores"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="PaymentMethodResponse">
+        <property name="paymentMethod" type="PaymentMethod"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -72,10 +102,15 @@
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

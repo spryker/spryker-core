@@ -28,7 +28,7 @@ class CmsBlockProductAbstractType extends AbstractType
     public const PLACEHOLDER_ID_PRODUCT_ABSTRACTS = 'Type three letters of name or sku for suggestions.';
 
     /**
-     * @deprecated Use \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS instead.
+     * @deprecated Use {@link \Spryker\Zed\CmsBlockProductConnector\Communication\Form\CmsBlockProductAbstractType::OPTION_ASSIGNED_PRODUCT_ABSTRACTS} instead.
      */
     public const OPTION_PRODUCT_ABSTRACT_ARRAY = 'option-assigned-product-abstracts';
 
@@ -78,7 +78,7 @@ class CmsBlockProductAbstractType extends AbstractType
     }
 
     /**
-     * @deprecated Use `getBlockPrefix()` instead.
+     * @deprecated Use {@link getBlockPrefix()} instead.
      *
      * @return string
      */

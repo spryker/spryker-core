@@ -7,19 +7,30 @@
 
 namespace Spryker\Zed\Search\Business\Model;
 
+use Psr\Log\LoggerInterface;
+
 class SearchInstaller implements SearchInstallerInterface
 {
     /**
-     * @var \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
+     * @var \Psr\Log\LoggerInterface
      */
-    protected $installerStack = [];
+    protected $logger;
 
     /**
-     * @param \Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] $installerStack
+     * @deprecated Use {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface} instead.
+     *
+     * @var \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[]
      */
-    public function __construct(array $installerStack)
+    protected $installer = [];
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface[]|\Spryker\Zed\Search\Business\Model\SearchInstallerInterface[] $installer Deprecated: Use {@link \Spryker\Zed\SearchExtension\Dependency\Plugin\InstallPluginInterface} instead.
+     */
+    public function __construct(LoggerInterface $logger, array $installer)
     {
-        $this->installerStack = $installerStack;
+        $this->logger = $logger;
+        $this->installer = $installer;
     }
 
     /**
@@ -27,8 +38,14 @@ class SearchInstaller implements SearchInstallerInterface
      */
     public function install()
     {
-        foreach ($this->installerStack as $installer) {
-            $installer->install();
+        foreach ($this->installer as $installer) {
+            if ($installer instanceof SearchInstallerInterface) {
+                $installer->install();
+
+                continue;
+            }
+
+            $installer->install($this->logger);
         }
     }
 }

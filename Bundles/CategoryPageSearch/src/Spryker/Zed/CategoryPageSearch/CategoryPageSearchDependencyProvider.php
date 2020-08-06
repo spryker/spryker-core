@@ -7,9 +7,8 @@
 
 namespace Spryker\Zed\CategoryPageSearch;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToEventBehaviorFacadeBridge;
-use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToSearchBridge;
+use Spryker\Zed\CategoryPageSearch\Dependency\Facade\CategoryPageSearchToStoreFacadeBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToCategoryQueryContainerBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\QueryContainer\CategoryPageSearchToLocaleQueryContainerBridge;
 use Spryker\Zed\CategoryPageSearch\Dependency\Service\CategoryPageSearchToUtilEncodingBridge;
@@ -26,8 +25,7 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
     public const QUERY_CONTAINER_LOCALE = 'QUERY_CONTAINER_LOCALE';
     public const FACADE_CATEGORY = 'FACADE_CATEGORY';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
-    public const FACADE_SEARCH = 'FACADE_SEARCH';
-    public const STORE = 'store';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -36,9 +34,11 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container = $this->addStoreFacade($container);
+
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CategoryPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -50,17 +50,11 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::STORE] = function (Container $container) {
-            return Store::getInstance();
-        };
+        $container = $this->addStoreFacade($container);
 
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CategoryPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
-
-        $container[self::FACADE_SEARCH] = function (Container $container) {
-            return new CategoryPageSearchToSearchBridge($container->getLocator()->search()->facade());
-        };
+        });
 
         return $container;
     }
@@ -72,13 +66,27 @@ class CategoryPageSearchDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CATEGORY, function (Container $container) {
             return new CategoryPageSearchToCategoryQueryContainerBridge($container->getLocator()->category()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CategoryPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new CategoryPageSearchToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

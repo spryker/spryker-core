@@ -52,9 +52,9 @@ class DataImportDumpConsole extends Console
     }
 
     /**
-     * @param array $dataImporter
+     * @param string[] $dataImporter
      *
-     * @return array[]
+     * @return array
      */
     protected function formatForTable(array $dataImporter): array
     {

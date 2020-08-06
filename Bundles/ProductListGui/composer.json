@@ -6,20 +6,20 @@
   "require": {
     "php": ">=7.2",
     "spryker/category": "^4.6.0",
+    "spryker/configurable-bundle-gui-extension": "^1.0.0",
     "spryker/gui": "^3.17.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.33.0",
     "spryker/locale": "^3.1.0",
     "spryker/product": "^6.4.0",
-    "spryker/product-list": "^1.4.0",
-    "spryker/product-list-gui-extension": "^1.1.0",
+    "spryker/product-list": "^1.6.0",
+    "spryker/product-list-gui-extension": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",
     "spryker/symfony": "^3.0.0",
     "spryker/util-csv": "^1.0.0",
     "spryker/util-text": "^1.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/testify": "*"
+    "spryker/code-sniffer": "*"
   },
   "suggest": {
     "spryker/merchant-relationship-product-list-gui": "If you want to use MerchantRelationshipProductListGui plugins. Minimum required version: ^1.1.0"
@@ -31,9 +31,13 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
+  },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

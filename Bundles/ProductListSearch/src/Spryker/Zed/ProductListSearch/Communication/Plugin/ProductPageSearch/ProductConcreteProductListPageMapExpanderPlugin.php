@@ -35,8 +35,12 @@ class ProductConcreteProductListPageMapExpanderPlugin extends AbstractPlugin imp
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expand(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer): PageMapTransfer
-    {
+    public function expand(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ): PageMapTransfer {
         if (!isset($productData[ProductPageSearchTransfer::PRODUCT_LIST_MAP])) {
             return $pageMapTransfer;
         }

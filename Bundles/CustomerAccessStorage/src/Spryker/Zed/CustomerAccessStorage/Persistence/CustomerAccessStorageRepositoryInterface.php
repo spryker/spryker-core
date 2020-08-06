@@ -21,7 +21,11 @@ interface CustomerAccessStorageRepositoryInterface
     public function getUnauthenticatedCustomerAccess(): CustomerAccessTransfer;
 
     /**
-     * @return array
+     * @deprecated Use {@link findFilteredCustomerAccessStorageEntities()} instead.
+     *
+     * @see \Spryker\Zed\CustomerAccessStorage\Persistence\CustomerAccessStorageRepositoryInterface::findFilteredCustomerAccessStorageEntities()
+     *
+     * @return \Orm\Zed\CustomerAccessStorage\Persistence\SpyUnauthenticatedCustomerAccessStorage[]
      */
     public function findAllCustomerAccessStorageEntities(): array;
 

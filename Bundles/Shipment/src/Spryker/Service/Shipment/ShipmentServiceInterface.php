@@ -26,7 +26,7 @@ interface ShipmentServiceInterface
 
     /**
      * Specification:
-     * - Returns hash based on shipping address, shipment method and requested delivery date.
+     * - Returns hash based on shipping address, shipment method, requested delivery date and shipment additional data.
      *
      * @api
      *

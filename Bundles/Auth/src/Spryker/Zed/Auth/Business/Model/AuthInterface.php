@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Auth\Business\Model;
 
+use Generated\Shared\Transfer\HttpRequestTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AuthInterface
@@ -56,6 +57,13 @@ interface AuthInterface
      * @return \Generated\Shared\Transfer\UserTransfer
      */
     public function getSystemUserByHash($hash);
+
+    /**
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return bool
+     */
+    public function isSystemUserRequest(HttpRequestTransfer $httpRequestTransfer): bool;
 
     /**
      * @param string $token

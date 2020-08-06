@@ -1,6 +1,6 @@
 # ContentBannerGui Module
 [![Build Status](https://travis-ci.org/spryker/content-banner-gui.svg)](https://travis-ci.org/spryker/content-banner-gui)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/content-banner-gui/badge.svg)](https://coveralls.io/github/spryker/content-banner-gui)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 ContentBannerGui provides plugins for basic operations for banner
 

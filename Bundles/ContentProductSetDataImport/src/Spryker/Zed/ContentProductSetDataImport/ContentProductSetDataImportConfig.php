@@ -16,6 +16,8 @@ class ContentProductSetDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CONTENT_PRODUCT_SET = 'content-product-set';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getContentProductSetDataImporterConfiguration(): DataImporterConfigurationTransfer

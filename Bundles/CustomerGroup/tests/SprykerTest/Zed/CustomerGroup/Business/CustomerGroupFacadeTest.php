@@ -317,8 +317,12 @@ class CustomerGroupFacadeTest extends Unit
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer(string $email = 'one@first.de', string $lastName = 'First', string $firstName = 'One', string $reference = 'one'): SpyCustomer
-    {
+    protected function createCustomer(
+        string $email = 'one@first.de',
+        string $lastName = 'First',
+        string $firstName = 'One',
+        string $reference = 'one'
+    ): SpyCustomer {
         $customerEntity = new SpyCustomer();
         $customerEntity->setFirstName($firstName);
         $customerEntity->setFirstName($lastName);

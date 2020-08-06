@@ -12,6 +12,9 @@ use Elastica\Query\MatchAll;
 use Elastica\Query\QueryString;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\Query\SearchStringQuery} instead.
+ */
 class SearchStringQuery implements QueryInterface
 {
     /**
@@ -42,6 +45,11 @@ class SearchStringQuery implements QueryInterface
     }
 
     /**
+     * {@inheritDoc}
+     * - Returns a query object for string search.
+     *
+     * @api
+     *
      * @return \Elastica\Query\MatchAll|\Elastica\Query
      */
     public function getSearchQuery()

@@ -8,11 +8,14 @@
 namespace Spryker\Zed\ProductSearch\Business\Model;
 
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarkerInterface;
 use Spryker\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
 
 class ProductSearchWriter implements ProductSearchWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\ProductSearch\Business\Marker\ProductSearchMarkerInterface
      */
@@ -42,8 +45,18 @@ class ProductSearchWriter implements ProductSearchWriterInterface
     {
         $productConcreteTransfer->requireIdProductConcrete();
 
-        $this->productSearchQueryContainer->getConnection()->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): ProductConcreteTransfer {
+            return $this->executePersistProductSearchTransaction($productConcreteTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function executePersistProductSearchTransaction(ProductConcreteTransfer $productConcreteTransfer): ProductConcreteTransfer
+    {
         $this->productSearchMarker->deactivateProductSearch(
             $productConcreteTransfer->getIdProductConcrete(),
             $this->getIsSearchableLocales($productConcreteTransfer, false)
@@ -53,8 +66,6 @@ class ProductSearchWriter implements ProductSearchWriterInterface
             $productConcreteTransfer->getIdProductConcrete(),
             $this->getIsSearchableLocales($productConcreteTransfer, true)
         );
-
-        $this->productSearchQueryContainer->getConnection()->commit();
 
         return $productConcreteTransfer;
     }

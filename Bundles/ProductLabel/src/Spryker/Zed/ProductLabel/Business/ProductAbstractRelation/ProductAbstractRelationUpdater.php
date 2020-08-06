@@ -54,19 +54,23 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
     }
 
     /**
+     * @param bool $isTouchEnabled
+     *
      * @return void
      */
-    public function updateProductLabelRelations()
+    public function updateProductLabelRelations(bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () {
-            $this->executeUpdateProductLabelRelationsTransaction();
+        $this->handleDatabaseTransaction(function () use ($isTouchEnabled) {
+            $this->executeUpdateProductLabelRelationsTransaction($isTouchEnabled);
         });
     }
 
     /**
+     * @param bool $isTouchEnabled
+     *
      * @return void
      */
-    protected function executeUpdateProductLabelRelationsTransaction()
+    protected function executeUpdateProductLabelRelationsTransaction(bool $isTouchEnabled = true)
     {
         foreach ($this->productLabelRelationUpdaterPlugins as $productLabelRelationUpdaterPlugin) {
             $pluginName = get_class($productLabelRelationUpdaterPlugin);
@@ -78,32 +82,37 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
                 count($productLabelProductAbstractRelationTransfers)
             ));
 
-            $this->updateRelations($productLabelProductAbstractRelationTransfers, $pluginName);
+            $this->updateRelations($productLabelProductAbstractRelationTransfers, $pluginName, $isTouchEnabled);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer[] $productLabelProductAbstractRelationTransfers
      * @param string $pluginName
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function updateRelations($productLabelProductAbstractRelationTransfers, $pluginName)
+    protected function updateRelations($productLabelProductAbstractRelationTransfers, $pluginName, bool $isTouchEnabled = true)
     {
         foreach ($productLabelProductAbstractRelationTransfers as $productLabelProductAbstractRelationTransfer) {
-            $this->deAssign($productLabelProductAbstractRelationTransfer, $pluginName);
-            $this->assign($productLabelProductAbstractRelationTransfer, $pluginName);
+            $this->deAssign($productLabelProductAbstractRelationTransfer, $pluginName, $isTouchEnabled);
+            $this->assign($productLabelProductAbstractRelationTransfer, $pluginName, $isTouchEnabled);
         }
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer
      * @param string $pluginName
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function deAssign(ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer, $pluginName)
-    {
+    protected function deAssign(
+        ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer,
+        $pluginName,
+        bool $isTouchEnabled = true
+    ): void {
         $toBeDeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign());
 
         if (!$toBeDeAssigned) {
@@ -119,18 +128,23 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
 
         $this->productAbstractRelationDeleter->removeRelations(
             $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
-            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign()
+            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToDeAssign(),
+            $isTouchEnabled
         );
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer
      * @param string $pluginName
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function assign(ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer, $pluginName)
-    {
+    protected function assign(
+        ProductLabelProductAbstractRelationsTransfer $productLabelProductAbstractRelationTransfer,
+        $pluginName,
+        bool $isTouchEnabled = true
+    ): void {
         $toBeAssigned = count($productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign());
 
         if (!$toBeAssigned) {
@@ -146,7 +160,8 @@ class ProductAbstractRelationUpdater implements ProductAbstractRelationUpdaterIn
 
         $this->productAbstractRelationWriter->addRelations(
             $productLabelProductAbstractRelationTransfer->getIdProductLabel(),
-            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign()
+            $productLabelProductAbstractRelationTransfer->getIdsProductAbstractToAssign(),
+            $isTouchEnabled
         );
     }
 

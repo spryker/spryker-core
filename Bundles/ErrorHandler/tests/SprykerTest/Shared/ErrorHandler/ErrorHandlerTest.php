@@ -147,7 +147,7 @@ class ErrorHandlerTest extends Unit
         ErrorLoggerInterface $errorLogger,
         ErrorRendererInterface $errorRenderer,
         array $methods = []
-    ) {
+    ): ErrorHandler {
         $mockMethods = [
             'cleanOutputBuffer',
             'sendExitCode',
@@ -167,7 +167,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorLogger
      */
-    protected function getErrorLoggerMock()
+    protected function getErrorLoggerMock(): ErrorLogger
     {
         $loggerMock = $this->getLoggerMock();
 
@@ -183,7 +183,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
-    protected function getLoggerMock()
+    protected function getLoggerMock(): LoggerInterface
     {
         $loggerMock = $this->getMockBuilder(LoggerInterface::class)
             ->getMock();
@@ -194,7 +194,7 @@ class ErrorHandlerTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\ErrorHandler\ErrorRenderer\ErrorRendererInterface
      */
-    protected function getErrorRendererMock()
+    protected function getErrorRendererMock(): ErrorRendererInterface
     {
         $errorRendererMock = $this->getMockBuilder(ErrorRendererInterface::class)
             ->getMock();

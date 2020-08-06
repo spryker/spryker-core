@@ -117,6 +117,7 @@ class NavigationMenuCollector extends AbstractStoragePropelCollector
 
             if (is_array($value)) {
                 $filteredArray[$key] = $this->cleanNavigationArray($value);
+
                 continue;
             }
 

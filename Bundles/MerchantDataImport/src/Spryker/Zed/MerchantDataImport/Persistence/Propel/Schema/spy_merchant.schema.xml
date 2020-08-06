@@ -4,7 +4,7 @@
           namespace="Orm\Zed\Merchant\Persistence"
           package="src.Orm.Zed.Merchant.Persistence"
 >
-    <table name="spy_merchant" phpName="SpyMerchant" identifierQuoting="true">
+    <table name="spy_merchant" identifierQuoting="true">
         <column name="merchant_key" type="VARCHAR" size="255" description="Identifier for existing entities. It should never be changed."/>
 
         <unique name="spy_merchant-merchant_key">

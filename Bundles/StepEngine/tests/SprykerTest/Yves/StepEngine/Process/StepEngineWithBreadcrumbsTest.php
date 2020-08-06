@@ -46,7 +46,7 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
      */
-    protected function getStepBreadcrumbGeneratorMock()
+    protected function getStepBreadcrumbGeneratorMock(): StepBreadcrumbGeneratorInterface
     {
         return $this->getMockBuilder(StepBreadcrumbGeneratorInterface::class)->getMock();
     }
@@ -56,7 +56,7 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface
      */
-    protected function getDataContainerMock(?AbstractTransfer $dataTransfer = null)
+    protected function getDataContainerMock(?AbstractTransfer $dataTransfer = null): DataContainerInterface
     {
         $dataContainerMock = $this->getMockBuilder(DataContainerInterface::class)->getMock();
 
@@ -78,8 +78,13 @@ class StepEngineWithBreadcrumbsTest extends AbstractStepEngineTest
      *
      * @return \Spryker\Yves\StepEngine\Dependency\Step\StepWithBreadcrumbInterface
      */
-    protected function getStepMockWithBreadcrumb(bool $preCondition = true, bool $postCondition = true, bool $requireInput = true, string $stepRoute = '', string $escapeRoute = ''): StepWithBreadcrumbInterface
-    {
+    protected function getStepMockWithBreadcrumb(
+        bool $preCondition = true,
+        bool $postCondition = true,
+        bool $requireInput = true,
+        string $stepRoute = '',
+        string $escapeRoute = ''
+    ): StepWithBreadcrumbInterface {
         return new StepMockWithBreadcrumbs($preCondition, $postCondition, $requireInput, $stepRoute, $escapeRoute);
     }
 }

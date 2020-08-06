@@ -4,6 +4,8 @@ build:
 
     nodes:
         analysis:
+            requires:
+                - branch: /^master$|^(bugfix|hotfix|beta)\/.+|^feature\/[a-z]+-\d+\/(master|dev)-.+|^feature\/[a-z]+-\d+\/[a-z]+-\d+\/(master|dev)-.+/
             tests:
                 override:
                     - php-scrutinizer-run
@@ -11,6 +13,7 @@ build:
 filter:
     excluded_paths:
         - Bundles/Propel/src/Spryker/Zed/Propel/Business/Builder/*
+        - Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/*
         - Bundles/*/src/Spryker/Zed/*/*Factory.php
         - Bundles/Transfer/tests/_data/test_files/*
 

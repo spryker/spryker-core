@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Queue\Communication\Console;
 
 use Codeception\Test\Unit;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Queue\Business\QueueFacadeInterface;
 use Spryker\Zed\Queue\Communication\Console\QueueDumpConsole;
 use Symfony\Component\Console\Application;
@@ -55,7 +56,7 @@ class QueueDumpConsoleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Queue\Communication\Console\QueueDumpConsole
      */
-    protected function getQueueDumpConsoleMock()
+    protected function getQueueDumpConsoleMock(): QueueDumpConsole
     {
         $mockBuilder = $this->getMockBuilder(QueueDumpConsole::class)
             ->setMethods(['getFacade']);
@@ -69,7 +70,7 @@ class QueueDumpConsoleTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Kernel\Business\AbstractFacade
      */
-    protected function getFacadeMock()
+    protected function getFacadeMock(): AbstractFacade
     {
         $mockBuilder = $this->getMockBuilder(QueueFacadeInterface::class);
 

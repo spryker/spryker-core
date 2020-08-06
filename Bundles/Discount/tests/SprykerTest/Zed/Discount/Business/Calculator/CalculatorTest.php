@@ -615,7 +615,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\SpecificationBuilderInterface
      */
-    protected function createSpecificationBuilderMock()
+    protected function createSpecificationBuilderMock(): SpecificationBuilderInterface
     {
         return $this->getMockBuilder(SpecificationBuilderInterface::class)->getMock();
     }
@@ -623,7 +623,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Facade\DiscountToMessengerInterface
      */
-    protected function createMessengerFacadeBridgeMock()
+    protected function createMessengerFacadeBridgeMock(): DiscountToMessengerInterface
     {
         return $this->getMockBuilder(DiscountToMessengerInterface::class)->getMock();
     }
@@ -631,7 +631,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface
      */
-    protected function createCalculatorPluginMock()
+    protected function createCalculatorPluginMock(): DiscountCalculatorPluginInterface
     {
         return $this->getMockBuilder(DiscountCalculatorPluginInterface::class)->getMock();
     }
@@ -639,7 +639,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Dependency\Plugin\DiscountAmountCalculatorPluginInterface
      */
-    protected function createCalculatorDiscountAmountPluginMock()
+    protected function createCalculatorDiscountAmountPluginMock(): DiscountAmountCalculatorPluginInterface
     {
         return $this->getMockBuilder(DiscountAmountCalculatorPluginInterface::class)->getMock();
     }
@@ -647,7 +647,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\Distributor\DistributorInterface
      */
-    protected function createDistributorMock()
+    protected function createDistributorMock(): DistributorInterface
     {
         return $this->getMockBuilder(DistributorInterface::class)->getMock();
     }
@@ -655,7 +655,7 @@ class CalculatorTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorSpecificationInterface
      */
-    protected function collectorSpecificationMock()
+    protected function collectorSpecificationMock(): CollectorSpecificationInterface
     {
         return $this->getMockBuilder(CollectorSpecificationInterface::class)->getMock();
     }

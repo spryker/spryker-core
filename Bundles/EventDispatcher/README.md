@@ -1,6 +1,6 @@
 # EventDispatcher Module
 [![Build Status](https://travis-ci.org/spryker/event-dispatcher.svg)](https://travis-ci.org/spryker/event-dispatcher)
-[![Coverage Status](https://coveralls.io/repos/github/spryker/event-dispatcher/badge.svg)](https://coveralls.io/github/spryker/event-dispatcher)
+[![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
 EventDispatcher module provides a plugin that adds an event dispatcher to the Application.
 

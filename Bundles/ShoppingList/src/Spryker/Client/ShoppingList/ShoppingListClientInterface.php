@@ -93,12 +93,34 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      * @param array $params
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function addItem(ShoppingListItemTransfer $shoppingListItemTransfer, array $params = []): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Hydrates ShoppingListItem with provided optional params.
+     *  - Adds item to shopping list.
+     *  - Updates customer permissions.
+     *  - Get messages from zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     * @param array $params
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function addShoppingListItem(
+        ShoppingListItemTransfer $shoppingListItemTransfer,
+        array $params = []
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * Specification:
@@ -157,7 +179,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewWithoutProductDetails(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer): ShoppingListOverviewResponseTransfer;
+    public function getShoppingListOverviewWithoutProductDetails(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+    ): ShoppingListOverviewResponseTransfer;
 
     /**
      * Specification:
@@ -195,7 +219,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListAddToCartRequestCollectionTransfer
      */
-    public function addItemCollectionToCart(ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer): ShoppingListAddToCartRequestCollectionTransfer;
+    public function addItemCollectionToCart(
+        ShoppingListAddToCartRequestCollectionTransfer $shoppingListAddToCartRequestCollectionTransfer
+    ): ShoppingListAddToCartRequestCollectionTransfer;
 
     /**
      * Specification:
@@ -223,7 +249,9 @@ interface ShoppingListClientInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
      */
-    public function getShoppingListItemCollectionTransfer(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
+    public function getShoppingListItemCollectionTransfer(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListItemCollectionTransfer;
 
     /**
      * Specification:
@@ -233,11 +261,30 @@ interface ShoppingListClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link updateShoppingListItemById()} instead. Will be removed with next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function updateShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * Specification:
+     *  - Makes Zed request.
+     *  - Updates shopping list item.
+     *  - Updates customer permissions.
+     *  - Get messages from Zed request and put them to session.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemResponseTransfer
+     */
+    public function updateShoppingListItemById(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemResponseTransfer;
 
     /**
      * Specification:
@@ -332,4 +379,22 @@ interface ShoppingListClientInterface
      * @return int
      */
     public function calculateShoppingListSubtotal(array $shoppingListItemProductViews): int;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Finds shopping list by uuid.
+     * - Requires uuid field to be set in ShoppingListTransfer.
+     * - Requires idCompanyUser field to be set in ShoppingListTransfer.
+     * - Uuid is not a required field and could be missing.
+     *
+     * @api
+     *
+     * {@internal will work if uuid field is provided.}
+     *
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListResponseTransfer
+     */
+    public function findShoppingListByUuid(ShoppingListTransfer $shoppingListTransfer): ShoppingListResponseTransfer;
 }

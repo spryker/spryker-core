@@ -10,7 +10,7 @@ namespace Spryker\Yves\Storage\Controller;
 use Spryker\Shared\Storage\StorageConstants;
 
 /**
- * @method \Spryker\Yves\Kernel\Application getApplication()
+ * @method \Spryker\Service\Container\ContainerInterface getApplication()
  */
 trait StorageCacheControllerTrait
 {

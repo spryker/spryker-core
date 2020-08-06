@@ -23,8 +23,7 @@ class ProductTaxSetsResourceController extends AbstractController
      *              "Retrieves abstract product tax sets."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",

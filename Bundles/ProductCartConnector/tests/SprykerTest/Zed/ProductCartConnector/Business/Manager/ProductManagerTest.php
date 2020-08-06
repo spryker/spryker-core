@@ -136,7 +136,7 @@ class ProductManagerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getMockProductFacade()
+    private function getMockProductFacade(): ProductCartConnectorToProductInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToProductInterface::class)
             ->setMethods([
@@ -147,6 +147,9 @@ class ProductManagerTest extends Unit
                 'isProductConcreteActive',
                 'getRawProductConcreteBySku',
                 'getRawProductConcreteTransfersByConcreteSkus',
+                'getProductUrls',
+                'getRawProductAbstractTransfersByAbstractSkus',
+                'getProductConcretesByCriteria',
             ])
             ->disableOriginalConstructor()
             ->getMock();
@@ -155,7 +158,7 @@ class ProductManagerTest extends Unit
     /**
      * @return \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    private function getMockLocaleFacade()
+    private function getMockLocaleFacade(): ProductCartConnectorToLocaleInterface
     {
         return $this->getMockBuilder(ProductCartConnectorToLocaleInterface::class)
             ->setMethods(['getCurrentLocale'])

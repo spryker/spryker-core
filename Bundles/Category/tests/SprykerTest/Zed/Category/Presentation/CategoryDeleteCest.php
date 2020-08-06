@@ -32,6 +32,6 @@ class CategoryDeleteCest
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getDeleteButtonSelector());
         $i->click(CategoryListPage::getDeleteButtonSelector());
-        $i->seeBreadcrumbNavigation('Category / Delete Category');
+        $i->seeBreadcrumbNavigation('Catalog / Category / Delete Category');
     }
 }

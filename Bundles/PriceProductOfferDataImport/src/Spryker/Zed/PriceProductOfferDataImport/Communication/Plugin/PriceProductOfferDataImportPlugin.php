@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductOfferDataImport\Communication\Plugin;
@@ -14,12 +14,14 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig;
 
 /**
- * @method \Spryker\Zed\PriceProductDataImport\Business\PriceProductDataImportFacadeInterface getFacade()
- * @method \Spryker\Zed\PriceProductDataImport\PriceProductDataImportConfig getConfig()
+ * @method \Spryker\Zed\PriceProductOfferDataImport\Business\PriceProductOfferDataImportFacadeInterface getFacade()
+ * @method \Spryker\Zed\PriceProductOfferDataImport\PriceProductOfferDataImportConfig getConfig()
  */
 class PriceProductOfferDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class PriceProductOfferDataImportPlugin extends AbstractPlugin implements DataIm
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

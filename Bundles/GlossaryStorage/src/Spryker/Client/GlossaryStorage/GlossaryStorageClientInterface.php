@@ -24,4 +24,28 @@ interface GlossaryStorageClientInterface
      * @return string
      */
     public function translate($id, $localeName, array $parameters = []);
+
+    /**
+     * Specification:
+     * - Reads multiple glossary items from key-value storage by the given keys and locale.
+     * - Returns array of translated strings indexed by key.
+     * - If there was no translation found, then the key will be used as a translated string.
+     * - Parameters passed will be replaced in the translated text.
+     * - Parameters should be provided in the following format:
+     * [
+     *      key => [
+     *          stringToReplace => replaceWithString,
+     *          anotherStringToReplace => anotherReplaceWithString,
+     *      ]
+     * ]
+     *
+     * @api
+     *
+     * @param string[] $keyNames
+     * @param string $localeName
+     * @param string[][] $parameters
+     *
+     * @return string[]
+     */
+    public function translateBulk(array $keyNames, string $localeName, array $parameters = []): array;
 }

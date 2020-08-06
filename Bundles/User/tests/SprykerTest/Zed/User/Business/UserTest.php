@@ -8,7 +8,11 @@
 namespace SprykerTest\Zed\User\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\MailBuilder;
 use Generated\Shared\DataBuilder\UserBuilder;
+use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Client\Session\SessionClient;
 use Spryker\Zed\User\Business\Exception\UserNotFoundException;
@@ -35,7 +39,7 @@ class UserTest extends Unit
     public const USERNAME = 'test@test.com';
 
     /**
-     * @var \SprykerTest\Zed\User\BusinessTester
+     * @var \SprykerTest\Zed\User\UserBusinessTester
      */
     public $tester;
 
@@ -359,6 +363,119 @@ class UserTest extends Unit
     }
 
     /**
+     * @dataProvider getUserPositiveScenarioDataProvider
+     *
+     * @param string[] $userCriteriaKeys
+     *
+     * @return void
+     */
+    public function testFindUserReturnsTransferWithCorrectData(array $userCriteriaKeys): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => 'test_user@spryker.com',
+        ]);
+
+        $userCriteriaData = [
+            UserCriteriaTransfer::ID_USER => $userTransfer->getIdUser(),
+            UserCriteriaTransfer::EMAIL => $userTransfer->getUsername(),
+        ];
+        $userCriteriaData = array_intersect_key(
+            $userCriteriaData,
+            array_flip($userCriteriaKeys)
+        );
+
+        $userCriteriaTransfer = (new UserCriteriaTransfer())
+            ->fromArray($userCriteriaData);
+
+        // Act
+        $foundUserTransfer = $this->tester
+            ->getFacade()
+            ->findUser($userCriteriaTransfer);
+
+        // Assert
+        $this->assertSame($userTransfer->getIdUser(), $foundUserTransfer->getIdUser());
+    }
+
+    /**
+     * @dataProvider getUserNegativeScenarioDataProvider
+     *
+     * @param array $userCriteriaData
+     *
+     * @return void
+     */
+    public function testFindUserReturnsNullWithWrongData(array $userCriteriaData): void
+    {
+        // Arrange
+        $this->tester->haveUser([
+            UserTransfer::USERNAME => 'test_user@spryker.com',
+        ]);
+
+        $userCriteriaTransfer = (new UserCriteriaTransfer())
+            ->fromArray($userCriteriaData);
+
+        // Act
+        $foundUserTransfer = $this->tester
+            ->getFacade()
+            ->findUser($userCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($foundUserTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataReturnsUpdatedTransfer(): void
+    {
+        // Arrange
+        $userTransfer = $this->tester->haveUser([
+            UserTransfer::USERNAME => static::USERNAME,
+        ]);
+        $mailTransfer = $this->getMailTransfer($userTransfer->getUsername());
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertSame($mailTransfer->getUser()->getIdUser(), $userTransfer->getIdUser());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandMailWithUserDataDoesNothingWithIncorrectData(): void
+    {
+        // Arrange
+        $mailTransfer = $this->getMailTransfer('nonexistent_email@mail.com');
+
+        // Act
+        $expenseTransfer = $this->tester
+            ->getFacade()
+            ->expandMailWithUserData($mailTransfer);
+
+        // Assert
+        $this->assertNull($mailTransfer->getUser());
+    }
+
+    /**
+     * @param string $recipientEmail
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    protected function getMailTransfer(string $recipientEmail): MailTransfer
+    {
+        return (new MailBuilder())
+            ->seed()
+            ->withRecipient([
+                MailRecipientTransfer::EMAIL => $recipientEmail,
+            ])
+            ->build();
+    }
+
+    /**
      * @param string $userName
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -380,7 +497,7 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\Session\SessionClient
      */
-    protected function createSessionClient()
+    protected function createSessionClient(): SessionClient
     {
         $sessionClient = $this->getMockBuilder(SessionClient::class)->setMethods(['get', 'set', 'has'])->getMock();
 
@@ -390,10 +507,48 @@ class UserTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\User\Persistence\UserQueryContainerInterface
      */
-    protected function createQueryContainer()
+    protected function createQueryContainer(): UserQueryContainerInterface
     {
         $queryContainer = $this->getMockBuilder(UserQueryContainerInterface::class)->getMock();
 
         return $queryContainer;
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserPositiveScenarioDataProvider(): array
+    {
+        return [
+            'by id user' => [
+                'userCriteriaDataKeys' => [
+                    UserCriteriaTransfer::ID_USER,
+                ],
+            ],
+            'by email' => [
+                'userCriteriaDataKeys' => [
+                    UserCriteriaTransfer::EMAIL,
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserNegativeScenarioDataProvider(): array
+    {
+        return [
+            'by id user' => [
+                'userCriteriaData' => [
+                    UserCriteriaTransfer::ID_USER => 0,
+                ],
+            ],
+            'by email' => [
+                'userCriteriaData' => [
+                    UserCriteriaTransfer::EMAIL => '',
+                ],
+            ],
+        ];
     }
 }

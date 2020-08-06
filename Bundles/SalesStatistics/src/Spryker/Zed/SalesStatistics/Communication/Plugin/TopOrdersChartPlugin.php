@@ -28,6 +28,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     ];
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -38,6 +40,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string|null $dataIdentifier
@@ -59,6 +63,8 @@ class TopOrdersChartPlugin extends AbstractPlugin implements ChartPluginInterfac
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

@@ -23,6 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
 class DetailController extends AbstractController
 {
     protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     public const ROUTE_REDIRECT = '/sales/detail';
 
     /**
@@ -59,7 +60,7 @@ class DetailController extends AbstractController
         }
 
         $groupedOrderItems = $this->getFacade()
-            ->getUniqueOrderItems($orderTransfer->getItems());
+            ->getUniqueItemsFromOrder($orderTransfer);
 
         return array_merge([
             'eventsGroupedByItem' => $eventsGroupedByItem,
@@ -70,6 +71,8 @@ class DetailController extends AbstractController
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection,
             'groupedOrderItems' => $groupedOrderItems,
             'changeStatusRedirectUrl' => $this->createRedirectLink($idSalesOrder),
+            'tableColumnHeaders' => $this->getFactory()->createOrderItemsTableExpander()->getColumnHeaders(),
+            'tableColumnCellsContent' => $this->getFactory()->createOrderItemsTableExpander()->getColumnCellsContent($orderTransfer->getItems()),
         ], $blockResponseData);
     }
 
@@ -124,13 +127,10 @@ class DetailController extends AbstractController
     {
         $subRequest = clone $request;
         $subRequest->setMethod(Request::METHOD_POST);
+        /** @var array $orderTransfer */
         $subRequest->request->set('orderTransfer', $orderTransfer);
 
         $responseData = [];
-        /*
-         * @var string $blockName
-         * @var \Symfony\Component\HttpFoundation\Response $blockResponse
-         */
         foreach ($data as $blockName => $blockUrl) {
             $responseData[$blockName] = $this->handleSubRequest($subRequest, $blockUrl);
         }

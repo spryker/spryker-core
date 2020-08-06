@@ -44,7 +44,7 @@ class MoneyCollectionSingleStoreDataProvider extends BaseMoneyCollectionDataProv
     /**
      * @param \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[] $currentFormMoneyValueCollection
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\MoneyValueTransfer[]
      */
     public function mergeMissingMoneyValues(ArrayObject $currentFormMoneyValueCollection)
     {

@@ -50,11 +50,17 @@ class SalesDataHelper extends Module
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param string|null $stateMachineProcessName
+     * @param \Spryker\Zed\CheckoutExtension\Dependency\Plugin\CheckoutDoSaveOrderInterface[] $checkoutDoSaveOrderPlugins
      *
      * @return \Generated\Shared\Transfer\SaveOrderTransfer
      */
-    public function haveOrderFromQuote(QuoteTransfer $quoteTransfer, ?string $stateMachineProcessName = null): SaveOrderTransfer
-    {
+    public function haveOrderFromQuote(
+        QuoteTransfer $quoteTransfer,
+        ?string $stateMachineProcessName = null,
+        array $checkoutDoSaveOrderPlugins = []
+    ): SaveOrderTransfer {
+        $this->saveOrderStack = $checkoutDoSaveOrderPlugins;
+
         return $this->persistOrder($quoteTransfer, $stateMachineProcessName);
     }
 
@@ -150,6 +156,7 @@ class SalesDataHelper extends Module
     protected function createQuoteTransfer(array $override = []): QuoteTransfer
     {
         return (new QuoteBuilder())
+            ->withStore($override)
             ->withItem($override)
             ->withCustomer()
             ->withTotals()

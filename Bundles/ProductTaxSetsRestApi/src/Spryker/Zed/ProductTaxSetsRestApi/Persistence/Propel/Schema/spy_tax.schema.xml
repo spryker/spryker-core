@@ -3,7 +3,7 @@
           namespace="Orm\Zed\Tax\Persistence"
           package="src.Orm.Zed.Tax.Persistence">
 
-    <table name="spy_tax_set" phpName="SpyTaxSet">
+    <table name="spy_tax_set">
         <behavior name="uuid">
             <parameter name="key_prefix" value="tax_set"/>
             <parameter name="key_columns" value="id_tax_set"/>

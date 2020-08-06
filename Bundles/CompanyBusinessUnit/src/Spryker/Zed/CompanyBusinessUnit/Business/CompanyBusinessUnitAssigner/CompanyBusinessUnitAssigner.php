@@ -33,7 +33,8 @@ class CompanyBusinessUnitAssigner implements CompanyBusinessUnitAssignerInterfac
     public function assignDefaultBusinessUnitToCompanyUser(
         CompanyUserResponseTransfer $companyUserResponseTransfer
     ): CompanyUserResponseTransfer {
-        if ($companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null
+        if (
+            $companyUserResponseTransfer->getCompanyUser()->getIdCompanyUser() === null
             && $companyUserResponseTransfer->getCompanyUser()->getFkCompanyBusinessUnit() === null
         ) {
             $companyBusinessUnit = $this->repository

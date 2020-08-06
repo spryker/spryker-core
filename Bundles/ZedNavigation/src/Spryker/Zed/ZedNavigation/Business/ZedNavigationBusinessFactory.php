@@ -8,8 +8,11 @@
 namespace Spryker\Zed\ZedNavigation\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilter;
+use Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache;
 use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheBuilder;
+use Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheRemover;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator;
 use Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector;
 use Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor;
@@ -18,6 +21,11 @@ use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFin
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator;
 use Spryker\Zed\ZedNavigation\Business\Model\ZedNavigationBuilder;
+use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolver;
+use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
+use Spryker\Zed\ZedNavigation\Business\Strategy\BreadcrumbNavigationMergeStrategy;
+use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationFullMergeStrategy;
+use Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface;
 use Spryker\Zed\ZedNavigation\ZedNavigationDependencyProvider;
 
 /**
@@ -33,7 +41,19 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
         return new ZedNavigationBuilder(
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
-            $this->createPathExtractor()
+            $this->createPathExtractor(),
+            $this->createNavigationItemFilter()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface
+     */
+    public function createNavigationItemFilter(): NavigationItemFilterInterface
+    {
+        return new NavigationItemFilter(
+            $this->getNavigationItemFilterPlugins(),
+            $this->getNavigationItemCollectionFilterPlugins()
         );
     }
 
@@ -49,9 +69,19 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheRemover
+     */
+    public function createNavigationCacheRemover(): ZedNavigationCacheRemover
+    {
+        return new ZedNavigationCacheRemover(
+            $this->createNavigationCache()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatter
      */
-    protected function createMenuFormatter()
+    public function createMenuFormatter()
     {
         $urlBuilder = $this->getUrlBuilder();
         $urlUniqueValidator = $this->createUrlUniqueValidator();
@@ -67,7 +97,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinder
      */
-    protected function createNavigationSchemaFinder()
+    public function createNavigationSchemaFinder()
     {
         return new ZedNavigationSchemaFinder(
             $this->getConfig()->getNavigationSchemaPathPattern(),
@@ -78,18 +108,19 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollector
      */
-    protected function createNavigationCollector()
+    public function createNavigationCollector()
     {
         return new ZedNavigationCollector(
             $this->createNavigationSchemaFinder(),
-            $this->getConfig()->getRootNavigationSchema()
+            $this->createMergeNavigationStrategyResolver(),
+            $this->getConfig()
         );
     }
 
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractor
      */
-    protected function createPathExtractor()
+    public function createPathExtractor()
     {
         return new PathExtractor();
     }
@@ -97,7 +128,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Validator\MenuLevelValidator
      */
-    protected function createMenuLevelValidator()
+    public function createMenuLevelValidator()
     {
         $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 
@@ -107,7 +138,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCache
      */
-    protected function createNavigationCache()
+    public function createNavigationCache()
     {
         return new ZedNavigationCache(
             $this->getConfig()->getCacheFile(),
@@ -117,17 +148,65 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface
+     */
+    public function createMergeNavigationStrategyResolver(): MergeNavigationStrategyResolverInterface
+    {
+        return new MergeNavigationStrategyResolver(
+            $this->getConfig(),
+            [
+                $this->createNavigationFullMergeStrategy(),
+                $this->createBreadcrumbNavigationMergeStrategy(),
+            ]
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
+     */
+    public function createNavigationFullMergeStrategy(): NavigationMergeStrategyInterface
+    {
+        return new NavigationFullMergeStrategy();
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigation\Business\Strategy\NavigationMergeStrategyInterface
+     */
+    public function createBreadcrumbNavigationMergeStrategy(): NavigationMergeStrategyInterface
+    {
+        return new BreadcrumbNavigationMergeStrategy();
+    }
+
+    /**
      * @return \Spryker\Zed\ZedNavigation\Dependency\Util\ZedNavigationToUtilEncodingInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService()
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::SERVICE_ENCODING);
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ZedNavigation\Business\ZedNavigationBusinessFactory::getNavigationItemCollectionFilterPlugins()} instead.
+     *
+     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemFilterPluginInterface[]
+     */
+    public function getNavigationItemFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_FILTER);
+    }
+
+    /**
+     * @return \Spryker\Zed\ZedNavigationExtension\Dependency\Plugin\NavigationItemCollectionFilterPluginInterface[]
+     */
+    public function getNavigationItemCollectionFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(ZedNavigationDependencyProvider::PLUGINS_NAVIGATION_ITEM_COLLECTION_FILTER);
+    }
+
+    /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Collector\Decorator\ZedNavigationCollectorCacheDecorator
      */
-    protected function createCachedNavigationCollector()
+    public function createCachedNavigationCollector()
     {
         return new ZedNavigationCollectorCacheDecorator(
             $this->createNavigationCollector(),
@@ -139,7 +218,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Shared\Url\UrlBuilderInterface
      */
-    protected function getUrlBuilder()
+    public function getUrlBuilder()
     {
         return $this->getProvidedDependency(ZedNavigationDependencyProvider::URL_BUILDER);
     }
@@ -147,7 +226,7 @@ class ZedNavigationBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ZedNavigation\Business\Model\Validator\UrlUniqueValidator
      */
-    protected function createUrlUniqueValidator()
+    public function createUrlUniqueValidator()
     {
         return new UrlUniqueValidator();
     }

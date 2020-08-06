@@ -47,7 +47,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolver::executeResolvedPluginsBySourcesWithIds()} instead.
      *
      * @param string[] $resources
      *
@@ -69,7 +69,7 @@ class ExporterPluginResolver implements ExporterPluginResolverInterface
     public function executeResolvedPluginsBySourcesWithIds(array $resources, array $ids): void
     {
         $pluginsPerExporter = $this->getResolvedPluginsByResources($resources);
-        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS]);
+        $this->queryContainerExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::QUERY_CONTAINER_SYNCHRONIZATION_PLUGINS], $ids);
         $this->repositoryExporter->exportSynchronizedData($pluginsPerExporter[ExporterPluginResolver::REPOSITORY_SYNCHRONIZATION_PLUGINS], $ids);
     }
 

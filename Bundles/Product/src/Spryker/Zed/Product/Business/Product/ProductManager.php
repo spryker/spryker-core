@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductManager implements ProductManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -50,20 +53,9 @@ class ProductManager implements ProductManagerInterface
      */
     public function addProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $idProductAbstract = $this->productAbstractManager->createProductAbstract($productAbstractTransfer);
-        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
-        foreach ($productConcreteCollection as $productConcrete) {
-            $productConcrete->setFkProductAbstract($idProductAbstract);
-            $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcrete);
-            $productConcrete->setIdProductConcrete($idProductConcrete);
-        }
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $idProductAbstract;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer, $productConcreteCollection): int {
+            return $this->executeAddProductTransaction($productAbstractTransfer, $productConcreteCollection);
+        });
     }
 
     /**
@@ -74,27 +66,56 @@ class ProductManager implements ProductManagerInterface
      */
     public function saveProduct(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteCollection)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer, $productConcreteCollection): int {
+            return $this->executeSaveProductTransaction($productAbstractTransfer, $productConcreteCollection);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteTransfers
+     *
+     * @return int
+     */
+    protected function executeAddProductTransaction(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteTransfers): int
+    {
+        $idProductAbstract = $this->productAbstractManager->createProductAbstract($productAbstractTransfer);
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
+            $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
+            $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+        }
+
+        return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     * @param array $productConcreteTransfers
+     *
+     * @return int
+     */
+    protected function executeSaveProductTransaction(ProductAbstractTransfer $productAbstractTransfer, array $productConcreteTransfers): int
+    {
         $idProductAbstract = $this->productAbstractManager->saveProductAbstract($productAbstractTransfer);
 
-        foreach ($productConcreteCollection as $productConcrete) {
-            $productConcrete->setFkProductAbstract($idProductAbstract);
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $productConcreteTransfer->setFkProductAbstract($idProductAbstract);
 
             $productConcreteEntity = $this->productConcreteManager->findProductEntityByAbstractAndConcrete(
                 $productAbstractTransfer,
-                $productConcrete
+                $productConcreteTransfer
             );
 
             if ($productConcreteEntity) {
-                $this->productConcreteManager->saveProductConcrete($productConcrete);
+                $this->productConcreteManager->saveProductConcrete($productConcreteTransfer);
             } else {
-                $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcrete);
-                $productConcrete->setIdProductConcrete($idProductConcrete);
+                $idProductConcrete = $this->productConcreteManager->createProductConcrete($productConcreteTransfer);
+                $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
             }
         }
-
-        $this->productQueryContainer->getConnection()->commit();
 
         return $idProductAbstract;
     }

@@ -105,4 +105,7 @@
         <property name="companyUser" type="CompanyUser"/>
         <property name="isSuccessful" type="bool"/>
     </transfer>
+
+    <transfer name="StoreRelation">
+    </transfer>
 </transfers>

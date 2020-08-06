@@ -51,6 +51,8 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_CART_BUTTON_BOTTOM = 'content_product_set_gui.template.cart-button-btm';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getContentWidgetTemplates(): array
@@ -62,6 +64,8 @@ class ContentProductSetGuiConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

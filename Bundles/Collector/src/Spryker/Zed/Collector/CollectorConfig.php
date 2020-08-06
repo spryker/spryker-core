@@ -26,6 +26,8 @@ class CollectorConfig extends AbstractBundleConfig
     public const COLLECTOR_BULK_UPDATE_QUERY_CLASS = 'BulkUpdateTouchKeyByIdQuery';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchIndexName()
@@ -34,6 +36,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSearchDocumentType()
@@ -42,6 +46,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getMysqlEngineName()
@@ -50,6 +56,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPostgresEngineName()
@@ -58,6 +66,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCurrentEngineName()
@@ -66,6 +76,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getStandardChunkSize()
@@ -74,11 +86,23 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getChunkSizeTypeMap()
     {
         return [];
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isCollectorEnabled(): bool
+    {
+        return true;
     }
 
     /**
@@ -115,6 +139,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCurrentBulkQueryClassNames()
@@ -125,6 +151,8 @@ class CollectorConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getEnablePrepareScopeKeyJoinFixFeatureFlag()

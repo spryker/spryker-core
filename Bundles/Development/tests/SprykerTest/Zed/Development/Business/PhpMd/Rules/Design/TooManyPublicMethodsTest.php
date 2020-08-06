@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Development\Business\PhpMd\Rules\Design;
 
 use Codeception\Test\Unit;
+use PHPMD\AbstractNode;
 use PHPMD\Node\AbstractTypeNode;
 use Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods;
 
@@ -91,7 +92,7 @@ class TooManyPublicMethodsTest extends Unit
     /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Development\Business\PhpMd\Rules\Design\TooManyPublicMethods
      */
-    protected function getTooManyPublicMethodsMock()
+    protected function getTooManyPublicMethodsMock(): TooManyPublicMethods
     {
         $mockBuilder = $this->getMockBuilder(TooManyPublicMethods::class);
         $mockBuilder->setMethods(['addViolation', 'getIntProperty', 'getStringProperty']);
@@ -108,7 +109,7 @@ class TooManyPublicMethodsTest extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\PHPMD\AbstractNode
      */
-    protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName)
+    protected function getNodeMock(string $fullyQualifiedClassName, string $nodeName): AbstractNode
     {
         $mockBuilder = $this->getMockBuilder(AbstractTypeNode::class);
         $mockBuilder->setMethods(['getMetric', 'getName', 'getNamespace', 'getNamespaceName', 'hasSuppressWarningsAnnotationFor', 'getFullQualifiedName', 'getParentName', 'getMethods'])

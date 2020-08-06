@@ -23,6 +23,8 @@ class ProductOptionCartConnectorToProductOptionFacadeBridge implements ProductOp
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeBridge::getProductOptionValueById()} instead.
+     *
      * @param int $idProductOptionValueUsage
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
@@ -34,12 +36,13 @@ class ProductOptionCartConnectorToProductOptionFacadeBridge implements ProductOp
 
     /**
      * @param int $idProductOptionValue
+     * @param string|null $currencyCode
      *
      * @return \Generated\Shared\Transfer\ProductOptionTransfer
      */
-    public function getProductOptionValueById($idProductOptionValue)
+    public function getProductOptionValueById($idProductOptionValue, ?string $currencyCode = null)
     {
-        return $this->productOptionFacade->getProductOptionValueById($idProductOptionValue);
+        return $this->productOptionFacade->getProductOptionValueById($idProductOptionValue, $currencyCode);
     }
 
     /**

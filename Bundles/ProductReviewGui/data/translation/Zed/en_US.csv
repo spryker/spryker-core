@@ -5,3 +5,9 @@ Nickname,Nickname
 "Overview of Product Reviews","Overview of Product Reviews"
 "Product Reviews","Product Reviews"
 Reject,Reject
+Pending,Pending
+Rejected,Rejected
+"Product Review #%id% deleted successfully.","Product Review #%id% deleted successfully."
+Date,Date
+"Product name","Product Name"
+Rating,Rating

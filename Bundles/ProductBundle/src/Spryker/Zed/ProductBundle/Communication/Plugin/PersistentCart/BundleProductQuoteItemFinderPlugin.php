@@ -21,6 +21,7 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginI
 class BundleProductQuoteItemFinderPlugin extends AbstractPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Find item in quote.
      *

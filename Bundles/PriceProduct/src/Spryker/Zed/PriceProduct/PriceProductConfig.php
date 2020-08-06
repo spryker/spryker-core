@@ -20,6 +20,8 @@ class PriceProductConfig extends AbstractBundleConfig
     protected const IS_DELETE_ORPHAN_STORE_PRICES_ON_SAVE_ENABLED = false;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeDefaultName()
@@ -28,6 +30,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefault()
@@ -36,6 +40,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForBothType()
@@ -44,6 +50,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefaultName(): string
@@ -52,6 +60,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForNetType(): string
@@ -60,6 +70,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForGrossType(): string
@@ -68,6 +80,8 @@ class PriceProductConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getIsDeleteOrphanStorePricesOnSaveEnabled(): bool

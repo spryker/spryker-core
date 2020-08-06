@@ -64,7 +64,7 @@ class CompanyBusinessUnitTreeBuilderTest extends Test
     /**
      * @return \Spryker\Zed\CompanyBusinessUnit\Persistence\CompanyBusinessUnitRepositoryInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected function createCompanyBusinessUnitRepositoryMock()
+    protected function createCompanyBusinessUnitRepositoryMock(): CompanyBusinessUnitRepositoryInterface
     {
         return $this->getMockBuilder(CompanyBusinessUnitRepositoryInterface::class)
             ->getMock();

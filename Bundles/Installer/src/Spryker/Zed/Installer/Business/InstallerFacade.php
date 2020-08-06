@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class InstallerFacade extends AbstractFacade implements InstallerFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
