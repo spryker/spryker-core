@@ -3,6 +3,10 @@
 
     <table name="spy_sales_order">
         <column name="oms_processor_identifier" type="TINYINT" description="Defines the processor id for OMS multi-thread order processing"/>
+
+        <index name="index-spy_sales_order-oms_processor_identifier">
+            <index-column name="oms_processor_identifier"/>
+        </index>
     </table>
 
 </database>
