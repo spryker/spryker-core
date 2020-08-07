@@ -11,9 +11,9 @@ use Codeception\Actor;
 use Codeception\Scenario;
 use DateTime;
 use Faker\Factory;
-use PHPUnit\Framework\ExpectationFailedException;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\ColumnMap;
+use RuntimeException;
 use Symfony\Component\Finder\Finder;
 use Throwable;
 use Zend\Filter\FilterChain;
@@ -122,9 +122,9 @@ class PropelPersistenceTester extends Actor
     /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      *
-     * @throws \PHPUnit\Framework\ExpectationFailedException
+     * @throws \RuntimeException
      *
-     * @return bool|\DateTime|float|int|mixed|string|false
+     * @return bool|\DateTime|float|int|mixed|string
      */
     public function getValue(ColumnMap $columnMap)
     {
@@ -178,12 +178,7 @@ class PropelPersistenceTester extends Actor
             return new DateTime();
         }
 
-        throw new ExpectationFailedException(sprintf(
-            'Could not create a value for "%s.%s" type "%s".',
-            $columnMap->getTableName(),
-            $columnMap->getName(),
-            $columnMap->getType()
-        ));
+        throw new RuntimeException(sprintf('Unknown column type "%s"', $columnMap->getType()));
     }
 
     /**
