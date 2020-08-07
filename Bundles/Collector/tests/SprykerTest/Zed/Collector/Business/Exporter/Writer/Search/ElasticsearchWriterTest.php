@@ -14,6 +14,7 @@ use Elastica\Response;
 use Elastica\Type;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -44,6 +45,11 @@ class ElasticsearchWriterTest extends Unit
      * @var \PHPUnit\Framework\MockObject\MockObject|\Elastica\Type
      */
     protected $type;
+
+    /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected $indexFactory;
 
     /**
      * @return void
@@ -78,6 +84,7 @@ class ElasticsearchWriterTest extends Unit
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
+        $this->indexFactory = $this->getMockIndexFactory();
 
         // now that index is setup, we can use it for mocking the Type class method getIndex
         $this->type->method('getIndex')->willReturn($this->index);
@@ -111,7 +118,7 @@ class ElasticsearchWriterTest extends Unit
      */
     protected function getElasticsearchWriter(): ElasticsearchWriter
     {
-        return new ElasticsearchWriter($this->client, '', '');
+        return new ElasticsearchWriter($this->client, '', '', $this->indexFactory);
     }
 
     /**
@@ -155,6 +162,20 @@ class ElasticsearchWriterTest extends Unit
         $mockType->method('addDocuments')->willReturn(null);
 
         return $mockType;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected function getMockIndexFactory(): IndexFactoryInterface
+    {
+        $mockIndexFactory = $this->getMockBuilder(IndexFactoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIndexFactory->method('createIndex')->willReturn($this->index);
+
+        return $mockIndexFactory;
     }
 
     /**
