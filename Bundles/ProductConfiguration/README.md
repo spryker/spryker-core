@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/product-configuration.svg)](https://travis-ci.org/spryker/product-configuration)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+Product Configuration provides base infrastructure for the product configuration functionality.
 
 ## Installation
 
