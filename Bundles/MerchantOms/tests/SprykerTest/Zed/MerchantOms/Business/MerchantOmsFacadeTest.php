@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantOms\Business;
 
 use Codeception\Test\Unit;
+use DateTime;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOmsTriggerRequestTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
@@ -18,11 +19,13 @@ use Generated\Shared\Transfer\StateMachineItemStateTransfer;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Spryker\Zed\MerchantOms\Business\Exception\MerchantNotFoundException;
+use Spryker\Zed\MerchantOms\Business\MerchantOmsBusinessFactory;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeInterface;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeBridge;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\MerchantOmsDependencyProvider;
+use Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepository;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 
 /**
@@ -408,33 +411,41 @@ class MerchantOmsFacadeTest extends Unit
     public function testExpandMerchantOrderItemsWithStateHistory(): void
     {
         // Arrange
-        $this->setStateMachineFacadeMockDependency([], null, static::TEST_MANUAL_EVENTS);
+        $merchantOrderTransfer = new MerchantOrderTransfer();
+        $merchantOrderTransfer->addMerchantOrderItem((new MerchantOrderItemTransfer())
+            ->setIdMerchantOrderItem(1));
 
-        $merchantTransfer = $this->tester->haveMerchant();
-        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+        $repositoryMock = $this->getMockBuilder(MerchantOmsRepository::class)
+            ->setMethods(['findStateHistoryByMerchantOrderIds'])
+            ->getMock();
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
-        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
+        $repositoryMock
+            ->method('findStateHistoryByMerchantOrderIds')
+            ->willReturn([
+                (new StateMachineItemTransfer())
+                    ->setIdentifier(1)
+                    ->setCreatedAt(new DateTime())
+                    ->setStateName('test'),
+                (new StateMachineItemTransfer())
+                    ->setIdentifier(1)
+                    ->setCreatedAt((new DateTime())->modify('-1 day'))
+                    ->setStateName('new'),
+            ]);
+        $factoryMock = $this->getMockBuilder(MerchantOmsBusinessFactory::class)
+            ->setMethods(['getRepository'])
+            ->getMock();
 
-        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
-        $stateMachineItemStateEntity = $this->tester->haveStateMachineItemState([
-            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $stateMachineProcessEntity->getIdStateMachineProcess(),
-        ]);
+        $factoryMock->method('getRepository')
+            ->willReturn($repositoryMock);
 
-        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
-            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateMachineItemStateEntity->getIdStateMachineItemState(),
-            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
-            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
-        ]);
-
-        $merchantOrderTransfer = (new MerchantOrderTransfer())->addMerchantOrderItem($merchantOrderItemTransfer);
+        /** @var \Spryker\Zed\MerchantOms\Business\MerchantOmsFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade $facade */
+        $facade = $this->tester->getFacade();
+        $facade->setFactory($factoryMock);
 
         // Act
-        $merchantOrderTransfer = $this->tester
-            ->getFacade()
-            ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
+        $merchantOrderTransfer = $facade->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
 
-        $this->assertCount(1, $merchantOrderTransfer->getMerchantOrderItems()->getIterator()->current()->getStateHistory()->count());
+        // Assert
+        $this->assertCount(2, $merchantOrderTransfer->getMerchantOrderItems()->getIterator()->current()->getStateHistory());
     }
 }

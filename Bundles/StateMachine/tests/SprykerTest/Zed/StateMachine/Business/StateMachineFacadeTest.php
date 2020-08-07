@@ -386,7 +386,7 @@ class StateMachineFacadeTest extends Unit
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
 
         $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
-        $this->sleepIfMySql(1);
+        //$this->sleepIfMySql(1);
         $stateMachineItemTransfer = $stateMachineHandler->getItemStateUpdated();
 
         $stateMachineItemTransfers = $stateMachineFacade->getStateHistoryByStateItemIdentifier(
