@@ -9,12 +9,11 @@ namespace Spryker\Zed\ProductConfigurationStorage\Business\Deleter;
 
 use Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface;
-use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface;
 
 class ProductConfigurationStorageDeleter implements ProductConfigurationStorageDeleterInterface
 {
     /**
-     * @uses SpyProductConfigurationTableMap::COL_FK_PRODUCT
+     * @uses \Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap::COL_FK_PRODUCT
      */
     protected const COL_FK_PRODUCT = 'spy_product_configuration.fk_product';
 
@@ -24,16 +23,6 @@ class ProductConfigurationStorageDeleter implements ProductConfigurationStorageD
     protected $eventBehaviorFacade;
 
     /**
-     * @var \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface
-     */
-    protected $configurationFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface
-     */
-    protected $configurationStorageRepository;
-
-    /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface
      */
     protected $productConfigurationStorageEntityManager;
@@ -41,15 +30,12 @@ class ProductConfigurationStorageDeleter implements ProductConfigurationStorageD
     /**
      * @param \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToEventBehaviorFacadeInterface $eventBehaviorFacade
      * @param \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager
-     * @param \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface $configurationStorageRepository
      */
     public function __construct(
         ProductConfigurationStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
-        ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager,
-        ProductConfigurationStorageRepositoryInterface $configurationStorageRepository
+        ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
-        $this->configurationStorageRepository = $configurationStorageRepository;
         $this->productConfigurationStorageEntityManager = $productConfigurationStorageEntityManager;
     }
 

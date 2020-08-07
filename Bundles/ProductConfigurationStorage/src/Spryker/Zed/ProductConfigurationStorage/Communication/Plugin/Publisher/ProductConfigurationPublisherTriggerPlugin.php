@@ -54,14 +54,11 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit): array
     {
-        $criteria = new ProductConfigurationFilterTransfer();
-        $filter = new FilterTransfer();
+        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
+        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
 
-        $criteria->setFilter(
-            $filter->setLimit($limit)->setOffset($offset)
-        );
-
-        return (array)$this->getFacade()->getProductConfigurationCollection($criteria)->getProductConfigurations();
+        return $this->getFacade()->getProductConfigurationCollection($productConfigurationFilterTransfer)
+            ->getProductConfigurations()->getArrayCopy();
     }
 
     /**

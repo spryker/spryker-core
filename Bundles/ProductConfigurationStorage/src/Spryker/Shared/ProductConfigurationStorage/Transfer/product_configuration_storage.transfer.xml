@@ -20,6 +20,7 @@
 
     <transfer name="ProductConfigurationFilter">
         <property name="productConfigurationIds" type="int[]" singular="productConfigurationId"/>
+        <property name="productConfigurationStorageIds" type="int[]" singular="productConfigurationStorageId"/>
         <property name="filter" type="Filter"/>
     </transfer>
 

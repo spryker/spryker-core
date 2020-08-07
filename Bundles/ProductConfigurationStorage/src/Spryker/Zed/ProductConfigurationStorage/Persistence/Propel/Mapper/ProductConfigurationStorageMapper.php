@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductConfigurationStorage\Persistence\Propel\Mapper;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage;
 
-class ProductConfigurationStorageMapper implements ProductConfigurationStorageMapperInterface
+class ProductConfigurationStorageMapper
 {
     /**
      * @param \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage $productConfigurationStorageEntity
@@ -18,7 +18,7 @@ class ProductConfigurationStorageMapper implements ProductConfigurationStorageMa
      *
      * @return \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage
      */
-    public function mapSpyProductConfigurationStorageEntity(
+    public function mapProductConfigurationStorageEntity(
         SpyProductConfigurationStorage $productConfigurationStorageEntity,
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
     ): SpyProductConfigurationStorage {

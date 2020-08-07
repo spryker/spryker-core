@@ -46,8 +46,7 @@ class ProductConfigurationStorageBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductConfigurationStorageDeleter(
             $this->getEventBehaviorFacade(),
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEntityManager()
         );
     }
 

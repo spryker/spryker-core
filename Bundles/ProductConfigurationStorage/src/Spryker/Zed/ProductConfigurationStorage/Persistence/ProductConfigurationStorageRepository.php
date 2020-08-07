@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -17,49 +17,24 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductConfigurationStorageRepository extends AbstractRepository implements ProductConfigurationStorageRepositoryInterface
 {
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param int[] $ids
+     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransferByIds(int $offset, int $limit, array $ids): array
-    {
-        $filterTransfer = $this->createFilterTransfer($offset, $limit);
+    public function findProductConfigurationStorageDataTransfersByIds(
+        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    ): array {
+        $filterTransfer = $productConfigurationFilterTransfer->getFilter();
         $query = $this->getFactory()->createProductConfigurationStorageQuery();
 
-        if ($ids) {
-            $query->filterByIdProductConfigurationStorage_In($ids);
+        if ($productConfigurationFilterTransfer->getProductConfigurationStorageIds()) {
+            $query->filterByIdProductConfigurationStorage_In(
+                $productConfigurationFilterTransfer->getProductConfigurationStorageIds()
+            );
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)
             ->setFormatter(SynchronizationDataTransferObjectFormatter::class)
             ->find();
-    }
-
-    /**
-     * @param int[] $ids
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
-     */
-    public function findProductConfigurationStorageTransfersByProductConfigurationIds(array $ids): array
-    {
-        $query = $this->getFactory()->createProductConfigurationStorageQuery()
-            ->filterByFkProductConfiguration_In($ids);
-
-        return $query->find()->toArray();
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
-    {
-        return (new FilterTransfer())
-            ->setOffset($offset)
-            ->setLimit($limit);
     }
 }

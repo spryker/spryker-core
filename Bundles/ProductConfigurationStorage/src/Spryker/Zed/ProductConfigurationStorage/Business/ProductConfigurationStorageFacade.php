@@ -54,15 +54,14 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param int $offset
-     * @param int $limit
-     * @param array $ids
+     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransferByIds(int $offset, int $limit, array $ids): array
-    {
-        return $this->getRepository()->findProductConfigurationStorageDataTransferByIds($offset, $limit, $ids);
+    public function findProductConfigurationStorageDataTransfersByIds(
+        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    ): array {
+        return $this->getRepository()->findProductConfigurationStorageDataTransfersByIds($productConfigurationFilterTransfer);
     }
 
     /**

@@ -4,13 +4,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/event-behavior": "*",
+    "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-configuration": "*",
-    "spryker/publisher-extension": "*",
-    "spryker/synchronization": "*",
-    "spryker/synchronization-behavior": "*",
-    "spryker/synchronization-extension": "*"
+    "spryker/product-configuration": "^1.0.0",
+    "spryker/publisher-extension": "^1.0.0",
+    "spryker/synchronization": "^1.0.0",
+    "spryker/synchronization-behavior": "^1.0.0",
+    "spryker/synchronization-extension": "^1.0.0"
   },
   "require-dev": {
     "spryker/product": "*",
@@ -31,7 +31,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"

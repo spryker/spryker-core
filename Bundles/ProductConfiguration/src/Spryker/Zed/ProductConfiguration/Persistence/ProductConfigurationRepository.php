@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\ProductConfiguration\Persistence;
 
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -26,49 +26,44 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
     public function getProductConfigurationCollection(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): ProductConfigurationCollectionTransfer {
-        $productConfigurationIds = $productConfigurationFilterTransfer->getProductConfigurationIds();
+        $productConfigurationQuery = $this->getFactory()->createProductConfigurationQuery();
 
-        $productConfigurationEntitiesQuery = $this->getFactory()->createProductConfigurationQuery();
-
-        if ($productConfigurationIds) {
-            $productConfigurationEntitiesQuery->filterByIdProductConfiguration_In($productConfigurationIds);
-        }
-
-        $productConfigurationEntitiesQuery = $this->setQueryFilters(
-            $productConfigurationEntitiesQuery,
-            $productConfigurationFilterTransfer->getFilter()
+        $productConfigurationQuery = $this->setProductConfigurationFilters(
+            $productConfigurationQuery,
+            $productConfigurationFilterTransfer
         );
 
         return $this->getFactory()->createProductConfigurationMapper()
-            ->mapEntityCollectionToTransferCollection($productConfigurationEntitiesQuery->find());
+            ->mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
+                $productConfigurationQuery->find()
+            );
     }
 
     /**
-     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationEntitiesQuery
-     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery
+     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
      * @return \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery
      */
-    protected function setQueryFilters(
-        SpyProductConfigurationQuery $productConfigurationEntitiesQuery,
-        ?FilterTransfer $filterTransfer
+    protected function setProductConfigurationFilters(
+        SpyProductConfigurationQuery $productConfigurationQuery,
+        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): SpyProductConfigurationQuery {
-        if (!$filterTransfer) {
-            return $productConfigurationEntitiesQuery;
+        $productConfigurationIds = $productConfigurationFilterTransfer->getProductConfigurationIds();
+
+        if ($productConfigurationIds) {
+            $productConfigurationQuery->filterByIdProductConfiguration_In($productConfigurationIds);
         }
 
-        if ($filterTransfer->getLimit()) {
-            $productConfigurationEntitiesQuery->setLimit($filterTransfer->getLimit());
+        if ($productConfigurationFilterTransfer->getFilter()) {
+            $productConfigurationQuery = $this->buildQueryFromCriteria(
+                $productConfigurationQuery,
+                $productConfigurationFilterTransfer->getFilter()
+            );
+
+            $productConfigurationQuery->setFormatter(ModelCriteria::FORMAT_OBJECT);
         }
 
-        if ($filterTransfer->getOffset()) {
-            $productConfigurationEntitiesQuery->setOffset($filterTransfer->getOffset());
-        }
-
-        if ($filterTransfer->getOrderBy()) {
-            $productConfigurationEntitiesQuery->orderBy($filterTransfer->getOrderBy());
-        }
-
-        return $productConfigurationEntitiesQuery;
+        return $productConfigurationQuery;
     }
 }

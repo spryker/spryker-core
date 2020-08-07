@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Communication\Plugin\Synchronization;
 
+use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
@@ -55,7 +57,11 @@ class ProductConfigurationSynchronizationDataRepositoryPlugin extends AbstractPl
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()->findProductConfigurationStorageDataTransferByIds($offset, $limit, $ids);
+        $filter = (new FilterTransfer())->setOffset($offset)->setLimit($limit);
+
+        return $this->getFacade()->findProductConfigurationStorageDataTransfersByIds(
+            (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds($ids)->setFilter($filter)
+        );
     }
 
     /**

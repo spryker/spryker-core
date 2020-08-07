@@ -7,21 +7,16 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 
+use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+
 interface ProductConfigurationStorageRepositoryInterface
 {
     /**
-     * @param int $offset
-     * @param int $limit
-     * @param int[] $ids
+     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransferByIds(int $offset, int $limit, array $ids): array;
-
-    /**
-     * @param int[] $ids
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer[]
-     */
-    public function findProductConfigurationStorageTransfersByProductConfigurationIds(array $ids): array;
+    public function findProductConfigurationStorageDataTransfersByIds(
+        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    ): array;
 }

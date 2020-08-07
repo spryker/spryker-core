@@ -10,7 +10,6 @@ namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorageQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\ProductConfigurationStorage\Persistence\Propel\Mapper\ProductConfigurationStorageMapper;
-use Spryker\Zed\ProductConfigurationStorage\Persistence\Propel\Mapper\ProductConfigurationStorageMapperInterface;
 
 /**
  * @method \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface getEntityManager()
@@ -28,9 +27,9 @@ class ProductConfigurationStoragePersistenceFactory extends AbstractPersistenceF
     }
 
     /**
-     * @return \Spryker\Zed\ProductConfigurationStorage\Persistence\Propel\Mapper\ProductConfigurationStorageMapperInterface
+     * @return \Spryker\Zed\ProductConfigurationStorage\Persistence\Propel\Mapper\ProductConfigurationStorageMapper
      */
-    public function createProductConfigurationStorageMapper(): ProductConfigurationStorageMapperInterface
+    public function createProductConfigurationStorageMapper(): ProductConfigurationStorageMapper
     {
         return new ProductConfigurationStorageMapper();
     }

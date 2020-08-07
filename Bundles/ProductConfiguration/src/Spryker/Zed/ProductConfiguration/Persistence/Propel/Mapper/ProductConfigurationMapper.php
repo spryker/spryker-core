@@ -9,38 +9,25 @@ namespace Spryker\Zed\ProductConfiguration\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
-use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration;
 use Propel\Runtime\Collection\ObjectCollection;
 
-class ProductConfigurationMapper implements ProductConfigurationMapperInterface
+class ProductConfigurationMapper
 {
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
-    public function mapEntityCollectionToTransferCollection(
+    public function mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
         ObjectCollection $productConfigurationEntitiesCollection
     ): ProductConfigurationCollectionTransfer {
         $productConfigurationCollectionTransfer = new ProductConfigurationCollectionTransfer();
         foreach ($productConfigurationEntitiesCollection as $productConfigurationEntity) {
             $productConfigurationCollectionTransfer->addProductConfiguration(
-                $this->mapProductConfigurationEntityToTransfer(
-                    $productConfigurationEntity
-                )
+                (new ProductConfigurationTransfer())->fromArray($productConfigurationEntity->toArray(), true)
             );
         }
 
         return $productConfigurationCollectionTransfer;
-    }
-
-    /**
-     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration $productConfigurationEntity
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationTransfer
-     */
-    protected function mapProductConfigurationEntityToTransfer(SpyProductConfiguration $productConfigurationEntity)
-    {
-        return (new ProductConfigurationTransfer())->fromArray($productConfigurationEntity->toArray(), true);
     }
 }

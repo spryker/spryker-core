@@ -18,7 +18,7 @@ class ProductConfigurationStorageMapper implements ProductConfigurationStorageMa
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer
      */
-    public function mapProductConfigurationToProductConfigurationStorageTransfer(
+    public function mapProductConfigurationTransferToProductConfigurationStorageTransfer(
         ProductConfigurationTransfer $productConfiguration,
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
     ): ProductConfigurationStorageTransfer {

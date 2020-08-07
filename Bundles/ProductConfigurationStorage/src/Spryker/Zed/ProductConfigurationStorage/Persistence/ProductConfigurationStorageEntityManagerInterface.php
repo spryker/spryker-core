@@ -21,7 +21,7 @@ interface ProductConfigurationStorageEntityManagerInterface
     ): ProductConfigurationStorageTransfer;
 
     /**
-     * @param array $productConfigurationIds
+     * @param int[] $productConfigurationIds
      *
      * @return void
      */

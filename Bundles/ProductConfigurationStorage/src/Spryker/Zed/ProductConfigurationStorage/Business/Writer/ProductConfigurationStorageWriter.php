@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Business\Writer;
 
+use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Spryker\Zed\ProductConfigurationStorage\Business\Mapper\ProductConfigurationStorageMapperInterface;
@@ -76,12 +77,12 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
             return;
         }
 
-        $productConfigurationCollection = $this->getProductConfigurationCollection($productConfigurationIds);
+        $productConfigurationCollectionTransfer = $this->getProductConfigurationCollection($productConfigurationIds);
 
-        foreach ($productConfigurationCollection->getProductConfigurations() as $productConfiguration) {
+        foreach ($productConfigurationCollectionTransfer->getProductConfigurations() as $productConfigurationTransfer) {
             $productConfigurationStorageTransfer = $this->productConfigurationStorageMapper
-                ->mapProductConfigurationToProductConfigurationStorageTransfer(
-                    $productConfiguration,
+                ->mapProductConfigurationTransferToProductConfigurationStorageTransfer(
+                    $productConfigurationTransfer,
                     new ProductConfigurationStorageTransfer()
                 );
 
@@ -96,7 +97,7 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
-    protected function getProductConfigurationCollection(array $productConfigurationIds)
+    protected function getProductConfigurationCollection(array $productConfigurationIds): ProductConfigurationCollectionTransfer
     {
         $productConfigurationCriteria = (new ProductConfigurationFilterTransfer())
             ->setProductConfigurationIds($productConfigurationIds);

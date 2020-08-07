@@ -29,7 +29,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
             ->findOneOrCreate();
 
         $productConfigurationStorageEntity = $this->getFactory()->createProductConfigurationStorageMapper()
-            ->mapSpyProductConfigurationStorageEntity(
+            ->mapProductConfigurationStorageEntity(
                 $productConfigurationStorageEntity,
                 $productConfigurationStorageTransfer
             );
