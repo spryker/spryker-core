@@ -18,7 +18,7 @@
         <property name="isComplete" type="bool"/>
     </transfer>
 
-    <transfer name="ItemTrasfer">
+    <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
     </transfer>
 
