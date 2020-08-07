@@ -132,7 +132,8 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
             $this->assertTrue($batchProcessor->commit());
         } catch (Throwable $throwable) {
             $message = $throwable->getMessage();
-            if (strpos($message, 'Unique violation') !== false
+            if (
+                strpos($message, 'Unique violation') !== false
                 || strpos($message, 'Duplicate entry') !== false
                 || strpos($message, 'Cannot assign bundle product or use bundled product as a bundle') !== false
             ) {
