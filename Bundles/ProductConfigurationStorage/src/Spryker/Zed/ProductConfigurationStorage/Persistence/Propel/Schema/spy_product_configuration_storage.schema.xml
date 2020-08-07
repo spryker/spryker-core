@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\ProductConfigurationStorage\Persistence"
+          package="src.Orm.Zed.ProductConfigurationStorage.Persistence">
+
+    <table name="spy_product_configuration_storage">
+        <column name="id_product_configuration_storage" type="integer" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" type="integer" required="true"/>
+        <column name="fk_product_configuration" type="integer" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
+        <column name="data" type="LONGVARCHAR" required="false"/>
+
+        <id-method-parameter value="id_product_configuration_storage_pk_seq"/>
+
+        <index name="spy_product_configuration_storage-fk_product">
+            <index-column name="fk_product"/>
+        </index>
+
+        <index name="spy_product_configuration_storage-fk_product_configuration">
+            <index-column name="fk_product_configuration"/>
+        </index>
+
+        <behavior name="synchronization">
+            <parameter name="resource" value="product_configuration"/>
+            <parameter name="key_suffix_column" value="fk_product"/>
+            <parameter name="queue_group" value="sync.storage.product_configuration"/>
+        </behavior>
+
+        <behavior name="timestampable"/>
+    </table>
+</database>

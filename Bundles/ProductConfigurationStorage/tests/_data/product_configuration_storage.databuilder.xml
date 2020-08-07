@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="spryker:databuilder-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:databuilder-01 http://static.spryker.com/databuilder-01.xsd"
+>
+
+    <transfer name="ProductConfigurationStorage">
+        <property name="fkProduct" dataBuilderRule="numberBetween(0,1)"/>
+        <property name="fkProductConfiguration" dataBuilderRule="numberBetween(0,1)"/>
+        <property name="defaultDisplayData" dataBuilderRule="unique()->sentence"/>
+        <property name="defaultConfiguration" dataBuilderRule="word"/>
+        <property name="configuratorKey" dataBuilderRule="word"/>
+        <property name="isComplete" dataBuilderRule="boolean"/>
+    </transfer>
+</transfers>
