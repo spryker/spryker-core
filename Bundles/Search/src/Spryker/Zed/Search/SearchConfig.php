@@ -15,6 +15,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class SearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     */
+    public const HOST = 'SEARCH_ELASTICSEARCH:HOST';
+
+    /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     */
+    public const PORT = 'SEARCH_ELASTICSEARCH:PORT';
+
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
@@ -65,7 +75,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getElasticaDocumentType()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**
@@ -79,8 +89,8 @@ class SearchConfig extends AbstractBundleConfig
     {
         return sprintf(
             '%s:%s/_reindex?pretty',
-            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST),
-            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT)
+            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST, $this->get(static::HOST)),
+            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT, $this->get(static::PORT))
         );
     }
 
