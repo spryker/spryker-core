@@ -14,7 +14,6 @@ class ProductConfigurationStorageConfig extends SynchronizationBehaviorConfig
     /**
      * @api
      *
-     *
      * @return bool
      */
     public function isSynchronizationEnabled(): bool

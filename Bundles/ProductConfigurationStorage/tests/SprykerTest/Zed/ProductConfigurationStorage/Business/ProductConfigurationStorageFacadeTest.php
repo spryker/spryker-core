@@ -13,8 +13,8 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
-use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\ProductConfigurationStorage\Business\ProductConfigurationStorageBusinessFactory;
 use Spryker\Zed\ProductConfigurationStorage\Business\ProductConfigurationStorageFacade;
 use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManager;
@@ -34,27 +34,33 @@ use Spryker\Zed\ProductConfigurationStorage\ProductConfigurationStorageConfig;
  */
 class ProductConfigurationStorageFacadeTest extends Unit
 {
-    const DEFAULT_QUERY_OFFSET = 0;
+    protected const DEFAULT_QUERY_OFFSET = 0;
 
-    const DEFAULT_QUERY_LIMIT = 100;
+    protected const DEFAULT_QUERY_LIMIT = 100;
 
     /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManager
      */
     protected $productConfigurationStorageEntityManager;
+
     /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Business\ProductConfigurationStorageFacade
      */
     protected $productConfigurationStorageFacade;
+
     /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepository
      */
     protected $productConfigurationStorageRepository;
+
     /**
      * @var \SprykerTest\Zed\ProductConfigurationStorage\ProductConfigurationStorageBusinessTester
      */
     protected $tester;
 
+    /**
+     * @return void
+     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -133,7 +139,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $productConfigurationStorageTransfers = $this->productConfigurationStorageRepository
             ->findProductConfigurationStorageTransfersByProductConfigurationIds(
                 [
-                    $productConfigurationTransfer->getIdProductConfiguration()
+                    $productConfigurationTransfer->getIdProductConfiguration(),
                 ]
             );
 
@@ -182,12 +188,11 @@ class ProductConfigurationStorageFacadeTest extends Unit
                 static::DEFAULT_QUERY_OFFSET,
                 static::DEFAULT_QUERY_LIMIT,
                 [
-                    $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
+                    $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
                 ]
             );
 
         $this->assertEmpty($syncTransfers);
-
     }
 
     /**
@@ -213,11 +218,11 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $syncTransfers = $this->productConfigurationStorageFacade->findProductConfigurationStorageDataTransferByIds(
             static::DEFAULT_QUERY_OFFSET,
             static::DEFAULT_QUERY_LIMIT,
-                [
-                    $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
+            [
+                    $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
                 ]
         );
-        /** @var  \Generated\Shared\Transfer\SynchronizationDataTransfer $syncTransfer */
+        /** @var \Generated\Shared\Transfer\SynchronizationDataTransfer $syncTransfer */
         $syncTransfer = array_shift($syncTransfers);
 
         $this->assertEquals($productTransfer->getIdProductConcrete(), $syncTransfer->getData()['fk_product']);
