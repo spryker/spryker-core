@@ -50,14 +50,13 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
-    public function _before(): void
+    public function _beforeSuite(): void
     {
-        if (!$this->isTransferGenerated) {
-            $this->generateTransfer();
-            require_once(static::getTargetDirectory() . 'GeneratedTransfer.php');
-            require_once(static::getTargetDirectory() . 'GeneratedNestedTransfer.php');
-            $this->isTransferGenerated = true;
-        }
+        $this->generateTransfer();
+        $targetDirectory = $this->getTargetDirectory();
+
+        require_once($targetDirectory . 'GeneratedTransfer.php');
+        require_once($targetDirectory . 'GeneratedNestedTransfer.php');
     }
 
     /**
@@ -683,7 +682,7 @@ class GeneratedTransferTest extends Unit
      */
     protected function getClassGenerator(): GeneratorInterface
     {
-        $targetDirectory = static::getTargetDirectory();
+        $targetDirectory = $this->getTargetDirectory();
 
         return new ClassGenerator($targetDirectory);
     }
