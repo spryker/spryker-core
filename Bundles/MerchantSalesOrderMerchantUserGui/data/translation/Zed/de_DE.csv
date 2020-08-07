@@ -40,12 +40,11 @@ Quantity,Menge
 "Unit Price",Stückpreis
 "Item total","Artikel Gesamt"
 State,Zustand
-Trigger event,"Auslösendes Ereignis"
+"Trigger event","Auslösendes Ereignis"
 "Variant Details",Variantendetails
 "Show less","Weniger anzeigen"
 "Show more","Mehr anzeigen"
-"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer",
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
 "Show history","Historie anzeigen"
 "Hide history","Historie ausblenden"
-Option,Option
 Sku,SKU
