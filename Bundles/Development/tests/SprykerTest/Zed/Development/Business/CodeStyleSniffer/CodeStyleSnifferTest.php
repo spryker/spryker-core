@@ -61,31 +61,6 @@ class CodeStyleSnifferTest extends Unit
     /**
      * @return void
      */
-    public function testCheckCodeStyleRunsCommandInProject(): void
-    {
-        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = APPLICATION_ROOT_DIR . '/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle(null, $options);
-    }
-
-    /**
-     * @return void
-     */
-    public function testCheckCodeStyleRunsCommandInProjectModule(): void
-    {
-        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
-        $options = ['ignore' => 'vendor/'] + $this->defaultOptions;
-        $pathToApplicationRoot = rtrim(APPLICATION_ROOT_DIR) . '/src/Pyz/Zed/Development/';
-        $codeStyleSnifferMock = $this->getCodeStyleSnifferMock($pathToApplicationRoot, $options);
-
-        $codeStyleSnifferMock->checkCodeStyle('Development', $options);
-    }
-
-    /**
-     * @return void
-     */
     public function testCheckCodeStyleRunsCommandInCore(): void
     {
         $module = 'Spryker.all';

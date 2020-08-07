@@ -464,7 +464,7 @@ abstract class AbstractTable
         $defaultSorting = [$this->getDefaultSorting($config)];
 
         /** @var array|null $orderParameter */
-        $orderParameter = $this->request->query->get('order');
+        $orderParameter = $this->request->query->all('order');
 
         if (!is_array($orderParameter)) {
             return $defaultSorting;
