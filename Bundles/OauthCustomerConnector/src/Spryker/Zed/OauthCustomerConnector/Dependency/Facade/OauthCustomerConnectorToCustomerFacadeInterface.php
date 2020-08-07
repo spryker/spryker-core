@@ -24,4 +24,11 @@ interface OauthCustomerConnectorToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function getCustomer(CustomerTransfer $customerTransfer): CustomerTransfer;
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference($customerReference);
 }

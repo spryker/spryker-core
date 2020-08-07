@@ -78,4 +78,36 @@ class CustomerProvider implements CustomerProviderInterface
 
         return $oauthUserTransfer;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    public function getCustomerImpersonationOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
+    {
+        $oauthUserTransfer->setIsSuccess(false);
+
+        if (!$oauthUserTransfer->getCustomerReference()) {
+            return $oauthUserTransfer;
+        }
+
+        $customerTransfer = $this->customerFacade->findByReference($oauthUserTransfer->getCustomerReference());
+
+        if (!$customerTransfer) {
+            return $oauthUserTransfer;
+        }
+
+        $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setIdCustomer($customerTransfer->getIdCustomer());
+
+        foreach ($this->oauthCustomerIdentifierExpanderPlugins as $oauthCustomerIdentifierExpanderPlugin) {
+            $customerIdentifierTransfer = $oauthCustomerIdentifierExpanderPlugin->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
+        }
+
+        return $oauthUserTransfer
+            ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
+            ->setIsSuccess(true);
+    }
 }

@@ -20,6 +20,8 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      */
     public const GRANT_TYPE_PASSWORD = 'password';
 
+    public const GRANT_TYPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
+
     /**
      * @api
      *

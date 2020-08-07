@@ -35,6 +35,20 @@ class OauthCustomerConnectorFacade extends AbstractFacade implements OauthCustom
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    public function getCustomerImpersonationOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer
+    {
+        return $this->getFactory()->createCustomerProvider()->getCustomerImpersonationOauthUser($oauthUserTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthScopeTransfer[]

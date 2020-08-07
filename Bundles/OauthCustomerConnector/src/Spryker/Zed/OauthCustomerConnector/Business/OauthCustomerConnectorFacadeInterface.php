@@ -30,6 +30,19 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
+     *  - Authenticates impersonated customer.
+     *  - Reads customer data by `customer_reference` and provides it for access token.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    public function getCustomerImpersonationOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
+
+    /**
+     * Specification:
      *  - Reads customer scopes.
      *
      * @api

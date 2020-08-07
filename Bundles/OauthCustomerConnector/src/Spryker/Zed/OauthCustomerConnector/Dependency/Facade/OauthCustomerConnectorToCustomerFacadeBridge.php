@@ -43,4 +43,14 @@ class OauthCustomerConnectorToCustomerFacadeBridge implements OauthCustomerConne
     {
         return $this->customerFacade->getCustomer($customerTransfer);
     }
+
+    /**
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findByReference($customerReference)
+    {
+        return $this->customerFacade->findByReference($customerReference);
+    }
 }
