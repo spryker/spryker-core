@@ -60,7 +60,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {
@@ -76,7 +76,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFunction[]
+     * @return  \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

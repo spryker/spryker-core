@@ -8,12 +8,12 @@
 namespace Spryker\Zed\GuiTable\Communication\Twig;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface;
 use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
 
-class GuiTableConfigurationFunction extends TwigFunction
+class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 {
     protected const CONFIG_COLUMNS = 'columns';
     protected const CONFIG_DATA_SOURCE = 'dataSource';
@@ -56,7 +56,6 @@ class GuiTableConfigurationFunction extends TwigFunction
         ConfigurationDefaultValuesSetterInterface $configurationDefaultValuesSetter,
         ConfigurationTranslatorInterface $configurationTranslator
     ) {
-        parent::__construct();
         $this->utilEncodingService = $utilEncodingService;
         $this->configurationDefaultValuesSetter = $configurationDefaultValuesSetter;
         $this->configurationTranslator = $configurationTranslator;
@@ -65,7 +64,7 @@ class GuiTableConfigurationFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return 'guiTableConfiguration';
     }
@@ -73,7 +72,7 @@ class GuiTableConfigurationFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (GuiTableConfigurationTransfer $guiTableConfigurationTransfer, bool $jsonEncode = true) {
             $guiTableConfigurationTransfer = $this->configurationDefaultValuesSetter->setDefaultValues($guiTableConfigurationTransfer);

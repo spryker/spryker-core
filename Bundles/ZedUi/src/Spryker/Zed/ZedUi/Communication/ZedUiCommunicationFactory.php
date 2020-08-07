@@ -31,7 +31,7 @@ class ZedUiCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Twig\TwigFunction
      */
-    public function createNavigationComponentConfigFunction(): NavigationComponentConfigFunctionProvider
+    public function createNavigationComponentConfigFunction(): TwigFunction
     {
         $functionProvider = $this->createNavigationComponentConfigFunctionProvider();
 

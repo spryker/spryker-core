@@ -1,5 +1,5 @@
 {% block form_label %}
-{% spaceless %}
+{% apply spaceless %}
     {% if label is empty and name != 'locales' %}
         {% set label = name %}
     {% endif %}
@@ -10,5 +10,5 @@
     {% if attr.note is defined %} <span style="font: 11px normal; font-family: arial;">({{ attr.note }})</span>{% endif %}
     </label>
     {% endif %}
-{% endspaceless %}
+{% endapply %}
 {% endblock form_label %}

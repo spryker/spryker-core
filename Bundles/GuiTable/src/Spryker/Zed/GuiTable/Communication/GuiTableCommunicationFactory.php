@@ -11,7 +11,7 @@ use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetter;
 use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslator;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface;
-use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunction;
+use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider;
 use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface;
 use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
 use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
@@ -25,11 +25,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class GuiTableCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunction
+     * @return \Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider
      */
-    public function createGuiTableConfigurationFunction(): GuiTableConfigurationFunction
+    public function createGuiTableConfigurationFunctionProvider(): GuiTableConfigurationFunctionProvider
     {
-        return new GuiTableConfigurationFunction(
+        return new GuiTableConfigurationFunctionProvider(
             $this->getUtilEncodingService(),
             $this->createConfigurationDefaultValuesSetter(),
             $this->createConfigurationTranslator()

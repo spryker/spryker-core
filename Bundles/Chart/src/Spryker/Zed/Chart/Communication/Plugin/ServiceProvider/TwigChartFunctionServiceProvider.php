@@ -52,7 +52,7 @@ class TwigChartFunctionServiceProvider extends AbstractPlugin implements Service
     protected function registerChartTwigFunctions(Environment $twig): Environment
     {
         foreach ($this->getChartTwigFunctions() as $function) {
-            $twig->addFunction($function->getName(), $function);
+            $twig->addFunction($function);
         }
 
         return $twig;
