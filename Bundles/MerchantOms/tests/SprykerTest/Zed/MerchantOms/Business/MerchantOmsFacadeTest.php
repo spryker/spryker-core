@@ -402,6 +402,9 @@ class MerchantOmsFacadeTest extends Unit
         $this->assertEquals(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandMerchantOrderItemsWithStateHistory(): void
     {
         // Arrange
