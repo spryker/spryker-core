@@ -20,9 +20,12 @@ use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expander\OrderItemExpanderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpander;
 use Spryker\Zed\MerchantSalesOrder\Business\Expense\ExpenseExpanderInterface;
+use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReader;
+use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriter;
 use Spryker\Zed\MerchantSalesOrder\Business\Writer\MerchantOrderItemWriterInterface;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface;
+use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\MerchantSalesOrderDependencyProvider;
 
 /**
@@ -94,6 +97,18 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface
+     */
+    public function createMerchantSalesOrderReader(): MerchantSalesOrderReaderInterface
+    {
+        return new MerchantSalesOrderReader(
+            $this->getSalesFacade(),
+            $this->getRepository(),
+            $this->getMerchantOrderExpanderPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToCalculationFacadeInterface
      */
     public function getCalculationFacade(): MerchantSalesOrderToCalculationFacadeInterface
@@ -102,10 +117,26 @@ class MerchantSalesOrderBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface
+     */
+    public function getSalesFacade(): MerchantSalesOrderToSalesFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::FACADE_SALES);
+    }
+
+    /**
      * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPostCreatePluginInterface[]
      */
     public function getMerchantOrderPostCreatePlugins(): array
     {
         return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_POST_CREATE);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[]
+     */
+    public function getMerchantOrderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderDependencyProvider::PLUGINS_MERCHANT_ORDER_EXPANDER);
     }
 }

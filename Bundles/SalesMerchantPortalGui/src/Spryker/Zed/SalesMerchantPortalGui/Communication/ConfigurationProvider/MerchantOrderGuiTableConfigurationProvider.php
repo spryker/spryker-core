@@ -12,13 +12,16 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToStoreFacadeInterface;
 
-class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider
+class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider implements MerchantOrderGuiTableConfigurationProviderInterface
 {
     public const COL_KEY_REFERENCE = 'reference';
     public const COL_KEY_MERCHANT_REFERENCE = 'merchantReference';
@@ -29,6 +32,8 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
     public const COL_KEY_GRAND_TOTAL = 'grandTotal';
     public const COL_KEY_NUMBER_OF_ITEMS = 'numberOfItems';
     public const COL_KEY_STORE = 'store';
+
+    protected const ROW_ACTION_ID_MERCHANT_ORDER_DETAIL = 'merchant-order-detail';
 
     /**
      * @uses \Spryker\Zed\SalesMerchantPortalGui\Communication\Controller\OrdersController::tableDataAction()
@@ -73,8 +78,8 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
         $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->addPaginationToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
         $guiTableConfigurationTransfer->setDataSource(
             (new GuiTableDataSourceConfigurationTransfer())->setUrl(static::DATA_URL)
         );
@@ -137,6 +142,34 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
      */
+    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    {
+        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
+            ->setId(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
+            ->setTitle('Details')
+            ->setType('html-overlay')
+            ->addTypeOption(
+                'url',
+                sprintf(
+                    '/sales-merchant-portal-gui/detail?merchant-order-id=${row.%s}',
+                    MerchantOrderTransfer::ID_MERCHANT_ORDER
+                )
+            );
+
+        $guiTableConfigurationTransfer->setRowActions(
+            (new GuiTableRowActionsConfigurationTransfer())
+                ->addAction($guiTableRowActionTransfer)
+                ->setClick(static::ROW_ACTION_ID_MERCHANT_ORDER_DETAIL)
+        );
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
     protected function addPaginationToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
     {
         $guiTableConfigurationTransfer->setPagination(
@@ -144,14 +177,6 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         );
 
         return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getDefaultSortColumnKey(): string
-    {
-        return static::COL_KEY_REFERENCE;
     }
 
     /**
