@@ -401,4 +401,37 @@ class MerchantOmsFacadeTest extends Unit
         // Assert
         $this->assertEquals(static::TEST_MANUAL_EVENTS, $expandedMerchantOrderItemCollectionTransfer->getMerchantOrderItems()[0]->getManualEvents());
     }
+
+    public function testExpandMerchantOrderItemsWithStateHistory(): void
+    {
+        // Arrange
+        $this->setStateMachineFacadeMockDependency([], null, static::TEST_MANUAL_EVENTS);
+
+        $merchantTransfer = $this->tester->haveMerchant();
+        $saveOrderTransfer = $this->tester->getSaveOrderTransfer($merchantTransfer, static::TEST_STATE_MACHINE);
+
+        /** @var \Generated\Shared\Transfer\ItemTransfer $itemTransfer */
+        $itemTransfer = $saveOrderTransfer->getOrderItems()->offsetGet(0);
+        $merchantOrderTransfer = $this->tester->haveMerchantOrder([MerchantOrderTransfer::ID_ORDER => $saveOrderTransfer->getIdSalesOrder()]);
+
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
+        $stateMachineItemStateEntity = $this->tester->haveStateMachineItemState([
+            StateMachineItemStateTransfer::FK_STATE_MACHINE_PROCESS => $stateMachineProcessEntity->getIdStateMachineProcess(),
+        ]);
+
+        $merchantOrderItemTransfer = $this->tester->haveMerchantOrderItem([
+            MerchantOrderItemTransfer::FK_STATE_MACHINE_ITEM_STATE => $stateMachineItemStateEntity->getIdStateMachineItemState(),
+            MerchantOrderItemTransfer::ID_MERCHANT_ORDER => $merchantOrderTransfer->getIdMerchantOrder(),
+            MerchantOrderItemTransfer::ID_ORDER_ITEM => $itemTransfer->getIdSalesOrderItem(),
+        ]);
+
+        $merchantOrderTransfer = (new MerchantOrderTransfer())->addMerchantOrderItem($merchantOrderItemTransfer);
+
+        // Act
+        $merchantOrderTransfer = $this->tester
+            ->getFacade()
+            ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
+
+        $this->assertCount(1, $merchantOrderTransfer->getMerchantOrderItems()->getIterator()->current()->getStateHistory()->count());
+    }
 }
