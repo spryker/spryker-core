@@ -21,7 +21,7 @@ abstract class AbstractIndexClientProvider extends AbstractSearchClientProvider
     {
         $client = parent::createZedClient();
 
-        $index = ($index !== null) ? $index : Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        $index = ($index !== null) ? $index : Config::get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
 
         return $client->getIndex($index);
     }
