@@ -17,32 +17,32 @@ abstract class AbstractSearchClientProvider extends AbstractClientProvider
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
      */
-    public const HOST = 'SEARCH_ELASTICSEARCH:HOST';
+    protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
      */
-    public const PORT = 'SEARCH_ELASTICSEARCH:PORT';
+    protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::TRANSPORT
      */
-    public const TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
+    protected const TRANSPORT = 'SEARCH_ELASTICSEARCH:TRANSPORT';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::AUTH_HEADER
      */
-    public const AUTH_HEADER = 'SEARCH_ELASTICSEARCH:AUTH_HEADER';
+    protected const AUTH_HEADER = 'SEARCH_ELASTICSEARCH:AUTH_HEADER';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::EXTRA
      */
-    public const EXTRA = 'SEARCH_ELASTICSEARCH:EXTRA';
+    protected const EXTRA = 'SEARCH_ELASTICSEARCH:EXTRA';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::CLIENT_CONFIGURATION
      */
-    public const CLIENT_CONFIGURATION = 'SEARCH_ELASTICSEARCH:CLIENT_CONFIGURATION';
+    protected const CLIENT_CONFIGURATION = 'SEARCH_ELASTICSEARCH:CLIENT_CONFIGURATION';
 
     /**
      * @return object

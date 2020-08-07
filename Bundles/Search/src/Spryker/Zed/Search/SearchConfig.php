@@ -18,12 +18,12 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
      */
-    public const HOST = 'SEARCH_ELASTICSEARCH:HOST';
+    protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
 
     /**
      * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
      */
-    public const PORT = 'SEARCH_ELASTICSEARCH:PORT';
+    protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
 
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
