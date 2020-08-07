@@ -963,7 +963,7 @@ abstract class AbstractTable
 
         $options = [
             'fields' => $options,
-            'action' => $url,
+            'action' => (string)$url,
         ];
 
         $form = $this->createForm($formClassName, $name, $options);

@@ -120,7 +120,6 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
      */
     public function testCommitShouldInsertEntitiesInBatch(string $entityClassName)
     {
-        self::markTestSkipped();
         codecept_debug($entityClassName);
 
         try {
@@ -168,7 +167,6 @@ class ActiveRecordBatchProcessorTraitTest extends Unit
      */
     public function testCommitShouldUpdateEntitiesInBatch(string $entityClassName)
     {
-        self::markTestSkipped();
         $tableMapClassName = $entityClassName::TABLE_MAP;
         $tableMapClass = new $tableMapClassName();
         $columnMapCollection = $tableMapClass->getColumns();
