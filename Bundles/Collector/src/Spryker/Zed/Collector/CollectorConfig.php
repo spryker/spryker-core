@@ -33,7 +33,7 @@ class CollectorConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME, null);
+        return Config::get(CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
     }
 
     /**
