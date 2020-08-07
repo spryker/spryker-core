@@ -4,10 +4,19 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/event-behavior": "*",
+    "spryker/kernel": "^3.30.0",
+    "spryker/product-configuration": "*",
+    "spryker/publisher-extension": "*",
+    "spryker/synchronization": "*",
+    "spryker/synchronization-behavior": "*",
+    "spryker/synchronization-extension": "*"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/product-configuration": "*",
+    "spryker/propel": "*",
+    "spryker/queue": "*",
     "spryker/testify": "*"
   },
   "autoload": {

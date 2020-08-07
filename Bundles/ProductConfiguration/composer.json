@@ -4,10 +4,13 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/kernel": "^3.30.0",
+    "spryker/product": "*",
+    "spryker/propel-orm": "*"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/product": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {
