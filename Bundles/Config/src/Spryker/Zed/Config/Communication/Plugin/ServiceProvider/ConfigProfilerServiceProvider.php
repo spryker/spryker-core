@@ -10,7 +10,7 @@ namespace Spryker\Zed\Config\Communication\Plugin\ServiceProvider;
 use Spryker\Shared\Config\Plugin\ServiceProvider\AbstractConfigProfilerServiceProvider as SharedConfigProfilerServiceProvider;
 
 /**
- * @deprecated Use `\Spryker\Zed\Config\Communication\Plugin\WebProfiler\WebProfilerConfigDataCollector` instead.
+ * @deprecated Use {@link \Spryker\Zed\Config\Communication\Plugin\WebProfiler\WebProfilerConfigDataCollector} instead.
  */
 class ConfigProfilerServiceProvider extends SharedConfigProfilerServiceProvider
 {

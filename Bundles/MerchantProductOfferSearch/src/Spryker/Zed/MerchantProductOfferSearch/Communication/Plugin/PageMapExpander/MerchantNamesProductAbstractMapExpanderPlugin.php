@@ -45,7 +45,15 @@ class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMa
             return $pageMapTransfer;
         }
 
-        foreach ($productData[static::KEY_MERCHANT_NAMES] as $merchantName) {
+        if (empty($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()])) {
+            return $pageMapTransfer;
+        }
+
+        foreach ($productData[static::KEY_MERCHANT_NAMES][$pageMapTransfer->getStore()] as $merchantName) {
+            if ($this->hasMerchantNameFacet($pageMapTransfer, $merchantName)) {
+                continue;
+            }
+
             $pageMapBuilder
                 ->addStringFacet($pageMapTransfer, static::KEY_MERCHANT_NAME, $merchantName)
                 ->addFullTextBoosted($pageMapTransfer, $merchantName)
@@ -54,5 +62,22 @@ class MerchantNamesProductAbstractMapExpanderPlugin implements ProductAbstractMa
         }
 
         return $pageMapTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
+     * @param string $value
+     *
+     * @return bool
+     */
+    protected function hasMerchantNameFacet(PageMapTransfer $pageMapTransfer, string $value): bool
+    {
+        foreach ($pageMapTransfer->getStringFacet() as $facetMapTransfer) {
+            if ($facetMapTransfer->getName() === static::KEY_MERCHANT_NAME && in_array($value, $facetMapTransfer->getValue())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Console\Dependency\Plugin;
 use Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface as SharedConsolePostRunHookPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface` instead
+ * @deprecated Use {@link \Spryker\Shared\Console\Dependency\Plugin\ConsolePostRunHookPluginInterface} instead
  */
 interface ConsolePostRunHookPluginInterface extends SharedConsolePostRunHookPluginInterface
 {

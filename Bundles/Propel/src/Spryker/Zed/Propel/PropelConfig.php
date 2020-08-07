@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Propel;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException;
@@ -137,9 +136,25 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getLogPath()
     {
-        $defaultPath = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/propel.log';
+        $basePath = APPLICATION_ROOT_DIR . '/data/logs/';
+
+        if (!is_writable($basePath)) {
+            $basePath = $this->getBCBaseLogPath();
+        }
+
+        $defaultPath = $basePath . 'ZED/propel.log';
 
         return $this->get(PropelConstants::LOG_FILE_PATH, $defaultPath);
+    }
+
+    /**
+     * @deprecated Exists for BC reasons.
+     *
+     * @return string
+     */
+    protected function getBCBaseLogPath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/data/' . APPLICATION_STORE . '/logs/';
     }
 
     /**
@@ -155,6 +170,8 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @throws \Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException
      *
      * @return string
@@ -162,7 +179,10 @@ class PropelConfig extends AbstractBundleConfig
     public function getCurrentDatabaseEngineName()
     {
         $dbEngine = $this->getCurrentDatabaseEngine();
-        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES);
+        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES, [
+            PropelConfig::DB_ENGINE_MYSQL => 'MySql',
+            PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql',
+        ]);
 
         if (!array_key_exists($dbEngine, $supportedEngines)) {
             throw new UnSupportedDatabaseEngineException('Unsupported database engine: ' . $dbEngine);

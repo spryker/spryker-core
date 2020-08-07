@@ -24,10 +24,12 @@ use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use Spryker\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+use Symfony\Contracts\Translation\TranslatorTrait;
 
 class TranslationManager implements TranslationManagerInterface
 {
     use TransactionTrait;
+    use TranslatorTrait;
 
     public const TOUCH_TRANSLATION = 'translation';
     public const GLOSSARY_KEY = 'glossary_key';
@@ -92,6 +94,7 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
+        /** @var string|null $translationKey */
         $translationKey = $keyTranslationTransfer->getGlossaryKey();
         try {
             if (!$this->keyManager->hasKey($translationKey)) {
@@ -375,7 +378,7 @@ class TranslationManager implements TranslationManagerInterface
 
         $translation = $this->getTranslationByKeyName($keyName, $localeTransfer);
 
-        return str_replace(array_keys($data), array_values($data), $translation->getValue());
+        return $this->trans($translation->getValue(), $data, null, $localeTransfer->getLocaleName());
     }
 
     /**
@@ -504,11 +507,10 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translateByKeyId($idKey, array $data = [])
     {
-        $idLocale = $this->localeFacade->getCurrentLocale()
-            ->getIdLocale();
-        $translation = $this->getTranslationByIds($idKey, $idLocale);
+        $localeTransfer = $this->localeFacade->getCurrentLocale();
+        $translation = $this->getTranslationByIds($idKey, $localeTransfer->getIdLocale());
 
-        return str_replace(array_keys($data), array_values($data), $translation->getValue());
+        return $this->trans($translation->getValue(), $data, null, $localeTransfer->getLocaleName());
     }
 
     /**

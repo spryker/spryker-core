@@ -70,9 +70,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCalculationFacade(Container $container)
     {
-        $container[static::FACADE_CALCULATION] = function (Container $container) {
+        $container->set(static::FACADE_CALCULATION, function (Container $container) {
             return new CartToCalculationBridge($container->getLocator()->calculation()->facade());
-        };
+        });
 
         return $container;
     }
@@ -84,9 +84,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteFacade(Container $container)
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new CartToQuoteFacadeBridge($container->getLocator()->quote()->facade());
-        };
+        });
 
         return $container;
     }
@@ -98,9 +98,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container)
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new CartToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -112,9 +112,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addExpanderPlugins(Container $container)
     {
-        $container[static::CART_EXPANDER_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_EXPANDER_PLUGINS, function (Container $container) {
             return $this->getExpanderPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -126,9 +126,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPostSavePlugins(Container $container)
     {
-        $container[static::CART_POST_SAVE_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_POST_SAVE_PLUGINS, function (Container $container) {
             return $this->getPostSavePlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -140,9 +140,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartBeforePreCheckNormalizerPlugins(Container $container): Container
     {
-        $container[static::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS] = function (Container $container): array {
+        $container->set(static::CART_BEFORE_PRE_CHECK_NORMALIZER_PLUGINS, function (Container $container): array {
             return $this->getCartBeforePreCheckNormalizerPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -154,9 +154,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPreCheckPlugins(Container $container)
     {
-        $container[static::CART_PRE_CHECK_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_PRE_CHECK_PLUGINS, function (Container $container) {
             return $this->getCartPreCheckPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -168,9 +168,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartRemovalPreCheckPlugins(Container $container)
     {
-        $container[static::CART_REMOVAL_PRE_CHECK_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_REMOVAL_PRE_CHECK_PLUGINS, function (Container $container) {
             return $this->getCartRemovalPreCheckPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -182,9 +182,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPreReloadPlugins(Container $container)
     {
-        $container[static::CART_PRE_RELOAD_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_PRE_RELOAD_PLUGINS, function (Container $container) {
             return $this->getPreReloadPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -196,9 +196,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTerminationPlugins(Container $container)
     {
-        $container[static::CART_TERMINATION_PLUGINS] = function (Container $container) {
+        $container->set(static::CART_TERMINATION_PLUGINS, function (Container $container) {
             return $this->getTerminationPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -210,9 +210,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteChangeObserverPlugins(Container $container)
     {
-        $container[static::PLUGINS_QUOTE_CHANGE_OBSERVER] = function (Container $container) {
+        $container->set(static::PLUGINS_QUOTE_CHANGE_OBSERVER, function (Container $container) {
             return $this->getQuoteChangeObserverPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -224,9 +224,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartAddItemStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CART_ADD_ITEM_STRATEGY] = function (Container $container) {
+        $container->set(static::PLUGINS_CART_ADD_ITEM_STRATEGY, function (Container $container) {
             return $this->getCartAddItemStrategyPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -238,9 +238,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartRemoveItemStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CART_REMOVE_ITEM_STRATEGY] = function (Container $container) {
+        $container->set(static::PLUGINS_CART_REMOVE_ITEM_STRATEGY, function (Container $container) {
             return $this->getCartRemoveItemStrategyPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -252,9 +252,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPostReloadItemsPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_RELOAD_ITEMS] = function (Container $container): array {
+        $container->set(static::PLUGINS_POST_RELOAD_ITEMS, function (Container $container): array {
             return $this->getPostReloadItemsPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -266,9 +266,9 @@ class CartDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteLockPreResetPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_LOCK_PRE_RESET] = function () {
+        $container->set(static::PLUGINS_QUOTE_LOCK_PRE_RESET, function () {
             return $this->getQuoteLockPreResetPlugins();
-        };
+        });
 
         return $container;
     }

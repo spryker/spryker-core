@@ -91,7 +91,7 @@ interface CompanyBusinessUnitFacadeInterface
     /**
      * Specification:
      * - Returns the business units for the given company and filters.
-     * - Executes company business unit transfer expander plugins on each item in the collection.
+     * - Executes CompanyBusinessUnitExpanderPluginInterface plugins if CompanyBusinessUnitCriteriaFilterTransfer::withoutExpanders=false.
      *
      * @api
      *

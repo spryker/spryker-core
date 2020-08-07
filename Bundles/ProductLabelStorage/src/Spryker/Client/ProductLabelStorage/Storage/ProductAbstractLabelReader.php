@@ -68,10 +68,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
         $productLabelIds = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract);
 
@@ -79,16 +80,17 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
             return [];
         }
 
-        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName);
+        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName, $storeName);
     }
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
         $productLabelIdsByProductAbstractIds = $this->getProductLabelIdsByProductAbstractIds($productAbstractIds);
 
@@ -98,23 +100,26 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 
         return $this->getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
             $productLabelIdsByProductAbstractIds,
-            $localeName
+            $localeName,
+            $storeName
         );
     }
 
     /**
      * @param int[][] $productLabelIdsByProductAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
-        string $localeName
+        string $localeName,
+        string $storeName
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
-            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName)
         );
 
         $productLabelDictionaryItemTransfersByProductAbstractIds = [];
@@ -274,11 +279,12 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int[] $productLabelIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName)
+    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName, string $storeName)
     {
-        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
+        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName, $storeName);
     }
 }

@@ -27,6 +27,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_REVOKER';
     public const PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER = 'PLUGINS_OAUTH_REFRESH_TOKENS_REVOKER';
     public const PLUGINS_OAUTH_REFRESH_TOKEN_SAVER = 'PLUGINS_OAUTH_REFRESH_TOKEN_SAVER';
+    public const PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE = 'PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE';
     public const PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER = 'PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER';
     public const PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER = 'PLUGINS_OAUTH_EXPIRED_REFRESH_TOKEN_REMOVER';
     public const PLUGINS_OAUTH_REFRESH_TOKEN_READER = 'PLUGINS_OAUTH_REFRESH_TOKEN_READER';
@@ -50,6 +51,7 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addOauthRefreshTokenRevokerPlugins($container);
         $container = $this->addOauthRefreshTokensRevokerPlugins($container);
         $container = $this->addOauthRefreshTokenSaverPlugins($container);
+        $container = $this->addOauthRefreshTokenPersistencePlugins($container);
         $container = $this->addOauthRefreshTokenCheckerPlugins($container);
         $container = $this->addOauthExpiredRefreshTokenRemoverPlugins($container);
         $container = $this->addOauthRefreshTokenReaderPlugins($container);
@@ -65,11 +67,11 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthToUtilEncodingServiceBridge(
                 $container->getLocator()->utilEncoding()->service()
             );
-        };
+        });
 
         return $container;
     }
@@ -81,9 +83,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_USER_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGIN_USER_PROVIDER, function (Container $container) {
             return $this->getUserProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -95,9 +97,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addScopeProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_SCOPE_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGIN_SCOPE_PROVIDER, function (Container $container) {
             return $this->getScopeProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -109,9 +111,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGrantTypeConfigurationProviderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER] = function (Container $container) {
+        $container->set(static::PLUGINS_GRANT_TYPE_CONFIGURATION_PROVIDER, function (Container $container) {
             return $this->getGrantTypeConfigurationProviderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -123,9 +125,9 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOauthUserIdentifierFilterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER] = function () {
+        $container->set(static::PLUGINS_OAUTH_USER_IDENTIFIER_FILTER, function () {
             return $this->getOauthUserIdentifierFilterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -159,6 +161,8 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthDependencyProvider::addOauthRefreshTokenPersistencePlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
@@ -167,6 +171,20 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_SAVER, function () {
             return $this->getOauthRefreshTokenSaverPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addOauthRefreshTokenPersistencePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE, function () {
+            return $this->getOauthRefreshTokenPersistencePlugins();
         });
 
         return $container;
@@ -280,9 +298,19 @@ class OauthDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\Oauth\OauthDependencyProvider::getOauthRefreshTokenPersistencePlugins()} instead.
+     *
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
      */
     protected function getOauthRefreshTokenSaverPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[]
+     */
+    protected function getOauthRefreshTokenPersistencePlugins(): array
     {
         return [];
     }

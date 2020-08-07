@@ -37,9 +37,9 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new CmsPageSearchToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -51,17 +51,17 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new CmsPageSearchToUtilEncodingBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
-        $container[static::FACADE_CMS] = function (Container $container) {
+        $container->set(static::FACADE_CMS, function (Container $container) {
             return new CmsPageSearchToCmsBridge($container->getLocator()->cms()->facade());
-        };
+        });
 
-        $container[static::STORE] = function (Container $container) {
+        $container->set(static::STORE, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -73,13 +73,13 @@ class CmsPageSearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_PAGE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_PAGE, function (Container $container) {
             return new CmsPageSearchToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_LOCALE] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_LOCALE, function (Container $container) {
             return new CmsPageSearchToLocaleQueryContainerBridge($container->getLocator()->locale()->queryContainer());
-        };
+        });
 
         return $container;
     }

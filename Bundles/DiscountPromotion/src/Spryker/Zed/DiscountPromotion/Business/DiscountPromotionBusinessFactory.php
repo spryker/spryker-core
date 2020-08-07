@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidator;
+use Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface;
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreator;
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionCreator\DiscountPromotionCreatorInterface;
 use Spryker\Zed\DiscountPromotion\Business\DiscountPromotionUpdater\DiscountPromotionUpdater;
@@ -92,5 +94,13 @@ class DiscountPromotionBusinessFactory extends AbstractBusinessFactory
     public function createDiscountPromotionUpdater(): DiscountPromotionUpdaterInterface
     {
         return new DiscountPromotionUpdater($this->getEntityManager());
+    }
+
+    /**
+     * @return \Spryker\Zed\DiscountPromotion\Business\Cart\CartValidatorInterface
+     */
+    public function createCartValidator(): CartValidatorInterface
+    {
+        return new CartValidator();
     }
 }

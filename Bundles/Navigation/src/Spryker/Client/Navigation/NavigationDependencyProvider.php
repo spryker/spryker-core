@@ -33,8 +33,8 @@ class NavigationDependencyProvider extends AbstractDependencyProvider
      */
     protected function provideStorageClient(Container $container)
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return $container->getLocator()->storage()->client();
-        };
+        });
     }
 }

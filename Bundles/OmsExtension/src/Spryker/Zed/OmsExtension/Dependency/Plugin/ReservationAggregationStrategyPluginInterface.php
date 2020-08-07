@@ -10,6 +10,9 @@ namespace Spryker\Zed\OmsExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\OmsStateCollectionTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsReservationAggregationPluginInterface}
+ */
 interface ReservationAggregationStrategyPluginInterface
 {
     /**

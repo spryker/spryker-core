@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Touch\Business\Model\BulkTouch;
 
+use Spryker\Zed\Touch\TouchConfig;
+
 class BulkTouch implements BulkTouchInterface
 {
     /**
@@ -15,11 +17,18 @@ class BulkTouch implements BulkTouchInterface
     protected $bulkTouchHandler;
 
     /**
-     * @param array $bulkTouchHandler
+     * @var \Spryker\Zed\Touch\TouchConfig
      */
-    public function __construct(array $bulkTouchHandler)
+    protected $touchConfig;
+
+    /**
+     * @param array $bulkTouchHandler
+     * @param \Spryker\Zed\Touch\TouchConfig $touchConfig
+     */
+    public function __construct(array $bulkTouchHandler, TouchConfig $touchConfig)
     {
         $this->bulkTouchHandler = $bulkTouchHandler;
+        $this->touchConfig = $touchConfig;
     }
 
     /**
@@ -31,6 +40,10 @@ class BulkTouch implements BulkTouchInterface
      */
     public function bulkTouch($itemType, $itemEvent, array $itemIds)
     {
+        if (!$this->touchConfig->isTouchEnabled()) {
+            return 0;
+        }
+
         $affectedRows = 0;
 
         foreach ($this->bulkTouchHandler as $bulkTouchHandler) {

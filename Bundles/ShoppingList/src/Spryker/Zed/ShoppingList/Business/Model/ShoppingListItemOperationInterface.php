@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -15,7 +16,7 @@ use Generated\Shared\Transfer\ShoppingListTransfer;
 interface ShoppingListItemOperationInterface
 {
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::addShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link addShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -59,7 +60,7 @@ interface ShoppingListItemOperationInterface
     public function removeItemById(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer;
 
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::updateShoppingListItem instead. Will be removed with next major release.
+     * @deprecated Use {@link updateShoppingListItem()} instead. Will be removed with next major release.
      *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
@@ -80,4 +81,15 @@ interface ShoppingListItemOperationInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
     public function saveShoppingListItemWithoutPermissionsCheck(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void;
 }

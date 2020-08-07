@@ -9,8 +9,10 @@ namespace Spryker\Zed\ProductReviewGui\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductReviewGui\Communication\Form\DeleteProductReviewForm;
 use Spryker\Zed\ProductReviewGui\Communication\Table\ProductReviewTable;
 use Spryker\Zed\ProductReviewGui\ProductReviewGuiDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\ProductReviewGui\Persistence\ProductReviewGuiQueryContainerInterface getQueryContainer()
@@ -26,6 +28,16 @@ class ProductReviewGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createProductReviewTable(LocaleTransfer $localeTransfer)
     {
         return new ProductReviewTable($this->getQueryContainer(), $localeTransfer, $this->getUtilDateTimeService(), $this->getUtilSanitizeServiceInterface());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteProductReviewForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteProductReviewForm::class, [], [
+            'fields' => [],
+        ]);
     }
 
     /**

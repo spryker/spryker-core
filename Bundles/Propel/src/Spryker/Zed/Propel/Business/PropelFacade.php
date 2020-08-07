@@ -29,6 +29,20 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
     }
 
     /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSchemaDirectory(): string
+    {
+        return $this->getFactory()
+            ->createPropelConfigReader()
+            ->getSchemaDirectory();
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -45,7 +59,7 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `createDatabase()` instead.
+     * @deprecated Use {@link createDatabase()} instead.
      *
      * @return void
      */
@@ -146,6 +160,8 @@ class PropelFacade extends AbstractFacade implements PropelFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

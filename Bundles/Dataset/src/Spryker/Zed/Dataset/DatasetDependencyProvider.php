@@ -54,9 +54,9 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new DatasetToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -68,9 +68,9 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelDatasetQuery(Container $container): Container
     {
-        $container[static::PROPEL_DATASET_QUERY] = function () {
+        $container->set(static::PROPEL_DATASET_QUERY, $container->factory(function () {
             return SpyDatasetQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -82,9 +82,9 @@ class DatasetDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCsvAdapter(Container $container): Container
     {
-        $container[static::CSV_ADAPTER] = function () {
+        $container->set(static::CSV_ADAPTER, function () {
             return new CsvFactory();
-        };
+        });
 
         return $container;
     }

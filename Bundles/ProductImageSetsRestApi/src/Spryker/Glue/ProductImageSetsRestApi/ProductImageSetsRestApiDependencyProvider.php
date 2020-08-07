@@ -41,11 +41,11 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductImageStorageClientDependency(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_IMAGE_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_IMAGE_STORAGE, function (Container $container) {
             return new ProductImageSetsRestApiToProductImageStorageClientBridge(
                 $container->getLocator()->productImageStorage()->client()
             );
-        };
+        });
 
         return $container;
     }
@@ -57,11 +57,11 @@ class ProductImageSetsRestApiDependencyProvider extends AbstractBundleDependency
      */
     protected function addProductStorageClientDependency(Container $container): Container
     {
-        $container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
             return new ProductImageSetsRestApiToProductStorageClientBridge(
                 $container->getLocator()->productStorage()->client()
             );
-        };
+        });
 
         return $container;
     }

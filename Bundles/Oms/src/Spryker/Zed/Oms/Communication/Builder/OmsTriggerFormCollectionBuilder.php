@@ -63,4 +63,24 @@ class OmsTriggerFormCollectionBuilder implements OmsTriggerFormCollectionBuilder
 
         return $orderItemOmsTriggerFormCollection;
     }
+
+    /**
+     * @param string $redirectUrl
+     * @param string[] $events
+     * @param int[] $salesOrderItemIds
+     *
+     * @return array
+     */
+    public function buildOrderItemsOmsTriggerFormCollection(string $redirectUrl, array $events, array $salesOrderItemIds): array
+    {
+        $orderItemOmsTriggerFormCollection = [];
+
+        foreach ($events as $event) {
+            $orderItemOmsTriggerFormCollection[$event] = $this->omsTriggerFormFactory
+                ->getOrderItemsOmsTriggerForm($redirectUrl, $event, $salesOrderItemIds)
+                ->createView();
+        }
+
+        return $orderItemOmsTriggerFormCollection;
+    }
 }

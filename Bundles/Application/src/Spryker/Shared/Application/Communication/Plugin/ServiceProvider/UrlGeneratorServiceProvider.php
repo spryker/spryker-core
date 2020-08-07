@@ -14,7 +14,7 @@ use Spryker\Shared\Application\Application as SprykerApplication;
 /**
  * Symfony CMF Routing component Provider for URL generation.
  *
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\UrlGeneratorServiceProvider instead
+ * @deprecated Use {@link \Spryker\Shared\Application\ServiceProvider\UrlGeneratorServiceProvider} instead
  */
 class UrlGeneratorServiceProvider implements ServiceProviderInterface
 {

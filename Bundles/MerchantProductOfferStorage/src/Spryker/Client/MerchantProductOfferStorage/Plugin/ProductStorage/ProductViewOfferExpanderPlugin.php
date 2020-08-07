@@ -48,12 +48,13 @@ class ProductViewOfferExpanderPlugin extends AbstractPlugin implements ProductVi
             $productStorageCriteriaTransfer->modifiedToArray(),
             true
         );
+        $productOfferStorageCriteriaTransfer->fromArray($productViewTransfer->toArray(), true);
 
         $selectedAttributes = $productViewTransfer->getSelectedAttributes();
         if (isset($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE])) {
             $productOfferStorageCriteriaTransfer->setProductOfferReference($selectedAttributes[MerchantProductOfferStorageConfig::PRODUCT_OFFER_REFERENCE_ATTRIBUTE]);
         }
-        $productOfferStorageCriteriaTransfer->setSku($productViewTransfer->getSku());
+        $productOfferStorageCriteriaTransfer->addProductConcreteSku($productViewTransfer->getSku());
 
         return $productViewTransfer->setProductOfferReference(
             $this->getClient()->findProductConcreteDefaultProductOffer($productOfferStorageCriteriaTransfer)

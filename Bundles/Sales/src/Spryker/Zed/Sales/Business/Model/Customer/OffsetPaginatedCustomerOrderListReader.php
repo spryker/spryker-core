@@ -32,18 +32,26 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
     protected $omsFacade;
 
     /**
+     * @var \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     */
+    protected $searchOrderExpanderPlugins;
+
+    /**
      * @param \Spryker\Zed\Sales\Persistence\SalesRepositoryInterface $salesRepository
      * @param \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface $orderHydrator
      * @param \Spryker\Zed\Sales\Dependency\Facade\SalesToOmsInterface $omsFacade
+     * @param \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[] $searchOrderExpanderPlugins
      */
     public function __construct(
         SalesRepositoryInterface $salesRepository,
         OrderHydratorInterface $orderHydrator,
-        SalesToOmsInterface $omsFacade
+        SalesToOmsInterface $omsFacade,
+        array $searchOrderExpanderPlugins
     ) {
         $this->salesRepository = $salesRepository;
         $this->orderHydrator = $orderHydrator;
         $this->omsFacade = $omsFacade;
+        $this->searchOrderExpanderPlugins = $searchOrderExpanderPlugins;
     }
 
     /**
@@ -60,7 +68,11 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
             return $orderListTransfer;
         }
 
-        return $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
+        $orderListTransfer = $this->hydrateOrderTransfersInOrderListTransfer($orderListTransfer);
+        $orderTransfers = $this->executeSearchOrderExpanderPlugins($orderListTransfer->getOrders()->getArrayCopy());
+        $orderListTransfer->setOrders(new ArrayObject($orderTransfers));
+
+        return $orderListTransfer;
     }
 
     /**
@@ -81,5 +93,19 @@ class OffsetPaginatedCustomerOrderListReader implements OffsetPaginatedCustomerO
         }
 
         return $orderListTransfer->setOrders($orderTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    protected function executeSearchOrderExpanderPlugins(array $orderTransfers): array
+    {
+        foreach ($this->searchOrderExpanderPlugins as $searchOrderExpanderPlugin) {
+            $orderTransfers = $searchOrderExpanderPlugin->expand($orderTransfers);
+        }
+
+        return $orderTransfers;
     }
 }

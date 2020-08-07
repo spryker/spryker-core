@@ -43,5 +43,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateYvesIdeAutoCompletion();
 
         $this->info('Generated Yves IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

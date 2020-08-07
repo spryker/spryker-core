@@ -42,6 +42,8 @@ class QuoteFieldsConfigurator implements QuoteFieldsConfiguratorInterface
     public function getQuoteFieldsAllowedForSaving(QuoteTransfer $quoteTransfer): array
     {
         $quoteFields = array_merge($this->quoteConfig->getQuoteFieldsAllowedForSaving(), $this->executeQuoteFieldsAllowedForSavingProviderPlugins($quoteTransfer));
+        $quoteFields = array_unique($quoteFields);
+
         $quoteItemFields = $this->quoteConfig->getQuoteItemFieldsAllowedForSaving();
 
         if (!$quoteItemFields) {

@@ -86,7 +86,7 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
      *
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\UrlStorage\Persistence\SpyUrlRedirectStorageQuery
      */
@@ -105,7 +105,7 @@ class UrlStorageQueryContainer extends AbstractQueryContainer implements UrlStor
      *
      * @api
      *
-     * @param array $redirectIds
+     * @param int[] $redirectIds
      *
      * @return \Orm\Zed\Url\Persistence\SpyUrlRedirectQuery
      */

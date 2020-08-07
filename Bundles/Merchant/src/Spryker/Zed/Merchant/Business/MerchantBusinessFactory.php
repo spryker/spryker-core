@@ -8,16 +8,20 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
-use Spryker\Zed\Merchant\Business\Model\MerchantCreator;
-use Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantReader;
-use Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface;
-use Spryker\Zed\Merchant\Business\Model\MerchantUpdater;
-use Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReader;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidator;
-use Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Creator\MerchantCreator;
+use Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface;
+use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaver;
+use Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface;
+use Spryker\Zed\Merchant\Business\Reader\MerchantReader;
+use Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusReader;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidator;
+use Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface;
+use Spryker\Zed\Merchant\Business\Updater\MerchantUpdater;
+use Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface;
+use Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface;
 use Spryker\Zed\Merchant\Dependency\Service\MerchantToUtilTextServiceInterface;
 use Spryker\Zed\Merchant\MerchantDependencyProvider;
 
@@ -29,20 +33,21 @@ use Spryker\Zed\Merchant\MerchantDependencyProvider;
 class MerchantBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantCreatorInterface
+     * @return \Spryker\Zed\Merchant\Business\Creator\MerchantCreatorInterface
      */
     public function createMerchantCreator(): MerchantCreatorInterface
     {
         return new MerchantCreator(
             $this->getEntityManager(),
             $this->getConfig(),
-            $this->getMerchantPostSavePlugins(),
-            $this->getMerchantPostCreatePlugins()
+            $this->getMerchantPostCreatePlugins(),
+            $this->createMerchantUrlSaver(),
+            $this->getEventFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantUpdaterInterface
+     * @return \Spryker\Zed\Merchant\Business\Updater\MerchantUpdaterInterface
      */
     public function createMerchantUpdater(): MerchantUpdaterInterface
     {
@@ -50,13 +55,14 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->createMerchantStatusValidator(),
-            $this->getMerchantPostSavePlugins(),
-            $this->getMerchantPostUpdatePlugins()
+            $this->getMerchantPostUpdatePlugins(),
+            $this->createMerchantUrlSaver(),
+            $this->getEventFacade()
         );
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\MerchantReaderInterface
+     * @return \Spryker\Zed\Merchant\Business\Reader\MerchantReaderInterface
      */
     public function createMerchantReader(): MerchantReaderInterface
     {
@@ -67,7 +73,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusReaderInterface
+     * @return \Spryker\Zed\Merchant\Business\Status\MerchantStatusReaderInterface
      */
     public function createMerchantStatusReader(): MerchantStatusReaderInterface
     {
@@ -77,7 +83,7 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Merchant\Business\Model\Status\MerchantStatusValidatorInterface
+     * @return \Spryker\Zed\Merchant\Business\Status\MerchantStatusValidatorInterface
      */
     public function createMerchantStatusValidator(): MerchantStatusValidatorInterface
     {
@@ -92,16 +98,6 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function getUtilTextService(): MerchantToUtilTextServiceInterface
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::SERVICE_UTIL_TEXT);
-    }
-
-    /**
-     * @deprecated Use \Spryker\Zed\Merchant\Business\MerchantBusinessFactory::getMerchantPostCreatePlugins() or getMerchantPostUpdatePlugins() instead.
-     *
-     * @return \Spryker\Zed\MerchantExtension\Dependency\Plugin\MerchantPostSavePluginInterface[]
-     */
-    public function getMerchantPostSavePlugins(): array
-    {
-        return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_POST_SAVE);
     }
 
     /**
@@ -126,5 +122,31 @@ class MerchantBusinessFactory extends AbstractBusinessFactory
     public function getMerchantExpanderPlugins(): array
     {
         return $this->getProvidedDependency(MerchantDependencyProvider::PLUGINS_MERCHANT_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToUrlFacadeInterface
+     */
+    public function getUrlFacade(): MerchantToUrlFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Business\MerchantUrlSaver\MerchantUrlSaverInterface
+     */
+    public function createMerchantUrlSaver(): MerchantUrlSaverInterface
+    {
+        return new MerchantUrlSaver(
+            $this->getUrlFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Merchant\Dependency\Facade\MerchantToEventFacadeInterface
+     */
+    public function getEventFacade(): MerchantToEventFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantDependencyProvider::FACADE_EVENT);
     }
 }

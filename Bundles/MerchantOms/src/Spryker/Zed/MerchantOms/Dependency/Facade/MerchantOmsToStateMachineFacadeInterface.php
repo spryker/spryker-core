@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\MerchantOms\Dependency\Facade;
 
+use Generated\Shared\Transfer\StateMachineItemTransfer;
 use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 
@@ -36,4 +37,25 @@ interface MerchantOmsToStateMachineFacadeInterface
     public function findStateMachineProcess(
         StateMachineProcessCriteriaTransfer $stateMachineProcessCriteriaTransfer
     ): ?StateMachineProcessTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineProcessTransfer $stateMachineProcessTransfer
+     *
+     * @return string[]
+     */
+    public function getProcessStateNames(StateMachineProcessTransfer $stateMachineProcessTransfer): array;
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer[] $stateMachineItems
+     *
+     * @return string[][]
+     */
+    public function getManualEventsForStateMachineItems(array $stateMachineItems);
+
+    /**
+     * @param \Generated\Shared\Transfer\StateMachineItemTransfer $stateMachineItemTransfer
+     *
+     * @return string[]
+     */
+    public function getManualEventsForStateMachineItem(StateMachineItemTransfer $stateMachineItemTransfer);
 }

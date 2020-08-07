@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Translator;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
@@ -20,8 +21,16 @@ use Spryker\Zed\Translator\Dependency\Facade\TranslatorToLocaleFacadeBridge;
  */
 class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const SERVICE_TRANSLATOR = 'SERVICE_TRANSLATOR';
+    /**
+     * @uses \Spryker\Zed\Translator\Communication\Plugin\Application\TranslatorApplicationPlugin::SERVICE_TRANSLATOR
+     */
+    public const SERVICE_TRANSLATOR = 'translator';
+
+    /**
+     * @deprecated Will be removed in favor of accessing the service you need directly.
+     */
     public const APPLICATION = 'APPLICATION';
+
     public const STORE = 'STORE';
 
     public const FACADE_LOCALE = 'FACADE_LOCALE';
@@ -54,6 +63,8 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::provideCommunicationLayerDependencies($container);
 
         $container = $this->addApplication($container);
+
+        $container = $this->addTranslator($container);
         $container = $this->addLocaleFacade($container);
         $container = $this->addTranslatorPlugin($container);
 
@@ -65,11 +76,27 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addTranslator(Container $container): Container
+    {
+        $container->set(static::SERVICE_TRANSLATOR, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TRANSLATOR);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Please add the service you need directly.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addApplication(Container $container): Container
     {
-        $container[static::APPLICATION] = function () {
+        $container->set(static::APPLICATION, function () {
             return (new Pimple())->getApplication();
-        };
+        });
 
         return $container;
     }
@@ -81,9 +108,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container): Container
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -95,9 +122,9 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new TranslatorToLocaleFacadeBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }

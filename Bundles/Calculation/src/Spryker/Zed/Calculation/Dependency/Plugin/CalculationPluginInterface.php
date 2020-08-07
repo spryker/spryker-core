@@ -10,7 +10,7 @@ namespace Spryker\Zed\Calculation\Dependency\Plugin;
 use Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface as ExtensionCalculationPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\CalculationExtension\Dependency\Plugin\CalculationPluginInterface} instead.
  */
 interface CalculationPluginInterface extends ExtensionCalculationPluginInterface
 {

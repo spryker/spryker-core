@@ -143,7 +143,7 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateQuoteWilUpdateQuote(): void
+    public function testUpdateQuoteWillUpdateQuote(): void
     {
         $quoteTransfer = $this->tester->prepareQuoteTransfer();
         $quoteResponseTransfer = $this->cartsRestApiFacade->updateQuote($quoteTransfer);
@@ -273,6 +273,19 @@ class CartsRestApiFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testUpdateItemWillUpdateSecondItem(): void
+    {
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferForSecondItem();
+
+        $quoteResponseTransfer = $this->cartsRestApiFacade->updateItem($restCartItemsAttributesTransfer);
+
+        $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
     public function testUpdateItemWillNotAllowUpdateItemWithoutCustomerReference(): void
     {
         $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithoutCustomerReference();
@@ -316,6 +329,19 @@ class CartsRestApiFacadeTest extends Unit
     public function testDeleteItemWillDeleteItem(): void
     {
         $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferWithQuantity();
+
+        $quoteResponseTransfer = $this->cartsRestApiFacade->deleteItem($restCartItemsAttributesTransfer);
+
+        $this->assertInstanceOf(QuoteResponseTransfer::class, $quoteResponseTransfer);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testDeleteItemWillDeleteSecondItem(): void
+    {
+        $restCartItemsAttributesTransfer = $this->tester->prepareRestCartItemsAttributesTransferForSecondItem();
 
         $quoteResponseTransfer = $this->cartsRestApiFacade->deleteItem($restCartItemsAttributesTransfer);
 
@@ -723,17 +749,6 @@ class CartsRestApiFacadeTest extends Unit
      */
     protected function addQuoteCreatorPlugin(CartsRestApiBusinessFactory $cartsRestApiBusinessFactoryMock): CartsRestApiBusinessFactory
     {
-        $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
-            ->willReturn($this->createMockQuoteCreatorPlugin());
-
-        return $cartsRestApiBusinessFactoryMock;
-    }
-
-    /**
-     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface|\PHPUnit\Framework\MockObject\MockObject
-     */
-    protected function createMockQuoteCreatorPlugin(): QuoteCreatorPluginInterface
-    {
         $mockQuoteCreatorPlugin = $this->createPartialMock(
             QuoteCreatorPluginInterface::class,
             ['createQuote']
@@ -742,6 +757,9 @@ class CartsRestApiFacadeTest extends Unit
             ->method('createQuote')
             ->willReturn($this->tester->prepareQuoteResponseTransferWithQuote());
 
-        return $mockQuoteCreatorPlugin;
+        $cartsRestApiBusinessFactoryMock->method('getQuoteCreatorPlugin')
+            ->willReturn($mockQuoteCreatorPlugin);
+
+        return $cartsRestApiBusinessFactoryMock;
     }
 }

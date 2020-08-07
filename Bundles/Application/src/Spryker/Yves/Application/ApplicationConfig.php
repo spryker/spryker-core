@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Yves\Application\ApplicationConfig getSharedConfig()
+ * @method \Spryker\Shared\Application\ApplicationConfig getSharedConfig()
  */
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -121,5 +121,15 @@ class ApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Feature-Policy' => static::HEADER_FEATURE_POLICY_VALUE,
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDebugModeEnabled();
     }
 }

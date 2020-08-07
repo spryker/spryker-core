@@ -23,11 +23,12 @@ Name,Name
 "Overview of Product lists","Übersicht der Produktlisten"
 "Owner Type",Inhaberart
 "Please ensure you saved information","Bitte stellen Sie sicher, dass Sie Informationen gespeichert haben"
-"Product label #%d successfully created.","Produktetikett #% d wurde erfolgreich erstellt."
+"Product label #%d successfully created.","Produktlabel #%d wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully created.","Produktliste ""%s"" wurde erfolgreich erstellt."
 "Product List ""%s"" has been successfully updated.","Produktliste ""%s"" wurde erfolgreich aktualisiert."
 "Product List has been successfully removed.","Produktliste wurde erfolgreich entfernt."
 "Product List removal confirmation","Löschen der Produktliste bestätigt"
+"Product Lists",Produktlisten
 "Products in this list","Produkte in dieser Liste"
 "Remove List","Liste entfernen"
 Save,Speichern
@@ -39,3 +40,4 @@ Type,Typ
 "Used By","Verwendet von"
 Whitelist,Whitelist
 Сonfirm,Bestätigen
+"Add List","Liste hinzufügen"

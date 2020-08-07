@@ -10,7 +10,7 @@ namespace Spryker\Shared\Search;
 use Spryker\Shared\SearchExtension\SourceInterface;
 
 /**
- * @deprecated Use `\Spryker\Shared\SearchExtension\SourceInterface` instead.
+ * @deprecated Use {@link \Spryker\Shared\SearchExtension\SourceInterface} instead.
  */
 interface IndexMapInterface extends SourceInterface
 {

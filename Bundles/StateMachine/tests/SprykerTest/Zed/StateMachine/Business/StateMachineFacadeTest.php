@@ -22,6 +22,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
@@ -731,6 +732,33 @@ class StateMachineFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testGetProcessStateNamesReturnsArrayOfStateNames(): void
+    {
+        // Arrange
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        // Act
+        $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
+
+        // Assert
+        $this->assertEquals('completed', array_pop($stateNames));
+        $this->assertEquals('state with condition', array_pop($stateNames));
+        $this->assertEquals('new', array_shift($stateNames));
+    }
+
+    /**
      * @param \Spryker\Zed\StateMachine\Dependency\Plugin\StateMachineHandlerInterface $stateMachineHandler
      *
      * @return \Spryker\Zed\StateMachine\Business\StateMachineFacade
@@ -770,7 +798,7 @@ class StateMachineFacadeTest extends Unit
      */
     protected function sleepIfMySql(int $seconds): void
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
             sleep($seconds);
         }
     }

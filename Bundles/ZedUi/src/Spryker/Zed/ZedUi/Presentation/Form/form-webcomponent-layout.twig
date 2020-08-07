@@ -1,0 +1,173 @@
+{#
+Form theming.
+Example: the customized fragment name is `integer_widget` because you want to override the HTML widget for all `integer` field types.
+If you need to customize `textarea` fields, you would customize `textarea_widget`. The integer part comes from the class name: `IntegerType` becomes `integer`, based on a standard.
+
+As you can see, the fragment name is a combination of the field type and which part of the field is being rendered (e.g. widget, label, errors, row).
+As such, to customize how errors are rendered for just input text fields, you should customize the `text_errors fragment`.
+
+More commonly, however, you'll want to customize how errors are displayed across all fields. You can do this by customizing the `form_errors` fragment.
+This takes advantage of field type inheritance. Specifically, since the text type extends from the form type,
+the Form component will first look for the type-specific fragment (e.g. text_errors) before falling back to its parent fragment name if it doesn't exist (e.g. form_errors).
+
+For more information on this topic, see
+    - https://symfony.com/doc/3.4/form/form_themes.html#form-template-blocks
+    - https://symfony.com/doc/3.4/form/form_customization.html#what-are-form-themes
+#}
+{% extends "form_div_layout.html.twig" %}
+
+{%- block form_widget_compound -%}
+    {%- if form is rootform -%}
+        {{ form_errors(form) }}
+    {%- endif -%}
+    {{- block('form_rows') -}}
+    {{- form_rest(form) -}}
+{%- endblock form_widget_compound -%}
+
+{%- block form_errors -%}
+    {%- if errors|length > 0 -%}
+        {%- for error in errors -%}
+            <web-spy-notification type="error">
+                <span title>{{ error.message | trans }}</span>
+            </web-spy-notification>
+        {%- endfor -%}
+    {%- endif -%}
+{%- endblock form_errors -%}
+
+{%- block form_row -%}
+    {%- set widget_attr = {} -%}
+    {%- if help is not empty -%}
+        {%- set widget_attr = {attr: {'aria-describedby': id ~"_help"}} -%}
+    {%- endif -%}
+    {%- if not form.children -%}
+        {%- set row_attr = row_attr | merge({required: required}) -%}
+        <web-spy-form-item
+            for="{{ form.vars.id }}" {% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}
+            {% if form.vars.errors %}error="{{ form.vars.errors[0].message | default | trans }}"{% endif %}
+            {% if not label %}no-label="true"{% endif %}>
+    {%- endif -%}
+        {{- form_label(form) -}}
+        {{- form_widget(form, widget_attr) -}}
+        {{- form_help(form) -}}
+    {%- if not form.children -%}
+        </web-spy-form-item>
+    {%- endif -%}
+{%- endblock form_row -%}
+
+{%- block form_widget_simple -%}
+    {%- set type = type|default('text') -%}
+    {# Attribute "required" is on the level of form_row #}
+    {%- set required = false -%}
+
+    {%- if type == 'hidden' -%}
+        <input type="{{ type }}" id="{{ id }}" name="{{ full_name }}" {{ block('attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %}/>
+    {%- else -%}
+        <web-spy-input control type="{{ type }}" {{ block('widget_attributes') }} {% if value is not empty %}value="{{ value }}" {% endif %} cloak/>
+    {%- endif -%}
+
+{%- endblock form_widget_simple -%}
+
+{%- block button_row -%}
+    {%- if row_attr is not empty -%}
+        <div{% with {attr: row_attr} %}{{ block('attributes') }}{% endwith %}>
+    {%- endif -%}
+            {{- form_widget(form) -}}
+    {%- if row_attr is not empty -%}
+        </div>
+    {%- endif -%}
+{%- endblock button_row -%}
+
+{%- block button_widget -%}
+    {%- if label is empty -%}
+        {%- if label_format is not empty -%}
+            {% set label = label_format|replace({
+                '%name%': name,
+                '%id%': id,
+            }) %}
+        {%- elseif label is not same as(false) -%}
+            {% set label = name|humanize %}
+        {%- endif -%}
+    {%- endif -%}
+    <web-spy-button type="{{ type|default('button') }}" {{ block('button_attributes') }} cloak>{{ translation_domain is same as(false) or label is same as(false) ? label : label|trans(label_translation_parameters, translation_domain) }}</web-spy-button>
+{%- endblock button_widget -%}
+
+{%- block form_label -%}
+    {% if label is not same as(false) -%}
+        {% if label is empty -%}
+            {%- if label_format is not empty -%}
+                {% set label = label_format|replace({
+                    '%name%': name,
+                    '%id%': id,
+                }) %}
+            {%- else -%}
+                {% set label = name|humanize %}
+            {%- endif -%}
+        {%- endif -%}
+        <{{ element|default('label') }}{% if label_attr %}{% with { attr: label_attr } %}{{ block('attributes') }}{% endwith %}{% endif %}>
+            {%- if translation_domain is same as(false) -%}
+                {{- label -}}
+            {%- else -%}
+                {{- label|trans(label_translation_parameters, translation_domain) -}}
+            {%- endif -%}
+        </{{ element|default('label') }}>
+    {%- endif -%}
+{%- endblock form_label -%}
+
+{%- block widget_attributes -%}
+    spy-id="{{ id }}" name="{{ full_name }}"
+    {%- if disabled %} disabled="disabled"{% endif -%}
+    {%- if required %} required="true"{% endif -%}
+    {%- if not required %} required="false"{% endif -%}
+    {{ block('attributes') }}
+{%- endblock widget_attributes -%}
+
+{%- block textarea_widget -%}
+    <web-spy-textarea control {{ block('widget_attributes') }} value="{{ value }}"></web-spy-textarea>
+{%- endblock textarea_widget -%}
+
+{%- block choice_widget -%}
+    {%- if required and placeholder is none and not placeholder_in_choices and not multiple and (attr.size is not defined or attr.size <= 1) -%}
+        {% set required = false %}
+    {%- endif -%}
+    {%- set options = choices -%}
+    {%- set render_preferred_choices = false -%}
+
+    {% if multiple %}
+        {% set selectedData = choices | filter(choice => choice.value in value) %}
+        {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) %}
+    {% endif %}
+
+    <web-spy-select control {{ block('widget_attributes') }} value="{{ value | json_encode() }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
+    </web-spy-select>
+{%- endblock choice_widget -%}
+
+{%- block choice_widget_options -%}
+    {% set translatedChoices = [] %}
+    {% for group_label, choice in options %}
+        {% set translatedChoices = translatedChoices | merge([{
+            'label' : choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain),
+            'value' : choice.value,
+        }]) %}
+    {% endfor %}
+    options="{{ translatedChoices | json_encode() }}"
+{%- endblock choice_widget_options -%}
+
+{%- block checkbox_row -%}
+    {{- form_row(form) -}}
+{%- endblock checkbox_row -%}
+
+{%- block checkbox_widget -%}
+    {% if toggle is defined and toggle %}
+        <web-spy-toggle
+            control
+            {{ block('widget_attributes') }}
+            value="{{ checked ? 'true' : 'false' }}"
+        ></web-spy-toggle>
+    {% else %}
+        <web-spy-checkbox
+            control
+            {{ block('widget_attributes') }}
+            checked="{{ checked ? 'true' : 'false' }}"
+        >{{ label | trans }}</web-spy-checkbox>
+    {% endif %}
+{%- endblock checkbox_widget -%}

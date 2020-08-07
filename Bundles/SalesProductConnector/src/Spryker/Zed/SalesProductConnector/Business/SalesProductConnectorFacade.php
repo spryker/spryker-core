@@ -24,7 +24,7 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @deprecated Use saveOrderItemMetadata() instead
+     * @deprecated Use {@link saveOrderItemMetadata()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -60,7 +60,7 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      *
      * @api
      *
-     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithMetadata()} instead.
+     * @deprecated Use {@link expandOrderItemsWithMetadata()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -75,6 +75,8 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithProductIds()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -99,5 +101,37 @@ class SalesProductConnectorFacade extends AbstractFacade implements SalesProduct
         return $this->getFactory()
             ->createItemMetadataExpander()
             ->expandOrderItemsWithMetadata($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithMetadata(array $orderTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandOrdersWithMetadata($orderTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductIds(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductIdExpander()
+            ->expandOrderItemsWithProduct($itemTransfers);
     }
 }

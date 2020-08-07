@@ -75,9 +75,9 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideApiQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_API] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_API, function (Container $container) {
             return new ProductApiToApiBridge($container->getLocator()->api()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -89,9 +89,9 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideApiQueryBuilderQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_API_QUERY_BUILDER] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_API_QUERY_BUILDER, function (Container $container) {
             return new ProductApiToApiQueryBuilderBridge($container->getLocator()->apiQueryBuilder()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -103,9 +103,9 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideDateFormatterService(Container $container)
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -117,9 +117,9 @@ class ProductApiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function provideProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductApiToProductBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }

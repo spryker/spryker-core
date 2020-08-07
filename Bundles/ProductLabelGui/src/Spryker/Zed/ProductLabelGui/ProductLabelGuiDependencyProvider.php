@@ -8,12 +8,14 @@
 namespace Spryker\Zed\ProductLabelGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToLocaleBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToMoneyBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToPriceProductFacadeBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\Facade\ProductLabelGuiToProductLabelBridge;
 use Spryker\Zed\ProductLabelGui\Dependency\QueryContainer\ProductLabelGuiToProductQueryContainerBridge;
+use Spryker\Zed\ProductLabelGui\Exception\MissingStoreRelationFormTypePluginException;
 
 /**
  * @method \Spryker\Zed\ProductLabelGui\ProductLabelGuiConfig getConfig()
@@ -27,6 +29,8 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
 
+    public const PLUGIN_STORE_RELATION_FORM_TYPE = 'PLUGIN_STORE_RELATION_FORM_TYPE';
+
     /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -39,6 +43,7 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addMoneyFacade($container);
         $container = $this->addProductQueryContainer($container);
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addStoreRelationFormTypePlugin($container);
 
         return $container;
     }
@@ -62,9 +67,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductLabelGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +81,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductLabelFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductLabelGuiToProductLabelBridge($container->getLocator()->productLabel()->facade());
-        };
+        });
 
         return $container;
     }
@@ -90,9 +95,9 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyFacade(Container $container)
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new ProductLabelGuiToMoneyBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -104,11 +109,11 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToProductQueryContainerBridge(
                 $container->getLocator()->product()->queryContainer()
             );
-        };
+        });
 
         return $container;
     }
@@ -120,12 +125,43 @@ class ProductLabelGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductFacade(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new ProductLabelGuiToPriceProductFacadeBridge(
                 $container->getLocator()->priceProduct()->facade()
             );
-        };
+        });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreRelationFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
+            return $this->getStoreRelationFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\ProductLabelGui\Exception\MissingStoreRelationFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getStoreRelationFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingStoreRelationFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure StoreRelationFormType ' .
+                'in your own ProductLabelGuiDependencyProvider::getStoreRelationFormTypePlugin() ' .
+                'to be able to manage product labels.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

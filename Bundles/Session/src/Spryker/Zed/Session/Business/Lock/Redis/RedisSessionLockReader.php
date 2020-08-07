@@ -12,7 +12,7 @@ use Spryker\Shared\Session\Business\Handler\KeyGenerator\LockKeyGeneratorInterfa
 use Spryker\Zed\Session\Business\Lock\SessionLockReaderInterface;
 
 /**
- * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
  */
 class RedisSessionLockReader implements SessionLockReaderInterface
 {

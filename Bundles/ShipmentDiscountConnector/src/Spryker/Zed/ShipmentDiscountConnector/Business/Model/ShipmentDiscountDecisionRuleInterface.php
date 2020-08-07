@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentDiscountConnector\Business\Model;
 use Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface as ShipmentDiscountDecisionRuleWithMultiShipmentInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\ShipmentDiscountDecisionRuleInterface} instead.
  */
 interface ShipmentDiscountDecisionRuleInterface extends ShipmentDiscountDecisionRuleWithMultiShipmentInterface
 {

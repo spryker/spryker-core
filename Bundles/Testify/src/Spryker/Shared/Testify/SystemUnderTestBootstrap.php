@@ -9,7 +9,6 @@ namespace Spryker\Shared\Testify;
 
 use Exception;
 use InvalidArgumentException;
-use Propel\Runtime\Propel;
 use ReflectionObject;
 use Silex\Application;
 use Spryker\Shared\Config\Application\Environment;
@@ -18,13 +17,16 @@ use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
 use Spryker\Shared\Kernel\LocatorLocatorInterface;
 use Spryker\Yves\Kernel\Locator;
 use Spryker\Zed\Kernel\Locator as KernelLocator;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 /**
- * @deprecated Please switch to `Spryker\Zed\Testify\Bootstrap\ZedBootstrap`.
+ * @deprecated Please switch to {@link \Spryker\Zed\Testify\Bootstrap\ZedBootstrap}.
  */
 class SystemUnderTestBootstrap
 {
+    use InstancePoolingTrait;
+
     public const APPLICATION_ZED = 'Zed';
     public const APPLICATION_YVES = 'Yves';
     public const APPLICATION_SHARED = 'Shared';
@@ -61,15 +63,15 @@ class SystemUnderTestBootstrap
     /**
      * @param string $application
      *
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\ApplicationInterface|null
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
 
         $this->validateApplication($application);
         error_reporting(E_ALL | E_STRICT);
-        ini_set('display_errors', 1);
+        ini_set('display_errors', '1');
 
         putenv('SESSION_IS_TEST=true');
 
@@ -91,6 +93,8 @@ class SystemUnderTestBootstrap
         if ($application === self::APPLICATION_YVES) {
             return $this->bootstrapYves();
         }
+
+        return null;
     }
 
     /**
@@ -125,7 +129,7 @@ class SystemUnderTestBootstrap
     }
 
     /**
-     * @return \Spryker\Shared\Application\Application
+     * @return \Spryker\Shared\Application\ApplicationInterface
      */
     protected function bootstrapYves()
     {

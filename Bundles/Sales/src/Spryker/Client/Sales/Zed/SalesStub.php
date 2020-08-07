@@ -8,6 +8,8 @@
 namespace Spryker\Client\Sales\Zed;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderCancelRequestTransfer;
+use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -122,5 +124,35 @@ class SalesStub implements SalesStubInterface
         $itemCollectionTransfer = $this->zedStub->call('/sales/gateway/get-order-items', $orderItemFilterTransfer);
 
         return $itemCollectionTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::searchOrdersAction()
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer */
+        $orderListTransfer = $this->zedStub->call('/sales/gateway/search-orders', $orderListTransfer);
+
+        return $orderListTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\GatewayController::cancelOrderAction()
+     *
+     * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
+     */
+    public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\OrderCancelResponseTransfer $orderCancelResponseTransfer */
+        $orderCancelResponseTransfer = $this->zedStub->call('/sales/gateway/cancel-order', $orderCancelRequestTransfer);
+
+        return $orderCancelResponseTransfer;
     }
 }

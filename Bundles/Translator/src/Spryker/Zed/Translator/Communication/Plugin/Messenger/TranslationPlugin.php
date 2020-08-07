@@ -68,6 +68,6 @@ class TranslationPlugin extends AbstractPlugin implements TranslationPluginInter
      */
     protected function getTranslator()
     {
-        return $this->getFactory()->getApplication()['translator'];
+        return $this->getFactory()->getTranslator();
     }
 }

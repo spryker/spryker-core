@@ -19,7 +19,7 @@ interface QuoteRepositoryInterface
      * Specification:
      * - Find quote by customer reference.
      *
-     * @deprecated Use findQuoteByCustomerReferenceAndIdStore() instead.
+     * @deprecated Use {@link findQuoteByCustomerReferenceAndIdStore()} instead.
      *
      * @param string $customerReference
      *

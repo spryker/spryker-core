@@ -13,6 +13,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesExpenseMapperInterface;
@@ -21,6 +22,10 @@ use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderAddressMapperInterface
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderMapper;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilder;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilder;
+use Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilderInterface;
 
 /**
  * @method \Spryker\Zed\Sales\SalesConfig getConfig()
@@ -71,6 +76,14 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderTotalsQuery
+     */
+    public function getSalesOrderTotalsPropelQuery(): SpySalesOrderTotalsQuery
+    {
+        return SpySalesOrderTotalsQuery::create();
+    }
+
+    /**
      * @deprecated Will be removed with the next major
      *
      * @return \Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistoryQuery
@@ -110,5 +123,29 @@ class SalesPersistenceFactory extends AbstractPersistenceFactory
     public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchFilterFieldQueryBuilderInterface
+     */
+    public function createOrderSearchFilterFieldQueryBuilder(): OrderSearchFilterFieldQueryBuilderInterface
+    {
+        return new OrderSearchFilterFieldQueryBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\Propel\QueryBuilder\OrderSearchQueryJoinQueryBuilderInterface
+     */
+    public function createOrderSearchQueryJoinQueryBuilder(): OrderSearchQueryJoinQueryBuilderInterface
+    {
+        return new OrderSearchQueryJoinQueryBuilder();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Persistence\SalesQueryContainerInterface
+     */
+    public function getSalesQueryContainer(): SalesQueryContainerInterface
+    {
+        return $this->getQueryContainer();
     }
 }

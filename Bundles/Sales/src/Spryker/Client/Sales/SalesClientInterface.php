@@ -8,6 +8,8 @@
 namespace Spryker\Client\Sales;
 
 use Generated\Shared\Transfer\ItemCollectionTransfer;
+use Generated\Shared\Transfer\OrderCancelRequestTransfer;
+use Generated\Shared\Transfer\OrderCancelResponseTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
 use Generated\Shared\Transfer\OrderListRequestTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
@@ -111,4 +113,42 @@ interface SalesClientInterface
      * @return \Generated\Shared\Transfer\ItemCollectionTransfer
      */
     public function getOrderItems(OrderItemFilterTransfer $orderItemFilterTransfer): ItemCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires OrderListTransfer::customerReference to be set.
+     * - Requires OrderListTransfer::pagination to be set.
+     * - Requires OrderListTransfer::format to be set.
+     * - Filters orders by OrderListTransfer::filterFields if provided.
+     * - Filters orders by OrderListTransfer::filter if provided.
+     * - Executes SearchOrderQueryExpanderPluginInterface plugin stack.
+     * - Finds orders by criteria from OrderListTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderListTransfer $orderListTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderListTransfer
+     */
+    public function searchOrders(OrderListTransfer $orderListTransfer): OrderListTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Requires OrderCancelRequestTransfer::orderReference to be set.
+     * - Requires CustomerTransfer:customerReference to be set.
+     * - Requires ItemTransfer::idSalesOrderItem to be set.
+     * - Retrieves OrderTransfer filtered by orderReference and customerReference.
+     * - Checks OrderTransfer::isCancellable.
+     * - Triggers cancel event for provided order items.
+     * - Returns "isSuccessful=true" and order transfer on success or `isSuccessful=false` otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderCancelRequestTransfer $orderCancelRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderCancelResponseTransfer
+     */
+    public function cancelOrder(OrderCancelRequestTransfer $orderCancelRequestTransfer): OrderCancelResponseTransfer;
 }

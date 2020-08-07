@@ -22,7 +22,7 @@ use Spryker\Zed\PriceProduct\Persistence\PriceProductRepositoryInterface;
 class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
 {
     /**
-     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface;
+     * @var \Spryker\Zed\PriceProduct\Persistence\PriceProductQueryContainerInterface
      */
     protected $priceProductQueryContainer;
 
@@ -220,6 +220,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
+        /** @var int|null $idPriceProduct */
         $idPriceProduct = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
             ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])
@@ -280,7 +281,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
@@ -336,7 +337,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      * @param string[] $concreteSkus
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     public function getProductAbstractPricesByConcreteSkusAndCriteria(array $concreteSkus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -345,21 +346,6 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
         $priceProductTransfers = $this->priceProductExpander->expandPriceProductTransfers($priceProductTransfers);
         $priceProductTransfers = $this->pluginExecutor->executePriceExtractorPluginsForProductAbstract($priceProductTransfers);
 
-        return $this->indexPriceProductTransferByProductSku($priceProductTransfers);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[][]
-     */
-    protected function indexPriceProductTransferByProductSku(array $priceProductTransfers): array
-    {
-        $indexedPriceProductTransfers = [];
-        foreach ($priceProductTransfers as $priceProductTransfer) {
-            $indexedPriceProductTransfers[$priceProductTransfer->getSkuProduct()][] = $priceProductTransfer;
-        }
-
-        return $indexedPriceProductTransfers;
+        return $priceProductTransfers;
     }
 }

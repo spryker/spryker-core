@@ -10,8 +10,6 @@ namespace Spryker\Client\SalesReturn\Zed;
 use Generated\Shared\Transfer\ReturnCollectionTransfer;
 use Generated\Shared\Transfer\ReturnCreateRequestTransfer;
 use Generated\Shared\Transfer\ReturnFilterTransfer;
-use Generated\Shared\Transfer\ReturnReasonCollectionTransfer;
-use Generated\Shared\Transfer\ReturnReasonFilterTransfer;
 use Generated\Shared\Transfer\ReturnResponseTransfer;
 use Spryker\Client\SalesReturn\Dependency\Client\SalesReturnToZedRequestClientInterface;
 
@@ -28,24 +26,6 @@ class SalesReturnStub implements SalesReturnStubInterface
     public function __construct(SalesReturnToZedRequestClientInterface $zedRequestClient)
     {
         $this->zedRequestClient = $zedRequestClient;
-    }
-
-    /**
-     * @uses \Spryker\Zed\SalesReturn\Communication\Controller\GatewayController::getReturnReasonsAction()
-     *
-     * @param \Generated\Shared\Transfer\ReturnReasonFilterTransfer $returnReasonFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ReturnReasonCollectionTransfer
-     */
-    public function getReturnReasons(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer
-    {
-        /** @var \Generated\Shared\Transfer\ReturnReasonCollectionTransfer $returnReasonCollectionTransfer */
-        $returnReasonCollectionTransfer = $this->zedRequestClient->call(
-            '/sales-return/gateway/get-return-reasons',
-            $returnReasonFilterTransfer
-        );
-
-        return $returnReasonCollectionTransfer;
     }
 
     /**

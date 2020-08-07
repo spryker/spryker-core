@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ShoppingList\Business\Model;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListResponseTransfer;
@@ -69,8 +70,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::addShoppingListItem instead. Will be removed with next major release.
-     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -227,8 +226,6 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     }
 
     /**
-     * @deprecated Use ShoppingListItemOperationInterface::updateShoppingListItem instead. Will be removed with next major release.
-     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
@@ -284,8 +281,30 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
     public function deleteShoppingListItem(ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemResponseTransfer
     {
         $shoppingListItemTransfer = $this->pluginExecutor->executeItemExpanderPlugins($shoppingListItemTransfer);
+        $shoppingListItemTransfer = $this
+            ->executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer($shoppingListItemTransfer);
 
         return $this->deleteShoppingListItemTransaction($shoppingListItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
+     */
+    protected function executeShoppingListItemCollectionExpanderPluginsForSingleItemTransfer(
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
+        $shoppingListItemCollectionTransfer = (new ShoppingListItemCollectionTransfer())
+            ->addItem($shoppingListItemTransfer);
+
+        $shoppingListItemCollectionTransfer = $this->pluginExecutor
+            ->executeShoppingListItemCollectionExpanderPlugins($shoppingListItemCollectionTransfer);
+
+        /** @var \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer */
+        $shoppingListItemTransfer = $shoppingListItemCollectionTransfer->getItems()->getIterator()->current();
+
+        return $shoppingListItemTransfer;
     }
 
     /**
@@ -348,5 +367,34 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         }
 
         return $shoppingListTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    public function saveShoppingListItemBulk(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
+        $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemCollectionTransfer, $shoppingListTransfer) {
+            $this->saveShoppingListItemsCollectionTransaction($shoppingListItemCollectionTransfer, $shoppingListTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return void
+     */
+    protected function saveShoppingListItemsCollectionTransaction(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): void {
+        $shoppingListItemCollectionTransfer = $this->shoppingListEntityManager->saveShoppingListItems($shoppingListItemCollectionTransfer, $shoppingListTransfer);
+        $this->pluginExecutor->executeBulkPostSavePlugins($shoppingListItemCollectionTransfer);
     }
 }

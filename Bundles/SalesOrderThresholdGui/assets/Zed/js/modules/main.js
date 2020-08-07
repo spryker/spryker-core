@@ -26,12 +26,20 @@ $(document).ready(function () {
         thresholdStrategyToggle('soft');
     });
 
+    $('input[name="global-threshold[hardMaximumThreshold][strategy]"]').click(function() {
+        thresholdStrategyToggle('hardMaximumThreshold');
+    });
+
     if ($('input[name="global-threshold[hardThreshold][strategy]"][value!=""]').length === 1) {
         $('input[name="global-threshold[hardThreshold][strategy]"]').parents('.form-group').addClass('hidden');
     }
 
     if ($('input[name="global-threshold[softThreshold][strategy]"][value!=""]').length === 1) {
         $('input[name="global-threshold[softThreshold][strategy]"]').parents('.form-group').addClass('hidden');
+    }
+
+    if ($('input[name="global-threshold[hardMaximumThreshold][strategy]"][value!=""]').length === 1) {
+        $('input[name="global-threshold[hardMaximumThreshold][strategy]"]').parents('.form-group').addClass('hidden');
     }
 
     $('#global-threshold_storeCurrency').change(function() {

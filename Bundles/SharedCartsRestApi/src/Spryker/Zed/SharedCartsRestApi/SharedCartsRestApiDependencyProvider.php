@@ -41,11 +41,11 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function addQuoteFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE, function (Container $container) {
             return new SharedCartsRestApiToQuoteFacadeBridge(
                 $container->getLocator()->quote()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -57,11 +57,11 @@ class SharedCartsRestApiDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function addSharedCartFacade(Container $container): Container
     {
-        $container[static::FACADE_SHARED_CART] = function (Container $container) {
+        $container->set(static::FACADE_SHARED_CART, function (Container $container) {
             return new SharedCartsRestApiToSharedCartFacadeBridge(
                 $container->getLocator()->sharedCart()->facade()
             );
-        };
+        });
 
         return $container;
     }

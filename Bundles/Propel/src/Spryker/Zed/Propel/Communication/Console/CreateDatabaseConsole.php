@@ -40,5 +40,7 @@ class CreateDatabaseConsole extends Console
     {
         $this->info('Creating Database');
         $this->getFacade()->createDatabase();
+
+        return static::CODE_SUCCESS;
     }
 }

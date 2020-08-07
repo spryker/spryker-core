@@ -39,6 +39,8 @@ class EnvironmentInfo extends TwigFunction
                 . '<dd>' . Store::getInstance()->getCurrentLocale()
                 . '<dt>Store:'
                 . '<dd>' . Store::getInstance()->getStoreName()
+                . '<dt>Code Bucket:'
+                . '<dd>' . APPLICATION_CODE_BUCKET
                 . '<dt>Server:'
                 . '<dd>' . $utilNetworkHost->getHostname()
                 . '<dt>Controller:'

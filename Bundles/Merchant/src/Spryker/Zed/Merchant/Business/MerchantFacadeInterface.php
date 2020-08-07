@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Merchant\Business;
 
 use Generated\Shared\Transfer\MerchantCollectionTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantResponseTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 
@@ -25,6 +25,7 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
+     *   - storeRelation
      * - Persists the entity to DB.
      * - Sets ID to the returning transfer.
      * - Calls a stack of `MerchantPostCreatePluginInterface` after merchant is created.
@@ -51,6 +52,7 @@ interface MerchantFacadeInterface
      *   - contactPersonLastName
      *   - contactPersonPhone
      *   - email
+     *   - storeRelation
      * - Calls a stack of `MerchantPostUpdatePluginInterface` after merchant is updated.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant not found.
      * - Returns MerchantResponseTransfer.isSuccessful=false and error messages if merchant status transition is not valid.
@@ -75,11 +77,11 @@ interface MerchantFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantCollectionTransfer
      */
-    public function find(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): MerchantCollectionTransfer;
+    public function get(MerchantCriteriaTransfer $merchantCriteriaTransfer): MerchantCollectionTransfer;
 
     /**
      * Specification:
@@ -88,11 +90,11 @@ interface MerchantFacadeInterface
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantTransfer|null
      */
-    public function findOne(MerchantCriteriaFilterTransfer $merchantCriteriaFilterTransfer): ?MerchantTransfer;
+    public function findOne(MerchantCriteriaTransfer $merchantCriteriaTransfer): ?MerchantTransfer;
 
     /**
      * Specification:

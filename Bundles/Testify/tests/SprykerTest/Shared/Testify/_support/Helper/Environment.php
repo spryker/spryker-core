@@ -9,6 +9,8 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
 use Codeception\Module;
+use Spryker\Shared\Kernel\CodeBucket\Config\CodeBucketConfig;
+use Spryker\Shared\Kernel\Store;
 use SprykerTest\Shared\Testify\Exception\StoreNotFoundException;
 
 class Environment extends Module
@@ -36,20 +38,22 @@ class Environment extends Module
     {
         $this->prepareIsolatedModuleTests();
 
-        $rootDirectory = $this->getRootDirectory();
-        $store = $this->getStore();
         $applicationEnv = $this->getApplicationEnvironment();
 
         defined('MODULE_UNDER_TEST_ROOT_DIR') || define('MODULE_UNDER_TEST_ROOT_DIR', $this->getModuleUnderTestRootDirectory());
 
         defined('APPLICATION_ENV') || define('APPLICATION_ENV', $applicationEnv);
-        defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
-        putenv('APPLICATION_STORE=' . $store);
         defined('APPLICATION') || define('APPLICATION', 'ZED');
 
+        $rootDirectory = $this->getRootDirectory();
         defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', rtrim($rootDirectory, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR);
         defined('APPLICATION_SOURCE_DIR') || define('APPLICATION_SOURCE_DIR', APPLICATION_ROOT_DIR . 'src/');
         defined('APPLICATION_VENDOR_DIR') || define('APPLICATION_VENDOR_DIR', APPLICATION_ROOT_DIR . 'vendor/');
+
+        $this->defineStore();
+
+        defined('APPLICATION_CODE_BUCKET') || define('APPLICATION_CODE_BUCKET', $this->getCodeBucket());
+        putenv('APPLICATION_CODE_BUCKET=' . APPLICATION_CODE_BUCKET);
     }
 
     /**
@@ -185,6 +189,8 @@ class Environment extends Module
     }
 
     /**
+     * @deprecated Dynamic stores are based on the Channel context.
+     *
      * @throws \SprykerTest\Shared\Testify\Exception\StoreNotFoundException
      *
      * @return string
@@ -212,6 +218,14 @@ class Environment extends Module
         throw new StoreNotFoundException(
             'Could not find a defined store name. Please make sure that you have a "stores.php" and a "default_store.php" in the configuration directory "config/Shared/".'
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCodeBucket(): string
+    {
+        return (new CodeBucketConfig())->getCurrentCodeBucket();
     }
 
     /**
@@ -254,5 +268,17 @@ class Environment extends Module
         }
 
         return null;
+    }
+
+    /**
+     * @return void
+     */
+    protected function defineStore(): void
+    {
+        if (!Store::isDynamicStoreMode()) {
+            $store = $this->getStore();
+            defined('APPLICATION_STORE') || define('APPLICATION_STORE', $store);
+            putenv('APPLICATION_STORE=' . $store);
+        }
     }
 }

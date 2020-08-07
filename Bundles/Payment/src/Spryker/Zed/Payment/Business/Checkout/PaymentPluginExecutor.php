@@ -144,7 +144,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use executePreConditionPluginsForPayments() instead. Will be removed along with QuoteTransfer::getPayment().
+     * @deprecated Use {@link executePreConditionPluginsForPayments()} instead. Will be removed along with QuoteTransfer::getPayment().
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -195,7 +195,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use executePreCheckPluginPaymentPlugin() instead.
+     * @deprecated Use {@link executePreCheckPluginPaymentPlugin()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer

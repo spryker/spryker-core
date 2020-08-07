@@ -32,7 +32,7 @@ class CustomerMapper implements CustomerMapperInterface
     }
 
     /**
-     * @deprecated Use mapCustomerAddressEntityToAddressTransfer() instead.
+     * @deprecated Use {@link mapCustomerAddressEntityToAddressTransfer()} instead.
      *
      * @param \Orm\Zed\Customer\Persistence\SpyCustomerAddress $customerAddressEntity
      *

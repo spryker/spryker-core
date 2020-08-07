@@ -69,6 +69,8 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="operation" type="string"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="PersistentCartChange">
@@ -102,6 +104,17 @@
     </transfer>
 
     <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

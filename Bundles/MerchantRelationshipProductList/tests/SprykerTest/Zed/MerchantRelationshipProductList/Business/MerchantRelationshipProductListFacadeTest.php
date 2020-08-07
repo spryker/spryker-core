@@ -74,6 +74,7 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         // Arrange
         $this->tester->truncateProductListTableRelations();
         $this->tester->clearProductListTable();
+        $this->tester->haveProductList();
 
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
         $this->tester->createProductListWithMerchantRelationship($merchantRelationshipTransfer);
@@ -139,9 +140,9 @@ class MerchantRelationshipProductListFacadeTest extends Unit
         // Arrange
         $this->tester->truncateProductListTableRelations();
         $this->tester->clearProductListTable();
+        $productListTransfer = $this->tester->haveProductList();
 
         $merchantRelationshipTransfer = $this->tester->createMerchantRelationship();
-        $productListTransfer = $this->tester->haveProductList();
 
         $merchantRelationshipTransfer->setProductListIds([
             $productListTransfer->getIdProductList(),

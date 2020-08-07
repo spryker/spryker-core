@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Business\Model\Order;
 use Spryker\Zed\Sales\Business\Order\OrderHydratorInterface as OrderHydratorInterfaceWithMultiShippingAddress;
 
 /**
- * @deprecated Use \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\Sales\Business\Order\OrderHydratorInterface} instead.
  */
 interface OrderHydratorInterface extends OrderHydratorInterfaceWithMultiShippingAddress
 {

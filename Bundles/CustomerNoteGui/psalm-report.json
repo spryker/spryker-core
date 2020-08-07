@@ -1,0 +1,32 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 50,
+            "line_to": 50,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CustomerNoteGui\\Communication\\Controller\\IndexController::redirectResponse cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNoteGui/src/Spryker/Zed/CustomerNoteGui/Communication/Controller/IndexController.php",
+            "snippet": "            return $this->redirectResponse($request->headers->get(static::REFERER_HEADER));",
+            "selected_text": "$request->headers->get(static::REFERER_HEADER)",
+            "error_level": 3,
+            "shortcode": 78,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 54,
+            "line_to": 54,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Symfony\\Component\\Form\\FormErrorIterator::getMessage does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CustomerNoteGui/src/Spryker/Zed/CustomerNoteGui/Communication/Controller/IndexController.php",
+            "snippet": "            $this->addErrorMessage($error->getMessage());",
+            "selected_text": "getMessage",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

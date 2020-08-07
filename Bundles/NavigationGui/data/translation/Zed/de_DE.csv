@@ -1,10 +1,25 @@
+"Are you sure about deleting this navigation?","Sind Sie sicher, diese Navigation zu löschen?"
 "Are you sure you remove the selected node and all its children?","Sind Sie sicher, dass Sie den ausgewählten Knoten und alle seine Unterknoten entfernen möchten?"
 "Back to Navigation Elements","Zurück zu Navigationselementen"
 "Create child node","Unterknoten erstellen"
 "Create Navigation Element","Navigationselement erstellen"
+"Delete Navigation","Navigation löschen"
 "Delete selected node","Ausgewählten Knoten löschen"
+Duplicate,Duplikat
+"Duplicate Navigation Element","Navigationselement duplizieren"
 "Edit node","Knoten bearbeiten"
+Key,Schlüssel
+Name,Name
+"Navigation element details","Details zu Navigationselementen"
+"Navigation element %d was deleted successfully.","Das Navigationselement %d wurde erfolgreich gelöscht."
+"Navigation element %d was not found.","Das Navigationselement% %d wurde nicht gefunden"
+"Navigation removal confirmation","Bestätigung zum Entfernen der Navigation"
 "Navigation tree",Navigationsbaum
+"No, I want to keep this navigation","Nein, ich möchte diese Navigation beibehalten"
 Save,Speichern
 "Save order","Bestellung speichern"
 Search,Suche
+"Yes, delete this navigation","Ja, löschen Sie diese Navigation"
+"Overview of Navigation Elements","Übersicht der Navigationselemente"
+"Navigation element %d was activated successfully.","Navigationselement %d wurde erfolgreich aktiviert."
+"Navigation element %d was deactivated successfully.","Navigationselement %d wurde erfolgreich deaktiviert."

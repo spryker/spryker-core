@@ -4,9 +4,3 @@ parameters:
         - "#Strict comparison using === between '' and 'YVES' will always evaluate to false.#"
         - "#Strict comparison using === between '' and 'ZED' will always evaluate to false.#"
         - "#Strict comparison using === between 2 and 1 will always evaluate to false.#"
-        - "#Call to an undefined method .+HandlerInterface::close().#"
-        -
-            message: "#Else branch is unreachable because previous condition is always true.#"
-            path: "vendor/spryker/spryker/Bundles/Log/src/Spryker/Shared/Log/Dependency/Plugin/LogHandlerPluginInterface.php"
-
-    reportUnmatchedIgnoredErrors: false

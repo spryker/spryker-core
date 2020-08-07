@@ -30,6 +30,7 @@ use Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadata
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method void pause()
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)

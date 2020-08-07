@@ -1,47 +1,9 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Edit Product Label' | trans ~ ': "' ~ productLabelTransfer.getName() ~ '"' %}
+{% set widget_title = 'Edit Product Label' | trans ~ ': "' ~ productLabelTransfer.name ~ '"' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 {% block action %}
-    {% if (productLabelTransfer.getIsActive()) %}
-        {{ removeActionButton(
-            url(
-                '/product-label-gui/set-status/inactive',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/edit',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Deactivate' | trans,
-            {'icon': ''}
-        ) }}
-    {% else %}
-        {{ viewActionButton(
-            url(
-                '/product-label-gui/set-status/active',
-                {
-                    'id-product-label': productLabelTransfer.getIdProductLabel(),
-                    'redirect-url': url(
-                        '/product-label-gui/edit',
-                        {'id-product-label': productLabelTransfer.getIdProductLabel()}
-                    )
-                }
-            ),
-            'Activate' | trans,
-            {'icon': ''}
-        ) }}
-    {% endif %}
-    {{ viewActionButton(
-        url(
-            '/product-label-gui/view',
-            {'id-product-label': productLabelTransfer.getIdProductLabel()}
-        ),
-        'View' | trans
-    ) }}
     {{ backActionButton('/product-label-gui', 'Back to Product Labels' | trans) }}
 {% endblock %}
 
@@ -69,7 +31,7 @@
 {% block footer_js %}
     {{ parent() }}
     <script src="{{ assetsPath('js/spryker-zed-product-label-form.js') }}"></script>
-    {% if productLabelTransfer.getIsDynamic() %}
+    {% if productLabelTransfer.isDynamic %}
         <script src="{{ assetsPath('js/spryker-zed-product-label-dynamic-label.js') }}"></script>
     {% endif %}
 {% endblock %}

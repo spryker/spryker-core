@@ -10,6 +10,7 @@ namespace Spryker\Zed\ShoppingList\Business\Model;
 use Generated\Shared\Transfer\ItemCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\ShoppingListFromCartRequestTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Spryker\Zed\Kernel\PermissionAwareTrait;
@@ -169,6 +170,7 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
         ItemCollectionTransfer $itemCollectionTransfer,
         ShoppingListTransfer $shoppingListTransfer
     ): void {
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
         foreach ($itemCollectionTransfer->getItems() as $item) {
             $shoppingListItemTransfer = (new ShoppingListItemTransfer())
                 ->setFkShoppingList($shoppingListTransfer->getIdShoppingList())
@@ -178,9 +180,9 @@ class QuoteToShoppingListConverter implements QuoteToShoppingListConverterInterf
             foreach ($this->itemToShoppingListItemMapperPlugins as $itemToShoppingListItemMapperPlugin) {
                 $shoppingListItemTransfer = $itemToShoppingListItemMapperPlugin->map($item, $shoppingListItemTransfer);
             }
-
-            $this->shoppingListItemOperation->saveShoppingListItemWithoutPermissionsCheck($shoppingListItemTransfer);
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
         }
+        $this->shoppingListItemOperation->saveShoppingListItemBulk($shoppingListItemCollectionTransfer, $shoppingListTransfer);
     }
 
     /**

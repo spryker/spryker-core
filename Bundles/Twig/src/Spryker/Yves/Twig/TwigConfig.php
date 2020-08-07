@@ -8,7 +8,6 @@
 namespace Spryker\Yves\Twig;
 
 use ReflectionClass;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -40,22 +39,21 @@ class TwigConfig extends AbstractBundleConfig
     protected function addProjectTemplatePaths(array $paths)
     {
         $namespaces = $this->getProjectNamespaces();
-        $storeName = $this->getStoreName();
 
         $themeName = $this->getThemeName();
         $themeNameDefault = $this->getThemeNameDefault();
 
         foreach ($namespaces as $namespace) {
             if ($themeName !== '' && $themeName !== $themeNameDefault) {
-                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeName;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeName;
-                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeName;
+                $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeName;
                 $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeName;
             }
 
-            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeNameDefault;
             $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Yves/%s/Theme/' . $themeNameDefault;
-            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . $storeName . '/Theme/' . $themeNameDefault;
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s' . APPLICATION_CODE_BUCKET . '/Theme/' . $themeNameDefault;
             $paths[] = rtrim(APPLICATION_SOURCE_DIR, DIRECTORY_SEPARATOR) . '/' . $namespace . '/Shared/%s/Theme/' . $themeNameDefault;
         }
 
@@ -120,21 +118,13 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
-    }
-
-    /**
      * @api
      *
      * @return string
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
     }
 
     /**
@@ -164,7 +154,10 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getTwigOptions(): array
     {
-        return $this->get(TwigConstants::YVES_TWIG_OPTIONS, []);
+        return array_replace(
+            $this->getSharedConfig()->getDefaultTwigOptions(),
+            $this->get(TwigConstants::YVES_TWIG_OPTIONS, [])
+        );
     }
 
     /**

@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block action %}
-    {{ backActionButton('/sales', '
-    Back to Orders' | trans) }}
+    {{ backActionButton('/sales', 'Back to Orders' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -19,13 +18,13 @@
             } -%}
         </div>
 
-        <input type="submit" value="Create Reclamation" class="btn btn-primary"/>
+        <input type="submit" value="{{ 'Create Reclamation' | trans }}" class="btn btn-primary"/>
     </form>
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-reclamation-main.css') }}">
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-reclamation-gui-main.css') }}">
 {% endblock %}
 
 {% block footer_js %}

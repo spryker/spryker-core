@@ -107,7 +107,9 @@ class MerchantProductOfferSearchCommunicationTester extends Actor
         $data = $productPageSearchEntity->getStructuredData();
         $decodedData = json_decode($data, true);
 
-        $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names']);
+        foreach ($productConcreteTransfer->getStores() as $storeTransfer) {
+            $this->assertContains($merchantTransfer->getName(), $decodedData['merchant_names'][$storeTransfer->getName()]);
+        }
     }
 
     /**

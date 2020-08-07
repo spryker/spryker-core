@@ -20,6 +20,16 @@ interface PropelFacadeInterface
     public function cleanPropelSchemaDirectory();
 
     /**
+     * Specification:
+     * - Retrieves schema directory path from configuration.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getSchemaDirectory(): string;
+
+    /**
      * @api
      *
      * @return void
@@ -32,7 +42,7 @@ interface PropelFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `createDatabase()` instead.
+     * @deprecated Use {@link createDatabase()} instead.
      *
      * @return void
      */
@@ -107,6 +117,8 @@ interface PropelFacadeInterface
 
     /**
      * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */

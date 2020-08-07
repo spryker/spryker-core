@@ -33,9 +33,9 @@ class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new PriceProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        });
 
         return $container;
     }
@@ -47,13 +47,13 @@ class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductStorageToPriceProductFacadeBridge($container->getLocator()->priceProduct()->facade());
-        };
+        });
 
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -65,13 +65,13 @@ class PriceProductStorageDependencyProvider extends AbstractBundleDependencyProv
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new PriceProductStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
-        $container[static::QUERY_CONTAINER_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRICE_PRODUCT, function (Container $container) {
             return new PriceProductStorageToPriceProductQueryContainerBridge($container->getLocator()->priceProduct()->queryContainer());
-        };
+        });
 
         return $container;
     }

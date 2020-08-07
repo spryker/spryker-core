@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\Glossary;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToLocaleBridge;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToMessengerBridge;
 use Spryker\Zed\Glossary\Dependency\Facade\GlossaryToTouchBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -28,19 +28,24 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_MESSENGER = 'messages';
 
     /**
+     * @uses \Spryker\Zed\Validator\Communication\Plugin\Application\ValidatorApplicationPlugin::SERVICE_VALIDATOR
+     */
+    protected const SERVICE_VALIDATOR = 'validator';
+
+    /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::PLUGIN_VALIDATOR] = function () {
-            return (new Pimple())->getApplication()['validator'];
-        };
+        $container->set(static::PLUGIN_VALIDATOR, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_VALIDATOR);
+        });
 
         return $container;
     }
@@ -52,17 +57,17 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new GlossaryToTouchBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
-        $container[self::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new GlossaryToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
-        $container[self::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new GlossaryToMessengerBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ProductOffer\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductOfferResponseTransfer;
@@ -46,7 +48,7 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function findOne(ProductOfferCriteriaFilterTransfer $productOfferCriteriaFilter): ?ProductOfferTransfer
     {
-        return $this->getRepository()->findOne($productOfferCriteriaFilter);
+        return $this->getFactory()->createProductOfferReader()->findOne($productOfferCriteriaFilter);
     }
 
     /**
@@ -60,7 +62,9 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
      */
     public function create(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getEntityManager()->createProductOffer($productOfferTransfer);
+        return $this->getFactory()
+            ->createProductOfferWriter()
+            ->create($productOfferTransfer);
     }
 
     /**
@@ -93,5 +97,21 @@ class ProductOfferFacade extends AbstractFacade implements ProductOfferFacadeInt
         return $this->getFactory()
             ->createInactiveProductOfferItemsFilter()
             ->filterInactiveProductOfferItems($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkItemProductOffer(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createItemProductOfferChecker()
+            ->checkItemProductOffer($cartChangeTransfer);
     }
 }

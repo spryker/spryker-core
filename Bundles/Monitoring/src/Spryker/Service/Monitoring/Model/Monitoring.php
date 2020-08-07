@@ -10,6 +10,11 @@ namespace Spryker\Service\Monitoring\Model;
 class Monitoring implements MonitoringInterface
 {
     /**
+     * @var bool
+     */
+    protected static $isApplicationNameSet = false;
+
+    /**
      * @var \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
      */
     protected $monitoringExtensionPlugins;
@@ -46,13 +51,23 @@ class Monitoring implements MonitoringInterface
      */
     public function setApplicationName(?string $application = null, ?string $store = null, ?string $environment = null): void
     {
+        if (static::$isApplicationNameSet) {
+            return;
+        }
+
         $application = $application ?: APPLICATION;
-        $store = $store ?: APPLICATION_STORE;
+
+        if ($store === null) {
+            $store = defined('APPLICATION_STORE') ? APPLICATION_STORE : null;
+        }
+
         $environment = $environment ?: APPLICATION_ENV;
 
         foreach ($this->monitoringExtensionPlugins as $monitoringExtensionPlugin) {
             $monitoringExtensionPlugin->setApplicationName($application, $store, $environment);
         }
+
+        static::$isApplicationNameSet = true;
     }
 
     /**

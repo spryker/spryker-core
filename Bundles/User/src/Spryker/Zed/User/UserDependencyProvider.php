@@ -68,9 +68,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSession(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return $container->getLocator()->session()->client();
-        };
+        });
 
         return $container;
     }
@@ -82,9 +82,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addDateFormatter(Container $container)
     {
-        $container[static::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
 
         return $container;
     }
@@ -96,9 +96,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGroupPlugin(Container $container)
     {
-        $container[static::PLUGIN_GROUP] = function (Container $container) {
+        $container->set(static::PLUGIN_GROUP, function (Container $container) {
             return new GroupPlugin();
-        };
+        });
 
         return $container;
     }
@@ -110,12 +110,12 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserTableActionExpanderPlugins(Container $container)
     {
-        $container[static::PLUGINS_USER_TABLE_ACTION_EXPANDER] = function () {
+        $container->set(static::PLUGINS_USER_TABLE_ACTION_EXPANDER, function () {
             return array_merge(
                 $this->getUserTableActionExpanderPlugins(),
                 $this->getUsersTableExtenderPlugins()
             );
-        };
+        });
 
         return $container;
     }
@@ -139,7 +139,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins() instead.
+     * @deprecated Use {@link \Spryker\Zed\User\UserDependencyProvider::getUserTableActionExpanderPlugins()} instead.
      *
      * @return \Spryker\Zed\User\Dependency\Plugin\UsersTableExpanderPluginInterface[]
      */
@@ -155,9 +155,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_POST_SAVE] = function (): array {
+        $container->set(static::PLUGINS_POST_SAVE, function (): array {
             return $this->getPostSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -177,9 +177,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserPreSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_USER_PRE_SAVE] = function (): array {
+        $container->set(static::PLUGINS_USER_PRE_SAVE, function (): array {
             return $this->getUserPreSavePlugins();
-        };
+        });
 
         return $container;
     }
@@ -199,9 +199,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserTransferExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_USER_TRANSFER_EXPANDER] = function (): array {
+        $container->set(static::PLUGINS_USER_TRANSFER_EXPANDER, function (): array {
             return $this->getUserTransferExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -221,9 +221,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserTableConfigExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_USER_TABLE_CONFIG_EXPANDER] = function (): array {
+        $container->set(static::PLUGINS_USER_TABLE_CONFIG_EXPANDER, function (): array {
             return $this->getUserTableConfigExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -243,9 +243,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserTableDataExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_USER_TABLE_DATA_EXPANDER] = function (): array {
+        $container->set(static::PLUGINS_USER_TABLE_DATA_EXPANDER, function (): array {
             return $this->getUserTableDataExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -265,9 +265,9 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUserFormExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_USER_FORM_EXPANDER] = function (): array {
+        $container->set(static::PLUGINS_USER_FORM_EXPANDER, function (): array {
             return $this->getUserFormExpanderPlugins();
-        };
+        });
 
         return $container;
     }

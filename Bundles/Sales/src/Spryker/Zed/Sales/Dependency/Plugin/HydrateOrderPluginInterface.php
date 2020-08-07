@@ -10,7 +10,7 @@ namespace Spryker\Zed\Sales\Dependency\Plugin;
 use Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderExpanderPluginInterface} instead.
  */
 interface HydrateOrderPluginInterface extends OrderExpanderPluginInterface
 {

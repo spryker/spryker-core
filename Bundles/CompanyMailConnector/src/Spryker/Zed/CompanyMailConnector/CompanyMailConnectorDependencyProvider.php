@@ -38,9 +38,9 @@ class CompanyMailConnectorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addMailFacade(Container $container): Container
     {
-        $container[static::FACADE_MAIL] = function (Container $container) {
+        $container->set(static::FACADE_MAIL, function (Container $container) {
             return new CompanyMailConnectorToMailFacadeBridge($container->getLocator()->mail()->facade());
-        };
+        });
 
         return $container;
     }
@@ -52,9 +52,9 @@ class CompanyMailConnectorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new CompanyMailConnectorToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }

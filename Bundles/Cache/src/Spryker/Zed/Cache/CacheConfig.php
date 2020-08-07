@@ -17,6 +17,8 @@ class CacheConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Use {@link getCodeBucketCachePath()} instead.
+     *
      * @return string
      */
     public function getCachePath()
@@ -26,6 +28,28 @@ class CacheConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @return string
+     */
+    public function getCodeBucketCachePath(): string
+    {
+        return sprintf(APPLICATION_ROOT_DIR . '/src/Generated/*/*/codeBucket%s', APPLICATION_CODE_BUCKET);
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultCodeBucketCachePath(): string
+    {
+        return APPLICATION_ROOT_DIR . '/src/Generated/*/*/codeBucket';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @return string
      */
@@ -52,5 +76,18 @@ class CacheConfig extends AbstractBundleConfig
     public function getAllowedStores()
     {
         return Store::getInstance()->getAllowedStores();
+    }
+
+    /**
+     * Specification:
+     * - Defines project specific cache paths that should be cleared.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getProjectSpecificCache(): array
+    {
+        return [];
     }
 }

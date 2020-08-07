@@ -11,7 +11,7 @@ use Spryker\Zed\Storage\StorageConfig;
 use Symfony\Component\Process\Process;
 
 /**
- * @deprecated Use `Spryker\Zed\Redis\Business\Export\RedisExporter` instead.
+ * @deprecated Use {@link \Spryker\Zed\Redis\Business\Export\RedisExporter} instead.
  */
 class StorageExporter implements StorageExporterInterface
 {

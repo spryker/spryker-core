@@ -10,6 +10,8 @@ namespace Spryker\Zed\Sales\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriter;
 use Spryker\Zed\Sales\Business\Address\OrderAddressWriterInterface;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpander;
+use Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpander;
 use Spryker\Zed\Sales\Business\Expander\SalesAddressExpanderInterface;
 use Spryker\Zed\Sales\Business\Expense\ExpenseUpdater;
@@ -47,8 +49,14 @@ use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouper;
 use Spryker\Zed\Sales\Business\OrderItem\SalesOrderItemGrouperInterface;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReader;
 use Spryker\Zed\Sales\Business\Reader\OrderItemReaderInterface;
+use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReader;
+use Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolver;
 use Spryker\Zed\Sales\Business\StrategyResolver\OrderHydratorStrategyResolverInterface;
+use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggerer;
+use Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface;
+use Spryker\Zed\Sales\Business\Writer\OrderWriter;
+use Spryker\Zed\Sales\Business\Writer\OrderWriterInterface;
 use Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapper;
 use Spryker\Zed\Sales\Persistence\Propel\Mapper\SalesOrderItemMapperInterface;
@@ -70,6 +78,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new CustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
+            $this->getSearchOrderExpanderPlugins(),
             $this->getOmsFacade()
         );
     }
@@ -82,6 +91,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderReader(
             $this->getQueryContainer(),
             $this->createOrderHydratorStrategyResolver(),
+            $this->getSearchOrderExpanderPlugins(),
             $this->getOmsFacade()
         );
     }
@@ -94,7 +104,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new OffsetPaginatedCustomerOrderListReader(
             $this->getRepository(),
             $this->createOrderHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
@@ -106,7 +117,8 @@ class SalesBusinessFactory extends AbstractBusinessFactory
         return new PaginatedCustomerOrderOverview(
             $this->getQueryContainer(),
             $this->createCustomerOrderOverviewHydrator(),
-            $this->getOmsFacade()
+            $this->getOmsFacade(),
+            $this->getSearchOrderExpanderPlugins()
         );
     }
 
@@ -119,7 +131,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderSaver() instead.
+     * @deprecated Use {@link createSalesOrderSaver()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderSaverInterface
      */
@@ -167,7 +179,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderReaderWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createOrderReaderWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderReaderInterface
      */
@@ -218,7 +230,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderHydratorWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createOrderHydratorWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Order\OrderHydratorInterface
      */
@@ -228,8 +240,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getOmsFacade(),
             $this->getConfig(),
+            $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
-            $this->getOrderItemExpanderPlugins()
+            $this->getOrderItemExpanderPlugins(),
+            $this->getCustomerOrderAccessCheckPlugins()
         );
     }
 
@@ -242,8 +256,10 @@ class SalesBusinessFactory extends AbstractBusinessFactory
             $this->getQueryContainer(),
             $this->getOmsFacade(),
             $this->getConfig(),
+            $this->getCustomerFacade(),
             $this->getHydrateOrderPlugins(),
-            $this->getOrderItemExpanderPlugins()
+            $this->getOrderItemExpanderPlugins(),
+            $this->getCustomerOrderAccessCheckPlugins()
         );
     }
 
@@ -261,7 +277,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createOrderAddressWriter() instead.
+     * @deprecated Use {@link createOrderAddressWriter()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\Address\OrderAddressUpdaterInterface
      */
@@ -318,7 +334,7 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createSalesOrderItemMapper() instead.
+     * @deprecated Use {@link createSalesOrderItemMapper()} instead.
      *
      * @return \Spryker\Zed\Sales\Business\Model\OrderItem\SalesOrderItemMapperInterface
      */
@@ -359,6 +375,26 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function createSalesOrderItemMapper(): SalesOrderItemMapperInterface
     {
         return new SalesOrderItemMapper();
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\SearchReader\OrderSearchReaderInterface
+     */
+    public function createOrderSearchReader(): OrderSearchReaderInterface
+    {
+        return new OrderSearchReader(
+            $this->getRepository(),
+            $this->getSearchOrderExpanderPlugins(),
+            $this->getOrderSearchQueryExpanderPlugins()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Expander\ItemCurrencyExpanderInterface
+     */
+    public function createItemCurrencyExpander(): ItemCurrencyExpanderInterface
+    {
+        return new ItemCurrencyExpander($this->getRepository());
     }
 
     /**
@@ -481,6 +517,25 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Business\Writer\OrderWriterInterface
+     */
+    public function createOrderWriter(): OrderWriterInterface
+    {
+        return new OrderWriter(
+            $this->createOmsEventTriggerer(),
+            $this->createOrderReaderWithMultiShippingAddress()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\Sales\Business\Triggerer\OmsEventTriggererInterface
+     */
+    public function createOmsEventTriggerer(): OmsEventTriggererInterface
+    {
+        return new OmsEventTriggerer($this->getOmsFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Dependency\Facade\SalesToCustomerInterface
      */
     public function getCustomerFacade(): SalesToCustomerInterface
@@ -510,5 +565,29 @@ class SalesBusinessFactory extends AbstractBusinessFactory
     public function getOrderItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderExpanderPluginInterface[]
+     */
+    public function getSearchOrderExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_SEARCH_ORDER_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\SearchOrderQueryExpanderPluginInterface[]
+     */
+    public function getOrderSearchQueryExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_SEARCH_QUERY_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\CustomerOrderAccessCheckPluginInterface[]
+     */
+    public function getCustomerOrderAccessCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_CUSTOMER_ORDER_ACCESS_CHECK);
     }
 }

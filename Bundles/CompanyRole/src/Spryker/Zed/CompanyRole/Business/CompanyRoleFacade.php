@@ -244,7 +244,7 @@ class CompanyRoleFacade extends AbstractFacade implements CompanyRoleFacadeInter
      *
      * @api
      *
-     * @deprecated Use CompanyRoleFacade::findDefaultCompanyRoleByIdCompany() instead.
+     * @deprecated Use {@link \Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface::findDefaultCompanyRoleByIdCompany()} instead.
      *
      * @return \Generated\Shared\Transfer\CompanyRoleTransfer
      */

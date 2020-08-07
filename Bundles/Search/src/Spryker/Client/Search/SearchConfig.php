@@ -28,19 +28,19 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
     }
 
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
+     * @deprecated Use {@link \Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier()} instead for vendor specific source identification.
      *
      * @return string
      */
     public function getSearchDocumentType()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**

@@ -18,7 +18,8 @@
   },
   "suggest": {
     "spryker/container": "If you want to use Twig plugins",
-    "spryker/zed-navigation": "If you want to use the navigation."
+    "spryker/zed-navigation": "If you want to use the navigation.",
+    "spryker/ui-components": "If you want to use Spryker web components in HTML."
   },
   "autoload": {
     "psr-4": {

@@ -9,7 +9,6 @@ namespace Spryker\Zed\Twig;
 
 use ReflectionClass;
 use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\Twig\TwigConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Symfony\Bridge\Twig\Extension\FormExtension;
@@ -51,10 +50,9 @@ class TwigConfig extends AbstractBundleConfig
     protected function addProjectTemplatePaths(array $paths)
     {
         $namespaces = $this->getProjectNamespaces();
-        $storeName = $this->getStoreName();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/';
+            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
             $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
         }
 
@@ -100,21 +98,13 @@ class TwigConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    protected function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
-    }
-
-    /**
      * @api
      *
      * @return string
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
     }
 
     /**
@@ -124,7 +114,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePathForYves()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
     }
 
     /**
@@ -150,7 +140,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Please use `getZedDirectoryPathPatterns()` instead.
+     * @deprecated Use {@link getZedDirectoryPathPatterns()} instead.
      *
      * @return string[]
      */
@@ -177,7 +167,7 @@ class TwigConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Please use `getYvesDirectoryPathPatterns()` instead.
+     * @deprecated Use {@link getYvesDirectoryPathPatterns()} instead.
      *
      * @return string[]
      */
@@ -216,7 +206,10 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getTwigOptions(): array
     {
-        return $this->get(TwigConstants::ZED_TWIG_OPTIONS, []);
+        return array_replace(
+            $this->getSharedConfig()->getDefaultTwigOptions(),
+            $this->get(TwigConstants::ZED_TWIG_OPTIONS, [])
+        );
     }
 
     /**

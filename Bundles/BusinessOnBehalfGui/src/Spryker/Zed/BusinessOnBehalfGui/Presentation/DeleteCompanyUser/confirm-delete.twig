@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Company user deletion confirmation' %}
+{% set widget_title = 'Company user deletion confirmation' | trans %}
 
 {% block head_title widget_title %}
 {% block section_title widget_title %}
@@ -14,17 +14,21 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_content %}
-            <p>You are trying to delete user: <b>"{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.lastName }}"</b>
-                for company <b>"{{ companyUser.company.name }}"</b>,
-                business unit <b>"{{ companyUser.companyBusinessUnit.name }}"</b>
+            <p>{{ 'You are trying to delete user' | trans }}: <b>"{{ companyUser.customer.firstName ~ ' ' ~ companyUser.customer.lastName }}"</b>
+                {{ 'for company' | trans }} <b>"{{ companyUser.company.name }}"</b>,
+                {{ 'business unit' | trans }} <b>"{{ companyUser.companyBusinessUnit.name }}"</b>
             </p>
-            <p>It will be deleted from everywhere</p>
+            <p>{{ 'It will be deleted from everywhere' | trans }}</p>
             <div>
                 <a href="{{ app.request.headers.get('referer') }}" class="btn btn-back">{{ 'Cancel' | trans }}</a>
-                <a href="{{ url(
-                    '/business-on-behalf-gui/delete-company-user/delete',
-                    {'id-company-user': companyUser.idCompanyUser}
-                )}}" class="btn btn-danger safe-submit">{{ 'Delete company user' | trans }}</a>
+                {{ form_start(deleteForm, {
+                    'action': url(
+                        '/business-on-behalf-gui/delete-company-user/delete',
+                        {'id-company-user': companyUser.idCompanyUser}
+                    )
+                }) }}
+                <input type="submit" value="{{ 'Delete company user' | trans}}" class="btn btn-danger safe-submit">
+                {{ form_end(deleteForm) }}
             </div>
         {% endblock %}
 

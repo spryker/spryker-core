@@ -20,7 +20,7 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
-     * @deprecated Use emptyCache() instead
+     * @deprecated Use {@link emptyCache()} instead
      *
      * @return string[]
      */
@@ -34,6 +34,8 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link clearCodeBucketCache()} instead.
+     *
      * @return string[]
      */
     public function emptyCache()
@@ -42,11 +44,39 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
     }
 
     /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyCodeBucketCache(): string
+    {
+        return $this->getFactory()
+            ->createCacheClearer()
+            ->clearCodeBucketCache();
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function emptyDefaultCodeBucketCache(): string
+    {
+        return $this->getFactory()
+            ->createCacheClearer()
+            ->clearDefaultCodeBucketCache();
+    }
+
+    /**
      * {@inheritDoc}
      *
      * @api
      *
-     * @deprecated Use emptyAutoLoaderCache() instead
+     * @deprecated Use {@link emptyAutoLoaderCache()} instead
      *
      * @return string[]
      */
@@ -60,10 +90,24 @@ class CacheFacade extends AbstractFacade implements CacheFacadeInterface
      *
      * @api
      *
+     * @deprecated Use emptyCodeBucketAutoloaderCache instead.
+     *
      * @return string[]
      */
     public function emptyAutoLoaderCache()
     {
         return $this->getFactory()->createCacheClearer()->clearAutoLoaderCache();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function emptyProjectSpecificCache(): array
+    {
+        return $this->getFactory()->createCacheClearer()->clearProjectSpecificCache();
     }
 }

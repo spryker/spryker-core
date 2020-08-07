@@ -1,0 +1,32 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 42,
+            "line_to": 42,
+            "type": "InvalidNullableReturnType",
+            "message": "The declared return type 'string' for Spryker\\Client\\CmsSlotStoreConnector\\Plugin\\CmsSlot\\StoreExternalDataProviderStrategyPlugin::getValue is not nullable, but 'null|string' contains null",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotStoreConnector/src/Spryker/Client/CmsSlotStoreConnector/Plugin/CmsSlot/StoreExternalDataProviderStrategyPlugin.php",
+            "snippet": "     * @return string",
+            "selected_text": "string",
+            "error_level": 5,
+            "shortcode": 144,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "NullableReturnStatement",
+            "message": "The declared return type 'string' for Spryker\\Client\\CmsSlotStoreConnector\\Plugin\\CmsSlot\\StoreExternalDataProviderStrategyPlugin::getValue is not nullable, but the function returns 'null|string'",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlotStoreConnector/src/Spryker/Client/CmsSlotStoreConnector/Plugin/CmsSlot/StoreExternalDataProviderStrategyPlugin.php",
+            "snippet": "        return $this->getFactory()->getStoreClient()->getCurrentStore()->getName();",
+            "selected_text": "$this->getFactory()->getStoreClient()->getCurrentStore()->getName()",
+            "error_level": 5,
+            "shortcode": 139,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

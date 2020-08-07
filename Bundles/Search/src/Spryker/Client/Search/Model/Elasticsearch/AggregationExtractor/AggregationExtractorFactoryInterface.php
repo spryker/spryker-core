@@ -10,7 +10,7 @@ namespace Spryker\Client\Search\Model\Elasticsearch\AggregationExtractor;
 use Generated\Shared\Transfer\FacetConfigTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactoryInterface} instead.
  */
 interface AggregationExtractorFactoryInterface
 {

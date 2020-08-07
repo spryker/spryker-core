@@ -17,6 +17,8 @@ use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdater;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodStoreRelationUpdaterInterface;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdater;
 use Spryker\Zed\Payment\Business\Method\PaymentMethodUpdaterInterface;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodValidator;
+use Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentHydrator;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentReader;
 use Spryker\Zed\Payment\Business\Order\SalesPaymentSaver;
@@ -95,6 +97,14 @@ class PaymentBusinessFactory extends AbstractBusinessFactory
             $this->getStoreFacade(),
             $this->getRepository()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Payment\Business\Method\PaymentMethodValidatorInterface
+     */
+    public function createPaymentMethodValidator(): PaymentMethodValidatorInterface
+    {
+        return new PaymentMethodValidator($this->createPaymentMethodReader());
     }
 
     /**

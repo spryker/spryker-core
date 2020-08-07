@@ -42,5 +42,7 @@ class SchemaCopyConsole extends Console
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->info('Copy and merge schema files');
         $this->getFacade()->copySchemaFilesToTargetDirectory();
+
+        return static::CODE_SUCCESS;
     }
 }

@@ -1,0 +1,18 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 20,
+            "line_to": 20,
+            "type": "MethodSignatureMismatch",
+            "message": "Method Spryker\\Zed\\SalesReturnDataImport\\Business\\SalesReturnDataImportBusinessFactory::createTransactionAwareDataSetStepBroker has fewer parameters than parent method Spryker\\Zed\\DataImport\\Business\\DataImportBusinessFactory::createTransactionAwareDataSetStepBroker",
+            "file_name": "vendor/spryker/spryker/Bundles/SalesReturnDataImport/src/Spryker/Zed/SalesReturnDataImport/Business/SalesReturnDataImportBusinessFactory.php",
+            "snippet": "class SalesReturnDataImportBusinessFactory extends DataImportBusinessFactory",
+            "selected_text": "SalesReturnDataImportBusinessFactory",
+            "error_level": 7,
+            "shortcode": 42
+        }
+    ],
+    "warning": [],
+    "deprecation": []
+}

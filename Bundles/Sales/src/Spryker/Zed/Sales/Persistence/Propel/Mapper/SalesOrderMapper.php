@@ -9,6 +9,9 @@ namespace Spryker\Zed\Sales\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Propel\Runtime\Collection\Collection;
+use Propel\Runtime\Collection\ObjectCollection;
 
 class SalesOrderMapper
 {
@@ -27,5 +30,38 @@ class SalesOrderMapper
         }
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection|\Orm\Zed\Sales\Persistence\SpySalesOrder[] $salesOrderEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function mapSalesOrderEntityCollectionToOrderTransfers(Collection $salesOrderEntityCollection): array
+    {
+        $orderTransfers = [];
+
+        foreach ($salesOrderEntityCollection as $salesOrderEntity) {
+            $orderTransfers[] = (new OrderTransfer())->fromArray($salesOrderEntity->toArray(), true);
+        }
+
+        return $orderTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Sales\Persistence\SpySalesOrderTotals[] $salesOrderTotalsEntityCollection
+     *
+     * @return \Generated\Shared\Transfer\TotalsTransfer[]
+     */
+    public function mapSalesOrderTotalsEntityCollectionToMappedOrderTotalsByIdSalesOrder(
+        ObjectCollection $salesOrderTotalsEntityCollection
+    ): array {
+        $mappedTotalsTransfers = [];
+
+        foreach ($salesOrderTotalsEntityCollection as $salesOrderTotalsEntity) {
+            $mappedTotalsTransfers[$salesOrderTotalsEntity->getFkSalesOrder()] = (new TotalsTransfer())->fromArray($salesOrderTotalsEntity->toArray(), true);
+        }
+
+        return $mappedTotalsTransfers;
     }
 }

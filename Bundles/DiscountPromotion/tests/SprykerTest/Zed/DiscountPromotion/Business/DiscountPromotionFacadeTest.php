@@ -11,12 +11,15 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\DiscountBuilder;
 use Generated\Shared\DataBuilder\DiscountPromotionBuilder;
 use Generated\Shared\DataBuilder\ItemBuilder;
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\DiscountCalculatorTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
+use Generated\Shared\Transfer\PromotionItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
@@ -33,6 +36,10 @@ use Generated\Shared\Transfer\StoreTransfer;
 class DiscountPromotionFacadeTest extends Unit
 {
     protected const STORE_NAME_DE = 'DE';
+    protected const TEST_ITEM_SKU = 'test_sku';
+    protected const TEST_NOT_EXISTING_DISCOUNT_PROMOTION_ID = 0;
+    protected const CART_OPERATION_ADD = 'add';
+    protected const INVALID_CART_OPERATION_ADD = 'invalid operation';
 
     /**
      * @var \SprykerTest\Zed\DiscountPromotion\DiscountPromotionBusinessTester
@@ -226,6 +233,77 @@ class DiscountPromotionFacadeTest extends Unit
             $discountPromotionTransferSaved->getIdDiscountPromotion()
         );
         $this->assertSame($discountPromotionTransferUpdated->getAbstractSku(), $updateSku);
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartDiscountPromotionsWithExistingPromotion(): void
+    {
+        // Arrange
+        $discountPromotionTransfer = $this->tester->haveDiscountPromotion([
+            DiscountPromotionTransfer::FK_DISCOUNT => $this->tester->haveDiscount()->getIdDiscount(),
+        ]);
+
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_ITEM_SKU)
+            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+        $promotionItemTransfer = (new PromotionItemTransfer())
+            ->setIdDiscountPromotion($discountPromotionTransfer->getIdDiscountPromotion());
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setOperation(static::CART_OPERATION_ADD)
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer())->addPromotionItem($promotionItemTransfer));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartDiscountPromotions($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartDiscountPromotionsWithNotExistingPromotion(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_ITEM_SKU)
+            ->setIdDiscountPromotion(static::TEST_NOT_EXISTING_DISCOUNT_PROMOTION_ID);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setOperation(static::CART_OPERATION_ADD)
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer()));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartDiscountPromotions($cartChangeTransfer);
+
+        // Assert
+        $this->assertFalse($cartPreCheckResponseTransfer->getIsSuccess());
+    }
+
+    /**
+     * @return void
+     */
+    public function testValidateCartDiscountPromotionsWithInvalidOperation(): void
+    {
+        // Arrange
+        $itemTransfer = (new ItemTransfer())
+            ->setSku(static::TEST_ITEM_SKU)
+            ->setIdDiscountPromotion(static::TEST_NOT_EXISTING_DISCOUNT_PROMOTION_ID);
+
+        $cartChangeTransfer = (new CartChangeTransfer())
+            ->setOperation(static::INVALID_CART_OPERATION_ADD)
+            ->addItem($itemTransfer)
+            ->setQuote((new QuoteTransfer()));
+
+        // Act
+        $cartPreCheckResponseTransfer = $this->tester->getFacade()->validateCartDiscountPromotions($cartChangeTransfer);
+
+        // Assert
+        $this->assertTrue($cartPreCheckResponseTransfer->getIsSuccess());
     }
 
     /**

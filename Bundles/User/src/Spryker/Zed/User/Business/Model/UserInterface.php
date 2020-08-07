@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\UserTransfer;
 interface UserInterface
 {
     /**
-     * @deprecated Use \Spryker\Zed\User\Business\Model\UserInterface::createUser instead.
+     * @deprecated Use {@link \Spryker\Zed\User\Business\Model\UserInterface::createUser()} instead.
      *
      * @param string $firstName
      * @param string $lastName

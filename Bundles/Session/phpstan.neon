@@ -7,7 +7,7 @@ parameters:
     - "#Parameter \\#6 \\$gc of function session_set_save_handler expects callable\\(string\\): bool, array\\(SessionHandlerInterface, 'gc'\\) given.#"
     -
             message: '#Ternary operator condition is always true.#'
-            path: 'vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerCouchbase.php'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerCouchbase.php'
     -
             message: '#Ternary operator condition is always true.#'
-            path: 'vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php'
+            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Session/src/Spryker/Shared/Session/Business/Handler/SessionHandlerRedis.php'

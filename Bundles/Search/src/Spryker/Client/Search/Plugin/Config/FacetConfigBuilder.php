@@ -12,7 +12,7 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Config\FacetConfig` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Config\FacetConfig} instead.
  */
 class FacetConfigBuilder extends AbstractPlugin implements FacetConfigBuilderInterface
 {

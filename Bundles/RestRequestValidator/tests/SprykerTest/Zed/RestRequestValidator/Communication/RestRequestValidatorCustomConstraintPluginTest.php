@@ -131,7 +131,7 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
             RestRequestValidatorConfig::class,
             [
                 'getAvailableConstraintNamespaces',
-                'getValidationCacheFilenamePattern',
+                'getValidationCodeBucketCacheFilenamePattern',
             ]
         );
 
@@ -143,7 +143,7 @@ class RestRequestValidatorCustomConstraintPluginTest extends Unit
                 ]
             );
         $mockConfig
-            ->method('getValidationCacheFilenamePattern')
+            ->method('getValidationCodeBucketCacheFilenamePattern')
             ->willReturn(
                 $this->getFixtureDirectory() . static::VALIDATION_CACHE_FILENAME_PATTERN
             );

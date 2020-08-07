@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\DiscountPromotion\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\DiscountConfiguratorTransfer;
 use Generated\Shared\Transfer\DiscountPromotionTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -160,5 +162,21 @@ class DiscountPromotionFacade extends AbstractFacade implements DiscountPromotio
     {
         return $this->getRepository()
             ->findDiscountPromotionByUuid($uuid);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function validateCartDiscountPromotions(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartValidator()
+            ->validateCartDiscountPromotions($cartChangeTransfer);
     }
 }

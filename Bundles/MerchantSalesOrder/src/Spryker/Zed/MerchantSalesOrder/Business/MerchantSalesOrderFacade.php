@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemResponseTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
@@ -46,14 +47,14 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderCollectionTransfer
      */
     public function getMerchantOrderCollection(
-        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
     ): MerchantOrderCollectionTransfer {
-        return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaFilterTransfer);
+        return $this->getRepository()->getMerchantOrderCollection($merchantCriteriaTransfer);
     }
 
     /**
@@ -61,14 +62,16 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
     public function findMerchantOrder(
-        MerchantOrderCriteriaTransfer $merchantCriteriaFilterTransfer
+        MerchantOrderCriteriaTransfer $merchantCriteriaTransfer
     ): ?MerchantOrderTransfer {
-        return $this->getRepository()->findMerchantOrder($merchantCriteriaFilterTransfer);
+        return $this->getFactory()
+            ->createMerchantSalesOrderReader()
+            ->findMerchantOrder($merchantCriteriaTransfer);
     }
 
     /**
@@ -137,5 +140,63 @@ class MerchantSalesOrderFacade extends AbstractFacade implements MerchantSalesOr
     public function findMerchantOrderItem(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): ?MerchantOrderItemTransfer
     {
         return $this->getRepository()->findMerchantOrderItem($merchantOrderItemCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchantOrderData(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()->createOrderExpander()->expandOrderWithMerchantOrderData($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function expandOrderWithMerchantReferences(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        return $this->getFactory()
+            ->createOrderExpander()
+            ->expandOrderWithMerchantReferences($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer
+     *
+     * @return int
+     */
+    public function getMerchantOrdersCount(MerchantOrderCriteriaTransfer $merchantOrderCriteriaTransfer): int
+    {
+        return $this->getRepository()->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderItemCollectionTransfer
+     */
+    public function getMerchantOrderItemCollection(MerchantOrderItemCriteriaTransfer $merchantOrderItemCriteriaTransfer): MerchantOrderItemCollectionTransfer
+    {
+        return $this->getRepository()->getMerchantOrderItemCollection($merchantOrderItemCriteriaTransfer);
     }
 }

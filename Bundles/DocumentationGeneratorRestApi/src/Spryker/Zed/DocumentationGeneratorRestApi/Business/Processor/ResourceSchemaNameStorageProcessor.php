@@ -150,13 +150,13 @@ class ResourceSchemaNameStorageProcessor implements ResourceSchemaNameStoragePro
                 ->getResourceAttributesFromResourceRelationshipPlugin($resourceRelationship);
 
             if ($pluginAnnotationsTransfer->getResourceAttributesClassName()) {
-                $responseAttributesSchema = $this
+                $responseResourceDataSchema = $this
                     ->resourceTransferAnalyzer
-                    ->createResponseAttributesSchemaNameFromTransferClassName(
+                    ->createResponseResourceDataSchemaNameFromTransferClassName(
                         $pluginAnnotationsTransfer->getResourceAttributesClassName()
                     );
 
-                $this->resourceSchemaNameStorage->addResourceSchemaName($key, $responseAttributesSchema);
+                $this->resourceSchemaNameStorage->addResourceSchemaName($key, $responseResourceDataSchema);
             }
         }
     }

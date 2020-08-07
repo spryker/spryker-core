@@ -7,10 +7,14 @@
 
 namespace SprykerTest\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener;
 
+use ArrayObject;
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\MerchantProductOffer\Dependency\MerchantProductOfferEvents;
 use Spryker\Zed\MerchantProductOfferSearch\Communication\Plugin\Event\Listener\MerchantProductOfferSearchEventListener;
 
@@ -52,12 +56,16 @@ class MerchantProductOfferSearchEventListenerTest extends Unit
         // Arrange
         $beforeCount = $this->tester->getProductAbstractPageSearchPropelQuery()->count();
 
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
         $productConcreteTransfer = $this->tester->haveProduct();
-        $merchantTransfer = $this->tester->haveMerchant();
-        $this->tester->haveMerchantProfile($merchantTransfer, [MerchantProfileTransfer::IS_ACTIVE => true]);
+        $merchantTransfer = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
         $productOfferTransfer = $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchantTransfer->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcreteTransfer->getSku(),
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
         ]);
         $this->tester->addProductRelatedData($productConcreteTransfer);
         $merchantProductOfferSearchEventListener = new MerchantProductOfferSearchEventListener();

@@ -51,11 +51,11 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY, function (Container $container) {
             return new CompanyRoleGuiToCompanyFacadeBridge(
                 $container->getLocator()->company()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -67,11 +67,11 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyRoleFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_ROLE] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_ROLE, function (Container $container) {
             return new CompanyRoleGuiToCompanyRoleFacadeBridge(
                 $container->getLocator()->companyRole()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -83,9 +83,9 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyRolePropelQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_COMPANY_ROLE] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_COMPANY_ROLE, $container->factory(function () {
             return SpyCompanyRoleQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -97,11 +97,11 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlossaryFacade(Container $container): Container
     {
-        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+        $container->set(static::FACADE_GLOSSARY, function (Container $container) {
             return new CompanyRoleGuiToGlossaryFacadeBridge(
                 $container->getLocator()->glossary()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -113,11 +113,11 @@ class CompanyRoleGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new CompanyRoleGuiToPermissionFacadeBridge(
                 $container->getLocator()->permission()->facade()
             );
-        };
+        });
 
         return $container;
     }

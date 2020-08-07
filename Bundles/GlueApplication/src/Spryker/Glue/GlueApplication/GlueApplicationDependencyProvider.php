@@ -13,7 +13,7 @@ use Spryker\Glue\GlueApplication\Rest\Collection\ResourceRelationshipCollection;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
-use Spryker\Glue\Kernel\Plugin\Pimple;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 /**
  * @method \Spryker\Glue\GlueApplication\GlueApplicationConfig getConfig()
@@ -73,9 +73,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addGlueApplication(Container $container): Container
     {
-        $container[static::APPLICATION_GLUE] = function (Container $container) {
-            return (new Pimple())->getApplication();
-        };
+        $container->set(static::APPLICATION_GLUE, function (Container $container) {
+            return (new GlobalContainer())->getContainer();
+        });
 
         return $container;
     }
@@ -87,9 +87,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new GlueApplicationToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -101,9 +101,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addResourceRoutePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_ROUTES] = function (Container $container) {
+        $container->set(static::PLUGIN_RESOURCE_ROUTES, function (Container $container) {
             return $this->getResourceRoutePlugins();
-        };
+        });
 
         return $container;
     }
@@ -115,9 +115,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addResourceRelationshipPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_RESOURCE_RELATIONSHIP] = function (Container $container) {
+        $container->set(static::PLUGIN_RESOURCE_RELATIONSHIP, function (Container $container) {
             return $this->getResourceRelationshipPlugins(new ResourceRelationshipCollection());
-        };
+        });
 
         return $container;
     }
@@ -129,9 +129,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addValidateHttpRequestPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_VALIDATE_HTTP_REQUEST] = function (Container $container) {
+        $container->set(static::PLUGIN_VALIDATE_HTTP_REQUEST, function (Container $container) {
             return $this->getValidateHttpRequestPlugins();
-        };
+        });
 
         return $container;
     }
@@ -143,9 +143,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addValidateRestRequestPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_VALIDATE_REST_REQUEST] = function (Container $container) {
+        $container->set(static::PLUGIN_VALIDATE_REST_REQUEST, function (Container $container) {
             return $this->getValidateRestRequestPlugins();
-        };
+        });
 
         return $container;
     }
@@ -171,9 +171,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRestRequestValidatorPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_REST_REQUEST_VALIDATOR] = function (Container $container) {
+        $container->set(static::PLUGIN_REST_REQUEST_VALIDATOR, function (Container $container) {
             return $this->getRestRequestValidatorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -185,9 +185,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFormatRequestPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_FORMAT_REQUEST] = function (Container $container) {
+        $container->set(static::PLUGIN_FORMAT_REQUEST, function (Container $container) {
             return $this->getFormatRequestPlugins();
-        };
+        });
 
         return $container;
     }
@@ -199,9 +199,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFormatResponseDataPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_FORMAT_RESPONSE_DATA] = function (Container $container) {
+        $container->set(static::PLUGIN_FORMAT_RESPONSE_DATA, function (Container $container) {
             return $this->getFormatResponseDataPlugins();
-        };
+        });
 
         return $container;
     }
@@ -213,9 +213,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFormatResponseHeadersPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_FORMAT_RESPONSE_HEADERS] = function (Container $container) {
+        $container->set(static::PLUGIN_FORMAT_RESPONSE_HEADERS, function (Container $container) {
             return $this->getFormatResponseHeadersPlugins();
-        };
+        });
 
         return $container;
     }
@@ -227,9 +227,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreClient(Container $container): Container
     {
-        $container[static::CLIENT_STORE] = function (Container $container) {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
             return new GlueApplicationToStoreClientBridge($container->getLocator()->store()->client());
-        };
+        });
 
         return $container;
     }
@@ -241,9 +241,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addControllerBeforeActionPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CONTROLLER_BEFORE_ACTION] = function (Container $container) {
+        $container->set(static::PLUGIN_CONTROLLER_BEFORE_ACTION, function (Container $container) {
             return $this->getControllerBeforeActionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -255,9 +255,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addControllerAfterActionPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_CONTROLLER_AFTER_ACTION] = function (Container $container) {
+        $container->set(static::PLUGIN_CONTROLLER_AFTER_ACTION, function (Container $container) {
             return $this->getControllerAfterActionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -283,9 +283,9 @@ class GlueApplicationDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRestUserFinderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_REST_USER_FINDER] = function (Container $container) {
+        $container->set(static::PLUGINS_REST_USER_FINDER, function (Container $container) {
             return $this->getRestUserFinderPlugins();
-        };
+        });
 
         return $container;
     }

@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-        - '#Parameter \#1 \$quoteTransfer of method .+DummyMarketplacePaymentExpanderInterface::addPaymentToQuote\(\) expects .+QuoteTransfer, .+AbstractTransfer given.#'

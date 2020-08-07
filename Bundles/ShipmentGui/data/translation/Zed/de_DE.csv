@@ -1,48 +1,79 @@
 Actions,Aktionen
-"Are you sure about deleting this delivery method?",
-"Availability plugin",
-"Available in Store",
-Carrier,
-"Carrier Company",
-"Carrier was created successfully.",
-"Carrier with the same name already exists.",
-Configuration,
-"Create Delivery Method",
-"Create new carrier company",
-"Create new delivery method",
+"Are you sure about deleting this delivery method?","Möchten Sie diese Versandart wirklich löschen?"
+"Availability plugin","Verfügbarkeit Plugin"
+"Available in Store","Verfügbarkeit im Store"
+Carrier,Versendanbieter
+"Carrier Company",Versendanbieter
+"Carrier was created successfully.","Versendanbieter wurde erfolgreich erstellt."
+"Carrier with the same name already exists.","Ein Versendanbieter mit diesem Namen existiert bereits."
+Configuration,Konfiguration
+"Create Delivery Method","Versandart erstellen"
+"Create new carrier company","Neuen Versendanbieter erstellen"
+"Create new delivery method","Neue Versandart erstellen"
 Delete,Löschen
-"Delete Delivery Method",
-"Delete Delivery Method: %s",
-"Delivery Method Key",
-"Delivery method not found.",
-"Delivery method was deleted successfully.",
-"Delivery Methods",
-"Delivery Time plugin",
+"Delete Delivery Method","Versandart löschen"
+"Delete Delivery Method: %s","Versandart löschen: %s"
+"Delivery Method Key","Versandart Schlüssel"
+"Delivery method not found.","Versandart nicht gefunden."
+"Delivery method was deleted successfully.","Versandart wurde erfolgreich gelöscht."
+"Delivery Methods",Versandarten
+"Delivery Time plugin","Lieferzeit Plugin"
 Edit,Bearbeiten
-"Edit Delivery Method: %s",
+"Edit Delivery Method: %s","Versandart bearbeiten: %s"
 Enabled?,Aktiviert?
-"Is this delivery method active?",
-"List of delivery methods",
-"List Shipment Methods",
-"Method Name",
+"Is this delivery method active?","Ist diese Versandart aktiv?"
+"List of delivery methods","Alle Versandarten"
+"List Shipment Methods","Alle Versandarten"
+"Method Name",Name
 Name,Name
 "New address","Neue Adresse"
-"No, I want to keep this delivery method",
+"No, I want to keep this delivery method","Nein, ich möchte diese Versandart behalten"
 None,Keine
 "Price & Tax","Preis und Steuer"
-"Price plugin",
+"Price plugin","Preis Plugin"
 Save,Speichern
-"Select one",
-"Shipment method has been successfully saved",
-"Shipment method has been successfully updated",
-"Shipment method is not found",
-"Shipment method not found",
+"Select one","Wähle eins"
+"Shipment method has been successfully saved","Versandart wurde erfolgreich gespeichert"
+"Shipment method has been successfully updated","Versandart wurde erfolgreich aktualisiert"
+"Shipment method is not found","Versandart wurde nicht gefunden"
+"Shipment method not found","Versandart wurde nicht gefunden"
 "Shipment n° %shipmentNumber%","Versand n° %shipmentNumber%"
 Status,Status
-"Store relation",
+"Store relation",Store-Beziehung
+"Store Relation",Store-Beziehung
 "Tax set",Steuer-Set
 "This name is already in use.","Dieser Name wird schon benutzt."
-"This shipment method key is already in use.",
-View,
-"View Delivery Method: %s",
-"Yes, delete this delivery method",
+"This shipment method key is already in use.","Diese Versandart ID wird schon verwendet."
+View,Ansicht
+"View Delivery Method: %s","Versandart anzeigen: %s"
+"Yes, delete this delivery method","Ja, diese Versandart löschen"
+"Trigger all matching states of order inside this shipment","Alle übereinstimmenden Status innerhalb dieser Bestellung auslösen"
+Shipment,Lieferung
+of,von
+"Delivery Address",Lieferadresse
+"Delivery Method",Lieferart
+"Request delivery date","Angefragtes Lieferdatum"
+"Shipping Method",Versandart
+Shipments,Liefermethoden
+"Available in the following store(s)","Verfügbar in den folgenden Stores"
+"Is active","Ist aktiv"
+"Add Carrier Company","Versandanbieter hinzufügen"
+"Create Shipment","Sendung Erstellen"
+"Edit Shipment","Sendung Bearbeiten"
+"New Shipment for Order: %idSalesOrder%","Neue Sendung für Bestellung: %idSalesOrder%"
+"Address 1","Adresse 1"
+"Address 2","Adresse 2"
+"ZIP code",Postleitzahl
+Cellphone,Mobiltelefon
+"Shipment method",Versandmethode
+"Requested delivery date",Wunschlieferdatum
+"Order items inside this shipment","Artikel in dieser Sendung"
+"Current shipment","Aktuelle Sendung"
+"Please fill out this field.","Füllen Sie bitte dieses Feld aus."
+"Please select an item in the list.","Wählen Sie bitte ein Element aus der Liste aus."
+-select-,-auswählen-
+"Shipment has been successfully created.","Sendung wurde erfolgreich erstellt."
+"Edit Shipment for Order: N%idSalesOrder%","Sendung für Bestellung N%idSalesOrder% bearbeiten"
+"Shipment has been successfully edited.","Sendung wurde erfolgreich bearbeitet."
+"Item total",Gesamt
+"Shipping Costs",Versandkosten

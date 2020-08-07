@@ -1,0 +1,8 @@
+vouchers:
+    post:
+        code:
+            - NotBlank
+cart-codes:
+    post:
+        code:
+            - NotBlank

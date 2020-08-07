@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
@@ -34,5 +35,22 @@ class ShoppingListNoteRepository extends AbstractRepository implements ShoppingL
         }
 
         return null;
+    }
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     */
+    public function getShoppingListItemNoteTransfersByShoppingListItemIds(array $shoppingListItemIds): ArrayObject
+    {
+        $shoppingListItemNoteEntities = $this->getFactory()
+            ->createShoppingListItemNoteQuery()
+            ->filterByFkShoppingListItem_In($shoppingListItemIds)
+            ->find();
+
+        return $this->getFactory()
+            ->createShoppingListItemNoteMapper()
+            ->mapShoppingListItemEntityCollectionToTransferCollection($shoppingListItemNoteEntities);
     }
 }

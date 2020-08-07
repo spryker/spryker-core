@@ -27,17 +27,20 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return $this
+     * @return static
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
-        return $this->_if($storeTransfer->getIdStore() !== null)
+        /** @var static $query */
+        $query = $this->_if($storeTransfer->getIdStore() !== null)
                 ->filterByFkStore($storeTransfer->getIdStore())
             ->_else()
                 ->useStoreQuery()
                     ->filterByName($storeTransfer->getName())
                 ->endUse()
             ->_endif();
+
+        return $query;
     }
 
     /**
@@ -45,16 +48,19 @@ abstract class AbstractSpyMerchantRelationshipSalesOrderThresholdQuery extends B
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return $this
+     * @return static
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
-        return $this->_if($currencyTransfer->getIdCurrency() !== null)
+        /** @var static $query */
+        $query = $this->_if($currencyTransfer->getIdCurrency() !== null)
                 ->filterByFkCurrency($currencyTransfer->getIdCurrency())
             ->_else()
                 ->useCurrencyQuery()
                     ->filterByCode($currencyTransfer->getCode())
                 ->endUse()
             ->_endif();
+
+        return $query;
     }
 }

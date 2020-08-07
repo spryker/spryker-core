@@ -36,9 +36,9 @@ class PriceProductOfferVolumeDependencyProvider extends AbstractDependencyProvid
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductOfferVolumeToUtilEncodingServiceServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

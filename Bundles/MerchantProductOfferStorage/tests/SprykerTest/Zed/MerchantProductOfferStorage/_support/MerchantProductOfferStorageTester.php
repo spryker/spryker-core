@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\MerchantProductOfferStorage;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductOfferCollectionTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -84,7 +85,7 @@ class MerchantProductOfferStorageTester extends Actor
      */
     public function createProductOffer(StoreTransfer $storeTransfer, array $productOfferData = [], array $productData = []): ProductOfferTransfer
     {
-        $productOfferData[ProductOfferTransfer::FK_MERCHANT] = $this->haveMerchant()->getIdMerchant();
+        $productOfferData[ProductOfferTransfer::FK_MERCHANT] = $this->haveMerchant([MerchantTransfer::IS_ACTIVE => true])->getIdMerchant();
         $productOfferData[ProductOfferTransfer::CONCRETE_SKU] = $this->haveProduct($productData)->getSku();
 
         $productOfferTransfer = $this->haveProductOffer($productOfferData)->addStore($storeTransfer);

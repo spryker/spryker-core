@@ -36,7 +36,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     protected $repository;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -351,7 +351,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[]
      */
@@ -361,7 +361,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
      */

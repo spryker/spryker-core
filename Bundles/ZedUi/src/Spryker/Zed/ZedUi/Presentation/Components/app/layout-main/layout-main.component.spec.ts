@@ -11,11 +11,11 @@ describe('LayoutMainComponent', () => {
     @Component({
         selector: 'test-component',
         template: `
-        <mp-layout-main [navigationConfig]="navigationConfig">
-          <div name="header">Header Slot</div>
-          Main Slot
-        </mp-layout-main>
-    `,
+            <mp-layout-main [navigationConfig]="navigationConfig">
+                <div name="header">Header Slot</div>
+                Main Slot
+            </mp-layout-main>
+        `,
     })
     class TestComponent {
         navigationConfig: any;
@@ -25,8 +25,7 @@ describe('LayoutMainComponent', () => {
         TestBed.configureTestingModule({
             declarations: [TestComponent, LayoutMainComponent],
             schemas: [NO_ERRORS_SCHEMA],
-        })
-            .compileComponents();
+        }).compileComponents();
     }));
 
     beforeEach(() => {
@@ -40,7 +39,9 @@ describe('LayoutMainComponent', () => {
 
     describe('Elements detection', () => {
         it('should render <spy-sidebar> component', () => {
-            const sidebarElem = fixture.debugElement.query(By.css('spy-sidebar'));
+            const sidebarElem = fixture.debugElement.query(
+                By.css('spy-sidebar')
+            );
 
             expect(sidebarElem).toBeTruthy();
         });
@@ -58,7 +59,9 @@ describe('LayoutMainComponent', () => {
         });
 
         it('should render <spy-navigation> inside <spy-sidebar> component', () => {
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const navigationElem = fixture.debugElement.query(
+                By.css('spy-sidebar spy-navigation')
+            );
 
             expect(navigationElem).toBeTruthy();
         });
@@ -74,7 +77,9 @@ describe('LayoutMainComponent', () => {
         });
 
         it('should bind to `collapsed` of <spy-navigation>', () => {
-            const navigationElem = layoutFixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const navigationElem = layoutFixture.debugElement.query(
+                By.css('spy-sidebar spy-navigation')
+            );
 
             layoutComponent.isCollapsed = true;
 
@@ -84,14 +89,20 @@ describe('LayoutMainComponent', () => {
         });
 
         it('should show collapsed logo class if value is true', () => {
-            const collapsedClass = 'mp-layout-main__logo--collapsed';
-            const logoContainerElem = layoutFixture.debugElement.query(By.css('spy-sidebar .mp-layout-main__logo'));
+            const collapsedClass = 'mp-layout-main-cnt__logo--collapsed';
+            const logoContainerElem = layoutFixture.debugElement.query(
+                By.css('spy-sidebar .mp-layout-main-cnt__logo')
+            );
 
             layoutComponent.isCollapsed = true;
 
             layoutFixture.detectChanges();
 
-            expect(logoContainerElem.nativeElement.classList.contains(collapsedClass)).toBe(true);
+            expect(
+                logoContainerElem.nativeElement.classList.contains(
+                    collapsedClass
+                )
+            ).toBe(true);
         });
 
         it('should change if `updateCollapseHandler` method invokes', () => {
@@ -105,22 +116,33 @@ describe('LayoutMainComponent', () => {
 
     describe('Slots', () => {
         it('should render correct info inside `header` slot', () => {
-            const headerSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main__header'));
+            const headerSlotContainerElem = fixture.debugElement.query(
+                By.css('.mp-layout-main-cnt__header')
+            );
 
-            expect(headerSlotContainerElem.nativeElement.textContent).toMatch('Header Slot');
+            expect(headerSlotContainerElem.nativeElement.textContent).toMatch(
+                'Header Slot'
+            );
         });
 
         it('should render correct info inside main slot', () => {
-            const mainSlotContainerElem = fixture.debugElement.query(By.css('.mp-layout-main__content'));
+            const mainSlotContainerElem = fixture.debugElement.query(
+                By.css('.mp-layout-main-cnt__content')
+            );
 
-            expect(mainSlotContainerElem.nativeElement.textContent).toMatch('Main Slot');
+            expect(mainSlotContainerElem.nativeElement.textContent).toMatch(
+                'Main Slot'
+            );
         });
     });
 
     describe('@Input(navigationConfig)', () => {
         it('should bind to `items` of <spy-navigation>', () => {
-            const demoData = '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const demoData =
+                '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
+            const navigationElem = fixture.debugElement.query(
+                By.css('spy-sidebar spy-navigation')
+            );
 
             component.navigationConfig = demoData;
 
@@ -130,8 +152,11 @@ describe('LayoutMainComponent', () => {
         });
 
         it('should update binding when changed', () => {
-            const demoData = '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
-            const navigationElem = fixture.debugElement.query(By.css('spy-sidebar spy-navigation'));
+            const demoData =
+                '[{"title":"Dashboard","url":"\\/dashboard","icon":"fa fa-area-chart","isActive":false,"subItems":[]}]';
+            const navigationElem = fixture.debugElement.query(
+                By.css('spy-sidebar spy-navigation')
+            );
 
             component.navigationConfig = demoData;
 

@@ -56,11 +56,11 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      */
     protected function addProductDiscontinuedFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedProductBundleConnectorToProductDiscontinuedFacadeBridge(
                 $container->getLocator()->productDiscontinued()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -72,11 +72,11 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      */
     protected function addProductBundleFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_BUNDLE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_BUNDLE, function (Container $container) {
             return new ProductDiscontinuedProductBundleConnectorToProductBundleFacadeBridge(
                 $container->getLocator()->productBundle()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -88,9 +88,9 @@ class ProductDiscontinuedProductBundleConnectorDependencyProvider extends Abstra
      */
     protected function addProductDiscontinuedQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_DISCONTINUED] = function () {
+        $container->set(static::PROPEL_QUERY_PRODUCT_DISCONTINUED, $container->factory(function () {
             return SpyProductDiscontinuedQuery::create();
-        };
+        }));
 
         return $container;
     }

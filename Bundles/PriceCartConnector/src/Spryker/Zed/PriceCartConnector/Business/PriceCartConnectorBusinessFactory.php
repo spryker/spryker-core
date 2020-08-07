@@ -71,7 +71,8 @@ class PriceCartConnectorBusinessFactory extends AbstractBusinessFactory
         return new ItemsWithoutPriceFilter(
             $this->getPriceFacade(),
             $this->getPriceProductFacade(),
-            $this->getMessengerFacade()
+            $this->getMessengerFacade(),
+            $this->getPriceProductService()
         );
     }
 

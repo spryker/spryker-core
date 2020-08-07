@@ -5,6 +5,12 @@
 
     <transfer name="Merchant">
         <property name="idMerchant" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="urlCollection" type="Url[]" singular="url"/>
+        <property name="merchantReference" type="string"/>
+        <property name="registrationNumber" type="string"/>
+        <property name="email" type="string"/>
+        <property name="name" type="string"/>
         <property name="merchantProfile" type="MerchantProfile"/>
     </transfer>
 
@@ -14,7 +20,7 @@
         <property name="errors" type="MerchantError[]" singular="error"/>
     </transfer>
 
-    <transfer name="MerchantCriteriaFilter">
+    <transfer name="MerchantCriteria">
         <property name="idMerchant" type="int"/>
         <property name="email" type="string"/>
         <property name="merchantReference" type="string"/>
@@ -52,8 +58,6 @@
 
     <transfer name="MerchantProfile">
         <property name="idMerchantProfile" type="int"/>
-        <property name="isActive" type="bool"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantProfileLocalizedGlossaryAttributes" type="MerchantProfileLocalizedGlossaryAttributes[]" singular="merchantProfileLocalizedGlossaryAttribute"/>
         <property name="fkMerchant" type="int"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
@@ -103,7 +107,7 @@
 
     <transfer name="Url">
         <property name="urlPrefix" type="string"/>
-        <property name="fkResourceMerchantProfile" type="int"/>
+        <property name="fkResourceMerchant" type="int"/>
         <property name="idUrl" type="int"/>
         <property name="url" type="string"/>
         <property name="fkLocale" type="int"/>

@@ -1,3 +1,7 @@
 Active,Active
 Inactive,Inactive
 Remove,Remove
+"Product Alternatives","Product Alternatives"
+"This is a list of alternative products that the current Concrete Product has.","This is a list of alternative products that the current Concrete Product has."
+"Note: You can add a new product alternative using the text field below.","Note: You can add a new product alternative using the text field below."
+"Add Product Alternative by Name or SKU","Add Product Alternative by Name or SKU"

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence;
 
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 
 interface ShoppingListNoteEntityManagerInterface
@@ -24,4 +25,18 @@ interface ShoppingListNoteEntityManagerInterface
      * @return void
      */
     public function deleteShoppingListItemNoteById(int $idShoppingListItemNote): void;
+
+    /**
+     * @param int[] $shoppingListItemNoteIds
+     *
+     * @return void
+     */
+    public function deleteShoppingListItemNoteByShoppingListItemNoteIds(array $shoppingListItemNoteIds): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItemNoteInBulk(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): ShoppingListItemCollectionTransfer;
 }

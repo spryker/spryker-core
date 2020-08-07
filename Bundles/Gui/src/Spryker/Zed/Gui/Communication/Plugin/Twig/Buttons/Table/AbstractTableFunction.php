@@ -10,7 +10,7 @@ namespace Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\AbstractButtonFunction;
 
 /**
- * @deprecated Use `\Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\AbstractTableTwig` instead.
+ * @deprecated Use {@link \Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\AbstractTableTwig} instead.
  */
 abstract class AbstractTableFunction extends AbstractButtonFunction
 {

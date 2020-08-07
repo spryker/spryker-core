@@ -23,7 +23,7 @@ class ProductLabelSearchToProductPageSearchBridge implements ProductLabelSearchT
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      * @param array $pageDataExpanderPluginNames
      *
      * @return void

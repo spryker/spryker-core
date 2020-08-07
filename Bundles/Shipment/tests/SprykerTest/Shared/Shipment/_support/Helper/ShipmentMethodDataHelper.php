@@ -105,15 +105,17 @@ class ShipmentMethodDataHelper extends Module
      */
     protected function assertCarrier(ShipmentMethodTransfer $shipmentMethodTransfer, array $overrideCarrier): ShipmentMethodTransfer
     {
-        if (
-            $shipmentMethodTransfer->getFkShipmentCarrier() !== null
-            && SpyShipmentCarrierQuery::create()->findOneByIdShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier()) !== null
-        ) {
-            return $shipmentMethodTransfer;
+        if ($shipmentMethodTransfer->getFkShipmentCarrier()) {
+            $shipmentCarrierEntity = SpyShipmentCarrierQuery::create()->findOneByIdShipmentCarrier($shipmentMethodTransfer->getFkShipmentCarrier());
+
+            if ($shipmentCarrierEntity) {
+                return $shipmentMethodTransfer->setCarrierName($shipmentCarrierEntity->getName());
+            }
         }
 
         $shipmentCarrierTransfer = $this->getShipmentCarrierDataHelper()->haveShipmentCarrier($overrideCarrier);
         $shipmentMethodTransfer->setFkShipmentCarrier($shipmentCarrierTransfer->getIdShipmentCarrier());
+        $shipmentMethodTransfer->setCarrierName($shipmentCarrierTransfer->getName());
 
         return $shipmentMethodTransfer;
     }

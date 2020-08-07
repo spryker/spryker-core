@@ -14,7 +14,6 @@ use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * @method \Spryker\Zed\ZedRequest\Business\ZedRequestFacadeInterface getFacade()
@@ -74,9 +73,9 @@ class TransferController extends AbstractController
     }
 
     /**
-     * @return \Symfony\Component\HttpKernel\KernelInterface
+     * @return \Symfony\Component\HttpKernel\HttpKernelInterface
      */
-    protected function getKernel(): KernelInterface
+    protected function getKernel(): HttpKernelInterface
     {
         return $this->getApplication()->get('kernel');
     }

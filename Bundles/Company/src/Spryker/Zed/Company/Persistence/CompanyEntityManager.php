@@ -36,7 +36,7 @@ class CompanyEntityManager extends AbstractEntityManager implements CompanyEntit
 
         $spyCompany->save();
 
-        $companyTransfer->setIdCompany($spyCompany->getIdCompany());
+        $companyTransfer->fromArray($spyCompany->toArray(), true);
 
         return $companyTransfer;
     }

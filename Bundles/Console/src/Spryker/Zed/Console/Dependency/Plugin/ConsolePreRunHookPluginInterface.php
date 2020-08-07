@@ -10,7 +10,7 @@ namespace Spryker\Zed\Console\Dependency\Plugin;
 use Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface as SharedConsolePreRunHookPluginInterface;
 
 /**
- * @deprecated Use `\Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface` instead.
+ * @deprecated Use {@link \Spryker\Shared\Console\Dependency\Plugin\ConsolePreRunHookPluginInterface} instead.
  */
 interface ConsolePreRunHookPluginInterface extends SharedConsolePreRunHookPluginInterface
 {

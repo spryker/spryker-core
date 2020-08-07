@@ -31,11 +31,11 @@ interface SalesReturnRepositoryInterface
     public function getReturnReasonCollectionByFilter(ReturnReasonFilterTransfer $returnReasonFilterTransfer): ReturnReasonCollectionTransfer;
 
     /**
-     * @param string $customerReference
+     * @param string|null $customerReference
      *
      * @return int
      */
-    public function countCustomerReturns(string $customerReference): int;
+    public function countCustomerReturns(?string $customerReference = null): int;
 
     /**
      * @param \Generated\Shared\Transfer\ReturnFilterTransfer $returnFilterTransfer

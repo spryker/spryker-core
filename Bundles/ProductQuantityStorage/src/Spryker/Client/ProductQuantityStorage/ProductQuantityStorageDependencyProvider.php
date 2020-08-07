@@ -41,9 +41,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductQuantityStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -55,9 +55,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductQuantityStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -69,9 +69,9 @@ class ProductQuantityStorageDependencyProvider extends AbstractDependencyProvide
      */
     protected function addProductQuantityService(Container $container): Container
     {
-        $container[static::SERVICE_PRODUCT_QUANTITY] = function (Container $container): ProductQuantityStorageToProductQuantityServiceInterface {
+        $container->set(static::SERVICE_PRODUCT_QUANTITY, function (Container $container): ProductQuantityStorageToProductQuantityServiceInterface {
             return new ProductQuantityStorageToProductQuantityServiceBridge($container->getLocator()->productQuantity()->service());
-        };
+        });
 
         return $container;
     }

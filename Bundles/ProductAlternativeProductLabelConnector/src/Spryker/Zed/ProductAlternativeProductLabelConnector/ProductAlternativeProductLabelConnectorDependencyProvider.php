@@ -47,11 +47,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      */
     protected function addProductLabelFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductLabelBridge(
                 $container->getLocator()->productLabel()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -63,11 +63,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -79,11 +79,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      */
     protected function addProductAlternativeFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_ALTERNATIVE] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_ALTERNATIVE, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToProductAlternativeFacadeBridge(
                 $container->getLocator()->productAlternative()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -95,11 +95,11 @@ class ProductAlternativeProductLabelConnectorDependencyProvider extends Abstract
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductAlternativeProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }

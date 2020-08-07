@@ -38,6 +38,7 @@ class FilterReorderController extends AbstractController
      */
     public function saveAction(Request $request)
     {
+        /** @var array $filterList */
         $filterList = $request->request
             ->get(self::PARAM_FILTER_LIST);
 

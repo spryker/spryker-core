@@ -39,13 +39,13 @@ class ProductAttributesNotBlankValidator extends ConstraintValidator
     {
         foreach ($value as $attribute) {
             if (
-                empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_DROPDOWN])
-                || !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_INPUT])
+                empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && empty($attribute[ProductConcreteSuperAttributeForm::FIELD_DROPDOWN])
+                || !empty($attribute[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX]) && empty($attribute[ProductConcreteSuperAttributeForm::FIELD_INPUT])
             ) {
+                $this->context->buildViolation($constraint->message)->addViolation();
+
                 return;
             }
         }
-
-        $this->context->buildViolation($constraint->message)->addViolation();
     }
 }

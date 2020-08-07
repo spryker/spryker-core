@@ -66,14 +66,14 @@ interface RestRequestInterface
     public function getInclude(): array;
 
     /**
-     * @deprecated use getRestUser() instead.
+     * @deprecated Use {@link getRestUser()} instead.
      *
      * @return \Spryker\Glue\GlueApplication\Rest\Request\Data\UserInterface|null
      */
     public function getUser(): ?UserInterface;
 
     /**
-     * @deprecated use setRestUser() instead.
+     * @deprecated Use {@link setRestUser()} instead.
      *
      * @param string $surrogateIdentifier
      * @param string $naturalIdentifier

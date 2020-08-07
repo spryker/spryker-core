@@ -52,7 +52,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated use getYvesInstallMultiPathDirectoryPatterns() instead.
+     * @deprecated Use {@link getYvesInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */
@@ -63,6 +63,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string[]
      */
@@ -75,6 +77,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string
      */
@@ -111,7 +115,7 @@ class SetupFrontendConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated use getZedInstallMultiPathDirectoryPatterns() instead.
+     * @deprecated Use {@link getZedInstallMultiPathDirectoryPatterns()} instead.
      *
      * @return string
      */
@@ -122,6 +126,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string[]
      */
@@ -134,6 +140,8 @@ class SetupFrontendConfig extends AbstractBundleConfig
 
     /**
      * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
      *
      * @return string
      */
@@ -150,5 +158,27 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getZedBuildCommand()
     {
         return 'npm run zed';
+    }
+
+    /**
+     * @api
+     *
+     * @deprecated In next major this will not be used. Instead see {@link this->getProjectInstallCommand()}
+     *
+     * @return string
+     */
+    public function getMerchantPortalInstallCommand(): string
+    {
+        return 'yarn install';
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getMerchantPortalBuildCommand(): string
+    {
+        return 'npm run mp:build';
     }
 }

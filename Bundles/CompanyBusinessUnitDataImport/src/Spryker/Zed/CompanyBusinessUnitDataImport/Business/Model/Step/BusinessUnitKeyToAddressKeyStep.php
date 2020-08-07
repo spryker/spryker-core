@@ -67,6 +67,7 @@ class BusinessUnitKeyToAddressKeyStep implements DataImportStepInterface
             return $this->idCompanyUnitAddressListCache[$companyAddressKey];
         }
 
+        /** @var int|null $idCompanyUnitAddress */
         $idCompanyUnitAddress = $this->createCompanyUnitAddressQuery()
             ->filterByKey($companyAddressKey)
             ->select(SpyCompanyUnitAddressTableMap::COL_ID_COMPANY_UNIT_ADDRESS)

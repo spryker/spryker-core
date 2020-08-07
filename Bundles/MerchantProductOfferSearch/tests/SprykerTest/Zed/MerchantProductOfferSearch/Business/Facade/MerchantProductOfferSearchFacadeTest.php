@@ -7,11 +7,15 @@
 
 namespace SprykerTest\Zed\MerchantProductOfferSearch\Business\Facade;
 
+use ArrayObject;
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\MerchantProfileTransfer;
+use Generated\Shared\DataBuilder\StoreRelationBuilder;
+use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\ProductAbstractMerchantTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
+use Generated\Shared\Transfer\StoreRelationTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 /**
  * Auto-generated group annotations
@@ -28,12 +32,12 @@ use Generated\Shared\Transfer\ProductOfferTransfer;
 class MerchantProductOfferSearchFacadeTest extends Unit
 {
     /**
-     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_NAMES
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_NAMES
      */
     protected const KEY_MERCHANT_NAMES = 'names';
 
     /**
-     * @uses \Spryker\Zed\MerchantProductOfferSearch\Business\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_REFERENCES
+     * @uses \Spryker\Zed\MerchantProductOfferSearch\Persistence\Mapper\ProductAbstractMerchantMapper::KEY_MERCHANT_REFERENCES
      */
     protected const KEY_MERCHANT_REFERENCES = 'references';
 
@@ -55,32 +59,36 @@ class MerchantProductOfferSearchFacadeTest extends Unit
             ProductConcreteTransfer::IS_ACTIVE => true,
         ]);
 
-        $merchant = $this->tester->haveMerchant();
-        $this->tester->haveMerchantProfile($merchant, [
-            MerchantProfileTransfer::IS_ACTIVE => true,
-        ]);
+        $storeTransfer = $this->tester->haveStore([StoreTransfer::NAME => 'DE']);
+        $storeRelationTransfer = (new StoreRelationBuilder())->seed([
+            StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()],
+        ])->build();
+
+        $merchant = $this->tester->haveMerchant([MerchantTransfer::IS_ACTIVE => true, MerchantTransfer::STORE_RELATION => $storeRelationTransfer->toArray()]);
 
         $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcrete1->getSku(),
             ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
         ]);
 
         $this->tester->haveProductOffer([
             ProductOfferTransfer::FK_MERCHANT => $merchant->getIdMerchant(),
             ProductOfferTransfer::CONCRETE_SKU => $productConcrete2->getSku(),
             ProductOfferTransfer::IS_ACTIVE => true,
+            ProductOfferTransfer::STORES => new ArrayObject([$storeTransfer]),
         ]);
 
         $productAbstractMerchantTransfer1 = (new ProductAbstractMerchantTransfer())
             ->setIdProductAbstract($productConcrete1->getFkProductAbstract())
-            ->setMerchantNames([$merchant->getName()])
-            ->setMerchantReferences([$merchant->getMerchantReference()]);
+            ->setMerchantNames([$storeTransfer->getName() => [$merchant->getName()]])
+            ->setMerchantReferences([$storeTransfer->getName() => [$merchant->getMerchantReference()]]);
 
         $productAbstractMerchantTransfer2 = (new ProductAbstractMerchantTransfer())
             ->setIdProductAbstract($productConcrete2->getFkProductAbstract())
-            ->setMerchantNames([$merchant->getName()])
-            ->setMerchantReferences([$merchant->getMerchantReference()]);
+            ->setMerchantNames([$storeTransfer->getName() => [$merchant->getName()]])
+            ->setMerchantReferences([$storeTransfer->getName() => [$merchant->getMerchantReference()]]);
 
         $expectedResult = [
             $productAbstractMerchantTransfer1,

@@ -37,9 +37,9 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductLabelToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class ProductLabelDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }

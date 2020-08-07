@@ -10,7 +10,7 @@ namespace Spryker\Zed\Synchronization\Business\Export;
 interface ExporterPluginResolverInterface
 {
     /**
-     * @deprecated Use `Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolverInterface::executeResolvedPluginsBySourcesWithIds()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Synchronization\Business\Export\ExporterPluginResolverInterface::executeResolvedPluginsBySourcesWithIds()} instead.
      *
      * @param string[] $resources
      *

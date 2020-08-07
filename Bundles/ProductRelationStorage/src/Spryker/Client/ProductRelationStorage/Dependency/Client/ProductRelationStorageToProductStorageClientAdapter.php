@@ -51,7 +51,7 @@ class ProductRelationStorageToProductStorageClientAdapter implements ProductRela
     }
 
     /**
-     * @deprecated Use \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore() instead.
+     * @deprecated Use {@link \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore()} instead.
      *
      * @see \Spryker\Client\ProductRelationStorage\Dependency\Client\ProductRelationStorageToProductStorageClientAdapter::getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore()
      *

@@ -15,6 +15,16 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
  */
 class SearchConfig extends AbstractBundleConfig
 {
+    /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::HOST
+     */
+    protected const HOST = 'SEARCH_ELASTICSEARCH:HOST';
+
+    /**
+     * @uses \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConstants::PORT
+     */
+    protected const PORT = 'SEARCH_ELASTICSEARCH:PORT';
+
     protected const BLACKLIST_SETTINGS_FOR_INDEX_UPDATE = [
         'index.number_of_shards',
         'index.routing_partition_size',
@@ -65,13 +75,13 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getElasticaDocumentType()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getReindexUrl()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getReindexUrl()} instead.
      *
      * @return string
      */
@@ -79,15 +89,15 @@ class SearchConfig extends AbstractBundleConfig
     {
         return sprintf(
             '%s:%s/_reindex?pretty',
-            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST),
-            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT)
+            $this->get(SearchConstants::ELASTICA_PARAMETER__HOST, $this->get(static::HOST)),
+            $this->get(SearchConstants::ELASTICA_PARAMETER__PORT, $this->get(static::PORT))
         );
     }
 
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getJsonSchemaDefinitionDirectories()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getJsonSchemaDefinitionDirectories()} instead.
      *
      * @return array
      */
@@ -108,7 +118,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getClassTargetDirectory()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getClassTargetDirectory()} instead.
      *
      * @return string
      */
@@ -120,7 +130,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getBlacklistSettingsForIndexUpdate()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getBlacklistSettingsForIndexUpdate()} instead.
      *
      * @return string[]
      */
@@ -132,7 +142,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getStaticIndexSettings()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getStaticIndexSettings()} instead.
      *
      * @return string[]
      */
@@ -144,7 +154,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getDynamicIndexSettings()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getDynamicIndexSettings()} instead.
      *
      * @return string[]
      */
@@ -164,7 +174,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getPermissionMode()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getPermissionMode()} instead.
      *
      * @return int
      */
@@ -176,7 +186,7 @@ class SearchConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getIndexMapClassTemplateDirectory()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\SearchElasticsearchConfig::getIndexMapClassTemplateDirectory()} instead.
      *
      * @return string
      */

@@ -1,22 +1,24 @@
 Actions,Aktionen
 Active,Aktiv
-"Available in Store",
-"Available in the following store(s)",
-Configuration,
+"Available in Store","Verfügbarkeit im Store"
+"Available in the following store(s)","Verfügbar in folgenden Stores"
+Configuration,Konfiguration
 Edit,Bearbeiten
-"Edit Payment Method: %s",
+"Edit Payment Method: %s","Zahlungsart bearbeiten: %s"
 Inactive,Inaktiv
 "Is the Payment Method active?","Ist die Zahlart aktiv?"
 "Is this payment method active?","Ist die Zahlart aktiviert?"
-"List Payment Methods",
+"List Payment Methods","Alle Zahlungsarten"
 Name,Name
-"Payment Method Key","Zahlart Key"
+"Payment Method Key","Zahlart Schlüssel"
 "Payment method not found","Zahlart nicht gefunden"
 "Payment Methods",Zahlarten
 "Payment Provider",Zahlungsanbieter
-Provider,
+Provider,Anbieter
 Save,Speichern
 Status,Status
-"Store relation",
-View,
-"View Payment Method: %s",
+"Store relation",Store-Beziehung
+View,Ansicht
+"View Payment Method: %s","Zahlungsmittel anzeigen: %s"
+"Payment method has been successfully updated","Zahlart wurde erfolgreich aktualisiert"
+"Payment Management","Zahlarten Management"

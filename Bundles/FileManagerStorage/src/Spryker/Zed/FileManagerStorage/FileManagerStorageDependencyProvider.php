@@ -52,11 +52,11 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new FileManagerStorageToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -68,11 +68,11 @@ class FileManagerStorageDependencyProvider extends AbstractBundleDependencyProvi
      */
     protected function addEventBehaviorFacade(Container $container)
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
             return new FileManagerStorageToEventBehaviorFacadeBridge(
                 $container->getLocator()->eventBehavior()->facade()
             );
-        };
+        });
 
         return $container;
     }

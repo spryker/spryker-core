@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantProfileMerchantPortalGui\Communication\Form\Constraint;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Spryker\Zed\Kernel\Communication\Validator\AbstractConstraintValidator;
 use Symfony\Component\Validator\Constraint;
@@ -62,9 +62,9 @@ class UniqueEmailValidator extends AbstractConstraintValidator
      */
     protected function findMerchantByEmail(string $email): ?MerchantTransfer
     {
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setEmail($email);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setEmail($email);
 
-        return $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
+        return $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaTransfer);
     }
 }

@@ -20,7 +20,7 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderItemMetadata() instead
+     * @deprecated Use {@link saveOrderItemMetadata()} instead
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
@@ -48,7 +48,7 @@ interface SalesProductConnectorFacadeInterface
      *
      * @api
      *
-     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithMetadata()} instead.
+     * @deprecated Use {@link expandOrderItemsWithMetadata()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -61,6 +61,8 @@ interface SalesProductConnectorFacadeInterface
      * - Hydrates product ids (abstract / concrete) into an order based on their sku
      *
      * @api
+     *
+     * @deprecated Use {@link SalesProductConnectorFacade::expandOrderItemsWithProductIds()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -79,4 +81,30 @@ interface SalesProductConnectorFacadeInterface
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
     public function expandOrderItemsWithMetadata(array $itemTransfers): array;
+
+    /**
+     * Specification:
+     * - Expands OrderTransfers with metadata information.
+     * - Requires OrderTransfer::idSalesOrder to be set.
+     * - Requires ItemTransfer::fkSalesOrder at OrderTransfer::items to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OrderTransfer[] $orderTransfers
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer[]
+     */
+    public function expandOrdersWithMetadata(array $orderTransfers): array;
+
+    /**
+     * Specification:
+     * - Hydrates product ids (abstract / concrete) into an order items based on their skus.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductIds(array $itemTransfers): array;
 }

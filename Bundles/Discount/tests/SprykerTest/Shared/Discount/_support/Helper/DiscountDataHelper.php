@@ -16,9 +16,9 @@ use Generated\Shared\DataBuilder\MoneyValueBuilder;
 use Generated\Shared\Transfer\DiscountGeneralTransfer;
 use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use Orm\Zed\Sales\Persistence\SpySalesDiscount;
-use Propel\Runtime\Propel;
 use Spryker\Zed\Discount\Business\DiscountFacadeInterface;
 use Spryker\Zed\Discount\Persistence\DiscountQueryContainer;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
@@ -26,6 +26,7 @@ class DiscountDataHelper extends Module
 {
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
+    use InstancePoolingHelperTrait;
 
     /**
      * @param array $override
@@ -103,7 +104,7 @@ class DiscountDataHelper extends Module
     public function resetCurrentDiscounts(): void
     {
         $discounts = SpyDiscountQuery::create()->find();
-        Propel::disableInstancePooling();
+        $this->disableInstancePooling();
         foreach ($discounts as $discountEntity) {
             $discountEntity->setIsActive(false);
             $discountEntity->save();

@@ -12,6 +12,8 @@ use League\OAuth2\Server\ResponseTypes\ResponseTypeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstaller;
 use Spryker\Zed\Oauth\Business\Installer\OauthClientInstallerInterface;
+use Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapper;
+use Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutor;
 use Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface;
 use Spryker\Zed\Oauth\Business\Model\League\AccessTokenRequestExecutor;
@@ -58,7 +60,7 @@ use Spryker\Zed\Oauth\OauthDependencyProvider;
 class OauthBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @deprecated Use createAccessTokenRequestExecutor() instead.
+     * @deprecated Use {@link createAccessTokenRequestExecutor()} instead.
      *
      * @return \Spryker\Zed\Oauth\Business\Model\League\AccessGrantExecutorInterface
      */
@@ -155,13 +157,15 @@ class OauthBusinessFactory extends AbstractBusinessFactory
             $this->getRepository(),
             $this->getEntityManager(),
             $this->getUtilEncodingService(),
+            $this->createOauthRefreshTokenMapper(),
             $this->getUserProviderPlugins(),
             $this->getScopeProviderPlugins(),
             $this->getOauthUserIdentifierFilterPlugins(),
             $this->getOauthRefreshTokenRevokerPlugins(),
             $this->getOauthRefreshTokensRevokerPlugins(),
             $this->getOauthRefreshTokenCheckerPlugins(),
-            $this->getOauthRefreshTokenSaverPlugins()
+            $this->getOauthRefreshTokenSaverPlugins(),
+            $this->getOauthRefreshTokenPersistencePlugins()
         );
     }
 
@@ -297,6 +301,17 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface
+     */
+    public function createOauthRefreshTokenMapper(): OauthRefreshTokenMapperInterface
+    {
+        return new OauthRefreshTokenMapper(
+            $this->getUtilEncodingService(),
+            $this->getOauthUserIdentifierFilterPlugins()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthGrantTypeConfigurationProviderPluginInterface[]
      */
     public function getGrantTypeConfigurationProviderPlugins(): array
@@ -361,6 +376,8 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @deprecated User {@link \Spryker\Zed\Oauth\Business\OauthBusinessFactory::getOauthRefreshTokenPersistencePlugins()} instead.
+     *
      * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
      */
     public function getOauthRefreshTokenSaverPlugins(): array
@@ -374,5 +391,13 @@ class OauthBusinessFactory extends AbstractBusinessFactory
     public function getOauthRefreshTokenCheckerPlugins(): array
     {
         return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_CHECKER);
+    }
+
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[]
+     */
+    public function getOauthRefreshTokenPersistencePlugins(): array
+    {
+        return $this->getProvidedDependency(OauthDependencyProvider::PLUGINS_OAUTH_REFRESH_TOKEN_PERSISTENCE);
     }
 }
