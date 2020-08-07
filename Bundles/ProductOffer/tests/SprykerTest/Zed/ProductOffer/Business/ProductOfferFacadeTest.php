@@ -441,7 +441,7 @@ class ProductOfferFacadeTest extends Unit
     public function testGetApplicableMerchantStatusesForWaitingForApprovalStatus(): void
     {
         // Arrange
-        $currentApprovalStatus = 'waiting-for-approval';
+        $currentApprovalStatus = 'waiting_for_approval';
         $expectedResult = ['approved', 'denied'];
 
         // Act
