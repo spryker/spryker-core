@@ -48,6 +48,7 @@ interface ProductBundleStorageFacadeInterface
     public function writeCollectionByProductEvents(array $eventTransfers): void;
 
     /**
+     * Specification:
      * - Retrieves paginated product_bundle data from storage.
      *
      * @api

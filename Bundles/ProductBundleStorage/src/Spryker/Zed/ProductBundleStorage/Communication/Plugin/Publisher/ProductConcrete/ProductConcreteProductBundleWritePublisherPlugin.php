@@ -39,9 +39,7 @@ class ProductConcreteProductBundleWritePublisherPlugin extends AbstractPlugin im
      *
      * @api
      *
-     * @phpstan-return array<int, string>
-     *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents(): array
     {

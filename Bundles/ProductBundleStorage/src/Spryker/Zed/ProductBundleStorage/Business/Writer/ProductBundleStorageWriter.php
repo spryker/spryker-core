@@ -137,18 +137,4 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 
         return $productConcreteIds;
     }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductBundleTransfer $productBundleTransfer
-     *
-     * @return void
-     */
-    protected function removeInactiveBundledProducts(ProductBundleTransfer $productBundleTransfer): void
-    {
-        foreach ($productBundleTransfer->getBundledProducts() as $key => $productForBundleTransfer) {
-            if (!$productForBundleTransfer->getIsActive()) {
-                $productBundleTransfer->getBundledProducts()->offsetUnset($key);
-            }
-        }
-    }
 }

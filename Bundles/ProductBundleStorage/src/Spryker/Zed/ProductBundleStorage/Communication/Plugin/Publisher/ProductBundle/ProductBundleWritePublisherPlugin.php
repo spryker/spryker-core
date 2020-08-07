@@ -39,9 +39,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
      *
      * @api
      *
-     * @phpstan-return array<int, string>
-     *
-     * @return array
+     * @return string[]
      */
     public function getSubscribedEvents(): array
     {

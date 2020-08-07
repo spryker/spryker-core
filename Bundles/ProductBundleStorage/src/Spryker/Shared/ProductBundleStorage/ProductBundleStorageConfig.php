@@ -26,7 +26,7 @@ class ProductBundleStorageConfig
     public const PRODUCT_BUNDLE_RESOURCE_NAME = 'product_bundle';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_product_bundle publishing.
      *
      * @api
@@ -34,7 +34,7 @@ class ProductBundleStorageConfig
     public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish';
 
     /**
-     * Specification
+     * Specification:
      * - This event is used for spy_product_bundle entity creation.
      *
      * @api
@@ -42,7 +42,7 @@ class ProductBundleStorageConfig
     public const ENTITY_SPY_PRODUCT_BUNDLE_CREATE = 'Entity.spy_product_bundle.create';
 
     /**
-     * Specification
+     * Specification:
      * - This events will be used for spy_product_bundle entity changes.
      *
      * @api
@@ -58,6 +58,11 @@ class ProductBundleStorageConfig
     public const ENTITY_SPY_PRODUCT_BUNDLE_DELETE = 'Entity.spy_product_bundle.delete';
 
     /**
+     * Specification:
+     * - This event is used for spy_product entity changes.
+     *
+     * @api
+     *
      * @uses \Spryker\Shared\ProductStorage\ProductStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
      */
     public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
