@@ -60,23 +60,17 @@ class CustomerProvider implements CustomerProviderInterface
 
         $isAuthorized = $this->customerFacade->tryAuthorizeCustomerByEmailAndPassword($customerTransfer);
 
-        if ($isAuthorized) {
-            $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
-
-            $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
-                ->setCustomerReference($customerTransfer->getCustomerReference())
-                ->setIdCustomer($customerTransfer->getIdCustomer());
-
-            foreach ($this->oauthCustomerIdentifierExpanderPlugins as $oauthCustomerIdentifierExpanderPlugin) {
-                $customerIdentifierTransfer = $oauthCustomerIdentifierExpanderPlugin->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
-            }
-
-            $oauthUserTransfer
-                ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
-                ->setIsSuccess(true);
+        if (!$isAuthorized) {
+            return $oauthUserTransfer;
         }
 
-        return $oauthUserTransfer;
+        $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
+
+        $customerIdentifierTransfer = $this->getCustomerIdentifierForCustomer($customerTransfer);
+
+        return $oauthUserTransfer
+            ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
+            ->setIsSuccess(true);
     }
 
     /**
@@ -98,16 +92,29 @@ class CustomerProvider implements CustomerProviderInterface
             return $oauthUserTransfer;
         }
 
+        $customerIdentifierTransfer = $this->getCustomerIdentifierForCustomer($customerTransfer);
+
+        return $oauthUserTransfer
+            ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
+            ->setIsSuccess(true);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
+     */
+    protected function getCustomerIdentifierForCustomer(CustomerTransfer $customerTransfer): CustomerIdentifierTransfer
+    {
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setIdCustomer($customerTransfer->getIdCustomer());
 
         foreach ($this->oauthCustomerIdentifierExpanderPlugins as $oauthCustomerIdentifierExpanderPlugin) {
-            $customerIdentifierTransfer = $oauthCustomerIdentifierExpanderPlugin->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
+            $customerIdentifierTransfer = $oauthCustomerIdentifierExpanderPlugin
+                ->expandCustomerIdentifier($customerIdentifierTransfer, $customerTransfer);
         }
 
-        return $oauthUserTransfer
-            ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
-            ->setIsSuccess(true);
+        return $customerIdentifierTransfer;
     }
 }

@@ -10,12 +10,10 @@ namespace Spryker\Glue\AgentAuthRestApi;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceInterface;
-use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreator;
-use Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreator;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreatorInterface;
-use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\AgentAccessTokenMapper;
-use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\AgentAccessTokenMapperInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreator;
+use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapper;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapperInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilder;
@@ -32,25 +30,6 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class AgentAuthRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Mapper\AgentAccessTokenMapperInterface
-     */
-    public function createAgentAccessTokenMapper(): AgentAccessTokenMapperInterface
-    {
-        return new AgentAccessTokenMapper();
-    }
-
-    /**
-     * @return \Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface
-     */
-    public function createAgentAccessTokenRestResponseBuilder(): AgentAccessTokenRestResponseBuilderInterface
-    {
-        return new AgentAccessTokenRestResponseBuilder(
-            $this->getResourceBuilder(),
-            $this->createAgentAccessTokenMapper()
-        );
-    }
-
-    /**
      * @return \Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreatorInterface
      */
     public function createAgentAccessTokenCreator(): AgentAccessTokenCreatorInterface
@@ -62,13 +41,13 @@ class AgentAuthRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken\AgentCustomerImpersonationAccessTokenCreatorInterface
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreatorInterface
      */
     public function createAgentCustomerImpersonationAccessTokenCreator(): AgentCustomerImpersonationAccessTokenCreatorInterface
     {
         return new AgentCustomerImpersonationAccessTokenCreator(
             $this->getOauthClient(),
-            $this->getResourceBuilder()
+            $this->createAgentAccessTokenRestResponseBuilder()
         );
     }
 
@@ -77,9 +56,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
      */
     public function createAgentValidator(): AgentValidatorInterface
     {
-        return new AgentValidator(
-            $this->getConfig()
-        );
+        return new AgentValidator($this->getConfig());
     }
 
     /**
@@ -87,9 +64,15 @@ class AgentAuthRestApiFactory extends AbstractFactory
      */
     public function createAgentAccessTokenRestRequestValidator(): AgentAccessTokenRestRequestValidatorInterface
     {
-        return new AgentAccessTokenRestRequestValidator(
-            $this->getOauthClient()
-        );
+        return new AgentAccessTokenRestRequestValidator($this->getOauthClient());
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface
+     */
+    public function createAgentAccessTokenRestResponseBuilder(): AgentAccessTokenRestResponseBuilderInterface
+    {
+        return new AgentAccessTokenRestResponseBuilder($this->getResourceBuilder());
     }
 
     /**

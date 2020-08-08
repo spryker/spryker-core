@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\AgentAuthRestApi\Processor\AgentCustomerImpersonationAccessToken;
+namespace Spryker\Glue\AgentAuthRestApi\Processor\Creator;
 
 use Generated\Shared\Transfer\RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;

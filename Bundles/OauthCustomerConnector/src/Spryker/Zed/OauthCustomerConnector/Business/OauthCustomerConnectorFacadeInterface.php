@@ -17,8 +17,9 @@ interface OauthCustomerConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Authenticates customer.
-     *  - Reads customer data and provides it for access token.
+     * - Authenticates customer.
+     * - Reads customer data and provides it for access token.
+     * - Executes `OauthCustomerIdentifierExpanderPluginInterface` plugins.
      *
      * @api
      *
@@ -32,6 +33,7 @@ interface OauthCustomerConnectorFacadeInterface
      * Specification:
      *  - Authenticates impersonated customer.
      *  - Reads customer data by `customer_reference` and provides it for access token.
+     *  - Executes `OauthCustomerIdentifierExpanderPluginInterface` plugins.
      *
      * @api
      *
@@ -43,7 +45,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer scopes.
+     * - Reads customer scopes.
      *
      * @api
      *
@@ -55,7 +57,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer impersonation scopes.
+     * - Reads customer impersonation scopes.
      *
      * @api
      *
@@ -66,11 +68,11 @@ interface OauthCustomerConnectorFacadeInterface
     public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
 
     /**
-     * @api
-     *
      * Specification:
-     *  - Installs oauth client data.
-     *  - Installs oauth scope data.
+     * - Installs oauth client data.
+     * - Installs oauth scope data.
+     *
+     * @api
      *
      * @deprecated Will be removed in the next major.
      *
@@ -92,7 +94,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer client secret.
+     * - Reads customer client secret.
      *
      * @api
      *
@@ -104,7 +106,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer client identifier.
+     * - Reads customer client identifier.
      *
      * @api
      *
