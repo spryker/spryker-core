@@ -17,8 +17,9 @@ interface OauthCustomerConnectorFacadeInterface
 {
     /**
      * Specification:
-     *  - Authenticates customer.
-     *  - Reads customer data and provides it for access token.
+     * - Authenticates customer.
+     * - Reads customer data and provides it for access token.
+     * - Executes `OauthCustomerIdentifierExpanderPluginInterface` plugins.
      *
      * @api
      *
@@ -30,7 +31,21 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer scopes.
+     *  - Authenticates impersonated customer.
+     *  - Reads customer data by `customer_reference` and provides it for access token.
+     *  - Executes `OauthCustomerIdentifierExpanderPluginInterface` plugins.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthUserTransfer $oauthUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthUserTransfer
+     */
+    public function getCustomerImpersonationOauthUser(OauthUserTransfer $oauthUserTransfer): OauthUserTransfer;
+
+    /**
+     * Specification:
+     * - Reads customer scopes.
      *
      * @api
      *
@@ -41,11 +56,23 @@ interface OauthCustomerConnectorFacadeInterface
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
 
     /**
+     * Specification:
+     * - Reads customer impersonation scopes.
+     *
      * @api
      *
+     * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array;
+
+    /**
      * Specification:
-     *  - Installs oauth client data.
-     *  - Installs oauth scope data.
+     * - Installs oauth client data.
+     * - Installs oauth scope data.
+     *
+     * @api
      *
      * @deprecated Will be removed in the next major.
      *
@@ -55,7 +82,9 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Installs oauth customer scope data.
+     * - Installs customer-specific OAuth scopes.
+     * - Scopes are defined in `OauthCustomerConnectorConfig::getCustomerScopes()`, `OauthCustomerConnectorConfig::getCustomerImpersonationScopes()`.
+     * - Skips scope if it already exists in persistent storage.
      *
      * @api
      *
@@ -65,7 +94,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer client secret.
+     * - Reads customer client secret.
      *
      * @api
      *
@@ -77,7 +106,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     *  - Reads customer client identifier.
+     * - Reads customer client identifier.
      *
      * @api
      *

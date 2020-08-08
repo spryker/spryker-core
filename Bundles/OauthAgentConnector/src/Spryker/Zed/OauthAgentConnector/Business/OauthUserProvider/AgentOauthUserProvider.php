@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
-use Symfony\Component\Security\Core\Encoder\NativePasswordEncoder;
+use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class AgentOauthUserProvider implements AgentOauthUserProviderInterface
 {
@@ -26,15 +26,23 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     */
+    protected $passwordEncoder;
+
+    /**
      * @param \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface $agentFacade
      * @param \Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface $passwordEncoder
      */
     public function __construct(
         OauthAgentConnectorToAgentFacadeInterface $agentFacade,
-        OauthAgentConnectorToUtilEncodingServiceInterface $utilEncodingService
+        OauthAgentConnectorToUtilEncodingServiceInterface $utilEncodingService,
+        PasswordEncoderInterface $passwordEncoder
     ) {
         $this->agentFacade = $agentFacade;
         $this->utilEncodingService = $utilEncodingService;
+        $this->passwordEncoder = $passwordEncoder;
     }
 
     /**
@@ -51,13 +59,12 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
             return $oauthUserTransfer;
         }
 
-        // Inject this.
-        $encoder = new NativePasswordEncoder();
-        $isAuthorized = $encoder->isPasswordValid(
+        $isAuthorized = $this->passwordEncoder->isPasswordValid(
             $findAgentResponseTransfer->getAgent()->getPassword(),
             $oauthUserTransfer->getPassword(),
             null
         );
+
         if (!$isAuthorized) {
             return $oauthUserTransfer;
         }

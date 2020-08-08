@@ -42,4 +42,19 @@ class ScopeProvider implements ScopeProviderInterface
 
         return $scopes;
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\OauthScopeRequestTransfer $oauthScopeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthScopeTransfer[]
+     */
+    public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
+    {
+        $scopes = (array)$oauthScopeRequestTransfer->getDefaultScopes();
+        foreach ($this->oauthCustomerConnectorConfig->getCustomerImpersonationScopes() as $scope) {
+            $scopes[] = (new OauthScopeTransfer())->setIdentifier($scope);
+        }
+
+        return $scopes;
+    }
 }

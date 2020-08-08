@@ -11,13 +11,18 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class AgentAuthRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
+    public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
 
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS
      */
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
+
+    /**
+     * @uses \Spryker\Zed\OauthCustomerConnector\OauthCustomerConnectorConfig::GRANT_TYPE_CUSTOMER_IMPERSONATION
+     */
+    public const GRANT_TYPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
 
     public const HEADER_X_AGENT_AUTHORIZATION = 'X-Agent-Authorization';
 
@@ -29,4 +34,25 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_AGENT_ONLY = '4103';
     public const RESPONSE_DETAIL_AGENT_ONLY = 'Action is available to agent user only.';
+
+    public const RESPONSE_CODE_FAILED_TO_IMPERSONATE_CUSTOMER = '4104';
+    public const RESPONSE_DETAIL_FAILED_TO_IMPERSONATE_CUSTOMER = 'Failed to impersonate a customer.';
+
+    /**
+     * @type string[]
+     */
+    protected const AGENT_RESOURCES = [];
+
+    /**
+     * Specification:
+     * - Returns resources which are accessible only for agents.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getAgentResources(): array
+    {
+        return static::AGENT_RESOURCES;
+    }
 }

@@ -20,7 +20,24 @@ interface AgentAccessTokenRestResponseBuilderInterface
     public function createAgentAccessTokensRestResponse(OauthResponseTransfer $oauthResponseTransfer): RestResponseInterface;
 
     /**
+     * @param \Generated\Shared\Transfer\OauthResponseTransfer $oauthResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createAgentCustomerImpersonationAccessTokensRestResponse(OauthResponseTransfer $oauthResponseTransfer): RestResponseInterface;
+
+    /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createInvalidCredentialsErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createFailedToImpersonateCustomerErrorResponse(): RestResponseInterface;
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createActionAvailableForAgentsOnlyErrorResponse(): RestResponseInterface;
 }
