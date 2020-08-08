@@ -34,11 +34,7 @@ class AgentValidator implements AgentValidatorInterface
      */
     public function validate(RestRequestInterface $restRequest): ?RestErrorMessageTransfer
     {
-        if (!$this->isAgentResource($restRequest)) {
-            return null;
-        }
-
-        if ($this->isAgent($restRequest)) {
+        if (!$this->isAgentResource($restRequest) || $this->isAgent($restRequest)) {
             return null;
         }
 

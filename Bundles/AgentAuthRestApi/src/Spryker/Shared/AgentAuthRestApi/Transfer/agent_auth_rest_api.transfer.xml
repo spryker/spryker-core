@@ -39,4 +39,44 @@
       <property name="idAgent" type="int"/>
   </transfer>
 
+    <transfer name="CustomerQuery">
+        <property name="query" type="string"/>
+    </transfer>
+
+    <transfer name="OauthRequest">
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationRequest">
+        <property name="accessToken" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerAutocompleteResponse">
+        <property name="customers" type="Customer[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="isValid" type="bool"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthUserId" type="string"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationResponse">
+        <property name="isValid" type="bool"/>
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>

@@ -22,14 +22,19 @@ class AgentCustomerSearchResourceController extends AbstractController
      *          "summary": [
      *              "Retrieves customer list by query provided in GET parameteres."
      *          ],
-     *          "parameters": [{
-     *              "ref": "acceptLanguage"
-     *          }],
+     *          "parameters": [
+     *              {
+     *                  "ref": "acceptLanguage"
+     *              },
+     *              {
+     *                  "name": "q",
+     *                  "in": "query",
+     *                  "description": "Search query string."
+     *              }
+     *          ],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestAgentCustomerSearchAttributesTransfer",
      *          "responses": {
-     *              "400": "Bad request.",
-     *              "401": "Failed to authenticate user.",
-     *              "422": "Unprocessable entity."
+     *              "401": "Action is available to agent user only."
      *          },
      *          "isIdNullable": true
      *     }

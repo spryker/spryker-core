@@ -16,7 +16,6 @@ use Codeception\Test\Unit;
  * @group Zed
  * @group OauthAgentConnector
  * @group Business
- * @group Facade
  * @group OauthAgentConnectorFacade
  * @group InstallAgentOauthScopeTest
  * Add your own group annotations below this line

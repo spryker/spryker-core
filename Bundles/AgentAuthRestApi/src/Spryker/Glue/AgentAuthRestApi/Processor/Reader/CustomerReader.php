@@ -15,6 +15,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomerReader implements CustomerReaderInterface
 {
+    protected const REQUEST_PAREMETER_QUERY = 'q';
+
     /**
      * @var \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface
      */
@@ -49,7 +51,7 @@ class CustomerReader implements CustomerReaderInterface
         }
 
         $customerQueryTransfer = (new CustomerQueryTransfer())
-            ->setQuery($restRequest->getHttpRequest()->get('q', ''))
+            ->setQuery($restRequest->getHttpRequest()->get(static::REQUEST_PAREMETER_QUERY, ''))
             ->setLimit(10);
 
         $customerAutocompleteResponseTransfer = $this->agentClient->findCustomersByQuery($customerQueryTransfer);

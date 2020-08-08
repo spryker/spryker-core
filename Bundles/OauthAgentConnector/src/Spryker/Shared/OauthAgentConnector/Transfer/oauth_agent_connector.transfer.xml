@@ -32,4 +32,13 @@
         <property name="grantType" type="string"/>
     </transfer>
 
+    <transfer name="FindAgentResponse">
+        <property name="isAgentFound" type="bool"/>
+        <property name="agent" type="User"/>
+    </transfer>
+
+    <transfer name="OauthGrantTypeConfiguration">
+        <property name="identifier" type="string"/>
+    </transfer>
+
 </transfers>

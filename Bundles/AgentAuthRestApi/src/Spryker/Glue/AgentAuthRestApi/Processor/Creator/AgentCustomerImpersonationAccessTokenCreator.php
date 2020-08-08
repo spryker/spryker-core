@@ -49,7 +49,7 @@ class AgentCustomerImpersonationAccessTokenCreator implements AgentCustomerImper
         RestRequestInterface $restRequest,
         RestAgentCustomerImpersonationAccessTokensRequestAttributesTransfer $restAgentCustomerImpersonationAccessTokensRequestAttributesTransfer
     ): RestResponseInterface {
-        if ($restRequest->getRestUser() || !$restRequest->getRestUser()->getIdAgent()) {
+        if (!$restRequest->getRestUser() || !$restRequest->getRestUser()->getIdAgent()) {
             return $this->agentAccessTokenRestResponseBuilder->createActionAvailableForAgentsOnlyErrorResponse();
         }
 

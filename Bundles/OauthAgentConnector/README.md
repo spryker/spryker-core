@@ -2,7 +2,7 @@
 [![Build Status](https://travis-ci.org/spryker/oauth-agent-connector.svg)](https://travis-ci.org/spryker/oauth-agent-connector)
 [![Minimum PHP Version](https://img.shields.io/badge/php-%3E%3D%207.2-8892BF.svg)](https://php.net/)
 
-{{ADD DESCRIPTION HERE}}
+OauthCustomerConnector module provides plugins for extending the Oauth module. This extension provides functionality to sign an agent in via login and password.
 
 ## Installation
 

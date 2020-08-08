@@ -39,4 +39,7 @@
         <property name="grantType" type="string"/>
     </transfer>
 
+    <transfer name="OauthGrantTypeConfiguration">
+    </transfer>
+
 </transfers>

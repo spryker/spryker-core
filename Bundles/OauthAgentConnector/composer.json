@@ -1,5 +1,6 @@
 {
   "name": "spryker/oauth-agent-connector",
+  "type": "library",
   "description": "OauthAgentConnector module",
   "license": "proprietary",
   "require": {
@@ -12,6 +13,7 @@
     "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
@@ -31,7 +33,10 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "scripts": {},
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+  },
   "extra": {
     "branch-alias": {
       "dev-master": "1.0.x-dev"
