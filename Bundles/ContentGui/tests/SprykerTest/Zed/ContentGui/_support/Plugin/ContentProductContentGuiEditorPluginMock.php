@@ -13,8 +13,8 @@ use Spryker\Zed\ContentGuiExtension\Dependency\Plugin\ContentGuiEditorPluginInte
 class ContentProductContentGuiEditorPluginMock implements ContentGuiEditorPluginInterface
 {
     protected const TEMPLATES = [
-        'default' => 'content_product_abstract_list.template.default',
-        'top-title' => 'content_product_abstract_list.template.top-title',
+        'default' => 'Default',
+        'top-title' => 'Top Title',
     ];
 
     /**

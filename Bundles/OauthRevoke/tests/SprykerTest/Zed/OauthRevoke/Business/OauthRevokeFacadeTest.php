@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\OauthRevoke\Business;
 
 use ArrayObject;
 use Codeception\Test\Unit;
+use DateTime;
 use DateTimeImmutable;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
