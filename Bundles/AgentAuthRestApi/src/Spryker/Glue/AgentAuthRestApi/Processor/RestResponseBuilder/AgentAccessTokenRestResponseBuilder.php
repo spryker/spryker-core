@@ -7,9 +7,12 @@
 
 namespace Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Generated\Shared\Transfer\RestAgentAccessTokensAttributesTransfer;
 use Generated\Shared\Transfer\RestAgentCustomerImpersonationAccessTokensAttributesTransfer;
+use Generated\Shared\Transfer\RestAgentCustomerSearchAttributesTransfer;
+use Generated\Shared\Transfer\RestAgentCustomerSearchCustomersAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
@@ -71,6 +74,33 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
 
         return $this->restResourceBuilder->createRestResponse()
             ->addResource($accessTokenResource);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function createAgentCustomerSearchRestResponse(
+        CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+    ): RestResponseInterface {
+        $agentCustomerSearchRestResponse = $this->restResourceBuilder->createRestResponse();
+
+        $restAgentCustomerSearchAttributesTransfer = new RestAgentCustomerSearchAttributesTransfer();
+        foreach ($customerAutocompleteResponseTransfer->getCustomers() as $customerTransfer) {
+            $restAgentCustomerSearchAttributesTransfer->addCustomer(
+                (new RestAgentCustomerSearchCustomersAttributesTransfer())
+                    ->fromArray($customerTransfer->toArray(), true)
+            );
+        }
+
+        return $agentCustomerSearchRestResponse->addResource(
+            $this->restResourceBuilder->createRestResource(
+                AgentAuthRestApiConfig::RESOURCE_AGENT_CUSTOMER_SEARCH,
+                null,
+                $restAgentCustomerSearchAttributesTransfer
+            )
+        );
     }
 
     /**

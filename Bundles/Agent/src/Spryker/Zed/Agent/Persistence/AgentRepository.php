@@ -60,6 +60,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->filterByCustomerReference($query)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
+                SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,
                 SpyCustomerTableMap::COL_FIRST_NAME,
                 SpyCustomerTableMap::COL_LAST_NAME,
                 SpyCustomerTableMap::COL_EMAIL,
@@ -78,6 +79,7 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
         foreach ($customers as $customer) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->setIdCustomer($customer[SpyCustomerTableMap::COL_ID_CUSTOMER]);
+            $customerTransfer->setCustomerReference($customer[SpyCustomerTableMap::COL_CUSTOMER_REFERENCE]);
             $customerTransfer->setFirstName($customer[SpyCustomerTableMap::COL_FIRST_NAME]);
             $customerTransfer->setLastName($customer[SpyCustomerTableMap::COL_LAST_NAME]);
             $customerTransfer->setEmail($customer[SpyCustomerTableMap::COL_EMAIL]);

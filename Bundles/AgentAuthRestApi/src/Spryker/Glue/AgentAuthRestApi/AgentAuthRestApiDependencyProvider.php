@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\AgentAuthRestApi;
 
+use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientBridge;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientBridge;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceBridge;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceBridge;
@@ -18,6 +19,7 @@ use Spryker\Glue\Kernel\Container;
  */
 class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const CLIENT_AGENT = 'CLIENT_AGENT';
     public const CLIENT_OAUTH = 'CLIENT_OAUTH';
 
     public const SERVICE_OAUTH = 'SERVICE_OAUTH';
@@ -32,9 +34,26 @@ class AgentAuthRestApiDependencyProvider extends AbstractBundleDependencyProvide
     {
         $container = parent::provideDependencies($container);
 
+        $container = $this->addAgentClient($container);
         $container = $this->addOauthClient($container);
         $container = $this->addOauthService($container);
         $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addAgentClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_AGENT, function (Container $container) {
+            return new AgentAuthRestApiToAgentClientBridge(
+                $container->getLocator()->agent()->client()
+            );
+        });
 
         return $container;
     }

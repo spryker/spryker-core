@@ -11,8 +11,9 @@ use Spryker\Glue\Kernel\AbstractBundleConfig;
 
 class AgentAuthRestApiConfig extends AbstractBundleConfig
 {
-    public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
     public const RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS = 'agent-customer-impersonation-access-tokens';
+    public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
+    public const RESOURCE_AGENT_CUSTOMER_SEARCH = 'agent-customer-search';
 
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS

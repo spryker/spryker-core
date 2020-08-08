@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\AgentAuthRestApi;
 
+use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceInterface;
@@ -16,6 +17,8 @@ use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAc
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapper;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapperInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReader;
+use Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReaderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilder;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Validator\AgentAccessTokenRestRequestValidator;
@@ -29,6 +32,17 @@ use Spryker\Glue\Kernel\AbstractFactory;
  */
 class AgentAuthRestApiFactory extends AbstractFactory
 {
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReaderInterface
+     */
+    public function createCustomerReader(): CustomerReaderInterface
+    {
+        return new CustomerReader(
+            $this->getAgentClient(),
+            $this->createAgentAccessTokenRestResponseBuilder()
+        );
+    }
+
     /**
      * @return \Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreatorInterface
      */
@@ -84,6 +98,14 @@ class AgentAuthRestApiFactory extends AbstractFactory
             $this->getOauthService(),
             $this->getUtilEncodingService()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface
+     */
+    public function getAgentClient(): AgentAuthRestApiToAgentClientInterface
+    {
+        return $this->getProvidedDependency(AgentAuthRestApiDependencyProvider::CLIENT_AGENT);
     }
 
     /**

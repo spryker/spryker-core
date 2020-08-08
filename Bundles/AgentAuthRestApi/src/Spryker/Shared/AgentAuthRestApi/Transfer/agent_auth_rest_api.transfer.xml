@@ -24,6 +24,17 @@
       <property name="refreshToken" type="string"/>
   </transfer>
 
+  <transfer name="RestAgentCustomerSearchAttributes">
+      <property name="customers" type="RestAgentCustomerSearchCustomersAttributes[]" singular="customer"/>
+  </transfer>
+
+  <transfer name="RestAgentCustomerSearchCustomersAttributes">
+      <property name="customerReference" type="string"/>
+      <property name="email" type="string"/>
+      <property name="firstName" type="string"/>
+      <property name="lastName" type="string"/>
+  </transfer>
+
   <transfer name="RestUser">
       <property name="idAgent" type="int"/>
   </transfer>
