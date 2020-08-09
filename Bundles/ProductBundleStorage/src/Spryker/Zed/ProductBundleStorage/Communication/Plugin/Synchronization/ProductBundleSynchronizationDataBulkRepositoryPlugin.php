@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization;
 
 use Generated\Shared\Transfer\FilterTransfer;
-use Orm\Zed\ProductBundleStorage\Persistence\Map\SpyProductBundleStorageTableMap;
 use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBulkRepositoryPluginInterface;
