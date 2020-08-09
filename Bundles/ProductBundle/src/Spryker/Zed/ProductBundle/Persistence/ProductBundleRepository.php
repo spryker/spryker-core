@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductBundleRepository extends AbstractRepository implements ProductBundleRepositoryInterface
 {
+    protected const ALIAS_BUNDLED_PRODUCT = 'aliasBundledProduct';
+
     /**
      * @param string $sku
      *
@@ -92,15 +94,17 @@ class ProductBundleRepository extends AbstractRepository implements ProductBundl
             $productBundleQuery->filterByFkProduct_In($productBundleCriteriaFilterTransfer->getProductConcreteIds());
         }
 
-        if ($productBundleCriteriaFilterTransfer->getIsBundleProductActive() !== null) {
-            $productBundleQuery->useSpyProductRelatedByFkProductQuery()
-                ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsBundleProductActive())
+        if ($productBundleCriteriaFilterTransfer->getIsProductConcreteActive() !== null) {
+            $productBundleQuery
+                ->useSpyProductRelatedByFkProductQuery()
+                    ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsProductConcreteActive())
                 ->endUse();
         }
 
         if ($productBundleCriteriaFilterTransfer->getIsBundledProductActive() !== null) {
-            $productBundleQuery->useSpyProductRelatedByFkBundledProductQuery()
-                ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsBundledProductActive())
+            $productBundleQuery
+                ->useSpyProductRelatedByFkBundledProductQuery(static::ALIAS_BUNDLED_PRODUCT)
+                    ->filterByIsActive($productBundleCriteriaFilterTransfer->getIsBundledProductActive())
                 ->endUse();
         }
 

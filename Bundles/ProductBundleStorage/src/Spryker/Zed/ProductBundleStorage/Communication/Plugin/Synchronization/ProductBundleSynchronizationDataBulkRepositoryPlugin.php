@@ -22,6 +22,11 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataBu
 class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugin implements SynchronizationDataBulkRepositoryPluginInterface
 {
     /**
+     * @uses \Orm\Zed\ProductBundleStorage\Persistence\Map\SpyProductBundleStorageTableMap::COL_ID_PRODUCT_BUNDLE_STORAGE
+     */
+    protected const COL_ID_PRODUCT_BUNDLE_STORAGE = 'spy_product_bundle_storage.id_product_bundle_storage';
+
+    /**
      * {@inheritDoc}
      *
      * @api
@@ -47,6 +52,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
 
     /**
      * {@inheritDoc}
+     * - Retrieves paginated product_bundle data from storage.
      *
      * @api
      *
@@ -58,11 +64,12 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
      */
     public function getData(int $offset, int $limit, array $ids = []): array
     {
-        return $this->getFacade()
-            ->getPaginatedProductBundleStorageDataTransfers(
-                $this->createFilterTransfer($offset, $limit),
-                $ids
-            );
+        $filterTransfer = (new FilterTransfer())
+            ->setOrderBy(static::COL_ID_PRODUCT_BUNDLE_STORAGE)
+            ->setOffset($offset)
+            ->setLimit($limit);
+
+        return $this->getFacade()->getPaginatedProductBundleStorageDataTransfers($filterTransfer, $ids);
     }
 
     /**
@@ -101,19 +108,5 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
     public function getSynchronizationQueuePoolName(): ?string
     {
         return $this->getFactory()->getConfig()->getProductBundleSynchronizationPoolName();
-    }
-
-    /**
-     * @param int $offset
-     * @param int $limit
-     *
-     * @return \Generated\Shared\Transfer\FilterTransfer
-     */
-    protected function createFilterTransfer(int $offset, int $limit): FilterTransfer
-    {
-        return (new FilterTransfer())
-            ->setOrderBy(SpyProductBundleStorageTableMap::COL_ID_PRODUCT_BUNDLE_STORAGE)
-            ->setOffset($offset)
-            ->setLimit($limit);
     }
 }

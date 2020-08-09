@@ -45,7 +45,7 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setFilter($filterTransfer)
             ->setApplyGrouped(true)
-            ->setIsBundleProductActive(true)
+            ->setIsProductConcreteActive(true)
             ->setIsBundledProductActive(true);
 
         return $this->getFactory()

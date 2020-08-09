@@ -27,4 +27,12 @@ interface ProductBundleStorageToEventBehaviorFacadeInterface
      * @return array
      */
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array $columns
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns);
 }

@@ -46,4 +46,15 @@ class ProductBundleStorageToEventBehaviorFacadeBridge implements ProductBundleSt
     {
         return $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, $foreignKeyColumnName);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
+     * @param array $columns
+     *
+     * @return \Generated\Shared\Transfer\EventEntityTransfer[]
+     */
+    public function getEventTransfersByModifiedColumns(array $eventTransfers, array $columns)
+    {
+        return $this->eventBehaviorFacade->getEventTransfersByModifiedColumns($eventTransfers, $columns);
+    }
 }

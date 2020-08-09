@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductBundleStorage\Business\Writer;
 
 use Generated\Shared\Transfer\ProductBundleCriteriaFilterTransfer;
 use Generated\Shared\Transfer\ProductBundleStorageTransfer;
-use Generated\Shared\Transfer\ProductBundleTransfer;
 use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
 use Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToProductBundleFacadeInterface;
@@ -17,6 +16,11 @@ use Spryker\Zed\ProductBundleStorage\Persistence\ProductBundleStorageEntityManag
 
 class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
 {
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_IS_ACTIVE
+     */
+    protected const COL_PRODUCT_CONCRETE_IS_ACTIVE = 'spy_product.is_active';
+
     /**
      * @var \Spryker\Zed\ProductBundleStorage\Dependency\Facade\ProductBundleStorageToEventBehaviorFacadeInterface
      */
@@ -54,13 +58,13 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      */
     public function writeCollectionByProductBundlePublishEvents(array $eventTransfers): void
     {
-        $productConcreteIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-        $productConcreteIds = array_unique(array_filter($productConcreteIds));
-        if (!$productConcreteIds) {
+        $productConcreteBundleIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productConcreteBundleIds = array_unique(array_filter($productConcreteBundleIds));
+        if (!$productConcreteBundleIds) {
             return;
         }
 
-        $this->writeCollection($productConcreteIds);
+        $this->writeCollection($productConcreteBundleIds);
     }
 
     /**
@@ -70,13 +74,14 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      */
     public function writeCollectionByProductBundleEvents(array $eventTransfers): void
     {
-        $productConcreteIds = $this->eventBehaviorFacade->getEventTransferForeignKeys($eventTransfers, SpyProductBundleTableMap::COL_FK_PRODUCT);
-        $productConcreteIds = array_unique(array_filter($productConcreteIds));
-        if (!$productConcreteIds) {
+        $productConcreteBundleIds = $this->eventBehaviorFacade
+            ->getEventTransferForeignKeys($eventTransfers, SpyProductBundleTableMap::COL_FK_PRODUCT);
+        $productConcreteBundleIds = array_unique(array_filter($productConcreteBundleIds));
+        if (!$productConcreteBundleIds) {
             return;
         }
 
-        $this->writeCollection($productConcreteIds);
+        $this->writeCollection($productConcreteBundleIds);
     }
 
     /**
@@ -86,36 +91,49 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      */
     public function writeCollectionByProductEvents(array $eventTransfers): void
     {
-        $bundledProductIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
-        $bundledProductIds = array_unique(array_filter($bundledProductIds));
-        if (!$bundledProductIds) {
+        $eventTransfers = $this->eventBehaviorFacade
+            ->getEventTransfersByModifiedColumns($eventTransfers, [static::COL_PRODUCT_CONCRETE_IS_ACTIVE]);
+        $productConcreteIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $productConcreteIds = array_unique(array_filter($productConcreteIds));
+        if (!$productConcreteIds) {
             return;
         }
 
-        $this->writeCollection($this->getProductConcreteIds($bundledProductIds));
+        $productConcreteBundleIds = array_merge(
+            $this->getProductConcreteBundleIds($productConcreteIds),
+            $productConcreteIds
+        );
+
+        $this->writeCollection($productConcreteBundleIds);
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param int[] $productConcreteBundleIds
      *
      * @return void
      */
-    protected function writeCollection(array $productConcreteIds): void
+    protected function writeCollection(array $productConcreteBundleIds): void
     {
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
-            ->setProductConcreteIds($productConcreteIds)
+            ->setProductConcreteIds($productConcreteBundleIds)
             ->setApplyGrouped(true)
-            ->setIsBundleProductActive(true)
+            ->setIsProductConcreteActive(true)
             ->setIsBundledProductActive(true);
 
         $productBundleCollectionTransfer = $this->productBundleFacade
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
 
+        $savedProductConcreteBundleIds = [];
+
         foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
             $productBundleStorageTransfer = (new ProductBundleStorageTransfer())
                 ->fromArray($productBundleTransfer->modifiedToArray(), true);
             $this->productBundleStorageEntityManager->saveProductBundleStorage($productBundleStorageTransfer);
+            $savedProductConcreteBundleIds[] = $productBundleStorageTransfer->getIdProductConcreteBundle();
         }
+
+        $this->productBundleStorageEntityManager
+            ->deleteProductBundleStorageEntities(array_diff($productConcreteBundleIds, $savedProductConcreteBundleIds));
     }
 
     /**
@@ -123,18 +141,18 @@ class ProductBundleStorageWriter implements ProductBundleStorageWriterInterface
      *
      * @return int[]
      */
-    protected function getProductConcreteIds(array $bundledProductIds): array
+    protected function getProductConcreteBundleIds(array $bundledProductIds): array
     {
-        $productConcreteIds = [];
+        $productConcreteBundleIds = [];
         $productBundleCriteriaFilterTransfer = (new ProductBundleCriteriaFilterTransfer())
             ->setBundledProductIds($bundledProductIds)
             ->setApplyGrouped(true);
         $productBundleCollectionTransfer = $this->productBundleFacade
             ->getProductBundleCollectionByCriteriaFilter($productBundleCriteriaFilterTransfer);
         foreach ($productBundleCollectionTransfer->getProductBundles() as $productBundleTransfer) {
-            $productConcreteIds[] = $productBundleTransfer->getIdProductConcreteBundle();
+            $productConcreteBundleIds[] = $productBundleTransfer->getIdProductConcreteBundle();
         }
 
-        return $productConcreteIds;
+        return $productConcreteBundleIds;
     }
 }

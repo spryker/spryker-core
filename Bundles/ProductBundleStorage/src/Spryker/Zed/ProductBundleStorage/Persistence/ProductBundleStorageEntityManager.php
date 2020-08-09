@@ -31,4 +31,17 @@ class ProductBundleStorageEntityManager extends AbstractEntityManager implements
             ->setData($productBundleStorageTransfer->toArray())
             ->save();
     }
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return void
+     */
+    public function deleteProductBundleStorageEntities(array $productConcreteIds): void
+    {
+        $this->getFactory()
+            ->getProductBundleStoragePropelQuery()
+            ->filterByFkProduct_In($productConcreteIds)
+            ->delete();
+    }
 }
