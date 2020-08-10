@@ -7,7 +7,6 @@
 
 namespace Spryker\Yves\Currency;
 
-use Spryker\Shared\Currency\Dependency\Internationalization\CurrenciesToInternationalizationBridge;
 use Spryker\Shared\Currency\Dependency\Internationalization\CurrencyToInternationalizationBridge;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToMessengerClientBridge;
@@ -15,7 +14,6 @@ use Spryker\Yves\Currency\Dependency\Client\CurrencyToSessionBridge;
 use Spryker\Yves\Currency\Dependency\Client\CurrencyToZedRequestClientBridge;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
-use Symfony\Component\Intl\Intl;
 
 class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -67,11 +65,7 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
     protected function addInternationalization(Container $container)
     {
         $container->set(static::INTERNATIONALIZATION, function () {
-            if (method_exists(Intl::class, 'getCurrencyBundle')) {
-                return new CurrencyToInternationalizationBridge(Intl::getCurrencyBundle());
-            }
-
-            return new CurrenciesToInternationalizationBridge();
+            return new CurrencyToInternationalizationBridge();
         });
 
         return $container;

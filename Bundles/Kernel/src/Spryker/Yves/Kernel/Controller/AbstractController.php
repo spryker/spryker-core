@@ -147,7 +147,6 @@ abstract class AbstractController
             return new RedirectResponse($absoluteUrl, $code);
         }
 
-        trigger_error('Please apply plugin', E_USER_DEPRECATED);
         if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
         }

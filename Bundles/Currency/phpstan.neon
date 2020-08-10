@@ -1,0 +1,4 @@
+parameters:
+    ignoreErrors:
+        - "#'getCurrencyBundle' will always evaluate to false.#"
+        - '#Call to an undefined static method .+Intl::getCurrencyBundle\(\).#'
