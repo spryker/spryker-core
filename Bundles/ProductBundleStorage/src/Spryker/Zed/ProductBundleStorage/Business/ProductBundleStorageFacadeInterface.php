@@ -49,7 +49,7 @@ interface ProductBundleStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves paginated product_bundle data from storage.
+     * - Retrieves paginated product_bundle data from spy_product_bundle_storage table.
      *
      * @api
      *
