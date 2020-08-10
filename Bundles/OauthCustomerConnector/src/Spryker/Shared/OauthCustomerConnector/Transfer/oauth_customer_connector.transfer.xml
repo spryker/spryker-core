@@ -25,6 +25,7 @@
         <property name="isSuccess" type="bool"/>
         <property name="userIdentifier" type="string"/>
         <property name="grantType" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="OauthClient">

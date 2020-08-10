@@ -59,10 +59,12 @@
 
     <transfer name="OauthAccessTokenValidationRequest">
         <property name="accessToken" type="string"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="CustomerAutocompleteResponse">
         <property name="customers" type="Customer[]" singular="customer"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="OauthResponse">
