@@ -24,4 +24,11 @@ interface MerchantOmsRepositoryInterface
      * @return \Generated\Shared\Transfer\StateMachineItemTransfer|null
      */
     public function findCurrentStateByIdSalesOrderItem(int $idSalesOrderItem): ?StateMachineItemTransfer;
+
+    /**
+     * @param int[] $merchantOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\StateMachineItemTransfer[]
+     */
+    public function findStateHistoryByMerchantOrderIds(array $merchantOrderItemIds): array;
 }

@@ -124,6 +124,20 @@ interface MerchantOmsFacadeInterface
 
     /**
      * Specification:
+     * - Expands MerchantOrder.items with oms state history.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     **/
+    public function expandMerchantOrderItemsWithStateHistory(
+        MerchantOrderTransfer $merchantOrderTransfer
+    ): MerchantOrderTransfer;
+
+    /**
+     * Specification:
      * - Adds MerchantOrderItemTransfer.manualEvents to each merchant order item.
      *
      * @api

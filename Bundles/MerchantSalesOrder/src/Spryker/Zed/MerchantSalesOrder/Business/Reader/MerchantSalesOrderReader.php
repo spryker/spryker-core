@@ -8,9 +8,9 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface;
 use Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface;
@@ -148,7 +148,7 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Spryker\Zed\MerchantSalesOrder\Business\Reader\OrderTransfer
+     * @return \Generated\Shared\Transfer\OrderTransfer
      */
     protected function filterOrder(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {

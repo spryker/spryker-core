@@ -1,0 +1,50 @@
+"Overview of Orders",Auftragsübersicht
+"List of Orders","Liste der Bestellungen"
+"Order Reference",Bestellnummer
+"Marketplace Order Reference","Bestellreferenz für den Marktplatz"
+Created,Erstellt
+Customer,Kunde
+Email,Email
+"Order State",Bestellstatus
+"Grand Total",Gesamtsumme
+"Number of items","Anzahl der Teile"
+Actions,Aktionen
+View,Aussicht
+"Merchant Order Overview",Händlerbestellübersicht
+Reference,Referenz
+Name,Name
+"Previous orders count","Vorherige Bestellungen zählen"
+"Billing address",Rechnungsadresse
+"Merchant Order Reference",Händlerbestellreferenz
+"Order date",Auftragsdatum
+Totals,Summen
+Option,Möglichkeit
+Subtotal,Zwischensumme
+Discount,Rabatt
+"Cancelled amount","Stornierter Betrag"
+"GRAND TOTAL",GESAMTSUMME
+"Total taxes",Gesamtsteuern
+"Remuneration total","Vergütung insgesamt"
+"Merchant order doesn't exist.","Händlerbestellung existiert nicht."
+Shipment,Versand
+of,von
+"Delivery Address",Lieferadresse
+"Delivery Method",Versandart
+"Shipping Method",Versandart
+"Shipping Costs",Versandkosten
+"Request delivery date","Liefertermin anfordern"
+"Trigger all matching states of order inside this shipment","Lösen Sie alle übereinstimmenden Bestellzustände innerhalb dieser Sendung aus"
+"Merchant Order Items",Händlerbestellartikel
+Product,Produkt
+Quantity,Menge
+"Unit Price",Stückpreis
+"Item total","Artikel Gesamt"
+State,Zustand
+"Trigger event","Auslösendes Ereignis"
+"Variant Details",Variantendetails
+"Show less","Weniger anzeigen"
+"Show more","Mehr anzeigen"
+"incl. %tax_amount% % tax","Inkl. %tax_amount% % Mehrwertsteuer"
+"Show history","Historie anzeigen"
+"Hide history","Historie ausblenden"
+Sku,SKU

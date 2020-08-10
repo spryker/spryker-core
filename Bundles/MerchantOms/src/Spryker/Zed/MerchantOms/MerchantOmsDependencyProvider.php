@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantOms;
 
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderItemQuery;
+use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateHistoryQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToMerchantFacadeBridge;
@@ -28,6 +29,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_PLUGINS_STATE_MACHINE_COMMAND = 'PLUGINS_PLUGINS_STATE_MACHINE_COMMAND';
 
     public const PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM = 'PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM';
+    public const PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY = 'PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY';
 
     public const SERVICE_UTIL_DATA_READER = 'SERVICE_UTIL_DATA_READER';
 
@@ -74,6 +76,7 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
         $container = parent::providePersistenceLayerDependencies($container);
 
         $container = $this->addMerchantSalesOrderItemPropelQuery($container);
+        $container = $this->addStateMachineItemStateHistoryPropelQuery($container);
 
         return $container;
     }
@@ -87,6 +90,20 @@ class MerchantOmsDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::PROPEL_QUERY_MERCHANT_SALES_ORDER_ITEM, $container->factory(function () {
             return SpyMerchantSalesOrderItemQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStateMachineItemStateHistoryPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_STATE_MACHINE_ITEM_STATE_HISTORY, $container->factory(function () {
+            return SpyStateMachineItemStateHistoryQuery::create();
         }));
 
         return $container;
