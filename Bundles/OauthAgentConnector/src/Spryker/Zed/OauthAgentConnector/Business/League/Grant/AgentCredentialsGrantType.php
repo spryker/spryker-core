@@ -73,10 +73,10 @@ class AgentCredentialsGrantType extends AbstractGrant implements GrantTypeInterf
     }
 
     /**
-     * @throw \League\OAuth2\Server\Exception\OAuthServerException
-     *
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param \League\OAuth2\Server\Entities\ClientEntityInterface $clientEntity
+     *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
      *
      * @return \League\OAuth2\Server\Entities\UserEntityInterface
      */
