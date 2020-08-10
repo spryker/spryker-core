@@ -27,5 +27,8 @@
     "select2": "https://github.com/select2/select2.git#4.0.2",
     "summernote": "^0.8.11",
     "sweetalert": "~1.1.3"
+  },
+  "devDependencies": {
+    "phantomjs-polyfill": "0.0.2"
   }
 }
