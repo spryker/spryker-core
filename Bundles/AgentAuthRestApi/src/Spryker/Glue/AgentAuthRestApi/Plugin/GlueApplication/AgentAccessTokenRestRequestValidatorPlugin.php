@@ -20,7 +20,7 @@ class AgentAccessTokenRestRequestValidatorPlugin extends AbstractPlugin implemen
 {
     /**
      * {@inheritDoc}
-     *  - Validates access token passed via X-Agent-Authorization header.
+     * - Validates access token passed via `X-Agent-Authorization` header.
      *
      * @api
      *

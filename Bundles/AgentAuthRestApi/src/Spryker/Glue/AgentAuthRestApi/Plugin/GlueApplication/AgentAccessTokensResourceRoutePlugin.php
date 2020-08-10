@@ -17,7 +17,7 @@ class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements Res
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for agent-access-tokens resource.
+     * - Configures available actions for `agent-access-tokens` resource.
      *
      * @api
      *

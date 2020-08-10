@@ -17,7 +17,7 @@ class AgentCustomerSearchResourceRoutePlugin extends AbstractPlugin implements R
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for agent-customer-search resource.
+     * - Configures available actions for `agent-customer-search` resource.
      *
      * @api
      *

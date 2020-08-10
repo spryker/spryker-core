@@ -21,7 +21,7 @@ class AgentCredentialsOauthGrantTypeConfigurationProviderPlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Returns configuration of Password GrantType.
+     * - Returns configuration of `agent_credentials` grant type.
      *
      * @api
      *

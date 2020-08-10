@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\OauthAgentConnector\Business\OauthAgentConnectorFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OauthUserTransfer;
 
 /**
  * Auto-generated group annotations
@@ -30,22 +31,35 @@ class GetAgentOauthUserTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
+    public function testGetAgentOauthUserWillAuthorizeAnAgent(): void
     {
-        parent::setUp();
+        // Arrange
+        $userTransfer = $this->tester->haveRegisteredAgent(['password' => 'change123']);
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->setUsername($userTransfer->getUsername())
+            ->setPassword('change123');
 
-        // TODO:
+        // Act
+        $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);
+
+        // Assert
+        $this->assertTrue($resultingOauthUserTransfer->getIsSuccess());
     }
 
     /**
      * @return void
      */
-    public function test(): void
+    public function testGetAgentOauthUserWillNotAuthorizeAnAgentWithWrongCredentials(): void
     {
         // Arrange
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->setUsername('admin@spryker.com')
+            ->setPassword('change1233');
 
         // Act
+        $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);
 
         // Assert
+        $this->assertFalse($resultingOauthUserTransfer->getIsSuccess());
     }
 }

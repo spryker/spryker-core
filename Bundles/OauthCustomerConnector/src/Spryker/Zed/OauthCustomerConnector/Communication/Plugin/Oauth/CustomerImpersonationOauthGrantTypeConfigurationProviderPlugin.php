@@ -21,7 +21,7 @@ class CustomerImpersonationOauthGrantTypeConfigurationProviderPlugin extends Abs
 {
     /**
      * {@inheritDoc}
-     * - Returns configuration of `customer_impersonation` GrantType.
+     * - Returns configuration of `customer_impersonation` grant type.
      *
      * @api
      *

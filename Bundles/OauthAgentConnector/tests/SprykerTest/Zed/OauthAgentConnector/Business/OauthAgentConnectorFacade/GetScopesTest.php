@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\OauthAgentConnector\Business\OauthAgentConnectorFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OauthScopeRequestTransfer;
+use Generated\Shared\Transfer\OauthScopeTransfer;
 
 /**
  * Auto-generated group annotations
@@ -30,22 +32,33 @@ class GetScopesTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
+    public function testGetScopesWillReturnScopes(): void
     {
-        parent::setUp();
+        // Arrange
+        $scopesRequestTransfer = new OauthScopeRequestTransfer();
 
-        // TODO:
+        // Act
+        $oauthScopeTransfers = $this->tester->getFacade()->getScopes($scopesRequestTransfer);
+
+        // Assert
+        $this->assertNotEmpty($oauthScopeTransfers);
     }
 
     /**
      * @return void
      */
-    public function test(): void
+    public function testGetScopesWillReturnScopesWithDefault(): void
     {
         // Arrange
+        $defaultScopeTransfer = (new OauthScopeTransfer())->setIdentifier('test');
+        $scopesRequestTransfer = (new OauthScopeRequestTransfer())
+            ->addScope($defaultScopeTransfer);
 
         // Act
+        $oauthScopeTransfers = $this->tester->getFacade()->getScopes($scopesRequestTransfer);
 
         // Assert
+        $this->assertNotEmpty($oauthScopeTransfers);
+        $this->assertContains($defaultScopeTransfer, $oauthScopeTransfers);
     }
 }

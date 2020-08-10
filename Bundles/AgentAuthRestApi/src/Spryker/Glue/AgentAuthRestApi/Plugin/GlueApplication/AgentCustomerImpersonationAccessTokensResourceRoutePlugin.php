@@ -17,7 +17,7 @@ class AgentCustomerImpersonationAccessTokensResourceRoutePlugin extends Abstract
 {
     /**
      * {@inheritDoc}
-     * - Configures available actions for agent-customer-impersonation-access-tokens resource.
+     * - Configures available actions for `agent-customer-impersonation-access-tokens` resource.
      *
      * @api
      *
@@ -27,7 +27,7 @@ class AgentCustomerImpersonationAccessTokensResourceRoutePlugin extends Abstract
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection->addPost('post');
+        $resourceRouteCollection->addPost('post', false);
 
         return $resourceRouteCollection;
     }

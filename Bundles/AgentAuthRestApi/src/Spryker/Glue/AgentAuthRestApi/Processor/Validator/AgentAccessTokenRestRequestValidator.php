@@ -72,12 +72,12 @@ class AgentAccessTokenRestRequestValidator implements AgentAccessTokenRestReques
             return false;
         }
 
-        $authAccessTokenValidationRequestTransfer = new OauthAccessTokenValidationRequestTransfer();
-        $authAccessTokenValidationRequestTransfer
+        $oauthAccessTokenValidationRequestTransfer = (new OauthAccessTokenValidationRequestTransfer())
             ->setAccessToken($accessToken)
             ->setType($type);
 
-        $authAccessTokenValidationResponseTransfer = $this->oauthClient->validateAccessToken($authAccessTokenValidationRequestTransfer);
+        $authAccessTokenValidationResponseTransfer = $this->oauthClient
+            ->validateAccessToken($oauthAccessTokenValidationRequestTransfer);
 
         return $authAccessTokenValidationResponseTransfer->getIsValid();
     }

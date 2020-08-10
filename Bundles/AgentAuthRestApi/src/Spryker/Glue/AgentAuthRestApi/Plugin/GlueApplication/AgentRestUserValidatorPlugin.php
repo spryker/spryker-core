@@ -18,6 +18,12 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 class AgentRestUserValidatorPlugin extends AbstractPlugin implements RestUserValidatorPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Checks if the `RestRequest.restUser` is an agent in case the agent-only resource is being accessed.
+     * - Uses `AgentAuthRestApiConfig::getAgentResources()` for agent-only resoucres list.
+     *
+     * @api
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Generated\Shared\Transfer\RestErrorMessageTransfer|null

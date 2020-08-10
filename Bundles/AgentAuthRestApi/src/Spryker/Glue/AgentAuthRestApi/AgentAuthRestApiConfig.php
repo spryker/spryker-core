@@ -40,11 +40,6 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_FAILED_TO_IMPERSONATE_CUSTOMER = 'Failed to impersonate a customer.';
 
     /**
-     * @type string[]
-     */
-    protected const AGENT_RESOURCES = [];
-
-    /**
      * Specification:
      * - Returns resources which are accessible only for agents.
      *
@@ -54,6 +49,6 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      */
     public function getAgentResources(): array
     {
-        return static::AGENT_RESOURCES;
+        return [];
     }
 }

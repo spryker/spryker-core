@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\OauthAgentConnector\Business\OauthAgentConnectorFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\Transfer\OauthScopeTransfer;
+use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig;
 
 /**
  * Auto-generated group annotations
@@ -30,22 +32,18 @@ class InstallAgentOauthScopeTest extends Unit
     /**
      * @return void
      */
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        // TODO:
-    }
-
-    /**
-     * @return void
-     */
     public function test(): void
     {
         // Arrange
+        $agentScopeIdentifier = current((new OauthAgentConnectorConfig())->getAgentScopes());
+        $oauthScopeTransfer = (new OauthScopeTransfer())->setIdentifier($agentScopeIdentifier);
 
         // Act
+        $this->tester->getFacade()->installAgentOauthScope();
 
         // Assert
+        $agentOauthScopeTransfer = $this->tester->getLocator()->oauth()->facade()
+            ->findScopeByIdentifier($oauthScopeTransfer);
+        $this->assertNotNull($agentOauthScopeTransfer);
     }
 }
