@@ -22,6 +22,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
@@ -797,7 +798,7 @@ class StateMachineFacadeTest extends Unit
      */
     protected function sleepIfMySql(int $seconds): void
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
             sleep($seconds);
         }
     }
