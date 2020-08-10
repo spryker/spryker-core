@@ -13,11 +13,6 @@ use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStor
 class ProductConfigurationStorageDeleter implements ProductConfigurationStorageDeleterInterface
 {
     /**
-     * @uses \Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap::COL_FK_PRODUCT
-     */
-    protected const COL_FK_PRODUCT = 'spy_product_configuration.fk_product';
-
-    /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToEventBehaviorFacadeInterface
      */
     protected $eventBehaviorFacade;

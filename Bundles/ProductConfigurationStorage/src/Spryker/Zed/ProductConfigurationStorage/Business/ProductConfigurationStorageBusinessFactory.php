@@ -34,8 +34,7 @@ class ProductConfigurationStorageBusinessFactory extends AbstractBusinessFactory
             $this->getEventBehaviorFacade(),
             $this->getProductConfigurationFacade(),
             $this->createProductConfigurationStorageMapper(),
-            $this->getEntityManager(),
-            $this->getRepository()
+            $this->getEntityManager()
         );
     }
 
