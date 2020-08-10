@@ -416,6 +416,7 @@
     "spryker/oms": "*",
     "spryker/oms-discount-connector": "*",
     "spryker/oms-extension": "*",
+    "spryker/oms-multi-thread": "*",
     "spryker/oms-product-offer-reservation": "*",
     "spryker/oms-rest-api": "*",
     "spryker/order-custom-reference": "*",
