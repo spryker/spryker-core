@@ -9,14 +9,6 @@
 // extend webpack 2 support on IE11 and PhantomJS
 require('es6-promise/auto');
 
-if (!Object.prototype.hasOwnProperty.call(Node.prototype, 'getRootNode')) {
-    Node.prototype.getRootNode = function(opt) {
-        var composed = typeof opt === 'object' && Boolean(opt.composed);
-        
-        return composed ? getShadowIncludingRoot(this) : getRoot(this);
-    };
-}
-
 // external dependencies
 require('jquery');
 require('jquery-migrate/dist/jquery-migrate.min');
