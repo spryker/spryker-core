@@ -166,6 +166,8 @@ class OrderStateMachineTest extends Unit
             'no store name, limit' => [1, null, 1], // Will take only first created order
             'US store, no limit' => [2, 'US', null],
             'DE store, no limit' => [1, 'DE', null],
+            'US store, no limit, single processor identifier' => [2, 'US', null, [2]],
+            'US store, no limit, multiple processor identifiers' => [2, 'US', null, [1, 2]],
         ];
     }
 
@@ -179,11 +181,16 @@ class OrderStateMachineTest extends Unit
      * @param int $expectedAffectedOrderItemsCount
      * @param string|null $storeName
      * @param int|null $limit
+     * @param int[] $omsProcessorIdentifiers
      *
      * @return void
      */
-    public function testCheckConditionsWithCriteria(int $expectedAffectedOrderItemsCount, ?string $storeName = null, ?int $limit = null): void
-    {
+    public function testCheckConditionsWithCriteria(
+        int $expectedAffectedOrderItemsCount,
+        ?string $storeName = null,
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
+    ): void {
         // Arrange
         $stateName = 'condition-test';
         $processName = 'DummyPayment01';
@@ -202,12 +209,13 @@ class OrderStateMachineTest extends Unit
         $orderStateMachineMock->method('updateStateByTransition')->willReturn([]);
         $orderStateMachineMock->method('filterItemsWithOnEnterEvent')->willReturn([]);
 
-        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('DE', $stateName, $processName, 1);
-        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('US', $stateName, $processName, 2);
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('DE', $stateName, $processName, 1, 1);
+        $this->tester->createOrderWithOrderItemsInStateAndProcessForStore('US', $stateName, $processName, 2, 2);
 
         $omsCheckConditionQueryCriteriaTransfer = new OmsCheckConditionsQueryCriteriaTransfer();
         $omsCheckConditionQueryCriteriaTransfer
             ->setStoreName($storeName)
+            ->setOmsProcessorIdentifiers($omsProcessorIdentifiers)
             ->setLimit($limit);
 
         // Act
