@@ -48,6 +48,8 @@ class ProductBundleStorageToEventBehaviorFacadeBridge implements ProductBundleSt
     }
 
     /**
+     * @phpstan-param array<string> $columns
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param array $columns
      *

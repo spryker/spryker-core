@@ -29,6 +29,8 @@ interface ProductBundleStorageToEventBehaviorFacadeInterface
     public function getEventTransferForeignKeys(array $eventTransfers, $foreignKeyColumnName);
 
     /**
+     * @phpstan-param array<string> $columns
+     *
      * @param \Generated\Shared\Transfer\EventEntityTransfer[] $eventTransfers
      * @param array $columns
      *

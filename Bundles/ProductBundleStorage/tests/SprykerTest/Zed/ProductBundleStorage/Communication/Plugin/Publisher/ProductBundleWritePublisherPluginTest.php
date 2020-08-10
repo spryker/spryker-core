@@ -64,13 +64,20 @@ class ProductBundleWritePublisherPluginTest extends Unit
             (new EventEntityTransfer())->setId($productConcreteTransfer->getIdProductConcrete()),
         ];
 
-        $productBundleWritePublisherPlugin->handleBulk($eventTransfers, ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH);
+        $productBundleWritePublisherPlugin->handleBulk(
+            $eventTransfers,
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+        );
 
         // Assert
-        $productBundleStorageTransfer = $this->tester->findProductBundleStorageByFkProduct($productConcreteTransfer->getIdProductConcrete());
+        $productBundleStorageTransfer = $this->tester
+            ->findProductBundleStorageByFkProduct($productConcreteTransfer->getIdProductConcrete());
         $productForProductBundleStorageTransfers = $productBundleStorageTransfer->getBundledProducts();
 
-        $this->assertSame($productConcreteTransfer->getIdProductConcrete(), $productBundleStorageTransfer->getIdProductConcreteBundle());
+        $this->assertSame(
+            $productConcreteTransfer->getIdProductConcrete(),
+            $productBundleStorageTransfer->getIdProductConcreteBundle()
+        );
         $this->assertSame(
             $productForBundleTransfers->offsetGet(0)->getIdProductConcrete(),
             $productForProductBundleStorageTransfers->offsetGet(0)->getIdProductConcrete()
@@ -105,14 +112,25 @@ class ProductBundleWritePublisherPluginTest extends Unit
             (new EventEntityTransfer())->setId($secondProductConcreteTransfer->getIdProductConcrete()),
         ];
 
-        $productBundleWritePublisherPlugin->handleBulk($eventTransfers, ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH);
+        $productBundleWritePublisherPlugin->handleBulk(
+            $eventTransfers,
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+        );
 
         // Assert
-        $firstProductBundleStorageTransfer = $this->tester->findProductBundleStorageByFkProduct($firstProductConcreteTransfer->getIdProductConcrete());
-        $secondProductBundleStorageTransfer = $this->tester->findProductBundleStorageByFkProduct($secondProductConcreteTransfer->getIdProductConcrete());
+        $firstProductBundleStorageTransfer = $this->tester
+            ->findProductBundleStorageByFkProduct($firstProductConcreteTransfer->getIdProductConcrete());
+        $secondProductBundleStorageTransfer = $this->tester
+            ->findProductBundleStorageByFkProduct($secondProductConcreteTransfer->getIdProductConcrete());
 
-        $this->assertSame($firstProductConcreteTransfer->getIdProductConcrete(), $firstProductBundleStorageTransfer->getIdProductConcreteBundle());
-        $this->assertSame($secondProductConcreteTransfer->getIdProductConcrete(), $secondProductBundleStorageTransfer->getIdProductConcreteBundle());
+        $this->assertSame(
+            $firstProductConcreteTransfer->getIdProductConcrete(),
+            $firstProductBundleStorageTransfer->getIdProductConcreteBundle()
+        );
+        $this->assertSame(
+            $secondProductConcreteTransfer->getIdProductConcrete(),
+            $secondProductBundleStorageTransfer->getIdProductConcreteBundle()
+        );
     }
 
     /**
@@ -120,18 +138,20 @@ class ProductBundleWritePublisherPluginTest extends Unit
      */
     public function testProductBundleWritePublisherPluginWithFakeProductConcreteId(): void
     {
-        // Arrange
-
         // Act
         $productBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::FAKE_ID_PRODUCT_CONCRETE),
         ];
 
-        $productBundleWritePublisherPlugin->handleBulk($eventTransfers, ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH);
+        $productBundleWritePublisherPlugin->handleBulk(
+            $eventTransfers,
+            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH
+        );
 
         // Assert
-        $productBundleStorageTransfer = $this->tester->findProductBundleStorageByFkProduct(static::FAKE_ID_PRODUCT_CONCRETE);
+        $productBundleStorageTransfer = $this->tester
+            ->findProductBundleStorageByFkProduct(static::FAKE_ID_PRODUCT_CONCRETE);
 
         $this->assertNull($productBundleStorageTransfer);
     }

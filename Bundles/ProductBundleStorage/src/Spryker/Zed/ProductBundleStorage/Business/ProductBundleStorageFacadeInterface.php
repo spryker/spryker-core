@@ -58,5 +58,8 @@ interface ProductBundleStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getPaginatedProductBundleStorageDataTransfers(FilterTransfer $filterTransfer, array $productConcreteIds): array;
+    public function getPaginatedProductBundleStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $productConcreteIds
+    ): array;
 }

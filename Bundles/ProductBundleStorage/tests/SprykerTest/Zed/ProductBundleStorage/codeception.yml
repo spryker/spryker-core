@@ -31,3 +31,4 @@ suites:
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
                 - \SprykerTest\Shared\Availability\Helper\AvailabilityDataHelper
                 - \SprykerTest\Shared\ProductBundle\Helper\ProductBundleHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
