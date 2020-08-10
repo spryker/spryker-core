@@ -86,13 +86,13 @@ class CustomerProvider implements CustomerProviderInterface
             return $oauthUserTransfer;
         }
 
-        $customerTransfer = $this->customerFacade->findByReference($oauthUserTransfer->getCustomerReference());
+        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($oauthUserTransfer->getCustomerReference());
 
-        if (!$customerTransfer) {
+        if (!$customerResponseTransfer->getIsSuccess()) {
             return $oauthUserTransfer;
         }
 
-        $customerIdentifierTransfer = $this->getCustomerIdentifierForCustomer($customerTransfer);
+        $customerIdentifierTransfer = $this->getCustomerIdentifierForCustomer($customerResponseTransfer->getCustomerTransfer());
 
         return $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))

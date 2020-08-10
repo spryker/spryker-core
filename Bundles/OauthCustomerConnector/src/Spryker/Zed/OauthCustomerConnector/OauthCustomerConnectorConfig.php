@@ -70,6 +70,9 @@ class OauthCustomerConnectorConfig extends AbstractBundleConfig
      */
     public function getCustomerImpersonationScopes(): array
     {
-        return [static::SCOPE_CUSTOMER_IMPERSONATION];
+        return [
+            static::SCOPE_CUSTOMER_IMPERSONATION,
+            static::SCOPE_CUSTOMER,
+        ];
     }
 }

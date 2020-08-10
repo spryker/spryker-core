@@ -9,6 +9,7 @@ namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface;
 use Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface;
 
@@ -30,18 +31,26 @@ class CustomerReader implements CustomerReaderInterface
     protected $addressManager;
 
     /**
+     * @var \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface
+     */
+    protected $customerExpander;
+
+    /**
      * @param \Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface $customerEntityManager
      * @param \Spryker\Zed\Customer\Persistence\CustomerRepositoryInterface $customerRepository
      * @param \Spryker\Zed\Customer\Business\Customer\AddressInterface $addressManager
+     * @param \Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface $customerExpander
      */
     public function __construct(
         CustomerEntityManagerInterface $customerEntityManager,
         CustomerRepositoryInterface $customerRepository,
-        AddressInterface $addressManager
+        AddressInterface $addressManager,
+        CustomerExpanderInterface $customerExpander
     ) {
         $this->customerEntityManager = $customerEntityManager;
         $this->customerRepository = $customerRepository;
         $this->addressManager = $addressManager;
+        $this->customerExpander = $customerExpander;
     }
 
     /**
@@ -71,6 +80,7 @@ class CustomerReader implements CustomerReaderInterface
             ->setHasCustomer(false);
 
         if ($customerTransfer) {
+            $customerTransfer = $this->customerExpander->expand($customerTransfer);
             $customerTransfer->setAddresses($this->addressManager->getAddresses($customerTransfer));
             $customerResponseTransfer->setCustomerTransfer($customerTransfer)
                 ->setHasCustomer(true)

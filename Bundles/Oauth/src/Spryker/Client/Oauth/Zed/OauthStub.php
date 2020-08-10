@@ -31,6 +31,8 @@ class OauthStub implements OauthStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Oauth\Communication\Controller\GatewayController::processAccessTokenRequestAction()
+     *
      * @param \Generated\Shared\Transfer\OauthRequestTransfer $oauthRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthResponseTransfer

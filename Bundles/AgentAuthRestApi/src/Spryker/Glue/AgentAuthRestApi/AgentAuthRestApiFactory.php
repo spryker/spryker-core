@@ -15,6 +15,8 @@ use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreator;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentAccessTokenCreatorInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreator;
 use Spryker\Glue\AgentAuthRestApi\Processor\Creator\AgentCustomerImpersonationAccessTokenCreatorInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinder;
+use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapper;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapperInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReader;
@@ -95,6 +97,17 @@ class AgentAuthRestApiFactory extends AbstractFactory
     public function createRestUserMapper(): RestUserMapperInterface
     {
         return new RestUserMapper(
+            $this->getOauthService(),
+            $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinderInterface
+     */
+    public function createRestUserFinder(): RestUserFinderInterface
+    {
+        return new RestUserFinder(
             $this->getOauthService(),
             $this->getUtilEncodingService()
         );

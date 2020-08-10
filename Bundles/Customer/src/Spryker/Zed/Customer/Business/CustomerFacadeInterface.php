@@ -507,8 +507,9 @@ interface CustomerFacadeInterface
 
     /**
      * Specification:
-     *  - Finds customer by reference.
-     *  - Returns customer response transfer.
+     * - Finds customer by reference.
+     * - Expands customer data with `CustomerTransferExpanderPluginInterface` plugins stack.
+     * - Returns customer response transfer.
      *
      * @api
      *
