@@ -26,11 +26,6 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
     protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
 
     /**
-     * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_FK_PRODUCT
-     */
-    protected const COL_FK_PRODUCT = 'spy_product_configuration.fk_product';
-
-    /**
      * {@inheritDoc}
      *
      * @api
