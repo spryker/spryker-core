@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage;
 
+use Pyz\Zed\Synchronization\SynchronizationConfig;
 use Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig;
 
 class ProductConfigurationStorageConfig extends SynchronizationBehaviorConfig
@@ -18,6 +19,6 @@ class ProductConfigurationStorageConfig extends SynchronizationBehaviorConfig
      */
     public function getProductConfigurationSynchronizationPoolName(): ?string
     {
-        return null;
+        return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
     }
 }
