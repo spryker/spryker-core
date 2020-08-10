@@ -22,7 +22,7 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Synchronization\Produc
  * @group Communication
  * @group Plugin
  * @group Synchronization
- * @group ProductConcreteProductBundleWritePublisherPluginTest
+ * @group ProductBundleSynchronizationDataBulkRepositoryPluginTest
  * Add your own group annotations below this line
  */
 class ProductBundleSynchronizationDataBulkRepositoryPluginTest extends Unit
