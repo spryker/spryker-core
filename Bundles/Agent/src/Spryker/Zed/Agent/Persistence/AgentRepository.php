@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\Agent\Persistence;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -42,10 +42,11 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
     /**
      * @param string $query
      * @param int|null $limit
+     * @param int|null $offset
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
-    public function findCustomersByQuery(string $query, ?int $limit): array
+    public function findCustomersByQuery(string $query, ?int $limit, ?int $offset): CustomerAutocompleteResponseTransfer
     {
         $queryPattern = $query . '%';
 
@@ -67,26 +68,11 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ])
             ->setIgnoreCase(true);
 
-        if ($limit !== null) {
-            $customersQuery->limit($limit);
-        }
+        $page = $offset && $limit ? floor($offset / $limit + 1) : 1;
+        $pager = $customersQuery->paginate($page, $limit);
+        $customers = $pager->getResults()->getData();
 
-        /** @var array $customers */
-        $customers = $customersQuery->find();
-
-        $customerTransferList = [];
-
-        foreach ($customers as $customer) {
-            $customerTransfer = new CustomerTransfer();
-            $customerTransfer->setIdCustomer($customer[SpyCustomerTableMap::COL_ID_CUSTOMER]);
-            $customerTransfer->setCustomerReference($customer[SpyCustomerTableMap::COL_CUSTOMER_REFERENCE]);
-            $customerTransfer->setFirstName($customer[SpyCustomerTableMap::COL_FIRST_NAME]);
-            $customerTransfer->setLastName($customer[SpyCustomerTableMap::COL_LAST_NAME]);
-            $customerTransfer->setEmail($customer[SpyCustomerTableMap::COL_EMAIL]);
-
-            $customerTransferList[] = $customerTransfer;
-        }
-
-        return $customerTransferList;
+        return $this->getFactory()->createAgentMapper()
+            ->mapCustomerDataToCustomerAutocompleteResponseTransfer($customers, $pager);
     }
 }

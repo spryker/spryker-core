@@ -91,11 +91,31 @@ class AgentFacadeTest extends Unit
     }
 
     /**
+     * @dataProvider findCustomersByQueryPagination
+     *
+     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
+     * @param int $count
+     *
+     * @return void
+     */
+    public function testFindCustomersByQueryOffsetLimit(
+        CustomerQueryTransfer $customerQueryTransfer,
+        int $count
+    ): void {
+        $this->createNCustomers();
+
+        $customerAutocompleteResponseTransfer = $this->tester->getAgentFacade()
+            ->findCustomersByQuery($customerQueryTransfer);
+
+        $this->assertEquals($count, $customerAutocompleteResponseTransfer->getCustomers()->count());
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     protected function createCustomer(): CustomerTransfer
     {
-        return (new CustomerBuilder())->build();
+        return (new CustomerBuilder(['firstName' => uniqid('', true)]))->build();
     }
 
     /**
@@ -104,5 +124,60 @@ class AgentFacadeTest extends Unit
     protected function getCustomerFacade(): CustomerFacadeInterface
     {
         return new CustomerFacade();
+    }
+
+    /**
+     * @param int $count
+     *
+     * @return void
+     */
+    protected function createNCustomers(int $count = 10): void
+    {
+        while ($count) {
+            $this->tester->haveCustomer();
+            $count--;
+        }
+    }
+
+    /**
+     * @return array
+     */
+    public function findCustomersByQueryPagination(): array
+    {
+        return [
+            [
+                (new CustomerQueryTransfer())
+                    ->setQuery('')
+                    ->setLimit(10),
+                10,
+            ],
+            [
+                (new CustomerQueryTransfer())
+                    ->setQuery('')
+                    ->setLimit(5),
+                5,
+            ],
+            [
+                (new CustomerQueryTransfer())
+                    ->setQuery('')
+                    ->setLimit(5)
+                    ->setOffset(5),
+                5,
+            ],
+            [
+                (new CustomerQueryTransfer())
+                    ->setQuery('')
+                    ->setLimit(3)
+                    ->setOffset(5),
+                3,
+            ],
+            [
+                (new CustomerQueryTransfer())
+                    ->setQuery('')
+                    ->setLimit(3)
+                    ->setOffset(6),
+                3,
+            ],
+        ];
     }
 }

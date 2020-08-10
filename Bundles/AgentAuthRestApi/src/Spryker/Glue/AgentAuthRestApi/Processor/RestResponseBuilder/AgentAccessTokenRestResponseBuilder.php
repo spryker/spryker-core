@@ -17,6 +17,8 @@ use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\Page;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Response;
 
 class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestResponseBuilderInterface
@@ -78,13 +80,18 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createAgentCustomerSearchRestResponse(
-        CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+        CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer,
+        RestRequestInterface $restRequest
     ): RestResponseInterface {
-        $agentCustomerSearchRestResponse = $this->restResourceBuilder->createRestResponse();
+        $agentCustomerSearchRestResponse = $this->restResourceBuilder->createRestResponse(
+            $customerAutocompleteResponseTransfer->getPagination()->getNbResults(),
+            $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()
+        );
 
         $restAgentCustomerSearchAttributesTransfer = new RestAgentCustomerSearchAttributesTransfer();
         foreach ($customerAutocompleteResponseTransfer->getCustomers() as $customerTransfer) {
@@ -92,6 +99,10 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
                 (new RestAgentCustomerSearchCustomersAttributesTransfer())
                     ->fromArray($customerTransfer->toArray(), true)
             );
+        }
+
+        if (!$restRequest->getPage()) {
+            $restRequest->setPage(new Page(0, $customerAutocompleteResponseTransfer->getPagination()->getMaxPerPage()));
         }
 
         return $agentCustomerSearchRestResponse->addResource(

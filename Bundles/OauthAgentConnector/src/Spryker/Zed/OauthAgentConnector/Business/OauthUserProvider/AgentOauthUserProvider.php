@@ -70,7 +70,6 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
         }
 
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
-            ->setAgentUserName($findAgentResponseTransfer->getAgent()->getUsername())
             ->setIdAgent($findAgentResponseTransfer->getAgent()->getIdUser());
 
         $oauthUserTransfer

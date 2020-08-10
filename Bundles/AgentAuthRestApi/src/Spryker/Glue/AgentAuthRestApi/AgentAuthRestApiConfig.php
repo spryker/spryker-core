@@ -15,6 +15,8 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
     public const RESOURCE_AGENT_CUSTOMER_SEARCH = 'agent-customer-search';
 
+    public const DEFAULT_PAGINATION_LIMIT = 10;
+
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS
      */

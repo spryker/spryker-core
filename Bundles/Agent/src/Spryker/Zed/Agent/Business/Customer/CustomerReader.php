@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Agent\Business\Customer;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
 use Spryker\Zed\Agent\Persistence\AgentRepositoryInterface;
@@ -34,14 +33,10 @@ class CustomerReader implements CustomerReaderInterface
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
-        $customers = $this->agentRepository->findCustomersByQuery(
+        return $this->agentRepository->findCustomersByQuery(
             $customerQueryTransfer->getQuery(),
-            $customerQueryTransfer->getLimit()
+            $customerQueryTransfer->getLimit(),
+            $customerQueryTransfer->getOffset()
         );
-
-        $customerCollectionTransfer = new CustomerAutocompleteResponseTransfer();
-        $customerCollectionTransfer->setCustomers(new ArrayObject($customers));
-
-        return $customerCollectionTransfer;
     }
 }

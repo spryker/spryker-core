@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Agent\Persistence;
 
+use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 
 interface AgentRepositoryInterface
@@ -20,9 +21,10 @@ interface AgentRepositoryInterface
 
     /**
      * @param string $query
-     * @param int $limit
+     * @param int|null $limit
+     * @param int|null $offset
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
-    public function findCustomersByQuery(string $query, int $limit): array;
+    public function findCustomersByQuery(string $query, ?int $limit, ?int $offset): CustomerAutocompleteResponseTransfer;
 }

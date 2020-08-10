@@ -10,6 +10,7 @@ namespace Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder;
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 interface AgentAccessTokenRestResponseBuilderInterface
 {
@@ -29,11 +30,13 @@ interface AgentAccessTokenRestResponseBuilderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
     public function createAgentCustomerSearchRestResponse(
-        CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer
+        CustomerAutocompleteResponseTransfer $customerAutocompleteResponseTransfer,
+        RestRequestInterface $restRequest
     ): RestResponseInterface;
 
     /**

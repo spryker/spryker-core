@@ -10,11 +10,18 @@
 
     <transfer name="CustomerAutocompleteResponse">
         <property name="customers" type="Customer[]" singular="customer"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
     </transfer>
 
     <transfer name="CustomerQuery">
         <property name="query" type="string"/>
         <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="FindAgentResponse">

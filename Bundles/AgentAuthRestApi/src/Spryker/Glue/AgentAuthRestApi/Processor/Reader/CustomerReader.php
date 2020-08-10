@@ -8,6 +8,7 @@
 namespace Spryker\Glue\AgentAuthRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\CustomerQueryTransfer;
+use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
@@ -50,13 +51,21 @@ class CustomerReader implements CustomerReaderInterface
             return $this->agentAccessTokenRestResponseBuilder->createActionAvailableForAgentsOnlyErrorResponse();
         }
 
+        $offset = 0;
+        $limit = AgentAuthRestApiConfig::DEFAULT_PAGINATION_LIMIT;
+        if ($restRequest->getPage()) {
+            $offset = $restRequest->getPage()->getOffset();
+            $limit = $restRequest->getPage()->getLimit();
+        }
+
         $customerQueryTransfer = (new CustomerQueryTransfer())
             ->setQuery($restRequest->getHttpRequest()->get(static::REQUEST_PAREMETER_QUERY, ''))
-            ->setLimit(10);
+            ->setOffset($offset)
+            ->setLimit($limit);
 
         $customerAutocompleteResponseTransfer = $this->agentClient->findCustomersByQuery($customerQueryTransfer);
 
         return $this->agentAccessTokenRestResponseBuilder
-            ->createAgentCustomerSearchRestResponse($customerAutocompleteResponseTransfer);
+            ->createAgentCustomerSearchRestResponse($customerAutocompleteResponseTransfer, $restRequest);
     }
 }
