@@ -35,30 +35,39 @@ class PageMapBuilder implements PageMapBuilderInterface
         switch ($fieldName) {
             case PageIndexMap::FULL_TEXT:
                 $this->addFullText($pageMapTransfer, $value);
+
                 break;
             case PageIndexMap::FULL_TEXT_BOOSTED:
                 $this->addFullTextBoosted($pageMapTransfer, $value);
+
                 break;
             case PageIndexMap::COMPLETION_TERMS:
                 $this->addCompletionTerms($pageMapTransfer, $value);
+
                 break;
             case PageIndexMap::SUGGESTION_TERMS:
                 $this->addSuggestionTerms($pageMapTransfer, $value);
+
                 break;
             case PageIndexMap::SEARCH_RESULT_DATA:
                 $this->addSearchResultData($pageMapTransfer, $name, $value);
+
                 break;
             case PageIndexMap::STRING_FACET:
                 $this->addStringFacet($pageMapTransfer, $name, $value);
+
                 break;
             case PageIndexMap::INTEGER_FACET:
                 $this->addIntegerFacet($pageMapTransfer, $name, $value);
+
                 break;
             case PageIndexMap::STRING_SORT:
                 $this->addStringSort($pageMapTransfer, $name, $value);
+
                 break;
             case PageIndexMap::INTEGER_SORT:
                 $this->addIntegerSort($pageMapTransfer, $name, $value);
+
                 break;
             default:
                 throw new InvalidArgumentException(sprintf('Adding "%s" field is not supported!', $fieldName));
@@ -261,6 +270,8 @@ class PageMapBuilder implements PageMapBuilderInterface
         }
 
         // removes null, false and empty strings but leaves 0 (zero) values
-        return array_values(array_filter($value, 'strlen'));
+        return array_values(array_filter($value, function ($value) {
+            return (bool)strlen($value);
+        }));
     }
 }

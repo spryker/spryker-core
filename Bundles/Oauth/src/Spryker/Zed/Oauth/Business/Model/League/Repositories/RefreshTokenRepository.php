@@ -7,14 +7,70 @@
 
 namespace Spryker\Zed\Oauth\Business\Model\League\Repositories;
 
+use ArrayObject;
+use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use League\OAuth2\Server\Entities\RefreshTokenEntityInterface;
-use League\OAuth2\Server\Repositories\RefreshTokenRepositoryInterface;
+use Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface;
 use Spryker\Zed\Oauth\Business\Model\League\Entities\RefreshTokenEntity;
 
 class RefreshTokenRepository implements RefreshTokenRepositoryInterface
 {
     /**
-     * Creates a new refresh token
+     * @var \Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface
+     */
+    protected $oauthRefreshTokenMapper;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[]
+     */
+    protected $refreshTokenRevokerPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[]
+     */
+    protected $refreshTokensRevokerPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[]
+     */
+    protected $refreshTokenCheckerPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[]
+     */
+    protected $refreshTokenSaverPlugins;
+
+    /**
+     * @var \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[]
+     */
+    protected $oauthRefreshTokenPersistencePlugins;
+
+    /**
+     * @param \Spryker\Zed\Oauth\Business\Mapper\OauthRefreshTokenMapperInterface $oauthRefreshTokenMapper
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenRevokerPluginInterface[] $refreshTokenRevokerPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokensRevokerPluginInterface[] $refreshTokensRevokerPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenCheckerPluginInterface[] $refreshTokenCheckerPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenSaverPluginInterface[] $refreshTokenSaverPlugins
+     * @param \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthRefreshTokenPersistencePluginInterface[] $oauthRefreshTokenPersistencePlugins
+     */
+    public function __construct(
+        OauthRefreshTokenMapperInterface $oauthRefreshTokenMapper,
+        array $refreshTokenRevokerPlugins,
+        array $refreshTokensRevokerPlugins,
+        array $refreshTokenCheckerPlugins,
+        array $refreshTokenSaverPlugins,
+        array $oauthRefreshTokenPersistencePlugins
+    ) {
+        $this->oauthRefreshTokenMapper = $oauthRefreshTokenMapper;
+        $this->refreshTokenRevokerPlugins = $refreshTokenRevokerPlugins;
+        $this->refreshTokensRevokerPlugins = $refreshTokensRevokerPlugins;
+        $this->refreshTokenCheckerPlugins = $refreshTokenCheckerPlugins;
+        $this->refreshTokenSaverPlugins = $refreshTokenSaverPlugins;
+        $this->oauthRefreshTokenPersistencePlugins = $oauthRefreshTokenPersistencePlugins;
+    }
+
+    /**
+     * Creates a new refresh token.
      *
      * @return \League\OAuth2\Server\Entities\RefreshTokenEntityInterface
      */
@@ -24,7 +80,7 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
     }
 
     /**
-     * Create a new refresh token_name.
+     * Persists a new refresh token to permanent storage.
      *
      * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
      *
@@ -32,6 +88,28 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function persistNewRefreshToken(RefreshTokenEntityInterface $refreshTokenEntity)
     {
+        $this->executeRefreshTokenSaverPlugins($refreshTokenEntity);
+
+        $oauthRefreshTokenTransfer = $this->oauthRefreshTokenMapper
+            ->mapRefreshTokenEntityToOauthRefreshTokenTransfer($refreshTokenEntity, new OauthRefreshTokenTransfer());
+
+        foreach ($this->oauthRefreshTokenPersistencePlugins as $oauthRefreshTokenPersistencePlugin) {
+            $oauthRefreshTokenPersistencePlugin->saveRefreshToken($oauthRefreshTokenTransfer);
+        }
+    }
+
+    /**
+     * @deprecated Added for BC reasons.
+     *
+     * @param \League\OAuth2\Server\Entities\RefreshTokenEntityInterface $refreshTokenEntity
+     *
+     * @return void
+     */
+    protected function executeRefreshTokenSaverPlugins(RefreshTokenEntityInterface $refreshTokenEntity): void
+    {
+        foreach ($this->refreshTokenSaverPlugins as $refreshTokenSaverPlugin) {
+            $refreshTokenSaverPlugin->saveRefreshToken($refreshTokenEntity);
+        }
     }
 
     /**
@@ -39,11 +117,30 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      *
      * @param string $tokenId
      *
-     * @return bool
+     * @return void
      */
     public function revokeRefreshToken($tokenId)
     {
-        return false;
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier($tokenId);
+
+        foreach ($this->refreshTokenRevokerPlugins as $refreshTokenRevokePlugin) {
+            $refreshTokenRevokePlugin->revokeRefreshToken($oauthRefreshTokenTransfer);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     *
+     * @param \ArrayObject|\Generated\Shared\Transfer\OauthRefreshTokenTransfer[] $oauthRefreshTokenTransfers
+     *
+     * @return void
+     */
+    public function revokeAllRefreshTokens(ArrayObject $oauthRefreshTokenTransfers): void
+    {
+        foreach ($this->refreshTokensRevokerPlugins as $refreshTokensRevokerPlugin) {
+            $refreshTokensRevokerPlugin->revokeAllRefreshTokens($oauthRefreshTokenTransfers);
+        }
     }
 
     /**
@@ -55,6 +152,15 @@ class RefreshTokenRepository implements RefreshTokenRepositoryInterface
      */
     public function isRefreshTokenRevoked($tokenId)
     {
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier($tokenId);
+
+        foreach ($this->refreshTokenCheckerPlugins as $refreshTokenCheckerPlugin) {
+            if ($refreshTokenCheckerPlugin->isApplicable($tokenId)) {
+                return $refreshTokenCheckerPlugin->isRefreshTokenRevoked($oauthRefreshTokenTransfer);
+            }
+        }
+
         return false;
     }
 }

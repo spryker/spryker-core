@@ -1,0 +1,34 @@
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+
+@letter-spacing-base: 0.11px;
+
+.login {
+    max-width: 420px;
+    margin: 0 auto;
+
+    &__logo {
+        padding-bottom: 30px;
+        width: 193px;
+        margin: 0 auto;
+        text-align: right;
+
+        &-image {
+            height: 74px;
+        }
+
+        &-text {
+            color: @primary-color;
+            letter-spacing: @letter-spacing-base;
+            font: @font-weight-semi-bold @font-size-lg @font-family;
+        }
+    }
+
+    &__message {
+        display: block;
+        margin-bottom: 15px;
+    }
+
+    &__submit {
+        width: 100%;
+    }
+}

@@ -57,8 +57,9 @@ class AvailabilityNotificationSubscriptionSaver implements AvailabilityNotificat
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function save(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionTransfer
-    {
+    public function save(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionTransfer {
         $availabilityNotificationSubscriptionTransfer->requireSku();
         $availabilityNotificationSubscriptionTransfer->requireEmail();
 

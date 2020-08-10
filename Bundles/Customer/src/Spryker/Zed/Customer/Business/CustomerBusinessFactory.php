@@ -135,7 +135,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createCheckoutCustomerOrderSaverWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */

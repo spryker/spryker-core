@@ -29,8 +29,10 @@ class ProductCategoryFilterStorageReader implements ProductCategoryFilterStorage
      * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Client\ProductCategoryFilterStorageToStorageInterface $storageClient
      * @param \Spryker\Client\ProductCategoryFilterStorage\Dependency\Service\ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(ProductCategoryFilterStorageToStorageInterface $storageClient, ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        ProductCategoryFilterStorageToStorageInterface $storageClient,
+        ProductCategoryFilterStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }

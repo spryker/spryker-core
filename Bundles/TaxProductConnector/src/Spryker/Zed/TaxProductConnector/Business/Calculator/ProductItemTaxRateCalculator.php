@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\Calculator;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\TaxProductConnector\Dependency\Facade\TaxProductConnectorToTaxInterface;
@@ -55,16 +57,40 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
      */
     public function recalculate(QuoteTransfer $quoteTransfer)
     {
+        $itemTransfers = $this->recalculateWithItemTransfers($quoteTransfer->getItems());
+        $quoteTransfer->setItems($itemTransfers);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculateWithCalculableObject(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        $itemTransfers = $this->recalculateWithItemTransfers($calculableObjectTransfer->getItems());
+        $calculableObjectTransfer->setItems($itemTransfers);
+
+        return $calculableObjectTransfer;
+    }
+
+    /**
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function recalculateWithItemTransfers(ArrayObject $itemTransfers): ArrayObject
+    {
         $foundResults = $this->taxQueryContainer
             ->queryTaxSetByIdProductAbstractAndCountryIso2Codes(
-                $this->getIdProductAbstruct($quoteTransfer->getItems()),
-                $this->getCountryIso2Codes($quoteTransfer->getItems())
+                $this->getIdProductAbstruct($itemTransfers),
+                $this->getCountryIso2Codes($itemTransfers)
             )
             ->find();
 
         $taxRatesByIdProductAbstractAndCountry = $this->mapByIdProductAbstractAndCountry($foundResults);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             $taxRate = $this->getEffectiveTaxRate(
                 $taxRatesByIdProductAbstractAndCountry,
                 $itemTransfer->getIdProductAbstract(),
@@ -72,6 +98,8 @@ class ProductItemTaxRateCalculator implements CalculatorInterface
             );
             $itemTransfer->setTaxRate($taxRate);
         }
+
+        return $itemTransfers;
     }
 
     /**

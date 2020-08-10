@@ -21,6 +21,10 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     protected const KEY_OPENAPI = 'openapi';
     protected const KEY_INFO = 'info';
     protected const KEY_VERSION = 'version';
+    protected const KEY_CONTACT = 'contact';
+    protected const KEY_CONTACT_NAME = 'name';
+    protected const KEY_CONTACT_URL = 'url';
+    protected const KEY_CONTACT_EMAIL = 'email';
     protected const KEY_TITLE = 'title';
     protected const KEY_LICENSE = 'license';
     protected const KEY_NAME = 'name';
@@ -30,6 +34,8 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     protected const KEY_COMPONENTS = 'components';
     protected const KEY_SCHEMAS = 'schemas';
     protected const KEY_SECURITY_SCHEMES = 'securitySchemes';
+    protected const KEY_TAGS = 'tags';
+    protected const KEY_PARAMETERS = 'parameters';
 
     protected const YAML_NESTING_LEVEL = 9;
     protected const YAML_INDENT = 4;
@@ -73,8 +79,10 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
     {
         $dataStructure = $this->getDefaultDataStructure();
         $dataStructure[static::KEY_PATHS] = $data[static::KEY_PATHS];
+        $dataStructure[static::KEY_TAGS] = $data[static::KEY_TAGS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SCHEMAS] = $data[static::KEY_SCHEMAS];
         $dataStructure[static::KEY_COMPONENTS][static::KEY_SECURITY_SCHEMES] = $data[static::KEY_SECURITY_SCHEMES];
+        $dataStructure[static::KEY_COMPONENTS][static::KEY_PARAMETERS] = $data[static::KEY_PARAMETERS];
 
         $fileName = $this->resolveGeneratedFileName();
         $yaml = $this->yamlDumper->dump(
@@ -98,11 +106,17 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::KEY_OPENAPI => static::OPENAPI_VERSION,
             static::KEY_INFO => [
                 static::KEY_VERSION => $this->documentationGeneratorRestApiConfig->getApiDocumentationVersionInfo(),
+                static::KEY_CONTACT => [
+                    static::KEY_CONTACT_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactName(),
+                    static::KEY_CONTACT_URL => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactUrl(),
+                    static::KEY_CONTACT_EMAIL => $this->documentationGeneratorRestApiConfig->getApiDocumentationContactEmail(),
+                ],
                 static::KEY_TITLE => $this->documentationGeneratorRestApiConfig->getApiDocumentationTitleInfo(),
                 static::KEY_LICENSE => [
                     static::KEY_NAME => $this->documentationGeneratorRestApiConfig->getApiDocumentationLicenceNameInfo(),
                 ],
             ],
+            static::KEY_TAGS => [],
             static::KEY_SERVERS => [
                 [
                     static::KEY_URL => $this->documentationGeneratorRestApiConfig->getRestApplicationDomain(),
@@ -112,6 +126,7 @@ class YamlOpenApiDocumentationWriter implements DocumentationWriterInterface
             static::KEY_COMPONENTS => [
                 static::KEY_SECURITY_SCHEMES => [],
                 static::KEY_SCHEMAS => [],
+                static::KEY_PARAMETERS => [],
             ],
         ];
     }

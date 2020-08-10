@@ -33,5 +33,7 @@ interface ConfigurableBundleTemplateSlotEditFormDataProviderExpanderPluginInterf
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotEditFormTransfer
      */
-    public function expandData(ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotEditFormTransfer;
+    public function expandData(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotEditFormTransfer;
 }

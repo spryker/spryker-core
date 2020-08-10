@@ -45,10 +45,11 @@ class IndexInstallerTest extends Unit
 
         $indexMock = $this->getMockBuilder(Index::class)
             ->disableOriginalConstructor()
-            ->setMethods(['exists', 'request'])
+            ->setMethods(['exists', 'request', 'getName'])
             ->getMock();
 
         $indexMock->method('exists')->willReturn(false);
+        $indexMock->method('getName')->willReturn('');
         $indexMock->expects($this->atLeastOnce())->method('request');
 
         $installer = new IndexInstaller(
@@ -86,7 +87,7 @@ class IndexInstallerTest extends Unit
     }
 
     /**
-     * @uses IndexInstaller::getIndexState()
+     * @uses \Spryker\Zed\SearchElasticsearch\Business\Installer\Index\Install\IndexInstaller::getIndexState()
      *
      * @param \PHPUnit\Framework\MockObject\MockObject|\Elastica\Index $indexMock
      *

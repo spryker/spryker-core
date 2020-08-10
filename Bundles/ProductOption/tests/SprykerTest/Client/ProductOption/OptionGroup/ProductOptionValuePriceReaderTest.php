@@ -217,8 +217,8 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToCurrencyClientInterface::getCurrent()
-     * @uses CurrencyTransfer::getCode()
+     * @uses \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToCurrencyClientInterface::getCurrent()
+     * @uses \Generated\Shared\Transfer\CurrencyTransfer::getCode()
      *
      * @return void
      */
@@ -237,7 +237,7 @@ class ProductOptionValuePriceReaderTest extends Unit
     }
 
     /**
-     * @uses ProductOptionToPriceClientInterface::getCurrentPriceMode()
+     * @uses \Spryker\Client\ProductOption\Dependency\Client\ProductOptionToPriceClientInterface::getCurrentPriceMode()
      *
      * @return void
      */

@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class DataImportPublisherPlugin extends AbstractPlugin implements DataImportAfterImportHookInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void

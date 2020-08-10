@@ -20,6 +20,7 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\CartChangeRequestExpan
 class RemoveBundleChangeRequestExpanderPlugin extends AbstractPlugin implements CartChangeRequestExpandPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Replace items with bundle items if it exist
      *

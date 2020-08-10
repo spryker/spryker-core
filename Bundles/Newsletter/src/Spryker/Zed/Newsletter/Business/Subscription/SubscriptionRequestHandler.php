@@ -111,6 +111,7 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -148,6 +149,7 @@ class SubscriptionRequestHandler implements SubscriptionRequestHandlerInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 

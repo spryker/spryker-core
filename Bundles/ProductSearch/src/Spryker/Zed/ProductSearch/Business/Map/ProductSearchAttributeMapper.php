@@ -28,7 +28,7 @@ class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper::mapDynamicProductAttributesToSearchData` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper::mapDynamicProductAttributesToSearchData()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -46,7 +46,7 @@ class ProductSearchAttributeMapper implements ProductSearchAttributeMapperInterf
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper::executeAttributeMapCollector` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductSearch\Business\Map\ProductSearchAttributeMapper::executeAttributeMapCollector()} instead.
      *
      * @param \Spryker\Zed\ProductSearch\Business\Map\Collector\ProductSearchAttributeMapCollectorInterface $attributeMapCollector
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder

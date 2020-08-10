@@ -12,9 +12,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ShoppingListStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getShoppingListSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

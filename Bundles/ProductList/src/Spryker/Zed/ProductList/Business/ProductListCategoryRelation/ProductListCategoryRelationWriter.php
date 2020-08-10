@@ -55,8 +55,9 @@ class ProductListCategoryRelationWriter implements ProductListCategoryRelationWr
      *
      * @return \Generated\Shared\Transfer\ProductListCategoryRelationTransfer
      */
-    protected function executeSaveProductListCategoryRelationTransaction(ProductListCategoryRelationTransfer $productListCategoryRelationTransfer): ProductListCategoryRelationTransfer
-    {
+    protected function executeSaveProductListCategoryRelationTransaction(
+        ProductListCategoryRelationTransfer $productListCategoryRelationTransfer
+    ): ProductListCategoryRelationTransfer {
         $productListCategoryRelationTransfer->requireIdProductList();
         $idProductList = $productListCategoryRelationTransfer->getIdProductList();
 

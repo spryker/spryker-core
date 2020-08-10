@@ -50,6 +50,16 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected $priceProductService;
 
     /**
+     * @var \Generated\Shared\Transfer\CurrencyTransfer|null
+     */
+    protected static $currencyTransfer;
+
+    /**
+     * @var string|null
+     */
+    protected static $currentPriceMode;
+
+    /**
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToPriceClientInterface $priceClient
      * @param \Spryker\Client\PriceProduct\Dependency\Client\PriceProductToCurrencyClientInterface $currencyClient
      * @param \Spryker\Client\PriceProduct\PriceProductConfig $priceProductConfig
@@ -130,7 +140,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\CurrentProductPriceTransfer $currentProductPriceTransfer
      * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilter
      *
@@ -178,6 +188,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setQuantity($priceProductFilter->getQuantity())
             ->setPriceMode($priceMode)
             ->setSumPrice($price * $priceProductFilter->getQuantity())
+            ->setPriceData($priceProductTransfer->getMoneyValue()->getPriceData())
             ->setPriceDimension($priceProductTransfer->getPriceDimension());
     }
 
@@ -189,10 +200,11 @@ class ProductPriceResolver implements ProductPriceResolverInterface
     protected function buildPriceProductFilterWithCurrentValues(
         ?PriceProductFilterTransfer $priceProductFilterTransfer = null
     ): PriceProductFilterTransfer {
-        $currencyTransfer = $this->currencyClient->getCurrent();
-        $priceMode = $this->priceClient->getCurrentPriceMode();
+        $currencyTransfer = $this->getCurrencyTransfer();
+        $priceMode = $this->getCurrentPriceMode();
         $priceTypeName = $this->priceProductConfig->getPriceTypeDefaultName();
-        $quote = $this->quoteClient->getQuote();
+
+        $quoteTransfer = $this->quoteClient->getQuote();
 
         $builtPriceProductFilterTransfer = new PriceProductFilterTransfer();
 
@@ -208,9 +220,33 @@ class ProductPriceResolver implements ProductPriceResolverInterface
             ->setCurrency($currencyTransfer)
             ->setCurrencyIsoCode($currencyTransfer->getCode())
             ->setPriceTypeName($priceTypeName)
-            ->setQuote($quote);
+            ->setQuote($quoteTransfer);
 
         return $builtPriceProductFilterTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CurrencyTransfer
+     */
+    protected function getCurrencyTransfer(): CurrencyTransfer
+    {
+        if (static::$currencyTransfer === null) {
+            static::$currencyTransfer = $this->currencyClient->getCurrent();
+        }
+
+        return static::$currencyTransfer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getCurrentPriceMode(): string
+    {
+        if (static::$currentPriceMode === null) {
+            static::$currentPriceMode = $this->priceClient->getCurrentPriceMode();
+        }
+
+        return static::$currentPriceMode;
     }
 
     /**
@@ -249,6 +285,7 @@ class ProductPriceResolver implements ProductPriceResolverInterface
                     }
                     if ($priceMode === $this->priceProductConfig->getPriceModeIdentifierForNetType()) {
                         $priceProductTransfers[$index]->getMoneyValue()->setNetAmount($priceAmount);
+
                         continue;
                     }
 

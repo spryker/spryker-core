@@ -12,6 +12,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\Controller\AbstractController;
 
 /**
+ * @deprecated Use {@link \Spryker\Glue\ContentProductAbstractListsRestApi\Controller\AbstractProductsResourceController} instead.
+ *
  * @method \Spryker\Glue\ContentProductAbstractListsRestApi\ContentProductAbstractListsRestApiFactory getFactory()
  */
 class ContentProductAbstractListController extends AbstractController
@@ -20,11 +22,10 @@ class ContentProductAbstractListController extends AbstractController
      * @Glue({
      *     "getResourceById": {
      *          "summary": [
-     *              "Retrieves content item abstract products."
+     *              "Retrieves content item abstract list products."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Content key is missing.",
@@ -41,7 +42,7 @@ class ContentProductAbstractListController extends AbstractController
     public function getAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createContentProductAbstractListReader()
-            ->getContentProductAbstractListById($restRequest);
+            ->createProductAbstractReader()
+            ->getProductAbstractByContentProductAbstractListId($restRequest);
     }
 }

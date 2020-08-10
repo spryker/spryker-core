@@ -18,7 +18,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\FacetQueryExpanderPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */
@@ -197,8 +197,12 @@ class FacetQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPl
      *
      * @return \Elastica\Aggregation\AbstractAggregation
      */
-    protected function createGlobalAggregation(array $facetFilters, FacetConfigTransfer $facetConfigTransfer, BoolQuery $boolQuery, AbstractAggregation $facetAggregation)
-    {
+    protected function createGlobalAggregation(
+        array $facetFilters,
+        FacetConfigTransfer $facetConfigTransfer,
+        BoolQuery $boolQuery,
+        AbstractAggregation $facetAggregation
+    ) {
         $aggregationFilterQuery = $this->getGlobalAggregationFilters($facetConfigTransfer, $boolQuery, $facetFilters);
 
         $filterAggregation = $this

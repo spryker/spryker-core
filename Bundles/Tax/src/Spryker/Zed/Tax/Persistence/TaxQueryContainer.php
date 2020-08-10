@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -32,6 +34,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxRateQuery
@@ -42,6 +46,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -54,6 +60,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Tax\Persistence\SpyTaxSetQuery
@@ -64,6 +72,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Propel\Runtime\ActiveQuery\ModelCriteria $expandableQuery
@@ -98,6 +108,8 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name

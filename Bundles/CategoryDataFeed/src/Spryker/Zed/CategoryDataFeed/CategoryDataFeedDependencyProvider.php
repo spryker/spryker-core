@@ -45,13 +45,13 @@ class CategoryDataFeedDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function providePersistenceLayerDependencies(Container $container)
     {
-        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+        $container->set(static::CATEGORY_QUERY_CONTAINER, function (Container $container) {
             $categoryQueryContainer = $container->getLocator()
                 ->category()
                 ->queryContainer();
 
             return new CategoryDataFeedToCategoryBridge($categoryQueryContainer);
-        };
+        });
 
         return $container;
     }

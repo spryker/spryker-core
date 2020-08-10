@@ -51,7 +51,8 @@ class ProductConcreteProductAbstractUrlStorageListener extends AbstractPlugin im
     {
         $validEventTransfers = [];
         foreach ($eventTransfers as $eventTransfer) {
-            if (in_array(SpyUrlTableMap::COL_URL, $eventTransfer->getModifiedColumns()) ||
+            if (
+                in_array(SpyUrlTableMap::COL_URL, $eventTransfer->getModifiedColumns()) ||
                 in_array(SpyUrlTableMap::COL_FK_RESOURCE_PRODUCT_ABSTRACT, $eventTransfer->getModifiedColumns())
             ) {
                 $validEventTransfers[] = $eventTransfer;

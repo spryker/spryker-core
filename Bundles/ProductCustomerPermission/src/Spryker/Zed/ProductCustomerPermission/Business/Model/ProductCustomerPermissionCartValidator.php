@@ -59,6 +59,7 @@ class ProductCustomerPermissionCartValidator implements ProductCustomerPermissio
             if (!$this->hasPermission($customerTransfer->getIdCustomer(), $itemTransfer->getSku())) {
                 $cartPreCheckResponseTransfer->setIsSuccess(false);
                 $cartPreCheckResponseTransfer->addMessage($this->createCartErrorMessage());
+
                 break;
             }
         }

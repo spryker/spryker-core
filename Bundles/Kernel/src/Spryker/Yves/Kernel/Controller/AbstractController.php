@@ -18,6 +18,7 @@ use Spryker\Yves\Kernel\View\View;
 use Symfony\Cmf\Component\Routing\ChainRouterInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -32,9 +33,19 @@ abstract class AbstractController
     protected const SERVICE_ROUTER = 'routers';
 
     /**
+     * @uses \Spryker\Yves\Http\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
+    /**
      * @uses \Spryker\Yves\Twig\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
      */
     protected const SERVICE_TWIG = 'twig';
+
+    /**
+     * @uses \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlValidationEventDispatcherPlugin::BC_REDIRECT_URL_VALIDATION_HANDLED
+     */
+    protected const BC_REDIRECT_URL_VALIDATION_HANDLED = 'BC_REDIRECT_URL_VALIDATION_HANDLED';
 
     /**
      * @var \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
@@ -91,6 +102,14 @@ abstract class AbstractController
     }
 
     /**
+     * @return \Symfony\Component\HttpFoundation\RequestStack
+     */
+    protected function getRequestStack(): RequestStack
+    {
+        return $this->getApplication()->get(static::SERVICE_REQUEST_STACK);
+    }
+
+    /**
      * @return \Spryker\Yves\Kernel\Application|\Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
@@ -107,6 +126,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
+     *
      * @see \Spryker\Shared\Kernel\KernelConstants::STRICT_DOMAIN_REDIRECT For strict redirection check status.
      * @see \Spryker\Shared\Kernel\KernelConstants::DOMAIN_WHITELIST For allowed list of external domains.
      *
@@ -119,7 +140,14 @@ abstract class AbstractController
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
     {
-        if (strpos($absoluteUrl, '/') !== 0 && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
+        if (
+            $this->getApplication()->has(static::BC_REDIRECT_URL_VALIDATION_HANDLED) &&
+            $this->getApplication()->get(static::BC_REDIRECT_URL_VALIDATION_HANDLED)
+        ) {
+            return new RedirectResponse($absoluteUrl, $code);
+        }
+
+        if (parse_url($absoluteUrl, PHP_URL_HOST) && !$this->isUrlDomainWhitelisted($absoluteUrl)) {
             throw new ForbiddenExternalRedirectException("This URL $absoluteUrl is not a part of a whitelisted domain");
         }
 
@@ -295,6 +323,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Yves\Kernel\Plugin\EventDispatcher\RedirectUrlWhitelistValidationEventDispatcherPlugin} instead.
+     *
      * @param string $absoluteUrl
      *
      * @return bool
@@ -318,6 +348,8 @@ abstract class AbstractController
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @param string $url
      *
      * @return string

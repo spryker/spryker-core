@@ -8,6 +8,7 @@
 namespace SprykerTest\Client\Search\Plugin\Elasticsearch\QueryExpander;
 
 use Elastica\Query\BoolQuery;
+use Elastica\Type;
 use Spryker\Client\Search\Dependency\Plugin\SearchConfigInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\QueryExpander\FacetQueryExpanderPlugin;
 
@@ -34,8 +35,13 @@ abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryEx
      *
      * @return void
      */
-    public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(SearchConfigInterface $searchConfig, BoolQuery $expectedQuery, array $params = []): void
-    {
+    public function testFacetQueryExpanderShouldCreateSearchQueryBasedOnSearchConfig(
+        SearchConfigInterface $searchConfig,
+        BoolQuery $expectedQuery,
+        array $params = []
+    ): void {
+        $this->skipIfElasticsearch7();
+
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
         $queryExpander = new FacetQueryExpanderPlugin();
@@ -52,4 +58,14 @@ abstract class AbstractFacetQueryExpanderPluginQueryTest extends AbstractQueryEx
      * @return array
      */
     abstract public function facetQueryExpanderDataProvider(): array;
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!class_exists(Type::class)) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
+    }
 }

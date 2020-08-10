@@ -141,4 +141,10 @@
         <property name="bundleItem" type="Item"/>
         <property name="groupItems" type="Item[]" singular="item"/>
     </transfer>
+
+    <transfer name="TaxRate">
+    </transfer>
+
+    <transfer name="MoneyValue">
+    </transfer>
 </transfers>

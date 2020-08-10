@@ -46,8 +46,10 @@ class WishlistItemAdder implements WishlistItemAdderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function add(RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer, RestRequestInterface $restRequest): RestResponseInterface
-    {
+    public function add(
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesRequestTransfer,
+        RestRequestInterface $restRequest
+    ): RestResponseInterface {
         $wishlistResource = $restRequest->findParentResourceByType(WishlistsRestApiConfig::RESOURCE_WISHLISTS);
         if (!$wishlistResource) {
             return $this->wishlistRestResponseBuilder->createWishlistNotFoundErrorResponse();

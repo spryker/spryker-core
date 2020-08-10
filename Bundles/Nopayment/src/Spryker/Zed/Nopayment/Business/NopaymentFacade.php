@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
@@ -30,6 +32,8 @@ class NopaymentFacade extends AbstractFacade implements NopaymentFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem

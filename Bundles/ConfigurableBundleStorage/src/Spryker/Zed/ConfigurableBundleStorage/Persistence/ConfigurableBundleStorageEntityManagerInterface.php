@@ -31,12 +31,16 @@ interface ConfigurableBundleStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveConfigurableBundleTemplateImageStorageEntity(SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity): void;
+    public function saveConfigurableBundleTemplateImageStorageEntity(
+        SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
+    ): void;
 
     /**
      * @param \Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
      *
      * @return void
      */
-    public function deleteConfigurableBundleTemplateImageStorageEntity(SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity): void;
+    public function deleteConfigurableBundleTemplateImageStorageEntity(
+        SpyConfigurableBundleTemplateImageStorage $configurableBundleTemplateImageStorageEntity
+    ): void;
 }

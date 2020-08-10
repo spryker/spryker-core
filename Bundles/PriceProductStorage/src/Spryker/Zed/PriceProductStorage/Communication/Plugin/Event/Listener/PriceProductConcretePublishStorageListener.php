@@ -13,7 +13,8 @@ use Spryker\Zed\PriceProduct\Dependency\PriceProductEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStoragePublishListener` and `\Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStoragePublishListener}
+ *   and {@link \Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Listener\PriceProductConcreteStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\PriceProductStorage\Persistence\PriceProductStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\PriceProductStorage\Communication\PriceProductStorageCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class PriceProductConcretePublishStorageListener extends AbstractPlugin implemen
         $this->preventTransaction();
         $concreteIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
+        if (
+            $eventName === PriceProductEvents::ENTITY_SPY_PRICE_TYPE_DELETE ||
             $eventName === PriceProductEvents::ENTITY_SPY_PRICE_PRODUCT_DELETE ||
             $eventName === PriceProductEvents::PRICE_CONCRETE_UNPUBLISH
         ) {

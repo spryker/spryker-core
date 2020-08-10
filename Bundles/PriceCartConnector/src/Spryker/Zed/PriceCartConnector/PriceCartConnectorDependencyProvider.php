@@ -13,6 +13,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToCurrenc
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartConnectorToPriceProductAdapter;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToMessengerFacadeBridge;
 use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
+use Spryker\Zed\PriceCartConnector\Dependency\Service\PriceCartConnectorToPriceProductServiceBridge;
 
 /**
  * @method \Spryker\Zed\PriceCartConnector\PriceCartConnectorConfig getConfig()
@@ -20,6 +21,7 @@ use Spryker\Zed\PriceCartConnector\Dependency\Facade\PriceCartToPriceBridge;
 class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_PRICE_PRODUCT = 'price product facade';
+    public const SERVICE_PRICE_PRODUCT = 'SERVICE_PRICE_PRODUCT';
     public const FACADE_PRICE = 'price facade';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
     public const FACADE_CURRENCY = 'FACADE_CURRENCY';
@@ -32,6 +34,7 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = $this->addPriceProductFacade($container);
+        $container = $this->addPriceProductService($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addMessengerFacade($container);
         $container = $this->addCurrencyFacade($container);
@@ -48,6 +51,20 @@ class PriceCartConnectorDependencyProvider extends AbstractBundleDependencyProvi
     {
         $container->set(static::FACADE_PRICE_PRODUCT, function (Container $container) {
             return new PriceCartConnectorToPriceProductAdapter($container->getLocator()->priceProduct()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addPriceProductService(Container $container): Container
+    {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
+            return new PriceCartConnectorToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
         });
 
         return $container;

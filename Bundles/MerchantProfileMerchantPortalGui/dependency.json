@@ -1,0 +1,6 @@
+{
+  "include": {
+    "spryker/zed-ui": "If you want to use Zed Ui layout templates.",
+    "spryker/merchant-profile": "Plugins provide merchant profile functionality."
+  }
+}

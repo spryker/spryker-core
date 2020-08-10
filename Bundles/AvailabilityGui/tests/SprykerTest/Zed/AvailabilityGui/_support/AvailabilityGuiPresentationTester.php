@@ -61,6 +61,6 @@ class AvailabilityGuiPresentationTester extends Actor
      */
     public function clickViewButton(): void
     {
-        $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
+        $this->click('//*[@class="dataTables_scrollBody"]/table/tbody/tr/td[8]/a');
     }
 }

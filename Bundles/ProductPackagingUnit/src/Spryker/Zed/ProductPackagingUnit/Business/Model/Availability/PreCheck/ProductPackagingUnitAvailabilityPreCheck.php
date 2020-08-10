@@ -105,6 +105,7 @@ abstract class ProductPackagingUnitAvailabilityPreCheck
         foreach ($itemTransfers as $itemTransfer) {
             if ($this->isLeadProductItemTransfer($leadProductSku, $itemTransfer)) {
                 $quantity = $quantity->add($itemTransfer->getQuantity());
+
                 continue;
             }
 

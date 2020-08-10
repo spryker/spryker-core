@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 27,
+            "line_to": 27,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of findOneByIdCmsSlot cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotEntityManager.php",
+            "snippet": "        $cmsSlot = $this->getFactory()->createCmsSlotQuery()->findOneByIdCmsSlot($cmsSlotTransfer->getIdCmsSlot());",
+            "selected_text": "$cmsSlotTransfer->getIdCmsSlot()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlot\\Persistence\\Propel\\Mapper\\CmsSlotMapper::mapCmsSlotTransferToEntity cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotEntityManager.php",
+            "snippet": "        $cmsSlot = $cmsSlotMapper->mapCmsSlotTransferToEntity($cmsSlot, $cmsSlotTransfer);",
+            "selected_text": "$cmsSlot",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 82,
+            "line_to": 82,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\CmsSlot\\Persistence\\Propel\\Mapper\\CmsSlotMapper::mapCmsSlotEntityCollectionToTransferCollection expects Propel\\Runtime\\Collection\\Collection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\CmsSlot\\Persistence\\SpyCmsSlot> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsSlot/src/Spryker/Zed/CmsSlot/Persistence/CmsSlotRepository.php",
+            "snippet": "            ->mapCmsSlotEntityCollectionToTransferCollection($cmsSlotEntities);",
+            "selected_text": "$cmsSlotEntities",
+            "error_level": 3,
+            "shortcode": 92
+        }
+    ],
+    "deprecation": []
+}

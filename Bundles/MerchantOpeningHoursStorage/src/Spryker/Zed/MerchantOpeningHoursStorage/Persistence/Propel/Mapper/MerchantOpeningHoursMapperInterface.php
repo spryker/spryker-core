@@ -14,7 +14,7 @@ interface MerchantOpeningHoursMapperInterface
 {
     /**
      * @param \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursWeekdaySchedule[]|\Propel\Runtime\Collection\ObjectCollection $weekdayScheduleEntities
-     * @param \ArrayObject $weekdayScheduleTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[] $weekdayScheduleTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\WeekdayScheduleTransfer[]
      */
@@ -25,7 +25,7 @@ interface MerchantOpeningHoursMapperInterface
 
     /**
      * @param \Orm\Zed\MerchantOpeningHours\Persistence\SpyMerchantOpeningHoursDateSchedule[]|\Propel\Runtime\Collection\ObjectCollection $dateScheduleEntities
-     * @param \ArrayObject $dateScheduleTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[] $dateScheduleTransfers
      *
      * @return \ArrayObject|\Generated\Shared\Transfer\DateScheduleTransfer[]
      */

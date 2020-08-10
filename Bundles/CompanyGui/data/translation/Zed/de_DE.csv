@@ -1,6 +1,7 @@
 "Add Company","Firma hinzufügen"
-Approved,Bestätigt
+Approved,Genehmigt
 "Back to Companies","Zurück zu Firma"
+Companies,Firmenkonten
 "Company has been activated.","Unternehmen wurde aktiviert."
 "Company has been approved.","Unternehmen wurde zugelassen."
 "Company has been created.","Unternehmen wurde erstellt."
@@ -17,3 +18,4 @@ Deny,Ablehnen
 "List of Companies","Liste der Firmen"
 "Overview of Companies","Übersicht der Firmen"
 Save,Speichern
+Pending,Ausstehend

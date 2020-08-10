@@ -8,7 +8,6 @@
 namespace Spryker\Zed\Messenger;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 
@@ -18,6 +17,12 @@ use Spryker\Zed\Messenger\Communication\Plugin\TranslationPlugin;
 class MessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const SESSION = 'session';
+
+    /**
+     * @uses \Spryker\Zed\Http\Communication\Plugin\Application\HttpApplicationPlugin::SERVICE_REQUEST_STACK
+     */
+    protected const SERVICE_REQUEST_STACK = 'request_stack';
+
     /**
      * @deprecated See \Spryker\Zed\Messenger\MessengerDependencyProvider::PLUGINS_TRANSLATION
      */
@@ -45,9 +50,12 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSession(Container $container)
     {
-        $container[static::SESSION] = function (Container $container) {
-            return (new Pimple())->getApplication()['request']->getSession();
-        };
+        $container->set(static::SESSION, function (Container $container) {
+            /** @var \Symfony\Component\HttpFoundation\RequestStack $requestStack */
+            $requestStack = $container->getApplicationService(static::SERVICE_REQUEST_STACK);
+
+            return $requestStack->getCurrentRequest()->getSession();
+        });
 
         return $container;
     }
@@ -61,9 +69,9 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslationPlugin(Container $container)
     {
-        $container[static::PLUGIN_TRANSLATION] = function (Container $container) {
+        $container->set(static::PLUGIN_TRANSLATION, function (Container $container) {
             return new TranslationPlugin();
-        };
+        });
 
         return $container;
     }
@@ -75,9 +83,9 @@ class MessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTranslationPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_TRANSLATION] = function () {
+        $container->set(static::PLUGINS_TRANSLATION, function () {
             return $this->getTranslationPlugins();
-        };
+        });
 
         return $container;
     }

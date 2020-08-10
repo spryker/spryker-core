@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class MultiCartConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getCustomerQuoteDefaultName(): string
@@ -23,6 +25,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGuestQuoteDefaultName(): string

@@ -141,4 +141,7 @@
     <transfer name="FileSystemVisibility">
     </transfer>
 
+    <transfer name="FileInfoLocalizedAttributes">
+    </transfer>
+
 </transfers>

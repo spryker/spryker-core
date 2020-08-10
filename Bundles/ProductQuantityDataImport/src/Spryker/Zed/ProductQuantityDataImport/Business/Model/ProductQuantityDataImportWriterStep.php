@@ -42,15 +42,15 @@ class ProductQuantityDataImportWriterStep extends PublishAwareStep implements Da
      */
     protected function filterDataSet(DataSetInterface $dataSet): DataSetInterface
     {
-        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL] === "") {
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL] === '') {
             $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL] = static::DEFAULT_INTERVAL;
         }
 
-        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] === "") {
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] === '') {
             $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MIN] = $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_INTERVAL];
         }
 
-        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] === "") {
+        if ($dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] === '') {
             $dataSet[ProductQuantityDataImportDataSet::COLUMN_QUANTITY_MAX] = static::DEFAULT_MAX;
         }
 

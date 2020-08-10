@@ -10,5 +10,6 @@
         <property name="registrationNumber" dataBuilderRule="word"/>
         <property name="status" dataBuilderRule="=waiting_for_approval"/>
         <property name="email" dataBuilderRule="email"/>
+        <property name="isActive" dataBuilderRule="boolean(100)"/>
     </transfer>
 </transfers>

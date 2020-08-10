@@ -31,8 +31,10 @@ class ProductImageProductConcretePageDataExpanderPlugin extends AbstractPlugin i
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer
      */
-    public function expand(ProductConcreteTransfer $productConcreteTransfer, ProductConcretePageSearchTransfer $productConcretePageSearchTransfer): ProductConcretePageSearchTransfer
-    {
+    public function expand(
+        ProductConcreteTransfer $productConcreteTransfer,
+        ProductConcretePageSearchTransfer $productConcretePageSearchTransfer
+    ): ProductConcretePageSearchTransfer {
         return $this->getFacade()->expandProductConcretePageSearchTransferWithProductImages($productConcretePageSearchTransfer);
     }
 }

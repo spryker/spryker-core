@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
  *
  * @see https://www.owasp.org/index.php/HTTP_Strict_Transport_Security
  *
- * @deprecated Use Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider instead
+ * @deprecated Use {@link \Spryker\Shared\Application\ServiceProvider\AbstractHstsServiceProvider} instead
  */
 abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
 {
@@ -85,15 +85,15 @@ abstract class AbstractHstsServiceProvider implements ServiceProviderInterface
     {
         $headerParts = [];
         if (!empty($hstsConfig[static::HSTS_CONFIG_MAXAGE])) {
-            $headerParts[] = "max-age=" . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
+            $headerParts[] = 'max-age=' . $hstsConfig[static::HSTS_CONFIG_MAXAGE];
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_INCLUDE_SUBDOMAINS])) {
-            $headerParts[] = "includeSubDomains";
+            $headerParts[] = 'includeSubDomains';
         }
 
         if (!empty($hstsConfig[static::HSTS_CONFIG_PRELOAD])) {
-            $headerParts[] = "preload";
+            $headerParts[] = 'preload';
         }
 
         if ($headerParts) {

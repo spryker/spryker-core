@@ -83,7 +83,7 @@ class ContentKeyProvider implements ContentKeyProviderInterface
     protected function suggestCandidate(int $index): string
     {
         return $this->utilUuidGeneratorService->generateUuid5FromObjectId(
-            sprintf("%s-%d", microtime(true), $index)
+            sprintf('%s-%d', microtime(true), $index)
         );
     }
 

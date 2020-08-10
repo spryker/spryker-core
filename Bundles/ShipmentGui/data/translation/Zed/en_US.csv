@@ -1,47 +1,79 @@
-"Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
-"New address","New address"
-"Carrier was created successfully.","Carrier was created successfully."
-Name,Name
-Enabled?,Enabled?
-"Carrier with the same name already exists.","Carrier with the same name already exists."
-View,View
-Edit,Edit
-Delete,Delete
-"Delivery Method Key","Delivery Method Key"
-"Carrier Company","Carrier Company"
-Status,Status
-"Method Name",Name
-"Available in Store","Available in Store"
 Actions,Actions
-"Delivery Methods","Delivery Methods"
+"Are you sure about deleting this delivery method?","Are you sure about deleting this delivery method?"
+"Availability plugin","Availability plugin"
+"Available in Store","Available in Store"
+Carrier,Carrier
+"Carrier Company","Carrier Company"
+"Carrier was created successfully.","Carrier was created successfully."
+"Carrier with the same name already exists.","Carrier with the same name already exists."
+Configuration,Configuration
+"Create Delivery Method","Create Delivery Method"
 "Create new carrier company","Create new carrier company"
 "Create new delivery method","Create new delivery method"
-"Shipment method is not found","Shipment method is not found"
-"View Delivery Method: %s","View Delivery Method: %s"
-"List of delivery methods","List of delivery methods"
-Configuration,Configuration
-"Availability plugin","Availability plugin"
-"Price plugin","Price plugin"
-"Delivery Time plugin","Delivery Time plugin"
-"Is this delivery method active?","Is this delivery method active?"
-"Store relation","Store relation"
-"Price & Tax","Price & Tax"
-None,None
-"Delivery method not found.","Delivery method not found."
-"Delivery method was deleted successfully.","Delivery method was deleted successfully."
+Delete,Delete
 "Delete Delivery Method","Delete Delivery Method"
 "Delete Delivery Method: %s","Delete Delivery Method: %s"
-"No, I want to keep this delivery method","No, I want to keep this delivery method"
-"Yes, delete this delivery method","Yes, delete this delivery method"
-"Shipment method has been successfully saved","Shipment method has been successfully saved"
-"Create Delivery Method","Create Delivery Method"
-Save,Save
-Carrier,Carrier
-"Select one","Select one"
-"Shipment method has been successfully updated","Shipment method has been successfully updated"
-"Shipment method not found","Shipment method not found"
+"Delivery Method Key","Delivery Method Key"
+"Delivery method not found.","Delivery method not found."
+"Delivery method was deleted successfully.","Delivery method was deleted successfully."
+"Delivery Methods","Delivery Methods"
+"Delivery Time plugin","Delivery Time plugin"
+Edit,Edit
 "Edit Delivery Method: %s","Edit Delivery Method: %s"
-"This shipment method key is already in use.","This shipment method key is already in use."
-"This name is already in use.","This name is already in use."
+Enabled?,Enabled?
+"Is this delivery method active?","Is this delivery method active?"
+"List of delivery methods","List of delivery methods"
+"List Shipment Methods","List Shipment Methods"
+"Method Name",Name
+Name,Name
+"New address","New address"
+"No, I want to keep this delivery method","No, I want to keep this delivery method"
+None,None
+"Price & Tax","Price & Tax"
+"Price plugin","Price plugin"
+Save,Save
+"Select one","Select one"
+"Shipment method has been successfully saved","Shipment method has been successfully saved"
+"Shipment method has been successfully updated","Shipment method has been successfully updated"
+"Shipment method is not found","Shipment method is not found"
+"Shipment method not found","Shipment method not found"
+"Shipment n° %shipmentNumber%","Shipment n° %shipmentNumber%"
+Status,Status
+"Store relation","Store relation"
+"Store Relation","Store Relation"
 "Tax set","Tax set"
-"Are you sure about deleting this delivery method?","Are you sure about deleting this delivery method?"
+"This name is already in use.","This name is already in use."
+"This shipment method key is already in use.","This shipment method key is already in use."
+View,View
+"View Delivery Method: %s","View Delivery Method: %s"
+"Yes, delete this delivery method","Yes, delete this delivery method"
+"Trigger all matching states of order inside this shipment","Trigger all matching states of order inside this shipment"
+Shipment,Shipment
+of,of
+"Delivery Address","Delivery Address"
+"Delivery Method","Delivery Method"
+"Request delivery date","Request delivery date"
+"Shipping Method","Shipping Method"
+Shipments,Shipments
+"Available in the following store(s)","Available in the following store(s)"
+"Is active","Is active"
+"Add Carrier Company","Add Carrier Company"
+"Create Shipment","Create Shipment"
+"Edit Shipment","Edit Shipment"
+"New Shipment for Order: %idSalesOrder%","New Shipment for Order: %idSalesOrder%"
+"Address 1","Address 1"
+"Address 2","Address 2"
+"ZIP code","ZIP code"
+Cellphone,"Cell Phone"
+"Shipment method","Shipment method"
+"Requested delivery date","Requested delivery date"
+"Order items inside this shipment","Order items inside this shipment"
+"Current shipment","Current shipment"
+"Please fill out this field.","Please fill out this field."
+"Please select an item in the list.","Please select an item in the list."
+-select-,-select-
+"Shipment has been successfully created.","Shipment has been successfully created."
+"Edit Shipment for Order: N%idSalesOrder%","Edit Shipment for Order: N%idSalesOrder%"
+"Shipment has been successfully edited.","Shipment has been successfully edited."
+"Item total",Total
+"Shipping Costs","Shipping Costs"

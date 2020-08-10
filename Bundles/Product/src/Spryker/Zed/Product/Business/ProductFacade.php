@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -323,7 +324,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacade::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductFacadeInterface::getRawProductConcreteTransfersByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *
@@ -792,10 +793,7 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an array of productIds as keys with array of attribute keys as values of a persisted products.
-     * - The attribute keys is a combination of the abstract product's attribute keys and all its existing concretes' attribute keys.
-     * - If $localeTransfer is provided then localized abstract and concrete attribute keys are also part of the result.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -922,8 +920,10 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer
-    {
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer {
         return $this->getFactory()
             ->createProductSuggester()
             ->getPaginatedProductAbstractSuggestions($suggestion, $paginationTransfer);
@@ -1112,5 +1112,33 @@ class ProductFacade extends AbstractFacade implements ProductFacadeInterface
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
         return $this->getRepository()->getProductUrls($productUrlCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->getRepository()->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
+    {
+        return $this->getRepository()->getProductConcretesByCriteria($productCriteriaTransfer);
     }
 }

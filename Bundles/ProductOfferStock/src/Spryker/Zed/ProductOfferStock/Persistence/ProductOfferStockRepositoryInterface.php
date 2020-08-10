@@ -7,15 +7,23 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Spryker\DecimalObject\Decimal;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 
 interface ProductOfferStockRepositoryInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
      */
-    public function getProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal;
+    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     */
+    public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject;
 }

@@ -36,7 +36,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     protected $repository;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -137,7 +137,8 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
         array $productConcreteLocalizedEntities
     ): ?SpyProductLocalizedAttributes {
         foreach ($productConcreteLocalizedEntities as $productConcreteLocalizedEntity) {
-            if ($productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
+            if (
+                $productConcreteLocalizedEntity->getFkProduct() === $idProduct &&
                 $productConcreteLocalizedEntity->getLocale()->getLocaleName() === $localeName
             ) {
                 return $productConcreteLocalizedEntity;
@@ -176,8 +177,11 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
      *
      * @return void
      */
-    protected function storeDataSet(SpyProductLocalizedAttributes $spyProductLocalizedEntity, array $imageSets, ?SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null)
-    {
+    protected function storeDataSet(
+        SpyProductLocalizedAttributes $spyProductLocalizedEntity,
+        array $imageSets,
+        ?SpyProductConcreteImageStorage $spyProductConcreteImageStorage = null
+    ) {
         if ($spyProductConcreteImageStorage === null) {
             $spyProductConcreteImageStorage = new SpyProductConcreteImageStorage();
         }
@@ -347,7 +351,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductLocalizedAttributes[]
      */
@@ -357,7 +361,7 @@ class ProductConcreteImageStorageWriter implements ProductConcreteImageStorageWr
     }
 
     /**
-     * @param array $productConcreteIds
+     * @param int[] $productConcreteIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductConcreteImageStorage[][]
      */

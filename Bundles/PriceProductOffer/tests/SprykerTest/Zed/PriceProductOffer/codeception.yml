@@ -9,8 +9,9 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*'] }
-
+    whitelist:
+        include:
+            - '../../../../src/*'
 suites:
     Business:
         path: Business
@@ -19,12 +20,12 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
-                - \SprykerTest\Shared\Propel\Helper\ConnectionHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
-                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
-                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
-                - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
+                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
+                - \SprykerTest\Zed\ProductOffer\Helper\ProductOfferHelper
                 - \SprykerTest\Shared\PriceProduct\Helper\PriceProductDataHelper
+                - \SprykerTest\Shared\Testify\Helper\TableRelationsCleanupHelper
                 - \SprykerTest\Shared\PriceProductOffer\Helper\PriceProductOfferHelper

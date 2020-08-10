@@ -27,17 +27,17 @@ class CustomerGroupDiscountConnectorDependencyProvider extends AbstractBundleDep
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_DISCOUNT] = function (Container $container) {
+        $container->set(static::FACADE_DISCOUNT, function (Container $container) {
             return new CustomerGroupDiscountConnectorToDiscountFacadeBridge(
                 $container->getLocator()->discount()->facade()
             );
-        };
+        });
 
-        $container[static::FACADE_CUSTOMER_GROUP] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER_GROUP, function (Container $container) {
             return new CustomerGroupDiscountConnectorToCustomerGroupFacadeBridge(
                 $container->getLocator()->customerGroup()->facade()
             );
-        };
+        });
 
         return $container;
     }

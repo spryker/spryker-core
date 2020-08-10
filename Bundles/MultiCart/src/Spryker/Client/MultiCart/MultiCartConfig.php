@@ -16,6 +16,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class MultiCartConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getCustomerQuoteDefaultName(): string
@@ -24,6 +26,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGuestQuoteDefaultName(): string
@@ -32,6 +36,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDuplicatedQuoteName(): string
@@ -40,6 +46,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getReorderQuoteName(): string
@@ -48,6 +56,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getQuickOrderQuoteName(): string
@@ -56,6 +66,8 @@ class MultiCartConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getQuoteFieldsAllowedForQuoteDuplicate(): array

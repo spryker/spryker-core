@@ -45,6 +45,7 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
 
             if ($minPriceProductTransfer === null || !$this->hasPriceByPriceMode($minPriceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
                 $minPriceProductTransfer = $priceProductTransfer;
+
                 continue;
             }
 
@@ -56,6 +57,7 @@ class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implem
                 if ($minPriceProductTransfer->getMoneyValue()->getGrossAmount() > $priceProductTransfer->getMoneyValue()->getGrossAmount()) {
                     $minPriceProductTransfer = $priceProductTransfer;
                 }
+
                 continue;
             }
 

@@ -36,8 +36,11 @@ class PaginatedQueryExpanderPluginTest extends AbstractQueryExpanderPluginTest
      *
      * @return void
      */
-    public function testPaginatedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(SearchConfigInterface $searchConfig, Query $expectedQuery, array $params = []): void
-    {
+    public function testPaginatedQueryExpanderShouldExpandTheBaseQueryAccordingToRequestParameters(
+        SearchConfigInterface $searchConfig,
+        Query $expectedQuery,
+        array $params = []
+    ): void {
         $searchFactoryMock = $this->createSearchFactoryMockedWithSearchConfig($searchConfig);
 
         $queryExpander = new PaginatedQueryExpanderPlugin();

@@ -18,6 +18,8 @@ use Spryker\Zed\Sales\Communication\Form\DataProvider\CustomerFormDataProvider;
 use Spryker\Zed\Sales\Communication\Table\CustomerOrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTable;
 use Spryker\Zed\Sales\Communication\Table\OrdersTableQueryBuilder;
+use Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpander;
+use Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpanderInterface;
 use Spryker\Zed\Sales\SalesDependencyProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\DataProvider\OrderItemSplitDataProvider;
 use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
@@ -32,7 +34,7 @@ use Spryker\Zed\SalesSplit\Communication\Form\OrderItemSplitForm;
 class SalesCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @deprecated Use `getCustomerForm()` instead.
+     * @deprecated Use {@link getCustomerForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
@@ -64,6 +66,14 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\Sales\Communication\TableExpander\OrderItemsTableExpanderInterface
+     */
+    public function createOrderItemsTableExpander(): OrderItemsTableExpanderInterface
+    {
+        return new OrderItemsTableExpander($this->getOrderItemsTableExpanderPlugins());
+    }
+
+    /**
      * @return \Spryker\Zed\Sales\Communication\Form\DataProvider\CommentFormDataProvider
      */
     public function createCommentFormDataProvider()
@@ -72,7 +82,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getAddressForm()` instead.
+     * @deprecated Use {@link getAddressForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
@@ -96,7 +106,7 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getCommentForm()` instead.
+     * @deprecated Use {@link getCommentForm()} instead.
      *
      * @param array $formData
      * @param array $formOptions
@@ -237,5 +247,13 @@ class SalesCommunicationFactory extends AbstractCommunicationFactory
     public function getSalesTablePlugins()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::UI_SALES_TABLE_PLUGINS);
+    }
+
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\OrderItemsTableExpanderPluginInterface[]
+     */
+    public function getOrderItemsTableExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_ORDER_ITEMS_TABLE_EXPANDER);
     }
 }

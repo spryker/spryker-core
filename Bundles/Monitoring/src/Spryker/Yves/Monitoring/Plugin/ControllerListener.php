@@ -41,8 +41,11 @@ class ControllerListener extends AbstractPlugin implements EventSubscriberInterf
      * @param \Spryker\Yves\Monitoring\Dependency\Service\MonitoringToUtilNetworkServiceInterface $utilNetworkService
      * @param array $ignorableTransactions
      */
-    public function __construct(MonitoringServiceInterface $monitoringService, MonitoringToUtilNetworkServiceInterface $utilNetworkService, array $ignorableTransactions = [])
-    {
+    public function __construct(
+        MonitoringServiceInterface $monitoringService,
+        MonitoringToUtilNetworkServiceInterface $utilNetworkService,
+        array $ignorableTransactions = []
+    ) {
         $this->monitoringService = $monitoringService;
         $this->utilNetworkService = $utilNetworkService;
         $this->ignorableTransactions = $ignorableTransactions;

@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 
@@ -120,6 +121,44 @@ interface SearchElasticsearchFacadeInterface
      * @return bool
      */
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool;
+
+    /**
+     * Specification:
+     * - Returns the total number of documents in an index.
+     * - The name of an index to get metadata from is passed in ElasticsearchSearchContextTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     *
+     * @return int
+     */
+    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): int;
+
+    /**
+     * Specification:
+     * - Returns the metadata information from the index.
+     * - Returns empty array if the index is not installed
+     * - The name of and index to get metadata from is passed in ElasticsearchSearchContextTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     *
+     * @return array
+     */
+    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): array;
+
+    /**
+     * Specification:
+     * - Returns the names of all the available indexes present in Elasticsearch.
+     * - Available indexes are those matching {@link \Spryker\Shared\SearchElasticsearch\SearchElasticsearchConfig::SUPPORTED_SOURCE_IDENTIFIERS}.
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getIndexNames(): array;
 
     /**
      * Specification:

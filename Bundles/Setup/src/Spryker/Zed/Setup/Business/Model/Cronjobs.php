@@ -241,6 +241,7 @@ class Cronjobs
             // skip if job is in existingjobs
             if (in_array($k, $existingJobs)) {
                 $output .= "SKIPPED jenkins job: $k (already exists)" . PHP_EOL;
+
                 continue;
             }
 

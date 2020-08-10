@@ -18,6 +18,8 @@
 
     <transfer name="ProductOfferAvailabilityStorage">
         <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="isAvailable" type="bool"/>
     </transfer>
 
     <transfer name="ProductView">
@@ -39,6 +41,7 @@
 
     <transfer name="ProductConcreteAvailability">
         <property name="availability" type="decimal"/>
+        <property name="isNeverOutOfStock" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferCriteriaFilter">
@@ -53,6 +56,10 @@
 
     <transfer name="ProductOfferCollection">
         <property name="productOffers" type="ProductOffer[]" singular="productOffer"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

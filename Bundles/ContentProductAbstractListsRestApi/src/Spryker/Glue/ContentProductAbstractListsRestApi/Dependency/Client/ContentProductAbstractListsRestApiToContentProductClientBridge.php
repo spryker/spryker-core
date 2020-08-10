@@ -34,4 +34,17 @@ class ContentProductAbstractListsRestApiToContentProductClientBridge implements 
     {
         return $this->contentProductClient->executeProductAbstractListTypeByKey($contentKey, $localeName);
     }
+
+    /**
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentProductAbstractListTypeTransfer[]
+     */
+    public function executeProductAbstractListTypeByKeys(array $contentKeys, string $localeName): array
+    {
+        return $this->contentProductClient->executeProductAbstractListTypeByKeys($contentKeys, $localeName);
+    }
 }

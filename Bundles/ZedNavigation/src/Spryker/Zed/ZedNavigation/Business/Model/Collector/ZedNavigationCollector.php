@@ -10,6 +10,8 @@ namespace Spryker\Zed\ZedNavigation\Business\Model\Collector;
 use ErrorException;
 use Exception;
 use Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface;
+use Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface;
+use Spryker\Zed\ZedNavigation\ZedNavigationConfig;
 use Zend\Config\Config;
 use Zend\Config\Factory;
 
@@ -21,18 +23,33 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     private $navigationSchemaFinder;
 
     /**
-     * @var string
+     * @var \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface
      */
-    private $rootNavigationFile;
+    protected $mergeNavigationStrategyResolver;
+
+    /**
+     * @var \Spryker\Zed\ZedNavigation\ZedNavigationConfig
+     */
+    protected $zedNavigationConfig;
+
+    /**
+     * @var array|null
+     */
+    protected $navigationDefinition;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface $navigationSchemaFinder
-     * @param string $rootNavigationFile
+     * @param \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver
+     * @param \Spryker\Zed\ZedNavigation\ZedNavigationConfig $zedNavigationConfig
      */
-    public function __construct(ZedNavigationSchemaFinderInterface $navigationSchemaFinder, $rootNavigationFile)
-    {
+    public function __construct(
+        ZedNavigationSchemaFinderInterface $navigationSchemaFinder,
+        MergeNavigationStrategyResolverInterface $mergeNavigationStrategyResolver,
+        ZedNavigationConfig $zedNavigationConfig
+    ) {
         $this->navigationSchemaFinder = $navigationSchemaFinder;
-        $this->rootNavigationFile = $rootNavigationFile;
+        $this->mergeNavigationStrategyResolver = $mergeNavigationStrategyResolver;
+        $this->zedNavigationConfig = $zedNavigationConfig;
     }
 
     /**
@@ -42,15 +59,20 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
      */
     public function getNavigation()
     {
+        if ($this->navigationDefinition !== null) {
+            return $this->navigationDefinition;
+        }
+
         try {
             /** @var \Zend\Config\Config $navigationDefinition */
-            $navigationDefinition = Factory::fromFile($this->rootNavigationFile, true);
+            $navigationDefinition = Factory::fromFile($this->zedNavigationConfig->getRootNavigationSchema(), true);
             $rootDefinition = clone $navigationDefinition;
         } catch (Exception $e) {
             $navigationDefinition = new Config([]);
             $rootDefinition = new Config([]);
         }
 
+        $coreNavigationDefinition = new Config([]);
         foreach ($this->navigationSchemaFinder->getSchemaFiles() as $moduleNavigationFile) {
             if (!file_exists($moduleNavigationFile->getPathname())) {
                 throw new ErrorException('Navigation-File does not exist: ' . $moduleNavigationFile);
@@ -58,10 +80,15 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
             /** @var \Zend\Config\Config $configFromFile */
             $configFromFile = Factory::fromFile($moduleNavigationFile->getPathname(), true);
             $navigationDefinition->merge($configFromFile);
+            $coreNavigationDefinition->merge($configFromFile);
         }
 
-        $navigationDefinition->merge($rootDefinition);
+        $navigationMergeStrategy = $this->mergeNavigationStrategyResolver->resolve();
 
-        return $navigationDefinition->toArray();
+        return $navigationMergeStrategy->mergeNavigation(
+            $navigationDefinition,
+            $rootDefinition,
+            $coreNavigationDefinition
+        );
     }
 }

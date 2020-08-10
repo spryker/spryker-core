@@ -30,13 +30,9 @@ class ProductOfferPriceProductFilterPlugin extends AbstractPlugin implements Pri
      */
     public function filter(array $priceProductTransfers, PriceProductFilterTransfer $priceProductFilterTransfer): array
     {
-        if (!$priceProductFilterTransfer->getProductOffer()) {
-            return $priceProductTransfers;
-        }
-
         $priceProductTransfers = array_filter($priceProductTransfers, function (PriceProductTransfer $priceProductTransfer) use ($priceProductFilterTransfer) {
             $productOfferReference = $priceProductTransfer->getPriceDimension()->getProductOfferReference();
-            $filterProductOfferReference = $priceProductFilterTransfer->getProductOffer()->getProductOfferReference();
+            $filterProductOfferReference = $priceProductFilterTransfer->getProductOfferReference();
 
             return !$productOfferReference || $productOfferReference === $filterProductOfferReference;
         });

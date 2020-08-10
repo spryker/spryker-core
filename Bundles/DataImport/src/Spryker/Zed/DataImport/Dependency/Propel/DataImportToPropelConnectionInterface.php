@@ -23,4 +23,9 @@ interface DataImportToPropelConnectionInterface
      * @return void
      */
     public function endTransaction();
+
+    /**
+     * @return bool
+     */
+    public function rollBack();
 }

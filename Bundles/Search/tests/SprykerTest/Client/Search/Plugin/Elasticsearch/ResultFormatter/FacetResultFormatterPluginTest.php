@@ -401,9 +401,9 @@ class FacetResultFormatterPluginTest extends AbstractResultFormatterPluginTest
         $aggregationResult = [
             PageIndexMap::CATEGORY_ALL_PARENTS => [
                 'buckets' => [
-                    ["key" => 'c1', "doc_count" => 10],
-                    ["key" => 'c2', "doc_count" => 20],
-                    ["key" => 'c3', "doc_count" => 30],
+                    ['key' => 'c1', 'doc_count' => 10],
+                    ['key' => 'c2', 'doc_count' => 20],
+                    ['key' => 'c3', 'doc_count' => 30],
                 ],
             ],
         ];

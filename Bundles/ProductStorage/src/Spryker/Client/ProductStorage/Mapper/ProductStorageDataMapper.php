@@ -7,10 +7,12 @@
 
 namespace Spryker\Client\ProductStorage\Mapper;
 
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\Locator;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface;
 use Spryker\Client\ProductStorage\ProductStorageConfig;
+use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderByCriteriaPluginInterface;
 use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Zend\Filter\FilterChain;
@@ -20,7 +22,7 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 class ProductStorageDataMapper implements ProductStorageDataMapperInterface
 {
     /**
-     * @var \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[]
+     * @var \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[]
      */
     protected $productStorageExpanderPlugins;
 
@@ -30,9 +32,9 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
     protected $productAbstractVariantsRestrictionFilter;
 
     /**
-     * @uses ProductStorageDataMapper::filterProductStorageExpanderPlugins()
+     * @uses \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper::filterProductStorageExpanderPlugins()
      *
-     * @param \Spryker\Client\ProductStorage\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
+     * @param \Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpanderPluginInterface[] $storageProductExpanderPlugins
      * @param \Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilterInterface $productAbstractVariantsRestrictionFilter
      */
     public function __construct(
@@ -47,16 +49,27 @@ class ProductStorageDataMapper implements ProductStorageDataMapperInterface
      * @param string $locale
      * @param array $productStorageData
      * @param array $selectedAttributes
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function mapProductStorageData($locale, array $productStorageData, array $selectedAttributes = [])
-    {
+    public function mapProductStorageData(
+        $locale,
+        array $productStorageData,
+        array $selectedAttributes = [],
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ) {
         $productStorageData = $this->filterAbstractProductVariantsData($productStorageData);
         $productViewTransfer = $this->createProductViewTransfer($productStorageData);
         $productViewTransfer->setSelectedAttributes($selectedAttributes);
 
         foreach ($this->productStorageExpanderPlugins as $productViewExpanderPlugin) {
+            if ($productViewExpanderPlugin instanceof ProductViewExpanderByCriteriaPluginInterface) {
+                $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale, $productStorageCriteriaTransfer);
+
+                continue;
+            }
+
             $productViewTransfer = $productViewExpanderPlugin->expandProductViewTransfer($productViewTransfer, $productStorageData, $locale);
         }
 

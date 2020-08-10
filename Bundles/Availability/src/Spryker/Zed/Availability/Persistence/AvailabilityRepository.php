@@ -23,6 +23,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  */
 class AvailabilityRepository extends AbstractRepository implements AvailabilityRepositoryInterface
 {
+    protected const COL_ID_PRODUCT = 'id_product';
+
     /**
      * @param int $idProductConcrete
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
@@ -52,6 +54,42 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
                 $availabilityEntity,
                 new ProductConcreteAvailabilityTransfer()
             );
+    }
+
+    /**
+     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer[]
+     */
+    public function getMappedProductConcreteAvailabilitiesByProductConcreteIds(
+        array $productConcreteIds,
+        StoreTransfer $storeTransfer
+    ): array {
+        $storeTransfer->requireIdStore();
+
+        $availabilityEntities = $this->getFactory()
+            ->createSpyAvailabilityQuery()
+            ->filterByFkStore($storeTransfer->getIdStore())
+            ->addJoin(SpyAvailabilityTableMap::COL_SKU, SpyProductTableMap::COL_SKU, Criteria::INNER_JOIN)
+            ->where(sprintf('%s IN (%s)', SpyProductTableMap::COL_ID_PRODUCT, implode(',', $productConcreteIds)))
+            ->withColumn(SpyProductTableMap::COL_ID_PRODUCT, static::COL_ID_PRODUCT)
+            ->find()
+            ->toKeyIndex(static::COL_ID_PRODUCT);
+
+        $productConcreteAvailabilityTransfers = [];
+        $availabilityMapper = $this->getFactory()->createAvailabilityMapper();
+
+        foreach ($availabilityEntities as $idProductConcrete => $availabilityEntity) {
+            $productConcreteAvailabilityTransfer = $availabilityMapper->mapAvailabilityEntityToProductConcreteAvailabilityTransfer(
+                $availabilityEntity,
+                new ProductConcreteAvailabilityTransfer()
+            );
+
+            $productConcreteAvailabilityTransfers[$idProductConcrete] = $productConcreteAvailabilityTransfer;
+        }
+
+        return $productConcreteAvailabilityTransfers;
     }
 
     /**
@@ -96,6 +134,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
     ): ?ProductAbstractAvailabilityTransfer {
         $storeTransfer->requireIdStore();
 
+        /** @var array|null $availabilityAbstractEntityArray */
         $availabilityAbstractEntityArray = $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
             ->filterByFkStore($storeTransfer->getIdStore())
@@ -135,6 +174,7 @@ class AvailabilityRepository extends AbstractRepository implements AvailabilityR
         string $abstractSku,
         StoreTransfer $storeTransfer
     ): int {
+        /** @var int|null $idAvailabilityAbstract */
         $idAvailabilityAbstract = $this->getFactory()
             ->createSpyAvailabilityAbstractQuery()
             ->filterByAbstractSku($abstractSku)

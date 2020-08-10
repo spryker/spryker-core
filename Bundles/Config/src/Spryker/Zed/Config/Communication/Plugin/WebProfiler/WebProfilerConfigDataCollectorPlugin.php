@@ -86,6 +86,8 @@ class WebProfilerConfigDataCollectorPlugin extends AbstractPlugin implements Web
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

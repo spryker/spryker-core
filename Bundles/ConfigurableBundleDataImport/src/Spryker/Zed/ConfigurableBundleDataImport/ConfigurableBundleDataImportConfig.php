@@ -17,6 +17,8 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CONFIGURABLE_BUNDLE_TEMPLATE_IMAGE = 'configurable-bundle-template-image';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getConfigurableBundleTemplateDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -30,6 +32,8 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getConfigurableBundleTemplateSlotDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -43,6 +47,8 @@ class ConfigurableBundleDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getConfigurableBundleTemplateImageDataImporterConfiguration(): DataImporterConfigurationTransfer

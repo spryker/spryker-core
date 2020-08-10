@@ -74,8 +74,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return \Generated\Shared\Transfer\QuoteRequestOverviewCollectionTransfer
      */
-    public function getQuoteRequestOverviewCollectionAction(QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer): QuoteRequestOverviewCollectionTransfer
-    {
+    public function getQuoteRequestOverviewCollectionAction(
+        QuoteRequestOverviewFilterTransfer $quoteRequestOverviewFilterTransfer
+    ): QuoteRequestOverviewCollectionTransfer {
         return $this->getFacade()->getQuoteRequestOverviewCollection($quoteRequestOverviewFilterTransfer);
     }
 }

@@ -17,5 +17,10 @@ interface ProductPageAttributeInterface
      *
      * @return array
      */
-    public function getCombinedProductAttributes($abstractAttributesData, $abstractLocalizedAttributesData, $concreteAttributesData, $concreteLocalizedAttributesData);
+    public function getCombinedProductAttributes(
+        $abstractAttributesData,
+        $abstractLocalizedAttributesData,
+        $concreteAttributesData,
+        $concreteLocalizedAttributesData
+    );
 }

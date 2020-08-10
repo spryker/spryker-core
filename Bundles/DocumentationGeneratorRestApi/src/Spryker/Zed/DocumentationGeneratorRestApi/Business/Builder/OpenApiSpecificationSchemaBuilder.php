@@ -16,12 +16,14 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
     protected const KEY_ID = 'id';
     protected const KEY_LINKS = 'links';
     protected const KEY_RELATIONSHIPS = 'relationships';
+    protected const KEY_INCLUDED = 'included';
     protected const KEY_REST_REQUEST_PARAMETER = 'rest_request_parameter';
     protected const KEY_IS_NULLABLE = 'is_nullable';
     protected const KEY_SELF = 'self';
     protected const KEY_TYPE = 'type';
 
     protected const VALUE_TYPE_STRING = 'string';
+    protected const VALUE_TYPE_ARRAY = 'array';
     protected const SCHEMA_NAME_LINKS = 'RestLinks';
     protected const SCHEMA_NAME_RELATIONSHIPS = 'RestRelationships';
     protected const SCHEMA_NAME_RELATIONSHIPS_DATA = 'RestRelationshipsData';
@@ -172,6 +174,20 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
 
     /**
      * @param string $schemaName
+     * @param string $ref
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedBaseSchema(string $schemaName, string $ref): SchemaDataTransfer
+    {
+        $schemaData = $this->schemaComponentBuilder->createSchemaDataTransfer($schemaName);
+        $schemaData->addProperty($this->schemaComponentBuilder->createReferencePropertyTransfer(static::KEY_INCLUDED, $ref));
+
+        return $schemaData;
+    }
+
+    /**
+     * @param string $schemaName
      * @param array $resourceRelationships
      *
      * @return \Generated\Shared\Transfer\SchemaDataTransfer
@@ -184,6 +200,20 @@ class OpenApiSpecificationSchemaBuilder implements SchemaBuilderInterface
         }
 
         return $schemaData;
+    }
+
+    /**
+     * @param string $schemaName
+     * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface[] $resourceRelationships
+     *
+     * @return \Generated\Shared\Transfer\SchemaDataTransfer
+     */
+    public function createIncludedDataSchema(string $schemaName, array $resourceRelationships): SchemaDataTransfer
+    {
+        return $this->schemaComponentBuilder
+            ->createSchemaDataTransfer($schemaName)
+            ->setType(static::VALUE_TYPE_ARRAY)
+            ->setItems($this->schemaComponentBuilder->createRelationshipSchemaItemsTransfer($resourceRelationships));
     }
 
     /**

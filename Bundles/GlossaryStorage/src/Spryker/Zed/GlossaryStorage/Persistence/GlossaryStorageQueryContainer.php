@@ -13,11 +13,15 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStorageRepository} instead
+ *
  * @method \Spryker\Zed\GlossaryStorage\Persistence\GlossaryStoragePersistenceFactory getFactory()
  */
 class GlossaryStorageQueryContainer extends AbstractQueryContainer implements GlossaryStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -32,6 +36,8 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $glossaryKeyIds
@@ -50,6 +56,8 @@ class GlossaryStorageQueryContainer extends AbstractQueryContainer implements Gl
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $glossaryKeysIds

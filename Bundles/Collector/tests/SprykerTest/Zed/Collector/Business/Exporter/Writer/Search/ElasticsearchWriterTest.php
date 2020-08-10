@@ -14,6 +14,7 @@ use Elastica\Response;
 use Elastica\Type;
 use Spryker\Zed\Collector\Business\Exporter\Exception\InvalidDataSetException;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 /**
  * Auto-generated group annotations
@@ -46,6 +47,11 @@ class ElasticsearchWriterTest extends Unit
     protected $type;
 
     /**
+     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected $indexFactory;
+
+    /**
      * @return void
      */
     public function testWriteCreateDocumentsWithValidDataSet(): void
@@ -73,9 +79,12 @@ class ElasticsearchWriterTest extends Unit
      */
     protected function setUp(): void
     {
+        $this->skipIfElasticsearch7();
+
         $this->type = $this->getMockType();
         $this->index = $this->getMockIndex();
         $this->client = $this->getMockClient();
+        $this->indexFactory = $this->getMockIndexFactory();
 
         // now that index is setup, we can use it for mocking the Type class method getIndex
         $this->type->method('getIndex')->willReturn($this->index);
@@ -109,7 +118,7 @@ class ElasticsearchWriterTest extends Unit
      */
     protected function getElasticsearchWriter(): ElasticsearchWriter
     {
-        return new ElasticsearchWriter($this->client, '', '');
+        return new ElasticsearchWriter($this->client, '', '', $this->indexFactory);
     }
 
     /**
@@ -156,6 +165,20 @@ class ElasticsearchWriterTest extends Unit
     }
 
     /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected function getMockIndexFactory(): IndexFactoryInterface
+    {
+        $mockIndexFactory = $this->getMockBuilder(IndexFactoryInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $mockIndexFactory->method('createIndex')->willReturn($this->index);
+
+        return $mockIndexFactory;
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Elastica\Response
      */
     protected function getResponse(): Response
@@ -167,5 +190,15 @@ class ElasticsearchWriterTest extends Unit
         $mockResponse->method('isOk')->willReturn(true);
 
         return $mockResponse;
+    }
+
+    /**
+     * @return void
+     */
+    protected function skipIfElasticsearch7(): void
+    {
+        if (!method_exists(Index::class, 'getType')) {
+            $this->markTestSkipped('This test is not suitable for Elasticsearch 7 or higher');
+        }
     }
 }

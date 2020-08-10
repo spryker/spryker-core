@@ -38,4 +38,7 @@
         <property name="storesWithSharedPersistence" type="array" singular="storeWithSharedPersistence"/>
     </transfer>
 
+    <transfer name="Url">
+    </transfer>
+
 </transfers>

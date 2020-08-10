@@ -30,7 +30,8 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
             $this->createAttributeMap(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()->isSendingToQueue()
+            $this->getConfig()->isSendingToQueue(),
+            $this->getProductAbstractStorageExpanderPlugins()
         );
     }
 
@@ -71,5 +72,13 @@ class ProductStorageBusinessFactory extends AbstractBusinessFactory
     public function getStoreFacade(): ProductStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductStorageDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     */
+    public function getProductAbstractStorageExpanderPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductStorageDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_STORAGE_EXPANDER);
     }
 }

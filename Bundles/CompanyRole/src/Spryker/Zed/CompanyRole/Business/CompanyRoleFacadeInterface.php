@@ -161,15 +161,18 @@ interface CompanyRoleFacadeInterface
 
     /**
      * Specification:
-     * - Returns ids of company users that have the assigned permission.
+     * - Filters company users by assigned permission key.
+     * - Filters company users by idCompany if provided.
+     * - Returns company users ids.
      *
      * @api
      *
      * @param string $permissionKey
+     * @param int|null $idCompany
      *
      * @return int[]
      */
-    public function getCompanyUserIdsByPermissionKey(string $permissionKey): array;
+    public function getCompanyUserIdsByPermissionKey(string $permissionKey, ?int $idCompany = null): array;
 
     /**
      * Specification:

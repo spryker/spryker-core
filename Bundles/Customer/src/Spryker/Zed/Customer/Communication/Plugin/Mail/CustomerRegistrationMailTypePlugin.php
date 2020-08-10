@@ -22,6 +22,8 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
     public const MAIL_TYPE = 'customer registration mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailT
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder

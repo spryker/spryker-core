@@ -50,7 +50,8 @@ class ProductBundleDiscontinuedReader implements ProductBundleDiscontinuedReader
             ->setIsSuccessful(true);
         $bundledProductConcreteIds = $this->getBundledProductConcreteIds($productDiscontinuedTransfer);
 
-        if (!$bundledProductConcreteIds
+        if (
+            !$bundledProductConcreteIds
             || !$this->productDiscontinuedFacade->isAnyProductConcreteDiscontinued($bundledProductConcreteIds)
         ) {
             return $productDiscontinuedResponseTransfer;

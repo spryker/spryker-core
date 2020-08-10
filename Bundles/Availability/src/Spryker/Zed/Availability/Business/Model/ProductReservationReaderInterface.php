@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 interface ProductReservationReaderInterface
 {
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\Model\ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale
@@ -27,7 +27,7 @@ interface ProductReservationReaderInterface
     public function getProductAbstractAvailability(int $idProductAbstract, int $idLocale): ProductAbstractAvailabilityTransfer;
 
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductConcreteAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\Model\ProductAvailabilityReaderInterface::findOrCreateProductConcreteAvailabilityBySkuForStore()} instead.
      *
      * @param \Generated\Shared\Transfer\ProductConcreteAvailabilityRequestTransfer $productConcreteAvailabilityRequestTransfer
      *
@@ -38,7 +38,7 @@ interface ProductReservationReaderInterface
     ): ?ProductConcreteAvailabilityTransfer;
 
     /**
-     * @deprecated Use `ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore() instead`.
+     * @deprecated Use {@link \Spryker\Zed\Availability\Business\Model\ProductAvailabilityReaderInterface::findOrCreateProductAbstractAvailabilityBySkuForStore()} instead.
      *
      * @param int $idProductAbstract
      * @param int $idLocale

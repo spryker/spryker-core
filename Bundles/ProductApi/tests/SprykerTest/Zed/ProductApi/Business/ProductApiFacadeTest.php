@@ -226,14 +226,14 @@ class ProductApiFacadeTest extends Unit
     protected function getJsonDataForPagination(): array
     {
         return [
-            "rules" => [
+            'rules' => [
                 [
-                    "id" => "spy_product_abstract.id_product_abstract",
-                    "field" => "spy_product_abstract.id_product_abstract",
-                    "type" => "number",
-                    "input" => "text",
-                    "operator" => "greater_or_equal",
-                    "value" => "209",
+                    'id' => 'spy_product_abstract.id_product_abstract',
+                    'field' => 'spy_product_abstract.id_product_abstract',
+                    'type' => 'number',
+                    'input' => 'text',
+                    'operator' => 'greater_or_equal',
+                    'value' => '209',
                 ],
             ],
         ];

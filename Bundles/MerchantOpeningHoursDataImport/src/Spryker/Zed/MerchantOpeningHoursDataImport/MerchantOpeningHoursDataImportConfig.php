@@ -16,6 +16,8 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_OPENING_HOURS_DATE_SCHEDULE = 'merchant-opening-hours-date-schedule';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantOpeningHoursWeekdayScheduleDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -29,6 +31,8 @@ class MerchantOpeningHoursDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantOpeningHoursDateScheduleDataImporterConfiguration(): DataImporterConfigurationTransfer

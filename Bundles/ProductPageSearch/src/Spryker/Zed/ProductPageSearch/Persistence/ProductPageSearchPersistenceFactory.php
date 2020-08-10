@@ -91,7 +91,7 @@ class ProductPageSearchPersistenceFactory extends AbstractPersistenceFactory
     }
 
     /**
-     * @deprecated Use getCategoryQueryContainer() instead.
+     * @deprecated Use {@link getCategoryQueryContainer()} instead.
      *
      * @return \Spryker\Zed\ProductPageSearch\Dependency\QueryContainer\ProductPageSearchToCategoryQueryContainerInterface
      */

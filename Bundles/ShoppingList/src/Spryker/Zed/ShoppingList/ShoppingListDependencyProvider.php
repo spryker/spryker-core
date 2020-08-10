@@ -29,9 +29,11 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     public const FACADE_EVENT = 'FACADE_EVENT';
 
     public const PLUGINS_ITEM_EXPANDER = 'PLUGINS_ITEM_EXPANDER';
+    public const PLUGINS_ITEM_COLLECTION_EXPANDER = 'PLUGINS_ITEM_COLLECTION_EXPANDER';
     public const PLUGINS_QUOTE_ITEM_EXPANDER = 'PLUGINS_QUOTE_ITEM_EXPANDER';
     public const PLUGINS_ADD_ITEM_PRE_CHECK = 'PLUGINS_ADD_ITEM_PRE_CHECK';
     public const PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE';
+    public const PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE = 'PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE';
     public const PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE = 'PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE';
     public const PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER = 'PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER';
 
@@ -50,9 +52,11 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCompanyUserFacade($container);
 
         $container = $this->addItemExpanderPlugins($container);
+        $container = $this->addItemCollectionExpanderPlugins($container);
         $container = $this->addQuoteItemExpanderPlugins($container);
         $container = $this->addAddItemPreCheckPlugins($container);
         $container = $this->addShoppingListItemPostSavePlugins($container);
+        $container = $this->addShoppingListItemBulkPostSavePlugins($container);
         $container = $this->addBeforeDeleteShoppingListItemPlugins($container);
         $container = $this->addItemToShoppingListItemMapperPlugins($container);
 
@@ -66,9 +70,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ShoppingListToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -80,9 +84,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPermissionFacade(Container $container): Container
     {
-        $container[static::FACADE_PERMISSION] = function (Container $container) {
+        $container->set(static::FACADE_PERMISSION, function (Container $container) {
             return new ShoppingListToPermissionFacadeBridge($container->getLocator()->permission()->facade());
-        };
+        });
 
         return $container;
     }
@@ -94,9 +98,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPersistentCartFacade(Container $container): Container
     {
-        $container[static::FACADE_PERSISTENT_CART] = function (Container $container) {
+        $container->set(static::FACADE_PERSISTENT_CART, function (Container $container) {
             return new ShoppingListToPersistentCartFacadeBridge($container->getLocator()->persistentCart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -108,9 +112,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCompanyUserFacade(Container $container): Container
     {
-        $container[static::FACADE_COMPANY_USER] = function (Container $container) {
+        $container->set(static::FACADE_COMPANY_USER, function (Container $container) {
             return new ShoppingListToCompanyUserFacadeBridge($container->getLocator()->companyUser()->facade());
-        };
+        });
 
         return $container;
     }
@@ -122,9 +126,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ShoppingListToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -136,9 +140,25 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventFacade(Container $container): Container
     {
-        $container[static::FACADE_EVENT] = function (Container $container) {
+        $container->set(static::FACADE_EVENT, function (Container $container) {
             return new ShoppingListToEventFacadeBridge($container->getLocator()->event()->facade());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::addItemCollectionExpanderPlugins()} instead.
+     *
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_ITEM_EXPANDER, function () {
+            return $this->getItemExpanderPlugins();
+        });
 
         return $container;
     }
@@ -148,11 +168,11 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addItemExpanderPlugins(Container $container): Container
+    protected function addItemCollectionExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEM_EXPANDER] = function () {
-            return $this->getItemExpanderPlugins();
-        };
+        $container->set(static::PLUGINS_ITEM_COLLECTION_EXPANDER, function (Container $container) {
+            return $this->getItemCollectionExpanderPlugins();
+        });
 
         return $container;
     }
@@ -164,9 +184,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQuoteItemExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_QUOTE_ITEM_EXPANDER] = function () {
+        $container->set(static::PLUGINS_QUOTE_ITEM_EXPANDER, function () {
             return $this->getQuoteItemExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -178,17 +198,27 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addAddItemPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ADD_ITEM_PRE_CHECK] = function () {
+        $container->set(static::PLUGINS_ADD_ITEM_PRE_CHECK, function () {
             return $this->getAddItemPreCheckPlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getItemCollectionExpanderPlugins()} instead.
+     *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
      */
     protected function getItemExpanderPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemCollectionExpanderPluginInterface[]
+     */
+    protected function getItemCollectionExpanderPlugins(): array
     {
         return [];
     }
@@ -210,23 +240,49 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::addShoppingListItemBulkPostSavePlugins()} instead.
+     *
      * @param \Spryker\Zed\Kernel\Container $container
      *
      * @return \Spryker\Zed\Kernel\Container
      */
     protected function addShoppingListItemPostSavePlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_POST_SAVE, function () {
             return $this->getShoppingListItemPostSavePlugins();
-        };
+        });
 
         return $container;
     }
 
     /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShoppingListItemBulkPostSavePlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_BULK_POST_SAVE, function () {
+            return $this->getShoppingListItemBulkPostSavePlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Zed\ShoppingList\ShoppingListDependencyProvider::getShoppingListItemBulkPostSavePlugins()} instead.
+     *
      * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
      */
     protected function getShoppingListItemPostSavePlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBulkPostSavePluginInterface[]
+     */
+    protected function getShoppingListItemBulkPostSavePlugins(): array
     {
         return [];
     }
@@ -238,9 +294,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addBeforeDeleteShoppingListItemPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE] = function () {
+        $container->set(static::PLUGINS_SHOPPING_LIST_ITEM_BEFORE_DELETE, function () {
             return $this->getBeforeDeleteShoppingListItemPlugins();
-        };
+        });
 
         return $container;
     }
@@ -260,9 +316,9 @@ class ShoppingListDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addItemToShoppingListItemMapperPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER] = function () {
+        $container->set(static::PLUGINS_ITEM_TO_SHOPPING_LIST_ITEM_MAPPER, function () {
             return $this->getItemToShoppingListItemMapperPlugins();
-        };
+        });
 
         return $container;
     }

@@ -15,7 +15,7 @@ class MySqlStorageReader extends AbstractStorageReader
     protected const DEFAULT_PLACEHOLDER_ALIAS_KEY = ':alias_key';
 
     protected const SELECT_STATEMENT_PATTERN = '
-      SELECT %1$s as resource_key, (CASE WHEN `key` = %1$s THEN data WHEN alias_keys -> %2$s IS NOT NULL THEN alias_keys -> %2$s END) AS resource_data
+      SELECT %1$s as resource_key, (CASE WHEN `key` = %1$s THEN data WHEN JSON_EXTRACT(alias_keys, %2$s) IS NOT NULL THEN JSON_EXTRACT(alias_keys, %2$s) END) AS resource_data
         FROM %3$s
         HAVING resource_data IS NOT NULL
     ';
@@ -94,7 +94,7 @@ class MySqlStorageReader extends AbstractStorageReader
 
     /**
      * @param \PDOStatement $statement
-     * @param string[][] $queryDataPerTable
+     * @param string[][][] $queryDataPerTable
      *
      * @return \PDOStatement
      */
@@ -116,8 +116,11 @@ class MySqlStorageReader extends AbstractStorageReader
      *
      * @return string
      */
-    protected function buildSelectQuerySql(string $tableName, string $keyPlaceholder = self::DEFAULT_PLACEHOLDER_KEY, string $aliasKeyPlaceholder = self::DEFAULT_PLACEHOLDER_ALIAS_KEY): string
-    {
+    protected function buildSelectQuerySql(
+        string $tableName,
+        string $keyPlaceholder = self::DEFAULT_PLACEHOLDER_KEY,
+        string $aliasKeyPlaceholder = self::DEFAULT_PLACEHOLDER_ALIAS_KEY
+    ): string {
         return sprintf(
             static::SELECT_STATEMENT_PATTERN,
             $keyPlaceholder,

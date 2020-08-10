@@ -74,7 +74,7 @@ class CheckoutRestApiBusinessTester extends Actor
         'lastName' => 'hopkin',
         'address1' => 'West road',
         'address2' => '212',
-        'address3' => "",
+        'address3' => '',
         'zipCode' => '61000',
         'city' => 'Berlin',
         'iso2Code' => 'DE',
@@ -134,13 +134,13 @@ class CheckoutRestApiBusinessTester extends Actor
     public function getPaymentTransfer(): AbstractTransfer
     {
         $paymentTransferData = [
-            "dummyPaymentInvoice" => [
-                "dateOfBirth" => "08.04.1986",
+            'dummyPaymentInvoice' => [
+                'dateOfBirth' => '08.04.1986',
             ],
-            "paymentMethod" => "invoice",
-            "paymentProvider" => "dummyPayment",
-            "paymentSelection" => "dummyPaymentInvoice",
-            "amount" => "899910",
+            'paymentMethod' => 'invoice',
+            'paymentProvider' => 'dummyPayment',
+            'paymentSelection' => 'dummyPaymentInvoice',
+            'amount' => '899910',
         ];
 
         return (new PaymentBuilder($paymentTransferData))->build();

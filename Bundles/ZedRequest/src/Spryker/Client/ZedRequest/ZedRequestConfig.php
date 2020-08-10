@@ -16,6 +16,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     public const HASH_COST = 'cost';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRawToken()
@@ -27,6 +29,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getHashCost()
@@ -35,6 +39,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getZedRequestBaseUrl()
@@ -59,6 +65,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientConfiguration()
@@ -77,6 +85,8 @@ class ZedRequestConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTokenOptions()

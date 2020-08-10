@@ -13,6 +13,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestProductOptionsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\ProductOptionsRestApi\ProductOptionsRestApiFactory getFactory()
  */
 class ProductOptionsByProductAbstractSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

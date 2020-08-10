@@ -10,6 +10,10 @@ namespace Spryker\Zed\CompanyGui\Communication\Table;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\CompanyGui\Communication\Form\ActivateCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\ApproveCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\DeactivateCompanyForm;
+use Spryker\Zed\CompanyGui\Communication\Form\DenyCompanyForm;
 use Spryker\Zed\CompanyGui\Communication\Table\PluginExecutor\CompanyTablePluginExecutorInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -172,18 +176,24 @@ class CompanyTable extends AbstractTable
     protected function generateStatusChangeButton(array $item)
     {
         if ($item[SpyCompanyTableMap::COL_IS_ACTIVE]) {
-            return $this->generateRemoveButton(
+            return $this->generateFormButton(
                 Url::generate(static::URL_COMPANY_DEACTIVATE, [
                     static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                 ]),
-                'Deactivate'
+                'Deactivate',
+                DeactivateCompanyForm::class,
+                [
+                    static::BUTTON_ICON => 'fa-trash',
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
             );
         } else {
-            return $this->generateViewButton(
+            return $this->generateFormButton(
                 Url::generate(static::URL_COMPANY_ACTIVATE, [
                     static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                 ]),
-                'Activate'
+                'Activate',
+                ActivateCompanyForm::class
             );
         }
     }
@@ -198,34 +208,49 @@ class CompanyTable extends AbstractTable
         $buttons = [];
         switch ($item[SpyCompanyTableMap::COL_STATUS]) {
             case SpyCompanyTableMap::COL_STATUS_PENDING:
-                $buttons[] = $this->generateViewButton(
+                $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_APPROVE, [
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
-                    'Approve'
+                    'Approve',
+                    ApproveCompanyForm::class
                 );
-                $buttons[] = $this->generateRemoveButton(
+                $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_DENY, [
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
-                    'Deny'
+                    'Deny',
+                    DenyCompanyForm::class,
+                    [
+                        static::BUTTON_ICON => 'fa-trash',
+                        static::BUTTON_CLASS => 'btn-danger safe-submit',
+                    ]
                 );
+
                 break;
             case SpyCompanyTableMap::COL_STATUS_APPROVED:
-                $buttons[] = $this->generateRemoveButton(
+                $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_DENY, [
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
-                    'Deny'
+                    'Deny',
+                    DenyCompanyForm::class,
+                    [
+                        static::BUTTON_ICON => 'fa-trash',
+                        static::BUTTON_CLASS => 'btn-danger safe-submit',
+                    ]
                 );
+
                 break;
             case SpyCompanyTableMap::COL_STATUS_DENIED:
-                $buttons[] = $this->generateViewButton(
+                $buttons[] = $this->generateFormButton(
                     Url::generate(static::URL_COMPANY_APPROVE, [
                         static::REQUEST_ID_COMPANY => $item[SpyCompanyTableMap::COL_ID_COMPANY],
                     ]),
-                    'Approve'
+                    'Approve',
+                    ApproveCompanyForm::class
                 );
+
                 break;
         }
 
@@ -261,5 +286,7 @@ class CompanyTable extends AbstractTable
             case SpyCompanyTableMap::COL_STATUS_DENIED:
                 return $this->generateLabel('Denied', 'label-danger');
         }
+
+        return '';
     }
 }

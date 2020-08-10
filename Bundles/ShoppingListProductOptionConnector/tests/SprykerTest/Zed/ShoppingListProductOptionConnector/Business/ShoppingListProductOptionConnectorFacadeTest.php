@@ -14,9 +14,11 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductOptionGroupTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOption;
+use Orm\Zed\ShoppingListProductOptionConnector\Persistence\SpyShoppingListProductOptionQuery;
 use Spryker\Zed\Permission\PermissionDependencyProvider;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionStoragePlugin;
@@ -602,6 +604,84 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testSaveShoppingListItemProductOptionsForShoppingListItemCollectionSaveProductOptions(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            );
+        $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptionsForShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        //Assert
+        $spyShoppingListProductOptionQuery = SpyShoppingListProductOptionQuery::create();
+
+        $productOptionValueIds = [
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+        ];
+        $productOptionEntities = $spyShoppingListProductOptionQuery
+            ->filterByFkProductOptionValue_In($productOptionValueIds)
+            ->find();
+
+        $this->assertSameSize($productOptionValueIds, $productOptionEntities);
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandShoppingListItemCollectionWithProductOptionsExpandsTransfer(): void
+    {
+        // Arrange
+        $shoppingListItemTransfer = $this->getAssignedShoppingListItemCopy()
+            ->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferActive2->getIdProductOptionValue()
+                )
+            )->addProductOption(
+                (new ProductOptionTransfer())->setIdProductOptionValue(
+                    $this->productOptionValueTransferInactive->getIdProductOptionValue()
+                )
+            );
+        $shoppingListItemCollectionTransfer = $this->createShoppingListItemCollectionTransfer([$shoppingListItemTransfer]);
+
+        // Act
+        $this->tester->getFacade()->saveShoppingListItemProductOptionsForShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        $actualResult = $this->tester->getFacade()
+            ->expandShoppingListItemCollectionWithProductOptions(
+                $shoppingListItemCollectionTransfer
+            );
+
+        // Assert
+        $expectedResult = [
+            $this->productOptionValueTransferActive->getIdProductOptionValue(),
+            $this->productOptionValueTransferActive2->getIdProductOptionValue(),
+        ];
+
+        $productOptionTransfers = $actualResult->getItems()[0]->getProductOptions();
+        foreach ($productOptionTransfers as $productOption) {
+            $this->assertContains($productOption->getIdProductOptionValue(), $expectedResult);
+        }
+        $this->assertSameSize($productOptionTransfers, $expectedResult);
+    }
+
+    /**
      * @return \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface
      */
     protected function getProductOptionFacade(): ProductOptionFacadeInterface
@@ -616,6 +696,22 @@ class ShoppingListProductOptionConnectorFacadeTest extends Unit
     {
         return (new ShoppingListItemTransfer())
             ->fromArray($this->shoppingListItemTransferAssigned->toArray());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemTransfer[] $shoppingListItemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    protected function createShoppingListItemCollectionTransfer(array $shoppingListItemTransfers = []): ShoppingListItemCollectionTransfer
+    {
+        $shoppingListItemCollectionTransfer = new ShoppingListItemCollectionTransfer();
+
+        foreach ($shoppingListItemTransfers as $shoppingListItemTransfer) {
+            $shoppingListItemCollectionTransfer->addItem($shoppingListItemTransfer);
+        }
+
+        return $shoppingListItemCollectionTransfer;
     }
 
     /**

@@ -24,12 +24,10 @@ use Codeception\Actor;
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
  *
  * @SuppressWarnings(PHPMD)
+ *
+ * @method \Spryker\Zed\Kernel\Business\KernelBusinessFactory getFactory()
  */
 class KernelZedTester extends Actor
 {
     use _generated\KernelZedTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

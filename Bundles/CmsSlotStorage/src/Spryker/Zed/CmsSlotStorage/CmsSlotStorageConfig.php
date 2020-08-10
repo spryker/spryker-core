@@ -12,9 +12,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class CmsSlotStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getCmsSlotStorageSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

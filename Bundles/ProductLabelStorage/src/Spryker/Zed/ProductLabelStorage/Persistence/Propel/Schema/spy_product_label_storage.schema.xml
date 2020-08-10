@@ -8,6 +8,7 @@
         <id-method-parameter value="spy_product_label_dictionary_storage_pk_seq"/>
         <behavior name="synchronization">
             <parameter name="resource" value="product_label_dictionary"/>
+            <parameter name="store" required="true"/>
             <parameter name="locale" required="true"/>
             <parameter name="queue_group" value="sync.storage.product"/>
         </behavior>

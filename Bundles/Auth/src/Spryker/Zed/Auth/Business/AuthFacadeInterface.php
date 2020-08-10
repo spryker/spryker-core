@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\Auth\Business;
 
+use Generated\Shared\Transfer\HttpRequestTransfer;
+
 interface AuthFacadeInterface
 {
     /**
@@ -77,6 +79,18 @@ interface AuthFacadeInterface
      * @return string
      */
     public function getCurrentUserToken();
+
+    /**
+     * Specification:
+     *  - Returns true if auth token exists in `HttpRequestTransfer.headers` and it belongs to the system user.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\HttpRequestTransfer $httpRequestTransfer
+     *
+     * @return bool
+     */
+    public function isSystemUserRequest(HttpRequestTransfer $httpRequestTransfer): bool;
 
     /**
      * @api

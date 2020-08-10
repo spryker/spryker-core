@@ -19,6 +19,8 @@ class GlossaryConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/glossary';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getGlossaryFilePaths()
@@ -32,6 +34,8 @@ class GlossaryConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedirectUrl(): string

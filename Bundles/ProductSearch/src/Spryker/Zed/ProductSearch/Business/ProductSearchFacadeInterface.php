@@ -31,7 +31,7 @@ interface ProductSearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\ProductSearch\Business\ProductSearchFacadeInterface::mapDynamicProductAttributes()` instead.
+     * @deprecated Use {@link mapDynamicProductAttributes()} instead.
      *
      * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -59,7 +59,11 @@ interface ProductSearchFacadeInterface
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function mapDynamicProductAttributesToSearchData(ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder, PageMapTransfer $pageMapTransfer, array $attributes): PageMapTransfer;
+    public function mapDynamicProductAttributesToSearchData(
+        ProductSearchExtensionPageMapBuilderInterface $pageMapBuilder,
+        PageMapTransfer $pageMapTransfer,
+        array $attributes
+    ): PageMapTransfer;
 
     /**
      * Specification:
@@ -109,7 +113,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function createProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 
@@ -121,7 +125,7 @@ interface ProductSearchFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ProductSearchPreferencesTransfer $productSearchPreferencesTransfer
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\ProductSearchPreferencesTransfer
      */
     public function updateProductSearchPreferences(ProductSearchPreferencesTransfer $productSearchPreferencesTransfer);
 

@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class QuoteApprovalConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getRequiredQuoteFieldsForApprovalProcess(): array
@@ -23,6 +25,8 @@ class QuoteApprovalConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @deprecated Will be removed without replacement. BC-reason only.
      *
      * @return bool

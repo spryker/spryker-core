@@ -15,10 +15,22 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class ConsoleConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function shouldCatchExceptions(): bool
     {
         return $this->getSharedConfig()->shouldCatchExceptions();
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDebugModeEnabled();
     }
 }

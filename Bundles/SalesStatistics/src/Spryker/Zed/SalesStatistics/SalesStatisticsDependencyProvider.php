@@ -9,8 +9,8 @@ namespace Spryker\Zed\SalesStatistics;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -21,6 +21,11 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
     public const PROPEL_SALES_ORDER_QUERY = 'SALES_ORDER_QUERY';
     public const PROPEL_SALES_ORDER_ITEM_QUERY = 'SALES_ORDER_ITEM_QUERY';
     public const RENDERER = 'RENDERER';
+
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,9 +61,9 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderQuery(Container $container): Container
     {
-        $container[static::PROPEL_SALES_ORDER_QUERY] = function () {
+        $container->set(static::PROPEL_SALES_ORDER_QUERY, $container->factory(function () {
             return SpySalesOrderQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -70,9 +75,9 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSalesOrderItemQuery(Container $container): Container
     {
-        $container[static::PROPEL_SALES_ORDER_ITEM_QUERY] = function () {
+        $container->set(static::PROPEL_SALES_ORDER_ITEM_QUERY, $container->factory(function () {
             return SpySalesOrderItemQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -84,11 +89,9 @@ class SalesStatisticsDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addRenderer(Container $container): Container
     {
-        $container[static::RENDERER] = function () {
-            $pimplePlugin = new Pimple();
-
-            return $pimplePlugin->getApplication()['twig'];
-        };
+        $container->set(static::RENDERER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
+        });
 
         return $container;
     }

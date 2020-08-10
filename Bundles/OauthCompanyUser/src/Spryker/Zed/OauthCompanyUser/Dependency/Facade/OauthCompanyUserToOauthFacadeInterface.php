@@ -41,5 +41,7 @@ interface OauthCompanyUserToOauthFacadeInterface
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
 }

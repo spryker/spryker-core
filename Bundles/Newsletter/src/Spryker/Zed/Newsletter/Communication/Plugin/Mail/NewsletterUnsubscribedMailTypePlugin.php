@@ -22,6 +22,8 @@ class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements Mai
     public const MAIL_TYPE = 'newsletter unsubscribed mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class NewsletterUnsubscribedMailTypePlugin extends AbstractPlugin implements Mai
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder

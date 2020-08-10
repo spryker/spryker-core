@@ -9,6 +9,7 @@ namespace Spryker\Zed\Cache\Business\Model;
 
 use Spryker\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Exception\DirectoryNotFoundException;
 use Symfony\Component\Finder\Finder;
 
 class CacheClearer implements CacheClearerInterface
@@ -49,6 +50,41 @@ class CacheClearer implements CacheClearerInterface
             $this->config->getCachePath(),
             $this->config->getAllowedStores()
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function clearCodeBucketCache(): string
+    {
+        $directory = $this->config->getCodeBucketCachePath();
+
+        return $this->clearDirectoriesByPattern($directory);
+    }
+
+    /**
+     * @return string
+     */
+    public function clearDefaultCodeBucketCache(): string
+    {
+        $directory = $this->config->getDefaultCodeBucketCachePath();
+
+        return $this->clearDirectoriesByPattern($directory);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function clearProjectSpecificCache(): array
+    {
+        $projectSpecificCache = $this->config->getProjectSpecificCache();
+
+        $emptyProjectDirectories = [];
+        foreach ($projectSpecificCache as $projectSpecificCacheDirectory) {
+            $emptyProjectDirectories[] = $this->clearDirectoriesByPattern($projectSpecificCacheDirectory);
+        }
+
+        return $emptyProjectDirectories;
     }
 
     /**
@@ -120,5 +156,28 @@ class CacheClearer implements CacheClearerInterface
             ->depth(0);
 
         return $finder;
+    }
+
+    /**
+     * @param string $directoryPattern
+     *
+     * @return string
+     */
+    protected function clearDirectoriesByPattern(string $directoryPattern): string
+    {
+        try {
+            $iterator = $this->finder->directories()->depth(0)->in($directoryPattern);
+        } catch (DirectoryNotFoundException $e) {
+            return '';
+        }
+
+        $directories = [];
+        foreach ($iterator as $splInfo) {
+            $directory = $splInfo->getPath();
+            $this->clearDirectory($directory);
+            $directories[] = $directory;
+        }
+
+        return implode(PHP_EOL, $directories);
     }
 }

@@ -20,8 +20,9 @@ class AvailabilityNotificationSubscriptionMapper implements AvailabilityNotifica
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function mapAvailabilityNotificationSubscriptionTransfer(SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntity): AvailabilityNotificationSubscriptionTransfer
-    {
+    public function mapAvailabilityNotificationSubscriptionTransfer(
+        SpyAvailabilityNotificationSubscription $availabilityNotificationSubscriptionEntity
+    ): AvailabilityNotificationSubscriptionTransfer {
         $availabilityNotificationSubscriptionTransfer = new AvailabilityNotificationSubscriptionTransfer();
         $availabilityNotificationSubscriptionTransfer->fromArray($availabilityNotificationSubscriptionEntity->toArray(), true);
 
@@ -41,7 +42,7 @@ class AvailabilityNotificationSubscriptionMapper implements AvailabilityNotifica
     /**
      * @param \Propel\Runtime\Collection\ObjectCollection $availabilityNotificationSubscriptionEntities
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer[]
      */
     public function mapAvailabilityNotificationSubscriptionTransferCollection(ObjectCollection $availabilityNotificationSubscriptionEntities): array
     {

@@ -42,5 +42,7 @@ class CloseOutdatedQuoteRequestConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output): ?int
     {
         $this->getFacade()->closeOutdatedQuoteRequests();
+
+        return static::CODE_SUCCESS;
     }
 }

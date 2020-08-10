@@ -350,8 +350,11 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SalesOrderItemStateAggregationTransfer[]
      */
-    public function aggregateProductPackagingUnitReservation(string $sku, OmsStateCollectionTransfer $reservedStates, ?StoreTransfer $storeTransfer = null): array
-    {
+    public function aggregateProductPackagingUnitReservation(
+        string $sku,
+        OmsStateCollectionTransfer $reservedStates,
+        ?StoreTransfer $storeTransfer = null
+    ): array {
         return $this->getFactory()
             ->createProductPackagingUnitReservationHandler()
             ->aggregateProductPackagingUnitReservation($sku, $reservedStates, $storeTransfer);
@@ -383,8 +386,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountSalesUnit(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
-    {
+    public function expandSalesOrderItemWithAmountSalesUnit(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandSalesOrderItemWithAmountSalesUnit($itemTransfer, $salesOrderItemEntity);
@@ -400,8 +405,10 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer
      */
-    public function expandSalesOrderItemWithAmountAndAmountSku(ItemTransfer $itemTransfer, SpySalesOrderItemEntityTransfer $salesOrderItemEntity): SpySalesOrderItemEntityTransfer
-    {
+    public function expandSalesOrderItemWithAmountAndAmountSku(
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItemEntityTransfer $salesOrderItemEntity
+    ): SpySalesOrderItemEntityTransfer {
         return $this->getFactory()
             ->createOrderItemExpander()
             ->expandSalesOrderItemWithAmountAndAmountSku($itemTransfer, $salesOrderItemEntity);
@@ -411,6 +418,8 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountSalesUnit()} instead.
      *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
@@ -428,6 +437,24 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountSalesUnit(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithAmountSalesUnit($itemTransfers);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link ProductPackagingUnitFacade::expandOrderItemsWithAmountLeadProduct()} instead.
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      *
      * @return \Generated\Shared\Transfer\OrderTransfer
@@ -437,6 +464,22 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createAmountLeadProductHydrateOrder()
             ->expandOrderWithAmountLeadProduct($orderTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithAmountLeadProduct(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithAmountLeadProduct($itemTransfers);
     }
 
     /**
@@ -503,5 +546,37 @@ class ProductPackagingUnitFacade extends AbstractFacade implements ProductPackag
         return $this->getFactory()
             ->createProductPackagingUnitCartOperation()
             ->removeItemFromQuote($itemTransfer, $quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartPreCheckResponseTransfer
+     */
+    public function checkCartItemProductPackagingUnit(CartChangeTransfer $cartChangeTransfer): CartPreCheckResponseTransfer
+    {
+        return $this->getFactory()
+            ->createCartItemProductPackagingUnitChecker()
+            ->checkCartItemProductPackagingUnit($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $productConcreteTransfers
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function filterProductsWithoutPackagingUnit(array $productConcreteTransfers): array
+    {
+        return $this->getFactory()
+            ->createProductPackagingUnitReader()
+            ->filterProductsWithoutPackagingUnit($productConcreteTransfers);
     }
 }

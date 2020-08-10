@@ -11,10 +11,13 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Zed\Customer\Business\Customer\Address;
 use Spryker\Zed\Customer\Business\Customer\Customer;
@@ -44,6 +47,7 @@ class CustomerFacadeTest extends Unit
     public const TESTER_NON_EXISTING_EMAIL = 'nonexisting@spryker.com';
     public const TESTER_UPDATE_EMAIL = 'update.tester@spryker.com';
     public const TESTER_PASSWORD = '$2tester';
+    public const TESTER_NEW_PASSWORD = '$3tester';
     public const TESTER_NAME = 'Tester';
 
     /**
@@ -580,7 +584,7 @@ class CustomerFacadeTest extends Unit
     {
         // Assign
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setPassword("other password");
+        $customerTransfer->setPassword('other password');
         $this->mockUtilValidateService(true);
 
         // Act
@@ -595,15 +599,20 @@ class CustomerFacadeTest extends Unit
      */
     public function testUpdateCustomerWithProvidedPasswordShouldSuccessWhenPasswordAreProvided(): void
     {
+        // Arrange
         $customerTransfer = $this->createTestCustomer();
-        $customerTransfer->setNewPassword('new password');
-        $customerTransfer->setPassword(self::TESTER_PASSWORD);
-        $customerTransfer->setLastName(self::TESTER_NAME);
+        $customerTransfer->setNewPassword(static::TESTER_NEW_PASSWORD);
+        $customerTransfer->setPassword(static::TESTER_PASSWORD);
+        $customerTransfer->setLastName(static::TESTER_NAME);
+
+        // Act
         $customerResponse = $this->tester->getFacade()->updateCustomer($customerTransfer);
-        $this->assertNotNull($customerResponse);
-        $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
-        $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
+
+        // Assert
+        $this->assertTrue($customerResponse->getIsSuccess(), 'Customer response must be successful.');
+        $this->assertEquals(static::TESTER_NAME, $customerTransfer->getLastName(), 'Last name was not saved.');
+        $this->tester->assertPasswordsEqual($customerTransfer->getPassword(), static::TESTER_NEW_PASSWORD);
     }
 
     /**
@@ -926,6 +935,121 @@ class CustomerFacadeTest extends Unit
         // Assert
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
         $this->assertEquals($customerTransfer->getCustomerReference(), $customerResponseTransfer->getCustomerTransfer()->getCustomerReference());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSendPasswordRestoreMailForCustomerCollectionShouldSetRestorePasswordKey(): void
+    {
+        // Arrange
+        (new SpyCustomer())
+            ->setEmail('customer2@shop.com')
+            ->setPassword(static::VALUE_VALID_PASSWORD)
+            ->setRestorePasswordKey(null)
+            ->setCustomerReference('DE--112')
+            ->save();
+
+        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+
+        //Act
+        $this->tester->getFacade()->sendPasswordRestoreMailForCustomerCollection(
+            (new CustomerCollectionTransfer())->addCustomer($customerResponseTransfer->getCustomerTransfer())
+        );
+
+        $customerResponseTransfer = $this->tester->getFacade()->findCustomerByReference('DE--112');
+        // Assert
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRestorePasswordKey());
+    }
+
+    /**
+     * @dataProvider getCustomerDataProvider
+     *
+     * @param array $usersData
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $criteriaFilterTransfer
+     * @param int $expectedCount
+     *
+     * @return void
+     */
+    public function testGetCustomerCollectionByCriteriaShouldReturnCollectionOfCustomers(
+        array $usersData,
+        CustomerCriteriaFilterTransfer $criteriaFilterTransfer,
+        int $expectedCount
+    ): void {
+        // Arrange
+        foreach ($usersData as $item) {
+            $this->createCustomerUsingCustomerDataProviderUserData($item);
+        }
+
+        // Assert
+        $this->assertSame(
+            $expectedCount,
+            $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function getCustomerDataProvider(): array
+    {
+        return [
+            'get customers with empty password - expects 2' => [
+                $this->getUsersData(),
+                (new CustomerCriteriaFilterTransfer())->setPasswordExists(false)
+                    ->setRestorePasswordKeyExists(true),
+                2,
+            ],
+            'get customers with empty password and empty password restore key - expects 1' => [
+                $this->getUsersData(),
+                (new CustomerCriteriaFilterTransfer())
+                    ->setPasswordExists(false)
+                    ->setRestorePasswordKeyExists(false),
+                1,
+            ],
+        ];
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return int
+     */
+    protected function createCustomerUsingCustomerDataProviderUserData(array $data): int
+    {
+        return (new SpyCustomer())
+            ->setEmail($data['email'])
+            ->setPassword($data['password'])
+            ->setRestorePasswordKey($data['passwordRestoreKey'])
+            ->setCustomerReference($data['customerReference'])
+            ->save();
+    }
+
+    /**
+     * @return array
+     */
+    protected function getUsersData(): array
+    {
+        return [
+            [
+                'email' => 'customer1@shop.com',
+                'password' => null,
+                'passwordRestoreKey' => null,
+                'customerReference' => 'DE--111',
+            ],
+            [
+                'email' => 'customer2@shop.com',
+                'password' => null,
+                'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
+                'customerReference' => 'DE--112',
+            ],
+            [
+                'email' => 'customer3@shop.com',
+                'password' => static::VALUE_VALID_PASSWORD,
+                'passwordRestoreKey' => 'fee0292350a14da40ac6f8f9d6cd26ad',
+                'customerReference' => 'DE--113',
+            ],
+        ];
     }
 
     /**

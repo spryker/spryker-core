@@ -148,6 +148,8 @@ class ProductManagerTest extends Unit
                 'getRawProductConcreteBySku',
                 'getRawProductConcreteTransfersByConcreteSkus',
                 'getProductUrls',
+                'getRawProductAbstractTransfersByAbstractSkus',
+                'getProductConcretesByCriteria',
             ])
             ->disableOriginalConstructor()
             ->getMock();

@@ -11,7 +11,7 @@ use Elastica\Query;
 use Generated\Shared\Search\PageIndexMap;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SpellingSuggestionQueryExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\SpellingSuggestionQueryExpanderPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

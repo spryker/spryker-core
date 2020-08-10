@@ -12,7 +12,7 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Spryker\Yves\Application\ApplicationConfig getSharedConfig()
+ * @method \Spryker\Shared\Application\ApplicationConfig getSharedConfig()
  */
 class ApplicationConfig extends AbstractBundleConfig
 {
@@ -47,6 +47,8 @@ class ApplicationConfig extends AbstractBundleConfig
     protected const HEADER_FEATURE_POLICY_VALUE = '';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHostName()
@@ -55,6 +57,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isSslEnabled()
@@ -63,6 +67,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSslExcludedResources()
@@ -71,6 +77,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedProxies()
@@ -79,6 +87,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeader(): int
@@ -87,6 +97,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getTrustedHosts()
@@ -95,6 +107,8 @@ class ApplicationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getSecurityHeaders(): array
@@ -107,5 +121,15 @@ class ApplicationConfig extends AbstractBundleConfig
             'Referrer-Policy' => static::HEADER_REFERRER_POLICY_VALUE,
             'Feature-Policy' => static::HEADER_FEATURE_POLICY_VALUE,
         ];
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->getSharedConfig()->isDebugModeEnabled();
     }
 }

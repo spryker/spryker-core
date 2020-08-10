@@ -48,7 +48,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
     protected $storeFacade;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -133,6 +133,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
             if (!in_array($pair[static::STORE_NAME], $storeRelations, true)) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
+
                 continue;
             }
 
@@ -140,6 +141,7 @@ class CmsBlockStorageWriter implements CmsBlockStorageWriterInterface
 
             if ($cmsBlockEntity === null || !$cmsBlockEntity[static::COLUMN_CMS_BLOCK_IS_ACTIVE]) {
                 $this->deleteStorageEntity($cmsBlockStorageEntity);
+
                 continue;
             }
 

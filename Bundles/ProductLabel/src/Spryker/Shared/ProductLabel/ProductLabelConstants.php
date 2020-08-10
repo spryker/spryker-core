@@ -15,6 +15,4 @@ class ProductLabelConstants
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY_IDENTIFIER = 1;
     public const RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY = 'product_label_dictionary';
     public const RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS = 'product_abstract_product_label_relations';
-
-    public const VALIDITY_DATE_FORMAT = 'Y-m-d';
 }

@@ -39,6 +39,69 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandItemProductBundlesWithProductOptions(array $itemTransfers): array
+    {
+        $mappedProductBundles = $this->extractMappedProductBundlesWithProductOptions($itemTransfers);
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $productBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if (!$productBundleItemIdentifier || !isset($mappedProductBundles[$productBundleItemIdentifier])) {
+                continue;
+            }
+
+            $itemTransfer->setProductBundle($mappedProductBundles[$productBundleItemIdentifier]);
+        }
+
+        return $itemTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function extractMappedProductBundlesWithProductOptions(array $itemTransfers): array
+    {
+        $mappedProductBundles = [];
+
+        foreach ($itemTransfers as $itemTransfer) {
+            $productBundleItemIdentifier = $itemTransfer->getRelatedBundleItemIdentifier();
+
+            if (!$productBundleItemIdentifier || !$itemTransfer->getProductBundle()) {
+                continue;
+            }
+
+            $mappedProductBundles[$productBundleItemIdentifier] = $this->expandBundleItemWithProductOptions(
+                $mappedProductBundles[$productBundleItemIdentifier] ?? $itemTransfer->getProductBundle(),
+                $itemTransfer
+            );
+        }
+
+        return $this->sortProductBundlesProductOptions($mappedProductBundles);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $productBundles
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function sortProductBundlesProductOptions(array $productBundles): array
+    {
+        foreach ($productBundles as $productBundle) {
+            $productBundle->setProductOptions(
+                new ArrayObject($this->sortBundleProductOptions($productBundle->getProductOptions()->getArrayCopy()))
+            );
+        }
+
+        return $productBundles;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $bundleItem
      *
@@ -87,6 +150,7 @@ class ProductOptionExpander implements ProductOptionExpanderInterface
         foreach ($bundleItem->getProductOptions() as $productOption) {
             if ($productOption->getSku() !== $productOptionTransfer->getSku()) {
                 $bundleItem->getProductOptions()->append($productOptionTransfer);
+
                 break;
             }
         }

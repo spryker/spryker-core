@@ -16,6 +16,7 @@ use Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInter
 class RequestExecutor implements RequestExecutorInterface
 {
     protected const AUTH_KEY = 'auth';
+    protected const HEADER_SET_COOKIE = 'set-cookie';
 
     /**
      * @var \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface
@@ -25,9 +26,8 @@ class RequestExecutor implements RequestExecutorInterface
     /**
      * @param \Spryker\Zed\SchedulerJenkins\Dependency\Guzzle\SchedulerJenkinsToGuzzleInterface $client
      */
-    public function __construct(
-        SchedulerJenkinsToGuzzleInterface $client
-    ) {
+    public function __construct(SchedulerJenkinsToGuzzleInterface $client)
+    {
         $this->client = $client;
     }
 
@@ -50,8 +50,9 @@ class RequestExecutor implements RequestExecutorInterface
         }
 
         $payload = $response->getBody()->getContents();
+        $cookie = $response->hasHeader(static::HEADER_SET_COOKIE) ? $response->getHeaderLine(static::HEADER_SET_COOKIE) : null;
 
-        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload);
+        return $this->createSchedulerJenkinsSuccessResponseTransfer($payload, $cookie);
     }
 
     /**
@@ -76,13 +77,15 @@ class RequestExecutor implements RequestExecutorInterface
 
     /**
      * @param string $payload
+     * @param string|null $cookie
      *
      * @return \Generated\Shared\Transfer\SchedulerJenkinsResponseTransfer
      */
-    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload): SchedulerJenkinsResponseTransfer
+    protected function createSchedulerJenkinsSuccessResponseTransfer(string $payload, ?string $cookie = null): SchedulerJenkinsResponseTransfer
     {
         return (new SchedulerJenkinsResponseTransfer())
             ->setPayload($payload)
+            ->setCookie($cookie)
             ->setStatus(true);
     }
 

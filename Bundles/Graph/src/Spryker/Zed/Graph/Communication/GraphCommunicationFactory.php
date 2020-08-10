@@ -86,6 +86,7 @@ class GraphCommunicationFactory extends AbstractCommunicationFactory
                 get_class($adapter),
                 GraphAdapterInterface::class
             );
+
             throw new InvalidGraphAdapterException($message);
         }
     }

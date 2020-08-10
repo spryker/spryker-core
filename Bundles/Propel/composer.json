@@ -8,7 +8,7 @@
     "spryker/application-extension": "^1.0.0",
     "spryker/config": "^3.0.0",
     "spryker/health-check-extension": "^1.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.48.0",
     "spryker/log": "^3.0.0",
     "spryker/monolog": "^2.0.0",
     "spryker/propel-orm": "^1.9.0",
@@ -21,7 +21,8 @@
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/zend": "*"
   },
   "suggest": {
     "spryker/container": "If you want to use the PropelApplicationPlugin.",

@@ -85,7 +85,7 @@ class QuoteRequestConverterTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(
             SharedQuoteRequestConfig::STATUS_READY,
-            (new DateTime("+1 hour"))->format('Y-m-d H:i:s')
+            (new DateTime('+1 hour'))->format('Y-m-d H:i:s')
         );
 
         // Act
@@ -122,7 +122,7 @@ class QuoteRequestConverterTest extends Unit
         // Arrange
         $quoteRequestTransfer = $this->createQuoteRequestTransfer(
             SharedQuoteRequestConfig::STATUS_READY,
-            (new DateTime("-1 hour"))->format('Y-m-d H:i:s')
+            (new DateTime('-1 hour'))->format('Y-m-d H:i:s')
         );
 
         // Act

@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\Availability\Persistence;
 
+use Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery;
+use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
+
 interface AvailabilityQueryContainerInterface
 {
     /**
@@ -72,6 +75,23 @@ interface AvailabilityQueryContainerInterface
     /**
      * @api
      *
+     * @param int[] $productAbstractIds
+     * @param int $idLocale
+     * @param int $idStore
+     * @param string[] $stockNames
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryProductAbstractWithStockByProductAbstractIds(
+        array $productAbstractIds,
+        int $idLocale,
+        int $idStore,
+        array $stockNames = []
+    ): SpyProductAbstractQuery;
+
+    /**
+     * @api
+     *
      * @param int $idProductAbstract
      * @param int $idLocale
      * @param int $idStore
@@ -96,9 +116,24 @@ interface AvailabilityQueryContainerInterface
      * @api
      *
      * @param int $idLocale
+     * @param int $idStore
+     * @param int[] $stockIds
+     *
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     */
+    public function queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated(
+        int $idLocale,
+        int $idStore,
+        array $stockIds
+    ): SpyProductAbstractQuery;
+
+    /**
+     * @api
+     *
+     * @param int $idLocale
      * @param array $stockNames
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function queryAvailabilityWithStockByIdLocale($idLocale, array $stockNames = []);
 
@@ -108,7 +143,7 @@ interface AvailabilityQueryContainerInterface
      * @param int $idLocale
      * @param array $stockNames
      *
-     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery|\Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function querySpyProductAbstractAvailabilityWithStockByIdLocale($idLocale, array $stockNames = []);
 
@@ -117,14 +152,14 @@ interface AvailabilityQueryContainerInterface
      *
      * @param array $stockNames
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function querySpyProductAbstractAvailabilityWithStock(array $stockNames = []);
 
     /**
      * @api
      *
-     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @return \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
     public function querySpyProductAbstractAvailability();
 
@@ -134,4 +169,13 @@ interface AvailabilityQueryContainerInterface
      * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
      */
     public function queryAllAvailabilityAbstracts();
+
+    /**
+     * @api
+     *
+     * @param int $idStore
+     *
+     * @return \Orm\Zed\Availability\Persistence\SpyAvailabilityAbstractQuery
+     */
+    public function queryAvailabilityAbstractByIdStore(int $idStore): SpyAvailabilityAbstractQuery;
 }

@@ -1,0 +1,223 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::client does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Client/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockProductStorageToStorageClientBridge($container->getLocator()->storage()->client());",
+            "selected_text": "client",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Client/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 113,
+            "line_to": 113,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $spyCmsBlockProductStorageEntities using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Business/Storage/CmsBlockProductStorageWriter.php",
+            "snippet": "                $this->storeDataSet($cmsBlockProductTransfer, $spyCmsBlockProductStorageEntities[$cmsBlockProductTransfer->getIdProductAbstract()]);",
+            "selected_text": "$spyCmsBlockProductStorageEntities",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 135,
+            "line_to": 135,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\CmsBlockProductStorage\\Persistence\\SpyCmsBlockProductStorage::setFkProductAbstract cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Business/Storage/CmsBlockProductStorageWriter.php",
+            "snippet": "        $spyCmsBlockProductStorage->setFkProductAbstract($cmsBlockProductsTransfer->getIdProductAbstract());",
+            "selected_text": "$cmsBlockProductsTransfer->getIdProductAbstract()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 33,
+            "line_to": 33,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockProductStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::service does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockProductStorageToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());",
+            "selected_text": "service",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::querycontainer does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/CmsBlockProductStorageDependencyProvider.php",
+            "snippet": "            return new CmsBlockProductStorageToCmsBlockProductConnectorQueryContainerBridge($container->getLocator()->cmsBlockProductConnector()->queryContainer());",
+            "selected_text": "queryContainer",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 59,
+            "line_to": 59,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyfkproductabstract_in does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Persistence/CmsBlockProductStorageQueryContainer.php",
+            "snippet": "        return $query->filterByFkProductAbstract_In($productIds);",
+            "selected_text": "filterByFkProductAbstract_In",
+            "error_level": 4,
+            "shortcode": 219
+        },
+        {
+            "severity": "info",
+            "line_from": 78,
+            "line_to": 78,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Propel\\Runtime\\ActiveQuery\\ModelCriteria::filterbyidcmsblockproductconnector_in does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Persistence/CmsBlockProductStorageQueryContainer.php",
+            "snippet": "            ->filterByIdCmsBlockProductConnector_In($cmsBlockProductIds);",
+            "selected_text": "filterByIdCmsBlockProductConnector_In",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Zed\\CmsBlockProductStorage\\CmsBlockProductStorageConfig::isSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Business/CmsBlockProductStorageBusinessFactory.php",
+            "snippet": "            $this->getConfig()->isSendingToQueue(),",
+            "selected_text": "isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 66,
+            "line_to": 66,
+            "type": "DeprecatedProperty",
+            "message": "Spryker\\Zed\\CmsBlockProductStorage\\Business\\Storage\\CmsBlockProductStorageWriter::$isSendingToQueue is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Business/Storage/CmsBlockProductStorageWriter.php",
+            "snippet": "        $this->isSendingToQueue = $isSendingToQueue;",
+            "selected_text": "$this->isSendingToQueue",
+            "error_level": 2,
+            "shortcode": 99
+        },
+        {
+            "severity": "info",
+            "line_from": 137,
+            "line_to": 137,
+            "type": "DeprecatedMethod",
+            "message": "The method Orm\\Zed\\CmsBlockProductStorage\\Persistence\\Base\\SpyCmsBlockProductStorage::setIsSendingToQueue has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Business/Storage/CmsBlockProductStorageWriter.php",
+            "snippet": "        $spyCmsBlockProductStorage->setIsSendingToQueue($this->isSendingToQueue);",
+            "selected_text": "setIsSendingToQueue",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorEntityStoragePublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 23,
+            "line_to": 23,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorEntityStorageUnpublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorPublishStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorStorageListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorStoragePublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        },
+        {
+            "severity": "info",
+            "line_from": 22,
+            "line_to": 22,
+            "type": "DeprecatedTrait",
+            "message": "Trait Spryker\\Zed\\PropelOrm\\Business\\Transaction\\DatabaseTransactionHandlerTrait is deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/CmsBlockProductStorage/src/Spryker/Zed/CmsBlockProductStorage/Communication/Plugin/Event/Listener/CmsBlockProductConnectorStorageUnpublishListener.php",
+            "snippet": "    use DatabaseTransactionHandlerTrait;",
+            "selected_text": "DatabaseTransactionHandlerTrait",
+            "error_level": 2,
+            "shortcode": 171
+        }
+    ]
+}

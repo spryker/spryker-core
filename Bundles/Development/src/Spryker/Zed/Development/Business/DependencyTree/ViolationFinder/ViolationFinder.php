@@ -41,6 +41,7 @@ class ViolationFinder implements ViolationFinderInterface
             }
 
             $isViolation = true;
+
             break;
         }
 

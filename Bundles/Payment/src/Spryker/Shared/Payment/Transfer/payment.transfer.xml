@@ -102,10 +102,15 @@
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
         <property name="saveOrder" type="SaveOrder"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="SaveOrder">
         <property name="idSalesOrder" type="int"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
     </transfer>
 
 </transfers>

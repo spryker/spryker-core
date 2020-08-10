@@ -99,6 +99,7 @@ class OrdersTable extends AbstractTable
         $config->addRawColumn(static::URL);
         $config->addRawColumn(SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE);
         $config->addRawColumn(SpySalesOrderTableMap::COL_EMAIL);
+        $config->addRawColumn(static::ITEM_STATE_NAMES_CSV);
 
         $config->setDefaultSortColumnIndex(0);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
@@ -191,12 +192,17 @@ class OrdersTable extends AbstractTable
      */
     protected function groupItemStateNames($itemStateNamesCsv)
     {
+        $itemStateNameLabels = [];
+
         $itemStateNames = explode(',', $itemStateNamesCsv);
         $itemStateNames = array_map('trim', $itemStateNames);
         $distinctItemStateNames = array_unique($itemStateNames);
-        $distinctItemStateNamesCsv = implode(', ', $distinctItemStateNames);
 
-        return $distinctItemStateNamesCsv;
+        foreach ($distinctItemStateNames as $distinctItemStateName) {
+            $itemStateNameLabels[] = $this->generateLabel($distinctItemStateName, null);
+        }
+
+        return implode(' ', $itemStateNameLabels);
     }
 
     /**

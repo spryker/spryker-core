@@ -121,7 +121,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createSubTotalDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -160,7 +159,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createItemQuantityDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -279,7 +277,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createMonthDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -446,7 +443,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @api
      *
-     * @deprecated use `findHydratedDiscountConfiguratorByIdDiscount()` instead.
+     * @deprecated Use {@link findHydratedDiscountConfiguratorByIdDiscount()} instead.
      *
      * @param int $idDiscount
      *
@@ -640,7 +637,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createCurrencyDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
@@ -662,7 +658,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
          return $this->getFactory()
              ->createPriceModeDecisionRule()
              ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);

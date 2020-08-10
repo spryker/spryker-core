@@ -15,14 +15,16 @@ class StorageConfig extends AbstractBundleConfig
     protected const DEFAULT_PAGE_LENGTH = 100;
 
     /**
-     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE` instead.
+     * @deprecated Use {@link \Spryker\Zed\StorageRedis\StorageRedisConfig::DEFAULT_REDIS_DATABASE} instead.
      */
     public const DEFAULT_REDIS_DATABASE = 0;
 
     protected const PROCESS_TIMEOUT = 60;
 
     /**
-     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRedisPort()` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\StorageRedis\StorageRedisConfig::getRedisPort()} instead.
      *
      * @return int
      */
@@ -32,7 +34,9 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\StorageRedis\StorageRedisConfig::getRdbDumpPath()` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\StorageRedis\StorageRedisConfig::getRdbDumpPath()} instead.
      *
      * Specification:
      * - Returns the path where the rdb dump file should be copied to.
@@ -45,6 +49,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getGuiDefaultPageLength(): int
@@ -53,7 +59,9 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Redis\RedisConfig::getProcessTimeout()` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Redis\RedisConfig::getProcessTimeout()} instead.
      *
      * Specification:
      * - Returns the value for the process timeout in seconds, after which an exception will be thrown.

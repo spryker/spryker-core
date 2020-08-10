@@ -60,8 +60,9 @@ class ConfigurableBundleTemplateUnpublisher implements ConfigurableBundleTemplat
      *
      * @return void
      */
-    protected function executeUnpublishTransaction(ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer): void
-    {
+    protected function executeUnpublishTransaction(
+        ConfigurableBundleTemplatePageSearchCollectionTransfer $configurableBundleTemplatePageSearchCollectionTransfer
+    ): void {
         foreach ($configurableBundleTemplatePageSearchCollectionTransfer->getConfigurableBundleTemplatePageSearches() as $configurableBundleTemplatePageSearchTransfer) {
             $this->configurableBundlePageSearchEntityManager->deleteConfigurableBundlePageSearch($configurableBundleTemplatePageSearchTransfer);
         }

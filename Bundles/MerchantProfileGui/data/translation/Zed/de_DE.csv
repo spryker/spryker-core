@@ -1,36 +1,29 @@
-Role,Rolle
-Title,Titel
-"First Name",Vorname
-"Last Name",Nachname
-Phone,Telefonnummer
+"Addition to address","Zusatz zur Adresse"
+"Average Delivery Time","Durchschnittliche Lieferzeit"
 "Banner URL","Banner URL"
+"Banner url","Banner url"
+"Cancellation Policy",Widerrufsbelehrung
+City,Stadt
+"Contact Person",Kontaktperson
+Country,Land
+"Data Privacy",Datenschutz
+Description,Beschreibung
+"Fax number",Faxnummer
+"First Name",Vorname
+Imprint,Impressum
+"Last Name",Nachname
+Latitude,Längengrad
+"Legal Information",Rechtsinformation
 "Logo URL","Logo URL"
+Longitude,Breitengrad
+"Merchant Profile",Händler-Profil
+"Merchant Reference",Händler-Referenznummer
+Number,Nummer
+Phone,Telefonnummer
 "Public Email",Kontakt-E-Mail-Adresse
 "Public Phone",Kontakt-Telefonnummer
-Description,Beschreibung
-"Banner url","Banner url"
-"Average Delivery Time","Durchschnittliche Lieferzeit"
-"Terms and Conditions",AGB
-"Cancellation Policy",Widerrufsbelehrung
-Imprint,Impressum
-"Data Privacy",Datenschutz
-"Is Active","Ist Aktiv"
-active,Aktiv
-inactive,Inaktiv
-Activate,Aktivieren
-Deactivate,Deaktivieren
-merchant_profile.activated,"Händlerprofil erfolgreich aktiviert."
-merchant_profile.deactivated,"Händlerprofil erfolgreich deaktiviert."
-"Contact Person",Kontaktperson
-"Merchant Profile",Händler-Profil
-"Legal Information",Rechtsinformation
-City,Stadt
-"Zip Code",Postleitzahl
-Country,Land
+Role,Rolle
 Street,Straße
-Number,Nummer
-"Addition to address","Zusatz zur Adresse"
-"Fax number",Faxnummer
-Latitude,Längengrad
-Longitude,Breitengrad
-"Merchant Reference",Händler-Referenznummer
+"Terms and Conditions",AGB
+Title,Titel
+"Zip Code",Postleitzahl

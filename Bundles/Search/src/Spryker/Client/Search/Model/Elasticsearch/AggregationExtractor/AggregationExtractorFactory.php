@@ -12,7 +12,7 @@ use Spryker\Client\Money\Plugin\MoneyPlugin;
 use Spryker\Shared\Search\SearchConfig;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\AggregationExtractorFactory} instead.
  */
 class AggregationExtractorFactory implements AggregationExtractorFactoryInterface
 {
@@ -36,13 +36,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
         switch ($facetConfigTransfer->getType()) {
             case SearchConfig::FACET_TYPE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
-
             case SearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createPriceRangeExtractor($facetConfigTransfer);
-
             case SearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
-
             default:
                 return $this->createFacetExtractor($facetConfigTransfer);
         }

@@ -13,6 +13,8 @@ use Spryker\Yves\Kernel\AbstractBundleConfig;
 class MonitoringConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIgnorableTransactionRouteNames(): array

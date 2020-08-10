@@ -28,6 +28,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     public const DATE_NOW = 'now';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -40,6 +42,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery
@@ -50,6 +54,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
@@ -60,6 +66,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -95,6 +103,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -130,6 +140,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idAbstractProduct
@@ -163,6 +175,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPriceProduct
@@ -181,6 +195,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPriceProductStore
@@ -195,6 +211,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -217,6 +235,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -234,6 +254,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
 
      * @return \Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery
@@ -244,6 +266,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -266,6 +290,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -282,6 +308,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idPriceProduct
@@ -296,6 +324,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductConcrete
@@ -313,6 +343,8 @@ class PriceProductQueryContainer extends AbstractQueryContainer implements Price
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

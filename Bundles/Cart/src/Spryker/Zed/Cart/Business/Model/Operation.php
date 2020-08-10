@@ -292,6 +292,7 @@ class Operation implements OperationInterface
 
         $quoteResponseTransfer = (new QuoteResponseTransfer())
             ->setIsSuccessful(false)
+            ->setCustomer($originalQuoteTransfer->getCustomer())
             ->setQuoteTransfer($originalQuoteTransfer);
 
         if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
@@ -327,11 +328,13 @@ class Operation implements OperationInterface
         $quoteTransfer = $this->recalculate($quoteTransfer);
         $quoteTransfer = $this->executePostReloadItemsPlugins($quoteTransfer);
 
-        if ($this->isTerminated(
-            static::TERMINATION_EVENT_NAME_RELOAD,
-            $cartChangeTransfer,
-            $quoteTransfer
-        )) {
+        if (
+            $this->isTerminated(
+                static::TERMINATION_EVENT_NAME_RELOAD,
+                $cartChangeTransfer,
+                $quoteTransfer
+            )
+        ) {
             return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
@@ -585,7 +588,7 @@ class Operation implements OperationInterface
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculate($quoteTransfer, false);
     }
 
     /**

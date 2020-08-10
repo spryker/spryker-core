@@ -14,7 +14,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use `\Spryker\Yves\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin` instead.
+ * @deprecated Use {@link \Spryker\Yves\Storage\Plugin\EventDispatcher\StorageCacheEventDispatcherPlugin} instead.
  *
  * @method \Spryker\Client\Storage\StorageClientInterface getClient()
  */

@@ -132,11 +132,13 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
             if (!$fileTransfer->getFileInfo()->count() && isset($fileStorageTransfers[$key])) {
                 $this->unpublish([$fileTransfer->getIdFile()]);
+
                 continue;
             }
 
             if (empty($fileStorageTransfers[$key])) {
                 $this->createDataSet($fileTransfer, $localeTransfer);
+
                 continue;
             }
 
@@ -207,13 +209,16 @@ class FileManagerStorageWriter implements FileManagerStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\FileStorageDataTransfer $fileStorageTransfer
-     * @param \ArrayObject $localizedAttributes
+     * @param \ArrayObject|\Generated\Shared\Transfer\FileLocalizedAttributesTransfer[] $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return void
      */
-    protected function addLocalizedAttributesToFileStorageDataTransfer(FileStorageDataTransfer $fileStorageTransfer, ArrayObject $localizedAttributes, LocaleTransfer $localeTransfer)
-    {
+    protected function addLocalizedAttributesToFileStorageDataTransfer(
+        FileStorageDataTransfer $fileStorageTransfer,
+        ArrayObject $localizedAttributes,
+        LocaleTransfer $localeTransfer
+    ) {
         if (empty($localizedAttributes[$localeTransfer->getIdLocale()])) {
             return;
         }

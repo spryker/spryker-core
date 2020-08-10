@@ -251,6 +251,7 @@ class CodeArchitectureSnifferConsole extends Console
                 }
                 if (!is_dir($path)) {
                     $output->writeln('Path not found, skipping: ' . $path, OutputInterface::VERBOSITY_VERY_VERBOSE);
+
                     continue;
                 }
                 $output->writeln('Checking path: ' . $path, OutputInterface::VERBOSITY_VERBOSE);
@@ -359,7 +360,7 @@ class CodeArchitectureSnifferConsole extends Console
      */
     protected function isVerboseModeEnabled(): bool
     {
-        return $this->input->getOption(static::OPTION_VERBOSE);
+        return (bool)$this->input->getOption(static::OPTION_VERBOSE);
     }
 
     /**

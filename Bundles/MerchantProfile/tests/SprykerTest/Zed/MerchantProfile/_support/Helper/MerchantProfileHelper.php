@@ -14,7 +14,6 @@ use Generated\Shared\DataBuilder\MerchantProfileAddressCollectionBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileGlossaryAttributeValuesBuilder;
 use Generated\Shared\DataBuilder\MerchantProfileLocalizedGlossaryAttributesBuilder;
-use Generated\Shared\DataBuilder\UrlBuilder;
 use Generated\Shared\Transfer\MerchantProfileAddressCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileLocalizedGlossaryAttributesTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
@@ -38,7 +37,6 @@ class MerchantProfileHelper extends Module
         $merchantProfileTransfer->setFkMerchant($merchantTransfer->getIdMerchant());
 
         $merchantProfileTransfer = $this->addMerchantProfileLocalizedGlossaryAttributes($merchantProfileTransfer);
-        $merchantProfileTransfer->setUrlCollection($this->createMerchantUrlTransfers());
         $merchantProfileTransfer->setAddressCollection($this->creatMerchantProfileAddressCollectionTransfer());
 
         return $this->getLocator()
@@ -91,18 +89,6 @@ class MerchantProfileHelper extends Module
         $merchantProfileLocalizedGlossaryAttributesTransfer->setMerchantProfileGlossaryAttributeValues($merchantProfileGlossaryAttributeValuesTransfer);
 
         return $merchantProfileLocalizedGlossaryAttributesTransfer;
-    }
-
-    /**
-     * @return \ArrayObject|\Generated\Shared\Transfer\UrlTransfer[]
-     */
-    public function createMerchantUrlTransfers(): ArrayObject
-    {
-        $urlTransfer = (new UrlBuilder())->build();
-        $urlCollection = new ArrayObject();
-        $urlCollection->append($urlTransfer);
-
-        return $urlCollection;
     }
 
     /**

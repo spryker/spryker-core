@@ -8,7 +8,7 @@
 namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Copier;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopierInterface` instead.
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopierInterface} instead.
  */
 interface IndexCopierInterface
 {

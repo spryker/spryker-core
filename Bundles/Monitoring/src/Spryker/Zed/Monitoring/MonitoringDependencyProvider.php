@@ -28,6 +28,19 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = $this->addMonitoringService($container);
+        $container = $this->addUtilNetworkService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = $this->addMonitoringService($container);
@@ -45,9 +58,9 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMonitoringService(Container $container): Container
     {
-        $container[static::MONITORING_SERVICE] = function (Container $container) {
+        $container->set(static::MONITORING_SERVICE, function (Container $container) {
             return $container->getLocator()->monitoring()->service();
-        };
+        });
 
         return $container;
     }
@@ -59,13 +72,13 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             $monitoringToStoreFacadeBridge = new MonitoringToStoreFacadeBridge(
                 $container->getLocator()->store()->facade()
             );
 
             return $monitoringToStoreFacadeBridge;
-        };
+        });
 
         return $container;
     }
@@ -77,13 +90,13 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             $monitoringToLocaleFacadeBridge = new MonitoringToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
 
             return $monitoringToLocaleFacadeBridge;
-        };
+        });
 
         return $container;
     }
@@ -95,13 +108,13 @@ class MonitoringDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilNetworkService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_NETWORK] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_NETWORK, function (Container $container) {
             $monitoringToUtilNetworkServiceBridge = new MonitoringToUtilNetworkServiceBridge(
                 $container->getLocator()->utilNetwork()->service()
             );
 
             return $monitoringToUtilNetworkServiceBridge;
-        };
+        });
 
         return $container;
     }

@@ -14,6 +14,8 @@ class ContentFileConfig extends AbstractBundleConfig
     protected const MAX_NUMBER_FILES_IN_FILE_LIST = 20;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxFilesInFileList(): int

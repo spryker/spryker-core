@@ -57,7 +57,7 @@ class ProductLabelDiscountConnectorFacade extends AbstractFacade implements Prod
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function findAllLabels()
     {

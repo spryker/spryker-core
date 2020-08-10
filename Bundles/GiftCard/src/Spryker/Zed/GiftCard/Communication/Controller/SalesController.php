@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method \Spryker\Zed\GiftCard\Business\GiftCardFacadeInterface getFacade()
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\Communication\GiftCardCommunicationFactory getFactory()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class SalesController extends AbstractController
 {

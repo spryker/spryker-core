@@ -9,7 +9,7 @@ namespace SprykerTest\Zed\Merchant\Business\MerchantFacade;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\Merchant\Persistence\Map\SpyMerchantTableMap;
 
@@ -40,15 +40,15 @@ class GetMerchantDataTest extends Unit
         $expectedMerchant = $this->tester->haveMerchant();
 
         // Act
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setIdMerchant($expectedMerchant->getIdMerchant());
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setIdMerchant($expectedMerchant->getIdMerchant());
 
-        $actualMerchantById = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
+        $actualMerchantById = $this->tester->getFacade()->findOne($merchantCriteriaTransfer);
 
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setEmail($expectedMerchant->getEmail());
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setEmail($expectedMerchant->getEmail());
 
-        $actualMerchantByEmail = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
+        $actualMerchantByEmail = $this->tester->getFacade()->findOne($merchantCriteriaTransfer);
 
         $this->assertEquals($expectedMerchant, $actualMerchantById);
         $this->assertEquals($expectedMerchant, $actualMerchantByEmail);
@@ -62,11 +62,11 @@ class GetMerchantDataTest extends Unit
         // Arrange
         $merchantTransfer = $this->tester->haveMerchant();
 
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setIdMerchant($merchantTransfer->getIdMerchant() + 1);
 
         // Act
-        $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaFilterTransfer);
+        $actualMerchant = $this->tester->getFacade()->findOne($merchantCriteriaTransfer);
 
         // Assert
         $this->assertNull($actualMerchant);
@@ -84,32 +84,32 @@ class GetMerchantDataTest extends Unit
         $this->tester->haveMerchant();
 
         // Act
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCollectionWithoutCriteriaTransfer = $this->tester->getFacade()->get($merchantCriteriaTransfer);
 
         // Arrange
         $paginationTransfer = new PaginationTransfer();
         $paginationTransfer->setPage(1);
         $paginationTransfer->setMaxPerPage(1);
-        $merchantCriteriaFilterTransfer->setPagination($paginationTransfer);
+        $merchantCriteriaTransfer->setPagination($paginationTransfer);
 
         // Act
-        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->get($merchantCriteriaTransfer);
 
         // Arrange
         $paginationTransfer = new FilterTransfer();
         $paginationTransfer->setOrderBy(SpyMerchantTableMap::COL_ID_MERCHANT);
         $paginationTransfer->setOrderDirection('DESC');
-        $merchantCriteriaFilterTransfer->setFilter($paginationTransfer);
+        $merchantCriteriaTransfer->setFilter($paginationTransfer);
 
         // Act
-        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionWithPaginationTransfer = $this->tester->getFacade()->get($merchantCriteriaTransfer);
 
         // Arrange
-        $merchantCriteriaFilterTransfer->getFilter()->setOrderDirection('ASC');
+        $merchantCriteriaTransfer->getFilter()->setOrderDirection('ASC');
 
         // Act
-        $merchantCollectionOrderByNameDescTransfer = $this->tester->getFacade()->find($merchantCriteriaFilterTransfer);
+        $merchantCollectionOrderByNameDescTransfer = $this->tester->getFacade()->get($merchantCriteriaTransfer);
 
         // Assert
         $this->assertCount(2, $merchantCollectionWithoutCriteriaTransfer->getMerchants());

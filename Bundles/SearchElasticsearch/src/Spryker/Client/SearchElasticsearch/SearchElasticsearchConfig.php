@@ -18,6 +18,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public const FACET_NAME_AGGREGATION_SIZE = 10;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientConfig(): array
@@ -26,6 +28,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFullTextBoostedBoostingValue(): int
@@ -34,6 +38,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFacetNameAggregationSize(): int
@@ -42,6 +48,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSupportedSourceIdentifiers(): array

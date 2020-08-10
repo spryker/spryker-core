@@ -111,7 +111,7 @@ class SynchronizationFacade extends AbstractFacade implements SynchronizationFac
      *
      * @api
      *
-     * @deprecated Use SynchronizationFacade::executeResolvedPluginsBySourcesWithIds() instead.
+     * @deprecated Use {@link executeResolvedPluginsBySourcesWithIds()} instead.
      *
      * @param string[] $resources
      *

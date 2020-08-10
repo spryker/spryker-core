@@ -249,11 +249,16 @@ body.mini-navbar .navbar-default .nav > li > .nav-second-level li a {
     }
 }
 
-.is-hidden .show-less,
-.is-shown .show-more {
-    display: none;
+.spacing-bottom {
+    margin-bottom: 1em;
 }
 
-.more-history {
-    color: #337ab7;
+.nav .label,
+.ibox .label {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.navbar-default .metismenu > li {
+    background-color: #2f4050;
 }

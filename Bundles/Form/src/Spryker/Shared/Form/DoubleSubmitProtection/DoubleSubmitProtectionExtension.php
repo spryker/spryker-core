@@ -16,12 +16,12 @@ use Symfony\Component\Translation\TranslatorInterface;
 class DoubleSubmitProtectionExtension extends AbstractExtension
 {
     /**
-     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface $tokenProvider
+     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\TokenGeneratorInterface
      */
     protected $tokenGenerator;
 
     /**
-     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface $tokenProvider
+     * @var \Spryker\Shared\Form\DoubleSubmitProtection\RequestTokenProvider\StorageInterface
      */
     protected $tokenStorage;
 

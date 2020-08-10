@@ -12,7 +12,8 @@ interface AuthMailConnectorFacadeInterface
     /**
      * Specification:
      * - Generates MailTransfer for reset password functionality.
-     * - Uses `MailFacade::handleMail()` to handle generated MailTransfer.
+     * - Calls a stack of `AuthMailExpanderPluginInterface` to expand the MailTransfer with an additional data.
+     * - Uses {@link \Spryker\Zed\Mail\Business\MailFacadeInterface::handleMail()} to handle generated MailTransfer.
      *
      * @api
      *

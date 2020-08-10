@@ -99,9 +99,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Returns the total stock amount of the abstract product for all its available stock types and store.
-     *  - Filters out stocks that are inactive.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -122,7 +120,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @deprecated Use \Spryker\Zed\Stock\Business\StockFacade::createStock() instead.
+     * @deprecated Use {@link createStock()} instead.
      *
      * @param \Generated\Shared\Transfer\TypeTransfer $stockTypeTransfer
      *
@@ -292,7 +290,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getStockTypesForStore(StoreTransfer $storeTransfer)
     {
@@ -304,7 +302,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getWarehouseToStoreMapping()
     {
@@ -318,7 +316,7 @@ class StockFacade extends AbstractFacade implements StockFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[][]
      */
     public function getStoreToWarehouseMapping()
     {

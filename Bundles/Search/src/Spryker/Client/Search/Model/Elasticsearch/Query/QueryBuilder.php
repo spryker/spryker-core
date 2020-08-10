@@ -16,7 +16,7 @@ use Elastica\Query\Term;
 use Elastica\Query\Terms;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Query\QueryBuilder` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Query\QueryBuilder} instead.
  */
 class QueryBuilder implements QueryBuilderInterface
 {

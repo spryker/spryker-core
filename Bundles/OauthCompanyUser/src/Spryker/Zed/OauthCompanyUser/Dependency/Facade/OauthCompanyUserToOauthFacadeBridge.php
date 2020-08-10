@@ -63,8 +63,9 @@ class OauthCompanyUserToOauthFacadeBridge implements OauthCompanyUserToOauthFaca
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer
-    {
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer {
         return $this->oauthFacade->validateAccessToken($authAccessTokenValidationRequestTransfer);
     }
 }

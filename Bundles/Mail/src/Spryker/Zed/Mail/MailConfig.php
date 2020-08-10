@@ -15,6 +15,8 @@ class MailConfig extends AbstractBundleConfig
     public const MAIL_TYPE_ALL = '*';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSenderName()
@@ -23,6 +25,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSenderEmail()
@@ -31,6 +35,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSmtpHost(): string
@@ -39,6 +45,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSmtpPort(): int
@@ -47,6 +55,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSmtpEncryption(): string
@@ -55,6 +65,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSmtpAuthMode(): string
@@ -63,6 +75,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSmtpUsername(): string
@@ -71,6 +85,8 @@ class MailConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSmtpPassword(): string

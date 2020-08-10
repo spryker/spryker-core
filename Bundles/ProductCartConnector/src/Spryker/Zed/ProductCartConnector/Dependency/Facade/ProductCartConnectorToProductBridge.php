@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductCartConnector\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 
 class ProductCartConnectorToProductBridge implements ProductCartConnectorToProductInterface
@@ -37,7 +38,7 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge::getRawProductConcreteTransfersByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge::getRawProductConcreteTransfersByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *
@@ -60,23 +61,23 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
-     * @param string $concreteSku
+     * @param string $sku
      *
      * @return bool
      */
-    public function hasProductConcrete($concreteSku)
+    public function hasProductConcrete($sku)
     {
-        return $this->productFacade->hasProductConcrete($concreteSku);
+        return $this->productFacade->hasProductConcrete($sku);
     }
 
     /**
-     * @param string $abstractSku
+     * @param string $sku
      *
      * @return bool
      */
-    public function hasProductAbstract($abstractSku)
+    public function hasProductAbstract($sku)
     {
-        return $this->productFacade->hasProductAbstract($abstractSku);
+        return $this->productFacade->hasProductAbstract($sku);
     }
 
     /**
@@ -100,6 +101,16 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array
+    {
+        return $this->productFacade->getProductConcretesByCriteria($productCriteriaTransfer);
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer
      *
      * @return \Generated\Shared\Transfer\UrlTransfer[]
@@ -107,5 +118,15 @@ class ProductCartConnectorToProductBridge implements ProductCartConnectorToProdu
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array
     {
         return $this->productFacade->getProductUrls($productUrlCriteriaFilterTransfer);
+    }
+
+    /**
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array
+    {
+        return $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($productAbstractSkus);
     }
 }

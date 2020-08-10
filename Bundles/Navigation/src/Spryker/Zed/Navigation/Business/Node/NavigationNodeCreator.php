@@ -143,8 +143,9 @@ class NavigationNodeCreator implements NavigationNodeCreatorInterface
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationNodeLocalizedAttributes
      */
-    protected function createNavigationNodeLocalizedAttributesEntityFromTransfer(NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer)
-    {
+    protected function createNavigationNodeLocalizedAttributesEntityFromTransfer(
+        NavigationNodeLocalizedAttributesTransfer $navigationNodeLocalizedAttributesTransfer
+    ) {
         $navigationNodeLocalizedAttributesEntity = new SpyNavigationNodeLocalizedAttributes();
         $navigationNodeLocalizedAttributesEntity->fromArray($navigationNodeLocalizedAttributesTransfer->toArray());
 

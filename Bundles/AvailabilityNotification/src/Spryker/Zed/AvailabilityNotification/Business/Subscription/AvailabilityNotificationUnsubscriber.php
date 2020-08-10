@@ -49,8 +49,9 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    public function unsubscribeBySubscriptionKey(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    public function unsubscribeBySubscriptionKey(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         $availabilityNotificationSubscriptionTransfer->requireSubscriptionKey();
 
         $availabilityNotificationSubscriptionTransfer = $this->availabilityNotificationReader->findOneBySubscriptionKey($availabilityNotificationSubscriptionTransfer->getSubscriptionKey());
@@ -105,8 +106,9 @@ class AvailabilityNotificationUnsubscriber implements AvailabilityNotificationUn
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionResponseTransfer
      */
-    protected function createSuccessResponse(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionResponseTransfer
-    {
+    protected function createSuccessResponse(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionResponseTransfer {
         return (new AvailabilityNotificationSubscriptionResponseTransfer())
             ->setIsSuccess(true)
             ->setAvailabilityNotificationSubscription($availabilityNotificationSubscriptionTransfer);

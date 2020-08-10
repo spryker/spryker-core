@@ -11,11 +11,13 @@ use Orm\Zed\Availability\Persistence\Map\SpyAvailabilityAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractLocalizedAttributesTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\DecimalObject\Decimal;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Availability\Persistence\AvailabilityQueryContainer;
 use Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface;
 use Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface;
+use Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -34,7 +36,7 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $availabilityHelper;
 
     /**
-     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery
+     * @var \Orm\Zed\Product\Persistence\SpyProductAbstractQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     protected $queryProductAbstractAvailability;
 
@@ -49,23 +51,37 @@ class AvailabilityAbstractTable extends AbstractTable
     protected $idStore;
 
     /**
+     * @var int
+     */
+    protected $idLocale;
+
+    /**
+     * @var \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface
+     */
+    protected $availabilityGuiRepository;
+
+    /**
      * @param \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface $availabilityHelper
      * @param \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface $storeFacade
      * @param int $idStore
      * @param int $idLocale
+     * @param \Spryker\Zed\AvailabilityGui\Persistence\AvailabilityGuiRepositoryInterface $availabilityGuiRepository
      */
     public function __construct(
         AvailabilityHelperInterface $availabilityHelper,
         AvailabilityToStoreFacadeInterface $storeFacade,
         int $idStore,
-        int $idLocale
+        int $idLocale,
+        AvailabilityGuiRepositoryInterface $availabilityGuiRepository
     ) {
         $this->availabilityHelper = $availabilityHelper;
         $this->storeFacade = $storeFacade;
         $this->idStore = $idStore;
+        $this->idLocale = $idLocale;
+        $this->availabilityGuiRepository = $availabilityGuiRepository;
 
         $this->queryProductAbstractAvailability = $this->availabilityHelper
-            ->queryAvailabilityAbstractWithStockByIdLocale($idLocale, $idStore);
+            ->queryAvailabilityAbstractWithCurrentStockAndReservedProductsAggregated($idLocale, $idStore);
     }
 
     /**
@@ -77,9 +93,7 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $url = Url::generate(
             '/availability-abstract-table',
-            [
-               static::URL_PARAM_ID_STORE => $this->idStore,
-            ]
+            $this->getRequest()->query->all()
         );
 
         $config->setUrl($url);
@@ -111,6 +125,7 @@ class AvailabilityAbstractTable extends AbstractTable
         $config->addRawColumn(SpyAvailabilityAbstractTableMap::COL_QUANTITY);
         $config->addRawColumn(static::IS_BUNDLE_PRODUCT);
         $config->addRawColumn(SpyProductAbstractTableMap::COL_SKU);
+        $config->addRawColumn(AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET);
         $config->setDefaultSortDirection(TableConfiguration::SORT_DESC);
 
         return $config;
@@ -125,26 +140,52 @@ class AvailabilityAbstractTable extends AbstractTable
     {
         $result = [];
 
-        $queryResult = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
+        $this->expandPropelQuery();
 
-        foreach ($queryResult as $productAbstractEntity) {
+        /** @var \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities */
+        $productAbstractEntities = $this->runQuery($this->queryProductAbstractAvailability, $config, true);
+
+        $productAbstractIds = $this->getProductAbstractIds($productAbstractEntities);
+        $productAbstractEntities = $this->availabilityHelper
+            ->getProductAbstractEntitiesWithStockByProductAbstractIds(
+                $productAbstractIds,
+                $this->idLocale,
+                $this->idStore
+            );
+
+        foreach ($productAbstractEntities as $productAbstractEntity) {
             $haveBundledProducts = $this->haveBundledProducts($productAbstractEntity);
 
             $isNeverOutOfStock = $this->isNeverOutOfStock($productAbstractEntity);
 
             $result[] = [
                 SpyProductAbstractTableMap::COL_SKU => $this->getProductEditPageLink($productAbstractEntity->getSku(), $productAbstractEntity->getIdProductAbstract()),
-                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getProductName(),
+                AvailabilityQueryContainer::PRODUCT_NAME => $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::PRODUCT_NAME),
                 SpyAvailabilityAbstractTableMap::COL_QUANTITY => $this->getAvailabilityLabel($productAbstractEntity, $isNeverOutOfStock),
                 AvailabilityHelperInterface::STOCK_QUANTITY => $this->getStockQuantity($productAbstractEntity)->trim(),
                 AvailabilityHelperInterface::RESERVATION_QUANTITY => ($haveBundledProducts) ? 'N/A' : $this->calculateReservation($productAbstractEntity)->trim(),
-                static::IS_BUNDLE_PRODUCT => ($haveBundledProducts) ? 'Yes' : 'No',
-                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => ($isNeverOutOfStock) ? 'Yes' : 'No',
+                static::IS_BUNDLE_PRODUCT => $this->generateLabel($haveBundledProducts ? 'Yes' : 'No', null),
+                AvailabilityHelperInterface::CONCRETE_NEVER_OUT_OF_STOCK_SET => $this->generateLabel($isNeverOutOfStock ? 'Yes' : 'No', null),
                 static::TABLE_COL_ACTION => $this->createViewButton($productAbstractEntity),
             ];
         }
 
         return $result;
+    }
+
+    /**
+     * @param \Orm\Zed\Product\Persistence\Base\SpyProductAbstract[]|\Propel\Runtime\Collection\ObjectCollection $productAbstractEntities
+     *
+     * @return int[]
+     */
+    protected function getProductAbstractIds(ObjectCollection $productAbstractEntities): array
+    {
+        $productAbstractIds = [];
+        foreach ($productAbstractEntities as $productAbstractEntity) {
+            $productAbstractIds[] = $productAbstractEntity->getIdProductAbstract();
+        }
+
+        return $productAbstractIds;
     }
 
     /**
@@ -246,5 +287,13 @@ class AvailabilityAbstractTable extends AbstractTable
             $productAbstractEntity->getVirtualColumn(AvailabilityHelperInterface::RESERVATION_QUANTITY) ?? '',
             $this->storeFacade->getStoreById($this->idStore)
         );
+    }
+
+    /**
+     * @return void
+     */
+    protected function expandPropelQuery(): void
+    {
+        $this->queryProductAbstractAvailability = $this->availabilityGuiRepository->expandQuery($this->queryProductAbstractAvailability);
     }
 }

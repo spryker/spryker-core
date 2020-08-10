@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\User\Business;
 
+use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\UserCriteriaTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -16,6 +18,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class UserFacade extends AbstractFacade implements UserFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void
@@ -28,6 +32,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $username
@@ -42,6 +48,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $username
@@ -56,6 +64,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $username
@@ -70,6 +80,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -88,6 +100,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link findUser()} instead.
+     *
      * @param int $idUser
      *
      * @return \Generated\Shared\Transfer\UserTransfer|null
@@ -100,6 +114,24 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\UserCriteriaTransfer $userCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\UserTransfer|null
+     */
+    public function findUser(UserCriteriaTransfer $userCriteriaTransfer): ?UserTransfer
+    {
+        return $this->getFactory()
+            ->createUserModel()
+            ->findUser($userCriteriaTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -114,6 +146,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $firstName
@@ -131,6 +165,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $userTransfer
@@ -145,6 +181,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -159,6 +197,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -173,6 +213,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\UserTransfer
@@ -185,6 +227,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return bool
@@ -197,6 +241,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $password
@@ -212,6 +258,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UserTransfer $user
@@ -226,6 +274,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\CollectionTransfer
@@ -238,6 +288,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -252,6 +304,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -264,6 +318,8 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -273,5 +329,21 @@ class UserFacade extends AbstractFacade implements UserFacadeInterface
     public function deactivateUser($idUser)
     {
         return $this->getFactory()->createUserModel()->deactivateUser($idUser);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\MailTransfer $mailTransfer
+     *
+     * @return \Generated\Shared\Transfer\MailTransfer
+     */
+    public function expandMailWithUserData(MailTransfer $mailTransfer): MailTransfer
+    {
+        return $this->getFactory()
+            ->createMailExpander()
+            ->expandMailWithUserData($mailTransfer);
     }
 }

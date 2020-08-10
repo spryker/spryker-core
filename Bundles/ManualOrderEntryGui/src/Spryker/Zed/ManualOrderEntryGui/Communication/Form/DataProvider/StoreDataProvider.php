@@ -55,7 +55,8 @@ class StoreDataProvider implements FormDataProviderInterface
             $quoteTransfer->setManualOrder(new ManualOrderTransfer());
         }
 
-        if ($quoteTransfer->getStore() !== null
+        if (
+            $quoteTransfer->getStore() !== null
             && $quoteTransfer->getCurrency() !== null
         ) {
             $storeName = $quoteTransfer->getStore()->getName();

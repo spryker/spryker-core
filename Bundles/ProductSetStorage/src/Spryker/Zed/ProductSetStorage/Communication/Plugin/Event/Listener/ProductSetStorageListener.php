@@ -13,7 +13,8 @@ use Spryker\Zed\ProductSet\Dependency\ProductSetEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStoragePublishListener` and `\Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStoragePublishListener}
+ *   and {@link \Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\ProductSetStorage\Persistence\ProductSetStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductSetStorage\Communication\ProductSetStorageCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class ProductSetStorageListener extends AbstractPlugin implements EventBulkHandl
         $this->preventTransaction();
         $productSetIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE ||
+        if (
+            $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DELETE ||
             $eventName === ProductSetEvents::ENTITY_SPY_PRODUCT_SET_DATA_DELETE ||
             $eventName === ProductSetEvents::PRODUCT_SET_UNPUBLISH
         ) {

@@ -30,8 +30,10 @@ class ComposerJsonValidatorComposite implements ComposerJsonValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
-    public function validate(array $composerJsonArray, ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer): ComposerJsonValidationResponseTransfer
-    {
+    public function validate(
+        array $composerJsonArray,
+        ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer
+    ): ComposerJsonValidationResponseTransfer {
         foreach ($this->composerJsonValidator as $composerJsonValidator) {
             $composerJsonValidationResponseTransfer = $composerJsonValidator->validate($composerJsonArray, $composerJsonValidationResponseTransfer);
         }

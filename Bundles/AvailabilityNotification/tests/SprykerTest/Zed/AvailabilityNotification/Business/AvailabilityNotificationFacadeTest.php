@@ -117,12 +117,12 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testUnsubscribeByCustomerReferenceAndSkuShouldSucceed(): void
     {
-        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
-
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer(
             $this->tester->haveProduct(),
             $this->tester->haveCustomer()
         );
+
+        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
 
         $availabilityNotificationFacade->subscribe($availabilityNotificationSubscription);
 
@@ -154,11 +154,11 @@ class AvailabilityNotificationFacadeTest extends Unit
      */
     public function testAnonymize(): void
     {
-        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
-
         $product = $this->tester->haveProduct();
 
         $customer = $this->tester->haveCustomer();
+
+        $availabilityNotificationFacade = $this->getAvailabilityNotificationFacadeMock();
 
         $availabilityNotificationSubscription = $this->tester->haveAvailabilityNotificationSubscriptionTransfer($product, $customer);
 

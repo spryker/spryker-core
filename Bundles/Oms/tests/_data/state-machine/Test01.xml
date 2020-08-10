@@ -17,7 +17,7 @@
             </state>
             <state name="paid" reserved="true"/>
             <state name="exported" reserved="true"/>
-            <state name="shipped" reserved="true"/>
+            <state name="shipped" reserved="true" display="in progress"/>
             <state name="delivered"/>
             <state name="closed"/>
         </states>

@@ -97,7 +97,8 @@ class CompanyRoleReader implements CompanyRoleReaderInterface
             (new CompanyRoleTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
-        if (!$companyRoleResponseTransfer->getIsSuccessful()
+        if (
+            !$companyRoleResponseTransfer->getIsSuccessful()
             || !$this->isCurrentCompanyUserInCompany($restRequest, $companyRoleResponseTransfer->getCompanyRoleTransfer())
         ) {
             return $this->companyRoleRestResponseBuilder->createCompanyRoleNotFoundError();

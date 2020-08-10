@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ReturnReason">
+        <property name="idSalesReturnReason" type="int"/>
+        <property name="glossaryKeyReason" type="string"/>
+    </transfer>
+
+    <transfer name="Return">
+        <property name="idSalesReturn" type="int"/>
+        <property name="returnReference" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="store" type="string"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+        <property name="returnTotals" type="ReturnTotals"/>
+        <property name="createdAt" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnItem">
+        <property name="idSalesReturnItem" type="int"/>
+        <property name="idSalesReturn" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="reason" type="string"/>
+        <property name="orderItem" type="Item"/>
+    </transfer>
+
+    <transfer name="ReturnTotals">
+        <property name="refundTotal" type="int"/>
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="Totals">
+        <property name="remunerationTotal" type="int"/>
+    </transfer>
+
+    <transfer name="ReturnFilter">
+        <property name="returnReference" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="returnIds" singular="idReturn" type="int[]"/>
+        <property name="filter" type="Filter"/>
+    </transfer>
+
+    <transfer name="ReturnItemFilter">
+        <property name="returnIds" type="array" singular="idReturn"/>
+    </transfer>
+
+    <transfer name="ReturnReasonFilter">
+        <property name="filter" type="Filter"/>
+        <property name="returnReasonIds" type="int[]" singular="returnReasonId"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnCreateRequest">
+        <property name="store" type="string"/>
+        <property name="customer" type="Customer"/>
+        <property name="returnItems" type="ReturnItem[]" singular="returnItem"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="uuid" type="string"/>
+        <property name="remunerationAmount" type="int"/>
+        <property name="refundableAmount" type="int"/>
+        <property name="canceledAmount" type="int"/>
+        <property name="state" type="ItemState"/>
+        <property name="createdAt" type="string"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="returnPolicyMessages" type="Message[]"  singular="returnPolicyMessage"/>
+        <property name="currencyIsoCode" type="string"/>
+    </transfer>
+
+    <transfer name="ReturnReasonCollection">
+        <property name="returnReasons" type="ReturnReason[]" singular="returnReason"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ReturnCollection">
+        <property name="returns" type="Return[]" singular="return"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ReturnResponse">
+        <property name="return" type="Return"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="Order">
+        <property name="totals" type="Totals"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
+    <transfer name="ItemState">
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

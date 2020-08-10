@@ -30,8 +30,10 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      * @param \Spryker\Zed\ProductOption\Business\OptionGroup\ProductOptionValuePriceReaderInterface $productOptionValuePriceReader
      * @param \Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface $productOptionQueryContainer
      */
-    public function __construct(ProductOptionValuePriceReaderInterface $productOptionValuePriceReader, ProductOptionQueryContainerInterface $productOptionQueryContainer)
-    {
+    public function __construct(
+        ProductOptionValuePriceReaderInterface $productOptionValuePriceReader,
+        ProductOptionQueryContainerInterface $productOptionQueryContainer
+    ) {
         $this->productOptionValuePriceReader = $productOptionValuePriceReader;
         $this->productOptionQueryContainer = $productOptionQueryContainer;
     }
@@ -78,8 +80,9 @@ class ProductOptionValueReader implements ProductOptionValueReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
      */
-    public function getProductOptionCollectionByProductOptionCriteria(ProductOptionCriteriaTransfer $productOptionCriteriaTransfer): ProductOptionCollectionTransfer
-    {
+    public function getProductOptionCollectionByProductOptionCriteria(
+        ProductOptionCriteriaTransfer $productOptionCriteriaTransfer
+    ): ProductOptionCollectionTransfer {
         $productOptionValueEntities = $this->productOptionQueryContainer
             ->queryProductOptionByProductOptionCriteria($productOptionCriteriaTransfer)
             ->find();

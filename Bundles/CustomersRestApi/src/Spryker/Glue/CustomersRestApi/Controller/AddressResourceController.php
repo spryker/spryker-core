@@ -24,8 +24,7 @@ class AddressResourceController extends AbstractController
      *              "Retrieves customer address by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Address not found."
@@ -36,8 +35,7 @@ class AddressResourceController extends AbstractController
      *              "Retrieves list of all customer addresses."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Customer not found.",
@@ -65,8 +63,7 @@ class AddressResourceController extends AbstractController
      *              "Creates customer address."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "403": "Unauthorized request.",
@@ -95,8 +92,7 @@ class AddressResourceController extends AbstractController
      *              "Updates customer address."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Address id is not specified.",
@@ -125,8 +121,7 @@ class AddressResourceController extends AbstractController
      *              "Deletes customer address."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Address id is not specified.",

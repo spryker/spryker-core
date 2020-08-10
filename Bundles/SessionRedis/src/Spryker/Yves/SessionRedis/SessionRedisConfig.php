@@ -20,6 +20,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     public const SESSION_REDIS_CONNECTION_KEY = 'SESSION_YVES';
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getSessionLifetime(): int
@@ -28,6 +30,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingTimeoutMilliseconds(): int
@@ -36,6 +40,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingRetryDelayMicroseconds(): int
@@ -44,6 +50,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingLockTtlMilliseconds(): int
@@ -52,6 +60,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\RedisConfigurationTransfer
      */
     public function getRedisConnectionConfiguration(): RedisConfigurationTransfer
@@ -69,6 +79,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRedisConnectionKey(): string
@@ -77,6 +89,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerRedisName(): string
@@ -85,6 +99,8 @@ class SessionRedisConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerRedisLockingName(): string

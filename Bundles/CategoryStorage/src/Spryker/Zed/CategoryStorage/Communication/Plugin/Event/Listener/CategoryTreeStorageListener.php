@@ -13,7 +13,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener` and `\Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStoragePublishListener}
+ *   and {@link \Spryker\Zed\CategoryStorage\Communication\Plugin\Event\Listener\CategoryTreeStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\CategoryStorage\Persistence\CategoryStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\CategoryStorage\Communication\CategoryStorageCommunicationFactory getFactory()
@@ -35,7 +36,8 @@ class CategoryTreeStorageListener extends AbstractPlugin implements EventBulkHan
     public function handleBulk(array $eventTransfers, $eventName)
     {
         $this->preventTransaction();
-        if ($eventName === CategoryEvents::CATEGORY_TREE_UNPUBLISH
+        if (
+            $eventName === CategoryEvents::CATEGORY_TREE_UNPUBLISH
         ) {
             $this->getFacade()->unpublishCategoryTree();
 

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductSearchConfigStorageQueryContainer extends AbstractQueryContainer implements ProductSearchConfigStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearchConfigStorage\Persistence\SpyProductSearchConfigStorageQuery

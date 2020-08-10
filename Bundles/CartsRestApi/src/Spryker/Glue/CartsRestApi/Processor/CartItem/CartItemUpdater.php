@@ -123,6 +123,7 @@ class CartItemUpdater implements CartItemUpdaterInterface
             ->setQuantity($restCartItemsAttributesTransfer->getQuantity())
             ->setQuoteUuid($uuidQuote)
             ->setSku($itemIdentifier)
+            ->setGroupKey($itemIdentifier)
             ->setCustomer($customerTransfer);
     }
 }

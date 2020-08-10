@@ -41,9 +41,9 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
      */
     public function addShipmentFacade(Container $container)
     {
-        $container[static::FACADE_SHIPMENT] = function (Container $container) {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new ShipmentCheckoutConnectorToShipmentFacadeBridge($container->getLocator()->shipment()->facade());
-        };
+        });
 
         return $container;
     }

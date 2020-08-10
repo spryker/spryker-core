@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class AuthQueryContainer extends AbstractQueryContainer implements AuthQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Auth\Persistence\SpyResetPasswordQuery
@@ -26,6 +28,8 @@ class AuthQueryContainer extends AbstractQueryContainer implements AuthQueryCont
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $code

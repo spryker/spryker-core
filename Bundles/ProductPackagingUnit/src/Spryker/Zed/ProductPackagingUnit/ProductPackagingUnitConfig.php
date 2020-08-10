@@ -27,6 +27,8 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductPackagingUnitTypeTransfer[]
      */
     public function getInfrastructuralPackagingUnitTypes(): array
@@ -40,6 +42,8 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getInfrastructuralProductPackagingUnitTypeNames(): array
@@ -48,6 +52,8 @@ class ProductPackagingUnitConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultProductPackagingUnitTypeName(): string

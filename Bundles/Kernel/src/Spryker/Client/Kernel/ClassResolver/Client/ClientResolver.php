@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\ClassResolver\AbstractClassResolver;
 
 class ClientResolver extends AbstractClassResolver
 {
-    public const CLASS_NAME_PATTERN = '\\%1$s\\Client\\%2$s%3$s\\%2$sClient';
+    protected const RESOLVABLE_TYPE = 'ClientClient';
 
     /**
      * @param object|string $callerClass
@@ -22,27 +22,12 @@ class ClientResolver extends AbstractClassResolver
      */
     public function resolve($callerClass)
     {
-        $this->setCallerClass($callerClass);
-        if ($this->canResolve()) {
-            /** @var \Spryker\Client\Kernel\AbstractClient $class */
-            $class = $this->getResolvedClassInstance();
+        $resolved = $this->doResolve($callerClass);
 
-            return $class;
+        if ($resolved !== null) {
+            return $resolved;
         }
 
         throw new ClientNotFoundException($this->getClassInfo());
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassPattern()
-    {
-        return sprintf(
-            self::CLASS_NAME_PATTERN,
-            self::KEY_NAMESPACE,
-            self::KEY_BUNDLE,
-            self::KEY_STORE
-        );
     }
 }

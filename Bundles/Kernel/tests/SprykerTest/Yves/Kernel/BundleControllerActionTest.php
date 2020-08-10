@@ -8,7 +8,7 @@
 namespace SprykerTest\Yves\Kernel;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Kernel\ClassResolver\BundleNameResolver;
+use Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver;
 use Spryker\Yves\Kernel\BundleControllerAction;
 
 /**
@@ -54,13 +54,13 @@ class BundleControllerActionTest extends Unit
     {
         $mock = $this
             ->getMockBuilder(BundleControllerAction::class)
-            ->setMethods(['getBundleNameResolver'])
+            ->setMethods(['getModuleNameResolver'])
             ->setConstructorArgs([$bundle, $controller, $action])
             ->getMock();
 
         $mock
-            ->method('getBundleNameResolver')
-            ->will($this->returnValue($this->getBundleNameResolverMock($storeName)));
+            ->method('getModuleNameResolver')
+            ->will($this->returnValue($this->getModuleNameResolverMock($storeName)));
 
         return $mock;
     }
@@ -68,12 +68,12 @@ class BundleControllerActionTest extends Unit
     /**
      * @param string $storeName
      *
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\BundleNameResolver
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Shared\Kernel\ClassResolver\ModuleNameResolver
      */
-    protected function getBundleNameResolverMock(string $storeName): BundleNameResolver
+    protected function getModuleNameResolverMock(string $storeName): ModuleNameResolver
     {
         $mock = $this
-            ->getMockBuilder(BundleNameResolver::class)
+            ->getMockBuilder(ModuleNameResolver::class)
             ->setMethods(['getStoreName'])
             ->getMock();
 

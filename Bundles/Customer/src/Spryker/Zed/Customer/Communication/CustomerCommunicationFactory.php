@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Communication;
 
 use Spryker\Zed\Customer\Communication\Form\AddressForm;
+use Spryker\Zed\Customer\Communication\Form\CustomerDeleteForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerForm;
 use Spryker\Zed\Customer\Communication\Form\CustomerUpdateForm;
 use Spryker\Zed\Customer\Communication\Form\DataProvider\AddressFormDataProvider;
@@ -19,6 +20,7 @@ use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpande
 use Spryker\Zed\Customer\Communication\Table\PluginExecutor\CustomerTableExpanderPluginExecutorInterface;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Customer\Persistence\CustomerQueryContainerInterface getQueryContainer()
@@ -60,6 +62,14 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     public function createCustomerForm(array $data = [], array $options = [])
     {
         return $this->getFormFactory()->create(CustomerForm::class, $data, $options);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function getCustomerDeleteForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CustomerDeleteForm::class);
     }
 
     /**
@@ -121,7 +131,7 @@ class CustomerCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Please use `getLocaleFacadePublic()` instead.
+     * @deprecated Use {@link getLocaleFacadePublic()} instead.
      *
      * @return \Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface
      */

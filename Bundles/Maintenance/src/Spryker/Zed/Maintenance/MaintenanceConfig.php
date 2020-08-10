@@ -15,6 +15,8 @@ class MaintenanceConfig extends AbstractBundleConfig
      * Specification:
      * - Directory to which the marker file will be written.
      *
+     * @api
+     *
      * @return string
      */
     public function getMaintenanceMarkerDirZed()
@@ -25,6 +27,8 @@ class MaintenanceConfig extends AbstractBundleConfig
     /**
      * Specification:
      * - Directory to which the marker file will be written.
+     *
+     * @api
      *
      * @return string
      */

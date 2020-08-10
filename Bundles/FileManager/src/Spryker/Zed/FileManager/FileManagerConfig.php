@@ -15,6 +15,8 @@ class FileManagerConfig extends AbstractBundleConfig
     protected const FILE_NAME_VERSION_DELIMITER = '-';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getStorageName()
@@ -23,6 +25,8 @@ class FileManagerConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getFileNameVersionDelimiter()

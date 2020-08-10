@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\SpySalesOrderItemEntityTransfer;
 use Spryker\Zed\ProductMeasurementUnit\Business\Model\Translation\ProductMeasurementUnitTranslationExpanderInterface;
 use Spryker\Zed\ProductMeasurementUnit\Persistence\ProductMeasurementUnitRepositoryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class OrderExpander implements OrderExpanderInterface
 {
     /**
@@ -99,8 +102,10 @@ class OrderExpander implements OrderExpanderInterface
      *
      * @return \Generated\Shared\Transfer\ProductMeasurementUnitTransfer
      */
-    protected function createProductMeasurementUnitTransfer(?string $productMeasurementUnitName, ?string $productMeasurementUnitCode = null): ProductMeasurementUnitTransfer
-    {
+    protected function createProductMeasurementUnitTransfer(
+        ?string $productMeasurementUnitName,
+        ?string $productMeasurementUnitCode = null
+    ): ProductMeasurementUnitTransfer {
         $productMeasurementUnitTransfer = new ProductMeasurementUnitTransfer();
         $productMeasurementUnitTransfer->setName($productMeasurementUnitName ?: '');
 

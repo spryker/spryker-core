@@ -15,6 +15,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use Spryker\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
 {
     /**
@@ -161,9 +164,12 @@ class ProductOptionOrderHydrate implements ProductOptionOrderHydrateInterface
      */
     protected function getIdProductOptionValue(SpySalesOrderItemOption $orderItemOptionEntity): ?int
     {
-        return $this->productOptionQueryContainer
+        /** @var int|null $idProductOptionValue */
+        $idProductOptionValue = $this->productOptionQueryContainer
             ->queryProductOptionValueBySku($orderItemOptionEntity->getSku())
             ->select(SpyProductOptionValueTableMap::COL_ID_PRODUCT_OPTION_VALUE)
             ->findOne();
+
+        return $idProductOptionValue;
     }
 }

@@ -1,23 +1,24 @@
-Warehouses,Warehouses
-Administration,Administration
-Name,Name
-"Warehouse ID","Warehouse ID"
-"Available in store","Available in store"
-Status,Status
 Actions,Actions
 Active,Active
-Inactive,Inactive
-"View Warehouse: ","View Warehouse: "
-Configuration,Configuration
-"Is this warehouse available?","Is this warehouse available?"
-Yes,Yes
-No,No
-"Store relation","Store relation"
+Administration,Administration
+"Available in store","Available in store"
 "Available in the following store(s)","Available in the following store(s)"
-View,View
+Configuration,Configuration
 "Create Warehouse","Create Warehouse"
-"Warehouse has been successfully saved","Warehouse has been successfully saved"
-"This name is already in use.","This name is already in use."
-"Warehouse has been successfully updated","Warehouse has been successfully updated"
-"Stock not found","Stock not found"
 "Edit Warehouse","Edit Warehouse"
+Inactive,Inactive
+"Is this warehouse available?","Is this warehouse available?"
+Name,Name
+No,No
+Status,Status
+"Stock not found","Stock not found"
+"Store relation","Store relation"
+"Store Relation","Store Relation"
+"This name is already in use.","This name is already in use."
+View,View
+"View Warehouse: ","View Warehouse: "
+"Warehouse has been successfully saved","Warehouse has been successfully saved"
+"Warehouse has been successfully updated","Warehouse has been successfully updated"
+"Warehouse ID","Warehouse ID"
+Warehouses,Warehouses
+Yes,Yes

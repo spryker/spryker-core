@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\NavigationGui\Communication\Form\DataProvider;
 
-use Generated\Shared\Transfer\NavigationTransfer;
+use Generated\Shared\Transfer\NavigationCriteriaTransfer;
 use Spryker\Zed\NavigationGui\Dependency\Facade\NavigationGuiToNavigationInterface;
 
 class NavigationFormDataProvider
@@ -32,10 +32,10 @@ class NavigationFormDataProvider
      */
     public function getData($idNavigation = null)
     {
-        $navigationTransfer = new NavigationTransfer();
-        $navigationTransfer->setIdNavigation($idNavigation);
+        $navigationCriteriaTransfer = new NavigationCriteriaTransfer();
+        $navigationCriteriaTransfer->setIdNavigation($idNavigation);
 
-        return $this->navigationFacade->findNavigation($navigationTransfer);
+        return $this->navigationFacade->findNavigationByCriteria($navigationCriteriaTransfer);
     }
 
     /**

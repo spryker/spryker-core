@@ -97,8 +97,9 @@ class ProductMeasurementUnitDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementSalesUnitEntityTransfer
      */
-    protected function storeProductMeasurementSalesUnit(SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer): SpyProductMeasurementSalesUnitEntityTransfer
-    {
+    protected function storeProductMeasurementSalesUnit(
+        SpyProductMeasurementSalesUnitEntityTransfer $salesUnitEntityTransfer
+    ): SpyProductMeasurementSalesUnitEntityTransfer {
         $spySalesUnitEntity = new SpyProductMeasurementSalesUnit();
         $spySalesUnitEntity->fromArray($salesUnitEntityTransfer->modifiedToArray());
         $spySalesUnitEntity->save();
@@ -152,8 +153,9 @@ class ProductMeasurementUnitDataHelper extends Module
      *
      * @return \Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer
      */
-    protected function storeProductMeasurementUnit(SpyProductMeasurementUnitEntityTransfer $productMeasurementUnitEntity): SpyProductMeasurementUnitEntityTransfer
-    {
+    protected function storeProductMeasurementUnit(
+        SpyProductMeasurementUnitEntityTransfer $productMeasurementUnitEntity
+    ): SpyProductMeasurementUnitEntityTransfer {
         $spyProductMeasurementUnitEntity = $this->getProductMeasurementUnitQuery()
             ->filterByCode($productMeasurementUnitEntity->getCode())
             ->findOneOrCreate();

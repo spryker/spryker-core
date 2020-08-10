@@ -21,14 +21,13 @@ class CreateController extends AbstractController
 {
     protected const PARAM_ID_PRODUCT = 'idProduct';
     protected const PARAM_ID_PRODUCT_ABSTRACT = 'idProductAbstract';
-    protected const TITLE_PRODUCT_ABSTRACT_PATTERN = 'Edit Product Abstract: %s';
-    protected const TITLE_PRODUCT_CONCRETE_PATTERN = 'Edit Product Concrete: %s';
     protected const REDIRECT_URL_PRODUCT_CONCRETE_PATTERN = '/product-management/edit/variant?id-product=%s&id-product-abstract=%s#tab-content-scheduled_prices';
     protected const REDIRECT_URL_PRODUCT_ABSTRACT_PATTERN = '/product-management/edit?id-product-abstract=%s#tab-content-scheduled_prices';
     protected const MESSAGE_SUCCESS = 'Scheduled price has been successfully saved';
     protected const KEY_TITLE = 'title';
     protected const KEY_FORM = 'form';
     protected const KEY_REDIRECT_URL = 'redirectUrl';
+    protected const KEY_ID_PRODUCT = 'idProduct';
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -53,9 +52,14 @@ class CreateController extends AbstractController
             return $this->handleSubmitForm($form, $redirectUrl);
         }
 
+        [$title, $idProduct] = $this->getFactory()
+            ->createPriceProductScheduleDataExtractor()
+            ->extractTitleAndIdProductFromPriceProductScheduleTransfer($priceProductScheduleTransfer);
+
         return $this->viewResponse([
             static::KEY_FORM => $form->createView(),
-            static::KEY_TITLE => $this->getTitleFromRequest($request),
+            static::KEY_TITLE => $title,
+            static::KEY_ID_PRODUCT => $idProduct,
             static::KEY_REDIRECT_URL => $redirectUrl,
         ]);
     }
@@ -93,11 +97,13 @@ class CreateController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\PriceProductScheduleTransfer
      */
-    protected function setProductIdentifierFromRequest(Request $request, PriceProductScheduleTransfer $priceProductScheduleTransfer): PriceProductScheduleTransfer
-    {
+    protected function setProductIdentifierFromRequest(
+        Request $request,
+        PriceProductScheduleTransfer $priceProductScheduleTransfer
+    ): PriceProductScheduleTransfer {
         $priceProductTransfer = new PriceProductTransfer();
-        $idProduct = $request->query->get(static::PARAM_ID_PRODUCT);
-        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
+        $idProduct = $request->query->getInt(static::PARAM_ID_PRODUCT) ?: null;
+        $idProductAbstract = $request->query->getInt(static::PARAM_ID_PRODUCT_ABSTRACT) ?: null;
         $priceProductTransfer = $this->setProductIdentifierToPriceProductTransfer(
             $priceProductTransfer,
             $idProduct,
@@ -124,23 +130,6 @@ class CreateController extends AbstractController
         }
 
         return $priceProductTransfer->setIdProduct($idProduct);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return string
-     */
-    protected function getTitleFromRequest(Request $request): string
-    {
-        $idProductConcrete = $request->query->get(static::PARAM_ID_PRODUCT);
-        if ($idProductConcrete !== null) {
-            return sprintf(static::TITLE_PRODUCT_CONCRETE_PATTERN, $idProductConcrete);
-        }
-
-        $idProductAbstract = $request->query->get(static::PARAM_ID_PRODUCT_ABSTRACT);
-
-        return sprintf(static::TITLE_PRODUCT_ABSTRACT_PATTERN, $idProductAbstract);
     }
 
     /**

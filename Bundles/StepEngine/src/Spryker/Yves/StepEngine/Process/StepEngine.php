@@ -35,18 +35,26 @@ class StepEngine implements StepEngineInterface
     protected $stepBreadcrumbGenerator;
 
     /**
+     * @var \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[]
+     */
+    protected $stepEnginePreRenderPlugins;
+
+    /**
      * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
      * @param \Spryker\Yves\StepEngine\Dependency\DataContainer\DataContainerInterface $dataContainer
      * @param \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface|null $stepBreadcrumbGenerator
+     * @param \Spryker\Yves\StepEngineExtension\Dependency\Plugin\StepEnginePreRenderPluginInterface[] $stepEnginePreRenderPlugins
      */
     public function __construct(
         StepCollectionInterface $stepCollection,
         DataContainerInterface $dataContainer,
-        ?StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null
+        ?StepBreadcrumbGeneratorInterface $stepBreadcrumbGenerator = null,
+        array $stepEnginePreRenderPlugins = []
     ) {
         $this->stepCollection = $stepCollection;
         $this->dataContainer = $dataContainer;
         $this->stepBreadcrumbGenerator = $stepBreadcrumbGenerator;
+        $this->stepEnginePreRenderPlugins = $stepEnginePreRenderPlugins;
     }
 
     /**
@@ -90,6 +98,8 @@ class StepEngine implements StepEngineInterface
         if (!$this->isRequestedStep($request, $currentStep)) {
             return $this->createRedirectResponse($this->stepCollection->getCurrentUrl($currentStep));
         }
+
+        $dataTransfer = $this->executeStepEnginePreRenderPlugins($dataTransfer);
 
         if (!$formCollection) {
             $dataTransfer = $this->executeWithoutInput($currentStep, $request, $dataTransfer);
@@ -198,5 +208,19 @@ class StepEngine implements StepEngineInterface
         }
 
         return $templateVariables;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $dataTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected function executeStepEnginePreRenderPlugins(AbstractTransfer $dataTransfer): AbstractTransfer
+    {
+        foreach ($this->stepEnginePreRenderPlugins as $stepEnginePreRenderPlugin) {
+            $dataTransfer = $stepEnginePreRenderPlugin->execute($dataTransfer);
+        }
+
+        return $dataTransfer;
     }
 }

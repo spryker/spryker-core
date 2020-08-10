@@ -55,8 +55,9 @@ class ProductListProductConcreteRelationWriter implements ProductListProductConc
      *
      * @return \Generated\Shared\Transfer\ProductListProductConcreteRelationTransfer
      */
-    protected function executeSaveProductListProductConcreteRelationTransaction(ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer): ProductListProductConcreteRelationTransfer
-    {
+    protected function executeSaveProductListProductConcreteRelationTransaction(
+        ProductListProductConcreteRelationTransfer $productListProductConcreteRelationTransfer
+    ): ProductListProductConcreteRelationTransfer {
         $productListProductConcreteRelationTransfer->requireIdProductList();
         $idProductList = $productListProductConcreteRelationTransfer->getIdProductList();
 

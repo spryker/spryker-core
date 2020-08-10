@@ -12,8 +12,9 @@ use Generated\Shared\Transfer\UserTransfer;
 use Spryker\Service\Container\Container;
 use Spryker\Shared\EventDispatcher\EventDispatcher;
 use Spryker\Zed\Acl\Communication\Plugin\EventDispatcher\AccessControlEventDispatcherPlugin;
+use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -105,16 +106,36 @@ class AccessControlEventDispatcherPluginTest extends Unit
     /**
      * @param \Spryker\Zed\Acl\Communication\Plugin\EventDispatcher\AccessControlEventDispatcherPlugin $accessControlEventDispatcherPlugin
      *
-     * @return \Symfony\Component\HttpKernel\Event\GetResponseEvent
+     * @return \Symfony\Component\HttpKernel\Event\RequestEvent
      */
-    protected function dispatchEvent(AccessControlEventDispatcherPlugin $accessControlEventDispatcherPlugin): GetResponseEvent
+    protected function dispatchEvent(AccessControlEventDispatcherPlugin $accessControlEventDispatcherPlugin): RequestEvent
     {
         $eventDispatcher = new EventDispatcher();
-        $accessControlEventDispatcherPlugin->extend($eventDispatcher, new Container());
+        $container = new Container();
+        $accessControlEventDispatcherPlugin->extend($eventDispatcher, $container);
 
-        /** @var \Symfony\Component\HttpKernel\Event\GetResponseEvent $event */
-        $event = $eventDispatcher->dispatch($this->tester->getResponseEvent(), KernelEvents::REQUEST);
+        $requestAttributesEventDispatcherPluginMock = $this->getRequestAttributesEventDispatcherPluginMock();
+        $requestAttributesEventDispatcherPluginMock->extend($eventDispatcher, $container);
+
+        /** @var \Symfony\Component\HttpKernel\Event\RequestEvent $event */
+        $event = $eventDispatcher->dispatch($this->tester->getRequestEvent(), KernelEvents::REQUEST);
 
         return $event;
+    }
+
+    /**
+     * @param bool $isCliRequest
+     *
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin
+     */
+    protected function getRequestAttributesEventDispatcherPluginMock(bool $isCliRequest = false): RequestAttributesEventDispatcherPlugin
+    {
+        $requestAttributesEventDispatcherPluginMock = $this->getMockBuilder(RequestAttributesEventDispatcherPlugin::class)
+            ->onlyMethods(['isCli'])
+            ->getMock();
+
+        $requestAttributesEventDispatcherPluginMock->method('isCli')->willReturn($isCliRequest);
+
+        return $requestAttributesEventDispatcherPluginMock;
     }
 }

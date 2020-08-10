@@ -19,6 +19,8 @@ class ShoppingListConfig extends AbstractBundleConfig
     protected const DEFAULT_SHOPPING_LIST_NAME = 'Shopping List';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultShoppingListName(): string
@@ -27,6 +29,8 @@ class ShoppingListConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ShoppingListPermissionGroupTransfer[]
      */
     public function getShoppingListPermissionGroups(): array

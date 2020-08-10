@@ -19,7 +19,7 @@ class TestifyFacade extends AbstractFacade implements TestifyFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function cleanUpOutputDirectories(): array
     {

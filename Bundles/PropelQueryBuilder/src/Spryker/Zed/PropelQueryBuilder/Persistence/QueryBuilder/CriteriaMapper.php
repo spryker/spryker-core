@@ -222,6 +222,7 @@ class CriteriaMapper implements CriteriaMapperInterface
             $criterion = $this->createCriterion($criteria, $multiRule, $operator);
             if (!$lastCriterion) {
                 $lastCriterion = $criterion;
+
                 continue;
             }
 

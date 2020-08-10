@@ -28,6 +28,8 @@ use Spryker\Zed\ProductPageSearch\Business\ProductConcretePageSearchWriter\Produ
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductAbstractPagePublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisher;
 use Spryker\Zed\ProductPageSearch\Business\Publisher\ProductConcretePageSearchPublisherInterface;
+use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReader;
+use Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisher;
 use Spryker\Zed\ProductPageSearch\Business\Unpublisher\ProductConcretePageSearchUnpublisherInterface;
 use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToPriceProductInterface;
@@ -55,7 +57,9 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getProductPageDataLoaderPlugins(),
             $this->createProductPageMapper(),
             $this->createProductPageWriter(),
-            $this->getStoreFacade()
+            $this->getConfig(),
+            $this->getStoreFacade(),
+            $this->createAddToCartSkuReader()
         );
     }
 
@@ -71,6 +75,7 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getUtilEncoding(),
             $this->createProductConcreteSearchDataMapper(),
             $this->getStoreFacade(),
+            $this->getConfig(),
             $this->getProductConcretePageDataExpanderPlugins()
         );
     }
@@ -139,6 +144,17 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
     {
         return new ProductPageAttribute(
             $this->getProductFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearch\Business\Reader\AddToCartSkuReaderInterface
+     */
+    public function createAddToCartSkuReader(): AddToCartSkuReaderInterface
+    {
+        return new AddToCartSkuReader(
+            $this->getRepository(),
+            $this->getProductAbstractAddToCartPlugins()
         );
     }
 
@@ -290,5 +306,13 @@ class ProductPageSearchBusinessFactory extends AbstractBusinessFactory
             $this->getPriceProductFacade(),
             $this->getStoreFacade()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductPageSearchExtension\Dependency\Plugin\ProductAbstractAddToCartPluginInterface[]
+     */
+    public function getProductAbstractAddToCartPlugins(): array
+    {
+        return $this->getProvidedDependency(ProductPageSearchDependencyProvider::PLUGINS_PRODUCT_ABSTRACT_ADD_TO_CART);
     }
 }

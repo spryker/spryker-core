@@ -8,7 +8,7 @@
 namespace Spryker\Yves\Currency\CurrencyChange;
 
 /**
- * @deprecated Use \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface instead.
+ * @deprecated Use {@link \Spryker\Client\CurrencyExtension\Dependency\CurrencyPostChangePluginInterface} instead.
  */
 interface CurrencyPostChangePluginExecutorInterface
 {

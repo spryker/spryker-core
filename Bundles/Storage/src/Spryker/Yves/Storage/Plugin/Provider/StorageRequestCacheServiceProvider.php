@@ -13,7 +13,7 @@ use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @deprecated Use \Spryker\Yves\Storage\Plugin\Provider\StorageCacheServiceProvider instead.
+ * @deprecated Use {@link \Spryker\Yves\Storage\Plugin\Provider\StorageCacheServiceProvider} instead.
  *
  * @method \Spryker\Client\Storage\StorageClientInterface getClient()
  */

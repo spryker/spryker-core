@@ -49,19 +49,19 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
      */
     public function getApproversList(QuoteTransfer $quoteTransfer): CompanyUserCollectionTransfer
     {
-        $approverIds = $this->getApproversIds();
-        $quoteTransfer->requireCustomer();
+        $quoteTransfer
+            ->requireCustomer()
+            ->getCustomer()
+                ->requireCompanyUserTransfer();
 
-        $customer = $quoteTransfer->getCustomer();
-        $customer->requireCompanyUserTransfer();
+        $companyUserTransfer = $quoteTransfer->getCustomer()->getCompanyUserTransfer();
 
-        $companyUser = $customer->getCompanyUserTransfer();
-        $idBusinessUnit = $companyUser->getFkCompanyBusinessUnit();
+        $approverIds = $this->getApproversIds($companyUserTransfer->getFkCompany());
 
-        $quoteApproverList = $this->getCompanyUserCollectionByIds($approverIds);
-        $quoteApproverList = $this->filterByBusinessUnit($quoteApproverList, $idBusinessUnit);
+        $companyUserCollectionTransfer = $this->getCompanyUserCollectionByIds($approverIds);
+        $companyUserCollectionTransfer = $this->filterByBusinessUnit($companyUserCollectionTransfer, $companyUserTransfer->getFkCompanyBusinessUnit());
 
-        return $quoteApproverList;
+        return $companyUserCollectionTransfer;
     }
 
     /**
@@ -103,10 +103,12 @@ class QuoteApproverListProvider implements QuoteApproverListProviderInterface
     }
 
     /**
+     * @param int|null $idCompany
+     *
      * @return int[]
      */
-    protected function getApproversIds(): array
+    protected function getApproversIds(?int $idCompany = null): array
     {
-        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey(ApproveQuotePermissionPlugin::KEY);
+        return $this->companyRoleFacade->getCompanyUserIdsByPermissionKey(ApproveQuotePermissionPlugin::KEY, $idCompany);
     }
 }

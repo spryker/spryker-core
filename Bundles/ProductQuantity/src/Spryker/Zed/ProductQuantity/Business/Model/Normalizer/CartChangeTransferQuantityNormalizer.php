@@ -101,8 +101,11 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
-    protected function normalizeItemTransfer(ItemTransfer $itemTransfer, ProductQuantityTransfer $productQuantityTransfer, int $totalQuantityByGroupKey): ItemTransfer
-    {
+    protected function normalizeItemTransfer(
+        ItemTransfer $itemTransfer,
+        ProductQuantityTransfer $productQuantityTransfer,
+        int $totalQuantityByGroupKey
+    ): ItemTransfer {
         $nearestQuantity = $this->productQuantityService->getNearestQuantity($productQuantityTransfer, $totalQuantityByGroupKey);
         $totalQuantityByGroupKeyAfterAdjustment = $totalQuantityByGroupKey - $itemTransfer->getQuantity() + $nearestQuantity;
 
@@ -152,8 +155,6 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
      */
     protected function getItemAddCartQuantityMap(CartChangeTransfer $cartChangeTransfer): array
     {
-        $quoteQuantityMapByGroupKey = $this->getQuoteQuantityMap($cartChangeTransfer);
-
         $cartQuantityMap = [];
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if (!$this->isItemTransferNormalizable($itemTransfer)) {
@@ -161,31 +162,9 @@ class CartChangeTransferQuantityNormalizer implements CartChangeTransferQuantity
             }
             $productGroupKey = $itemTransfer->getGroupKey();
             $cartQuantityMap[$productGroupKey] = $itemTransfer->getQuantity();
-
-            if (isset($quoteQuantityMapByGroupKey[$productGroupKey])) {
-                $cartQuantityMap[$productGroupKey] += $quoteQuantityMapByGroupKey[$productGroupKey];
-            }
         }
 
         return $cartQuantityMap;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
-     *
-     * @return array
-     */
-    protected function getQuoteQuantityMap(CartChangeTransfer $cartChangeTransfer): array
-    {
-        $quoteQuantityMap = [];
-        foreach ($cartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
-            if (!$this->isItemTransferNormalizable($itemTransfer)) {
-                continue;
-            }
-            $quoteQuantityMap[$itemTransfer->getGroupKey()] = $itemTransfer->getQuantity();
-        }
-
-        return $quoteQuantityMap;
     }
 
     /**

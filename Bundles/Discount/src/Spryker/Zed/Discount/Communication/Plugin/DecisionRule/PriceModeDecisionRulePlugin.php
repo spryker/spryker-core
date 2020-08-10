@@ -24,6 +24,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithValueOptionsPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -37,12 +39,13 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isPriceModeDecisionRuleSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -53,6 +56,8 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -65,9 +70,11 @@ class PriceModeDecisionRulePlugin extends AbstractPlugin implements DecisionRule
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getQueryStringValueOptions()
     {

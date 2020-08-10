@@ -49,7 +49,7 @@ class EditPageController extends AbstractController
         $cmsPageTransfer = $cmsPageFormTypeDataProvider->getData($idCmsPage);
 
         if ($cmsPageTransfer === null) {
-            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ["%s" => $idCmsPage]);
+            $this->addErrorMessage("'Cms page with id %s doesn't exist'", ['%s' => $idCmsPage]);
 
             return $this->redirectResponse($this->getFactory()->getConfig()->getDefaultRedirectUrl());
         }
@@ -82,6 +82,8 @@ class EditPageController extends AbstractController
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
+        $publishForm = $this->getFactory()->createPublishVersionPageForm();
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -90,6 +92,7 @@ class EditPageController extends AbstractController
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'publishForm' => $publishForm->createView(),
         ];
     }
 
@@ -146,6 +149,14 @@ class EditPageController extends AbstractController
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
+        $form = $this->getFactory()->createActivateCmsPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         try {
             $this->getFactory()
                 ->getCmsFacade()
@@ -168,6 +179,14 @@ class EditPageController extends AbstractController
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+
+        $form = $this->getFactory()->createDeactivateCmsPageForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid.');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $this->getFactory()
             ->getCmsFacade()

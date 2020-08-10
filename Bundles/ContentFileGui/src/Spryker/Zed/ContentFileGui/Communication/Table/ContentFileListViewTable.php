@@ -26,7 +26,7 @@ class ContentFileListViewTable extends AbstractTable
     public const COL_FILE_NAME = 'file_name';
 
     /**
-     * @deprecated Use Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable::COL_ACTIONS instead.
+     * @deprecated Use {@link \Spryker\Zed\ContentFileGui\Communication\Table\ContentFileListViewTable::COL_ACTIONS} instead.
      */
     public const COL_SELECTED = 'Actions';
     public const COL_ACTIONS = 'Actions';

@@ -18,6 +18,8 @@ class CmsBlockConfig extends AbstractBundleConfig
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPlaceholderPattern(): string
@@ -26,6 +28,8 @@ class CmsBlockConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPlaceholderValuePattern(): string
@@ -34,6 +38,8 @@ class CmsBlockConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $templateRelativePath
      *
      * @return array
@@ -74,6 +80,8 @@ class CmsBlockConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getThemeNames(): array
@@ -87,6 +95,23 @@ class CmsBlockConfig extends AbstractBundleConfig
         return [
             $this->getThemeName(),
             $this->getThemeNameDefault(),
+        ];
+    }
+
+    /**
+     * @api
+     *
+     * @return string[]
+     */
+    public function getCmsBlockTemplatePaths(): array
+    {
+        return [
+            sprintf(
+                '%s/%s/Shared/CmsBlock/Theme/%s',
+                APPLICATION_SOURCE_DIR,
+                $this->get(CmsBlockConstants::PROJECT_NAMESPACE),
+                static::THEME_NAME_DEFAULT
+            ),
         ];
     }
 

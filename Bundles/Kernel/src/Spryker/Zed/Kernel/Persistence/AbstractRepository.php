@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\BundleDependencyProviderResolverAwareTrait;
-use Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver;
+use Spryker\Zed\Kernel\ClassResolver\Persistence\PersistenceFactoryResolver;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjector;
 use Spryker\Zed\Kernel\Persistence\Repository\CriteriaBuilder;
@@ -91,11 +91,11 @@ abstract class AbstractRepository
     }
 
     /**
-     * @return \Spryker\Zed\Kernel\ClassResolver\Factory\FactoryResolver
+     * @return \Spryker\Zed\Kernel\ClassResolver\Persistence\PersistenceFactoryResolver
      */
     private function getFactoryResolver()
     {
-        return new FactoryResolver();
+        return new PersistenceFactoryResolver();
     }
 
     /**

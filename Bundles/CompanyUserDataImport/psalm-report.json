@@ -1,0 +1,58 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface::addStep does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserDataImport/src/Spryker/Zed/CompanyUserDataImport/Business/CompanyUserDataImportBusinessFactory.php",
+            "snippet": "        $dataSetStepBroker->addStep(new CompanyUserWriterStep());",
+            "selected_text": "addStep",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterInterface::addDataSetStepBroker does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserDataImport/src/Spryker/Zed/CompanyUserDataImport/Business/CompanyUserDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "addDataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerAwareInterface::addDataSetStepBroker expects Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface, possibly different type Spryker\\Zed\\DataImport\\Business\\Model\\DataImportStep\\DataImportStepAwareInterface|Spryker\\Zed\\DataImport\\Business\\Model\\DataSet\\DataSetStepBrokerInterface provided",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserDataImport/src/Spryker/Zed/CompanyUserDataImport/Business/CompanyUserDataImportBusinessFactory.php",
+            "snippet": "        $dataImporter->addDataSetStepBroker($dataSetStepBroker);",
+            "selected_text": "$dataSetStepBroker",
+            "error_level": 3,
+            "shortcode": 92,
+            "taint_trace": null
+        },
+        {
+            "severity": "info",
+            "line_from": 30,
+            "line_to": 30,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Spryker\\Zed\\DataImport\\Business\\Model\\DataImporterAfterImportAwareInterface::import does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/CompanyUserDataImport/src/Spryker/Zed/CompanyUserDataImport/Business/CompanyUserDataImportFacade.php",
+            "snippet": "        return $this->getFactory()->createCompanyUserDataImport()->import($dataImporterConfigurationTransfer);",
+            "selected_text": "import",
+            "error_level": 3,
+            "shortcode": 108,
+            "taint_trace": null
+        }
+    ],
+    "deprecation": []
+}

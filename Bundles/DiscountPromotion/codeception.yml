@@ -1,5 +1,6 @@
 namespace: DiscountPromotion
 include:
+    - tests/SprykerTest/Shared/DiscountPromotion
     - tests/SprykerTest/Zed/DiscountPromotion
 
 paths:

@@ -26,8 +26,10 @@ class ProductPackagingUnitClient extends AbstractClient implements ProductPackag
      *
      * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
      */
-    public function expandAmountForPersistentCartChange(PersistentCartChangeTransfer $persistentCartChangeTransfer, array $params = []): PersistentCartChangeTransfer
-    {
+    public function expandAmountForPersistentCartChange(
+        PersistentCartChangeTransfer $persistentCartChangeTransfer,
+        array $params = []
+    ): PersistentCartChangeTransfer {
         return $this->getFactory()
             ->createProductPackagingUnitAmountExpander()
             ->expandAmountForPersistentCartChange($persistentCartChangeTransfer, $params);

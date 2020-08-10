@@ -183,4 +183,13 @@
         <property name="addresses" type="Address[]" singular="address"/>
     </transfer>
 
+    <transfer name="PromotionItem">
+    </transfer>
+
+    <transfer name="GiftCard">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
 </transfers>

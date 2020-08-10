@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\DependencyValidationRequestTransfer;
 use Generated\Shared\Transfer\DependencyValidationResponseTransfer;
 use Generated\Shared\Transfer\ModuleFilterTransfer;
 use Generated\Shared\Transfer\ModuleTransfer;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionOptionConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -64,7 +65,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return int
      */
-    public function runFixtures($module, array $options = []): int
+    public function runFixtures(?string $module, array $options = []): int
     {
         return $this->getFactory()->createCodeTester()->runFixtures($module, $options);
     }
@@ -174,7 +175,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @deprecated Please use `getModules()` instead.
+     * @deprecated Use {@link getModules()} instead.
      *
      * @return array
      */
@@ -188,7 +189,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @deprecated Use `getAllModules()` instead.
+     * @deprecated Use {@link getAllModules()} instead.
      *
      * @return array
      */
@@ -313,7 +314,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList()
     {
@@ -367,9 +368,33 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeYvesIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::YVES);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateZedIdeAutoCompletion()
     {
         $this->getFactory()->createZedIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::ZED);
     }
 
     /**
@@ -391,6 +416,18 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeClientIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::CLIENT);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateServiceIdeAutoCompletion()
     {
         $this->getFactory()->createServiceIdeAutoCompletionWriter()->writeCompletionFiles();
@@ -403,9 +440,33 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @return void
      */
+    public function removeServiceIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::SERVICE);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
     public function generateGlueIdeAutoCompletion()
     {
         $this->getFactory()->createGlueIdeAutoCompletionWriter()->writeCompletionFiles();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void
+    {
+        $this->getFactory()->createIdeAutoCompletionDirectoryRemover()->remove(IdeAutoCompletionOptionConstants::GLUE);
     }
 
     /**
@@ -440,7 +501,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @api
      *
-     * @deprecated Use `listAllModules` instead.
+     * @deprecated Use {@link listAllModules()} instead.
      *
      * @return array
      */
@@ -540,7 +601,7 @@ class DevelopmentFacade extends AbstractFacade implements DevelopmentFacadeInter
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array
     {

@@ -22,6 +22,8 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     public const MAIL_TYPE = 'order confirmation mail';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -32,6 +34,8 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder

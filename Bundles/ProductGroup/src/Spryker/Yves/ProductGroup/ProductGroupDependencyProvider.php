@@ -7,13 +7,22 @@
 
 namespace Spryker\Yves\ProductGroup;
 
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Plugin\Pimple;
 
 class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
 {
+    /**
+     * @deprecated Will be removed without replacement.
+     */
     public const PLUGIN_APPLICATION = 'PLUGIN_APPLICATION';
+
+    /**
+     * @uses \Spryker\Yves\Locale\Plugin\Application\LocaleApplicationPlugin::SERVICE_LOCALE
+     */
+    public const SERVICE_LOCALE = 'locale';
 
     /**
      * @param \Spryker\Yves\Kernel\Container $container
@@ -22,6 +31,7 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideDependencies(Container $container)
     {
+        $container = $this->addLocale($container);
         $this->providePluginApplication($container);
 
         return $container;
@@ -30,14 +40,30 @@ class ProductGroupDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    protected function addLocale(Container $container): Container
+    {
+        $container->set(static::SERVICE_LOCALE, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_LOCALE);
+        });
+
+        return $container;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
      * @return void
      */
     protected function providePluginApplication(Container $container)
     {
-        $container[static::PLUGIN_APPLICATION] = function () {
+        $container->set(static::PLUGIN_APPLICATION, function () {
             $pimplePlugin = new Pimple();
 
             return $pimplePlugin->getApplication();
-        };
+        });
     }
 }

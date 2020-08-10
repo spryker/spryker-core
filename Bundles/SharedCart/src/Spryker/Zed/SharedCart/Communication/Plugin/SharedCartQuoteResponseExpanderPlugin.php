@@ -19,6 +19,8 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderP
 class SharedCartQuoteResponseExpanderPlugin extends AbstractPlugin implements QuoteResponseExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer

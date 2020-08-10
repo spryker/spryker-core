@@ -8,9 +8,7 @@
 namespace SprykerTest\Zed\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
-use ReflectionClass;
 use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Zed\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Zed\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
 use Spryker\Zed\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -61,7 +59,7 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
+    protected $classPattern = '%namespace%\\Zed\\%fromBundle%%codeBucket%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -74,11 +72,6 @@ class DependencyInjectorResolverTest extends Unit
     public function tearDown(): void
     {
         parent::tearDown();
-
-        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
-        $reflectionProperty = $reflectionResolver->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -197,7 +190,7 @@ class DependencyInjectorResolverTest extends Unit
     public function testGetClassPattern(): void
     {
         $dependencyInjectorResolver = new DependencyInjectorResolver();
-        $this->assertSame('\%namespace%\Zed\%fromBundle%%store%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
+        $this->assertSame('\%namespace%\Zed\%fromBundle%%codeBucket%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
     }
 
     /**

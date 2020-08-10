@@ -69,7 +69,10 @@ interface FileManagerMapperInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileLocalizedAttributes
      */
-    public function mapFileLocalizedAttributesTransferToEntity(FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer, SpyFileLocalizedAttributes $fileLocalizedAttributes);
+    public function mapFileLocalizedAttributesTransferToEntity(
+        FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer,
+        SpyFileLocalizedAttributes $fileLocalizedAttributes
+    );
 
     /**
      * @param \Generated\Shared\Transfer\FileDirectoryTransfer $fileDirectoryTransfer
@@ -93,7 +96,10 @@ interface FileManagerMapperInterface
      *
      * @return \Orm\Zed\FileManager\Persistence\SpyFileDirectoryLocalizedAttributes
      */
-    public function mapFileDirectoryLocalizedAttributesTransferToEntity(FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer, SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes);
+    public function mapFileDirectoryLocalizedAttributesTransferToEntity(
+        FileDirectoryLocalizedAttributesTransfer $fileDirectoryLocalizedAttributesTransfer,
+        SpyFileDirectoryLocalizedAttributes $fileDirectoryLocalizedAttributes
+    );
 
     /**
      * @param \Orm\Zed\FileManager\Persistence\SpyMimeType $mimeType

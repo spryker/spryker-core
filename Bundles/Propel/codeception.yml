@@ -5,14 +5,13 @@ include:
     - tests/SprykerTest/Zed/Propel
 
 paths:
-    tests: tests
+    tests: tests/
     support: .
-    log: tests/_output
-    data: tests/_data
-    envs: tests/_envs
+    log: tests/_output/
+    data: tests/_data/
+    envs: tests/_envs/
 
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M

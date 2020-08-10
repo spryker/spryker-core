@@ -328,8 +328,11 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttribute
      */
-    protected function createProductSearchAttributeEntity(string $attributeKey, ProductSearchAttributeTransfer $productSearchAttributeTransfer, bool $synced = false): SpyProductSearchAttribute
-    {
+    protected function createProductSearchAttributeEntity(
+        string $attributeKey,
+        ProductSearchAttributeTransfer $productSearchAttributeTransfer,
+        bool $synced = false
+    ): SpyProductSearchAttribute {
         $productAttributeKeyEntity = $this->createProductAttributeKeyEntity($attributeKey);
         $productSearchAttributeEntity = new SpyProductSearchAttribute();
         $productSearchAttributeEntity->fromArray($productSearchAttributeTransfer->toArray());

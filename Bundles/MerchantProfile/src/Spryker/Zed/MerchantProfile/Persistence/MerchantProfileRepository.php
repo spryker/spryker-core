@@ -7,10 +7,12 @@
 
 namespace Spryker\Zed\MerchantProfile\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileCollectionTransfer;
 use Generated\Shared\Transfer\MerchantProfileCriteriaFilterTransfer;
 use Generated\Shared\Transfer\MerchantProfileTransfer;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileQuery;
+use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -56,6 +58,7 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
             ->endUse();
 
         $merchantProfileQuery = $this->applyFilters($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer);
+        $merchantProfileQuery = $this->buildQueryFromCriteria($merchantProfileQuery, $merchantProfileCriteriaFilterTransfer->getFilter());
         $merchantProfileEntityCollection = $merchantProfileQuery->find();
 
         foreach ($merchantProfileEntityCollection as $merchantProfileEntity) {
@@ -67,6 +70,20 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
         }
 
         return $merchantProfileCollectionTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\ActiveQuery\ModelCriteria $criteria
+     * @param \Generated\Shared\Transfer\FilterTransfer|null $filterTransfer
+     *
+     * @return \Propel\Runtime\ActiveQuery\ModelCriteria
+     */
+    public function buildQueryFromCriteria(ModelCriteria $criteria, ?FilterTransfer $filterTransfer = null): ModelCriteria
+    {
+        $criteria = parent::buildQueryFromCriteria($criteria, $filterTransfer);
+        $criteria->setFormatter(ModelCriteria::FORMAT_OBJECT);
+
+        return $criteria;
     }
 
     /**
@@ -99,10 +116,6 @@ class MerchantProfileRepository extends AbstractRepository implements MerchantPr
 
         if ($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile() !== null) {
             $merchantProfileQuery->filterByIdMerchantProfile($merchantProfileCriteriaFilterTransfer->getIdMerchantProfile());
-        }
-
-        if ($merchantProfileCriteriaFilterTransfer->getIsActive() !== null) {
-            $merchantProfileQuery->filterByIsActive($merchantProfileCriteriaFilterTransfer->getIsActive());
         }
 
         return $merchantProfileQuery;

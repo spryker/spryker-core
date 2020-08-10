@@ -23,6 +23,7 @@
         <property name="sku" type="string"/>
         <property name="abstractSku" type="string"/>
         <property name="discount" type="Discount"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Item">
@@ -55,6 +56,7 @@
         <property name="abstractSku" type="string"/>
         <property name="quantity" type="int"/>
         <property name="fkDiscount" type="int"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="CalculableObject">
@@ -67,6 +69,8 @@
 
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="operation" type="string"/>
+        <property name="quote" type="Quote"/>
     </transfer>
 
     <transfer name="PersistentCartChange">
@@ -97,6 +101,20 @@
     </transfer>
 
     <transfer name="Store">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
     </transfer>
 
 </transfers>

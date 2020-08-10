@@ -35,5 +35,7 @@ interface MerchantOpeningHoursStorageRepositoryInterface
      *
      * @return \Generated\Shared\Transfer\SpyMerchantOpeningHoursStorageEntityTransfer[]
      */
-    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer): array;
+    public function getFilteredMerchantOpeningHoursStorageEntityTransfers(
+        MerchantOpeningHoursStorageCriteriaFilterTransfer $merchantOpeningHoursStorageCriteriaFilterTransfer
+    ): array;
 }

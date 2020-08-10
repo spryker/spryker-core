@@ -7,17 +7,19 @@
     "php": ">=7.2",
     "spryker/event-behavior": "^1.1.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-label": "^2.4.0",
+    "spryker/product-label": "^3.0.0",
     "spryker/product-page-search": "^0.1.0 || ^1.0.0 || ^2.2.0 || ^3.0.0",
     "spryker/product-page-search-extension": "^1.0.0",
+    "spryker/publisher-extension": "^1.0.0",
     "spryker/util-sanitize": "^2.1.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/event": "*",
+    "spryker/product": "*",
     "spryker/propel": "*",
     "spryker/propel-orm": "*",
-    "spryker/search": "*",
+    "spryker/store": "*",
     "spryker/testify": "*"
   },
   "suggest": {
@@ -43,7 +45,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.0.x-dev"
+      "dev-master": "2.0.x-dev"
     }
   },
   "config": {

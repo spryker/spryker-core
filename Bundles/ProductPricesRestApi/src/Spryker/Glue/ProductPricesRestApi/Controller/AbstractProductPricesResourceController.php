@@ -23,8 +23,7 @@ class AbstractProductPricesResourceController extends AbstractController
      *              "Retrieves abstract product prices."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Abstract product id is not specified.",

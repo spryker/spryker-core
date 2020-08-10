@@ -29,7 +29,7 @@ interface PropelConstants
     public const PROPEL_DEBUG = 'PROPEL_DEBUG';
 
     /**
-     * @deprecated Use Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION instead.
+     * @deprecated Use {@link \Spryker\Shared\PropelOrm\PropelOrmConstants::PROPEL_SHOW_EXTENDED_EXCEPTION} instead.
      *
      * Specification:
      * - Enable this to get a better exception message when an error occurs.
@@ -91,6 +91,8 @@ interface PropelConstants
      * Specification:
      * - MySql database engine.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
@@ -99,6 +101,8 @@ interface PropelConstants
      * Specification:
      * - Postgres database engine.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ZED_DB_ENGINE_PGSQL = 'ZED_DB_ENGINE_PGSQL';
@@ -106,6 +110,8 @@ interface PropelConstants
     /**
      * Specification:
      * - Array of supported database engines.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
@@ -124,6 +130,8 @@ interface PropelConstants
      * - Pattern for schema files path.
      * - Path is used with glob to find path.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const SCHEMA_FILE_PATH_PATTERN = 'SCHEMA_FILE_PATH_PATTERN';
@@ -135,4 +143,25 @@ interface PropelConstants
      * @api
      */
     public const LOG_FILE_PATH = 'PROPEL:LOG_FILE_PATH';
+
+    /**
+     * Specification:
+     * - Defines database connections to improve the performance of web applications by dispatching the database-load to multiple database-servers.
+     *
+     * Example:
+     *
+     * $config[PropelConstants::ZED_DB_REPLICAS][] = [
+     *     'host' => 'replica-1',
+     *     'port' => '5432'
+     * ];
+     *
+     * - If slave-database connections are not set the Propel uses singular master database that is responsible for all read and write queries.
+     *
+     * Example:
+     *
+     * $config[PropelConstants::ZED_DB_REPLICAS] = [];
+     *
+     * @api
+     */
+    public const ZED_DB_REPLICAS = 'PROPEL:ZED_DB_REPLICAS';
 }

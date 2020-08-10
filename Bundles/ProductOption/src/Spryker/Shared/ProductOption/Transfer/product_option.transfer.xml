@@ -218,4 +218,18 @@
         <property name="name" type="string"/>
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="Totals">
+    </transfer>
+
+    <transfer name="CheckoutError">
+    </transfer>
+
+    <transfer name="CalculableObject">
+        <property name="items" type="Item[]" singular="item"/>
+        <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
+    </transfer>
+
 </transfers>

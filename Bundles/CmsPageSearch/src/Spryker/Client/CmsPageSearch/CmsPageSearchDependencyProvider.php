@@ -49,9 +49,9 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSearchClient(Container $container): Container
     {
-        $container[static::CLIENT_SEARCH] = function (Container $container) {
+        $container->set(static::CLIENT_SEARCH, function (Container $container) {
             return new CmsPageSearchToSearchBridge($container->getLocator()->search()->client());
-        };
+        });
 
         return $container;
     }
@@ -63,9 +63,9 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchQueryPlugin(Container $container): Container
     {
-        $container[static::PLUGIN_CMS_PAGE_SEARCH_QUERY] = function () {
+        $container->set(static::PLUGIN_CMS_PAGE_SEARCH_QUERY, function () {
             return $this->createCmsPageSearchQueryPlugin();
-        };
+        });
 
         return $container;
     }
@@ -77,9 +77,9 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchResultFormatterPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER] = function () {
+        $container->set(static::PLUGINS_CMS_PAGE_SEARCH_RESULT_FORMATTER, function () {
             return $this->createCmsPageSearchResultFormatterPlugins();
-        };
+        });
 
         return $container;
     }
@@ -91,9 +91,9 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchQueryExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CMS_PAGE_SEARCH_QUERY_EXPANDER, function () {
             return $this->createCmsPageSearchQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -105,9 +105,9 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCmsPageSearchQueryCountExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER] = function () {
+        $container->set(static::PLUGINS_CMS_PAGE_SEARCH_COUNT_QUERY_EXPANDER, function () {
             return $this->createCmsPageSearchCountQueryExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -121,7 +121,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface[]
      */
     protected function createCmsPageSearchResultFormatterPlugins(): array
     {
@@ -129,7 +129,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCmsPageSearchQueryExpanderPlugins(): array
     {
@@ -137,7 +137,7 @@ class CmsPageSearchDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+     * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryExpanderPluginInterface[]
      */
     protected function createCmsPageSearchCountQueryExpanderPlugins(): array
     {

@@ -38,8 +38,11 @@ class SortedResultFormatterPluginTest extends AbstractResultFormatterPluginTest
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, array $requestParameters, SortSearchResultTransfer $expectedResult): void
-    {
+    public function testFormatResultShouldReturnCorrectFormat(
+        SearchConfigInterface $searchConfig,
+        array $requestParameters,
+        SortSearchResultTransfer $expectedResult
+    ): void {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])

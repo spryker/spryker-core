@@ -16,7 +16,7 @@ use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\LocalizedQueryExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\LocalizedQueryExpanderPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

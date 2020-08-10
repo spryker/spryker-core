@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\DataImport\Business;
 
+use Generated\Shared\Transfer\DataImportConfigurationActionTransfer;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
+use Generated\Shared\Transfer\DataImporterReportTransfer;
 
 /**
  * @method \Spryker\Zed\DataImport\Business\DataImportBusinessFactory getFactory()
@@ -22,6 +24,8 @@ interface DataImportFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\DataImport\Business\DataImportFacadeInterface::importByAction()} instead.
+     *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfiguration
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
@@ -30,11 +34,29 @@ interface DataImportFacadeInterface
 
     /**
      * Specification:
+     * - Creates importer by DataImportConfigurationActionTransfer.
+     * - Runs `DataImporterInterface::import()`.
+     * - Returns DataImportReportTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer
+     * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfiguration
+     *
+     * @return \Generated\Shared\Transfer\DataImporterReportTransfer
+     */
+    public function importByAction(
+        DataImportConfigurationActionTransfer $dataImportConfigurationActionTransfer,
+        ?DataImporterConfigurationTransfer $dataImporterConfiguration = null
+    ): DataImporterReportTransfer;
+
+    /**
+     * Specification:
      * - Returns a list of all applied `DataImportPluginInterfaces` and `DataImportInterfaces`.
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function listImporters(): array;
 

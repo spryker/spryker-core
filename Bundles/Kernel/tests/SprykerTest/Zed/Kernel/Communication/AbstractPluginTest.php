@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use ReflectionClass;
 use Spryker\Shared\Kernel\ClassResolver\ClassInfo;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
-use Spryker\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use Spryker\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -46,17 +45,6 @@ class AbstractPluginTest extends Unit
         $communicationFactory = $plugin->getFactory();
 
         $this->assertInstanceOf(AbstractCommunicationFactory::class, $communicationFactory);
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound(): void
-    {
-        $this->expectException(FacadeNotFoundException::class);
-
-        $plugin = new FooPlugin();
-        $plugin->getFacade();
     }
 
     /**

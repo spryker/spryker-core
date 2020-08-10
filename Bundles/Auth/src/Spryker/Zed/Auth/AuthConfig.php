@@ -17,6 +17,13 @@ class AuthConfig extends AbstractBundleConfig
     public const DEFAULT_URL_LOGIN = '/auth/login';
 
     /**
+     * @uses \Spryker\Shared\Session\SessionConstants::ZED_SESSION_TIME_TO_LIVE
+     */
+    protected const ZED_SESSION_TIME_TO_LIVE = 'SESSION:ZED_SESSION_TIME_TO_LIVE';
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getLoginPageUrl()
@@ -61,6 +68,8 @@ class AuthConfig extends AbstractBundleConfig
     protected $envConfigurations = [];
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getIgnorable()
@@ -69,6 +78,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param string $bundle
      * @param string $controller
      * @param string $action
@@ -85,6 +96,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getUsersCredentials()
@@ -103,6 +116,19 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return int
+     */
+    public function getSystemUserSessionRedisLifeTime(): int
+    {
+        return (int)$this->get(
+            AuthConstants::SYSTEM_USER_SESSION_REDIS_LIFE_TIME,
+            $this->get(static::ZED_SESSION_TIME_TO_LIVE)
+        );
+    }
+
+    /**
      * @return array
      */
     protected function getSystemUsers()
@@ -111,6 +137,8 @@ class AuthConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPasswordTokenExpirationInSeconds()

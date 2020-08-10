@@ -78,9 +78,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceFacade(Container $container): Container
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new OfferGuiToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCustomerFacade(Container $container): Container
     {
-        $container[static::FACADE_CUSTOMER] = function (Container $container) {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new OfferGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
-        };
+        });
 
         return $container;
     }
@@ -106,9 +106,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container): Container
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new OfferGuiToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -120,9 +120,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionClient(Container $container): Container
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new OfferGuiToSessionClientBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -134,9 +134,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new OfferGuiToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
 
         return $container;
     }
@@ -148,9 +148,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container): Container
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new OfferGuiToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -162,9 +162,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMoneyFacade(Container $container): Container
     {
-        $container[static::FACADE_MONEY] = function (Container $container) {
+        $container->set(static::FACADE_MONEY, function (Container $container) {
             return new OfferGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
-        };
+        });
 
         return $container;
     }
@@ -176,9 +176,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOmsFacade(Container $container): Container
     {
-        $container[static::FACADE_OMS] = function (Container $container) {
+        $container->set(static::FACADE_OMS, function (Container $container) {
             return new OfferGuiToOmsFacadeBridge($container->getLocator()->oms()->facade());
-        };
+        });
 
         return $container;
     }
@@ -190,9 +190,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCartFacade(Container $container): Container
     {
-        $container[static::FACADE_CART] = function (Container $container) {
+        $container->set(static::FACADE_CART, function (Container $container) {
             return new OfferGuiToCartFacadeBridge($container->getLocator()->cart()->facade());
-        };
+        });
 
         return $container;
     }
@@ -204,9 +204,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_DATE_TIME] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new OfferGuiToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
-        };
+        });
 
         return $container;
     }
@@ -218,9 +218,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilSanitize(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new OfferGuiToUtilSanitizeServiceBridge($container->getLocator()->utilSanitize()->service());
-        };
+        });
 
         return $container;
     }
@@ -232,9 +232,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncoding(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OfferGuiToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -246,9 +246,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPropelQueryOffer(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_OFFER] = function (Container $container) {
+        $container->set(static::PROPEL_QUERY_OFFER, $container->factory(function () {
             return SpyOfferQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -260,9 +260,9 @@ class OfferGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addOfferFacade(Container $container): Container
     {
-        $container[static::FACADE_OFFER] = function (Container $container) {
+        $container->set(static::FACADE_OFFER, function (Container $container) {
             return new OfferGuiToOfferFacadeBridge($container->getLocator()->offer()->facade());
-        };
+        });
 
         return $container;
     }

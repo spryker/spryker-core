@@ -15,6 +15,8 @@ class CompanyUnitAddressDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMPANY_UNIT_ADDRESS = 'company-unit-address';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyUnitAddressDataImporterConfiguration(): DataImporterConfigurationTransfer

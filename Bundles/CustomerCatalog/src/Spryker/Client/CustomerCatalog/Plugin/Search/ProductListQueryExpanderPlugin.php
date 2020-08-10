@@ -24,6 +24,16 @@ use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
     /**
+     * @var bool
+     */
+    protected static $customerRequested = false;
+
+    /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected static $customerTransfer;
+
+    /**
      * @api
      *
      * @param \Spryker\Client\Search\Dependency\Plugin\QueryInterface $searchQuery
@@ -126,10 +136,10 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
         $customer = $this->getCustomer();
 
         if ($customer) {
-            $customerProductListCollectionTransfer = $this->getCustomer()->getCustomerProductListCollection();
+            $customerProductListCollectionTransfer = $customer->getCustomerProductListCollection();
 
             if ($customerProductListCollectionTransfer) {
-                return $this->getCustomer()->getCustomerProductListCollection();
+                return $customer->getCustomerProductListCollection();
             }
         }
 
@@ -141,9 +151,14 @@ class ProductListQueryExpanderPlugin extends AbstractPlugin implements QueryExpa
      */
     protected function getCustomer(): ?CustomerTransfer
     {
-        return $this->getFactory()
-            ->getCustomerClient()
-            ->getCustomer();
+        if (!static::$customerRequested) {
+            static::$customerRequested = true;
+            static::$customerTransfer = $this->getFactory()
+                ->getCustomerClient()
+                ->getCustomer();
+        }
+
+        return static::$customerTransfer;
     }
 
     /**

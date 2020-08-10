@@ -56,6 +56,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     public const INDEX_CLOSE_STATE = 'close';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getReindexUrl(): string
@@ -64,6 +66,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getJsonSchemaDefinitionDirectories(): array
@@ -84,6 +88,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getClassTargetDirectory(): string
@@ -92,6 +98,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getBlacklistSettingsForIndexUpdate(): array
@@ -100,6 +108,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getStaticIndexSettings(): array
@@ -108,6 +118,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getDynamicIndexSettings(): array
@@ -116,6 +128,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getPermissionMode(): int
@@ -124,6 +138,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getIndexMapClassTemplateDirectory(): string
@@ -132,6 +148,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getClientConfig(): array
@@ -140,6 +158,8 @@ class SearchElasticsearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getSupportedSourceIdentifiers(): array

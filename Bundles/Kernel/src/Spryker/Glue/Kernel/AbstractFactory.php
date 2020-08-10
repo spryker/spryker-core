@@ -9,7 +9,7 @@ namespace Spryker\Glue\Kernel;
 
 use Spryker\Glue\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
 use Spryker\Glue\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use Spryker\Glue\Kernel\Plugin\Pimple;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 use Spryker\Shared\Kernel\ContainerGlobals;
 use Spryker\Shared\Kernel\ContainerMocker\ContainerMocker;
 
@@ -20,9 +20,14 @@ abstract class AbstractFactory
     use ContainerMocker;
 
     /**
-     * @var \Spryker\Glue\Kernel\Container $container
+     * @uses \Spryker\Glue\GlueApplication\Plugin\Application\GlueApplicationApplicationPlugin::SERVICE_RESOURCE_BUILDER
      */
-    private $container;
+    protected const SERVICE_RESOURCE_BUILDER = 'resource_builder';
+
+    /**
+     * @var \Spryker\Glue\Kernel\Container[]
+     */
+    protected static $containers = [];
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -31,7 +36,7 @@ abstract class AbstractFactory
      */
     public function setContainer(Container $container)
     {
-        $this->container = $container;
+        static::$containers[static::class] = $container;
 
         return $this;
     }
@@ -41,7 +46,7 @@ abstract class AbstractFactory
      */
     public function getResourceBuilder()
     {
-        return (new Pimple())->getApplication()['resource_builder'];
+        return (new GlobalContainer())->get(static::SERVICE_RESOURCE_BUILDER);
     }
 
     /**
@@ -71,15 +76,27 @@ abstract class AbstractFactory
      */
     protected function getProvidedDependency($key)
     {
-        if ($this->container === null) {
-            $this->container = $this->createContainerWithProvidedDependencies();
-        }
+        $container = $this->getContainer();
 
-        if ($this->container->has($key) === false) {
+        if ($container->has($key) === false) {
             throw new ContainerKeyNotFoundException($this, $key);
         }
 
-        return $this->container->get($key);
+        return $container->get($key);
+    }
+
+    /**
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function getContainer(): Container
+    {
+        $containerKey = static::class;
+
+        if (!isset(static::$containers[$containerKey])) {
+            static::$containers[$containerKey] = $this->createContainerWithProvidedDependencies();
+        }
+
+        return static::$containers[$containerKey];
     }
 
     /**

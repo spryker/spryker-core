@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductBundle\Business\ProductBundle\PreCheck;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 
 class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterface
 {
@@ -18,16 +18,16 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     protected const GLOSSARY_PARAMETER_SKU = '%sku%';
 
     /**
-     * @var \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
      */
-    protected $productBundleRepository;
+    protected $productBundleReader;
 
     /**
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface $productBundleRepository
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
      */
-    public function __construct(ProductBundleRepositoryInterface $productBundleRepository)
+    public function __construct(ProductBundleReaderInterface $productBundleReader)
     {
-        $this->productBundleRepository = $productBundleRepository;
+        $this->productBundleReader = $productBundleReader;
     }
 
     /**
@@ -39,9 +39,13 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     {
         $cartPreCheckResponseTransfer = (new CartPreCheckResponseTransfer())
             ->setIsSuccess(true);
+        $productConcreteSkus = $this->getProductConcreteSkusFromCartChangeTransfer($cartChangeTransfer);
+        $groupedProductForBundleTransfers = $this
+            ->productBundleReader
+            ->getProductForBundleTransfersByProductConcreteSkus($productConcreteSkus);
 
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            if (!$this->checkBundledProductsActive($itemTransfer->getSku())) {
+            if (!$this->checkBundledProductsActive($groupedProductForBundleTransfers[$itemTransfer->getSku()] ?? [])) {
                 $cartPreCheckResponseTransfer
                     ->addMessage(
                         $this->createItemIsNotActiveMessageTransfer($itemTransfer->getSku())
@@ -54,14 +58,12 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
     }
 
     /**
-     * @param string $sku
+     * @param \Generated\Shared\Transfer\ProductForBundleTransfer[] $productForBundleTransfers
      *
      * @return bool
      */
-    protected function checkBundledProductsActive(string $sku): bool
+    protected function checkBundledProductsActive(array $productForBundleTransfers): bool
     {
-        $productForBundleTransfers = $this->productBundleRepository->findBundledProductsBySku($sku);
-
         foreach ($productForBundleTransfers as $productForBundleTransfer) {
             if (!$productForBundleTransfer->getIsActive()) {
                 return false;
@@ -83,5 +85,21 @@ class ProductBundleCartActiveCheck implements ProductBundleCartActiveCheckInterf
             ->setParameters([
                 static::GLOSSARY_PARAMETER_SKU => $sku,
             ]);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductConcreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = [];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $skus[] = $itemTransfer->getSku();
+        }
+
+        return $skus;
     }
 }

@@ -21,8 +21,10 @@ class ComposerJsonPackageNameValidator implements ComposerJsonValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
-    public function validate(array $composerJsonArray, ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer): ComposerJsonValidationResponseTransfer
-    {
+    public function validate(
+        array $composerJsonArray,
+        ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer
+    ): ComposerJsonValidationResponseTransfer {
         $require = $composerJsonArray[static::REQUIRE] ?? [];
         foreach ($require as $packageName => $version) {
             $composerJsonValidationResponseTransfer = $this->assertPackageName($packageName, $composerJsonValidationResponseTransfer);
@@ -42,8 +44,10 @@ class ComposerJsonPackageNameValidator implements ComposerJsonValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
-    protected function assertPackageName(string $packageName, ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer): ComposerJsonValidationResponseTransfer
-    {
+    protected function assertPackageName(
+        string $packageName,
+        ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer
+    ): ComposerJsonValidationResponseTransfer {
         if (mb_strtolower($packageName) !== $packageName) {
             $validationMessageTransfer = new ValidationMessageTransfer();
             $validationMessageTransfer->setMessage(sprintf('Package name `%s` is not in valid lowercase only format.', $packageName));

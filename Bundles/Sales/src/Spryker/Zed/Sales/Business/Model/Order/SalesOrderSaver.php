@@ -338,7 +338,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
             $salesOrderItemEntity = $this->executeOrderItemExpanderPreSavePlugins($quoteTransfer, $itemTransfer, $salesOrderItemEntity);
 
             $salesOrderItemEntity->save();
-            $itemTransfer->setIdSalesOrderItem($salesOrderItemEntity->getIdSalesOrderItem());
+            $itemTransfer->fromArray($salesOrderItemEntity->toArray(), true);
         }
     }
 
@@ -525,8 +525,11 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
-    protected function executeOrderItemExpanderPreSavePlugins(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, SpySalesOrderItem $spySalesOrderItemEntity): SpySalesOrderItem
-    {
+    protected function executeOrderItemExpanderPreSavePlugins(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        SpySalesOrderItem $spySalesOrderItemEntity
+    ): SpySalesOrderItem {
         $salesOrderItemEntity = $this->salesOrderItemMapper
             ->mapSpySalesOrderItemEntityToSalesOrderItemEntity($spySalesOrderItemEntity, new SpySalesOrderItemEntityTransfer());
         $salesOrderItemEntity = $this->salesOrderSaverPluginExecutor

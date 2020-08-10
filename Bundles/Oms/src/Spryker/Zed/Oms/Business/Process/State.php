@@ -149,6 +149,7 @@ class State implements StateInterface
                 }
             }
         }
+
         throw new Exception('Event ' . $id . ' not found.');
     }
 
@@ -291,6 +292,7 @@ class State implements StateInterface
                 }
             }
         }
+
         throw new Exception('There is no onEnter event for state ' . $this->getName());
     }
 

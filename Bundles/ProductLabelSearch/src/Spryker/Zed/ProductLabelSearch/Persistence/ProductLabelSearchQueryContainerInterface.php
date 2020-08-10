@@ -16,7 +16,7 @@ interface ProductLabelSearchQueryContainerInterface extends QueryContainerInterf
      *
      * @param array $productLabelIds
      *
-     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery
+     * @return \Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryProductLabelByProductLabelIds(array $productLabelIds);
 }

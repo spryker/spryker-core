@@ -16,6 +16,17 @@ use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener\Produ
 use Spryker\Zed\ProductRelationStorage\Communication\Plugin\Event\Listener\ProductRelationStorageListener;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation\ProductRelationWriteForPublishingPublisherPlugin},
+ *   {@link \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation\ProductRelationWritePublisherPlugin},
+ *   {@link \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationProductAbstract\ProductRelationProductAbstractWritePublisherPlugin},
+ *   {@link \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationStore\ProductRelationStoreWritePublisherPlugin}
+ * instead.
+ *
+ * @see \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation\ProductRelationWriteForPublishingPublisherPlugin
+ * @see \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelation\ProductRelationWritePublisherPlugin
+ * @see \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationProductAbstract\ProductRelationProductAbstractWritePublisherPlugin
+ * @see \Spryker\Zed\ProductRelationStorage\Communication\Plugin\Publisher\ProductRelationStore\ProductRelationStoreWritePublisherPlugin
+ *
  * @method \Spryker\Zed\ProductRelationStorage\Communication\ProductRelationStorageCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductRelationStorage\Business\ProductRelationStorageFacadeInterface getFacade()
  * @method \Spryker\Zed\ProductRelationStorage\ProductRelationStorageConfig getConfig()
@@ -51,7 +62,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationPublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_PUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -61,7 +72,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationUnpublishStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::PRODUCT_ABSTRACT_RELATION_UNPUBLISH, new ProductRelationPublishStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -71,7 +82,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_CREATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -81,7 +92,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_UPDATE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -91,7 +102,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_DELETE, new ProductRelationStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -101,7 +112,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationProductAbstractCreateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_CREATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -111,7 +122,7 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationProductAbstractUpdateStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_UPDATE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 
     /**
@@ -121,6 +132,6 @@ class ProductRelationStorageEventSubscriber extends AbstractPlugin implements Ev
      */
     protected function addProductRelationProductAbstractDeleteStorageListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener());
+        $eventCollection->addListenerQueued(ProductRelationEvents::ENTITY_SPY_PRODUCT_RELATION_PRODUCT_ABSTRACT_DELETE, new ProductRelationProductAbstractStorageListener(), 0, null, $this->getConfig()->getProductRelationEventQueueName());
     }
 }

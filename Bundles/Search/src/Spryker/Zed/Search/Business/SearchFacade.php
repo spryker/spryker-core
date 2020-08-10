@@ -40,6 +40,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return int
      */
     public function getTotalCount()
@@ -54,6 +56,8 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
      *
      * @return array
      */
@@ -70,7 +74,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteIndex()} instead.
      *
      * @return \Elastica\Response
      */
@@ -170,7 +174,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::generateSourceMap()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchFacade::generateSourceMap()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -204,7 +208,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -222,7 +226,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -239,7 +243,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::deleteSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -256,7 +260,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshotRepository()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::existsSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      *
@@ -272,7 +276,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshotRepository()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::createSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -290,7 +294,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::restoreSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::restoreSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -308,7 +312,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()} instead.
      *
      * @return bool
      */
@@ -322,7 +326,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::openIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::openIndex()} instead.
      *
      * @return bool
      */
@@ -336,7 +340,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::closeIndex()} instead.
      *
      * @return bool
      */
@@ -350,7 +354,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::copyIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacade::copyIndex()} instead.
      *
      * @param string $source
      * @param string $target
@@ -367,7 +371,7 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacade::installSources()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchFacade::installSources()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -402,5 +406,31 @@ class SearchFacade extends AbstractFacade implements SearchFacadeInterface
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer
     {
         return $this->getFactory()->createSearchHealthChecker()->executeHealthCheck();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacyMode(): bool
+    {
+        return $this->getFactory()->createSearchLegacyModeChecker()->isInLegacyMode();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void
+    {
+        $this->getFactory()->createElasticsearchIndexMapCleaner()->cleanDirectory();
     }
 }

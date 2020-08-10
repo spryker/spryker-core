@@ -17,5 +17,7 @@ interface AbstractProductImageSetsMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestProductImageSetsAttributesTransfer
      */
-    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer): RestProductImageSetsAttributesTransfer;
+    public function mapProductAbstractImageStorageTransferToRestProductImageSetsAttributesTransfer(
+        ProductAbstractImageStorageTransfer $productAbstractImageStorageTransfer
+    ): RestProductImageSetsAttributesTransfer;
 }

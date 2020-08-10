@@ -11,6 +11,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\ZedRequest\Client\RequestInterface;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Kernel\BundleConfigResolverAwareTrait;
+use Spryker\Zed\ZedRequest\Business\Exception\InvalidActionPathException;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
 /**
@@ -26,6 +27,8 @@ class Repeater implements RepeaterInterface
      */
     use BundleConfigResolverAwareTrait;
 
+    protected const MODULE_CONTROLLER_ACTION_REGEXP = '/^[a-zA-Z0-9_-]+$/';
+
     /**
      * @var bool
      */
@@ -38,6 +41,8 @@ class Repeater implements RepeaterInterface
      */
     public function getRepeatData($moduleControllerAction = null)
     {
+        $this->validateModuleControllerAction($moduleControllerAction);
+
         $this->isRepeatInProgress = true;
         if ($moduleControllerAction !== null) {
             return $this->getFlashInFile($this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
@@ -75,6 +80,8 @@ class Repeater implements RepeaterInterface
             $httpRequest->attributes->get('controller'),
             $httpRequest->attributes->get('action')
         );
+
+        $this->validateModuleControllerAction($moduleControllerAction);
 
         $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName($moduleControllerAction));
         $this->setFlashInFile($repeatData, $this->getConfig()->getYvesRequestRepeatDataFileName());
@@ -127,5 +134,30 @@ class Repeater implements RepeaterInterface
     protected function getFilePath($fileName)
     {
         return $this->getConfig()->getPathToYvesRequestRepeatData($fileName);
+    }
+
+    /**
+     * @param string|null $moduleControllerAction
+     *
+     * @throws \Spryker\Zed\ZedRequest\Business\Exception\InvalidActionPathException
+     *
+     * @return void
+     */
+    protected function validateModuleControllerAction(?string $moduleControllerAction = null): void
+    {
+        if ($moduleControllerAction === null) {
+            return;
+        }
+
+        if (preg_match(static::MODULE_CONTROLLER_ACTION_REGEXP, $moduleControllerAction)) {
+            return;
+        }
+
+        throw new InvalidActionPathException(
+            sprintf(
+                'The path %s to the action you are trying to invoke has forbidden symbols.',
+                $moduleControllerAction
+            )
+        );
     }
 }

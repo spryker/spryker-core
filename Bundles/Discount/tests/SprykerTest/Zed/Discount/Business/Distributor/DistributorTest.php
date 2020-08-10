@@ -476,7 +476,7 @@ class DistributorTest extends Unit
     /**
      * @param array $items
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function createDiscountableObjects(array $items = []): ArrayObject
     {

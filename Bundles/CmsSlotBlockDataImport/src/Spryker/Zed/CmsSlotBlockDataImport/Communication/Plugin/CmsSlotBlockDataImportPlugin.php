@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class CmsSlotBlockDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -33,6 +35,8 @@ class CmsSlotBlockDataImportPlugin extends AbstractPlugin implements DataImportP
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

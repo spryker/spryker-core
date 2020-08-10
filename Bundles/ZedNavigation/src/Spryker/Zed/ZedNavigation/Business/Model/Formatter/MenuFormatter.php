@@ -211,7 +211,7 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $page
      *
-     * @return mixed|null
+     * @return string|null
      */
     protected function getPageAction(array $page)
     {
@@ -225,14 +225,15 @@ class MenuFormatter implements MenuFormatterInterface
 
     /**
      * @param array $page
-     * @param mixed|null $action
+     * @param string|null $action
      *
-     * @return mixed|null
+     * @return string|null
      */
     protected function getPageController(array $page, $action)
     {
         $pageController = null;
-        if (isset($page[self::CONTROLLER]) &&
+        if (
+            isset($page[self::CONTROLLER]) &&
             (
                 $page[self::CONTROLLER] !== self::INDEX || $action !== null
             )

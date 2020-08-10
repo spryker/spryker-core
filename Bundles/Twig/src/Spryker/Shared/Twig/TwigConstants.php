@@ -22,7 +22,7 @@ interface TwigConstants
     public const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
 
     /**
-     * @deprecated Use `\Spryker\Shared\Twig\TwigConfig::getYvesThemeName()` instead.
+     * @deprecated Use {@link \Spryker\Shared\Twig\TwigConfig::getYvesThemeName()} instead.
      *
      * Specification:
      * - Defines the used theme name for Yves.
@@ -35,6 +35,8 @@ interface TwigConstants
     /**
      * Specification:
      * - Path to cache file for resolved template directories.
+     *
+     * @deprecated Use {@link \Spryker\Yves\Twig\TwigConfig::getCacheFilePath()} instead.
      *
      * @api
      */
@@ -60,6 +62,8 @@ interface TwigConstants
     /**
      * Specification:
      * - Path to cache file for resolved template directories.
+     *
+     * @deprecated Use {@link \Spryker\Zed\Twig\TwigConfig::getCacheFilePath()} instead.
      *
      * @api
      */

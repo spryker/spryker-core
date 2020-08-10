@@ -186,7 +186,8 @@ class QuoteItemOperation implements QuoteItemOperationInterface
      */
     protected function isQuoteWriteAllowed(QuoteTransfer $quoteTransfer, CustomerTransfer $customerTransfer): bool
     {
-        if ($customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
+        if (
+            $customerTransfer->getCustomerReference() === $quoteTransfer->getCustomerReference()
             || ($customerTransfer->getCompanyUserTransfer()
                 && $this->can('WriteSharedCartPermissionPlugin', $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser(), $quoteTransfer->getIdQuote())
             )

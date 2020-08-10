@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class QuoteRequestAgentConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getInitialStatus(): string

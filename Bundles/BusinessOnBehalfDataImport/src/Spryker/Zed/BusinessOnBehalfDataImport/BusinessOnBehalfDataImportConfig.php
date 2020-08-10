@@ -16,6 +16,8 @@ class BusinessOnBehalfDataImportConfig extends DataImportConfig
     protected const IMPORT_FILE = 'company_user.csv';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getBusinessOnBehalfDataImporterConfiguration(): DataImporterConfigurationTransfer

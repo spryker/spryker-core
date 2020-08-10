@@ -16,6 +16,8 @@ class StockDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_STOCK_STORE = 'stock-store';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getStockDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -29,6 +31,8 @@ class StockDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getStockStoreDataImporterConfiguration(): DataImporterConfigurationTransfer

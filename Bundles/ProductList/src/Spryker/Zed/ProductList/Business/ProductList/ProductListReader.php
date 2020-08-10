@@ -256,8 +256,11 @@ class ProductListReader implements ProductListReaderInterface
      *
      * @return array
      */
-    protected function mergeProductConcreteAndProductAbstractLists(array $productConcreteLists, array $productAbstractLists, array $concreteToAbstractMap): array
-    {
+    protected function mergeProductConcreteAndProductAbstractLists(
+        array $productConcreteLists,
+        array $productAbstractLists,
+        array $concreteToAbstractMap
+    ): array {
         $mergedProductConcreteAndProductAbstractLists = [];
 
         foreach ($concreteToAbstractMap as $idProductConcrete => $idProductAbstract) {

@@ -17,6 +17,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
  * @method \Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface getFacade()
  * @method \Spryker\Zed\StateMachine\Persistence\StateMachineQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\StateMachine\Communication\StateMachineCommunicationFactory getFactory()
+ * @method \Spryker\Zed\StateMachine\Persistence\StateMachineRepositoryInterface getRepository()
  */
 class TriggerController extends AbstractController
 {
@@ -33,7 +34,7 @@ class TriggerController extends AbstractController
     protected const ERROR_INVALID_FORM = 'Form is invalid';
 
     /**
-     * @deprecated Use submitTriggerEventForNewItemAction() instead.
+     * @deprecated Use {@link submitTriggerEventForNewItemAction()} instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -42,7 +43,7 @@ class TriggerController extends AbstractController
     public function triggerEventForNewItemAction(Request $request)
     {
         trigger_error(
-            "This action is deprecated, please use submitTriggerEventForNewItemAction() instead.",
+            'This action is deprecated, please use submitTriggerEventForNewItemAction() instead.',
             E_USER_DEPRECATED
         );
 
@@ -86,7 +87,7 @@ class TriggerController extends AbstractController
     }
 
     /**
-     * @deprecated Use submitTriggerEventAction() instead.
+     * @deprecated Use {@link submitTriggerEventAction()} instead.
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -95,7 +96,7 @@ class TriggerController extends AbstractController
     public function triggerEventAction(Request $request)
     {
         trigger_error(
-            "This action is deprecated, please use submitTriggerEventAction() instead.",
+            'This action is deprecated, please use submitTriggerEventAction() instead.',
             E_USER_DEPRECATED
         );
 

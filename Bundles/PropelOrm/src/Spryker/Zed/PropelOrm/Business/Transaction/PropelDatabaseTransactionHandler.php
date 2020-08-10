@@ -12,11 +12,14 @@ use Exception;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use Spryker\Zed\Kernel\Persistence\EntityManager\InstancePoolingTrait;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionHandlerInterface;
 use Throwable;
 
 class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
 {
+    use InstancePoolingTrait;
+
     /**
      * @var \Propel\Runtime\Connection\ConnectionInterface|null
      */
@@ -46,9 +49,11 @@ class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
             return $result;
         } catch (Exception $exception) {
             $this->connection->rollBack();
+
             throw $exception;
         } catch (Throwable $exception) {
             $this->connection->rollBack();
+
             throw $exception;
         }
     }
@@ -73,21 +78,5 @@ class PropelDatabaseTransactionHandler implements TransactionHandlerInterface
         if (Propel::getConnection()->inTransaction()) {
             throw new PropelException('This operation is not allowed inside of transaction');
         }
-    }
-
-    /**
-     * @return void
-     */
-    protected function disableInstancePooling()
-    {
-        Propel::disableInstancePooling();
-    }
-
-    /**
-     * @return void
-     */
-    protected function enableInstancePooling()
-    {
-        Propel::enableInstancePooling();
     }
 }

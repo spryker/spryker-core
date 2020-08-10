@@ -30,6 +30,7 @@
         <property name="priceMode" type="string"/>
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="isCancellable" type="bool"/>
     </transfer>
 
     <transfer name="Quote">
@@ -54,9 +55,28 @@
 
     <transfer name="OrderList">
         <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
         <property name="filter" type="Filter"/>
         <property name="orders" type="Order[]" singular="order"/>
         <property name="pagination" type="Pagination"/>
+        <property name="filterFields" type="FilterField[]" singular="filterField"/>
+        <property name="format" type="OrderListFormat"/>
+        <property name="queryJoins" type="QueryJoinCollection"/>
+    </transfer>
+
+    <transfer name="OrderListFormat">
+        <property name="expandWithItems" type="bool"/>
+    </transfer>
+
+    <transfer name="FilterField">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="OrderListRequest">
+        <property name="customerReference" type="string"/>
+        <property name="orderReferences" type="string[]"  singular="orderReference"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
     <transfer name="ShipmentCarrier">
@@ -163,6 +183,10 @@
         <property name="unitPriceToPayAggregation" type="int"/>
         <property name="sumProductOptionPriceAggregation" type="int"/>
         <property name="unitProductOptionPriceAggregation" type="int"/>
+        <property name="orderReference" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="isReturnable" type="bool"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ItemCollection">
@@ -319,6 +343,61 @@
     </transfer>
 
     <transfer name="Money">
+    </transfer>
+
+    <transfer name="Locale">
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+        <property name="idDiscount" type="int"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+        <property name="salesOrderItemUuids" type="string[]" singular="salesOrderItemUuid"/>
+        <property name="customerReferences" type="string[]" singular="customerReference"/>
+        <property name="filter" type="Filter"/>
+        <property name="orderReferences" type="string[]" singular="orderReference"/>
+        <property name="itemStates" type="string[]" singular="itemState"/>
+    </transfer>
+
+    <transfer name="QueryJoin">
+        <property name="relation" type="string"/>
+        <property name="left" type="array" singular="left"/>
+        <property name="right" type="array" singular="right"/>
+        <property name="joinType" type="string"/>
+        <property name="condition" type="string"/>
+        <property name="whereConditions" type="QueryWhereCondition[]" singular="queryWhereCondition"/>
+        <property name="withColumns" type="string[]" singular="withColumn"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+    </transfer>
+
+    <transfer name="QueryJoinCollection">
+        <property name="queryJoins" type="QueryJoin[]" singular="queryJoin"/>
+    </transfer>
+
+    <transfer name="QueryWhereCondition">
+        <property name="column" type="string"/>
+        <property name="value" type="string"/>
+        <property name="comparison" type="string"/>
+        <property name="mergeWithCondition" type="string"/>
+        <property name="mergeOperator" type="string"/>
+    </transfer>
+
+    <transfer name="OrderCancelRequest">
+        <property name="idSalesOrder" type="int"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="OrderCancelResponse">
+        <property name="order" type="Order"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="messages" type="Message[]"  singular="message"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="value" type="string"/>
     </transfer>
 
 </transfers>

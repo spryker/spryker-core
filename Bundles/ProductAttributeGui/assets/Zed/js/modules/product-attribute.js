@@ -124,7 +124,10 @@ function AttributeManager() {
         key = key.replace(/([^a-z0-9\_\-\:]+)/gi, '').toLowerCase();
 
         if (key === '' || !idAttribute) {
-            alert('Please select attribute key first');
+            var $messageInput = $('#empty-attribute-key-message');
+
+            alert($messageInput ? $messageInput.val() : 'Please select attribute key first');
+
             return false;
         }
 

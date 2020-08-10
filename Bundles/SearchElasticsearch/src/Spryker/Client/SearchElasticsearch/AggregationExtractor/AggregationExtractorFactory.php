@@ -46,13 +46,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
         switch ($facetConfigTransfer->getType()) {
             case SearchElasticsearchConfig::FACET_TYPE_RANGE:
                 return $this->createRangeExtractor($facetConfigTransfer);
-
             case SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createPriceRangeExtractor($facetConfigTransfer);
-
             case SearchElasticsearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryExtractor($facetConfigTransfer);
-
             default:
                 return $this->createFacetExtractor($facetConfigTransfer);
         }
@@ -65,7 +62,10 @@ class AggregationExtractorFactory implements AggregationExtractorFactoryInterfac
      */
     protected function createRangeExtractor(FacetConfigTransfer $facetConfigTransfer): AggregationExtractorInterface
     {
-        return new RangeExtractor($facetConfigTransfer);
+        return new RangeExtractor(
+            $facetConfigTransfer,
+            $this->createFacetValueTransformerFactory()->createTransformer($facetConfigTransfer)
+        );
     }
 
     /**

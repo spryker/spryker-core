@@ -52,7 +52,10 @@ interface ContentStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\ContentStorageTransfer
      */
-    public function mapContentStorageEntityToTransfer(SpyContentStorage $contentStorageEntity, ContentStorageTransfer $contentStorageTransfer): ContentStorageTransfer;
+    public function mapContentStorageEntityToTransfer(
+        SpyContentStorage $contentStorageEntity,
+        ContentStorageTransfer $contentStorageTransfer
+    ): ContentStorageTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\ContentStorageTransfer $contentStorageTransfer
@@ -60,5 +63,8 @@ interface ContentStorageMapperInterface
      *
      * @return \Orm\Zed\ContentStorage\Persistence\SpyContentStorage
      */
-    public function mapContentStorageTransferToEntity(ContentStorageTransfer $contentStorageTransfer, SpyContentStorage $contentStorageEntity): SpyContentStorage;
+    public function mapContentStorageTransferToEntity(
+        ContentStorageTransfer $contentStorageTransfer,
+        SpyContentStorage $contentStorageEntity
+    ): SpyContentStorage;
 }

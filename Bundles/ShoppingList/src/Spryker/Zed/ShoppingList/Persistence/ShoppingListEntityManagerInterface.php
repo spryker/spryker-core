@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PermissionTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitBlacklistTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\ShoppingListCompanyUserTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 use Generated\Shared\Transfer\SpyShoppingListPermissionGroupEntityTransfer;
@@ -133,7 +134,9 @@ interface ShoppingListEntityManagerInterface
      *
      * @return void
      */
-    public function createShoppingListCompanyBusinessUnitBlacklist(ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer): void;
+    public function createShoppingListCompanyBusinessUnitBlacklist(
+        ShoppingListCompanyBusinessUnitBlacklistTransfer $shoppingListCompanyBusinessUnitBlacklistTransfer
+    ): void;
 
     /**
      * @param int $idShoppingList
@@ -148,4 +151,15 @@ interface ShoppingListEntityManagerInterface
      * @return void
      */
     public function deleteCompanyBusinessUnitBlacklistByBusinessUnitId(int $idCompanyBusinessUnit): void;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     * @param \Generated\Shared\Transfer\ShoppingListTransfer $shoppingListTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer
+     */
+    public function saveShoppingListItems(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer,
+        ShoppingListTransfer $shoppingListTransfer
+    ): ShoppingListItemCollectionTransfer;
 }

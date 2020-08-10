@@ -14,7 +14,7 @@ use Spryker\Zed\ProductPageSearch\Dependency\Plugin\ProductPageMapExpanderInterf
 use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface;
 
 /**
- * @deprecated Use `\Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductImagePageMapExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Zed\ProductPageSearch\Communication\Plugin\ProductPageSearch\Elasticsearch\ProductImagePageMapExpanderPlugin} instead.
  *
  * @method \Spryker\Zed\ProductPageSearch\Persistence\ProductPageSearchQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductPageSearch\Communication\ProductPageSearchCommunicationFactory getFactory()
@@ -24,6 +24,8 @@ use Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInt
 class ProductImagePageMapExpanderPlugin extends AbstractPlugin implements ProductPageMapExpanderInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PageMapTransfer $pageMapTransfer
@@ -33,8 +35,12 @@ class ProductImagePageMapExpanderPlugin extends AbstractPlugin implements Produc
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductPageMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductPageMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $pageMapBuilder->addSearchResultData($pageMapTransfer, 'images', $productData['product_images']);
 
         return $pageMapTransfer;

@@ -1,7 +1,1 @@
-product_offer_reference,stock_name,quantity
-offer1,Roan Warehouse 1,10
-offer2,Steenbok Warehouse 1,2
-offer3,Roan Warehouse 1,10
-offer4,Steenbok Warehouse 1,0
-offer5,Roan Warehouse 1,10
-offer6,Steenbok Warehouse 1,10
+product_offer_reference,stock_name,quantity,is_never_out_of_stock

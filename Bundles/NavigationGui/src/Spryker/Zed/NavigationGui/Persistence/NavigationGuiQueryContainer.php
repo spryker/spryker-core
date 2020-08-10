@@ -21,6 +21,8 @@ use Spryker\Zed\PropelOrm\Business\Model\Formatter\PropelArraySetFormatter;
 class NavigationGuiQueryContainer extends AbstractQueryContainer implements NavigationGuiQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Navigation\Persistence\SpyNavigationQuery
@@ -31,6 +33,8 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $searchText
@@ -62,6 +66,8 @@ class NavigationGuiQueryContainer extends AbstractQueryContainer implements Navi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $searchText

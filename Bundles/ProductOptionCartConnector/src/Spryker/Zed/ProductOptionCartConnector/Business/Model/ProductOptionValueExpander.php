@@ -34,8 +34,10 @@ class ProductOptionValueExpander implements ProductOptionValueExpanderInterface
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade
      * @param \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
      */
-    public function __construct(ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade, ProductOptionCartConnectorToPriceFacadeInterface $priceFacade)
-    {
+    public function __construct(
+        ProductOptionCartConnectorToProductOptionFacadeInterface $productOptionFacade,
+        ProductOptionCartConnectorToPriceFacadeInterface $priceFacade
+    ) {
         $this->productOptionFacade = $productOptionFacade;
         $this->priceFacade = $priceFacade;
     }

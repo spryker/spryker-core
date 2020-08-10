@@ -7,15 +7,27 @@
 
 namespace Spryker\Shared\Console;
 
-use Spryker\Shared\Kernel\AbstractBundleConfig;
+use Spryker\Shared\Kernel\AbstractSharedConfig;
 
-class ConsoleConfig extends AbstractBundleConfig
+class ConsoleConfig extends AbstractSharedConfig
 {
     /**
+     * @api
+     *
      * @return bool
      */
     public function shouldCatchExceptions(): bool
     {
         return $this->get(ConsoleConstants::CATCH_EXCEPTIONS, false);
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->get(ConsoleConstants::IS_DEBUG_ENABLED, false);
     }
 }

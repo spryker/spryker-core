@@ -135,10 +135,10 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param array $calculatedDiscountsByGroupKey
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[][] $calculatedDiscountsByGroupKey
      * @param string $groupKey
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
     protected function getGroupedCalculatedDiscounts(array &$calculatedDiscountsByGroupKey, $groupKey)
     {

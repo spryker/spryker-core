@@ -35,9 +35,9 @@ class CmsContentWidgetCmsBlockConnectorDependencyProvider extends AbstractBundle
      */
     protected function addCmsBlockStorageClient(Container $container): Container
     {
-        $container[static::CLIENT_CMS_BLOCK_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_CMS_BLOCK_STORAGE, function (Container $container) {
             return new CmsContentWidgetCmsBlockConnectorToCmsBlockStorageClientBridge($container->getLocator()->cmsBlockStorage()->client());
-        };
+        });
 
         return $container;
     }

@@ -14,6 +14,7 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaFinder;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
 use Spryker\Zed\Propel\Dependency\Service\PropelToUtilTextServiceBridge;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -105,7 +106,8 @@ class PropelSchemaTest extends Unit
         return new PropelSchemaMerger(
             new PropelToUtilTextServiceBridge(
                 $this->tester->getLocator()->utilText()->service()
-            )
+            ),
+            new PropelSchemaElementFilter([])
         );
     }
 }

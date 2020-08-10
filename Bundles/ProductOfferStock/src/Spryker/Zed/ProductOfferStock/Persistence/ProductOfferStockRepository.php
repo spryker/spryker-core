@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\ProductOfferStock\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ProductOfferStockRequestTransfer;
-use Orm\Zed\ProductOfferStock\Persistence\Map\SpyProductOfferStockTableMap;
-use Spryker\DecimalObject\Decimal;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
+use Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,36 +18,81 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductOfferStockRepository extends AbstractRepository implements ProductOfferStockRepositoryInterface
 {
-    protected const COLUMN_ALIAS_QUANTITY = 'quantity';
+    /**
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer|null
+     */
+    public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer
+    {
+        $productOfferStockQuery = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->joinWithSpyProductOffer();
+        $productOfferStockEntity = $this->applyFilters(
+            $productOfferStockQuery,
+            $productOfferStockRequestTransfer
+        )->findOne();
+
+        if (!$productOfferStockEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createProductOfferStockMapper()
+            ->mapProductOfferStockEntityToProductOfferStockTransfer(
+                $productOfferStockEntity,
+                new ProductOfferStockTransfer()
+            );
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
      *
-     * @return \Spryker\DecimalObject\Decimal
+     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
      */
-    public function getProductOfferStockForRequest(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): Decimal
+    public function find(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ArrayObject
     {
-        $productOfferStockRequestTransfer->requireProductOfferReference()
-            ->requireStore()
-            ->getStore()
-                ->requireName();
+        $productOfferStockEntities = $this->applyFilters(
+            $this->getFactory()->getProductOfferStockPropelQuery(),
+            $productOfferStockRequestTransfer
+        )->find();
 
-        $quantity = $this->getFactory()
-            ->getProductOfferStockPropelQuery()
-            ->useSpyProductOfferQuery()
-                ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
-            ->endUse()
-            ->useStockQuery()
-                ->useStockStoreQuery()
-                    ->useStoreQuery()
-                        ->filterByName($productOfferStockRequestTransfer->getStore()->getName())
+        return $this->getFactory()
+            ->createProductOfferStockMapper()
+            ->mapProductOfferStockEntityCollectionToProductOfferStockTransfers(
+                $productOfferStockEntities,
+                new ArrayObject()
+            );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery $productOfferStockQuery
+     * @param \Generated\Shared\Transfer\ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+     *
+     * @return \Orm\Zed\ProductOfferStock\Persistence\SpyProductOfferStockQuery
+     */
+    protected function applyFilters(
+        SpyProductOfferStockQuery $productOfferStockQuery,
+        ProductOfferStockRequestTransfer $productOfferStockRequestTransfer
+    ): SpyProductOfferStockQuery {
+        if ($productOfferStockRequestTransfer->getProductOfferReference() !== null) {
+            $productOfferStockQuery
+                ->useSpyProductOfferQuery()
+                    ->filterByProductOfferReference($productOfferStockRequestTransfer->getProductOfferReference())
+                ->endUse();
+        }
+
+        if ($productOfferStockRequestTransfer->getStore() && $productOfferStockRequestTransfer->getStore()->getName()) {
+            $productOfferStockQuery
+                ->useStockQuery()
+                    ->useStockStoreQuery()
+                        ->useStoreQuery()
+                            ->filterByName($productOfferStockRequestTransfer->getStore()->getName())
+                        ->endUse()
                     ->endUse()
-                ->endUse()
-            ->endUse()
-            ->withColumn('SUM(' . SpyProductOfferStockTableMap::COL_QUANTITY . ')', static::COLUMN_ALIAS_QUANTITY)
-            ->select([static::COLUMN_ALIAS_QUANTITY])
-            ->findOne();
+                ->endUse();
+        }
 
-        return new Decimal($quantity ?: 0);
+        return $productOfferStockQuery;
     }
 }

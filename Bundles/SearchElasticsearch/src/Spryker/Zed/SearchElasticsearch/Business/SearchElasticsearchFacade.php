@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SearchElasticsearch\Business;
 
+use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Psr\Log\LoggerInterface;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -135,6 +136,46 @@ class SearchElasticsearchFacade extends AbstractFacade implements SearchElastics
     public function copyIndex(SearchContextTransfer $sourceSearchContextTransfer, SearchContextTransfer $targetSearchContextTransfer): bool
     {
         return $this->getFactory()->createIndex()->copyIndex($sourceSearchContextTransfer, $targetSearchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     *
+     * @return int
+     */
+    public function getDocumentsTotalCount(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): int
+    {
+        return $this->getFactory()->createIndex()->getDocumentsTotalCount($elasticsearchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ElasticsearchSearchContextTransfer $elasticsearchContextTransfer
+     *
+     * @return array
+     */
+    public function getIndexMetaData(ElasticsearchSearchContextTransfer $elasticsearchContextTransfer): array
+    {
+        return $this->getFactory()->createIndex()->getIndexMetaData($elasticsearchContextTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return string[]
+     */
+    public function getIndexNames(): array
+    {
+        return $this->getFactory()->createIndex()->getIndexNames();
     }
 
     /**

@@ -36,6 +36,6 @@ class BulkDeleteTouchByIdQuery extends AbstractBulkTouchQuery implements BulkDel
      */
     protected function getQueryTemplate()
     {
-        return "DELETE FROM %s WHERE %s IN (%s)";
+        return 'DELETE FROM %s WHERE %s IN (%s)';
     }
 }

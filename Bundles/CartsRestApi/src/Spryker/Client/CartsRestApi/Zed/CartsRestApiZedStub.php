@@ -98,7 +98,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @deprecated Use updateItemQuantity() instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -126,7 +126,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @deprecated Use addToCart() instead.
+     * @deprecated Use {@link addToCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -154,7 +154,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @deprecated Use removeItem() instead.
+     * @deprecated Use {@link removeItem()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

@@ -37,11 +37,11 @@ class FileManagerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addFileSystemService(Container $container)
     {
-        $container[static::SERVICE_FILE_SYSTEM] = function ($container) {
+        $container->set(static::SERVICE_FILE_SYSTEM, function ($container) {
             return new FileManagerToFileSystemServiceBridge(
                 $container->getLocator()->fileSystem()->service()
             );
-        };
+        });
 
         return $container;
     }

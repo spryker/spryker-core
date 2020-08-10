@@ -23,8 +23,7 @@ class CompanyBusinessUnitsResourceController extends AbstractController
      *              "Retrieves a company business unit by id."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Company business unit id is missing.",

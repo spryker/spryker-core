@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserverInterface;
@@ -26,6 +28,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundl
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
@@ -75,7 +79,9 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleReader(
             $this->getQueryContainer(),
             $this->getAvailabilityFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->createProductBundleCache()
         );
     }
 
@@ -85,11 +91,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartExpander()
     {
         return new ProductBundleCartExpander(
-            $this->getQueryContainer(),
             $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->createProductBundleReader()
         );
     }
 
@@ -152,7 +158,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createProductBundleReader()
         );
     }
 
@@ -162,7 +169,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartActiveCheck(): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->getRepository()
+            $this->createProductBundleReader()
         );
     }
 
@@ -318,6 +325,25 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
     {
         return new QuoteItemsGrouper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
+    public function createProductBundleCache(): ProductBundleCacheInterface
+    {
+        return new ProductBundleCache();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface
+     */
+    public function createProductBundleItemExpander(): ProductBundleItemExpanderInterface
+    {
+        return new ProductBundleItemExpander(
+            $this->getRepository(),
+            $this->createProductBundlePriceCalculator()
+        );
     }
 
     /**

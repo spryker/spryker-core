@@ -12,6 +12,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface;
+use Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToStoreClientInterface;
 use Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface;
 
 class RelatedProductReader implements RelatedProductReaderInterface
@@ -35,18 +36,26 @@ class RelatedProductReader implements RelatedProductReaderInterface
     protected $relatedProductRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductStorageClientInterface $productStorageClient
      * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient
      * @param \Spryker\Glue\RelatedProductsRestApi\Processor\RestResponseBuilder\RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
+     * @param \Spryker\Glue\RelatedProductsRestApi\Dependency\Client\RelatedProductsRestApiToStoreClientInterface $storeClient
      */
     public function __construct(
         RelatedProductsRestApiToProductStorageClientInterface $productStorageClient,
         RelatedProductsRestApiToProductRelationStorageClientInterface $productRelationStorageClient,
-        RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder
+        RelatedProductRestResponseBuilderInterface $relatedProductRestResponseBuilder,
+        RelatedProductsRestApiToStoreClientInterface $storeClient
     ) {
         $this->productStorageClient = $productStorageClient;
         $this->productRelationStorageClient = $productRelationStorageClient;
         $this->relatedProductRestResponseBuilder = $relatedProductRestResponseBuilder;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -72,8 +81,9 @@ class RelatedProductReader implements RelatedProductReaderInterface
             return $this->relatedProductRestResponseBuilder->createProductAbstractNotFoundError();
         }
 
+        $storeName = $this->storeClient->getCurrentStore()->getName();
         $relatedProductAbstractIds = $this->productRelationStorageClient
-            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT]);
+            ->findRelatedAbstractProductIds($abstractProductData[static::KEY_ID_PRODUCT_ABSTRACT], $storeName);
 
         return $this->relatedProductRestResponseBuilder
             ->buildRelatedProductCollectionRestResponse($restRequest, $relatedProductAbstractIds);

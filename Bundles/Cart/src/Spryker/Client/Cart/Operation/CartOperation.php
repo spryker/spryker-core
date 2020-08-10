@@ -199,6 +199,7 @@ class CartOperation implements CartOperationInterface
 
             if ($changeItem->getQuantity() === 0) {
                 $cartChangeTransferForRemoval->addItem($quoteItem);
+
                 continue;
             }
 

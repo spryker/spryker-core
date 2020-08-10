@@ -13,7 +13,7 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class CatalogConfig extends AbstractBundleConfig
 {
     /**
-     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE` instead.
+     * @deprecated Use {@link \Spryker\Client\Catalog\CatalogConfig::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE} instead.
      *
      * @uses \Spryker\Shared\ProductPageSearch\ProductPageSearchConstants::FULL_TEXT_BOOSTED_BOOSTING_VALUE
      */
@@ -33,7 +33,9 @@ class CatalogConfig extends AbstractBundleConfig
     protected const ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE = 'SEARCH_ELASTICSEARCH:FULL_TEXT_BOOSTED_BOOSTING_VALUE';
 
     /**
-     * @deprecated Use `\Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()` instead.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Catalog\CatalogConfig::getElasticsearchFullTextBoostedBoostingValue()} instead.
      *
      * @return int
      */
@@ -43,6 +45,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getItemsPerPageParameterName(): string
@@ -51,6 +55,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getPaginationConfig(): PaginationConfigTransfer
@@ -66,6 +72,8 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getCatalogSearchPaginationConfigTransfer(): PaginationConfigTransfer
@@ -80,13 +88,15 @@ class CatalogConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getElasticsearchFullTextBoostedBoostingValue(): int
     {
         return $this->get(
             static::ELASTICSEARCH_FULL_TEXT_BOOSTED_BOOSTING_VALUE,
-            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE)
+            $this->get(static::FULL_TEXT_BOOSTED_BOOSTING_VALUE, 1)
         );
     }
 }

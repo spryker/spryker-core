@@ -38,5 +38,8 @@
     <transfer name="Locale">
     </transfer>
 
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
 </transfers>
 

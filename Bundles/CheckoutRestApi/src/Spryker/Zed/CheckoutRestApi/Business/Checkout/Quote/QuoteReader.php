@@ -34,8 +34,10 @@ class QuoteReader implements QuoteReaderInterface
      */
     public function findCustomerQuoteByUuid(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer): ?QuoteTransfer
     {
-        if (!$restCheckoutRequestAttributesTransfer->getCustomer()
-            || !$restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference()) {
+        if (
+            !$restCheckoutRequestAttributesTransfer->getCustomer()
+            || !$restCheckoutRequestAttributesTransfer->getCustomer()->getCustomerReference()
+        ) {
             return null;
         }
 

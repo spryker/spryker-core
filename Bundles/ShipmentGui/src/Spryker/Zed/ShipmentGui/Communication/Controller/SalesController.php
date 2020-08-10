@@ -49,6 +49,9 @@ class SalesController extends AbstractController
             'groupedOrderItemsByShipment' => $shipmentGroupsCollection,
             'changeStatusRedirectUrl' => $request->attributes->get('changeStatusRedirectUrl'),
             'itemGroups' => $itemGroups,
+            'tableColumnHeaders' => $request->attributes->get('tableColumnHeaders'),
+            'tableColumnCellsContent' => $request->attributes->get('tableColumnCellsContent'),
+            'templates' => $this->getFactory()->createShipmentOrderItemTemplateProvider()->provide($orderTransfer->getItems()),
         ]);
     }
 

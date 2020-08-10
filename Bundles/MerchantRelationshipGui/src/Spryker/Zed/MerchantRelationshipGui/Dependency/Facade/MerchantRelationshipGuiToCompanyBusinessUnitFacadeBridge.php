@@ -30,8 +30,9 @@ class MerchantRelationshipGuiToCompanyBusinessUnitFacadeBridge implements Mercha
      *
      * @return \Generated\Shared\Transfer\CompanyBusinessUnitCollectionTransfer
      */
-    public function getCompanyBusinessUnitCollection(CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer): CompanyBusinessUnitCollectionTransfer
-    {
+    public function getCompanyBusinessUnitCollection(
+        CompanyBusinessUnitCriteriaFilterTransfer $companyBusinessUnitCriteriaFilterTransfer
+    ): CompanyBusinessUnitCollectionTransfer {
         return $this->companyBusinessUnitFacade->getCompanyBusinessUnitCollection($companyBusinessUnitCriteriaFilterTransfer);
     }
 }

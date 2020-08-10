@@ -249,5 +249,11 @@
     <transfer name="Money">
     </transfer>
 
+    <transfer name="Address">
+    </transfer>
+
+    <transfer name="Customer">
+    </transfer>
+
 </transfers>
 

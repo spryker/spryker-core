@@ -24,4 +24,20 @@ interface ContentStorageClientInterface
      * @return \Generated\Shared\Transfer\ContentTypeContextTransfer|null
      */
     public function findContentTypeContextByKey(string $contentKey, string $localeName): ?ContentTypeContextTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves content by keys through a storage client dependency.
+     * - Returns the context needed to generate a content type.
+     *
+     * @api
+     *
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ContentTypeContextTransfer>
+     *
+     * @param string[] $contentKeys
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ContentTypeContextTransfer[]
+     */
+    public function getContentTypeContextByKeys(array $contentKeys, string $localeName): array;
 }

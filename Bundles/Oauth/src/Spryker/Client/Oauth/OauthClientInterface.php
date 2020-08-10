@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer;
 use Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer;
 use Generated\Shared\Transfer\OauthRequestTransfer;
 use Generated\Shared\Transfer\OauthResponseTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer;
 
 /**
  * @method \Spryker\Client\Oauth\OauthFactory getFactory()
@@ -35,9 +36,56 @@ interface OauthClientInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Client\Oauth\OauthClient::validateOauthAccessToken()} instead.
+     *
      * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
      *
      * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
      */
-    public function validateAccessToken(OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer): OauthAccessTokenValidationResponseTransfer;
+    public function validateAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Validates JWT token.
+     * - Checks if fingerprint is valid using public key.
+     * - Does not go to Zed.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\OauthAccessTokenValidationResponseTransfer
+     */
+    public function validateOauthAccessToken(
+        OauthAccessTokenValidationRequestTransfer $authAccessTokenValidationRequestTransfer
+    ): OauthAccessTokenValidationResponseTransfer;
+
+    /**
+     * Specification:
+     * - Revokes refresh token by identifier and customer reference.
+     * - Makes Zed request.
+     *
+     * @api
+     *
+     * @param string $refreshTokenIdentifier
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeRefreshToken(string $refreshTokenIdentifier, string $customerReference): RevokeRefreshTokenResponseTransfer;
+
+    /**
+     * Specification:
+     * - Revokes all refresh tokens for the given customer reference.
+     * - Makes Zed request.
+     *
+     * @api
+     *
+     * @param string $customerReference
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenResponseTransfer
+     */
+    public function revokeAllRefreshTokens(string $customerReference): RevokeRefreshTokenResponseTransfer;
 }

@@ -33,4 +33,18 @@
         <property name="customOptions" type="array" singular="customOptions"/>
     </transfer>
 
+    <transfer name="Mail">
+        <property name="user" type="User"/>
+        <property name="recipients" type="MailRecipient[]" singular="recipient"/>
+    </transfer>
+
+    <transfer name="MailRecipient">
+        <property name="email" type="string"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="idUser" type="int"/>
+        <property name="email" type="string"/>
+    </transfer>
+
 </transfers>

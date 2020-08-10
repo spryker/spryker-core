@@ -15,6 +15,8 @@ class CmsSlotBlockDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_CMS_SLOT_BLOCK = 'cms-slot-block';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCmsSlotBlockDataImporterConfiguration(): DataImporterConfigurationTransfer

@@ -20,13 +20,6 @@ interface ProductPageSearchToPriceProductInterface
     public function findPriceFor(PriceProductFilterTransfer $priceFilterTransfer);
 
     /**
-     * @param int $idProductAbstract
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductAbstractPrices($idProductAbstract);
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      *
      * @return array
@@ -35,10 +28,14 @@ interface ProductPageSearchToPriceProductInterface
 
     /**
      * @param int $idProductAbstract
+     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer|null $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtraction($idProductAbstract);
+    public function findProductAbstractPricesWithoutPriceExtraction(
+        int $idProductAbstract,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 
     /**
      * @param int[] $productAbstractIds
@@ -60,5 +57,8 @@ interface ProductPageSearchToPriceProductInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
-    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(array $productAbstractIds, ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null): array;
+    public function findProductAbstractPricesWithoutPriceExtractionByProductAbstractIdsAndCriteria(
+        array $productAbstractIds,
+        ?PriceProductCriteriaTransfer $priceProductCriteriaTransfer = null
+    ): array;
 }

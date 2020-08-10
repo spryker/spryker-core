@@ -40,8 +40,9 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    public function findSharedQuoteCollectionBySharedQuoteCriteriaFilter(SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer): QuoteCollectionTransfer
-    {
+    public function findSharedQuoteCollectionBySharedQuoteCriteriaFilter(
+        SharedQuoteCriteriaFilterTransfer $sharedQuoteCriteriaFilterTransfer
+    ): QuoteCollectionTransfer {
         $sharedCartsIdDefaultFlagData = $this->sharedCartRepository->getIsDefaultFlagForSharedCartsBySharedQuoteCriteriaFilter($sharedQuoteCriteriaFilterTransfer);
 
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
@@ -59,8 +60,10 @@ class QuoteReader implements QuoteReaderInterface
      *
      * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
      */
-    protected function applyIsDefaultFlagForSharedQuotes(QuoteCollectionTransfer $quoteCollectionTransfer, array $quotesIsDefaultFlagData): QuoteCollectionTransfer
-    {
+    protected function applyIsDefaultFlagForSharedQuotes(
+        QuoteCollectionTransfer $quoteCollectionTransfer,
+        array $quotesIsDefaultFlagData
+    ): QuoteCollectionTransfer {
         foreach ($quoteCollectionTransfer->getQuotes() as $quoteTransfer) {
             $quoteTransfer->setIsDefault($quotesIsDefaultFlagData[$quoteTransfer->getIdQuote()]);
         }

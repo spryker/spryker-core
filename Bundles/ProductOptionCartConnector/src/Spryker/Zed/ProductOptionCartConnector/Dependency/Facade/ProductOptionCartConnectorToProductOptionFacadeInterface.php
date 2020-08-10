@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOptionCartConnector\Dependency\Facade;
 interface ProductOptionCartConnectorToProductOptionFacadeInterface
 {
     /**
-     * @deprecated Use `Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface::getProductOptionValueById()` instead.
+     * @deprecated Use {@link \Spryker\Zed\ProductOptionCartConnector\Dependency\Facade\ProductOptionCartConnectorToProductOptionFacadeInterface::getProductOptionValueById()} instead.
      *
      * @param int $idProductOptionValueUsage
      *

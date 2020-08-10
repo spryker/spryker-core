@@ -129,8 +129,9 @@ class ConfigurableBundleTemplatePageSearchMapper implements ConfigurableBundleTe
      *
      * @return string|null
      */
-    protected function getConfigurableBundleTemplatePageSearchTransferStructuredData(ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer): ?string
-    {
+    protected function getConfigurableBundleTemplatePageSearchTransferStructuredData(
+        ConfigurableBundleTemplatePageSearchTransfer $configurableBundleTemplatePageSearchTransfer
+    ): ?string {
         $structuredData = $configurableBundleTemplatePageSearchTransfer->toArray(true, true);
 
         unset($structuredData[ConfigurableBundleTemplatePageSearchTransfer::ID_CONFIGURABLE_BUNDLE_TEMPLATE_PAGE_SEARCH]);

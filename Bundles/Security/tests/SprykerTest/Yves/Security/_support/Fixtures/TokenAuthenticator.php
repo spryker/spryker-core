@@ -24,11 +24,12 @@ class TokenAuthenticator extends AbstractGuardAuthenticator
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return array|bool
+     * @return string[]|bool
      */
     public function getCredentials(Request $request)
     {
-        if (!$token = $request->headers->get('X-AUTH-TOKEN')) {
+        $token = $request->headers->get('X-AUTH-TOKEN');
+        if (!$token) {
             return false;
         }
 

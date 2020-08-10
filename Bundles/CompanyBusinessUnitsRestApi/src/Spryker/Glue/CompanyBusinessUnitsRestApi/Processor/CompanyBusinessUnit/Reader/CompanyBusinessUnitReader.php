@@ -97,8 +97,10 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
             (new CompanyBusinessUnitTransfer())->setUuid($restRequest->getResource()->getId())
         );
 
-        if (!$companyBusinessUnitResponseTransfer->getIsSuccessful()
-            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())) {
+        if (
+            !$companyBusinessUnitResponseTransfer->getIsSuccessful()
+            || !$this->isCurrentCompanyUserInCompany($restRequest, $companyBusinessUnitResponseTransfer->getCompanyBusinessUnitTransfer())
+        ) {
             return $this->companyBusinessUnitRestResponseBuilder->createCompanyBusinessUnitNotFoundError();
         }
 
@@ -129,8 +131,9 @@ class CompanyBusinessUnitReader implements CompanyBusinessUnitReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function createCompanyBusinessUnitCollectionResponse(CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer): RestResponseInterface
-    {
+    protected function createCompanyBusinessUnitCollectionResponse(
+        CompanyBusinessUnitCollectionTransfer $companyBusinessUnitCollectionTransfer
+    ): RestResponseInterface {
         $companyBusinessUnitRestResources = [];
 
         foreach ($companyBusinessUnitCollectionTransfer->getCompanyBusinessUnits() as $companyBusinessUnitTransfer) {

@@ -27,6 +27,7 @@ class ConfigurableBundleItemTransformer implements ConfigurableBundleItemTransfo
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             if (!$itemTransfer->getConfiguredBundle() || $itemTransfer->getConfiguredBundle()->getQuantity() <= 1) {
                 $transformedOrderItems[] = $itemTransfer;
+
                 continue;
             }
 

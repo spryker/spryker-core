@@ -16,5 +16,7 @@ interface CmsStubInterface
      *
      * @return \Generated\Shared\Transfer\FlattenedLocaleCmsPageDataRequestTransfer
      */
-    public function getFlattenedLocaleCmsPageData(FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer): FlattenedLocaleCmsPageDataRequestTransfer;
+    public function getFlattenedLocaleCmsPageData(
+        FlattenedLocaleCmsPageDataRequestTransfer $flattenedLocaleCmsPageDataRequestTransfer
+    ): FlattenedLocaleCmsPageDataRequestTransfer;
 }

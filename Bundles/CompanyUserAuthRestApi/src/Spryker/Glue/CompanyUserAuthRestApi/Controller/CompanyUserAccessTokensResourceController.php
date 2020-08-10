@@ -24,8 +24,7 @@ class CompanyUserAccessTokensResourceController extends AbstractController
      *              "Creates access token for company user."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCompanyUserAccessTokenResponseAttributesTransfer",
      *          "responses": {

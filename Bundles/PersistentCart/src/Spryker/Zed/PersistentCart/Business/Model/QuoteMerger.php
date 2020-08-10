@@ -22,9 +22,8 @@ class QuoteMerger implements QuoteMergerInterface
     /**
      * @param \Spryker\Zed\CartExtension\Dependency\Plugin\CartOperationStrategyPluginInterface[] $cartAddItemStrategyPlugins
      */
-    public function __construct(
-        array $cartAddItemStrategyPlugins
-    ) {
+    public function __construct(array $cartAddItemStrategyPlugins)
+    {
         $this->cartAddItemStrategyPlugins = $cartAddItemStrategyPlugins;
     }
 

@@ -171,6 +171,7 @@ class VoucherEngine implements VoucherEngineInterface
 
             if ($this->voucherCodeExists($code) === true) {
                 $codeCollisions++;
+
                 continue;
             }
 

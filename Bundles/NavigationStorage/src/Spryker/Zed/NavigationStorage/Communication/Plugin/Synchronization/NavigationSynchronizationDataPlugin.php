@@ -21,6 +21,7 @@ use Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataQu
 class NavigationSynchronizationDataPlugin extends AbstractPlugin implements SynchronizationDataQueryContainerPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns the resource name of the storage or search module
      *
@@ -34,6 +35,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns true if this entity has multi-store concept
      *
@@ -47,6 +49,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns array of storage or search synchronized data, provided $ids parameter
      *    will limit the result
@@ -69,6 +72,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns array of configuration parameter which needed for Redis or Elasticsearch
      *
@@ -82,6 +86,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns synchronization queue name
      *
@@ -95,6 +100,7 @@ class NavigationSynchronizationDataPlugin extends AbstractPlugin implements Sync
     }
 
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Returns synchronization queue pool name for broadcasting messages
      *

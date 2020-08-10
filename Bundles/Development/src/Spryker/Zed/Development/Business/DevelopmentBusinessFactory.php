@@ -68,6 +68,8 @@ use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyF
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\TwigDependencyFinderInterface;
 use Spryker\Zed\Development\Business\Dependency\DependencyFinder\TwigDependencyFinder\ViewFunctionDependencyFinder;
 use Spryker\Zed\Development\Business\Dependency\Manager;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapper;
+use Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParser;
 use Spryker\Zed\Development\Business\Dependency\ModuleDependencyParserInterface;
 use Spryker\Zed\Development\Business\Dependency\ModuleParser\UseStatementParser;
@@ -148,6 +150,11 @@ use Spryker\Zed\Development\Business\IdeAutoCompletion\FileWriterInterface;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\Generator\BundleMethodGenerator;
 use Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriter;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemover;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinder;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface;
+use Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\TargetDirectoryResolver;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinder;
 use Spryker\Zed\Development\Business\Integration\DependencyProviderUsedPluginFinderInterface;
 use Spryker\Zed\Development\Business\Module\ModuleFileFinder\ModuleFileFinder;
@@ -187,6 +194,7 @@ use Spryker\Zed\Development\Dependency\Facade\DevelopmentToModuleFinderFacadeInt
 use Spryker\Zed\Development\DevelopmentDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\Finder as SymfonyFinder;
 use Symfony\Component\Yaml\Parser;
 use Zend\Config\Reader\Xml;
@@ -607,8 +615,17 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     {
         return new Manager(
             $this->createModuleDependencyParser(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createDependencyModuleMapper()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\Dependency\Mapper\DependencyModuleMapperInterface
+     */
+    protected function createDependencyModuleMapper(): DependencyModuleMapperInterface
+    {
+        return new DependencyModuleMapper();
     }
 
     /**
@@ -1424,7 +1441,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEngineBundleList()
     {
@@ -1602,6 +1619,18 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\DirectoryRemoverInterface
+     */
+    public function createIdeAutoCompletionDirectoryRemover(): DirectoryRemoverInterface
+    {
+        return new DirectoryRemover(
+            $this->createTargetDirectoryResolver(),
+            $this->getFilesystem(),
+            $this->createGeneratedFileFinder()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\IdeAutoCompletionWriterInterface
      */
     public function createZedIdeAutoCompletionWriter()
@@ -1643,6 +1672,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
             $this->createGlueIdeAutoCompletionBundleBuilder(),
             $this->getConfig()->getGlueIdeAutoCompletionOptions()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\GeneratedFileFinderInterface
+     */
+    public function createGeneratedFileFinder(): GeneratedFileFinderInterface
+    {
+        return new GeneratedFileFinder($this->getFinder());
     }
 
     /**
@@ -1808,7 +1845,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     protected function createIdeAutoCompletionBundleFinder(BundleBuilderInterface $bundleBuilder)
     {
         return new BundleFinder(
-            $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER),
+            $this->getFinder(),
             $bundleBuilder,
             $this->getConfig()->getIdeAutoCompletionSourceDirectoryGlobPatterns()
         );
@@ -1909,7 +1946,7 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated use `createAllModuleFinder` instead.
+     * @deprecated Use {@link createAllModuleFinder()} instead.
      *
      * @return \Spryker\Zed\Development\Business\ArchitectureSniffer\AllBundleFinderInterface
      */
@@ -2033,6 +2070,14 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Symfony\Component\Finder\Finder
+     */
+    protected function getFinder(): Finder
+    {
+        return $this->getProvidedDependency(DevelopmentDependencyProvider::FINDER);
+    }
+
+    /**
      * @return \Spryker\Zed\Development\Business\Codeception\Argument\Builder\CodeceptionArgumentsBuilderInterface
      */
     public function createConfigArgumentCollectionBuilder(): CodeceptionArgumentsBuilderInterface
@@ -2048,5 +2093,15 @@ class DevelopmentBusinessFactory extends AbstractBusinessFactory
     public function createComposerNameFinder(): ComposerNameFinderInterface
     {
         return new ComposerNameFinder($this->getModuleFinderFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\TargetDirectoryResolver
+     */
+    protected function createTargetDirectoryResolver(): TargetDirectoryResolver
+    {
+        return new TargetDirectoryResolver(
+            $this->getConfig()
+        );
     }
 }

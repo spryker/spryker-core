@@ -8,7 +8,7 @@
 namespace Spryker\Zed\StateMachine\Communication\Console;
 
 /**
- * @deprecated Use Spryker\Zed\StateMachine\Communication\ClearLocksConsole instead.
+ * @deprecated Use {@link \Spryker\Zed\StateMachine\Communication\ClearLocksConsole} instead.
  */
 class ClearLocks extends ClearLocksConsole
 {

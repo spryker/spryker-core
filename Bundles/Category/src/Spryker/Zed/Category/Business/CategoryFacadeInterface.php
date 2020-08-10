@@ -135,6 +135,7 @@ interface CategoryFacadeInterface
      *  - Touches created category-node entities active (via TouchFacade)
      *  - Touches navigation (via TouchFacade)
      *  - Touches created url entities active (via TouchFacade)
+     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
      *
      * @api
      *
@@ -186,6 +187,7 @@ interface CategoryFacadeInterface
      *   - Touches all category-node entities in path active (via TouchFacade)
      *   - Touches removed URL entities deleted (via TouchFacade)
      *   - Touches navigation active (via TouchFacade)
+     *   - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
      *
      * @api
      *
@@ -231,6 +233,7 @@ interface CategoryFacadeInterface
      *  - Touches all deleted url entities deleted (via TouchFacade)
      *  - Touches navigation active (via TouchFacade)
      *  - Calls all registered CategoryRelationDeletePluginInterface-plugins directly before removing the category entity
+     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
      *
      * @api
      *
@@ -244,6 +247,7 @@ interface CategoryFacadeInterface
      * Specification:
      *  - Finds sub-trees for the category node to be deleted and moves them under the destination node
      *  - Touches deleted category-node deleted (via TouchFacade)
+     *  - Triggers CategoryEvents::CATEGORY_NODE_PUBLISH event for parent and children nodes
      *
      * @api
      *

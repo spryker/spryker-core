@@ -26,6 +26,7 @@ class QuoteChangeRequestExpander implements QuoteChangeRequestExpanderInterface
             $bundledItemTransferList = $this->getBundledItems($cartChangeTransfer->getQuote(), $quoteTransfer->getGroupKey(), $quoteTransfer->getQuantity());
             if (count($bundledItemTransferList)) {
                 $itemTransferList = array_merge($itemTransferList, $bundledItemTransferList);
+
                 continue;
             }
             $itemTransferList[] = $quoteTransfer;

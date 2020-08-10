@@ -209,6 +209,7 @@ class PriceProductDimensionQueryExpander implements PriceProductDimensionQueryEx
                 if ($queryJoinTransfer->getCondition()) {
                     $priceProductStoreQuery->addJoinCondition($queryJoinTransfer->getRelation(), $queryJoinTransfer->getCondition());
                 }
+
                 continue;
             }
             $priceProductStoreQuery->addJoin(

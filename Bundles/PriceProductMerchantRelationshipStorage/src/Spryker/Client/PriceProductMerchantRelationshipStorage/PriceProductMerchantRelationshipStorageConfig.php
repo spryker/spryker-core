@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class PriceProductMerchantRelationshipStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionMerchantRelationship()

@@ -8,11 +8,14 @@
 namespace Spryker\Zed\Url\Business\Url;
 
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Url\Business\Exception\UrlExistsException;
 use Spryker\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Url\Persistence\UrlQueryContainerInterface
      */
@@ -49,20 +52,24 @@ class UrlCreator extends AbstractUrlCreatorSubject implements UrlCreatorInterfac
     {
         $this->assertUrlTransferForCreate($urlTransfer);
 
-        $this->urlQueryContainer
-            ->getConnection()
-            ->beginTransaction();
+        return $this->getTransactionHandler()->handleTransaction(function () use ($urlTransfer): UrlTransfer {
+            return $this->executeCreateUrlTransaction($urlTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\UrlTransfer $urlTransfer
+     *
+     * @return \Generated\Shared\Transfer\UrlTransfer
+     */
+    protected function executeCreateUrlTransaction(UrlTransfer $urlTransfer): UrlTransfer
+    {
         $this->notifyBeforeSaveObservers($urlTransfer);
 
         $urlTransfer = $this->persistUrlEntity($urlTransfer);
         $this->urlActivator->activateUrl($urlTransfer);
 
         $this->notifyAfterSaveObservers($urlTransfer);
-
-        $this->urlQueryContainer
-            ->getConnection()
-            ->commit();
 
         return $urlTransfer;
     }

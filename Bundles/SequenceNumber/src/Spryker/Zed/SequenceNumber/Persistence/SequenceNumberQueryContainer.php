@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class SequenceNumberQueryContainer extends AbstractQueryContainer implements SequenceNumberQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery
@@ -25,6 +27,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated This is not used anymore.
@@ -42,6 +46,8 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idMethod

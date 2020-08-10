@@ -59,5 +59,8 @@ interface CategoryImageMapperInterface
      *
      * @return \Orm\Zed\CategoryImage\Persistence\SpyCategoryImageSet
      */
-    public function mapCategoryImageSetToEntity(SpyCategoryImageSet $categoryImageSetEntity, CategoryImageSetTransfer $categoryImageSetTransfer): SpyCategoryImageSet;
+    public function mapCategoryImageSetToEntity(
+        SpyCategoryImageSet $categoryImageSetEntity,
+        CategoryImageSetTransfer $categoryImageSetTransfer
+    ): SpyCategoryImageSet;
 }

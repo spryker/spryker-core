@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductCategoryFilterStorageClient extends AbstractClient implements ProductCategoryFilterStorageClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory

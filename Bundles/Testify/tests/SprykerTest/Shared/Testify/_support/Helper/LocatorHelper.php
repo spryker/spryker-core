@@ -10,7 +10,6 @@ namespace SprykerTest\Shared\Testify\Helper;
 use ArrayObject;
 use Codeception\Configuration;
 use Codeception\Module;
-use Codeception\Step;
 use Codeception\TestInterface;
 use ReflectionClass;
 use ReflectionProperty;
@@ -88,6 +87,18 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _before(TestInterface $test): void
+    {
+        $this->clearLocators();
+        $this->clearCaches();
+        $this->configureNamespacesForClassResolver();
+    }
+
+    /**
      * @return void
      */
     protected function clearLocators(): void
@@ -112,16 +123,6 @@ class LocatorHelper extends Module
     }
 
     /**
-     * @param \Codeception\Step $step
-     *
-     * @return void
-     */
-    public function _beforeStep(Step $step): void
-    {
-        $this->configureNamespacesForClassResolver();
-    }
-
-    /**
      * @return void
      */
     private function configureNamespacesForClassResolver(): void
@@ -139,6 +140,8 @@ class LocatorHelper extends Module
     }
 
     /**
+     * @deprecated Use {@link \SprykerTest\Zed\Testify\Helper\BusinessHelper::getFacade()} instead.
+     *
      * @return \Spryker\Zed\Kernel\Business\AbstractFacade
      */
     public function getFacade(): AbstractFacade
@@ -157,6 +160,8 @@ class LocatorHelper extends Module
      */
     public function _after(TestInterface $test): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 
@@ -165,6 +170,8 @@ class LocatorHelper extends Module
      */
     public function _afterSuite(): void
     {
+        $this->clearLocators();
+        $this->clearCaches();
         $this->resetConfig();
     }
 

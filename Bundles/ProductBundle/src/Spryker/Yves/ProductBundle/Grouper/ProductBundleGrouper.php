@@ -11,12 +11,12 @@ use ArrayObject;
 use Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper as ClientProductBundleGrouper;
 
 /**
- * @deprecated Use \Spryker\Client\ProductBundle\ProductBundleClient instead.
+ * @deprecated Use {@link \Spryker\Client\ProductBundle\ProductBundleClient} instead.
  */
 class ProductBundleGrouper extends ClientProductBundleGrouper implements ProductBundleGrouperInterface
 {
     /**
-     * @deprecated Use \Spryker\Client\ProductBundle\ProductBundleClient::getGroupedBundleItems() instead.
+     * @deprecated Use {@link \Spryker\Client\ProductBundle\ProductBundleClient::getGroupedBundleItems()} instead.
      *
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $items
      * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $bundleItems

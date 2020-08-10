@@ -9,6 +9,7 @@ namespace Spryker\Zed\Product\Business\Product;
 
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Exception\ProductConcreteNotFoundException;
 use Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface;
 use Spryker\Zed\Product\Business\Product\Touch\ProductConcreteTouchInterface;
@@ -17,6 +18,8 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductConcreteActivator implements ProductConcreteActivatorInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Product\Business\Product\Status\ProductAbstractStatusCheckerInterface
      */
@@ -78,15 +81,9 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      */
     public function activateProductConcrete($idProductConcrete)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);
-        $this->updateIsActive($productConcreteTransfer, true);
-
-        $productAbstractTransfer = $this->getProductAbstractTransfer($productConcreteTransfer);
-        $this->productUrlManager->updateProductUrl($productAbstractTransfer);
-
-        $this->productQueryContainer->getConnection()->commit();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductConcrete): void {
+            $this->executeActivateProductConcreteTransaction($idProductConcrete);
+        });
     }
 
     /**
@@ -96,8 +93,32 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
      */
     public function deactivateProductConcrete($idProductConcrete)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($idProductConcrete) {
+            $this->executeDeactivateProductConcreteTransaction($idProductConcrete);
+        });
+    }
 
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function executeActivateProductConcreteTransaction(int $idProductConcrete): void
+    {
+        $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);
+        $this->updateIsActive($productConcreteTransfer, true);
+
+        $productAbstractTransfer = $this->getProductAbstractTransfer($productConcreteTransfer);
+        $this->productUrlManager->updateProductUrl($productAbstractTransfer);
+    }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    protected function executeDeactivateProductConcreteTransaction(int $idProductConcrete): void
+    {
         $productConcreteTransfer = $this->getProductConcreteTransfer($idProductConcrete);
         $this->updateIsActive($productConcreteTransfer, false);
 
@@ -105,8 +126,6 @@ class ProductConcreteActivator implements ProductConcreteActivatorInterface
             $productAbstractTransfer = $this->getProductAbstractTransfer($productConcreteTransfer);
             $this->productUrlManager->deleteProductUrl($productAbstractTransfer);
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**

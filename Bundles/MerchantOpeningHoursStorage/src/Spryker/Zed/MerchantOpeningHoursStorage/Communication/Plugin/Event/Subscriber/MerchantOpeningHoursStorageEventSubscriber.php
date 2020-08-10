@@ -12,6 +12,7 @@ use Spryker\Zed\Event\Dependency\Plugin\EventSubscriberInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\MerchantOpeningHoursDateScheduleStoragePublishListener;
+use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\MerchantOpeningHoursScheduleStoragePublishListener;
 use Spryker\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event\Listener\MerchantOpeningHoursWeekdayScheduleStoragePublishListener;
 
 /**
@@ -46,8 +47,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursPublishListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::MERCHANT_OPENING_HOURS_PUBLISH, new MerchantOpeningHoursScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -59,8 +59,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursWeekdayScheduleCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_WEEKDAY_SCHEDULE_CREATE, new MerchantOpeningHoursWeekdayScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }
@@ -72,8 +71,7 @@ class MerchantOpeningHoursStorageEventSubscriber extends AbstractPlugin implemen
      */
     protected function addMerchantOpeningHoursDateScheduleCreateListener(EventCollectionInterface $eventCollection)
     {
-        $eventCollection
-            ->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE, new MerchantOpeningHoursDateScheduleStoragePublishListener());
+        $eventCollection->addListenerQueued(MerchantOpeningHoursEvents::ENTITY_SPY_MERCHANT_OPENING_HOURS_DATE_SCHEDULE_CREATE, new MerchantOpeningHoursDateScheduleStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
 
         return $this;
     }

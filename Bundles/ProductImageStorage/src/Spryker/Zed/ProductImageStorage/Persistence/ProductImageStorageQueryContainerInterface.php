@@ -15,7 +15,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductImageStorage\Persistence\SpyProductAbstractImageStorageQuery
      */
@@ -33,7 +33,7 @@ interface ProductImageStorageQueryContainerInterface extends QueryContainerInter
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */

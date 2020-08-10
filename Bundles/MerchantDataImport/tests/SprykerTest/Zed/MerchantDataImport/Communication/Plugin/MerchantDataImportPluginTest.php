@@ -11,10 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
-use ReflectionClass;
-use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBroker;
-use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportBusinessFactory;
-use Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacade;
 use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
 use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
 
@@ -31,6 +27,7 @@ use Spryker\Zed\MerchantDataImport\MerchantDataImportConfig;
  */
 class MerchantDataImportPluginTest extends Unit
 {
+    protected const MERCHANT_REFERENCE = 'MER000006-test';
     /**
      * @var \SprykerTest\Zed\MerchantDataImport\MerchantDataImportCommunicationTester
      */
@@ -41,9 +38,7 @@ class MerchantDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
-        $this->tester->truncateMerchantRelations();
-
-        $this->tester->assertDatabaseTableIsEmpty();
+        $this->tester->deleteMerchantByReferences([static::MERCHANT_REFERENCE]);
 
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/merchant.csv');
@@ -52,17 +47,11 @@ class MerchantDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         $dataImportPlugin = new MerchantDataImportPlugin();
-        $pluginReflection = new ReflectionClass($dataImportPlugin);
-
-        $facadePropertyReflection = $pluginReflection->getParentClass()->getProperty('facade');
-        $facadePropertyReflection->setAccessible(true);
-        $facadePropertyReflection->setValue($dataImportPlugin, $this->getFacadeMock());
-
         $dataImporterReportTransfer = $dataImportPlugin->import($dataImportConfigurationTransfer);
 
         $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
 
-        $this->tester->assertDatabaseTableContainsData();
+        $this->tester->assertDatabaseTableContainsData([static::MERCHANT_REFERENCE]);
     }
 
     /**
@@ -72,32 +61,5 @@ class MerchantDataImportPluginTest extends Unit
     {
         $dataImportPlugin = new MerchantDataImportPlugin();
         $this->assertSame(MerchantDataImportConfig::IMPORT_TYPE_MERCHANT, $dataImportPlugin->getImportType());
-    }
-
-    /**
-     * @return \Spryker\Zed\MerchantDataImport\Business\MerchantDataImportFacade
-     */
-    public function getFacadeMock(): MerchantDataImportFacade
-    {
-        $factoryMock = $this->getMockBuilder(MerchantDataImportBusinessFactory::class)
-            ->setMethods(
-                [
-                    'createTransactionAwareDataSetStepBroker',
-                    'getConfig',
-                ]
-            )
-            ->getMock();
-
-        $factoryMock
-            ->method('createTransactionAwareDataSetStepBroker')
-            ->willReturn(new DataSetStepBroker());
-
-        $factoryMock->method('getConfig')
-            ->willReturn(new MerchantDataImportConfig());
-
-        $facade = new MerchantDataImportFacade();
-        $facade->setFactory($factoryMock);
-
-        return $facade;
     }
 }

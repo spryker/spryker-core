@@ -10,22 +10,27 @@ namespace Spryker\Zed\ProductOptionStorage\Business;
 interface ProductOptionStorageFacadeInterface
 {
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Queries all productOptions with the given productAbstractIds
+     * - Stores data as json encoded to storage table
+     * - Sends a copy of data to queue based on module config
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
     public function publish(array $productAbstractIds);
 
     /**
-     * {@inheritDoc}
+     * Specification:
+     * - Finds and deletes productOptions storage entities with the given productAbstractIds
+     * - Sends delete message to queue based on module config
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

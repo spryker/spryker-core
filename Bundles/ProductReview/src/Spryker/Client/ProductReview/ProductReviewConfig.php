@@ -19,6 +19,8 @@ class ProductReviewConfig extends AbstractBundleConfig
     ];
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\ProductReviewSearchConfigTransfer
      */
     public function getProductReviewSearchConfig()
@@ -30,6 +32,8 @@ class ProductReviewConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\PaginationConfigTransfer
      */
     public function getPaginationConfig()
@@ -45,6 +49,8 @@ class ProductReviewConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaximumRating()

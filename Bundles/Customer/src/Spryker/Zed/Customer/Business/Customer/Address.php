@@ -8,13 +8,12 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Exception;
-use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\AddressCriteriaFilterTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
-use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Business\Exception\AddressNotFoundException;
 use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
@@ -114,17 +113,15 @@ class Address implements AddressInterface
      */
     protected function getAddressTransferById($idAddress, $idCustomer = null)
     {
-        $addressQuery = $this->queryContainer->queryAddress($idAddress);
-        if ($idCustomer !== null) {
-            $addressQuery->filterByFkCustomer($idCustomer);
-        }
-        $addressEntity = $addressQuery->findOne();
+        $addressCriteriaFilterTransfer = (new AddressCriteriaFilterTransfer())
+            ->setIdCustomerAddress($idAddress)
+            ->setFkCustomer($idCustomer);
 
-        if ($addressEntity === null) {
+        $addressTransfer = $this->customerRepository->findAddressByCriteria($addressCriteriaFilterTransfer);
+
+        if ($addressTransfer === null) {
             throw new AddressNotFoundException(sprintf('Address not found for ID `%s` (and optional customer ID `%s`).', $idAddress, $idCustomer));
         }
-
-        $addressTransfer = $this->entityToAddressTransfer($addressEntity);
 
         return $addressTransfer;
     }
@@ -166,13 +163,10 @@ class Address implements AddressInterface
      */
     public function getAddresses(CustomerTransfer $customerTransfer)
     {
-        $entities = $this->queryContainer
-            ->queryAddresses()
-            ->joinCountry()
-            ->filterByFkCustomer($customerTransfer->getIdCustomer())
-            ->find();
+        $addressCriteriaFilterTransfer = (new AddressCriteriaFilterTransfer())
+            ->setFkCustomer($customerTransfer->getIdCustomer());
 
-        return $this->entityCollectionToTransferCollection($entities);
+        return $this->customerRepository->getAddressesByCriteria($addressCriteriaFilterTransfer);
     }
 
     /**
@@ -278,7 +272,7 @@ class Address implements AddressInterface
     /**
      * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
      *
-     * @return array
+     * @return string[]
      */
     public function getFormattedAddressArray(AddressTransfer $addressTransfer)
     {
@@ -322,23 +316,6 @@ class Address implements AddressInterface
         $addressTransfer->setCountry($countryTransfer);
 
         return $addressTransfer;
-    }
-
-    /**
-     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Customer\Persistence\SpyCustomerAddress[] $entities
-     *
-     * @return \Generated\Shared\Transfer\AddressesTransfer
-     */
-    protected function entityCollectionToTransferCollection(ObjectCollection $entities)
-    {
-        $addressTransferCollection = new AddressesTransfer();
-
-        foreach ($entities as $entity) {
-            $addressTransfer = $this->entityToAddressTransfer($entity);
-            $addressTransferCollection->addAddress($addressTransfer);
-        }
-
-        return $addressTransferCollection;
     }
 
     /**
@@ -558,6 +535,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -591,6 +569,7 @@ class Address implements AddressInterface
             $connection->commit();
         } catch (Exception $e) {
             $connection->rollBack();
+
             throw $e;
         }
 
@@ -621,9 +600,11 @@ class Address implements AddressInterface
      */
     protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
+        $addressTransfer->setUuid(null);
+        $addressTransfer->setIdCustomerAddress(null);
+
         $addressEntity = new SpyCustomerAddress();
         $addressEntity->fromArray($addressTransfer->toArray());
-        $addressEntity->setIdCustomerAddress(null);
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
         $addressEntity->setFkCountry($fkCountry);

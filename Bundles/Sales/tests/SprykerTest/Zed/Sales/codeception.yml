@@ -30,6 +30,8 @@ suites:
                 - \SprykerTest\Zed\Oms\Helper\OmsHelper
                 - \SprykerTest\Zed\Sales\Helper\BusinessHelper
                 - \SprykerTest\Shared\Sales\Helper\SalesDataHelper
+                - \SprykerTest\Shared\Customer\Helper\CustomerDataHelper
+                - \SprykerTest\Shared\Store\Helper\StoreDataHelper
 
     Communication:
         path: Communication

@@ -37,10 +37,11 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $executeQuotePlugins
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculate(QuoteTransfer $quoteTransfer)
+    public function recalculate(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true)
     {
         $calculableObjectTransfer = $this->mapCalculableObjectTransfer($quoteTransfer);
 
@@ -57,7 +58,9 @@ class QuoteCalculatorExecutor implements QuoteCalculatorExecutorInterface
         }
 
         $quoteTransfer = $this->mapQuoteTransfer($quoteTransfer, $calculableObjectTransfer);
-        $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
+        if ($executeQuotePlugins) {
+            $quoteTransfer = $this->executeQuotePostRecalculatePlugins($quoteTransfer);
+        }
 
         return $quoteTransfer;
     }

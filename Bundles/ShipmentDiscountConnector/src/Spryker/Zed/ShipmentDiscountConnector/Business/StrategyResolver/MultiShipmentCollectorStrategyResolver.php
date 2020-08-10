@@ -72,7 +72,8 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
      */
     protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(string $type): void
     {
-        if (!isset($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
+        if (
+            !isset($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
             || !($this->strategyContainer[$type][static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] instanceof Closure)
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT);
@@ -88,7 +89,8 @@ class MultiShipmentCollectorStrategyResolver implements MultiShipmentCollectorSt
      */
     protected function assertRequiredStrategyWithMultiShipmentContainerItems(string $type): void
     {
-        if (!isset($this->strategyContainer[$type][static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
+        if (
+            !isset($this->strategyContainer[$type][static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
             || !($this->strategyContainer[$type][static::STRATEGY_KEY_WITH_MULTI_SHIPMENT] instanceof Closure)
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITH_MULTI_SHIPMENT);

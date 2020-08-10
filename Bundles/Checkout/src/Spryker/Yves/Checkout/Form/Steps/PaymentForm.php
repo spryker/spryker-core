@@ -150,6 +150,7 @@ class PaymentForm extends AbstractType
 
             if (!$paymentMethodSubForm instanceof SubFormProviderNameInterface) {
                 $choices[$subFormName] = $paymentMethodSubForm->getPropertyPath();
+
                 continue;
             }
 

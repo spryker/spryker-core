@@ -11,6 +11,7 @@ use Orm\Zed\ProductRelation\Persistence\SpyProductRelationProductAbstractQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToEventBehaviorFacadeBridge;
+use Spryker\Zed\ProductRelationStorage\Dependency\Facade\ProductRelationStorageToProductRelationFacadeBridge;
 use Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelationStorageToProductQueryContainerBridge;
 use Spryker\Zed\ProductRelationStorage\Dependency\QueryContainer\ProductRelationStorageToProductRelationQueryContainerBridge;
 
@@ -22,6 +23,7 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
     public const QUERY_CONTAINER_PRODUCT = 'QUERY_CONTAINER_PRODUCT';
     public const QUERY_CONTAINER_PRODUCT_RELATION = 'QUERY_CONTAINER_PRODUCT_RELATION';
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
+    public const FACADE_PRODUCT_RELATION = 'FACADE_PRODUCT_RELATION';
     public const PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT = 'PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT';
 
     /**
@@ -29,11 +31,27 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
-        $container[static::FACADE_EVENT_BEHAVIOR] = function (Container $container) {
-            return new ProductRelationStorageToEventBehaviorFacadeBridge($container->getLocator()->eventBehavior()->facade());
-        };
+        $container = parent::provideCommunicationLayerDependencies($container);
+
+        $container = $this->addEventBehaviorFacade($container);
+        $container = $this->addProductRelationFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addProductRelationFacade($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }
@@ -57,11 +75,43 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    protected function addEventBehaviorFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_EVENT_BEHAVIOR, function (Container $container) {
+            return new ProductRelationStorageToEventBehaviorFacadeBridge(
+                $container->getLocator()->eventBehavior()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductRelationFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT_RELATION, function (Container $container) {
+            return new ProductRelationStorageToProductRelationFacadeBridge(
+                $container->getLocator()->productRelation()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addPropelProductRelationProductAbstractQuery(Container $container): Container
     {
-        $container[static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT] = function (): SpyProductRelationProductAbstractQuery {
+        $container->set(static::PROPEL_QUERY_PRODUCT_RELATION_PRODUCT_ABSTRACT, $container->factory(function (): SpyProductRelationProductAbstractQuery {
             return SpyProductRelationProductAbstractQuery::create();
-        };
+        }));
 
         return $container;
     }
@@ -73,9 +123,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
             return new ProductRelationStorageToProductQueryContainerBridge($container->getLocator()->product()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -87,9 +137,9 @@ class ProductRelationStorageDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addProductRelationQueryContainer(Container $container): Container
     {
-        $container[static::QUERY_CONTAINER_PRODUCT_RELATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_PRODUCT_RELATION, function (Container $container) {
             return new ProductRelationStorageToProductRelationQueryContainerBridge($container->getLocator()->productRelation()->queryContainer());
-        };
+        });
 
         return $container;
     }

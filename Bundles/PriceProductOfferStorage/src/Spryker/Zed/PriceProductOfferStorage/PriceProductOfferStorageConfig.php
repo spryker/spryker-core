@@ -12,9 +12,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class PriceProductOfferStorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getPriceProductOfferSynchronizationPoolName(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @api
+     *
+     * @return string|null
+     */
+    public function getEventQueueName(): ?string
     {
         return null;
     }

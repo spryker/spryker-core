@@ -16,5 +16,5 @@ interface LabelCreatorInterface
      *
      * @return void
      */
-    public function create(ProductLabelTransfer $productLabelTransfer);
+    public function create(ProductLabelTransfer $productLabelTransfer): void;
 }

@@ -57,6 +57,8 @@ class ContentFileGuiConfig extends AbstractSharedConfig
     protected const WIDGET_TEMPLATE_DISPLAY_NAME_FILE_ICON_AND_SIZE = 'content_file_gui.template.file-icon-and-size';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getContentWidgetTemplates(): array
@@ -68,6 +70,8 @@ class ContentFileGuiConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

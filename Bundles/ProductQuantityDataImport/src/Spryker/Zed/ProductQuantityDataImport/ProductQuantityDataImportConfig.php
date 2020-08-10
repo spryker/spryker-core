@@ -15,6 +15,8 @@ class ProductQuantityDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_PRODUCT_QUANTITY = 'product-quantity';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getProductQuantityDataImportConfiguration(): DataImporterConfigurationTransfer

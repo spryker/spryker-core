@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $value
@@ -28,6 +30,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $value
@@ -41,6 +45,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $value
@@ -54,6 +60,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $value
@@ -67,6 +75,8 @@ class AssertionFacade extends AbstractFacade implements AssertionFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param mixed $value

@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements GiftCardBalanceQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLogQuery
@@ -25,6 +27,8 @@ class GiftCardBalanceQueryContainer extends AbstractQueryContainer implements Gi
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $giftCardCode

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductOfferDataImport\Business\Step;
@@ -25,17 +25,11 @@ class PriceProductOfferWriterStep extends PublishAwareStep implements DataImport
     {
         $priceProductOfferEntity = SpyPriceProductOfferQuery::create()
             ->filterByFkProductOffer($dataSet[PriceProductOfferDataSetInterface::FK_PRODUCT_OFFER])
-            ->filterByFkPriceType($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_TYPE])
-            ->filterByFkStore($dataSet[PriceProductOfferDataSetInterface::FK_STORE])
-            ->filterByFkCurrency($dataSet[PriceProductOfferDataSetInterface::FK_CURRENCY])
+            ->filterByFkPriceProductStore($dataSet[PriceProductOfferDataSetInterface::FK_PRICE_PRODUCT_STORE])
             ->findOneOrCreate();
-
-        $priceProductOfferEntity
-            ->setNetPrice($dataSet[PriceProductOfferDataSetInterface::VALUE_NET])
-            ->setGrossPrice($dataSet[PriceProductOfferDataSetInterface::VALUE_GROSS]);
 
         $priceProductOfferEntity->save();
 
-        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, $priceProductOfferEntity->getIdPriceProductOffer());
+        $this->addPublishEvents(PriceProductOfferEvents::ENTITY_SPY_PRICE_PRODUCT_OFFER_PUBLISH, (int)$priceProductOfferEntity->getIdPriceProductOffer());
     }
 }

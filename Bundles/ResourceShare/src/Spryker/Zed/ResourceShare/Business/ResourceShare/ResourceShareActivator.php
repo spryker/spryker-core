@@ -65,6 +65,7 @@ class ResourceShareActivator implements ResourceShareActivatorInterface
             }
 
             $resourceShareResponseTransfer = $resourceShareActivatorStrategyPlugin->execute($resourceShareRequestTransfer);
+
             break;
         }
 

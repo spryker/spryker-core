@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class UpdateNavigationRelationPlugin extends AbstractPlugin implements CategoryRelationUpdatePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CategoryTransfer $categoryTransfer $categoryTransfer

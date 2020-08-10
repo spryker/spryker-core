@@ -26,6 +26,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     protected const FIELD_SOFT_FIXED_FEE = 'fixedFee';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -36,6 +38,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -46,6 +50,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -56,6 +62,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -71,6 +79,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
@@ -86,6 +96,8 @@ class MerchantRelationshipSoftThresholdFixedFeeFormExpanderPlugin extends Abstra
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data

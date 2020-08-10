@@ -10,10 +10,16 @@ namespace Spryker\Client\ProductReview;
 use Generated\Shared\Transfer\BulkProductReviewSearchRequestTransfer;
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculator;
+use Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface;
 use Spryker\Client\ProductReview\Pagination\PaginationExpander;
 use Spryker\Client\ProductReview\Pagination\PaginationExpanderInterface;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\BulkProductReviewsQueryPlugin;
 use Spryker\Client\ProductReview\Plugin\Elasticsearch\Query\ProductReviewsQueryPlugin;
+use Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpander;
+use Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpanderInterface;
+use Spryker\Client\ProductReview\Search\ProductReviewSearchReader;
+use Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface;
 use Spryker\Client\ProductReview\Storage\ProductAbstractReviewStorageReader;
 use Spryker\Client\ProductReview\Zed\ProductReviewStub;
 use Spryker\Shared\ProductReview\KeyBuilder\ProductAbstractReviewResourceKeyBuilder;
@@ -115,7 +121,7 @@ class ProductReviewFactory extends AbstractFactory
     }
 
     /**
-     * @deprecated Use getProductReviewConfig() instead.
+     * @deprecated Use {@link getProductReviewConfig()} instead.
      *
      * @return \Spryker\Client\ProductReview\ProductReviewConfig
      */
@@ -159,5 +165,40 @@ class ProductReviewFactory extends AbstractFactory
     protected function createProductAbstractReviewResourceKeyBuilder()
     {
         return new ProductAbstractReviewResourceKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductReview\Calculator\ProductReviewSummaryCalculatorInterface
+     */
+    public function createProductReviewSummaryCalculator(): ProductReviewSummaryCalculatorInterface
+    {
+        return new ProductReviewSummaryCalculator($this->getProductReviewConfig());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return \Spryker\Client\ProductReview\ProductViewExpander\ProductViewExpanderInterface
+     */
+    public function createProductViewExpander(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): ProductViewExpanderInterface
+    {
+        return new ProductViewExpander(
+            $this->createProductReviewSummaryCalculator(),
+            $this->createProductReviewSearchReader($productReviewSearchRequestTransfer)
+        );
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer
+     *
+     * @return \Spryker\Client\ProductReview\Search\ProductReviewSearchReaderInterface
+     */
+    public function createProductReviewSearchReader(ProductReviewSearchRequestTransfer $productReviewSearchRequestTransfer): ProductReviewSearchReaderInterface
+    {
+        return new ProductReviewSearchReader(
+            $this->createProductReviewsQueryPlugin($productReviewSearchRequestTransfer),
+            $this->getSearchClient(),
+            $this->getProductReviewsSearchResultFormatterPlugins()
+        );
     }
 }

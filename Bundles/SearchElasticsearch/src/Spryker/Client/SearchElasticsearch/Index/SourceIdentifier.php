@@ -33,8 +33,8 @@ class SourceIdentifier implements SourceIdentifierInterface
     public function isSupported(SearchContextTransfer $searchContextTransfer): bool
     {
         $sourceIdentifier = $searchContextTransfer->requireSourceIdentifier()->getSourceIdentifier();
-        $supportedSourceNames = $this->config->getSupportedSourceIdentifiers();
+        $supportedSourceIdentifiers = $this->config->getSupportedSourceIdentifiers();
 
-        return in_array($sourceIdentifier, $supportedSourceNames, true);
+        return in_array($sourceIdentifier, $supportedSourceIdentifiers, true);
     }
 }

@@ -50,7 +50,7 @@ class CompanyUnitAddressRepository extends AbstractRepository implements Company
     /**
      * {@inheritDoc}
      *
-     * @deprecated Use `getCompanyBusinessUnitAddressesByCriteriaFilter()` and `getCompanyBusinessUnitAddressToBusinessUnitRelations()` instead.
+     * @deprecated Use {@link getCompanyBusinessUnitAddressesByCriteriaFilter()} and {@link getCompanyBusinessUnitAddressToBusinessUnitRelations()} instead.
      *
      * @param \Generated\Shared\Transfer\CompanyUnitAddressCriteriaFilterTransfer $criteriaFilterTransfer
      *

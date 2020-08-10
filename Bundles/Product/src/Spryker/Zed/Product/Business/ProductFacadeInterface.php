@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductAttributeKeyTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductCriteriaTransfer;
 use Generated\Shared\Transfer\ProductUrlCriteriaFilterTransfer;
 use Generated\Shared\Transfer\RawProductAttributesTransfer;
 
@@ -291,7 +292,7 @@ interface ProductFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `Spryker\Zed\Product\Business\ProductFacadeInterface::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\ProductFacadeInterface::getRawProductConcreteTransfersByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *
@@ -784,7 +785,10 @@ interface ProductFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ProductAbstractSuggestionCollectionTransfer
      */
-    public function getPaginatedProductAbstractSuggestions(string $suggestion, PaginationTransfer $paginationTransfer): ProductAbstractSuggestionCollectionTransfer;
+    public function getPaginatedProductAbstractSuggestions(
+        string $suggestion,
+        PaginationTransfer $paginationTransfer
+    ): ProductAbstractSuggestionCollectionTransfer;
 
     /**
      * Specification:
@@ -961,4 +965,29 @@ interface ProductFacadeInterface
      * @return \Generated\Shared\Transfer\UrlTransfer[]
      */
     public function getProductUrls(ProductUrlCriteriaFilterTransfer $productUrlCriteriaFilterTransfer): array;
+
+    /**
+     * Specification:
+     * - Retrieves product abstract transfer by sku.
+     * - Doesn't populate it with additional data.
+     *
+     * @api
+     *
+     * @param string[] $productAbstractSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    public function getRawProductAbstractTransfersByAbstractSkus(array $productAbstractSkus): array;
+
+    /**
+     * Specification:
+     * - Retrieves product concrete transfers according to given criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductCriteriaTransfer $productCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getProductConcretesByCriteria(ProductCriteriaTransfer $productCriteriaTransfer): array;
 }

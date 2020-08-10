@@ -16,7 +16,7 @@ use Spryker\Client\Search\Dependency\Plugin\SearchStringGetterInterface;
 use Spryker\Client\Search\Exception\InvalidSearchQueryException;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\Plugin\QueryExpander\CompletionQueryExpanderPlugin} instead.
  *
  * @method \Spryker\Client\Search\SearchFactory getFactory()
  */

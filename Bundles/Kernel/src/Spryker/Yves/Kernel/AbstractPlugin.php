@@ -7,143 +7,47 @@
 
 namespace Spryker\Yves\Kernel;
 
-use Spryker\Client\Kernel\ClassResolver\Client\ClientResolver;
-use Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver;
-use Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver;
-use Spryker\Yves\Kernel\Plugin\Pimple;
+use Spryker\Service\Container\ContainerInterface;
+use Spryker\Shared\Kernel\Container\GlobalContainer;
 
 abstract class AbstractPlugin
 {
+    use FactoryResolverAwareTrait;
+    use ClientResolverAwareTrait;
+    use BundleConfigResolverAwareTrait;
+
     protected const SERVICE_LOCALE = 'locale';
-    /**
-     * @var \Spryker\Yves\Kernel\FactoryInterface
-     */
-    private $factory;
 
     /**
-     * @var \Spryker\Client\Kernel\AbstractClient
+     * @var \Spryker\Service\Container\ContainerInterface|null
      */
-    private $client;
+    protected static $container;
 
     /**
-     * @var \Spryker\Yves\Kernel\AbstractBundleConfig
+     * @var string|null
      */
-    private $config;
+    protected static $locale;
 
     /**
-     * @param \Spryker\Yves\Kernel\AbstractFactory $factory
+     * @deprecated Use {@link \Spryker\Yves\Kernel\AbstractPlugin::getContainer()} instead.
      *
-     * @return $this
-     */
-    public function setFactory(AbstractFactory $factory)
-    {
-        $this->factory = $factory;
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\FactoryInterface
-     */
-    protected function getFactory()
-    {
-        if ($this->factory === null) {
-            $this->factory = $this->resolveFactory();
-        }
-
-        return $this->factory;
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\AbstractFactory
-     */
-    private function resolveFactory()
-    {
-        return $this->getFactoryResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\ClassResolver\Factory\FactoryResolver
-     */
-    private function getFactoryResolver()
-    {
-        return new FactoryResolver();
-    }
-
-    /**
-     * @return \Spryker\Client\Kernel\AbstractClient
-     */
-    protected function getClient()
-    {
-        if ($this->client === null) {
-            $this->client = $this->resolveClient();
-        }
-
-        return $this->client;
-    }
-
-    /**
-     * @return \Spryker\Client\Kernel\AbstractClient
-     */
-    private function resolveClient()
-    {
-        return $this->getClientResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Client\Kernel\ClassResolver\Client\ClientResolver
-     */
-    private function getClientResolver()
-    {
-        return new ClientResolver();
-    }
-
-    /**
-     * @param \Spryker\Yves\Kernel\AbstractBundleConfig $config
-     *
-     * @return $this
-     */
-    public function setConfig(AbstractBundleConfig $config)
-    {
-        $this->config = $config;
-
-        return $this;
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
-     */
-    protected function getConfig()
-    {
-        if ($this->config === null) {
-            $this->config = $this->resolveBundleConfig();
-        }
-
-        return $this->config;
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\AbstractBundleConfig
-     */
-    private function resolveBundleConfig()
-    {
-        return $this->getBundleConfigResolver()->resolve($this);
-    }
-
-    /**
-     * @return \Spryker\Yves\Kernel\ClassResolver\Config\BundleConfigResolver
-     */
-    private function getBundleConfigResolver()
-    {
-        return new BundleConfigResolver();
-    }
-
-    /**
-     * @return \Spryker\Service\Container\Container
+     * @return \Spryker\Service\Container\ContainerInterface
      */
     protected function getApplication()
     {
-        return (new Pimple())->getApplication();
+        return $this->getContainer();
+    }
+
+    /**
+     * @return \Spryker\Service\Container\ContainerInterface
+     */
+    protected function getContainer(): ContainerInterface
+    {
+        if (static::$container === null) {
+            static::$container = (new GlobalContainer())->getContainer();
+        }
+
+        return static::$container;
     }
 
     /**
@@ -151,6 +55,10 @@ abstract class AbstractPlugin
      */
     protected function getLocale()
     {
-        return $this->getApplication()->get(static::SERVICE_LOCALE);
+        if (static::$locale === null) {
+            static::$locale = $this->getContainer()->get(static::SERVICE_LOCALE);
+        }
+
+        return static::$locale;
     }
 }

@@ -110,11 +110,11 @@ class FixturesCommand extends Run implements CustomCommandInterface
                 Codecept::versionString() . "\nPowered by " . Version::getVersionString()
             );
             $output->writeln(
-                "Running with seed: " . $this->options['seed'] . "\n"
+                'Running with seed: ' . $this->options['seed'] . "\n"
             );
         }
         if ($this->options['group']) {
-            $output->writeln(sprintf("[Groups] <info>%s</info> ", implode(', ', $this->options['group'])));
+            $output->writeln(sprintf('[Groups] <info>%s</info> ', implode(', ', $this->options['group'])));
         }
         if ($this->options['debug']) {
             $output->setVerbosity(OutputInterface::VERBOSITY_VERY_VERBOSE);

@@ -86,11 +86,43 @@
         <property name="oauthUserId" type="string"/>
     </transfer>
 
+    <transfer name="OauthRefreshToken">
+        <property name="identifier" type="string"/>
+        <property name="accessTokenIdentifier" type="string"/>
+        <property name="idOauthClient" type="string"/>
+        <property name="scopes" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="userIdentifier" type="string"/>
+        <property name="expiresAt" type="string"/>
+        <property name="revokedAt" type="string"/>
+    </transfer>
+
+    <transfer name="OauthRefreshTokenCollection">
+        <property name="oauthRefreshTokens" type="OauthRefreshToken[]" singular="oauthRefreshToken"/>
+    </transfer>
+
     <transfer name="JwtToken">
         <property name="headers" type="array" singular="headers"/>
         <property name="claims" type="array" singular="claims"/>
         <property name="signature" type="string"/>
         <property name="payload" type="array" singular="payload"/>
+    </transfer>
+
+    <transfer name="RevokeRefreshTokenRequest">
+        <property name="refreshToken" type="string"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="RevokeRefreshTokenResponse">
+        <property name="isSuccessful" type="bool"/>
+        <property name="error" type="string"/>
+    </transfer>
+
+    <transfer name="OauthTokenCriteriaFilter">
+        <property name="identifier" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="isRevoked" type="bool"/>
+        <property name="expiresAt" type="string"/>
     </transfer>
 
 </transfers>

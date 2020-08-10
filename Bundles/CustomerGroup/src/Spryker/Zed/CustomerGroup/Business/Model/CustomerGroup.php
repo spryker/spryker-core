@@ -17,9 +17,12 @@ use Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupToCustomer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\CustomerGroup\Business\Exception\CustomerGroupNotFoundException;
 use Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 class CustomerGroup implements CustomerGroupInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\CustomerGroup\Persistence\CustomerGroupQueryContainerInterface
      */
@@ -77,19 +80,9 @@ class CustomerGroup implements CustomerGroupInterface
      */
     public function add(CustomerGroupTransfer $customerGroupTransfer)
     {
-        $customerGroupEntity = new SpyCustomerGroup();
-        $customerGroupEntity->fromArray($customerGroupTransfer->toArray());
-
-        $this->queryContainer->getConnection()->beginTransaction();
-
-        $customerGroupEntity->save();
-        $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
-
-        $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
-
-        $this->queryContainer->getConnection()->commit();
-
-        return $customerGroupTransfer;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($customerGroupTransfer): CustomerGroupTransfer {
+            return $this->executeAddTransaction($customerGroupTransfer);
+        });
     }
 
     /**
@@ -99,18 +92,45 @@ class CustomerGroup implements CustomerGroupInterface
      */
     public function update(CustomerGroupTransfer $customerGroupTransfer)
     {
+        $this->getTransactionHandler()->handleTransaction(function () use ($customerGroupTransfer): void {
+            $this->executeUpdateTransaction($customerGroupTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerGroupTransfer
+     */
+    protected function executeAddTransaction(CustomerGroupTransfer $customerGroupTransfer): CustomerGroupTransfer
+    {
+        $customerGroupEntity = new SpyCustomerGroup();
+        $customerGroupEntity->fromArray($customerGroupTransfer->toArray());
+
+        $customerGroupEntity->save();
+        $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
+
+        $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
+
+        return $customerGroupTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerGroupTransfer $customerGroupTransfer
+     *
+     * @return void
+     */
+    protected function executeUpdateTransaction(CustomerGroupTransfer $customerGroupTransfer): void
+    {
         $customerGroupEntity = $this->getCustomerGroup($customerGroupTransfer);
         $customerGroupEntity->fromArray($customerGroupTransfer->toArray());
 
-        $this->queryContainer->getConnection()->beginTransaction();
         $customerGroupEntity->save();
 
         $customerGroupTransfer = $this->mapEntityToTransfer($customerGroupEntity, $customerGroupTransfer);
 
         $this->removeCustomersFromGroup($customerGroupTransfer);
         $this->saveCustomers($customerGroupTransfer, $customerGroupEntity);
-
-        $this->queryContainer->getConnection()->commit();
     }
 
     /**

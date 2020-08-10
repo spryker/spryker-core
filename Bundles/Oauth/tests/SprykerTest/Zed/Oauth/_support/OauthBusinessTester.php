@@ -8,6 +8,10 @@
 namespace SprykerTest\Zed\Oauth;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\RevokeRefreshTokenRequestBuilder;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer;
+use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
 
 /**
  * Inherited Methods
@@ -29,7 +33,47 @@ class OauthBusinessTester extends Actor
 {
     use _generated\OauthBusinessTesterActions;
 
+    protected const TEST_PASSWORD = 'Test password';
+
     /**
-     * Define custom actions here
+     * @param string $customerReference
+     * @param string|null $refreshToken
+     *
+     * @return \Generated\Shared\Transfer\RevokeRefreshTokenRequestTransfer
      */
+    public function createRevokeRefreshTokenRequestTransfer(string $customerReference, ?string $refreshToken = null): RevokeRefreshTokenRequestTransfer
+    {
+        $revokeRefreshTokenRequestTransfer = (new RevokeRefreshTokenRequestBuilder())
+            ->seed([RevokeRefreshTokenRequestTransfer::REFRESH_TOKEN => $refreshToken, RevokeRefreshTokenRequestTransfer::CUSTOMER_REFERENCE => $customerReference])
+            ->build();
+
+        return $revokeRefreshTokenRequestTransfer;
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    public function createCustomerTransfer(): CustomerTransfer
+    {
+        return $this->haveCustomer([
+            CustomerTransfer::PASSWORD => static::TEST_PASSWORD,
+            CustomerTransfer::NEW_PASSWORD => static::TEST_PASSWORD,
+        ]);
+    }
+
+    /**
+     * @return int
+     */
+    public function getOauthRefreshTokensCount(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->count();
+    }
+
+    /**
+     * @return int
+     */
+    public function deleteAllOauthRefreshTokens(): int
+    {
+        return SpyOauthRefreshTokenQuery::create()->deleteAll();
+    }
 }

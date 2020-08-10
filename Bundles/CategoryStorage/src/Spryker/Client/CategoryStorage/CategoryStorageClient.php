@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class CategoryStorageClient extends AbstractClient implements CategoryStorageClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $locale
@@ -29,6 +31,8 @@ class CategoryStorageClient extends AbstractClient implements CategoryStorageCli
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategoryNode

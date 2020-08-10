@@ -19,6 +19,8 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 class StockQueryContainer extends AbstractQueryContainer implements StockQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -34,6 +36,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -52,6 +56,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -66,6 +72,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -82,6 +90,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idStock
@@ -98,6 +108,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -120,6 +132,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $sku
@@ -142,6 +156,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -156,6 +172,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockQuery
@@ -166,6 +184,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $names
@@ -179,6 +199,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -189,6 +211,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Stock\Persistence\SpyStockProductQuery
@@ -207,6 +231,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idStockProduct
@@ -221,6 +247,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -239,6 +267,8 @@ class StockQueryContainer extends AbstractQueryContainer implements StockQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct

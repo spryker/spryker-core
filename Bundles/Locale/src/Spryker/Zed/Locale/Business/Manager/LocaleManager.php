@@ -71,7 +71,7 @@ class LocaleManager
     }
 
     /**
-     * @deprecated Use getLocale($localeName) instead
+     * @deprecated Use {@link \Spryker\Zed\Locale\Business\Manager\LocaleManager::getLocale()} instead.
      *
      * @param string $localeCode
      *
@@ -201,7 +201,7 @@ class LocaleManager
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales()
     {

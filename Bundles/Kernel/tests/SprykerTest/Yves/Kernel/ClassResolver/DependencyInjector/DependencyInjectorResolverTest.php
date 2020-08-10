@@ -8,8 +8,6 @@
 namespace SprykerTest\Yves\Kernel\ClassResolver\DependencyInjector;
 
 use Codeception\Test\Unit;
-use ReflectionClass;
-use Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver;
 use Spryker\Yves\Kernel\ClassResolver\DependencyInjector\DependencyInjectorResolver;
 use Spryker\Yves\Kernel\Container;
 use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorCollectionInterface;
@@ -61,7 +59,12 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @var string
      */
-    protected $classPattern = '%namespace%\\Yves\\%fromBundle%%store%\\ClassResolver\\%bundle%DependencyInjector';
+    protected $codeBucketClass = 'CodeBucketNamespace\\Yves\\KernelDE\\ClassResolver\\FooDependencyInjector';
+
+    /**
+     * @var string
+     */
+    protected $classPattern = '%namespace%\\Yves\\%fromBundle%%codeBucket%\\ClassResolver\\%bundle%DependencyInjector';
 
     /**
      * @var array
@@ -74,11 +77,6 @@ class DependencyInjectorResolverTest extends Unit
     public function tearDown(): void
     {
         parent::tearDown();
-
-        $reflectionResolver = new ReflectionClass(AbstractClassResolver::class);
-        $reflectionProperty = $reflectionResolver->getProperty('cache');
-        $reflectionProperty->setAccessible(true);
-        $reflectionProperty->setValue([]);
 
         $this->deleteCreatedFiles();
     }
@@ -194,10 +192,37 @@ class DependencyInjectorResolverTest extends Unit
     /**
      * @return void
      */
+    public function testResolveMustReturnCodeBucketClass(): void
+    {
+        $this->createClass($this->projectClass);
+        $this->createClass($this->codeBucketClass);
+        $this->createClass($this->storeClass);
+
+        $resolverMock = $this->getResolverMock(['getClassPattern', 'getDependencyInjectorConfiguration', 'getProjectNamespaces']);
+        $resolverMock->method('getClassPattern')->willReturn($this->classPattern);
+        $resolverMock->method('getProjectNamespaces')->willReturn(['CodeBucketNamespace']);
+
+        $resolverMock->method('getDependencyInjectorConfiguration')
+            ->willReturn([$this->injectToBundle => [$this->injectFromBundle]]);
+
+        $dependencyInjectorCollection = $resolverMock->resolve($this->injectToBundle);
+
+        $this->assertInstanceOf(
+            DependencyInjectorCollectionInterface::class,
+            $dependencyInjectorCollection
+        );
+
+        $resolvedDependencyInjector = current($dependencyInjectorCollection->getDependencyInjector());
+        $this->assertInstanceOf($this->codeBucketClass, $resolvedDependencyInjector);
+    }
+
+    /**
+     * @return void
+     */
     public function testGetClassPattern(): void
     {
         $dependencyInjectorResolver = new DependencyInjectorResolver();
-        $this->assertSame('\%namespace%\Yves\%fromBundle%%store%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
+        $this->assertSame('\%namespace%\Yves\%fromBundle%%codeBucket%\Dependency\Injector\%bundle%DependencyInjector', $dependencyInjectorResolver->getClassPattern());
     }
 
     /**

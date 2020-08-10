@@ -17,6 +17,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class OauthCustomerScopeInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return void

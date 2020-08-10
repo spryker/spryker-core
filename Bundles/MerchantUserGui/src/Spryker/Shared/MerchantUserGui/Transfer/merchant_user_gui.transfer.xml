@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="Merchant">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
+        <property name="user" type="User"/>
+    </transfer>
+
+    <transfer name="MerchantUserCriteria">
+        <property name="idMerchantUser" type="int"/>
+        <property name="idMerchant" type="int"/>
+        <property name="idUser" type="int"/>
+        <property name="withUser" type="bool"/>
+    </transfer>
+
+    <transfer name="MerchantUserResponse">
+        <property name="merchantUser" type="MerchantUser"/>
+        <property name="isSuccessful" type="bool"/>
+        <property name="errors" type="Message[]" singular="error"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="message" type="string"/>
+    </transfer>
+
+    <transfer name="TabItem">
+        <property name="name" type="string"/>
+        <property name="title" type="string"/>
+        <property name="template" type="string"/>
+    </transfer>
+
+    <transfer name="TabsView">
+        <property name="tabs" type="TabItem[]" singular="tab"/>
+    </transfer>
+
+    <transfer name="User">
+        <property name="idUser" type="int"/>
+        <property name="password" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="username" type="string"/>
+        <property name="status" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="UserCriteria">
+        <property name="email" type="string"/>
+    </transfer>
+
+</transfers>

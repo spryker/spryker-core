@@ -1,0 +1,18 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "UndefinedMagicMethod",
+            "message": "Magic method Spryker\\Shared\\Kernel\\BundleProxy::facade does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/OmsDiscountConnector/src/Spryker/Zed/OmsDiscountConnector/OmsDiscountConnectorDependencyProvider.php",
+            "snippet": "            return new OmsDiscountConnectorToDiscountBridge($container->getLocator()->discount()->facade());",
+            "selected_text": "facade",
+            "error_level": 4,
+            "shortcode": 219
+        }
+    ],
+    "deprecation": []
+}

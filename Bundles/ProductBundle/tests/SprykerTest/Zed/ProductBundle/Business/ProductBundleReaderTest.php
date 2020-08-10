@@ -16,6 +16,8 @@ use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use PHPUnit\Framework\MockObject\MockObject;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReader;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
@@ -130,8 +132,16 @@ class ProductBundleReaderTest extends Unit
             $productBundleRepository = $this->createProductBundleRepositoryMock();
         }
 
+        $productBundleCache = $this->createProductBundleCache();
+
         $productBundleReaderMock = $this->getMockBuilder(ProductBundleReader::class)
-            ->setConstructorArgs([$productBundleQueryContainerMock, $productBundleToAvailabilityFacadeMock, $storeFacadeMock, $productBundleRepository])
+            ->setConstructorArgs([
+                $productBundleQueryContainerMock,
+                $productBundleToAvailabilityFacadeMock,
+                $storeFacadeMock,
+                $productBundleRepository,
+                $productBundleCache,
+            ])
             ->setMethods(['findBundledProducts', 'findProductConcreteAvailabilityBySkuForStore'])
             ->getMock();
 
@@ -194,5 +204,13 @@ class ProductBundleReaderTest extends Unit
             ->method('findBundledProducts')
             ->with($fixtures['idProductConcrete'])
             ->willReturn([$productBundleEntity]);
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
+    protected function createProductBundleCache(): ProductBundleCacheInterface
+    {
+        return new ProductBundleCache();
     }
 }

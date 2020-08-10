@@ -18,7 +18,7 @@ class TestEventBulkListenerPluginStub implements EventBulkHandlerInterface
     protected static $exceptionThrownCount = 0;
 
     /**
-     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $transfers
+     * @param \Generated\Shared\Transfer\EventEntityTransfer[] $transfers
      * @param string $eventName
      *
      * @throws \Exception
@@ -29,6 +29,7 @@ class TestEventBulkListenerPluginStub implements EventBulkHandlerInterface
     {
         if (static::$exceptionThrownCount < 2) {
             static::$exceptionThrownCount++;
+
             throw new Exception('Error during message handling');
         }
     }

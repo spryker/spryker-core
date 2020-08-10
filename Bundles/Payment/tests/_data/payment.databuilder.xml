@@ -6,7 +6,7 @@
 >
 
     <transfer name="PaymentMethod">
-        <property name="methodName" dataBuilderRule="word"/>
+        <property name="methodName" dataBuilderRule="unique()->word"/>
         <property name="name" dataBuilderRule="word"/>
         <property name="isActive" dataBuilderRule="boolean"/>
     </transfer>

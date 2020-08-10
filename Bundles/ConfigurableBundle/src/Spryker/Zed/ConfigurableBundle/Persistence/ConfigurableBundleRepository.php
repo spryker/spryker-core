@@ -188,8 +188,10 @@ class ConfigurableBundleRepository extends AbstractRepository implements Configu
         SpyConfigurableBundleTemplateSlotQuery $configurableBundleTemplateSlotQuery,
         ConfigurableBundleTemplateSlotFilterTransfer $configurableBundleTemplateSlotFilterTransfer
     ): SpyConfigurableBundleTemplateSlotQuery {
-        if ($configurableBundleTemplateSlotFilterTransfer->getProductList()
-            && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()) {
+        if (
+            $configurableBundleTemplateSlotFilterTransfer->getProductList()
+            && $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
+        ) {
             $configurableBundleTemplateSlotQuery->filterByFkProductList(
                 $configurableBundleTemplateSlotFilterTransfer->getProductList()->getIdProductList()
             );

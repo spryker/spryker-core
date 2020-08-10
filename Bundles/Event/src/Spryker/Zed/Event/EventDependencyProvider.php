@@ -64,9 +64,9 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventListenerCollection(Container $container): Container
     {
-        $container[static::EVENT_LISTENERS] = function (Container $container) {
+        $container->set(static::EVENT_LISTENERS, function (Container $container) {
             return $this->getEventListenerCollection();
-        };
+        });
 
         return $container;
     }
@@ -78,9 +78,9 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addEventSubscriberCollection(Container $container): Container
     {
-        $container[static::EVENT_SUBSCRIBERS] = function (Container $container) {
+        $container->set(static::EVENT_SUBSCRIBERS, function (Container $container) {
             return $this->getEventSubscriberCollection();
-        };
+        });
 
         return $container;
     }
@@ -92,9 +92,9 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addQueueClient(Container $container): Container
     {
-        $container[static::CLIENT_QUEUE] = function (Container $container) {
+        $container->set(static::CLIENT_QUEUE, function (Container $container) {
             return new EventToQueueBridge($container->getLocator()->queue()->client());
-        };
+        });
 
         return $container;
     }
@@ -106,9 +106,9 @@ class EventDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new EventToUtilEncoding($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

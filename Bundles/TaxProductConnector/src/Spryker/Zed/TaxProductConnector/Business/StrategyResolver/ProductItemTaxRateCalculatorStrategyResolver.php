@@ -7,8 +7,9 @@
 
 namespace Spryker\Zed\TaxProductConnector\Business\StrategyResolver;
 
+use ArrayObject;
 use Closure;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
 use Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface;
 
@@ -34,19 +35,20 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\AddressTransfer|null $shippingAddressTransfer
      *
      * @return \Spryker\Zed\TaxProductConnector\Business\Calculator\CalculatorInterface
      */
-    public function resolve(QuoteTransfer $quoteTransfer): CalculatorInterface
+    public function resolve(ArrayObject $itemTransfers, ?AddressTransfer $shippingAddressTransfer): CalculatorInterface
     {
-        if ($quoteTransfer->getShippingAddress() !== null) {
+        if ($shippingAddressTransfer !== null) {
             $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
             return call_user_func($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT]);
         }
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
+        foreach ($itemTransfers as $itemTransfer) {
             if ($itemTransfer->getShipment() === null) {
                 $this->assertRequiredStrategyWithoutMultiShipmentContainerItems();
 
@@ -66,7 +68,8 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
      */
     protected function assertRequiredStrategyWithoutMultiShipmentContainerItems(): void
     {
-        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
+        if (
+            !isset($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT])
             || !($this->strategyContainer[static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT] instanceof Closure)
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITHOUT_MULTI_SHIPMENT);
@@ -80,7 +83,8 @@ class ProductItemTaxRateCalculatorStrategyResolver implements ProductItemTaxRate
      */
     protected function assertRequiredStrategyWithMultiShipmentContainerItems(): void
     {
-        if (!isset($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
+        if (
+            !isset($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT])
             || !($this->strategyContainer[static::STRATEGY_KEY_WITH_MULTI_SHIPMENT] instanceof Closure)
         ) {
             throw new ContainerKeyNotFoundException($this, static::STRATEGY_KEY_WITH_MULTI_SHIPMENT);

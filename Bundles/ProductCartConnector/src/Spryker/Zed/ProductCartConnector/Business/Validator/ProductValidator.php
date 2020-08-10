@@ -21,6 +21,9 @@ class ProductValidator implements ProductValidatorInterface
     public const MESSAGE_PARAM_SKU = 'sku';
     public const MESSAGE_ERROR_CONCRETE_PRODUCT_INACTIVE = 'product-cart.validation.error.concrete-product-inactive';
 
+    protected const SKU_CONCRETE = 'SKU_CONCRETE';
+    protected const SKU_ABSTRACT = 'SKU_ABSTRACT';
+
     /**
      * @var \Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductInterface
      */
@@ -43,16 +46,21 @@ class ProductValidator implements ProductValidatorInterface
     {
         $responseTransfer = new CartPreCheckResponseTransfer();
 
+        $skus = $this->getProductSkusFromCartChangeTransfer($cartChangeTransfer);
+        $indexedProductConcreteTransfers = $this->getIndexedProductConcretesByProductConcreteSkus($skus[static::SKU_CONCRETE]);
+        $indexedProductAbstractTransfers = $this->getIndexedProductAbstractsByProductAbstractSkus($skus[static::SKU_ABSTRACT]);
+
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             if ($itemTransfer->getSku()) {
-                if ($this->validateConcreteItem($itemTransfer, $responseTransfer) === false) {
+                if ($this->validateConcreteItem($itemTransfer, $responseTransfer, $indexedProductConcreteTransfers) === false) {
                     continue;
                 }
-                $this->productStatusCheck($itemTransfer, $responseTransfer);
+                $this->productStatusCheck($indexedProductConcreteTransfers[$itemTransfer->getSku()], $responseTransfer);
+
                 continue;
             }
 
-            $this->validateAbstractItem($itemTransfer, $responseTransfer);
+            $this->validateAbstractItem($itemTransfer, $responseTransfer, $indexedProductAbstractTransfers);
         }
 
         return $this->setResponseSuccessful($responseTransfer);
@@ -61,14 +69,16 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer[] $indexedProductConcreteTransfers
      *
      * @return bool
      */
-    protected function validateConcreteItem(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer)
-    {
-        $isValid = $this->productFacade->hasProductConcrete($itemTransfer->getSku());
-
-        if ($isValid) {
+    protected function validateConcreteItem(
+        ItemTransfer $itemTransfer,
+        CartPreCheckResponseTransfer $responseTransfer,
+        array $indexedProductConcreteTransfers
+    ): bool {
+        if (isset($indexedProductConcreteTransfers[$itemTransfer->getSku()])) {
             return true;
         }
 
@@ -83,18 +93,18 @@ class ProductValidator implements ProductValidatorInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
      *
      * @return void
      */
-    protected function productStatusCheck(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer): void
+    protected function productStatusCheck(ProductConcreteTransfer $productConcreteTransfer, CartPreCheckResponseTransfer $responseTransfer): void
     {
-        if ($this->isProductConcreteActive($itemTransfer->getSku())) {
+        if ($productConcreteTransfer->getIsActive()) {
             return;
         }
 
-        $responseTransfer->addMessage($this->createItemInactiveErrorMessage($itemTransfer->getSku()));
+        $responseTransfer->addMessage($this->createItemInactiveErrorMessage($productConcreteTransfer->getSku()));
     }
 
     /**
@@ -112,14 +122,16 @@ class ProductValidator implements ProductValidatorInterface
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\CartPreCheckResponseTransfer $responseTransfer
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer[] $indexedProductAbstractTransfers
      *
      * @return void
      */
-    protected function validateAbstractItem(ItemTransfer $itemTransfer, CartPreCheckResponseTransfer $responseTransfer)
-    {
-        $isValid = $this->productFacade->hasProductAbstract($itemTransfer->getAbstractSku());
-
-        if ($isValid) {
+    protected function validateAbstractItem(
+        ItemTransfer $itemTransfer,
+        CartPreCheckResponseTransfer $responseTransfer,
+        array $indexedProductAbstractTransfers
+    ) {
+        if (isset($indexedProductAbstractTransfers[$itemTransfer->getAbstractSku()])) {
             return;
         }
 
@@ -169,5 +181,71 @@ class ProductValidator implements ProductValidatorInterface
         $responseTransfer->setIsSuccess($isSuccessful);
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[][]
+     */
+    protected function getProductSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $skus = [
+            static::SKU_CONCRETE => [],
+            static::SKU_ABSTRACT => [],
+        ];
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            if ($itemTransfer->getSku()) {
+                $skus[static::SKU_CONCRETE][] = $itemTransfer->getSku();
+
+                continue;
+            }
+
+            $skus[static::SKU_ABSTRACT][] = $itemTransfer->getAbstractSku();
+        }
+
+        return $skus;
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    protected function getIndexedProductConcretesByProductConcreteSkus(array $skus): array
+    {
+        if (!$skus) {
+            return [];
+        }
+
+        $productConcreteTransfers = $this->productFacade->getRawProductConcreteTransfersByConcreteSkus($skus);
+        $indexedProductConcreteTransfers = [];
+
+        foreach ($productConcreteTransfers as $productConcreteTransfer) {
+            $indexedProductConcreteTransfers[$productConcreteTransfer->getSku()] = $productConcreteTransfer;
+        }
+
+        return $indexedProductConcreteTransfers;
+    }
+
+    /**
+     * @param string[] $skus
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractTransfer[]
+     */
+    protected function getIndexedProductAbstractsByProductAbstractSkus(array $skus): array
+    {
+        if (!$skus) {
+            return [];
+        }
+
+        $productAbstractTransfers = $this->productFacade->getRawProductAbstractTransfersByAbstractSkus($skus);
+        $indexedProductAbstractTransfers = [];
+
+        foreach ($productAbstractTransfers as $productAbstractTransfer) {
+            $indexedProductAbstractTransfers[$productAbstractTransfer->getSku()] = $productAbstractTransfer;
+        }
+
+        return $indexedProductAbstractTransfers;
     }
 }

@@ -30,7 +30,8 @@ class FileInfoListener extends AbstractFileManagerListener
             ->getEventBehaviorFacade()
             ->getEventTransferForeignKeys($eventTransfers, SpyFileInfoTableMap::COL_FK_FILE);
 
-        if ($eventName === FileManagerEvents::ENTITY_FILE_INFO_CREATE
+        if (
+            $eventName === FileManagerEvents::ENTITY_FILE_INFO_CREATE
             || $eventName === FileManagerEvents::ENTITY_FILE_INFO_UPDATE
             || $eventName === FileManagerEvents::ENTITY_FILE_INFO_DELETE
         ) {

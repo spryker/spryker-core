@@ -43,8 +43,10 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateImageStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateImageStorageTransfer
-    {
+    public function findConfigurableBundleTemplateImageStorage(
+        int $idConfigurableBundleTemplate,
+        string $localeName
+    ): ?ConfigurableBundleTemplateImageStorageTransfer {
         $configurableBundleTemplateImageStorageData = $this->storageClient->get(
             $this->generateKey($idConfigurableBundleTemplate, $localeName)
         );
@@ -61,8 +63,9 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer
      */
-    protected function mapStorageDataToConfigurableBundleImageStorageTransfer(array $configurableBundleTemplateImageStorageData): ConfigurableBundleTemplateImageStorageTransfer
-    {
+    protected function mapStorageDataToConfigurableBundleImageStorageTransfer(
+        array $configurableBundleTemplateImageStorageData
+    ): ConfigurableBundleTemplateImageStorageTransfer {
         return (new ConfigurableBundleTemplateImageStorageTransfer())
             ->fromArray($configurableBundleTemplateImageStorageData, true);
     }

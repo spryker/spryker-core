@@ -41,7 +41,7 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
     protected $productOptionStorageReader;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -139,8 +139,10 @@ class ProductOptionStorageWriter implements ProductOptionStorageWriterInterface
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorage[]
      */
-    protected function filterProductAbstractOptionStorageEntitiesByProductAbstractIds(array $productAbstractOptionStorageEntities, array $productAbstractIds): array
-    {
+    protected function filterProductAbstractOptionStorageEntitiesByProductAbstractIds(
+        array $productAbstractOptionStorageEntities,
+        array $productAbstractIds
+    ): array {
         $filteredProductAbstractOptionStorageEntities = [];
 
         foreach ($productAbstractOptionStorageEntities as $productAbstractOptionStorageEntityArray) {

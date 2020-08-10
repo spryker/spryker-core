@@ -10,7 +10,7 @@ namespace Spryker\Zed\ShipmentCheckoutConnector\Business\Model;
 use Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface as ShipmentCheckoutPreCheckWithMultipleShippingAddressInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentCheckoutConnector\Business\Shipment\ShipmentCheckoutPreCheckInterface} instead.
  */
 interface ShipmentCheckoutPreCheckInterface extends ShipmentCheckoutPreCheckWithMultipleShippingAddressInterface
 {

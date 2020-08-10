@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductListStorage\ProductRestrictionFilter;
 
 use Generated\Shared\Transfer\CustomerProductListCollectionTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ProductAbstractProductListStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteProductListStorageTransfer;
 use Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface;
@@ -21,6 +22,16 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      * @var \Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface
      */
     protected $customerClient;
+
+    /**
+     * @var bool
+     */
+    protected static $customerRequested = false;
+
+    /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected static $customerTransfer;
 
     /**
      * @param \Spryker\Client\ProductListStorage\Dependency\Client\ProductListStorageToCustomerClientInterface $customerClient
@@ -58,8 +69,12 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      *
      * @return int[]
      */
-    protected function filterProductIdsByCustomerProductLists(array $productIds, array $productListStorageTransfers, array $customerWhitelistIds, array $customerBlacklistIds): array
-    {
+    protected function filterProductIdsByCustomerProductLists(
+        array $productIds,
+        array $productListStorageTransfers,
+        array $customerWhitelistIds,
+        array $customerBlacklistIds
+    ): array {
         if (!$productListStorageTransfers || (!$customerBlacklistIds && !$customerWhitelistIds)) {
             return $productIds;
         }
@@ -78,12 +93,25 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      */
     protected function findCustomerProductListCollectionTransfer(): ?CustomerProductListCollectionTransfer
     {
-        $customerTransfer = $this->customerClient->getCustomer();
+        $customerTransfer = $this->getCustomerTransfer();
         if (!$customerTransfer) {
             return null;
         }
 
         return $customerTransfer->getCustomerProductListCollection();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    protected function getCustomerTransfer(): ?CustomerTransfer
+    {
+        if (!static::$customerRequested) {
+            static::$customerRequested = true;
+            static::$customerTransfer = $this->customerClient->getCustomer();
+        }
+
+        return static::$customerTransfer;
     }
 
     /**
@@ -131,7 +159,8 @@ abstract class AbstractProductRestrictionFilter implements ProductRestrictionFil
      */
     protected function assertProductListTransferRequiredType($productListStorageTransfer): void
     {
-        if (!$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
+        if (
+            !$productListStorageTransfer instanceof ProductAbstractProductListStorageTransfer
             && !$productListStorageTransfer instanceof ProductConcreteProductListStorageTransfer
         ) {
             $expectedType = implode(' or ', [ProductAbstractProductListStorageTransfer::class, ProductConcreteProductListStorageTransfer::class]);

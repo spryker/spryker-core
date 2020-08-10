@@ -20,6 +20,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class MarkAsDefaultQuoteAfterSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Mark shared quote as default.
      *

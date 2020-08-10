@@ -34,7 +34,7 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
     }
 
     /**
-     * @uses SpyCompanyBusinessUnitQuery
+     * @uses \Orm\Zed\CompanyBusinessUnit\Persistence\SpyCompanyBusinessUnitQuery
      *
      * @param string $businessUnitKey
      *
@@ -48,6 +48,7 @@ class BusinessUnitKeyToIdCompanyBusinessUnitStep implements DataImportStepInterf
             return $this->idBusinessUnitBuffer[$businessUnitKey];
         }
 
+        /** @var int|null $idBusinessUnit */
         $idBusinessUnit = SpyCompanyBusinessUnitQuery::create()
             ->select(SpyCompanyBusinessUnitTableMap::COL_ID_COMPANY_BUSINESS_UNIT)
             ->findOneByKey($businessUnitKey);
