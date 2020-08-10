@@ -14,7 +14,6 @@ use Spryker\Zed\ProductConfigurationStorage\Business\Mapper\ProductConfiguration
 use Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface;
 use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface;
-use Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface;
 
 class ProductConfigurationStorageWriter implements ProductConfigurationStorageWriterInterface
 {
@@ -27,11 +26,6 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
      * @var \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface
      */
     protected $configurationFacade;
-
-    /**
-     * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface
-     */
-    protected $configurationStorageRepository;
 
     /**
      * @var \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface
@@ -48,18 +42,15 @@ class ProductConfigurationStorageWriter implements ProductConfigurationStorageWr
      * @param \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface $configurationFacade
      * @param \Spryker\Zed\ProductConfigurationStorage\Business\Mapper\ProductConfigurationStorageMapperInterface $productConfigurationStorageMapper
      * @param \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager
-     * @param \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStorageRepositoryInterface $configurationStorageRepository
      */
     public function __construct(
         ProductConfigurationStorageToEventBehaviorFacadeInterface $eventBehaviorFacade,
         ProductConfigurationStorageToProductConfigurationFacadeInterface $configurationFacade,
         ProductConfigurationStorageMapperInterface $productConfigurationStorageMapper,
-        ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager,
-        ProductConfigurationStorageRepositoryInterface $configurationStorageRepository
+        ProductConfigurationStorageEntityManagerInterface $productConfigurationStorageEntityManager
     ) {
         $this->eventBehaviorFacade = $eventBehaviorFacade;
         $this->configurationFacade = $configurationFacade;
-        $this->configurationStorageRepository = $configurationStorageRepository;
         $this->productConfigurationStorageEntityManager = $productConfigurationStorageEntityManager;
         $this->productConfigurationStorageMapper = $productConfigurationStorageMapper;
     }
