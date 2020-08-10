@@ -44,6 +44,7 @@
     </transfer>
 
     <transfer name="OauthRequest">
+        <property name="grantType" type="string"/>
     </transfer>
 
     <transfer name="RestErrorCollection">
@@ -77,6 +78,10 @@
     </transfer>
 
     <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
     </transfer>
 
 </transfers>

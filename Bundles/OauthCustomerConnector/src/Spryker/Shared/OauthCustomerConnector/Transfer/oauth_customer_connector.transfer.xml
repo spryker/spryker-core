@@ -40,6 +40,8 @@
     </transfer>
 
     <transfer name="OauthGrantTypeConfiguration">
+        <property name="identifier" type="string"/>
+        <property name="fullyQualifiedClassName" type="string"/>
     </transfer>
 
 </transfers>
