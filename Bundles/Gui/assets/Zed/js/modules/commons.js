@@ -8,10 +8,13 @@
 // polyfill for Promise()
 // extend webpack 2 support on IE11 and PhantomJS
 require('es6-promise/auto');
-const isImplemented = require('get-root-node-polyfill/is-implemented');
 
-if (!isImplemented()) {
-    Node.prototype.getRootNode = require('get-root-node-polyfill');
+if (!Object.prototype.hasOwnProperty.call(Node.prototype, 'getRootNode')) {
+    Node.prototype.getRootNode = function(opt) {
+        var composed = typeof opt === 'object' && Boolean(opt.composed);
+        
+        return composed ? getShadowIncludingRoot(this) : getRoot(this);
+    };
 }
 
 // external dependencies
