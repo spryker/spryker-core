@@ -29,7 +29,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
             ->findOneOrCreate();
 
         $productConfigurationStorageEntity = $this->getFactory()->createProductConfigurationStorageMapper()
-            ->mapProductConfigurationStorageEntity(
+            ->mapProductConfigurationStorageTransferToProductConfigurationStorageEntity(
                 $productConfigurationStorageEntity,
                 $productConfigurationStorageTransfer
             );
@@ -45,7 +45,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
      *
      * @return void
      */
-    public function deleteProductConfigurationStorageByFkProductConfiguration(array $productConfigurationIds): void
+    public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void
     {
         $productConfigurationStorageEntities = $this->getFactory()
             ->createProductConfigurationStorageQuery()

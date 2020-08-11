@@ -11,7 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\ProductConfigurationStorageBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
 use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorageQuery;
@@ -67,32 +66,6 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         $this->productConfigurationStorageRepository = new ProductConfigurationStorageRepository();
         $this->productConfigurationStorageEntityManager = new ProductConfigurationStorageEntityManager();
-    }
-
-    /**
-     * @return void
-     */
-    public function testGetProductConfigurationCollection(): void
-    {
-        $productTransfer = $this->tester->haveProduct();
-
-        $productConfigurationTransfer = $this->tester->haveProductConfiguration(
-            [
-                ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            ]
-        );
-
-        $productConfigurationCriteriaTransfer = (new ProductConfigurationFilterTransfer())
-            ->setProductConfigurationIds([$productConfigurationTransfer->getIdProductConfiguration()]);
-
-        $productConfigurations = $this->tester->getFacade()
-            ->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
-
-        /** @var \Generated\Shared\Transfer\ProductConfigurationTransfer $createdProductConfigurationTransfer */
-        $createdProductConfigurationTransfer = $productConfigurations->getProductConfigurations()->getIterator()->current();
-
-        $this->assertNotEmpty($productConfigurations->getProductConfigurations());
-        $this->assertEquals($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
     }
 
     /**
@@ -160,10 +133,9 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
         $syncTransfers = $this->productConfigurationStorageRepository
-            ->getProductConfigurationStorageDataTransfersByCriteria(
-                (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds([
-                    $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
-                ])->setFilter($filter)
+            ->getFilteredProductConfigurationStorageDataTransfers(
+                $filter,
+                [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
             );
 
         $this->assertEmpty($syncTransfers);
@@ -189,10 +161,9 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
-        $syncTransfers = $this->tester->getFacade()->getProductConfigurationStorageDataTransfersByCriteria(
-            (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds([
-                $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
-            ])->setFilter($filter)
+        $syncTransfers = $this->tester->getFacade()->getFilteredProductConfigurationStorageDataTransfers(
+            $filter,
+            [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
         );
 
         /** @var \Generated\Shared\Transfer\SynchronizationDataTransfer $syncTransfer */

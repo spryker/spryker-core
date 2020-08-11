@@ -25,5 +25,5 @@ interface ProductConfigurationStorageEntityManagerInterface
      *
      * @return void
      */
-    public function deleteProductConfigurationStorageByFkProductConfiguration(array $productConfigurationIds): void;
+    public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void;
 }

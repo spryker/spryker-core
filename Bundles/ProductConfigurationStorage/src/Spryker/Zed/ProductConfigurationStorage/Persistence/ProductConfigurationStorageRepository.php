@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationDataTransferObjectFormatter;
 
@@ -17,20 +17,19 @@ use Spryker\Zed\Synchronization\Persistence\Propel\Formatter\SynchronizationData
 class ProductConfigurationStorageRepository extends AbstractRepository implements ProductConfigurationStorageRepositoryInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $productConfigurationStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductConfigurationStorageDataTransfersByCriteria(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    public function getFilteredProductConfigurationStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $productConfigurationStorageIds
     ): array {
-        $filterTransfer = $productConfigurationFilterTransfer->getFilter();
         $query = $this->getFactory()->createProductConfigurationStorageQuery();
 
-        if ($productConfigurationFilterTransfer->getProductConfigurationStorageIds()) {
-            $query->filterByIdProductConfigurationStorage_In(
-                $productConfigurationFilterTransfer->getProductConfigurationStorageIds()
-            );
+        if ($productConfigurationStorageIds) {
+            $query->filterByIdProductConfigurationStorage_In($productConfigurationStorageIds);
         }
 
         return $this->buildQueryFromCriteria($query, $filterTransfer)

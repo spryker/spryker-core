@@ -18,7 +18,7 @@ class ProductConfigurationStorageMapper
      *
      * @return \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage
      */
-    public function mapProductConfigurationStorageEntity(
+    public function mapProductConfigurationStorageTransferToProductConfigurationStorageEntity(
         SpyProductConfigurationStorage $productConfigurationStorageEntity,
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
     ): SpyProductConfigurationStorage {

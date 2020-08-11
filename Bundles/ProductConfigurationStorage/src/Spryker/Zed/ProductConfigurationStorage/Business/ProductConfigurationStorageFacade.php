@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Business;
 
-use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -54,29 +53,18 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $productConfigurationStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function getProductConfigurationStorageDataTransfersByCriteria(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    public function getFilteredProductConfigurationStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $productConfigurationStorageIds
     ): array {
-        return $this->getRepository()->getProductConfigurationStorageDataTransfersByCriteria($productConfigurationFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
-     */
-    public function getProductConfigurationCollection(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-    ): ProductConfigurationCollectionTransfer {
-        return $this->getFactory()->getProductConfigurationFacade()
-            ->getProductConfigurationCollection($productConfigurationFilterTransfer);
+        return $this->getRepository()->getFilteredProductConfigurationStorageDataTransfers(
+            $filterTransfer,
+            $productConfigurationStorageIds
+        );
     }
 }

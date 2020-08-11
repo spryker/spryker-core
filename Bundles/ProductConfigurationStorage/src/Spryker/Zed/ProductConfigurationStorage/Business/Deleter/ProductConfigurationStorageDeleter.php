@@ -43,6 +43,6 @@ class ProductConfigurationStorageDeleter implements ProductConfigurationStorageD
     {
         $productConfigurationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        $this->productConfigurationStorageEntityManager->deleteProductConfigurationStorageByFkProductConfiguration($productConfigurationIds);
+        $this->productConfigurationStorageEntityManager->deleteProductConfigurationStorageByProductConfigurationIds($productConfigurationIds);
     }
 }

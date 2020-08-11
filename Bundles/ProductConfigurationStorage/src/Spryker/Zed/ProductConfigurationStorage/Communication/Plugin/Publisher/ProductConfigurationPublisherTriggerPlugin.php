@@ -52,8 +52,9 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
         $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
         $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
 
-        return $this->getFacade()->getProductConfigurationCollection($productConfigurationFilterTransfer)
-            ->getProductConfigurations()->getArrayCopy();
+        return $this->getFactory()->getProductConfigurationFacade()->getProductConfigurationCollection(
+            $productConfigurationFilterTransfer
+        )->getProductConfigurations()->getArrayCopy();
     }
 
     /**
