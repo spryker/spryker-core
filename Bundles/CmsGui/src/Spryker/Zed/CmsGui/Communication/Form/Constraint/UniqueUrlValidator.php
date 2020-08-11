@@ -42,7 +42,7 @@ class UniqueUrlValidator extends ConstraintValidator
         $submittedUrlTransfer = $this->buildUrlTransfer($cmsPageAttributesTransfer, $uniqueUrlConstraint);
         $existingUrlTransfer = $uniqueUrlConstraint->getUrlFacade()->findUrlCaseInsensitive($submittedUrlTransfer);
 
-        if ($existingUrlTransfer === null) {
+        if ($existingUrlTransfer === null || $existingUrlTransfer->getFkResourcePage() === null && $existingUrlTransfer->getFkResourceRedirect() !== null) {
             return;
         }
 
