@@ -41,6 +41,7 @@
         <property name="firstName" type="string"/>
         <property name="lastName" type="string"/>
         <property name="email" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
 </transfers>
