@@ -59,7 +59,7 @@ class ProductConfigurationSynchronizationDataRepositoryPlugin extends AbstractPl
     {
         $filter = (new FilterTransfer())->setOffset($offset)->setLimit($limit);
 
-        return $this->getFacade()->findProductConfigurationStorageDataTransfersByIds(
+        return $this->getFacade()->getProductConfigurationStorageDataTransfersByCriteria(
             (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds($ids)->setFilter($filter)
         );
     }

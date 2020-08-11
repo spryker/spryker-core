@@ -17,8 +17,7 @@ interface ProductConfigurationFacadeInterface
 {
     /**
      * Specification:
-     *  - Retrieves product configurations from Persistence.
-     *  - Returns Product Configurations that mach given criteria.
+     *  - Retrieves product configurations from Persistence that match the given criteria.
      *
      * @api
      *

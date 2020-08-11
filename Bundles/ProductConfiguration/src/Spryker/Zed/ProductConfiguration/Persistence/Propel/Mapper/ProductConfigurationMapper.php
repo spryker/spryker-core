@@ -14,7 +14,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductConfigurationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
+     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration[]|\Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */

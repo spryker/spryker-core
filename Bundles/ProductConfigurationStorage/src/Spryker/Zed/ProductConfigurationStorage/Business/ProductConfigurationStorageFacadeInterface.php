@@ -14,8 +14,8 @@ interface ProductConfigurationStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Extracts Product Configurations IDs from the $eventTransfers.
-     * - Finds Product Configurations using product configuration IDs.
+     * - Extracts product configuration IDs from the $eventTransfers.
+     * - Finds product configuration using product configuration IDs.
      * - Stores JSON encoded data to a storage table.
      * - Sends a copy of data to queue based on module config.
      *
@@ -31,7 +31,7 @@ interface ProductConfigurationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Finds and deletes Product Configurations Storage entities.
+     * - Finds and deletes product configuration storage entities.
      * - Sends delete message to queue based on module config.
      *
      * @api
@@ -44,7 +44,7 @@ interface ProductConfigurationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves Product Configuration Storage from Persistence according to provided offset, limit and ids.
+     * - Retrieves a product configuration storage collection from Persistence according to provided offset, limit and ids.
      *
      * @api
      *
@@ -52,14 +52,14 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransfersByIds(
+    public function getProductConfigurationStorageDataTransfersByCriteria(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): array;
 
     /**
      * Specification:
      *  - Retrieves product configurations from Persistence.
-     *  - Returns Product Configurations that mach given criteria.
+     *  - Returns product configuration that mach given criteria.
      *
      * @api
      *

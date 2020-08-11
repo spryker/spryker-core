@@ -160,7 +160,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
         $syncTransfers = $this->productConfigurationStorageRepository
-            ->findProductConfigurationStorageDataTransfersByIds(
+            ->getProductConfigurationStorageDataTransfersByCriteria(
                 (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds([
                     $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
                 ])->setFilter($filter)
@@ -172,7 +172,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testFindProductConfigurationStorageDataTransfersByIds(): void
+    public function testGetProductConfigurationStorageDataTransfersByCriteria(): void
     {
         $productTransfer = $this->tester->haveProduct();
 
@@ -189,7 +189,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
-        $syncTransfers = $this->tester->getFacade()->findProductConfigurationStorageDataTransfersByIds(
+        $syncTransfers = $this->tester->getFacade()->getProductConfigurationStorageDataTransfersByCriteria(
             (new ProductConfigurationFilterTransfer())->setProductConfigurationStorageIds([
                 $productConfigurationStorageTransfer->getIdProductConfigurationStorage(),
             ])->setFilter($filter)

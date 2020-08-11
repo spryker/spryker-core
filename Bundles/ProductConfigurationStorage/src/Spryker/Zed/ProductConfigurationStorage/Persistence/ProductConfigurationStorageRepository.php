@@ -21,7 +21,7 @@ class ProductConfigurationStorageRepository extends AbstractRepository implement
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransfersByIds(
+    public function getProductConfigurationStorageDataTransfersByCriteria(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): array {
         $filterTransfer = $productConfigurationFilterTransfer->getFilter();

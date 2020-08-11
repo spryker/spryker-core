@@ -35,12 +35,22 @@ class ProductConfigurationHelper extends Module
         $productConfigurationTransfer->setIdProductConfiguration($productConfigurationEntity->getIdProductConfiguration());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($productConfigurationTransfer) {
-            $this->getProductConfigurationQuery()->filterByIdProductConfiguration(
-                $productConfigurationTransfer->getIdProductConfiguration()
-            )->delete();
+            $this->removeProductConfiguration($productConfigurationTransfer);
         });
 
         return $productConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationTransfer $productConfigurationTransfer
+     *
+     * @return void
+     */
+    protected function removeProductConfiguration(ProductConfigurationTransfer $productConfigurationTransfer): void
+    {
+        $this->getProductConfigurationQuery()->filterByIdProductConfiguration(
+            $productConfigurationTransfer->getIdProductConfiguration()
+        )->delete();
     }
 
     /**

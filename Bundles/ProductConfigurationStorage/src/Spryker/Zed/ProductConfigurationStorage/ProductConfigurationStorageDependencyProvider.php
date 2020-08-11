@@ -29,8 +29,8 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $this->addFacadeProductConfiguration($container);
-        $this->addEventBehaviorFacade($container);
+        $container = $this->addFacadeProductConfiguration($container);
+        $container = $this->addEventBehaviorFacade($container);
 
         return $container;
     }

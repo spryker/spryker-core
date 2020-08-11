@@ -58,10 +58,10 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransfersByIds(
+    public function getProductConfigurationStorageDataTransfersByCriteria(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): array {
-        return $this->getRepository()->findProductConfigurationStorageDataTransfersByIds($productConfigurationFilterTransfer);
+        return $this->getRepository()->getProductConfigurationStorageDataTransfersByCriteria($productConfigurationFilterTransfer);
     }
 
     /**
