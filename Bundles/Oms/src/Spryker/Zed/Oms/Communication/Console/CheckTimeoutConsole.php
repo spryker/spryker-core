@@ -27,6 +27,8 @@ class CheckTimeoutConsole extends Console
     protected const OPTION_STORE_NAME_SHORT = 's';
     protected const OPTION_LIMIT = 'limit';
     protected const OPTION_LIMIT_SHORT = 'l';
+    protected const OPTION_PROCESSOR_ID = 'processor-id';
+    protected const OPTION_PROCESSOR_ID_SHORT = 'p';
 
     /**
      * @return void
@@ -37,7 +39,8 @@ class CheckTimeoutConsole extends Console
             ->setName(static::COMMAND_NAME)
             ->setDescription(static::COMMAND_DESCRIPTION)
             ->addOption(static::OPTION_STORE_NAME, static::OPTION_STORE_NAME_SHORT, InputOption::VALUE_REQUIRED, 'Defines the store name for which order item timeouts should be checked.')
-            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item timeouts should be checked.');
+            ->addOption(static::OPTION_LIMIT, static::OPTION_LIMIT_SHORT, InputOption::VALUE_REQUIRED, 'Defines the amount of orders for which the order item timeouts should be checked.')
+            ->addOption(static::OPTION_PROCESSOR_ID, static::OPTION_PROCESSOR_ID_SHORT, InputOption::VALUE_OPTIONAL, 'Defines coma-separated list of the processor identifiers in a multi-thread OMS setup.');
 
         parent::configure();
     }
@@ -74,6 +77,28 @@ class CheckTimeoutConsole extends Console
             $omsCheckTimeoutsQueryCriteriaTransfer->setLimit((int)$input->getOption(static::OPTION_LIMIT));
         }
 
+        $omsProcessorIdentifiers = $this->getOmsProcessorIdentifiers($input);
+
+        if ($omsProcessorIdentifiers) {
+            $omsCheckTimeoutsQueryCriteriaTransfer->setOmsProcessorIdentifiers($omsProcessorIdentifiers);
+        }
+
         return $omsCheckTimeoutsQueryCriteriaTransfer;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     *
+     * @return int[]
+     */
+    protected function getOmsProcessorIdentifiers(InputInterface $input): array
+    {
+        if (!$input->getOption(static::OPTION_PROCESSOR_ID)) {
+            return [];
+        }
+
+        $omsProcessorIdentifiers = explode(',', $input->getOption(static::OPTION_PROCESSOR_ID));
+
+        return array_map('intval', $omsProcessorIdentifiers);
     }
 }

@@ -18,7 +18,6 @@ use Generated\Shared\Search\PageIndexMap;
 use Generated\Shared\Transfer\ElasticsearchSearchContextTransfer;
 use Generated\Shared\Transfer\SearchContextTransfer;
 use Generated\Shared\Transfer\SearchDocumentTransfer;
-use Spryker\Client\SearchElasticsearch\SearchElasticsearchClient;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use SprykerTest\Client\SearchElasticsearch\Plugin\Fixtures\BaseQueryPlugin;
 use SprykerTest\Shared\SearchElasticsearch\Helper\ElasticsearchHelper;
@@ -58,7 +57,7 @@ class SearchElasticsearchClientTest extends Unit
         $queryPlugin = $this->createQueryPluginMock($query);
 
         // Act
-        $resultSet = (new SearchElasticsearchClient())->search($queryPlugin);
+        $resultSet = $this->tester->getClient()->search($queryPlugin);
 
         // Assert
         $this->assertMatchFound($resultSet, $searchString);

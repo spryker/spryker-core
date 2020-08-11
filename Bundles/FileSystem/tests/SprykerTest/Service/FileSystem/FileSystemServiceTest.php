@@ -445,7 +445,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->putStream($fileSystemStreamTransfer, $stream);
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -467,7 +467,7 @@ class FileSystemServiceTest extends Unit
         $stream = $this->fileSystemService->readStream($fileSystemStreamTransfer);
 
         $content = stream_get_contents($stream);
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -488,7 +488,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->updateStream($fileSystemStreamTransfer, $stream);
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -511,7 +511,7 @@ class FileSystemServiceTest extends Unit
 
         $this->fileSystemService->writeStream($fileSystemStreamTransfer, $stream);
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 

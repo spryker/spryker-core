@@ -1,0 +1,56 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Offer' | trans } %}
+    {% block widget_content %}
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Reference' | trans }}</b></div>
+            <div class="col-xs-10">{{ productOffer.productOfferReference }}</div>
+        </div>
+
+        {% set statusLabelClass = 'label-info' %}
+        {% set statusTitle = 'Approved' | trans %}
+
+        {% if productOffer.approvalStatus == 'denied' %}
+            {% set statusLabelClass = 'label-danger' %}
+            {% set statusTitle = 'Denied' | trans %}
+        {% endif %}
+
+        {% if productOffer.approvalStatus == 'waiting_for_approval' %}
+            {% set statusLabelClass = 'label-warning' %}
+            {% set statusTitle = 'Waiting for Approval' | trans %}
+        {% endif %}
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Status' | trans }}</b></div>
+            <div class="col-xs-10">
+                <span class="label {{ statusLabelClass }}">{{ statusTitle }}</span>
+            </div>
+        </div>
+
+        {% set isActiveTitle = 'Active' | trans %}
+        {% set isActiveLabelClass = 'label-info' %}
+
+        {% if not productOffer.isActive %}
+            {% set isActiveTitle = 'Inactive' | trans %}
+            {% set isActiveLabelClass = 'label-danger' %}
+        {% endif %}
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Visibility' | trans }}</b></div>
+            <div class="col-xs-10">
+                <span class="label {{ isActiveLabelClass }}">{{ isActiveTitle }}</span>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+
+        {% if relatedStores %}
+            <div class="row form-group">
+                <div class="col-xs-2"><b>{{ 'Stores' | trans }}</b></div>
+                <div class="col-xs-10">
+                    {% for relatedStore in relatedStores %}
+                        <span class="label label-info">{{ relatedStore.name }}</span>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+        {% endif %}
+    {% endblock %}
+{% endembed %}
