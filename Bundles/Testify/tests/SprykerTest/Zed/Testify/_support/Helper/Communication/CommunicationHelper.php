@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Communication;
 
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -101,7 +100,7 @@ class CommunicationHelper extends Module
      */
     protected function createFactory(?string $moduleName = null): AbstractCommunicationFactory
     {
-        /** @var AbstractCommunicationFactory $factory */
+        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
         $factory = $this->resolveClass(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         return $factory;

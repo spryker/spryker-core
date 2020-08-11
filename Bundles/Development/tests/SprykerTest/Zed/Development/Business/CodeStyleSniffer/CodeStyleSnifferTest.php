@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\Development\Business\CodeStyleSniffer;
 
 use Codeception\Test\Unit;
-use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 
 /**

@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\Testify\ClassResolver;
 
 use Codeception\Configuration;
-use SprykerTest\Shared\Testify\Helper\LocatorHelper;
 use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 trait ClassResolverTrait
@@ -59,8 +58,8 @@ trait ClassResolverTrait
     }
 
     /**
-     * @param string $moduleName
      * @param string $classNamePattern
+     * @param string $moduleName
      *
      * @return string[]
      */
