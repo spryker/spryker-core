@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
+use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
@@ -83,10 +84,10 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     {
         $localeTransfer = (new LocaleTransfer())->setIdLocale($criteriaTransfer->getIdLocale());
         $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($criteriaTransfer);
-        $productTableDataArray = [];
+        $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
         foreach ($productConcreteCollectionTransfer->getProducts() as $productConcreteTransfer) {
-            $productTableDataArray[] = [
+            $responseData = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
                 ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
@@ -97,11 +98,13 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
                 ProductGuiTableConfigurationProvider::COL_KEY_VALID_TO => $productConcreteTransfer->getValidTo(),
                 ProductGuiTableConfigurationProvider::COL_KEY_OFFERS => $productConcreteTransfer->getNumberOfOffers(),
             ];
+
+            $guiTableDataResponseTransfer->addRow((new GuiTableRowDataResponseTransfer())->setResponseData($responseData));
         }
 
         $paginationTransfer = $productConcreteCollectionTransfer->getPagination();
 
-        return (new GuiTableDataResponseTransfer())->setData($productTableDataArray)
+        return $guiTableDataResponseTransfer
             ->setPage($paginationTransfer->getPage())
             ->setPageSize($paginationTransfer->getMaxPerPage())
             ->setTotal($paginationTransfer->getNbResults());

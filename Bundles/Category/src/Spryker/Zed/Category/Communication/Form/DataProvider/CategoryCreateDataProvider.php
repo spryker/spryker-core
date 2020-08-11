@@ -122,6 +122,7 @@ class CategoryCreateDataProvider
     {
         $idLocale = $this->getIdLocale();
         $idCategoryNode = $categoryNodeEntity->getIdCategoryNode();
+        /** @var string[] $pathTokens */
         $pathTokens = $this->queryContainer->queryPath($idCategoryNode, $idLocale, false, true)
             ->clearSelectColumns()->addSelectColumn('name')
             ->find();

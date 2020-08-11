@@ -49,6 +49,8 @@ class ApplicationConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @return string
      */
     public function getHostName()

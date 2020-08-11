@@ -53,6 +53,7 @@ class CmsSlotTemplatePathToCmsSlotTemplateIdStep implements DataImportStepInterf
             return $this->idCmsSlotTemplateBuffer[$templatePath];
         }
 
+        /** @var int|null $idCmsSlotTemplate */
         $idCmsSlotTemplate = SpyCmsSlotTemplateQuery::create()
             ->filterByPath($templatePath)
             ->select([SpyCmsSlotTemplateTableMap::COL_ID_CMS_SLOT_TEMPLATE])

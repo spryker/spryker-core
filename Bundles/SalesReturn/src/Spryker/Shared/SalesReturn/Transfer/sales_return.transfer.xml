@@ -78,6 +78,7 @@
         <property name="createdAt" type="string"/>
         <property name="isReturnable" type="bool"/>
         <property name="returnPolicyMessages" type="Message[]"  singular="returnPolicyMessage"/>
+        <property name="currencyIsoCode" type="string"/>
     </transfer>
 
     <transfer name="ReturnReasonCollection">
