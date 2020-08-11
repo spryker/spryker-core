@@ -22,6 +22,8 @@ class FixturesCommand extends Run implements CustomCommandInterface
 {
     use CommandConfig;
 
+    public const CODE_SUCCESS = 0;
+
     /**
      * @return string
      */
@@ -150,6 +152,6 @@ class FixturesCommand extends Run implements CustomCommandInterface
             exit(1);
         }
 
-        return static::SUCCESS;
+        return static::CODE_SUCCESS;
     }
 }
