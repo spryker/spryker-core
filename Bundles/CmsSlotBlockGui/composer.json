@@ -11,7 +11,7 @@
     "spryker/cms-slot-block-gui-extension": "^1.0.0",
     "spryker/gui": "^3.0.0",
     "spryker/kernel": "^3.33.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/transfer": "^3.8.0",
     "spryker/util-text": "^1.1.0"
   },

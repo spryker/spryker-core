@@ -9,7 +9,7 @@
     "spryker/oms": "^11.0.0",
     "spryker/sales": "^11.0.0",
     "spryker/sales-extension": "^1.1.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/util-data-reader": "^1.0.0"
   },
   "require-dev": {

@@ -11,7 +11,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/merchant-profile": "^0.2.0",
     "spryker/merchant-storage": "^0.1.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/urls-rest-api-extension": "^1.0.0"
   },
   "require-dev": {

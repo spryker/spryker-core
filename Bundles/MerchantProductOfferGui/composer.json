@@ -11,7 +11,7 @@
     "spryker/product-offer": "^0.4.0 || ^0.5.0",
     "spryker/product-offer-gui-extension": "^0.1.0",
     "spryker/propel-orm": "^1.9.0",
-    "spryker/symfony": "^3.0.0"
+    "spryker/symfony": "^3.0.0 || ^4.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"

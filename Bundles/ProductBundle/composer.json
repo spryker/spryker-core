@@ -25,7 +25,7 @@
     "spryker/shopping-list-extension": "^1.0.0",
     "spryker/stock": "^8.0.0",
     "spryker/store": "^1.5.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/transfer": "^3.18.0"
   },
   "require-dev": {

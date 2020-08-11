@@ -13,7 +13,7 @@
     "spryker/propel-orm": "^1.1.0",
     "spryker/storage": "^3.0.0",
     "spryker/store": "^1.4.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/touch": "^3.1.0 || ^4.0.0",
     "spryker/twig": "^3.0.0"
   },

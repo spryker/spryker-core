@@ -12,7 +12,7 @@
     "spryker/shipment": "^8.0.0",
     "spryker/shipment-gui-extension": "^0.1.0",
     "spryker/store": "^1.9.1",
-    "spryker/symfony": "^3.2.2",
+    "spryker/symfony": "^3.2.2 || ^4.0.0",
     "spryker/tax": "^5.0.0",
     "spryker/util-text": "^1.2.3"
   },

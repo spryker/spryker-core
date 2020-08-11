@@ -12,7 +12,7 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/testify": "*"
   },
   "autoload": {

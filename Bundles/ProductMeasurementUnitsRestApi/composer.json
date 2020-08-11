@@ -13,7 +13,7 @@
     "spryker/orders-rest-api-extension": "^1.0.0",
     "spryker/product-measurement-unit-storage": "^1.6.0",
     "spryker/product-storage": "^1.24.0",
-    "spryker/symfony": "^3.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/transfer": "^3.18.0"
   },
