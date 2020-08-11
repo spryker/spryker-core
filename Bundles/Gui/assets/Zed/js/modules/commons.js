@@ -9,6 +9,13 @@
 // extend webpack 2 support on IE11 and PhantomJS
 require('es6-promise/auto');
 
+var getRootNode = require('get-root-node-polyfill');
+var isImplemented = require('get-root-node-polyfill/is-implemented');
+
+if (!isImplemented()) {
+    Node.prototype.getRootNode = getRootNode;
+}
+
 // external dependencies
 require('jquery');
 require('jquery-migrate/dist/jquery-migrate.min');
