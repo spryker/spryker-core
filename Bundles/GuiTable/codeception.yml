@@ -1,4 +1,6 @@
-namespace: UtilSanitizeXss
+namespace: GuiTable
+include:
+    - tests/SprykerTest/Zed/GuiTable
 paths:
     tests: tests
     log: tests/_output
