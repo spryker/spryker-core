@@ -73,6 +73,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
      */
     public function testWriteProductConfigurationStorageCollectionByProductConfigurationEvents(): void
     {
+        // Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
@@ -85,9 +86,11 @@ class ProductConfigurationStorageFacadeTest extends Unit
             (new EventEntityTransfer())->setId($productConfigurationTransfer->getIdProductConfiguration()),
         ];
 
+        // Act
         $this->tester->getFacade()
             ->writeProductConfigurationStorageCollectionByProductConfigurationEvents($eventTransfers);
 
+        // Assert
         $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByFkProductConfiguration(
             $productConfigurationTransfer->getIdProductConfiguration()
         )->findOne();
@@ -108,6 +111,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
      */
     public function testDeleteProductConfigurationStorageCollection(): void
     {
+        // Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
@@ -127,6 +131,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
             (new EventEntityTransfer())->setId($productConfigurationTransfer->getIdProductConfiguration()),
         ];
 
+        // Act
         $this->tester->getFacade()
             ->deleteProductConfigurationStorageCollection($eventTransfers);
 
@@ -138,6 +143,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
                 [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
             );
 
+        // Assert
         $this->assertEmpty($syncTransfers);
     }
 
@@ -146,6 +152,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
      */
     public function testGetProductConfigurationStorageDataTransfersByCriteria(): void
     {
+        // Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $productConfigurationTransfer = $this->tester->haveProductConfiguration([
@@ -161,11 +168,13 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
+        // Act
         $syncTransfers = $this->tester->getFacade()->getFilteredProductConfigurationStorageDataTransfers(
             $filter,
             [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
         );
 
+        // Assert
         /** @var \Generated\Shared\Transfer\SynchronizationDataTransfer $syncTransfer */
         $syncTransfer = array_shift($syncTransfers);
 
