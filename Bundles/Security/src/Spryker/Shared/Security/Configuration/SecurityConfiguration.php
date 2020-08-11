@@ -11,6 +11,7 @@ use Spryker\Shared\Security\Exception\FirewallNotFoundException;
 use Spryker\Shared\Security\Exception\SecurityConfigurationException;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityBuilderInterface;
 use Spryker\Shared\SecurityExtension\Configuration\SecurityConfigurationInterface;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 
 class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigurationInterface
 {
@@ -205,13 +206,25 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface::extend()} instead. Since symfony/security-core 5.1 you
+     * need to add an event listener or subscriber instead.
+     *
      * @param string $firewallName
      * @param callable $logoutHandler
+     *
+     * @throws \Spryker\Shared\Security\Exception\SecurityConfigurationException
      *
      * @return $this
      */
     public function addLogoutHandler(string $firewallName, callable $logoutHandler)
     {
+        if (class_exists(LogoutEvent::class)) {
+            throw new SecurityConfigurationException(sprintf(
+                'Adding a logout handler is forbidden, please add an event listener or subscriber. Use a "\Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface" with the event "%s" to add your logout handling.',
+                LogoutEvent::class
+            ));
+        }
+
         $this->assertNotFrozen();
 
         $this->logoutHandlers[$firewallName] = $logoutHandler;

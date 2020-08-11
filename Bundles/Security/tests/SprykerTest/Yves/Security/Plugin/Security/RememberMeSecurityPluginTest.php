@@ -14,6 +14,7 @@ use Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPlu
 use Spryker\Shared\Security\Configuration\SecurityConfiguration;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\SecurityEvents;
 
 /**
@@ -165,6 +166,9 @@ class RememberMeSecurityPluginTest extends Unit
             {
                 $eventDispatcher->addListener(SecurityEvents::INTERACTIVE_LOGIN, function (): void {
                     $this->testClass->interactiveLoginTriggered = true;
+                });
+                $eventDispatcher->addListener(LogoutEvent::class, function (LogoutEvent $event): void {
+                    $event->setResponse(new Response('', 300, ['Location' => '/']));
                 });
 
                 return $eventDispatcher;

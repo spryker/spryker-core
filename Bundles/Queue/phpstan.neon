@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-        - '#Method .+QueueQueryContainer::query.+\(\) should return .+Spy.+Query but returns Propel\\Runtime\\ActiveQuery\\ModelCriteria#'

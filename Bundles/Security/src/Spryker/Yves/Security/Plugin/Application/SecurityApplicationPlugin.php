@@ -25,8 +25,6 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
-use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -52,6 +50,7 @@ use Symfony\Component\Security\Http\Authentication\DefaultAuthenticationSuccessH
 use Symfony\Component\Security\Http\EntryPoint\BasicAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\FormAuthenticationEntryPoint;
 use Symfony\Component\Security\Http\EntryPoint\RetryAuthenticationEntryPoint;
+use Symfony\Component\Security\Http\Event\LogoutEvent;
 use Symfony\Component\Security\Http\Firewall;
 use Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener;
 use Symfony\Component\Security\Http\Firewall\AccessListener;
@@ -722,7 +721,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addTrustResolver(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_TRUST_RESOLVER, function () {
-            return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
+            return new AuthenticationTrustResolver();
         });
 
         return $container;
@@ -1114,10 +1113,13 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 $tmp = $options['logout_path'] ?? '/logout';
                 $this->addSecurityRoute('get', $tmp);
 
+                /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */
+                $eventDispatcher = $this->getDispatcher($container);
+
                 $listener = new LogoutListener(
                     $container->get(static::SERVICE_SECURITY_TOKEN_STORAGE),
                     $container->get(static::SERVICE_SECURITY_HTTP_UTILS),
-                    $this->getLogoutHandler($container, $name, $options),
+                    (class_exists(LogoutEvent::class)) ? $eventDispatcher : $this->getLogoutHandler($container, $name, $options),
                     $options,
                     $this->getCsrfTokenManager($container, $options)
                 );
