@@ -1,7 +1,6 @@
 namespace: PriceProductScheduleDataImport
 include:
-  - tests/SprykerTest/Zed/PriceProductScheduleDataImport
-
+    - tests/SprykerTest/Zed/PriceProductScheduleDataImport
 paths:
     tests: tests
     log: tests/_output
@@ -9,7 +8,6 @@ paths:
     support: tests/_support
     envs: tests/_envs
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
