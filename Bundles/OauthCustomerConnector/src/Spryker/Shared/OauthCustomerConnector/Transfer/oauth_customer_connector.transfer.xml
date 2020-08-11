@@ -45,4 +45,9 @@
         <property name="fullyQualifiedClassName" type="string"/>
     </transfer>
 
+    <transfer name="CustomerResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
+    </transfer>
+
 </transfers>

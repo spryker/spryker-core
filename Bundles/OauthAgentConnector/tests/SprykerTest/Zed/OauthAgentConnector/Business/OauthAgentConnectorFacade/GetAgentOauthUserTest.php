@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\OauthAgentConnector\Business\OauthAgentConnectorFacade;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\UserBuilder;
 use Generated\Shared\Transfer\OauthUserTransfer;
 
 /**
@@ -29,14 +30,40 @@ class GetAgentOauthUserTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\UserTransfer
+     */
+    protected $userTransfer;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->userTransfer = $this->tester->getLocator()->user()->facade()
+            ->createUser((new UserBuilder(['password' => 'change123', 'isAgent' => true]))->build());
+    }
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        $this->tester->getLocator()->user()->facade()
+            ->deactivateUser($this->userTransfer->getIdUser());
+
+        parent::tearDown();
+    }
+
+    /**
      * @return void
      */
     public function testGetAgentOauthUserWillAuthorizeAnAgent(): void
     {
         // Arrange
-        $userTransfer = $this->tester->haveRegisteredAgent(['password' => 'change123']);
         $oauthUserTransfer = (new OauthUserTransfer())
-            ->setUsername($userTransfer->getUsername())
+            ->setUsername($this->userTransfer->getUsername())
             ->setPassword('change123');
 
         // Act
