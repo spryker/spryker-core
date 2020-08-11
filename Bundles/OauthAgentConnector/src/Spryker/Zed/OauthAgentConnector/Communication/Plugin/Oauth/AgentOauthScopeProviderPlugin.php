@@ -20,7 +20,7 @@ class AgentOauthScopeProviderPlugin extends AbstractPlugin implements OauthScope
 {
     /**
      * {@inheritDoc}
-     * - Returns true for `agent_credentials` grant type.
+     * - Returns true if `agent_credentials` grant type is provided.
      *
      * @api
      *

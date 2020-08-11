@@ -20,7 +20,7 @@ class CustomerImpersonationOauthUserProviderPlugin extends AbstractPlugin implem
 {
     /**
      * {@inheritDoc}
-     * - Returns true for `customer_impersonation` grant type.
+     * - Returns true if `customer_impersonation` grant type is provided.
      *
      * @api
      *
@@ -35,8 +35,9 @@ class CustomerImpersonationOauthUserProviderPlugin extends AbstractPlugin implem
 
     /**
      * {@inheritDoc}
-     * - Authenticates the agent user.
-     * - Returns the `OauthUserTransfer` with agent information.
+     * - Authenticates the customer by customer reference.
+     * - Returns the `OauthUserTransfer` with customer information.
+     * - Runs `OauthCustomerIdentifierExpanderPluginInterface` plugins stack to expand the customer identifier.
      *
      * @api
      *

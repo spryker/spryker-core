@@ -26,7 +26,7 @@ class AgentOauthScopeInstallerPlugin extends AbstractPlugin implements Installer
      *
      * @return void
      */
-    public function install()
+    public function install(): void
     {
         $this->getFacade()->installAgentOauthScope();
     }

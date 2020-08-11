@@ -18,5 +18,5 @@ interface RestUserMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestUserTransfer
      */
-    public function map(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer;
+    public function mapAgentDataToRestUserTransfer(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer;
 }

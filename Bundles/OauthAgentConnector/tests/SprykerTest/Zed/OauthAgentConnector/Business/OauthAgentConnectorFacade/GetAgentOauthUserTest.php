@@ -24,6 +24,8 @@ use Generated\Shared\Transfer\OauthUserTransfer;
  */
 class GetAgentOauthUserTest extends Unit
 {
+    protected const USER_PASSWORD_VALUE = 'change123';
+
     /**
      * @var \SprykerTest\Zed\OauthAgentConnector\OauthAgentConnectorBusinessTester
      */
@@ -41,8 +43,18 @@ class GetAgentOauthUserTest extends Unit
     {
         parent::setUp();
 
-        $this->userTransfer = $this->tester->getLocator()->user()->facade()
-            ->createUser((new UserBuilder(['password' => 'change123', 'isAgent' => true]))->build());
+        $userSeed = [
+            'password' => static::USER_PASSWORD_VALUE,
+            'isAgent' => true,
+        ];
+
+        /** @var \Generated\Shared\Transfer\UserTransfer $userTransfer */
+        $userTransfer = (new UserBuilder($userSeed))
+            ->build();
+
+        $this->userTransfer = $this->tester
+            ->getUserFacade()
+            ->createUser($userTransfer);
     }
 
     /**
@@ -50,7 +62,8 @@ class GetAgentOauthUserTest extends Unit
      */
     protected function tearDown(): void
     {
-        $this->tester->getLocator()->user()->facade()
+        $this->tester
+            ->getUserFacade()
             ->deactivateUser($this->userTransfer->getIdUser());
 
         parent::tearDown();
@@ -64,7 +77,7 @@ class GetAgentOauthUserTest extends Unit
         // Arrange
         $oauthUserTransfer = (new OauthUserTransfer())
             ->setUsername($this->userTransfer->getUsername())
-            ->setPassword('change123');
+            ->setPassword(static::USER_PASSWORD_VALUE);
 
         // Act
         $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);

@@ -13,7 +13,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OauthCustomerConnectorConfig extends AbstractBundleConfig
 {
     public const SCOPE_CUSTOMER = 'customer';
-    public const SCOPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
+    protected const SCOPE_CUSTOMER_IMPERSONATION = 'customer_impersonation';
 
     /**
      * @uses \Spryker\Zed\Oauth\OauthConfig::GRANT_TYPE_PASSWORD

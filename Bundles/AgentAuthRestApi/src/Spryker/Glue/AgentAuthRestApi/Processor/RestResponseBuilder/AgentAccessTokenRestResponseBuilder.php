@@ -53,7 +53,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
                 $restAgentAccessTokensAttributesTransfer
             );
 
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addResource($accessTokenResource);
     }
 
@@ -74,7 +75,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
                 $restAgentCustomerImpersonationAccessTokensAttributesTransfer
             );
 
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addResource($accessTokenResource);
     }
 
@@ -124,7 +126,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             ->setStatus(Response::HTTP_UNAUTHORIZED)
             ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_INVALID_LOGIN);
 
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addError($restErrorMessageTransfer);
     }
 
@@ -138,7 +141,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             ->setStatus(Response::HTTP_UNAUTHORIZED)
             ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_FAILED_TO_IMPERSONATE_CUSTOMER);
 
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addError($restErrorMessageTransfer);
     }
 
@@ -152,7 +156,8 @@ class AgentAccessTokenRestResponseBuilder implements AgentAccessTokenRestRespons
             ->setStatus(Response::HTTP_UNAUTHORIZED)
             ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_AGENT_ONLY);
 
-        return $this->restResourceBuilder->createRestResponse()
+        return $this->restResourceBuilder
+            ->createRestResponse()
             ->addError($restErrorMessageTransfer);
     }
 }

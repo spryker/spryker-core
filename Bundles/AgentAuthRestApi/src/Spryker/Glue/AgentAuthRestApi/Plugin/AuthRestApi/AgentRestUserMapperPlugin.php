@@ -32,6 +32,6 @@ class AgentRestUserMapperPlugin extends AbstractPlugin implements RestUserMapper
     {
         return $this->getFactory()
             ->createRestUserMapper()
-            ->map($restUserTransfer, $restRequest);
+            ->mapAgentDataToRestUserTransfer($restUserTransfer, $restRequest);
     }
 }

@@ -19,6 +19,8 @@ use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinder;
 use Spryker\Glue\AgentAuthRestApi\Processor\Finder\RestUserFinderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapper;
 use Spryker\Glue\AgentAuthRestApi\Processor\Mapper\RestUserMapperInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReader;
+use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReader;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\CustomerReaderInterface;
 use Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilder;
@@ -41,7 +43,8 @@ class AgentAuthRestApiFactory extends AbstractFactory
     {
         return new CustomerReader(
             $this->getAgentClient(),
-            $this->createAgentAccessTokenRestResponseBuilder()
+            $this->createAgentAccessTokenRestResponseBuilder(),
+            $this->getConfig()
         );
     }
 
@@ -80,7 +83,10 @@ class AgentAuthRestApiFactory extends AbstractFactory
      */
     public function createAgentAccessTokenRestRequestValidator(): AgentAccessTokenRestRequestValidatorInterface
     {
-        return new AgentAccessTokenRestRequestValidator($this->getOauthClient());
+        return new AgentAccessTokenRestRequestValidator(
+            $this->createAgentAuthorizationHeaderReader(),
+            $this->getOauthClient()
+        );
     }
 
     /**
@@ -96,10 +102,7 @@ class AgentAuthRestApiFactory extends AbstractFactory
      */
     public function createRestUserMapper(): RestUserMapperInterface
     {
-        return new RestUserMapper(
-            $this->getOauthService(),
-            $this->getUtilEncodingService()
-        );
+        return new RestUserMapper($this->createAgentAuthorizationHeaderReader());
     }
 
     /**
@@ -107,7 +110,15 @@ class AgentAuthRestApiFactory extends AbstractFactory
      */
     public function createRestUserFinder(): RestUserFinderInterface
     {
-        return new RestUserFinder(
+        return new RestUserFinder($this->createAgentAuthorizationHeaderReader());
+    }
+
+    /**
+     * @return \Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface
+     */
+    public function createAgentAuthorizationHeaderReader(): AgentAuthorizationHeaderReaderInterface
+    {
+        return new AgentAuthorizationHeaderReader(
             $this->getOauthService(),
             $this->getUtilEncodingService()
         );

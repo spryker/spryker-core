@@ -66,7 +66,8 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
                 SpyCustomerTableMap::COL_LAST_NAME,
                 SpyCustomerTableMap::COL_EMAIL,
             ])
-            ->setIgnoreCase(true);
+            ->setIgnoreCase(true)
+            ->orderBy(SpyCustomerTableMap::COL_ID_CUSTOMER);
 
         $page = $offset && $limit ? floor($offset / $limit + 1) : 1;
         $pager = $customersQuery->paginate($page, $limit);

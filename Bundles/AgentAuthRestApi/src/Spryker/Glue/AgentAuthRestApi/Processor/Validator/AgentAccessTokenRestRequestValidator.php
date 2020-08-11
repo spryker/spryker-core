@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\RestErrorCollectionTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface;
+use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,15 +20,24 @@ use Symfony\Component\HttpFoundation\Response;
 class AgentAccessTokenRestRequestValidator implements AgentAccessTokenRestRequestValidatorInterface
 {
     /**
+     * @var \Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface
+     */
+    protected $agentAuthorizationHeaderReader;
+
+    /**
      * @var \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface
      */
     protected $oauthClient;
 
     /**
+     * @param \Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface $agentAuthorizationHeaderReader
      * @param \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToOauthClientInterface $oauthClient
      */
-    public function __construct(AgentAuthRestApiToOauthClientInterface $oauthClient)
-    {
+    public function __construct(
+        AgentAuthorizationHeaderReaderInterface $agentAuthorizationHeaderReader,
+        AgentAuthRestApiToOauthClientInterface $oauthClient
+    ) {
+        $this->agentAuthorizationHeaderReader = $agentAuthorizationHeaderReader;
         $this->oauthClient = $oauthClient;
     }
 
@@ -39,66 +49,36 @@ class AgentAccessTokenRestRequestValidator implements AgentAccessTokenRestReques
      */
     public function validate(Request $request, RestRequestInterface $restRequest): ?RestErrorCollectionTransfer
     {
-        $authorizationToken = $request->headers->get(AgentAuthRestApiConfig::HEADER_X_AGENT_AUTHORIZATION);
+        $agentAccessTokenHeader = $request->headers->get(AgentAuthRestApiConfig::HEADER_X_AGENT_AUTHORIZATION);
 
-        if (!$authorizationToken) {
+        if (!$agentAccessTokenHeader) {
             return null;
         }
 
-        if ($this->validateAccessToken($authorizationToken)) {
+        $accessToken = $this->agentAuthorizationHeaderReader->extractToken($agentAccessTokenHeader);
+        $accessTokenType = $this->agentAuthorizationHeaderReader->extractTokenType($agentAccessTokenHeader);
+
+        if (!$accessToken || !$accessTokenType) {
             return null;
-        }
-
-        return (new RestErrorCollectionTransfer())
-            ->addRestError(
-                (new RestErrorMessageTransfer())
-                    ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN)
-                    ->setStatus(Response::HTTP_UNAUTHORIZED)
-                    ->setCode(AgentAuthRestApiConfig::RESPONSE_CODE_ACCESS_CODE_INVALID)
-            );
-    }
-
-    /**
-     * @param string $authorizationToken
-     *
-     * @return bool
-     */
-    protected function validateAccessToken(string $authorizationToken): bool
-    {
-        $accessToken = $this->extractToken($authorizationToken);
-        $type = $this->extractTokenType($authorizationToken);
-
-        if (!$accessToken || !$type) {
-            return false;
         }
 
         $oauthAccessTokenValidationRequestTransfer = (new OauthAccessTokenValidationRequestTransfer())
             ->setAccessToken($accessToken)
-            ->setType($type);
+            ->setType($accessTokenType);
 
         $authAccessTokenValidationResponseTransfer = $this->oauthClient
             ->validateAccessToken($oauthAccessTokenValidationRequestTransfer);
 
-        return $authAccessTokenValidationResponseTransfer->getIsValid();
-    }
+        if (!$authAccessTokenValidationResponseTransfer->getIsValid()) {
+            return (new RestErrorCollectionTransfer())
+                ->addRestError(
+                    (new RestErrorMessageTransfer())
+                        ->setDetail(AgentAuthRestApiConfig::RESPONSE_DETAIL_INVALID_ACCESS_TOKEN)
+                        ->setStatus(Response::HTTP_UNAUTHORIZED)
+                        ->setCode(AgentAuthRestApiConfig::RESPONSE_CODE_INVALID_ACCESS_TOKEN)
+                );
+        }
 
-    /**
-     * @param string $authorizationToken
-     *
-     * @return string|null
-     */
-    protected function extractToken(string $authorizationToken): ?string
-    {
-        return preg_split('/\s+/', $authorizationToken)[1] ?? null;
-    }
-
-    /**
-     * @param string $authorizationToken
-     *
-     * @return string|null
-     */
-    protected function extractTokenType(string $authorizationToken): ?string
-    {
-        return preg_split('/\s+/', $authorizationToken)[0] ?? null;
+        return null;
     }
 }

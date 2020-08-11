@@ -20,7 +20,7 @@ class CustomerImpersonationOauthScopeProviderPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Returns true for `customer_impersonation` grant type.
+     * - Returns true if `customer_impersonation` grant type is provided.
      *
      * @api
      *
@@ -30,7 +30,7 @@ class CustomerImpersonationOauthScopeProviderPlugin extends AbstractPlugin imple
      */
     public function accept(OauthScopeRequestTransfer $oauthScopeRequestTransfer): bool
     {
-        return $oauthScopeRequestTransfer->getGrantType() === OauthCustomerConnectorConfig::SCOPE_CUSTOMER_IMPERSONATION;
+        return $oauthScopeRequestTransfer->getGrantType() === OauthCustomerConnectorConfig::GRANT_TYPE_CUSTOMER_IMPERSONATION;
     }
 
     /**

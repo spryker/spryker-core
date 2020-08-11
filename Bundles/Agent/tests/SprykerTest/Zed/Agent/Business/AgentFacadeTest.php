@@ -8,11 +8,7 @@
 namespace SprykerTest\Zed\Agent\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\CustomerBuilder;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
-use Spryker\Zed\Customer\Business\CustomerFacade;
-use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -33,15 +29,33 @@ class AgentFacadeTest extends Unit
     protected $tester;
 
     /**
+     * @var \Generated\Shared\Transfer\CustomerTransfer[]
+     */
+    protected $customerTransfers;
+
+    /**
+     * @return void
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->customerTransfers = $this->tester->createNCustomers();
+    }
+
+    /**
      * @return void
      */
     public function testGetExitingAgentByUsername(): void
     {
+        // Arrange
         $userTransfer = $this->tester->registerAgent();
 
-        $agentFromAgentFacade = $this->tester->getAgentFacade()
+        // Act
+        $agentFromAgentFacade = $this->tester->getFacade()
             ->findAgentByUsername($userTransfer->getUsername());
 
+        // Assert
         $this->assertNotEmpty($agentFromAgentFacade->getAgent());
         $this->assertTrue($agentFromAgentFacade->getIsAgentFound());
     }
@@ -51,11 +65,13 @@ class AgentFacadeTest extends Unit
      */
     public function testGetNonExitingAgentByUsername(): void
     {
-        $agentFromAgentFacade = $this->tester->getAgentFacade()
+        // Act
+        $agentFromAgentFacade = $this->tester->getFacade()
             ->findAgentByUsername(
                 $this->tester->createAgent()->getUsername()
             );
 
+        // Assert
         $this->assertFalse($agentFromAgentFacade->getIsAgentFound());
     }
 
@@ -64,14 +80,17 @@ class AgentFacadeTest extends Unit
      */
     public function testFindCustomersByQuery(): void
     {
+        // Arrange
         $customerTransfer = $this->tester->haveCustomer();
         $customerQueryTransfer = new CustomerQueryTransfer();
         $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
         $customerQueryTransfer->setLimit(5);
 
-        $customerAutocompleteResponseTransfer = $this->tester->getAgentFacade()
+        // Act
+        $customerAutocompleteResponseTransfer = $this->tester->getFacade()
             ->findCustomersByQuery($customerQueryTransfer);
 
+        // Assert
         $this->assertGreaterThan(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
     }
 
@@ -80,103 +99,86 @@ class AgentFacadeTest extends Unit
      */
     public function testFindNonExitingCustomersByQuery(): void
     {
-        $customerTransfer = $this->createCustomer();
+        // Arrange
         $customerQueryTransfer = new CustomerQueryTransfer();
-        $customerQueryTransfer->setQuery($customerTransfer->getFirstName());
+        $customerQueryTransfer->setQuery(uniqid('customer name', true));
 
-        $customerAutocompleteResponseTransfer = $this->tester->getAgentFacade()
+        // Act
+        $customerAutocompleteResponseTransfer = $this->tester->getFacade()
             ->findCustomersByQuery($customerQueryTransfer);
 
+        // Assert
         $this->assertEquals(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
     }
 
     /**
-     * @dataProvider findCustomersByQueryPagination
+     * @dataProvider findCustomersByQueryPaginationDataProvider
      *
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
-     * @param int $count
+     * @param int $expectedOffset
      *
      * @return void
      */
-    public function testFindCustomersByQueryOffsetLimit(
+    public function testFindCustomersByQueryWithOffsetLimit(
         CustomerQueryTransfer $customerQueryTransfer,
-        int $count
+        int $expectedOffset
     ): void {
-        $this->createNCustomers();
-
-        $customerAutocompleteResponseTransfer = $this->tester->getAgentFacade()
+        // Act
+        $customerAutocompleteResponseTransfer = $this->tester->getFacade()
             ->findCustomersByQuery($customerQueryTransfer);
 
-        $this->assertEquals($count, $customerAutocompleteResponseTransfer->getCustomers()->count());
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\CustomerTransfer
-     */
-    protected function createCustomer(): CustomerTransfer
-    {
-        return (new CustomerBuilder(['firstName' => uniqid('', true)]))->build();
-    }
-
-    /**
-     * @return \Spryker\Zed\Customer\Business\CustomerFacadeInterface
-     */
-    protected function getCustomerFacade(): CustomerFacadeInterface
-    {
-        return new CustomerFacade();
-    }
-
-    /**
-     * @param int $count
-     *
-     * @return void
-     */
-    protected function createNCustomers(int $count = 10): void
-    {
-        while ($count) {
-            $this->tester->haveCustomer();
-            $count--;
+        // Assert
+        $this->assertCount(
+            $customerQueryTransfer->getLimit(),
+            $customerAutocompleteResponseTransfer->getCustomers()
+        );
+        foreach ($customerAutocompleteResponseTransfer->getCustomers() as $index => $actualCustomerTransfer) {
+            $expectedCustomerTransfer = $this->customerTransfers[$expectedOffset + $index];
+            $this->assertEquals(
+                $expectedCustomerTransfer->getCustomerReference(),
+                $actualCustomerTransfer->getCustomerReference()
+            );
         }
     }
 
     /**
      * @return array
      */
-    public function findCustomersByQueryPagination(): array
+    public function findCustomersByQueryPaginationDataProvider(): array
     {
         return [
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('')
+                    ->setQuery('customerFirstName')
                     ->setLimit(10),
-                10,
+                0,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('')
+                    ->setQuery('customerFirstName')
                     ->setLimit(5),
-                5,
+                0,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('')
+                    ->setQuery('customerFirstName')
                     ->setLimit(5)
                     ->setOffset(5),
                 5,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('')
+                    ->setQuery('customerFirstName')
                     ->setLimit(3)
                     ->setOffset(5),
                 3,
             ],
             [
                 (new CustomerQueryTransfer())
-                    ->setQuery('')
+                    ->setQuery('customerFirstName')
                     ->setLimit(3)
                     ->setOffset(6),
-                3,
+                6,
             ],
         ];
     }

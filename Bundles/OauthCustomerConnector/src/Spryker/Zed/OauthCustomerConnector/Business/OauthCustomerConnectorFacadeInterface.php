@@ -45,7 +45,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Reads customer scopes.
+     * - Returns customer scopes.
      *
      * @api
      *
@@ -57,7 +57,7 @@ interface OauthCustomerConnectorFacadeInterface
 
     /**
      * Specification:
-     * - Reads customer impersonation scopes.
+     * - Returns customer impersonation scopes.
      *
      * @api
      *

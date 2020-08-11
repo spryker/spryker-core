@@ -32,7 +32,7 @@ class InstallAgentOauthScopeTest extends Unit
     /**
      * @return void
      */
-    public function test(): void
+    public function testInstallAgentOauthScopeWillInitAgentScopes(): void
     {
         // Arrange
         $agentScopeIdentifier = current((new OauthAgentConnectorConfig())->getAgentScopes());

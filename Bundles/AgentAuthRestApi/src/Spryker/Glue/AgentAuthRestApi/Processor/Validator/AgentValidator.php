@@ -17,14 +17,14 @@ class AgentValidator implements AgentValidatorInterface
     /**
      * @var \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig
      */
-    private $config;
+    private $agentAuthRestApiConfig;
 
     /**
-     * @param \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig $config
+     * @param \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig $agentAuthRestApiConfig
      */
-    public function __construct(AgentAuthRestApiConfig $config)
+    public function __construct(AgentAuthRestApiConfig $agentAuthRestApiConfig)
     {
-        $this->config = $config;
+        $this->agentAuthRestApiConfig = $agentAuthRestApiConfig;
     }
 
     /**
@@ -53,7 +53,7 @@ class AgentValidator implements AgentValidatorInterface
     {
         return in_array(
             $restRequest->getResource()->getType(),
-            $this->config->getAgentResources(),
+            $this->agentAuthRestApiConfig->getAgentResources(),
             true
         );
     }
@@ -71,6 +71,6 @@ class AgentValidator implements AgentValidatorInterface
             return false;
         }
 
-        return $restRequest->getRestUser()->getIdAgent() !== null;
+        return (bool)$restRequest->getRestUser()->getIdAgent();
     }
 }

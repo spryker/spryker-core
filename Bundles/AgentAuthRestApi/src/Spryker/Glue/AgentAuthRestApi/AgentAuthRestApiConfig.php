@@ -15,8 +15,6 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_AGENT_ACCESS_TOKENS = 'agent-access-tokens';
     public const RESOURCE_AGENT_CUSTOMER_SEARCH = 'agent-customer-search';
 
-    public const DEFAULT_PAGINATION_LIMIT = 10;
-
     /**
      * @uses \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig::GRANT_TYPE_AGENT_CREDENTIALS
      */
@@ -32,7 +30,7 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_INVALID_LOGIN = '4101';
     public const RESPONSE_DETAIL_INVALID_LOGIN = 'Failed to authenticate an agent.';
 
-    public const RESPONSE_CODE_ACCESS_CODE_INVALID = '4102';
+    public const RESPONSE_CODE_INVALID_ACCESS_TOKEN = '4102';
     public const RESPONSE_DETAIL_INVALID_ACCESS_TOKEN = 'Agent access token is invalid.';
 
     public const RESPONSE_CODE_AGENT_ONLY = '4103';
@@ -40,6 +38,8 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
 
     public const RESPONSE_CODE_FAILED_TO_IMPERSONATE_CUSTOMER = '4104';
     public const RESPONSE_DETAIL_FAILED_TO_IMPERSONATE_CUSTOMER = 'Failed to impersonate a customer.';
+
+    protected const DEFAULT_CUSTOMER_SEARCH_PAGINATION_LIMIT = 10;
 
     /**
      * Specification:
@@ -52,5 +52,18 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
     public function getAgentResources(): array
     {
         return [];
+    }
+
+    /**
+     * Specification:
+     * - Returns the default pagination limit for customer search request.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getDefaultCustomerSearchPaginationLimit(): int
+    {
+        return static::DEFAULT_CUSTOMER_SEARCH_PAGINATION_LIMIT;
     }
 }

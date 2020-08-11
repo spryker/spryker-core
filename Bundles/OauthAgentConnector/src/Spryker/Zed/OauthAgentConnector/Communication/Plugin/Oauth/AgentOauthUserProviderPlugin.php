@@ -20,7 +20,7 @@ class AgentOauthUserProviderPlugin extends AbstractPlugin implements OauthUserPr
 {
     /**
      * {@inheritDoc}
-     * - Returns true for `agent_credentials` grant type.
+     * - Returns true if `agent_credentials` grant type is provided.
      *
      * @api
      *
@@ -35,7 +35,6 @@ class AgentOauthUserProviderPlugin extends AbstractPlugin implements OauthUserPr
 
     /**
      * {@inheritDoc}
-     * - Returns true for `agent_credentials` grant type.
      * - Authenticates an agent.
      * - Reads agent data and provides it for access token.
      *

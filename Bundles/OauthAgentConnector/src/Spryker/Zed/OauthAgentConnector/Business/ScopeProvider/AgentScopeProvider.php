@@ -33,7 +33,7 @@ class AgentScopeProvider implements AgentScopeProviderInterface
      */
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {
-        $scopes = (array)$oauthScopeRequestTransfer->getDefaultScopes();
+        $scopes = $oauthScopeRequestTransfer->getDefaultScopes()->getArrayCopy();
         foreach ($this->oauthAgentConnectorConfig->getAgentScopes() as $scope) {
             $scopes[] = (new OauthScopeTransfer())->setIdentifier($scope);
         }

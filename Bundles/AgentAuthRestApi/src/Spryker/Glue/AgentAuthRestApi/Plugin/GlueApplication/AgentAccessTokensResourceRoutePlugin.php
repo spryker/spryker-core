@@ -27,8 +27,7 @@ class AgentAccessTokensResourceRoutePlugin extends AbstractPlugin implements Res
      */
     public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
     {
-        $resourceRouteCollection
-            ->addPost('post', false);
+        $resourceRouteCollection->addPost('post', false);
 
         return $resourceRouteCollection;
     }

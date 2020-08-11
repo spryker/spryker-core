@@ -16,7 +16,8 @@
     "spryker/code-sniffer": "*",
     "spryker/installer": "*",
     "spryker/propel": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/user": "*"
   },
   "suggest": {
     "spryker/installer": "If you want to use Installer plugins."

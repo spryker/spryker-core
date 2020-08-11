@@ -29,15 +29,23 @@ class CustomerReader implements CustomerReaderInterface
     protected $agentAccessTokenRestResponseBuilder;
 
     /**
+     * @var \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig
+     */
+    protected $agentAuthRestApiConfig;
+
+    /**
      * @param \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface $agentClient
      * @param \Spryker\Glue\AgentAuthRestApi\Processor\RestResponseBuilder\AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder
+     * @param \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig $agentAuthRestApiConfig
      */
     public function __construct(
         AgentAuthRestApiToAgentClientInterface $agentClient,
-        AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder
+        AgentAccessTokenRestResponseBuilderInterface $agentAccessTokenRestResponseBuilder,
+        AgentAuthRestApiConfig $agentAuthRestApiConfig
     ) {
         $this->agentClient = $agentClient;
         $this->agentAccessTokenRestResponseBuilder = $agentAccessTokenRestResponseBuilder;
+        $this->agentAuthRestApiConfig = $agentAuthRestApiConfig;
     }
 
     /**
@@ -52,7 +60,7 @@ class CustomerReader implements CustomerReaderInterface
         }
 
         $offset = 0;
-        $limit = AgentAuthRestApiConfig::DEFAULT_PAGINATION_LIMIT;
+        $limit = $this->agentAuthRestApiConfig->getDefaultCustomerSearchPaginationLimit();
         if ($restRequest->getPage()) {
             $offset = $restRequest->getPage()->getOffset();
             $limit = $restRequest->getPage()->getLimit();

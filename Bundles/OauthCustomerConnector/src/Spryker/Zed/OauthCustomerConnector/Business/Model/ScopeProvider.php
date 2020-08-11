@@ -33,7 +33,7 @@ class ScopeProvider implements ScopeProviderInterface
      */
     public function getScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {
-        $scopes = (array)$oauthScopeRequestTransfer->getDefaultScopes();
+        $scopes = $oauthScopeRequestTransfer->getDefaultScopes()->getArrayCopy();
         foreach ($this->oauthCustomerConnectorConfig->getCustomerScopes() as $scope) {
             $oauthScopeTransfer = new OauthScopeTransfer();
             $oauthScopeTransfer->setIdentifier($scope);
@@ -50,7 +50,7 @@ class ScopeProvider implements ScopeProviderInterface
      */
     public function getCustomerImpersonationScopes(OauthScopeRequestTransfer $oauthScopeRequestTransfer): array
     {
-        $scopes = (array)$oauthScopeRequestTransfer->getDefaultScopes();
+        $scopes = $oauthScopeRequestTransfer->getDefaultScopes()->getArrayCopy();
         foreach ($this->oauthCustomerConnectorConfig->getCustomerImpersonationScopes() as $scope) {
             $scopes[] = (new OauthScopeTransfer())->setIdentifier($scope);
         }
