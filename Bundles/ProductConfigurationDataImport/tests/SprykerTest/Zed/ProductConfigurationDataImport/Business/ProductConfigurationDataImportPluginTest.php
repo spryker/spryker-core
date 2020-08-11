@@ -21,7 +21,7 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  *
  * @group SprykerTest
  * @group Zed
- * @group ProductConfiguration
+ * @group ProductConfigurationDataImport
  * @group Business
  * @group ProductConfigurationDataImportPluginTest
  * Add your own group annotations below this line
