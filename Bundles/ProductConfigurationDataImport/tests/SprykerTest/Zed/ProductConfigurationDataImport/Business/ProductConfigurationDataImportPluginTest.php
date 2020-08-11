@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ProductConfiguration\Business;
@@ -11,8 +11,6 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
-use Generated\Shared\Transfer\ProductConfigurationTransfer;
 use Spryker\Zed\DataImport\Business\Exception\DataImportException;
 use Spryker\Zed\ProductConfigurationDataImport\Communication\Plugin\ProductConfigurationDataImportPlugin;
 use Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig;
@@ -25,7 +23,6 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  * @group Zed
  * @group ProductConfiguration
  * @group Business
- * @group Facade
  * @group ProductConfigurationDataImportPluginTest
  * Add your own group annotations below this line
  */
@@ -63,7 +60,6 @@ class ProductConfigurationDataImportPluginTest extends Unit
         $productConfigurationQuery = $this->tester->getProductConfigurationQuery();
 
         $this->assertTrue(($productConfigurationQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
-
     }
 
     /**

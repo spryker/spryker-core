@@ -1,15 +1,14 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace SprykerTest\Zed\ProductConfigurationDataImport;
 
 use Codeception\Actor;
 use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
-use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Inherited Methods
@@ -32,10 +31,13 @@ class ProductConfigurationDataImportBusinessTester extends Actor
 {
     use _generated\ProductConfigurationDataImportBusinessTesterActions;
 
+    /**
+     * @return void
+     */
     public function cleanProductConfigurationTable()
-  {
-      $this->getProductConfigurationQuery()->deleteAll();
-  }
+    {
+        $this->getProductConfigurationQuery()->deleteAll();
+    }
 
     /**
      * @return \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery
