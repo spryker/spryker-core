@@ -12,7 +12,7 @@ use Symfony\Component\Process\Process;
 
 class NodeInstaller implements PackageManagerInstallerInterface
 {
-    protected const NODE_JS_MINIMUM_REQUIRED_VERSION = 'v12.6.1';
+    protected const NODE_JS_MINIMUM_REQUIRED_VERSION = 'v12.0.0';
 
     /**
      * @param \Psr\Log\LoggerInterface $logger
