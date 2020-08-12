@@ -166,6 +166,6 @@ class FormCollectionHandler implements FormCollectionHandlerInterface
             return $formType;
         }
 
-        return $this->formFactory->create($formType, null, $formOptions);
+        return $this->formFactory->create(is_object($formType) ? get_class($formType) : $formType, null, $formOptions);
     }
 }
