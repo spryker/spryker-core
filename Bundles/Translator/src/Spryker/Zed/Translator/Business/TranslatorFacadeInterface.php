@@ -56,13 +56,15 @@ interface TranslatorFacadeInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string;
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Zed\Translator\Business\TranslatorFacadeInterface::trans()} instead with a `%count%` parameter.
+     *
      * Specification:
      * - Translates the given choice message by choosing a translation according to a number.
-     *
-     * @api
      *
      * @param string $id
      * @param int $number

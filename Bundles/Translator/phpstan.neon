@@ -2,3 +2,5 @@ parameters:
   reportUnmatchedIgnoredErrors: false
   ignoreErrors:
     - '#constructor expects Symfony\\Contracts\\Translation\\TranslatorInterface#'
+    - '#Call to an undefined method .+TranslatorInterface::setLocale\(\).#'
+    - '#Call to an undefined method .+TranslatorInterface::getLocale\(\).#'

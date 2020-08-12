@@ -64,7 +64,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], $domain = null, $locale = null): string
+    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->getFactory()->createTranslator()->trans($id, $parameters, $domain, $locale);
     }
@@ -84,7 +84,9 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      */
     public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
     {
-        return $this->getFactory()->createTranslator()->transChoice($id, $number, $parameters, $domain, $locale);
+        $parameters['%count%'] = $number;
+
+        return $this->trans($id, $parameters, $domain, $locale);
     }
 
     /**
