@@ -18,7 +18,10 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\DeleteController;
+use Spryker\Zed\ProductRelationGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationActivateForm;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeactivateForm;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
@@ -38,6 +41,8 @@ class ProductRelationTable extends AbstractTable
     protected const COL_LOCALIZED_NAME = 'localized_name';
 
     protected const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
+    protected const URL_RELATION_ACTIVATE = '/product-relation-gui/edit/activate';
+    protected const URL_RELATION_DEACTIVATE = '/product-relation-gui/edit/deactivate';
     protected const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
     protected const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
 
@@ -240,20 +245,23 @@ class ProductRelationTable extends AbstractTable
             static::COL_NUMBER_OF_RELATED_PRODUCTS => $productRelationEntity->getVirtualColumn(static::COL_NUMBER_OF_RELATED_PRODUCTS),
             SpyProductRelationTableMap::COL_IS_ACTIVE => $this->buildActiveLabel($productRelationEntity),
             SpyStoreTableMap::COL_NAME => $this->getStoreNames($productRelationEntity),
-            static::COL_ACTIONS => implode(' ', $this->buildActions($productRelationEntity->getIdProductRelation())),
+            static::COL_ACTIONS => implode(' ', $this->buildActions($productRelationEntity)),
         ];
     }
 
     /**
-     * @param int $idProductRelation
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
      *
-     * @return array
+     * @return string[]
      */
-    protected function buildActions(int $idProductRelation): array
+    protected function buildActions(SpyProductRelation $productRelationEntity): array
     {
+        $idProductRelation = $productRelationEntity->getIdProductRelation();
+
         $buttons = [];
         $buttons[] = $this->createViewButton($idProductRelation);
         $buttons[] = $this->createEditButton($idProductRelation);
+        $buttons[] = $this->createRelationStatusChangeButton($productRelationEntity);
         $buttons[] = $this->createDeleteButton($idProductRelation);
 
         return $buttons;
@@ -325,6 +333,37 @@ class ProductRelationTable extends AbstractTable
                 DeleteController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
             'Delete'
+        );
+    }
+
+    /**
+     * @param \Orm\Zed\ProductRelation\Persistence\SpyProductRelation $productRelationEntity
+     *
+     * @return string
+     */
+    protected function createRelationStatusChangeButton(SpyProductRelation $productRelationEntity): string
+    {
+        if ($productRelationEntity->getIsActive()) {
+            return $this->generateFormButton(
+                Url::generate(static::URL_RELATION_DEACTIVATE, [
+                    EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationEntity->getIdProductRelation(),
+                    EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
+                ]),
+                'Deactivate',
+                ProductRelationDeactivateForm::class,
+                [
+                    static::BUTTON_CLASS => 'btn-danger safe-submit',
+                ]
+            );
+        }
+
+        return $this->generateFormButton(
+            Url::generate(static::URL_RELATION_ACTIVATE, [
+                EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationEntity->getIdProductRelation(),
+                EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
+            ]),
+            'Activate',
+            ProductRelationActivateForm::class
         );
     }
 
