@@ -28,7 +28,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getSearchIndexName()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
     }
 
     /**
@@ -40,7 +40,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getSearchDocumentType()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**

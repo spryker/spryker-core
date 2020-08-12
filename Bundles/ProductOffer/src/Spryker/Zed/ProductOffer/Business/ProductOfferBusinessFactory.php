@@ -16,6 +16,8 @@ use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactivePr
 use Spryker\Zed\ProductOffer\Business\InactiveProductOfferItemsFilter\InactiveProductOfferItemsFilterInterface;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReader;
 use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferReaderInterface;
+use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReader;
+use Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriter;
 use Spryker\Zed\ProductOffer\Business\Writer\ProductOfferWriterInterface;
 use Spryker\Zed\ProductOffer\Dependency\Facade\ProductOfferToMessengerFacadeInterface;
@@ -62,6 +64,14 @@ class ProductOfferBusinessFactory extends AbstractBusinessFactory
     public function createItemProductOfferChecker(): ItemProductOfferCheckerInterface
     {
         return new ItemProductOfferChecker($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOffer\Business\Reader\ProductOfferStatusReaderInterface
+     */
+    public function createProductOfferStatusReader(): ProductOfferStatusReaderInterface
+    {
+        return new ProductOfferStatusReader($this->getConfig());
     }
 
     /**
