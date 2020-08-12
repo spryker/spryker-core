@@ -23,6 +23,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -180,6 +181,13 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     ): RestResourceInterface {
         $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
             ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+
+        $abstractProductData = $this->productStorageClient->findProductAbstractStorageData(
+            $concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT],
+            $restRequest->getMetadata()->getLocale()
+        );
+        $restConcreteProductsAttributesTransfer->setProductAbstractSku($abstractProductData['sku']);
+
         $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
             $restConcreteProductsAttributesTransfer,
             $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
