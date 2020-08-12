@@ -179,7 +179,10 @@ class PropelConfig extends AbstractBundleConfig
     public function getCurrentDatabaseEngineName()
     {
         $dbEngine = $this->getCurrentDatabaseEngine();
-        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES);
+        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES, [
+            PropelConfig::DB_ENGINE_MYSQL => 'MySql',
+            PropelConfig::DB_ENGINE_PGSQL => 'PostgreSql',
+        ]);
 
         if (!array_key_exists($dbEngine, $supportedEngines)) {
             throw new UnSupportedDatabaseEngineException('Unsupported database engine: ' . $dbEngine);

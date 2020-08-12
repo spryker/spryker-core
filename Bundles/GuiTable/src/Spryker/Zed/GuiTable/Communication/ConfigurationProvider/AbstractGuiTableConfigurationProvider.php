@@ -9,22 +9,26 @@ namespace Spryker\Zed\GuiTable\Communication\ConfigurationProvider;
 
 use Generated\Shared\Transfer\DateRangeGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 
-abstract class AbstractGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
+abstract class AbstractGuiTableConfigurationProvider
 {
+    public const COLUMN_TYPE_TEXT = 'text';
+    public const COLUMN_TYPE_IMAGE = 'image';
+    public const COLUMN_TYPE_DATE = 'date';
+    public const COLUMN_TYPE_CHIP = 'chip';
+    public const COLUMN_TYPE_LIST = 'list';
+    public const COLUMN_TYPE_LAYOUT_FLAT = 'layout-flat';
+
+    public const FILTER_TYPE_SELECT = 'select';
+    public const FILTER_TYPE_DATE_RANGE = 'date-range';
+
     /**
      * @see https://angular.io/api/common/DatePipe for details.
      */
     protected const DEFAULT_UI_DATE_FORMAT = 'dd.MM.y';
-
-    /**
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    abstract public function getConfiguration(): GuiTableConfigurationTransfer;
 
     /**
      * @param string $id

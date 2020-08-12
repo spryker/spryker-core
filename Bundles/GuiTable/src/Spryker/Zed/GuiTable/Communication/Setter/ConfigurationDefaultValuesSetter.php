@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GuiTable\Communication\Setter;
 
+use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
@@ -42,6 +43,7 @@ class ConfigurationDefaultValuesSetter implements ConfigurationDefaultValuesSett
     ): GuiTableConfigurationTransfer {
         $guiTableConfigurationTransfer = $this->setDefaultDataSource($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultRowActions($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->setDefaultBatchActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultPagination($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultSearch($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setDefaultFilters($guiTableConfigurationTransfer);
@@ -87,6 +89,27 @@ class ConfigurationDefaultValuesSetter implements ConfigurationDefaultValuesSett
         }
 
         $guiTableConfigurationTransfer->setRowActions($guiTableRowActionsConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function setDefaultBatchActions(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions() ?? new GuiTableBatchActionsConfigurationTransfer();
+
+        if ($guiTableBatchActionsConfigurationTransfer->getIsEnabled() === null) {
+            $guiTableBatchActionsConfigurationTransfer->setIsEnabled(
+                in_array('batchActions', $this->guiTableConfig->getDefaultEnabledFeatures())
+            );
+        }
+
+        $guiTableConfigurationTransfer->setBatchActions($guiTableBatchActionsConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
