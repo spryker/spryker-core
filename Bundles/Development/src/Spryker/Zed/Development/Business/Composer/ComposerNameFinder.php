@@ -67,6 +67,11 @@ class ComposerNameFinder implements ComposerNameFinderInterface
      */
     protected function getComposerNameFromModuleCollection(string $moduleName): ?string
     {
+        /** @deprecated This is to make spryker/silex optional. */
+        if ($moduleName === 'Silex') {
+            return 'spryker/silex';
+        }
+
         if ($this->isNamespacedModuleName($moduleName)) {
             $moduleTransfer = $this->getModuleTransferCollection()[$moduleName];
 

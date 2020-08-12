@@ -1,0 +1,14 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Merchant' | trans } %}
+    {% block widget_content %}
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Merchant' | trans }}</b></div>
+            <div class="col-xs-10">
+                <a target="_blank" href="{{ url('/merchant-gui/edit-merchant', {'id-merchant': idMerchant}) }}">{{ merchantName }}</a></div>
+        </div>
+
+        <div class="row form-group">
+            <div class="col-xs-2"><b>{{ 'Merchant SKU' | trans }}</b></div>
+            <div class="col-xs-10">{{ merchantSku }}</div>
+        </div>
+    {% endblock %}
+{% endembed %}

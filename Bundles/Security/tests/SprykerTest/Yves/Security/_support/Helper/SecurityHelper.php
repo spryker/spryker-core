@@ -21,8 +21,8 @@ use Spryker\Yves\Security\SecurityConfig;
 use Spryker\Yves\Security\SecurityDependencyProvider;
 use Spryker\Yves\Security\SecurityFactory;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\EventDispatcher\Helper\EventDispatcherHelperTrait;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
 use SprykerTest\Yves\Testify\Helper\DependencyProviderHelperTrait;
 use SprykerTest\Yves\Testify\Helper\FactoryHelperTrait;
 

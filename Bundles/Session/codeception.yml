@@ -1,20 +1,15 @@
 namespace: SprykerTest
-
 include:
     - tests/SprykerTest/Shared/Session
     - tests/SprykerTest/Yves/Session
     - tests/SprykerTest/Zed/Session
-
 paths:
     support: .
     log: tests/_output
     data: tests/_data
     envs: tests/_envs
-
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-

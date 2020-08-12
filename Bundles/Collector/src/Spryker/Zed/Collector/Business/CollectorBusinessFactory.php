@@ -23,7 +23,11 @@ use Spryker\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater as Search
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\RedisWriter;
 use Spryker\Zed\Collector\Business\Exporter\Writer\Storage\TouchUpdater as StorageTouchUpdater;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Index\IndexFactory;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 use Spryker\Zed\Collector\Business\Manager\CollectorManager;
+use Spryker\Zed\Collector\Business\Mapping\MappingFactory;
+use Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface;
 use Spryker\Zed\Collector\Business\Model\BatchResult;
 use Spryker\Zed\Collector\Business\Model\BulkTouchQueryBuilder;
 use Spryker\Zed\Collector\Business\Model\FailedResult;
@@ -223,7 +227,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $elasticsearchWriter = new ElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
+            $this->createIndexFactory()
         );
 
         return $elasticsearchWriter;
@@ -239,7 +244,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $elasticsearchUpdateWriter = new ElasticsearchUpdateWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $settings->getSearchIndexName(),
-            $settings->getSearchDocumentType()
+            $settings->getSearchDocumentType(),
+            $this->createIndexFactory()
         );
 
         return $elasticsearchUpdateWriter;
@@ -266,7 +272,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         $elasticsearchMarkerWriter = new ElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
+            $this->createMappingFactory()
         );
 
         return $elasticsearchMarkerWriter;
@@ -280,7 +287,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new ElasticsearchMarkerReader(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
+            $this->createIndexFactory()
         );
     }
 
@@ -292,7 +300,8 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
         return new ElasticsearchReader(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchDocumentType(),
+            $this->createIndexFactory()
         );
     }
 
@@ -336,5 +345,21 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
     public function createCollectorManager()
     {
         return new CollectorManager($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    public function createIndexFactory(): IndexFactoryInterface
+    {
+        return new IndexFactory();
+    }
+
+    /**
+     * @return \Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface
+     */
+    public function createMappingFactory(): MappingFactoryInterface
+    {
+        return new MappingFactory();
     }
 }

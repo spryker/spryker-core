@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Persistence;
 
+use DateTime;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
+use Generated\Shared\Transfer\MerchantProductOfferCountsTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Generated\Shared\Transfer\ProductConcreteCollectionTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -46,12 +48,12 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\Propel\ProductTableDat
 class ProductOfferMerchantPortalGuiRepository extends AbstractRepository implements ProductOfferMerchantPortalGuiRepositoryInterface
 {
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductOfferTable\ProductOfferTable::COL_KEY_OFFER_REFERENCE
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider::COL_KEY_OFFER_REFERENCE
      */
     protected const COL_KEY_OFFER_REFERENCE = 'offerReference';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Table\ProductTable\ProductTable::COL_KEY_SKU
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider::COL_KEY_SKU
      */
     protected const COL_KEY_PRODUCT_SKU = 'sku';
 
@@ -820,5 +822,83 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $query->withColumn("LENGTH($orderColumn)");
 
         return $query;
+    }
+
+    /**
+     * @module ProductOffer
+     * @module ProductOfferStock
+     * @module ProductOfferValidity
+     *
+     * @param int $idMerchant
+     *
+     * @return \Generated\Shared\Transfer\MerchantProductOfferCountsTransfer
+     */
+    public function getOffersDashboardCardCounts(int $idMerchant): MerchantProductOfferCountsTransfer
+    {
+        $productOfferMerchantPortalGuiConfig = $this->getFactory()->getConfig();
+        $dashboardExpiringOffersLimit = $productOfferMerchantPortalGuiConfig->getDashboardExpiringOffersDaysThreshold();
+        $dashboardLowStockThreshold = $productOfferMerchantPortalGuiConfig->getDashboardLowStockThreshold();
+        $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
+        $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
+
+        /** @var array $merchantProductOfferCounts */
+        $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
+            ->leftJoinSpyProductOfferValidity()
+            ->leftJoinProductOfferStock()
+            ->filterByFkMerchant($idMerchant)
+            ->addAsColumn(MerchantProductOfferCountsTransfer::TOTAL, 'COUNT(*)')
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::ACTIVE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . ' IS TRUE THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::WITH_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
+                'COUNT(CASE WHEN ' . SpyProductOfferStockTableMap::COL_QUANTITY . ' < ' . $dashboardLowStockThreshold . ' THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
+                'COUNT(CASE WHEN (' .
+                    SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                    ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                        "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
+                    ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . ' IS NULL THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::EXPIRING,
+                "COUNT(CASE WHEN '" . $currentDateTime . "' < " . SpyProductOfferValidityTableMap::COL_VALID_TO
+                . " AND '" . $expiringOffersDateTime . "' > " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' THEN 1 END)'
+            )
+            ->addAsColumn(
+                MerchantProductOfferCountsTransfer::VISIBLE,
+                'COUNT(CASE WHEN ' . SpyProductOfferTableMap::COL_IS_ACTIVE . " IS TRUE
+                    AND " . SpyProductOfferStockTableMap::COL_QUANTITY . ' > 0 AND ((' .
+                        SpyProductOfferValidityTableMap::COL_VALID_FROM . " <= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_FROM . ' IS NULL)' .
+                        ' AND (' . SpyProductOfferValidityTableMap::COL_VALID_TO . " >= '" . $currentDateTime .
+                            "' OR " . SpyProductOfferValidityTableMap::COL_VALID_TO . ' IS NULL)' .
+                        ' OR ' . SpyProductOfferValidityTableMap::COL_ID_PRODUCT_OFFER_VALIDITY . " IS NULL
+                    ) THEN 1 END)"
+            )
+            ->select([
+                MerchantProductOfferCountsTransfer::TOTAL,
+                MerchantProductOfferCountsTransfer::ACTIVE,
+                MerchantProductOfferCountsTransfer::WITH_STOCK,
+                MerchantProductOfferCountsTransfer::LOW_IN_STOCK,
+                MerchantProductOfferCountsTransfer::WITH_VALID_DATES,
+                MerchantProductOfferCountsTransfer::EXPIRING,
+                MerchantProductOfferCountsTransfer::VISIBLE,
+            ])
+            ->findOne();
+
+        $merchantProductOfferCountsTransfer = (new MerchantProductOfferCountsTransfer())->fromArray($merchantProductOfferCounts, true);
+        $inactiveCount = $merchantProductOfferCountsTransfer->getTotal() - $merchantProductOfferCountsTransfer->getActive();
+        $merchantProductOfferCountsTransfer->setInactive($inactiveCount > 0 ? $inactiveCount : 0);
+
+        return $merchantProductOfferCountsTransfer;
     }
 }

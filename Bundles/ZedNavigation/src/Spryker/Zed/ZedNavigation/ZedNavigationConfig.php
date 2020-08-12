@@ -78,7 +78,7 @@ class ZedNavigationConfig extends AbstractBundleConfig
      */
     public function getCacheFile()
     {
-        return APPLICATION_ROOT_DIR . '/src/Generated/navigation.cache';
+        return APPLICATION_ROOT_DIR . '/src/Generated/' . ucfirst(strtolower(APPLICATION)) . '/Navigation/codeBucket/navigation.cache';
     }
 
     /**

@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\OauthRevoke\Business;
 use ArrayObject;
 use Codeception\Test\Unit;
 use DateTime;
+use DateTimeImmutable;
 use Generated\Shared\Transfer\OauthRefreshTokenTransfer;
 use Generated\Shared\Transfer\OauthTokenCriteriaFilterTransfer;
 use Orm\Zed\Oauth\Persistence\SpyOauthClient;
@@ -63,7 +64,7 @@ class OauthRevokeFacadeTest extends Unit
         $this->tester->deleteAllOauthRefreshTokens();
         $this->tester->persistOauthRefreshToken('identifier');
         $criteriaTransfer = new OauthTokenCriteriaFilterTransfer();
-        $criteriaTransfer->setExpiresAt((new DateTime())->format('Y-m-d'));
+        $criteriaTransfer->setExpiresAt((new DateTimeImmutable())->format('Y-m-d'));
 
         // Act
         $count = $this->oauthRevokeFacade->deleteExpiredRefreshTokens($criteriaTransfer);
@@ -209,8 +210,8 @@ class OauthRevokeFacadeTest extends Unit
             ->setUserIdentifier('user identifier')
             ->setFkOauthClient($oauthClient->getIdentifier())
             ->setCustomerReference('customer reference')
-            ->setExpiresAt((new DateTime())->format('Y-m-d'))
-            ->setRevokedAt((new DateTime())->format('Y-m-d'))
+            ->setExpiresAt((new DateTimeImmutable())->format('Y-m-d'))
+            ->setRevokedAt((new DateTimeImmutable())->format('Y-m-d'))
             ->save();
 
         $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
@@ -243,7 +244,7 @@ class OauthRevokeFacadeTest extends Unit
         $accessToken->setUserIdentifier($userIdentifier);
 
         $refreshToken = new RefreshTokenEntity();
-        $refreshToken->setExpiryDateTime(new DateTime());
+        $refreshToken->setExpiryDateTime(new DateTimeImmutable());
         $refreshToken->setAccessToken($accessToken);
         $refreshToken->setIdentifier('identifier');
 
@@ -256,5 +257,32 @@ class OauthRevokeFacadeTest extends Unit
 
         $this->assertNotEmpty($oauthRefreshTokenEntity);
         $this->assertEquals($refreshToken->getIdentifier(), $oauthRefreshTokenEntity->getIdentifier());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveRefreshTokenFromTransfer(): void
+    {
+        // Arrange
+        $this->tester->deleteAllOauthRefreshTokens();
+        $userIdentifier = json_encode([
+            'customer_reference' => 'DE--test',
+        ]);
+        $oauthRefreshTokenTransfer = (new OauthRefreshTokenTransfer())
+            ->setIdentifier('identifier1')
+            ->setCustomerReference('DE--test')
+            ->setUserIdentifier(json_encode($userIdentifier))
+            ->setExpiresAt((new DateTime())->format('Y-m-d H:i:s'))
+            ->setIdOauthClient('frontend');
+        // Act
+        $this->oauthRevokeFacade->saveRefreshTokenFromTransfer($oauthRefreshTokenTransfer);
+
+        // Assert
+        $oauthRefreshTokenEntity = SpyOauthRefreshTokenQuery::create()
+            ->findOne();
+
+        $this->assertNotEmpty($oauthRefreshTokenEntity);
+        $this->assertEquals('identifier1', $oauthRefreshTokenEntity->getIdentifier());
     }
 }

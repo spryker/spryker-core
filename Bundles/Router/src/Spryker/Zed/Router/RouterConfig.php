@@ -13,6 +13,9 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Router\Business\Generator\UrlGenerator;
 use Spryker\Zed\Router\Business\UrlMatcher\CompiledUrlMatcher;
 
+/**
+ * @method \Spryker\Shared\Router\RouterConfig getSharedConfig()
+ */
 class RouterConfig extends AbstractBundleConfig
 {
     /**
@@ -60,9 +63,7 @@ class RouterConfig extends AbstractBundleConfig
     protected function getCachePathIfCacheEnabled(): ?string
     {
         if ($this->get(RouterConstants::ZED_IS_CACHE_ENABLED, true)) {
-            $defaultCachePath = sprintf('%s/data/cache/codeBucket%s/%s/routing', APPLICATION_ROOT_DIR, APPLICATION_CODE_BUCKET, APPLICATION);
-
-            return $this->get(RouterConstants::ZED_CACHE_PATH, $defaultCachePath);
+            return $this->get(RouterConstants::ZED_CACHE_PATH, $this->getSharedConfig()->getDefaultRouterCachePath());
         }
 
         return null;

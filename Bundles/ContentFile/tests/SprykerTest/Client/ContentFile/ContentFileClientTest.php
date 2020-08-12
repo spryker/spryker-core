@@ -29,7 +29,7 @@ class ContentFileClientTest extends Unit
 {
     protected const LOCALE_NAME = 'de_DE';
     protected const WRONG_KEY_CONTENT = 'fl-0';
-    protected const EXCEPTION_ERROR_MESSAGE = 'There is no matching Term for FileListType when provided with term %s';
+    protected const EXCEPTION_ERROR_MESSAGE = 'There is no matching ContentFileListTermExecutor for FileListType when provided with term `%s`.';
 
     /**
      * @var \SprykerTest\Client\ContentFile\ContentFileClientTester

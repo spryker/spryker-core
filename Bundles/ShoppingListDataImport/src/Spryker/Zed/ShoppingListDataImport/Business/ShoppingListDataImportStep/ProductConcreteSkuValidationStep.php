@@ -33,6 +33,7 @@ class ProductConcreteSkuValidationStep implements DataImportStepInterface
         $sku = $dataSet[ShoppingListItemDataSetInterface::COLUMN_PRODUCT_SKU];
         if (!isset($this->productConcreteSkuCache[$sku])) {
             $productQuery = SpyProductQuery::create();
+            /** @var int|null $idProduct */
             $idProduct = $productQuery
                 ->select([SpyProductTableMap::COL_ID_PRODUCT])
                 ->findOneBySku($sku);

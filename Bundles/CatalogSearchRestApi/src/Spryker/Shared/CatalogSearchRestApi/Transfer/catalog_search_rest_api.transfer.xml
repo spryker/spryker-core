@@ -62,8 +62,20 @@
     <transfer name="RestCatalogSearchSuggestionsAttributes">
         <property name="completion" type="string[]" singular="completion"/>
         <property name="abstractProducts" type="RestCatalogSearchSuggestionAbstractProducts[]" singular="abstractProduct"/>
-        <property name="categories" type="array" singular="categories"/>
-        <property name="cmsPages" type="array" singular="cmsPages"/>
+        <property name="categories" type="array" singular="categories" deprecated="Use categoryCollection instead."/>
+        <property name="cmsPages" type="array" singular="cmsPages" deprecated="Use cmsPageCollection instead."/>
+        <property name="categoryCollection" type="RestCatalogSearchSuggestionCategories[]" singular="category"/>
+        <property name="cmsPageCollection" type="RestCatalogSearchSuggestionCmsPages[]" singular="cmsPage"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionCategories">
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="RestCatalogSearchSuggestionCmsPages">
+        <property name="name" type="string"/>
+        <property name="url" type="string"/>
     </transfer>
 
     <transfer name="RestCatalogSearchSuggestionAbstractProducts">
