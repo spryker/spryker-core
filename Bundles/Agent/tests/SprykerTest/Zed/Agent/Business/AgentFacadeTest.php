@@ -108,7 +108,7 @@ class AgentFacadeTest extends Unit
             ->findCustomersByQuery($customerQueryTransfer);
 
         // Assert
-        $this->assertEquals(0, $customerAutocompleteResponseTransfer->getCustomers()->count());
+        $this->assertCount(0, $customerAutocompleteResponseTransfer->getCustomers());
     }
 
     /**

@@ -17,7 +17,7 @@ class AgentValidator implements AgentValidatorInterface
     /**
      * @var \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig
      */
-    private $agentAuthRestApiConfig;
+    protected $agentAuthRestApiConfig;
 
     /**
      * @param \Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig $agentAuthRestApiConfig

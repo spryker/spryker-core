@@ -66,7 +66,7 @@ class CustomerProvider implements CustomerProviderInterface
 
         $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
 
-        $customerIdentifierTransfer = $this->getExpandedCustomerIdentifier($customerTransfer);
+        $customerIdentifierTransfer = $this->executeOauthCustomerIdentifierExpanderPlugins($customerTransfer);
 
         return $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
@@ -92,7 +92,9 @@ class CustomerProvider implements CustomerProviderInterface
             return $oauthUserTransfer;
         }
 
-        $customerIdentifierTransfer = $this->getExpandedCustomerIdentifier($customerResponseTransfer->getCustomerTransfer());
+        $customerIdentifierTransfer = $this->executeOauthCustomerIdentifierExpanderPlugins(
+            $customerResponseTransfer->getCustomerTransfer()
+        );
 
         return $oauthUserTransfer
             ->setUserIdentifier($this->utilEncodingService->encodeJson($customerIdentifierTransfer->toArray()))
@@ -104,7 +106,7 @@ class CustomerProvider implements CustomerProviderInterface
      *
      * @return \Generated\Shared\Transfer\CustomerIdentifierTransfer
      */
-    protected function getExpandedCustomerIdentifier(CustomerTransfer $customerTransfer): CustomerIdentifierTransfer
+    protected function executeOauthCustomerIdentifierExpanderPlugins(CustomerTransfer $customerTransfer): CustomerIdentifierTransfer
     {
         $customerIdentifierTransfer = (new CustomerIdentifierTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
