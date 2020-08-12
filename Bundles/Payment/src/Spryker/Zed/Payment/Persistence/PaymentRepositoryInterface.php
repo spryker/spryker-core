@@ -29,14 +29,16 @@ interface PaymentRepositoryInterface
     public function getStoreRelationByIdPaymentMethod(int $idPaymentMethod): StoreRelationTransfer;
 
     /**
-     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
-     */
-    public function getPaymentMethods(): PaymentMethodsTransfer;
-
-    /**
      * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\PaymentProviderCollectionTransfer
      */
     public function getAvailablePaymentProvidersForStore(string $storeName): PaymentProviderCollectionTransfer;
+
+    /**
+     * @param int $idStore
+     *
+     * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
+     */
+    public function getActivePaymentMethodsForStore(int $idStore): PaymentMethodsTransfer;
 }

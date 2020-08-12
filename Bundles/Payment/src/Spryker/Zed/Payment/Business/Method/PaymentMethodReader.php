@@ -74,23 +74,20 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
      */
     protected function findPaymentMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
-        $paymentMethodsFromPersistence = $this->paymentRepository->getPaymentMethods();
-
-        return $this->collectPaymentMethodsByStateMachineMapping(
-            $paymentMethodsFromPersistence,
+        $paymentMethodsFromPersistence = $this->paymentRepository->getActivePaymentMethodsForStore(
             $this->getIdStoreFromQuote($quoteTransfer)
         );
+
+        return $this->collectPaymentMethodsByStateMachineMapping($paymentMethodsFromPersistence);
     }
 
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
-     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     protected function collectPaymentMethodsByStateMachineMapping(
-        PaymentMethodsTransfer $paymentMethodsFromPersistence,
-        int $idStore
+        PaymentMethodsTransfer $paymentMethodsFromPersistence
     ): PaymentMethodsTransfer {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
         $paymentStateMachineMappings = array_keys($this->paymentConfig->getPaymentStatemachineMappings());
@@ -98,8 +95,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
 
         $paymentMethodsTransfer = $this->collectPaymentMethodsFromPersistence(
             $paymentMethodsTransfer,
-            $paymentMethodsFromPersistence,
-            $idStore
+            $paymentMethodsFromPersistence
         );
 
         $infrastructuralMethodNames = array_diff($paymentStateMachineMappings, $persistentMethodNames);
@@ -131,19 +127,15 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
     /**
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsFromPersistence
-     * @param int $idStore
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
     protected function collectPaymentMethodsFromPersistence(
         PaymentMethodsTransfer $paymentMethodsTransfer,
-        PaymentMethodsTransfer $paymentMethodsFromPersistence,
-        int $idStore
+        PaymentMethodsTransfer $paymentMethodsFromPersistence
     ): PaymentMethodsTransfer {
         foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            if ($this->isPaymentMethodAvailableForStore($paymentMethodTransfer, $idStore)) {
-                $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
-            }
+            $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
         }
 
         return $paymentMethodsTransfer;
@@ -163,22 +155,6 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         }
 
         return $persistentMethodNames;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
-     * @param int $idStore
-     *
-     * @return bool
-     */
-    protected function isPaymentMethodAvailableForStore(
-        PaymentMethodTransfer $paymentMethodTransfer,
-        int $idStore
-    ): bool {
-        $paymentMethodTransfer->requireStoreRelation();
-        $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation();
-
-        return $paymentMethodTransfer->getIsActive() && in_array($idStore, $storeRelationTransfer->getIdStores());
     }
 
     /**
