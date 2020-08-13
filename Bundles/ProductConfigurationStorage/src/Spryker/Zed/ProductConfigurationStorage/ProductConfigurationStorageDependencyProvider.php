@@ -29,7 +29,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container = $this->addFacadeProductConfiguration($container);
+        $container = $this->addProductConfigurationFacade($container);
         $container = $this->addEventBehaviorFacade($container);
 
         return $container;
@@ -40,7 +40,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractBundleDepend
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addFacadeProductConfiguration(Container $container): Container
+    protected function addProductConfigurationFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT_CONFIGURATION, function (Container $container) {
             return new ProductConfigurationStorageToProductConfigurationFacadeBridge(

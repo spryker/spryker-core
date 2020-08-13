@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\ProductConfiguration\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\DataBuilder\ProductConfigurationStorageBuilder;
 use Generated\Shared\Transfer\EventEntityTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
@@ -71,7 +70,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testWriteProductConfigurationStorageCollectionByProductConfigurationEvents(): void
+    public function testWriteCollectionByProductConfigurationEventsShouldSaveProductConfigurationStorage(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -88,7 +87,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()
-            ->writeProductConfigurationStorageCollectionByProductConfigurationEvents($eventTransfers);
+            ->writeCollectionByProductConfigurationEvents($eventTransfers);
 
         // Assert
         $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByFkProductConfiguration(
@@ -109,7 +108,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductConfigurationStorageCollection(): void
+    public function testDeleteProductConfigurationStorageCollectionShouldRemoveProductConfigurationStorage(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -120,12 +119,10 @@ class ProductConfigurationStorageFacadeTest extends Unit
             ]
         );
 
-        $productConfigurationStorageTransfer = $this->productConfigurationStorageEntityManager->saveProductConfigurationStorage(
-            (new ProductConfigurationStorageBuilder([
-                ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-                ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration(),
-            ]))->build()
-        );
+        $productConfigurationStorageTransfer = $this->tester->haveProductConfigurationStorage([
+            ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
+                ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration()
+        ]);
 
         $eventTransfers = [
             (new EventEntityTransfer())->setId($productConfigurationTransfer->getIdProductConfiguration()),
@@ -135,22 +132,18 @@ class ProductConfigurationStorageFacadeTest extends Unit
         $this->tester->getFacade()
             ->deleteProductConfigurationStorageCollection($eventTransfers);
 
-        $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
-
-        $syncTransfers = $this->productConfigurationStorageRepository
-            ->getFilteredProductConfigurationStorageDataTransfers(
-                $filter,
-                [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
-            );
+        $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByIdProductConfigurationStorage(
+            $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
+        )->findOne();
 
         // Assert
-        $this->assertEmpty($syncTransfers);
+        $this->assertEmpty($productConfigurationStorageEntity);
     }
 
     /**
      * @return void
      */
-    public function testGetProductConfigurationStorageDataTransfersByCriteria(): void
+    public function testGetFilteredProductConfigurationStorageDataTransfersWillReturnSynchronizationDataTransfers(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
@@ -159,29 +152,24 @@ class ProductConfigurationStorageFacadeTest extends Unit
                 ProductConfigurationTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
         ]);
 
-        $productConfigurationStorageTransfer = $this->productConfigurationStorageEntityManager->saveProductConfigurationStorage(
-            (new ProductConfigurationStorageBuilder([
-                ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-                ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration(),
-            ]))->build()
-        );
+        $productConfigurationStorageTransfer = $this->tester->haveProductConfigurationStorage([
+            ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
+            ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration()
+        ]);
 
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);
 
         // Act
-        $syncTransfers = $this->tester->getFacade()->getFilteredProductConfigurationStorageDataTransfers(
+        $synchronizationDataTransfers = $this->tester->getFacade()->getFilteredProductConfigurationStorageDataTransfers(
             $filter,
             [$productConfigurationStorageTransfer->getIdProductConfigurationStorage()]
         );
 
         // Assert
-        /** @var \Generated\Shared\Transfer\SynchronizationDataTransfer $syncTransfer */
-        $syncTransfer = array_shift($syncTransfers);
-
-        $this->assertEquals($productTransfer->getIdProductConcrete(), $syncTransfer->getData()['fk_product']);
-        $this->assertEquals(
-            $productConfigurationTransfer->getIdProductConfiguration(),
-            $syncTransfer->getData()['fk_product_configuration']
+        $this->assertCount(
+            1,
+            $synchronizationDataTransfers,
+            'Number of synchronisation data transfers is not equals to an expected value.'
         );
     }
 }

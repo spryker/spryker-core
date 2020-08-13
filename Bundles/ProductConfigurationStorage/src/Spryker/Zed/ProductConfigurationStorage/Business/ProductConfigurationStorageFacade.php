@@ -27,10 +27,11 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @return void
      */
-    public function writeProductConfigurationStorageCollectionByProductConfigurationEvents(array $eventTransfers): void
+    public function writeCollectionByProductConfigurationEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createProductConfigurationStorageWriter()
-            ->writeCollectionByProductConfigurationStorageEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductConfigurationStorageWriter()
+            ->writeCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**
@@ -44,8 +45,9 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      */
     public function deleteProductConfigurationStorageCollection(array $eventTransfers): void
     {
-        $this->getFactory()->createProductConfigurationStorageDeleter()
-            ->deleteCollectionByProductConfigurationStorageEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductConfigurationStorageDeleter()
+            ->deleteCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**

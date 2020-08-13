@@ -36,8 +36,11 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
 
         $productConfigurationStorageEntity->save();
 
-        return (new ProductConfigurationStorageTransfer())
-            ->fromArray($productConfigurationStorageEntity->toArray(), true);
+        return $this->getFactory()->createProductConfigurationStorageMapper()
+            ->mapProductConfigurationStorageEntityToProductConfigurationStorageTransfer(
+                $productConfigurationStorageEntity,
+                new ProductConfigurationStorageTransfer()
+            );
     }
 
     /**

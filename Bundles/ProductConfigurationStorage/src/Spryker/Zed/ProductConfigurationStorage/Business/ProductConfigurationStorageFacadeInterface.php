@@ -24,7 +24,7 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @return void
      */
-    public function writeProductConfigurationStorageCollectionByProductConfigurationEvents(
+    public function writeCollectionByProductConfigurationEvents(
         array $eventTransfers
     ): void;
 

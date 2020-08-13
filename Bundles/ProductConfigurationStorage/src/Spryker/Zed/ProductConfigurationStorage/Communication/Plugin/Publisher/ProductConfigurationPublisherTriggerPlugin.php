@@ -39,6 +39,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
+     * Retrieves product configurations by provided limit and offset.
      *
      * @api
      *
@@ -49,12 +50,13 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit): array
     {
-        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
-        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
+        $productConfigurationCollection = $this->getFactory()
+            ->getProductConfigurationFacade()
+            ->getProductConfigurationCollection(
+                $this->createProductConfigurationFilterTransfer($offset, $limit)
+            );
 
-        return $this->getFactory()->getProductConfigurationFacade()->getProductConfigurationCollection(
-            $productConfigurationFilterTransfer
-        )->getProductConfigurations()->getArrayCopy();
+        return $productConfigurationCollection->getProductConfigurations()->getArrayCopy();
     }
 
     /**
@@ -79,5 +81,23 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
     public function getIdColumnName(): ?string
     {
         return static::COL_ID_PRODUCT_CONFIGURATION;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationFilterTransfer
+     */
+    public function createProductConfigurationFilterTransfer(int $offset, int $limit): ProductConfigurationFilterTransfer
+    {
+        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
+        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
+
+        return $productConfigurationFilterTransfer;
     }
 }
