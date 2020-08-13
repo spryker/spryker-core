@@ -8,6 +8,7 @@
 namespace Spryker\Glue\AgentAuthRestApi\Processor\Finder;
 
 use Generated\Shared\Transfer\RestUserTransfer;
+use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -33,12 +34,18 @@ class RestUserFinder implements RestUserFinderInterface
      */
     public function findAgentRestUser(RestRequestInterface $restRequest): ?RestUserTransfer
     {
-        $decodedOauthUserId = $this->agentAuthorizationHeaderReader->getDecodedOauthUserIdentifier($restRequest);
+        $agentAccessTokenHeader = $restRequest->getHttpRequest()->headers->get(AgentAuthRestApiConfig::HEADER_X_AGENT_AUTHORIZATION);
 
-        if ($decodedOauthUserId && isset($decodedOauthUserId['id_agent'])) {
-            return (new RestUserTransfer())->setIdAgent($decodedOauthUserId['id_agent']);
+        if (!$agentAccessTokenHeader) {
+            return null;
         }
 
-        return null;
+        $idAgent = $this->agentAuthorizationHeaderReader->getIdAgentFromOauthAccessToken($restRequest);
+
+        if (!$idAgent) {
+            null;
+        }
+
+        return (new RestUserTransfer())->setIdAgent($idAgent);
     }
 }

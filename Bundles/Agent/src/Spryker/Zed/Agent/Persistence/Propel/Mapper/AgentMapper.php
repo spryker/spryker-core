@@ -26,18 +26,49 @@ class AgentMapper
         $customerAutocompleteResponseTransfer = new CustomerAutocompleteResponseTransfer();
 
         foreach ($customers as $customer) {
-            $customerTransfer = new CustomerTransfer();
-            $customerTransfer->setIdCustomer($customer[SpyCustomerTableMap::COL_ID_CUSTOMER]);
-            $customerTransfer->setCustomerReference($customer[SpyCustomerTableMap::COL_CUSTOMER_REFERENCE]);
-            $customerTransfer->setFirstName($customer[SpyCustomerTableMap::COL_FIRST_NAME]);
-            $customerTransfer->setLastName($customer[SpyCustomerTableMap::COL_LAST_NAME]);
-            $customerTransfer->setEmail($customer[SpyCustomerTableMap::COL_EMAIL]);
+            $customerTransfer = $this->mapCustomerDataToCustomerTransfer(
+                $customer,
+                new CustomerTransfer()
+            );
 
             $customerAutocompleteResponseTransfer->addCustomer($customerTransfer);
         }
 
-        $paginationTransfer = (new PaginationTransfer())
-            ->setFirstIndex($pager->getFirstIndex())
+        $paginationTransfer = $this->mapPropelModelPagerToPaginationTransfer($pager, new PaginationTransfer());
+
+        return $customerAutocompleteResponseTransfer->setPagination($paginationTransfer);
+    }
+
+    /**
+     * @param array $customer
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function mapCustomerDataToCustomerTransfer(
+        array $customer,
+        CustomerTransfer $customerTransfer
+    ): CustomerTransfer {
+        $customerTransfer->setIdCustomer($customer[SpyCustomerTableMap::COL_ID_CUSTOMER]);
+        $customerTransfer->setCustomerReference($customer[SpyCustomerTableMap::COL_CUSTOMER_REFERENCE]);
+        $customerTransfer->setFirstName($customer[SpyCustomerTableMap::COL_FIRST_NAME]);
+        $customerTransfer->setLastName($customer[SpyCustomerTableMap::COL_LAST_NAME]);
+        $customerTransfer->setEmail($customer[SpyCustomerTableMap::COL_EMAIL]);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param \Propel\Runtime\Util\PropelModelPager $pager
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\PaginationTransfer
+     */
+    protected function mapPropelModelPagerToPaginationTransfer(
+        PropelModelPager $pager,
+        PaginationTransfer $paginationTransfer
+    ): PaginationTransfer {
+        $paginationTransfer->setFirstIndex($pager->getFirstIndex())
             ->setFirstPage($pager->getFirstPage())
             ->setLastIndex($pager->getLastIndex())
             ->setLastPage($pager->getLastPage())
@@ -47,6 +78,6 @@ class AgentMapper
             ->setPage($pager->getPage())
             ->setPreviousPage($pager->getPreviousPage());
 
-        return $customerAutocompleteResponseTransfer->setPagination($paginationTransfer);
+        return $paginationTransfer;
     }
 }

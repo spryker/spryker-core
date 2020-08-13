@@ -40,7 +40,7 @@ class AgentFacadeTest extends Unit
     {
         parent::setUp();
 
-        $this->customerTransfers = $this->tester->createNCustomers();
+        $this->customerTransfers = $this->tester->createCustomers();
     }
 
     /**
@@ -112,14 +112,14 @@ class AgentFacadeTest extends Unit
     }
 
     /**
-     * @dataProvider findCustomersByQueryPaginationDataProvider
+     * @dataProvider findCustomersByQueryWithOffsetAndLimitRetrivesCustomersDataProvider
      *
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
      * @param int $expectedOffset
      *
      * @return void
      */
-    public function testFindCustomersByQueryWithOffsetLimit(
+    public function testFindCustomersByQueryWithOffsetAndLimitRetrievesCustomers(
         CustomerQueryTransfer $customerQueryTransfer,
         int $expectedOffset
     ): void {
@@ -144,7 +144,7 @@ class AgentFacadeTest extends Unit
     /**
      * @return array
      */
-    public function findCustomersByQueryPaginationDataProvider(): array
+    public function findCustomersByQueryWithOffsetAndLimitRetrivesCustomersDataProvider(): array
     {
         return [
             [

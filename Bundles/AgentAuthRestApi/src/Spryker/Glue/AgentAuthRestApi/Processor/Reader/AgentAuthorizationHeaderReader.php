@@ -7,10 +7,8 @@
 
 namespace Spryker\Glue\AgentAuthRestApi\Processor\Reader;
 
-use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToOauthServiceInterface;
 use Spryker\Glue\AgentAuthRestApi\Dependency\Service\AgentAuthRestApiToUtilEncodingServiceInterface;
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class AgentAuthorizationHeaderReader implements AgentAuthorizationHeaderReaderInterface
 {
@@ -37,20 +35,12 @@ class AgentAuthorizationHeaderReader implements AgentAuthorizationHeaderReaderIn
     }
 
     /**
-     * @phpstan-return array<int|string>|null
+     * @param string $agentAccessTokenHeader
      *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array|null
+     * @return int|null
      */
-    public function getDecodedOauthUserIdentifier(RestRequestInterface $restRequest): ?array
+    public function getIdAgentFromOauthAccessToken(string $agentAccessTokenHeader): ?int
     {
-        $agentAccessTokenHeader = $restRequest->getHttpRequest()->headers->get(AgentAuthRestApiConfig::HEADER_X_AGENT_AUTHORIZATION);
-
-        if (!$agentAccessTokenHeader) {
-            return null;
-        }
-
         $agentAccessToken = $this->extractToken($agentAccessTokenHeader);
         $agentAccessTokenType = $this->extractTokenType($agentAccessTokenHeader);
 
@@ -59,8 +49,9 @@ class AgentAuthorizationHeaderReader implements AgentAuthorizationHeaderReaderIn
         }
 
         $oauthAccessTokenDataTransfer = $this->oauthService->extractAccessTokenData($agentAccessToken);
+        $decodedOauthUserId = $this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true);
 
-        return $this->utilEncodingService->decodeJson($oauthAccessTokenDataTransfer->getOauthUserId(), true);
+        return $decodedOauthUserId['id_agent'] ?? null;
     }
 
     /**

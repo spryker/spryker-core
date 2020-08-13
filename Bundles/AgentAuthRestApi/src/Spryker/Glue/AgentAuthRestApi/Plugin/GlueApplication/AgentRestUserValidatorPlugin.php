@@ -20,7 +20,7 @@ class AgentRestUserValidatorPlugin extends AbstractPlugin implements RestUserVal
     /**
      * {@inheritDoc}
      * - Checks if the `RestRequest.restUser` is an agent in case the agent-only resource is being accessed.
-     * - Uses `AgentAuthRestApiConfig::getAgentResources()` for agent-only resoucres list.
+     * - Uses `AgentAuthRestApiConfig::getAgentResources()` for agent-only resource list.
      *
      * @api
      *

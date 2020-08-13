@@ -8,6 +8,7 @@
 namespace Spryker\Glue\AgentAuthRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\RestUserTransfer;
+use Spryker\Glue\AgentAuthRestApi\AgentAuthRestApiConfig;
 use Spryker\Glue\AgentAuthRestApi\Processor\Reader\AgentAuthorizationHeaderReaderInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
@@ -34,10 +35,16 @@ class RestUserMapper implements RestUserMapperInterface
      */
     public function mapAgentDataToRestUserTransfer(RestUserTransfer $restUserTransfer, RestRequestInterface $restRequest): RestUserTransfer
     {
-        $decodedOauthUserId = $this->agentAuthorizationHeaderReader->getDecodedOauthUserIdentifier($restRequest);
+        $agentAccessTokenHeader = $restRequest->getHttpRequest()->headers->get(AgentAuthRestApiConfig::HEADER_X_AGENT_AUTHORIZATION);
 
-        if ($decodedOauthUserId && isset($decodedOauthUserId['id_agent'])) {
-            $restUserTransfer->setIdAgent($decodedOauthUserId['id_agent']);
+        if (!$agentAccessTokenHeader) {
+            return $restUserTransfer;
+        }
+
+        $idAgent = $this->agentAuthorizationHeaderReader->getIdAgentFromOauthAccessToken($restRequest);
+
+        if ($idAgent) {
+            $restUserTransfer->setIdAgent($idAgent);
         }
 
         return $restUserTransfer;

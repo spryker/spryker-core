@@ -7,18 +7,14 @@
 
 namespace Spryker\Glue\AgentAuthRestApi\Processor\Reader;
 
-use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
-
 interface AgentAuthorizationHeaderReaderInterface
 {
     /**
-     * @phpstan-return array<int|string>|null
+     * @param string $agentAccessTokenHeader
      *
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return array|null
+     * @return int|null
      */
-    public function getDecodedOauthUserIdentifier(RestRequestInterface $restRequest): ?array;
+    public function getIdAgentFromOauthAccessToken(string $agentAccessTokenHeader): ?int;
 
     /**
      * @param string $authorizationToken
