@@ -135,10 +135,26 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         PaymentMethodsTransfer $paymentMethodsFromPersistence
     ): PaymentMethodsTransfer {
         foreach ($paymentMethodsFromPersistence->getMethods() as $paymentMethodTransfer) {
-            $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
+            if ($this->isPaymentMethodAvailableForStore($paymentMethodTransfer)) {
+                $paymentMethodsTransfer->addMethod($paymentMethodTransfer);
+            }
         }
 
         return $paymentMethodsTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\PaymentMethodTransfer $paymentMethodTransfer
+     *
+     * @return bool
+     */
+    protected function isPaymentMethodAvailableForStore(
+        PaymentMethodTransfer $paymentMethodTransfer
+    ): bool {
+        $paymentMethodTransfer->requireStoreRelation();
+        $storeRelationTransfer = $paymentMethodTransfer->getStoreRelation();
+
+        return $paymentMethodTransfer->getIsActive() && $storeRelationTransfer !== null;
     }
 
     /**

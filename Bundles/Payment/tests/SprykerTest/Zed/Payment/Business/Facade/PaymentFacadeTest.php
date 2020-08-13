@@ -202,6 +202,7 @@ class PaymentFacadeTest extends Unit
                 $storeTransfer,
             ],
         ])->build();
+
         $this->tester->havePaymentMethod([
             PaymentMethodTransfer::IS_ACTIVE => true,
             PaymentMethodTransfer::METHOD_NAME => 'dummyPaymentInvoice',
@@ -239,7 +240,7 @@ class PaymentFacadeTest extends Unit
         $paymentMethodsTransfer = $this->paymentFacade->getAvailableMethods($quoteTransfer);
 
         $this->assertCount(
-            2,
+            3,
             $paymentMethodsTransfer->getMethods(),
             'Amount of found payment method does not match to the expected value'
         );
