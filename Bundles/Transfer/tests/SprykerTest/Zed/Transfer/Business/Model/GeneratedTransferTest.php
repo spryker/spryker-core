@@ -50,7 +50,7 @@ class GeneratedTransferTest extends Unit
     /**
      * @return void
      */
-    public function _beforeSuite(): void
+    public function _before(): void
     {
         $this->generateTransfer();
         $targetDirectory = $this->getTargetDirectory();
