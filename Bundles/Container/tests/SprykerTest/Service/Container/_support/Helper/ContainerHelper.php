@@ -9,8 +9,8 @@ namespace SprykerTest\Service\Container\Helper;
 
 use Codeception\Module;
 use Codeception\TestInterface;
-use ReflectionClass;
 use ReflectionProperty;
+use Spryker\Service\Container\Container;
 use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\Kernel\Container\ContainerProxy;
 
@@ -61,9 +61,14 @@ class ContainerHelper extends Module
      */
     protected function resetStaticProperties(): void
     {
-        $reflectedClass = new ReflectionClass($this->container);
+        $staticProperties = [
+            'globalServices',
+            'globalServiceIdentifier',
+            'globalFrozenServices',
+        ];
 
-        foreach ($reflectedClass->getProperties(ReflectionProperty::IS_STATIC) as $reflectedProperty) {
+        foreach ($staticProperties as $staticProperty) {
+            $reflectedProperty = new ReflectionProperty(Container::class, $staticProperty);
             $reflectedProperty->setAccessible(true);
             $reflectedProperty->setValue([]);
         }
