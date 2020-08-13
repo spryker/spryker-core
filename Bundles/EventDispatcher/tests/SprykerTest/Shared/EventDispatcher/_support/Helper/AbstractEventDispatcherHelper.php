@@ -121,7 +121,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): ControllerArgumentsEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
         $controller = $controller ?? function () {
         };
 
@@ -134,7 +134,7 @@ abstract class AbstractEventDispatcherHelper extends Module
      * @param \Symfony\Component\HttpFoundation\Request|null $request
      * @param int|null $requestType
      *
-     * @return \Symfony\Component\HttpKernel\Event\ControllerArgumentsEvent
+     * @return \Symfony\Component\HttpKernel\Event\ControllerEvent
      */
     public function createControllerEvent(
         ?HttpKernelInterface $kernel = null,
@@ -143,7 +143,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): ControllerEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
         $controller = $controller ?? function () {
         };
 
@@ -165,7 +165,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?Throwable $throwable = null
     ): ExceptionEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
         $throwable = $throwable ?? new Exception();
 
         return new ExceptionEvent($kernel, $request, $requestType, $throwable);
@@ -184,7 +184,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): FinishRequestEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
 
         return new FinishRequestEvent($kernel, $request, $requestType);
     }
@@ -202,7 +202,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): KernelEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
 
         return new KernelEvent($kernel, $request, $requestType);
     }
@@ -220,7 +220,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): RequestEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
 
         return new RequestEvent($kernel, $request, $requestType);
     }
@@ -240,7 +240,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?int $requestType = Kernel::MASTER_REQUEST
     ): ResponseEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
         $response = $response ?? new Response();
 
         return new ResponseEvent($kernel, $request, $requestType, $response);
@@ -259,7 +259,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         ?Response $response = null
     ): TerminateEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
         $response = $response ?? new Response();
 
         return new TerminateEvent($kernel, $request, $response);
@@ -280,7 +280,7 @@ abstract class AbstractEventDispatcherHelper extends Module
         $controllerResult = ''
     ): ViewEvent {
         $kernel = $kernel ?? $this->getApplicationHelper()->getKernel();
-        $request = $request ?? Request::createFromGlobals();
+        $request = $request ?? $this->getApplicationHelper()->getRequest();
 
         return new ViewEvent($kernel, $request, $requestType, $controllerResult);
     }
@@ -304,7 +304,7 @@ abstract class AbstractEventDispatcherHelper extends Module
     protected function dispatch($event, string $eventName)
     {
         /** @var \Symfony\Contracts\EventDispatcher\Event $event */
-        $event = $this->getEventDispatcher()->dispatch($event, $eventName);
+        $event = $this->getEventDispatcher()->dispatch($event);
 
         return $event;
     }
