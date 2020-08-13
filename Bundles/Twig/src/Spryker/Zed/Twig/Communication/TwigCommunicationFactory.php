@@ -52,7 +52,7 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Twig\Loader\ChainLoader
      */
-    public function createTwigChainLoader(): ChainLoader
+    public function createChainLoader(): ChainLoader
     {
         return new ChainLoader();
     }

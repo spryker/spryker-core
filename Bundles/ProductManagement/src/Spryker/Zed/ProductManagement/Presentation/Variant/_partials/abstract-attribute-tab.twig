@@ -1,8 +1,8 @@
 <div class="well">
-    {% filter trans|raw %}
+    {% apply trans|raw %}
         <h3>{{ 'Configurable Product Attributes' | trans }}</h3>
         <p>{{ 'Select attributes and corresponding values.' | trans }}</p>
-    {% endfilter %}
+    {% endapply %}
 </div>
 
 {% for localeTransfer in attributeLocaleCollection %}

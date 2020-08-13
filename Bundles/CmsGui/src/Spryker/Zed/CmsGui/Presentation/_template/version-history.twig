@@ -72,9 +72,9 @@
 
         {% if hasTemplateDiff == false and versionDiffClass == 'diff' %}
         <div class="well">
-            {% filter trans|raw %}
+            {% apply trans|raw %}
                 <p><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> The Template has changed, Auto-Diff is not possible for placeholders.</p>
-            {% endfilter %}
+            {% endapply %}
         </div>
         {% endif %}
 

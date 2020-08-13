@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\GuiTable\Communication;
 
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetter;
 use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslator;
@@ -25,9 +26,9 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class GuiTableCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createGuiTableConfigurationFunctionProvider(): GuiTableConfigurationFunctionProvider
+    public function createGuiTableConfigurationFunctionProvider(): TwigFunctionProvider
     {
         return new GuiTableConfigurationFunctionProvider(
             $this->getUtilEncodingService(),

@@ -76,7 +76,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
     }
 
     /**
-     * @return  \Twig\TwigFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

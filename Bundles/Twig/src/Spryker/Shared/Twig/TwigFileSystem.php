@@ -23,7 +23,7 @@ class TwigFileSystem extends FilesystemLoader
      *
      * @return void
      */
-    public function setPaths($paths, $namespace = self::MAIN_NAMESPACE)
+    public function setPaths($paths, string $namespace = self::MAIN_NAMESPACE): void
     {
         $this->paths = [];
         foreach ($paths as $path) {
@@ -37,7 +37,7 @@ class TwigFileSystem extends FilesystemLoader
      *
      * @return void
      */
-    public function addPath($path, $namespace = self::MAIN_NAMESPACE)
+    public function addPath(string $path, string $namespace = self::MAIN_NAMESPACE): void
     {
         // invalidate the cache
         $this->cache = [];
@@ -50,7 +50,7 @@ class TwigFileSystem extends FilesystemLoader
      *
      * @return void
      */
-    public function prependPath($path, $namespace = self::MAIN_NAMESPACE)
+    public function prependPath(string $path, string $namespace = self::MAIN_NAMESPACE): void
     {
         // invalidate the cache
         $this->cache = [];
@@ -96,12 +96,13 @@ class TwigFileSystem extends FilesystemLoader
      * {@inheritDoc}
      *
      * @param string $name
+     * @param bool $throw
      *
      * @throws \Twig\Error\LoaderError
      *
      * @return string|false|null The template name or false/null
      */
-    protected function findTemplate($name)
+    protected function findTemplate(string $name, bool $throw = true)
     {
         $name = (string)$name;
 
@@ -149,6 +150,35 @@ class TwigFileSystem extends FilesystemLoader
         $templateName = ucfirst(substr($name, $pos + 2));
 
         return $this->load($name, $bundle, $templateName);
+    }
+
+    /**
+     * @param string $name
+     *
+     * @throws \Twig\Error\LoaderError
+     *
+     * @return void
+     */
+    private function validateName(string $name): void
+    {
+        if (strpos($name, "\0") !== false) {
+            throw new LoaderError('A template name cannot contain NUL bytes.');
+        }
+
+        $name = ltrim($name, '/');
+        $parts = explode('/', $name);
+        $level = 0;
+        foreach ($parts as $part) {
+            if ($part === '..') {
+                --$level;
+            } elseif ($part !== '.') {
+                ++$level;
+            }
+
+            if ($level < 0) {
+                throw new LoaderError(sprintf('Looks like you try to load a template outside configured directories (%s).', $name));
+            }
+        }
     }
 
     /**
