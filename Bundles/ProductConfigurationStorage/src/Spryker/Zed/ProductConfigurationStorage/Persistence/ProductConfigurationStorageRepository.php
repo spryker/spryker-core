@@ -18,7 +18,7 @@ class ProductConfigurationStorageRepository extends AbstractRepository implement
 {
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
-     * @param array $productConfigurationStorageIds
+     * @param int[] $productConfigurationStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
