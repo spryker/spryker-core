@@ -42,6 +42,8 @@ interface CollectorConstants
      * Specification:
      * - DB engine reference to MySql.
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @api
      */
     public const ZED_DB_ENGINE_MYSQL = 'ZED_DB_ENGINE_MYSQL';
@@ -49,6 +51,8 @@ interface CollectorConstants
     /**
      * Specification:
      * - DB engine reference to Pgsql.
+     *
+     * @deprecated Will be removed without replacement.
      *
      * @api
      */
