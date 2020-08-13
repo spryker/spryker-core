@@ -304,7 +304,7 @@ abstract class AbstractEventDispatcherHelper extends Module
     protected function dispatch($event, string $eventName)
     {
         /** @var \Symfony\Contracts\EventDispatcher\Event $event */
-        $event = $this->getEventDispatcher()->dispatch($event);
+        $event = $this->getEventDispatcher()->dispatch($event, $eventName);
 
         return $event;
     }
