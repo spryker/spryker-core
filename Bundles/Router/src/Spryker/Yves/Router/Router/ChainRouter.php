@@ -9,6 +9,8 @@ namespace Spryker\Yves\Router\Router;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Cmf\Component\Routing\ChainRouter as SymfonyChainRouter;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\RequestContext;
 
 class ChainRouter extends SymfonyChainRouter implements RouterInterface
 {
@@ -20,6 +22,7 @@ class ChainRouter extends SymfonyChainRouter implements RouterInterface
     {
         parent::__construct($logger);
 
+        $this->addRequestContext();
         $this->addRouterPlugins($routerPlugins);
     }
 
@@ -33,5 +36,18 @@ class ChainRouter extends SymfonyChainRouter implements RouterInterface
         foreach ($routerPlugins as $routerPlugin) {
             $this->add($routerPlugin->getRouter());
         }
+    }
+
+    /**
+     * @return void
+     */
+    protected function addRequestContext(): void
+    {
+        $request = Request::createFromGlobals();
+
+        $context = new RequestContext();
+        $context->fromRequest($request);
+
+        $this->setContext($context);
     }
 }
