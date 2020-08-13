@@ -95,6 +95,8 @@ class TimeoutTest extends Unit
             'no store name, limit' => [1, null, 1], // Will take only first created order
             'US store, no limit' => [2, 'US', null],
             'DE store, no limit' => [1, 'DE', null],
+            'US store, no limit, single processor identifier' => [2, 'US', null, [2]],
+            'US store, no limit, multiple processor identifiers' => [2, 'US', null, [1, 2]],
         ];
     }
 
@@ -108,17 +110,23 @@ class TimeoutTest extends Unit
      * @param int $expectedAffectedOrderItemsCount
      * @param string|null $storeName
      * @param int|null $limit
+     * @param array $omsProcessorIdentifiers
      *
      * @return void
      */
-    public function testCheckTimeoutsWithCriteria(int $expectedAffectedOrderItemsCount, ?string $storeName = null, ?int $limit = null)
-    {
-        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('DE', 'pay', 'payment pending', 1);
-        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('US', 'pay', 'payment pending', 2);
+    public function testCheckTimeoutsWithCriteria(
+        int $expectedAffectedOrderItemsCount,
+        ?string $storeName = null,
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
+    ) {
+        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('DE', 'pay', 'payment pending', 1, 1);
+        $this->tester->createOrderWithExpiredEventTimeoutOrderItemsForStore('US', 'pay', 'payment pending', 2, 2);
 
         $omsCheckTimeoutQueryCriteriaTransfer = new OmsCheckTimeoutsQueryCriteriaTransfer();
         $omsCheckTimeoutQueryCriteriaTransfer
             ->setStoreName($storeName)
+            ->setOmsProcessorIdentifiers($omsProcessorIdentifiers)
             ->setLimit($limit);
 
         $this->tester->mockConfigMethod('getActiveProcesses', ['DummyPayment01']);

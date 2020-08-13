@@ -5,16 +5,11 @@
 
     <transfer name="GuiTableDataRequest">
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
         <property name="filters" type="array" singular="filter" associative="true"/>
         <property name="orderBy" type="string"/>
         <property name="orderDirection" type="string"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
-    </transfer>
-
-    <transfer name="Locale">
-        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="GuiTableConfiguration">
@@ -95,8 +90,7 @@
         <property name="payload" type="GuiTableDataResponsePayload"/>
     </transfer>
 
-    <transfer name="GuiTableDataResponsePayload">
-    </transfer>
+    <transfer name="GuiTableDataResponsePayload"/>
 
     <transfer name="SelectGuiTableFilterTypeOptions">
         <property name="multiselect" type="bool"/>
@@ -116,7 +110,10 @@
     </transfer>
 
     <transfer name="GuiTableRowAction">
+        <property name="id" type="string"/>
         <property name="title" type="string"/>
+        <property name="type" type="string"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
     <transfer name="DateRangeGuiTableFilterTypeOptions">
@@ -130,7 +127,10 @@
     </transfer>
 
     <transfer name="GuiTableBatchAction">
+        <property name="id" type="string"/>
         <property name="title" type="string"/>
+        <property name="type" type="string"/>
+        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
 </transfers>
