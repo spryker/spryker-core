@@ -95,18 +95,14 @@ class PaymentRepository extends AbstractRepository implements PaymentRepositoryI
     }
 
     /**
-     * @param int $idStore
-     *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
      */
-    public function getActivePaymentMethodsForStore(int $idStore): PaymentMethodsTransfer
+    public function getPaymentMethodsWithStoreRelation(): PaymentMethodsTransfer
     {
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
         $paymentMethodEntities = $this->getFactory()
             ->createPaymentMethodQuery()
-            ->useSpyPaymentMethodStoreQuery()
-                ->filterByFkStore($idStore)
-            ->endUse()
+            ->leftJoinWithSpyPaymentMethodStore()
             ->find();
 
         if (!$paymentMethodEntities->getData()) {

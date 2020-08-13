@@ -39,7 +39,7 @@ class PaymentMapper
     }
 
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $paymentMethodEntityCollection
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Payment\Persistence\SpyPaymentMethod[] $paymentMethodEntityCollection
      * @param \Generated\Shared\Transfer\PaymentMethodsTransfer $paymentMethodsTransfer
      *
      * @return \Generated\Shared\Transfer\PaymentMethodsTransfer
