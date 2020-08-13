@@ -88,13 +88,15 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
     }
 
     /**
+     * Use mailbuilder setSenderName and setSenderEmail for customization
+     * 
      * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
      *
      * @return $this
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

@@ -97,7 +97,7 @@ class CompanyUserInvitationMailTypePlugin extends AbstractPlugin implements Mail
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }
