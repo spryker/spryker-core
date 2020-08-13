@@ -31,11 +31,12 @@ class MailBuilder implements MailBuilderInterface
 
     /**
      * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
+     * @param \Spryker\Zed\Mail\MailConfig $mailConfig
      */
     public function __construct(
         MailToGlossaryInterface $glossaryFacade,
         MailConfig $mailConfig
-    ){
+    ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->mailConfig = $mailConfig;
     }
