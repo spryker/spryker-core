@@ -37,6 +37,12 @@ class ProductConfigurationMapper
         return $productConfigurationCollectionTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationTransfer $productConfigurationTransfer
+     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration $productConfigurationEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationTransfer
+     */
     public function mapProductConfigurationEntityToProductConfigurationTransfer(
         ProductConfigurationTransfer $productConfigurationTransfer,
         SpyProductConfiguration $productConfigurationEntity
