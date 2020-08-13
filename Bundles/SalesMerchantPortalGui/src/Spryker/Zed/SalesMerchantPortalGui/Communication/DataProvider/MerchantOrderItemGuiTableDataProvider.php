@@ -15,8 +15,8 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTableCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\OrderItemFilterTransfer;
+use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\GuiTable\Communication\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider\MerchantOrderItemGuiTableConfigurationProvider;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -46,6 +46,11 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
     protected $salesFacade;
 
     /**
+     * @var int[]
+     */
+    protected $merchantOrderItemIds;
+
+    /**
      * @var array|\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
      */
     protected $merchantOrderItemTableExpanderPlugins;
@@ -55,6 +60,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToSalesFacadeInterface $salesFacade
+     * @param int[] $merchantOrderItemIds
      * @param \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[] $merchantOrderItemTableExpanderPlugins
      */
     public function __construct(
@@ -62,12 +68,14 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
         SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
         SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade,
         SalesMerchantPortalGuiToSalesFacadeInterface $salesFacade,
+        array $merchantOrderItemIds,
         array $merchantOrderItemTableExpanderPlugins = []
     ) {
         $this->salesMerchantPortalGuiRepository = $salesMerchantPortalGuiRepository;
         $this->merchantUserFacade = $merchantUserFacade;
         $this->merchantOmsFacade = $merchantOmsFacade;
         $this->salesFacade = $salesFacade;
+        $this->merchantOrderItemIds = $merchantOrderItemIds;
         $this->merchantOrderItemTableExpanderPlugins = $merchantOrderItemTableExpanderPlugins;
     }
 
@@ -80,7 +88,7 @@ class MerchantOrderItemGuiTableDataProvider extends AbstractGuiTableDataProvider
     {
         return (new MerchantOrderItemTableCriteriaTransfer())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant())
-            ->setMerchantOrderItemIds($guiTableDataRequestTransfer->getMerchantOrderItemIds());
+            ->setMerchantOrderItemIds($this->merchantOrderItemIds);
     }
 
     /**
