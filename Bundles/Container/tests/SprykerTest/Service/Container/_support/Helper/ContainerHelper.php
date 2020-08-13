@@ -51,9 +51,7 @@ class ContainerHelper extends Module
     {
         parent::_before($test);
 
-        if ($this->container !== null) {
-            $this->resetStaticProperties();
-        }
+        $this->resetStaticProperties();
 
         $this->container = null;
     }
