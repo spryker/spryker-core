@@ -32,11 +32,11 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
             ->setConfiguratorKey($dataSet[ProductConfigurationDataSet::KEY_CONFIGURATION_KEY])
             ->setIsComplete($dataSet[ProductConfigurationDataSet::KEY_IS_COMPLETE]);
 
+        $productConfigurationEntity->save();
+
         $this->addPublishEvents(
             ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_PUBLISH,
             $productConfigurationEntity->getIdProductConfiguration()
         );
-
-        $productConfigurationEntity->save();
     }
 }

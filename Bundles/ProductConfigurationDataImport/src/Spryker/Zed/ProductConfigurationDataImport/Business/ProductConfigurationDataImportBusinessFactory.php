@@ -8,9 +8,8 @@
 namespace Spryker\Zed\ProductConfigurationDataImport\Business;
 
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
-use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\ProductConfigurationDataImport\Business\Model\ProductConfigurationWriterStep;
-use Spryker\Zed\ProductConfigurationDataImport\Business\Model\Step\ConcreteSkuToIdProductStep;
+use Spryker\Zed\ProductConfigurationDataImport\Business\Model\Step\ConcreteSkuToIdProductConcreteStep;
 
 /**
  * @method \Spryker\Zed\ProductConfigurationDataImport\ProductConfigurationDataImportConfig getConfig()
@@ -35,10 +34,10 @@ class ProductConfigurationDataImportBusinessFactory extends DataImportBusinessFa
     }
 
     /**
-     * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+     * @return \Spryker\Zed\ProductConfigurationDataImport\Business\Model\Step\ConcreteSkuToIdProductConcreteStep
      */
-    public function createConcreteSkuToIdProductStep(): DataImportStepInterface
+    public function createConcreteSkuToIdProductStep(): ConcreteSkuToIdProductConcreteStep
     {
-        return new ConcreteSkuToIdProductStep();
+        return new ConcreteSkuToIdProductConcreteStep();
     }
 }

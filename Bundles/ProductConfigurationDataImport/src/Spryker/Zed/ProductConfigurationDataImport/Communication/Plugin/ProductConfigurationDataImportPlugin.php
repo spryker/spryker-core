@@ -20,6 +20,7 @@ class ProductConfigurationDataImportPlugin extends AbstractPlugin implements Dat
 {
     /**
      * {@inheritDoc}
+     * - Imports Product Configuration data.
      *
      * @api
      *

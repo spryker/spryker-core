@@ -14,12 +14,12 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductConfigurationDataImport\Business\Model\DataSet\ProductConfigurationDataSet;
 
-class ConcreteSkuToIdProductStep implements DataImportStepInterface
+class ConcreteSkuToIdProductConcreteStep implements DataImportStepInterface
 {
     /**
-     * @var array
+     * @var int[]
      */
-    protected $idProductCache = [];
+    protected $productConcreteIdsCache = [];
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -39,17 +39,17 @@ class ConcreteSkuToIdProductStep implements DataImportStepInterface
             /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
             $productQuery = SpyProductQuery::create()
                 ->select(SpyProductTableMap::COL_ID_PRODUCT);
-            /** @var string|int|null $idProduct */
-            $idProduct = $productQuery
+            /** @var int|null $idProductConcrete */
+            $idProductConcrete = $productQuery
                 ->findOneBySku($productConcreteSku);
 
-            if (!$idProduct) {
+            if (!$idProductConcrete) {
                 throw new EntityNotFoundException(sprintf('Could not find product by sku "%s"', $productConcreteSku));
             }
 
-            $this->idProductCache[$productConcreteSku] = $idProduct;
+            $this->productConcreteIdsCache[$productConcreteSku] = $idProductConcrete;
         }
 
-        $dataSet[ProductConfigurationDataSet::ID_PRODUCT_CONCRETE] = $this->idProductCache[$productConcreteSku];
+        $dataSet[ProductConfigurationDataSet::ID_PRODUCT_CONCRETE] = $this->productConcreteIdsCache[$productConcreteSku];
     }
 }

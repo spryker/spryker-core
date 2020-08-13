@@ -21,7 +21,7 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  *
  * @group SprykerTest
  * @group Zed
- * @group ProductConfigurationDataImport
+ * @group ProductConfiguration
  * @group Business
  * @group ProductConfigurationDataImportPluginTest
  * Add your own group annotations below this line
@@ -42,6 +42,7 @@ class ProductConfigurationDataImportPluginTest extends Unit
      */
     public function testImportImportsData(): void
     {
+        // Arrange
         $this->tester->cleanProductConfigurationTable();
 
         $this->tester->haveProduct([
@@ -55,11 +56,13 @@ class ProductConfigurationDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         $productConfigurationDataImportPlugin = new ProductConfigurationDataImportPlugin();
-        $productConfigurationDataImportPlugin->import($dataImportConfigurationTransfer);
 
+        // Act
+        $productConfigurationDataImportPlugin->import($dataImportConfigurationTransfer);
         $productConfigurationQuery = $this->tester->getProductConfigurationQuery();
 
-        $this->assertTrue(($productConfigurationQuery->count() > 0), 'Expected at least one entry in the database table but database table is empty.');
+        // Assert
+        $this->assertGreaterThan(0, $productConfigurationQuery->count(), 'Expected at least one entry in the database table but database table is empty.');
     }
 
     /**
@@ -68,7 +71,7 @@ class ProductConfigurationDataImportPluginTest extends Unit
     public function testImportThrowsExceptionWhenProductNotFound(): void
     {
         $this->tester->cleanProductConfigurationTable();
-
+        // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_configuration_product_not_exists.csv');
 
@@ -78,9 +81,11 @@ class ProductConfigurationDataImportPluginTest extends Unit
 
         $productConfigurationDataImportPlugin = new ProductConfigurationDataImportPlugin();
 
+        // Assert
         $this->expectException(DataImportException::class);
         $this->expectExceptionMessage('Could not find product by sku');
 
+        // Act
         $productConfigurationDataImportPlugin->import($dataImportConfigurationTransfer);
     }
 
@@ -89,7 +94,9 @@ class ProductConfigurationDataImportPluginTest extends Unit
      */
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
+        // Arrange
         $productConfigurationDataImportPlugin = new ProductConfigurationDataImportPlugin();
+        // Assert
         $this->assertSame(ProductConfigurationDataImportConfig::IMPORT_TYPE_PRODUCT_CONFIGURATION, $productConfigurationDataImportPlugin->getImportType());
     }
 
