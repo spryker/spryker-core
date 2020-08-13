@@ -50,10 +50,6 @@ class UniqueUrlValidator extends ConstraintValidator
             return;
         }
 
-        if ($existingUrlTransfer->getUrl() !== $submittedUrlTransfer->getUrl()) {
-            return;
-        }
-
         $this->context->buildViolation(sprintf(static::ERROR_MESSAGE_PROVIDED_URL_IS_ALREADY_TAKEN, $submittedUrlTransfer->getUrl()))
             ->atPath('url')
             ->addViolation();
