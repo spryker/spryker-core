@@ -84,6 +84,12 @@ class EditPageController extends AbstractController
 
         $publishForm = $this->getFactory()->createPublishVersionPageForm();
 
+        if ($cmsPageTransfer->getIsActive()) {
+            $activationForm = $this->getFactory()->createDeactivateCmsPageForm();
+        } else {
+            $activationForm = $this->getFactory()->createActivateCmsPageForm();
+        }
+
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -93,6 +99,7 @@ class EditPageController extends AbstractController
             'cmsPage' => $cmsPageTransfer,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
             'publishForm' => $publishForm->createView(),
+            'activationForm' => $activationForm->createView(),
         ];
     }
 
@@ -147,7 +154,7 @@ class EditPageController extends AbstractController
     public function activateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->request->get(static::URL_PARAM_REDIRECT_URL);
 
         $form = $this->getFactory()->createActivateCmsPageForm()->handleRequest($request);
 
@@ -178,7 +185,7 @@ class EditPageController extends AbstractController
     public function deactivateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->request->get(static::URL_PARAM_REDIRECT_URL);
 
         $form = $this->getFactory()->createDeactivateCmsPageForm()->handleRequest($request);
 

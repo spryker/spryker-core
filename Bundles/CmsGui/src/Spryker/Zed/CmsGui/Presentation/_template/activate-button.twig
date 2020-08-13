@@ -1,7 +1,23 @@
 {% if cmsVersion is not null %}
     {% if isActive %}
-        {{ removeActionButton(url('/cms-gui/edit-page/deactivate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Deactivate' | trans) }}
+        {% set activationFormAction = url('/cms-gui/edit-page/deactivate', {'id-cms-page': idCmsPage})  %}
+        {% set label = 'Deactivate' %}
+        {% set buttonClass = 'btn-remove' %}
+        {% set icon = 'fa-trash' %}
     {% else %}
-        {{ viewActionButton(url('/cms-gui/edit-page/activate', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl }), 'Activate' | trans) }}
+        {% set activationFormAction = url('/cms-gui/edit-page/activate', {'id-cms-page': idCmsPage})  %}
+        {% set label = 'Activate' %}
+        {% set buttonClass = 'btn-view' %}
+        {% set icon = 'fa-caret-right' %}
     {% endif %}
+    {{ form_start(activationForm, {
+        'action': activationFormAction,
+        'attr': {'class': 'form-inline'}
+    }) }}
+    <input type="hidden" name="redirect-url" value="{{ redirectUrl }}">
+    <button type="submit" class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+        <i class="fa {{ icon }}"></i>
+        {{ label | trans }}
+    </button>
+    {{ form_end(activationForm) }}
 {% endif %}

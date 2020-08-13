@@ -49,6 +49,12 @@ class ViewPageController extends AbstractController
 
         $relatedStoreNames = $this->getStoreNames($cmsPageTransfer);
 
+        if ($cmsPageTransfer->getIsActive()) {
+            $activationForm = $this->getFactory()->createDeactivateCmsPageForm();
+        } else {
+            $activationForm = $this->getFactory()->createActivateCmsPageForm();
+        }
+
         return [
             'cmsPage' => $cmsPageTransfer,
             'cmsGlossary' => $cmsVersionDataTransfer->getCmsGlossary(),
@@ -56,6 +62,7 @@ class ViewPageController extends AbstractController
             'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
             'relatedStoreNames' => $relatedStoreNames,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'activationForm' => $activationForm->createView(),
         ];
     }
 

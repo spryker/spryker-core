@@ -57,6 +57,12 @@ class CreateGlossaryController extends AbstractController
 
         $publishForm = $this->getFactory()->createPublishVersionPageForm();
 
+        if ($cmsPageTransfer->getIsActive()) {
+            $activationForm = $this->getFactory()->createDeactivateCmsPageForm();
+        } else {
+            $activationForm = $this->getFactory()->createActivateCmsPageForm();
+        }
+
         return [
             'glossaryForm' => $glossaryForm->createView(),
             'placeholderTabs' => $this->getPlaceholderTabs($cmsGlossaryTransfer),
@@ -66,6 +72,7 @@ class CreateGlossaryController extends AbstractController
             'cmsPage' => $cmsPageTransfer,
             'viewActionButtons' => $this->getViewActionButtons($cmsPageTransfer),
             'publishForm' => $publishForm->createView(),
+            'activationForm' => $activationForm->createView(),
         ];
     }
 

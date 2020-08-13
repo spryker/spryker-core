@@ -22,7 +22,7 @@
     {% if cmsVersion is not null %}
         {{ removeActionButton(url('/cms-gui/version-page/discard', {'id-cms-page': idCmsPage, 'redirect-url' : redirectUrl}), 'Discard Draft' | trans) }}
     {% endif %}
-    {{ include ('@CmsGui/_template/activate-button.twig', { 'id-cms-page': idCmsPage, 'isActive': cmsPage.isActive}) }}
+    {{ include ('@CmsGui/_template/activate-button.twig', { 'idCmsPage': idCmsPage, 'isActive': cmsPage.isActive, 'activationForm': activationForm }) }}
     {{ backActionButton('/cms-gui/list-page', 'Back to CMS' | trans) }}
 {% endblock %}
 
