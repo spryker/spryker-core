@@ -599,6 +599,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
      */
     public function getActiveProductAbstractsByProductAbstractIds(array $productAbstractIds): array
     {
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\Product\Persistence\SpyProductAbstract[] $productAbstractEntities */
         $productAbstractEntities = $this->getFactory()
             ->createProductAbstractQuery()
             ->filterByIdProductAbstract_In($productAbstractIds)
