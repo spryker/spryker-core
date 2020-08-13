@@ -80,7 +80,7 @@ class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfiguration
             $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
             $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
             $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
-                'limit' => 3,
+                'limit' => 2,
                 'typeOptions' => [
                     'color' => 'grey',
                 ],
