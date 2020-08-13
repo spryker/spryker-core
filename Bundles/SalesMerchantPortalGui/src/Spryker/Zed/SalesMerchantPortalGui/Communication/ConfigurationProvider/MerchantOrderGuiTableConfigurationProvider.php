@@ -101,7 +101,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
             $this->createColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true),
             $this->createColumnText(static::COL_KEY_EMAIL, 'Email', true, true),
             $this->createColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, [
-                'limit' => 3,
+                'limit' => 2,
                 'typeOptions' => [
                     'color' => 'green',
                 ],
