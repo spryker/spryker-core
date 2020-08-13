@@ -14,7 +14,7 @@ use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\ProductConfigurationDataImport\Business\Model\DataSet\ProductConfigurationDataSet;
 
-class ConcreteSkuToIdProductConcreteStep implements DataImportStepInterface
+class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterface
 {
     /**
      * @var int[]
@@ -44,7 +44,9 @@ class ConcreteSkuToIdProductConcreteStep implements DataImportStepInterface
                 ->findOneBySku($productConcreteSku);
 
             if (!$idProductConcrete) {
-                throw new EntityNotFoundException(sprintf('Could not find product by sku "%s"', $productConcreteSku));
+                throw new EntityNotFoundException(
+                    sprintf('Could not find product concrete by sku "%s"', $productConcreteSku)
+                );
             }
 
             $this->productConcreteIdsCache[$productConcreteSku] = $idProductConcrete;

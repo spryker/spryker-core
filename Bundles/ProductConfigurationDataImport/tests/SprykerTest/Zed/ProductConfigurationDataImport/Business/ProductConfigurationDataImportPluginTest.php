@@ -83,7 +83,7 @@ class ProductConfigurationDataImportPluginTest extends Unit
 
         // Assert
         $this->expectException(DataImportException::class);
-        $this->expectExceptionMessage('Could not find product by sku');
+        $this->expectExceptionMessage('Could not find product concrete by sku');
 
         // Act
         $productConfigurationDataImportPlugin->import($dataImportConfigurationTransfer);
