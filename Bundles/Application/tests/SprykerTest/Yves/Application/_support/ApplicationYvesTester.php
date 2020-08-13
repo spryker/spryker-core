@@ -8,10 +8,6 @@
 namespace SprykerTest\Yves\Application;
 
 use Codeception\Actor;
-use Silex\Application;
-use Spryker\Shared\Application\ApplicationConstants;
-use Spryker\Yves\Application\Plugin\ServiceProvider\SslServiceProvider;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Inherited Methods
@@ -32,33 +28,4 @@ use Symfony\Component\HttpFoundation\Request;
 class ApplicationYvesTester extends Actor
 {
     use _generated\ApplicationYvesTesterActions;
-
-    /**
-     * @param string $controllerResponse
-     * @param bool $isSslEnabled
-     *
-     * @return \Silex\Application
-     */
-    public function getApplicationForSslTest(string $controllerResponse = '', bool $isSslEnabled = true): Application
-    {
-        $this->setConfig(ApplicationConstants::YVES_SSL_ENABLED, $isSslEnabled);
-        $this->setConfig(ApplicationConstants::YVES_TRUSTED_HOSTS, []);
-
-        $application = new Application();
-        $application->register(new SslServiceProvider());
-
-        $application['controllers']->get('/foo', function () use ($controllerResponse) {
-            return $controllerResponse;
-        });
-
-        return $application;
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getRequestForSslTest(): Request
-    {
-        return Request::create('/foo');
-    }
 }
