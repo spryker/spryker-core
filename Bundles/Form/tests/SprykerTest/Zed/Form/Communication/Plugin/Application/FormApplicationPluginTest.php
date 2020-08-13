@@ -45,6 +45,7 @@ class FormApplicationPluginTest extends Unit
     {
         //Arrange
         $container = $this->getContainerHelper()->getContainer();
+        $container->remove(static::SERVICE_FORM_FACTORY);
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -62,6 +63,7 @@ class FormApplicationPluginTest extends Unit
     {
         //Arrange
         $container = $this->getContainerHelper()->getContainer();
+        $container->remove(static::SERVICE_FORM_FACTORY);
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -79,6 +81,7 @@ class FormApplicationPluginTest extends Unit
     {
         //Arrange
         $container = $this->getContainerHelper()->getContainer();
+        $container->remove(static::SERVICE_FORM_FACTORY);
         $plugin = new FormApplicationPlugin();
 
         //Act

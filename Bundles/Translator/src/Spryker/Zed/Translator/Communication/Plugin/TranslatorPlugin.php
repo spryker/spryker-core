@@ -9,6 +9,7 @@ namespace Spryker\Zed\Translator\Communication\Plugin;
 
 use Spryker\Shared\TranslatorExtension\Dependency\Plugin\TranslatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Symfony\Component\Translation\TranslatorInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Zed\Translator\Communication\Plugin\Translator\TranslatorPlugin} instead.
@@ -17,7 +18,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
  * @method \Spryker\Zed\Translator\Communication\TranslatorCommunicationFactory getFactory()
  * @method \Spryker\Zed\Translator\TranslatorConfig getConfig()
  */
-class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterface
+class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterface, TranslatorInterface
 {
     /**
      * {@inheritDoc}
