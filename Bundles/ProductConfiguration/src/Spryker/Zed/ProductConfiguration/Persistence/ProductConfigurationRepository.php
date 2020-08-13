@@ -26,7 +26,7 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
     public function getProductConfigurationCollection(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): ProductConfigurationCollectionTransfer {
-        $productConfigurationQuery = $this->getFactory()->createProductConfigurationQuery();
+        $productConfigurationQuery = $this->getFactory()->createProductConfigurationQuery()->leftJoinWithSpyProduct();
 
         $productConfigurationQuery = $this->setProductConfigurationFilters(
             $productConfigurationQuery,

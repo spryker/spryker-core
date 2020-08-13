@@ -6,7 +6,7 @@
 >
 
     <transfer name="ProductConfigurationStorage">
-        <property name="fkProduct" dataBuilderRule="numberBetween(0,1)"/>
+        <property name="sku" dataBuilderRule="word"/>
         <property name="fkProductConfiguration" dataBuilderRule="numberBetween(0,1)"/>
         <property name="defaultDisplayData" dataBuilderRule="unique()->sentence"/>
         <property name="defaultConfiguration" dataBuilderRule="word"/>

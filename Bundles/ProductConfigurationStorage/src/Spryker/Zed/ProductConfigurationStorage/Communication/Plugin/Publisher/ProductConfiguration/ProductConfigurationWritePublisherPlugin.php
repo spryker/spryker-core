@@ -20,8 +20,8 @@ class ProductConfigurationWritePublisherPlugin extends AbstractPlugin implements
 {
     /**
      * {@inheritDoc}
-     * Publishes product configuration data by publish ProductConfiguration event.
-     * Publishes product configuration data by create and update events from spy_product_configuration table.
+     * - Publishes product configuration data by publish ProductConfiguration event.
+     * - Publishes product configuration data by create and update events from spy_product_configuration table.
      *
      * @api
      *

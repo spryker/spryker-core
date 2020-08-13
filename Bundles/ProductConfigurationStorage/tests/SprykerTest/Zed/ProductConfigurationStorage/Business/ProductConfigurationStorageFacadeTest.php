@@ -95,8 +95,8 @@ class ProductConfigurationStorageFacadeTest extends Unit
         )->findOne();
 
         $this->assertEquals(
-            $productTransfer->getIdProductConcrete(),
-            $productConfigurationStorageEntity->getFkProduct()
+            $productTransfer->getSku(),
+            $productConfigurationStorageEntity->getSku()
         );
 
         $this->assertEquals(
@@ -120,8 +120,8 @@ class ProductConfigurationStorageFacadeTest extends Unit
         );
 
         $productConfigurationStorageTransfer = $this->tester->haveProductConfigurationStorage([
-            ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-                ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration()
+            ProductConfigurationStorageTransfer::SKU => $productTransfer->getSku(),
+                ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration(),
         ]);
 
         $eventTransfers = [
@@ -153,8 +153,8 @@ class ProductConfigurationStorageFacadeTest extends Unit
         ]);
 
         $productConfigurationStorageTransfer = $this->tester->haveProductConfigurationStorage([
-            ProductConfigurationStorageTransfer::FK_PRODUCT => $productTransfer->getIdProductConcrete(),
-            ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration()
+            ProductConfigurationStorageTransfer::SKU => $productTransfer->getSku(),
+            ProductConfigurationStorageTransfer::FK_PRODUCT_CONFIGURATION => $productConfigurationTransfer->getIdProductConfiguration(),
         ]);
 
         $filter = (new FilterTransfer())->setOffset(static::DEFAULT_QUERY_OFFSET)->setLimit(static::DEFAULT_QUERY_LIMIT);

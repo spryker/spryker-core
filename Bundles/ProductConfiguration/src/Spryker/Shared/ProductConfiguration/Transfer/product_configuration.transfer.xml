@@ -5,6 +5,7 @@
     <transfer name="ProductConfiguration">
         <property name="idProductConfiguration" type="int"/>
         <property name="fkProduct" type="int"/>
+        <property name="sku" type="string"/>
         <property name="defaultDisplayData" type="string"/>
         <property name="defaultConfiguration" type="string"/>
         <property name="configuratorKey" type="string"/>
