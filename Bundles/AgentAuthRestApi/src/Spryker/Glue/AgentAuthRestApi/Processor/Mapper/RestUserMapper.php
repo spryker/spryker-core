@@ -41,7 +41,7 @@ class RestUserMapper implements RestUserMapperInterface
             return $restUserTransfer;
         }
 
-        $idAgent = $this->agentAuthorizationHeaderReader->getIdAgentFromOauthAccessToken($restRequest);
+        $idAgent = $this->agentAuthorizationHeaderReader->getIdAgentFromOauthAccessToken($agentAccessTokenHeader);
 
         if ($idAgent) {
             $restUserTransfer->setIdAgent($idAgent);
