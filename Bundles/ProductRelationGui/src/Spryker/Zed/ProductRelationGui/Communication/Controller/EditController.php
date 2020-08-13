@@ -23,6 +23,7 @@ class EditController extends BaseProductRelationController
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
+    protected const MESSAGE_CSRF_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
@@ -109,7 +110,15 @@ class EditController extends BaseProductRelationController
     {
         $productRelationActivateForm = $this->getFactory()->createProductRelationActivateForm()->handleRequest($request);
 
-        return $this->executeRelationStatusChangeAction($request, $productRelationActivateForm, true);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+
+        if (!$productRelationActivateForm->isSubmitted() || !$productRelationActivateForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_TOKEN_IS_NOT_VALID);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        return $this->executeRelationStatusChangeAction($request, true, $redirectUrl);
     }
 
     /**
@@ -121,7 +130,15 @@ class EditController extends BaseProductRelationController
     {
         $productRelationDeactivateForm = $this->getFactory()->createProductRelationDeactivateForm()->handleRequest($request);
 
-        return $this->executeRelationStatusChangeAction($request, $productRelationDeactivateForm, false);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+
+        if (!$productRelationDeactivateForm->isSubmitted() || !$productRelationDeactivateForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_TOKEN_IS_NOT_VALID);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        return $this->executeRelationStatusChangeAction($request, false, $redirectUrl);
     }
 
     /**
@@ -184,23 +201,15 @@ class EditController extends BaseProductRelationController
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Symfony\Component\Form\FormInterface $form
      * @param bool $isActive
+     * @param string $redirectUrl
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    protected function executeRelationStatusChangeAction(Request $request, FormInterface $form, bool $isActive): RedirectResponse
+    protected function executeRelationStatusChangeAction(Request $request, bool $isActive, string $redirectUrl): RedirectResponse
     {
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
-
-        if (!$form->isSubmitted() || !$form->isValid()) {
-            $this->addErrorMessage('CSRF token is not valid.');
-
-            return $this->redirectResponse($redirectUrl);
-        }
-
         $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
 
         $productRelationTransfer = $this->getFactory()
