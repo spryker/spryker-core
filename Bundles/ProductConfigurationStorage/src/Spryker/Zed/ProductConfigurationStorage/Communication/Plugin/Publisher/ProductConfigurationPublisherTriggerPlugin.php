@@ -21,14 +21,9 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherTriggerPluginInter
 class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implements PublisherTriggerPluginInterface
 {
     /**
-     * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATIO
+     * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION
      */
     protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
-
-    /**
-     * @uses \Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap::COL_FK_PRODUCT
-     */
-    protected const COL_FK_PRODUCT = 'spy_product_configuration.fk_product';
 
     /**
      * {@inheritDoc}
@@ -44,6 +39,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
+     * Retrieves product configurations by provided limit and offset.
      *
      * @api
      *
@@ -54,11 +50,13 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
      */
     public function getData(int $offset, int $limit): array
     {
-        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
-        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
+        $productConfigurationCollection = $this->getFactory()
+            ->getProductConfigurationFacade()
+            ->getProductConfigurationCollection(
+                $this->createProductConfigurationFilterTransfer($offset, $limit)
+            );
 
-        return $this->getFacade()->getProductConfigurationCollection($productConfigurationFilterTransfer)
-            ->getProductConfigurations()->getArrayCopy();
+        return $productConfigurationCollection->getProductConfigurations()->getArrayCopy();
     }
 
     /**
@@ -83,5 +81,23 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
     public function getIdColumnName(): ?string
     {
         return static::COL_ID_PRODUCT_CONFIGURATION;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param int $offset
+     * @param int $limit
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationFilterTransfer
+     */
+    public function createProductConfigurationFilterTransfer(int $offset, int $limit): ProductConfigurationFilterTransfer
+    {
+        $productConfigurationFilterTransfer = new ProductConfigurationFilterTransfer();
+        $productConfigurationFilterTransfer->setFilter((new FilterTransfer())->setLimit($limit)->setOffset($offset));
+
+        return $productConfigurationFilterTransfer;
     }
 }

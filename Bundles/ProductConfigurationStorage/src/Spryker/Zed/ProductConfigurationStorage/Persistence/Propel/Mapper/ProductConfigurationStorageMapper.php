@@ -18,7 +18,7 @@ class ProductConfigurationStorageMapper
      *
      * @return \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage
      */
-    public function mapProductConfigurationStorageEntity(
+    public function mapProductConfigurationStorageTransferToProductConfigurationStorageEntity(
         SpyProductConfigurationStorage $productConfigurationStorageEntity,
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
     ): SpyProductConfigurationStorage {
@@ -26,5 +26,19 @@ class ProductConfigurationStorageMapper
         $productConfigurationStorageEntity->setFkProduct($productConfigurationStorageTransfer->getFkProduct());
 
         return $productConfigurationStorageEntity;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage $productConfigurationStorageEntity
+     * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer
+     */
+    public function mapProductConfigurationStorageEntityToProductConfigurationStorageTransfer(
+        SpyProductConfigurationStorage $productConfigurationStorageEntity,
+        ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
+    ): ProductConfigurationStorageTransfer {
+        return $productConfigurationStorageTransfer
+            ->fromArray($productConfigurationStorageEntity->toArray(), true);
     }
 }

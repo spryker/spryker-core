@@ -14,5 +14,5 @@ interface ProductConfigurationStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteCollectionByProductConfigurationStorageEvents(array $eventTransfers): void;
+    public function deleteCollectionByProductConfigurationEvents(array $eventTransfers): void;
 }

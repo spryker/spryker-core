@@ -39,10 +39,10 @@ class ProductConfigurationStorageDeleter implements ProductConfigurationStorageD
      *
      * @return void
      */
-    public function deleteCollectionByProductConfigurationStorageEvents(array $eventTransfers): void
+    public function deleteCollectionByProductConfigurationEvents(array $eventTransfers): void
     {
         $productConfigurationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
-        $this->productConfigurationStorageEntityManager->deleteProductConfigurationStorageByFkProductConfiguration($productConfigurationIds);
+        $this->productConfigurationStorageEntityManager->deleteProductConfigurationStorageByProductConfigurationIds($productConfigurationIds);
     }
 }

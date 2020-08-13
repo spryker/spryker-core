@@ -9,25 +9,38 @@ namespace Spryker\Zed\ProductConfiguration\Persistence\Propel\Mapper;
 
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationTransfer;
+use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductConfigurationMapper
 {
     /**
-     * @param \Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
+     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration[]|\Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
+     *
+     * @param \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer $productConfigurationCollectionTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
     public function mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
+        ProductConfigurationCollectionTransfer $productConfigurationCollectionTransfer,
         ObjectCollection $productConfigurationEntitiesCollection
     ): ProductConfigurationCollectionTransfer {
-        $productConfigurationCollectionTransfer = new ProductConfigurationCollectionTransfer();
         foreach ($productConfigurationEntitiesCollection as $productConfigurationEntity) {
             $productConfigurationCollectionTransfer->addProductConfiguration(
-                (new ProductConfigurationTransfer())->fromArray($productConfigurationEntity->toArray(), true)
+                $this->mapProductConfigurationEntityToProductConfigurationTransfer(
+                    new ProductConfigurationTransfer(),
+                    $productConfigurationEntity
+                )
             );
         }
 
         return $productConfigurationCollectionTransfer;
+    }
+
+    public function mapProductConfigurationEntityToProductConfigurationTransfer(
+        ProductConfigurationTransfer $productConfigurationTransfer,
+        SpyProductConfiguration $productConfigurationEntity
+    ): ProductConfigurationTransfer {
+       return $productConfigurationTransfer->fromArray($productConfigurationEntity->toArray(), true);
     }
 }

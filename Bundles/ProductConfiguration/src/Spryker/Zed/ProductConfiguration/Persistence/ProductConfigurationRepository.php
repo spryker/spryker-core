@@ -35,6 +35,7 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
 
         return $this->getFactory()->createProductConfigurationMapper()
             ->mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection(
+                new ProductConfigurationCollectionTransfer(),
                 $productConfigurationQuery->find()
             );
     }

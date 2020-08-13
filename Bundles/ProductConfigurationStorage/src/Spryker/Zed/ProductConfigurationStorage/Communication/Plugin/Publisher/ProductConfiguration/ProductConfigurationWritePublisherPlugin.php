@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductConfigurationStorage\Communication\Plugin\Publisher\ProductConfigurationStorage;
+namespace Spryker\Zed\ProductConfigurationStorage\Communication\Plugin\Publisher\ProductConfiguration;
 
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
@@ -16,10 +16,12 @@ use Spryker\Zed\PublisherExtension\Dependency\Plugin\PublisherPluginInterface;
  * @method \Spryker\Zed\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
  * @method \Spryker\Zed\ProductConfigurationStorage\Communication\ProductConfigurationStorageCommunicationFactory getFactory()
  */
-class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
+class ProductConfigurationWritePublisherPlugin extends AbstractPlugin implements PublisherPluginInterface
 {
     /**
      * {@inheritDoc}
+     * Publishes product configuration data by publish ProductConfiguration event.
+     * Publishes product configuration data by create and update events from spy_product_configuration table.
      *
      * @api
      *
@@ -30,7 +32,7 @@ class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implement
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->deleteProductConfigurationStorageCollection($eventTransfers);
+        $this->getFacade()->writeCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**
@@ -43,8 +45,9 @@ class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implement
     public function getSubscribedEvents(): array
     {
         return [
-            ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_UNPUBLISH,
-            ProductConfigurationStorageConfig::ENTITY_SPY_PRODUCT_CONFIGURATION_DELETE,
+            ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_PUBLISH,
+            ProductConfigurationStorageConfig::ENTITY_SPY_PRODUCT_CONFIGURATION_CREATE,
+            ProductConfigurationStorageConfig::ENTITY_SPY_PRODUCT_CONFIGURATION_UPDATE,
         ];
     }
 }

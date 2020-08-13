@@ -7,15 +7,14 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Business;
 
-use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 
 interface ProductConfigurationStorageFacadeInterface
 {
     /**
      * Specification:
-     * - Extracts Product Configurations IDs from the $eventTransfers.
-     * - Finds Product Configurations using product configuration IDs.
+     * - Extracts product configuration IDs from the $eventTransfers.
+     * - Finds product configuration using product configuration IDs.
      * - Stores JSON encoded data to a storage table.
      * - Sends a copy of data to queue based on module config.
      *
@@ -25,13 +24,13 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @return void
      */
-    public function writeProductConfigurationStorageCollectionByProductConfigurationEvents(
+    public function writeCollectionByProductConfigurationEvents(
         array $eventTransfers
     ): void;
 
     /**
      * Specification:
-     * - Finds and deletes Product Configurations Storage entities.
+     * - Finds and deletes product configuration storage entities.
      * - Sends delete message to queue based on module config.
      *
      * @api
@@ -44,30 +43,17 @@ interface ProductConfigurationStorageFacadeInterface
 
     /**
      * Specification:
-     * - Retrieves Product Configuration Storage from Persistence according to provided offset, limit and ids.
+     * - Retrieves a product configuration storage collection from Persistence according to provided offset, limit and ids.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $productConfigurationStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransfersByIds(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    public function getFilteredProductConfigurationStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $productConfigurationStorageIds
     ): array;
-
-    /**
-     * Specification:
-     *  - Retrieves product configurations from Persistence.
-     *  - Returns Product Configurations that mach given criteria.
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
-     */
-    public function getProductConfigurationCollection(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-    ): ProductConfigurationCollectionTransfer;
 }

@@ -32,8 +32,9 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConfigurationCollection(): void
+    public function testGetProductConfigurationCollectionRetrievesCollection(): void
     {
+        //Arrange
         $productTransfer = $this->tester->haveProduct();
 
         $productConfigurationTransfer = $this->tester->haveProductConfiguration(
@@ -45,6 +46,7 @@ class ProductConfigurationFacadeTest extends Unit
         $productConfigurationCriteriaTransfer = (new ProductConfigurationFilterTransfer())
             ->setProductConfigurationIds([$productConfigurationTransfer->getIdProductConfiguration()]);
 
+        //Act
         $productConfigurationCollectionTransfer = $this->tester->getFacade()
             ->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
 
@@ -52,6 +54,7 @@ class ProductConfigurationFacadeTest extends Unit
         $createdProductConfigurationTransfer = $productConfigurationCollectionTransfer->getProductConfigurations()
             ->getIterator()->current();
 
+        //Assert
         $this->assertNotEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
         $this->assertEquals($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
     }
@@ -59,14 +62,17 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetProductConfigurationCollectionWrongProductFK(): void
+    public function testGetProductConfigurationCollectionWithWrongProductFkRetrievesEmptyCollection(): void
     {
+        //Arrange
         $productConfigurationCriteriaTransfer = (new ProductConfigurationFilterTransfer())
             ->setProductConfigurationIds([ProductConfigurationTransfer::FK_PRODUCT => 222]);
 
+        //Act
         $productConfigurationCollectionTransfer = $this->tester->getFacade()
             ->getProductConfigurationCollection($productConfigurationCriteriaTransfer);
 
+        //Assert
         $this->assertEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
     }
 }

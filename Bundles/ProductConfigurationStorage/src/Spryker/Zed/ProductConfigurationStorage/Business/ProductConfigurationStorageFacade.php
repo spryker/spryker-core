@@ -7,8 +7,7 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage\Business;
 
-use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
-use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,10 +27,11 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @return void
      */
-    public function writeProductConfigurationStorageCollectionByProductConfigurationEvents(array $eventTransfers): void
+    public function writeCollectionByProductConfigurationEvents(array $eventTransfers): void
     {
-        $this->getFactory()->createProductConfigurationStorageWriter()
-            ->writeCollectionByProductConfigurationStorageEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductConfigurationStorageWriter()
+            ->writeCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**
@@ -45,8 +45,9 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      */
     public function deleteProductConfigurationStorageCollection(array $eventTransfers): void
     {
-        $this->getFactory()->createProductConfigurationStorageDeleter()
-            ->deleteCollectionByProductConfigurationStorageEvents($eventTransfers);
+        $this->getFactory()
+            ->createProductConfigurationStorageDeleter()
+            ->deleteCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**
@@ -54,29 +55,18 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param array $productConfigurationStorageIds
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
      */
-    public function findProductConfigurationStorageDataTransfersByIds(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
+    public function getFilteredProductConfigurationStorageDataTransfers(
+        FilterTransfer $filterTransfer,
+        array $productConfigurationStorageIds
     ): array {
-        return $this->getRepository()->findProductConfigurationStorageDataTransfersByIds($productConfigurationFilterTransfer);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
-     */
-    public function getProductConfigurationCollection(
-        ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
-    ): ProductConfigurationCollectionTransfer {
-        return $this->getFactory()->getProductConfigurationFacade()
-            ->getProductConfigurationCollection($productConfigurationFilterTransfer);
+        return $this->getRepository()->getFilteredProductConfigurationStorageDataTransfers(
+            $filterTransfer,
+            $productConfigurationStorageIds
+        );
     }
 }

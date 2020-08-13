@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfigurationStorage\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface;
+use Spryker\Zed\ProductConfigurationStorage\ProductConfigurationStorageDependencyProvider;
 
 /**
  * @method \Spryker\Zed\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
@@ -17,4 +19,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
  */
 class ProductConfigurationStorageCommunicationFactory extends AbstractCommunicationFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductConfigurationStorage\Dependency\Facade\ProductConfigurationStorageToProductConfigurationFacadeInterface
+     */
+    public function getProductConfigurationFacade(): ProductConfigurationStorageToProductConfigurationFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::FACADE_PRODUCT_CONFIGURATION);
+    }
 }
