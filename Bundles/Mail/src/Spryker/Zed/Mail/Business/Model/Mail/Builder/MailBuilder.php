@@ -30,6 +30,11 @@ class MailBuilder implements MailBuilderInterface
     protected $glossaryFacade;
 
     /**
+     * @var \Spryker\Zed\Mail\MailConfig
+     */
+    protected $mailConfig;
+
+    /**
      * @param \Spryker\Zed\Mail\Dependency\Facade\MailToGlossaryInterface $glossaryFacade
      * @param \Spryker\Zed\Mail\MailConfig $mailConfig
      */
@@ -161,16 +166,16 @@ class MailBuilder implements MailBuilderInterface
     public function useDefaultSender()
     {
         $mailSenderTransfer = new MailSenderTransfer();
-        
+
         $senderEmail = $this->mailConfig->getSenderEmail() ?: $this->translate('mail.sender.email');
         $senderName = $this->mailConfig->getSenderName() ?: $this->translate('mail.sender.name');
-        
+
         $mailSenderTransfer
             ->setEmail($senderEmail)
             ->setName($senderName);
 
         $this->getMailTransfer()->setSender($mailSenderTransfer);
-        
+
         return $this;
     }
 
