@@ -8,7 +8,6 @@
 namespace SprykerTest\Zed\PriceProduct\Persistence;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManager;
 use Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface;
 
@@ -32,10 +31,10 @@ class PriceProductEntityManagerTest extends Unit
     /**
      * @return void
      */
-    public function testSavePriceProductAbstract(): void
+    public function testSavePriceProductAbstractSavePriceProductForProductAbstract(): void
     {
         //Arrange
-        $priceProductTransfer = $this->createPriceProductForProductAbstract();
+        $priceProductTransfer = $this->tester->createPriceProductForProductAbstract();
         $expectedIdPriceProduct = $priceProductTransfer->getIdPriceProduct();
 
         //Act
@@ -48,10 +47,10 @@ class PriceProductEntityManagerTest extends Unit
     /**
      * @return void
      */
-    public function testSavePriceProductConcrete(): void
+    public function testSavePriceProductConcreteSavePriceProductForProductConcrete(): void
     {
         //Arrange
-        $priceProductTransfer = $this->createPriceProductForProductConcret();
+        $priceProductTransfer = $this->tester->createPriceProductForProductConcrete();
         $expectedIdPriceProduct = $priceProductTransfer->getIdPriceProduct();
 
         //Act
@@ -62,36 +61,9 @@ class PriceProductEntityManagerTest extends Unit
     }
 
     /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function createPriceProductForProductConcret(): PriceProductTransfer
-    {
-        $productConcrete = $this->tester->haveProduct();
-        $priceProductTransfer = $this->tester->havePriceProduct([
-                'idProduct' => $productConcrete->getIdProductConcrete(),
-                'skuProductAbstract' => $productConcrete->getAbstractSku(),
-            ]);
-        $priceProductTransfer->setSkuProductAbstract($productConcrete->getSku());
-
-        return $priceProductTransfer;
-    }
-
-    /**
-     * @return \Generated\Shared\Transfer\PriceProductTransfer
-     */
-    public function createPriceProductForProductAbstract(): PriceProductTransfer
-    {
-        $productAbstract = $this->tester->haveProductAbstract();
-        $priceProductTransfer = $this->tester->havePriceProduct(['skuProductAbstract' => $productAbstract->getSku()]);
-        $priceProductTransfer->setSkuProductAbstract($productAbstract->getSku());
-
-        return $priceProductTransfer;
-    }
-
-    /**
      * @return \Spryker\Zed\PriceProduct\Persistence\PriceProductEntityManagerInterface
      */
-    public function getEntityManager(): PriceProductEntityManagerInterface
+    protected function getEntityManager(): PriceProductEntityManagerInterface
     {
         return new PriceProductEntityManager();
     }
