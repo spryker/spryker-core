@@ -108,7 +108,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteProductConfigurationStorageCollectionShouldRemoveProductConfigurationStorage(): void
+    public function testDeleteCollectionShouldRemoveProductConfigurationStorageShouldRemoveProductConfigurationStorage(): void
     {
         // Arrange
         $productTransfer = $this->tester->haveProduct();
