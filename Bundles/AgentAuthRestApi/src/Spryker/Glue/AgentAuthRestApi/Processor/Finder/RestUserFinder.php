@@ -43,7 +43,7 @@ class RestUserFinder implements RestUserFinderInterface
         $idAgent = $this->agentAuthorizationHeaderReader->getIdAgentFromOauthAccessToken($agentAccessTokenHeader);
 
         if (!$idAgent) {
-            null;
+            return null;
         }
 
         return (new RestUserTransfer())->setIdAgent($idAgent);
