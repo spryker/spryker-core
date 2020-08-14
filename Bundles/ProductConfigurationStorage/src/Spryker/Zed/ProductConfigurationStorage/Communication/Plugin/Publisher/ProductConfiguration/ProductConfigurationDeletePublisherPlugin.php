@@ -32,7 +32,7 @@ class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implement
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->deleteProductConfigurationStorageCollection($eventTransfers);
+        $this->getFacade()->deleteCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**

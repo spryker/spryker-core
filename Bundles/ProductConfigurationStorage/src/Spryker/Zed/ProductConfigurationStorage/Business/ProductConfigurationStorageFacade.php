@@ -43,7 +43,7 @@ class ProductConfigurationStorageFacade extends AbstractFacade implements Produc
      *
      * @return void
      */
-    public function deleteProductConfigurationStorageCollection(array $eventTransfers): void
+    public function deleteCollectionByProductConfigurationEvents(array $eventTransfers): void
     {
         $this->getFactory()
             ->createProductConfigurationStorageDeleter()

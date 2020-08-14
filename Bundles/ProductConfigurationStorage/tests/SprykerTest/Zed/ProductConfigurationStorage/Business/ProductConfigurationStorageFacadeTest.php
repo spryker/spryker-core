@@ -130,7 +130,7 @@ class ProductConfigurationStorageFacadeTest extends Unit
 
         // Act
         $this->tester->getFacade()
-            ->deleteProductConfigurationStorageCollection($eventTransfers);
+            ->deleteCollectionByProductConfigurationEvents($eventTransfers);
 
         $productConfigurationStorageEntity = SpyProductConfigurationStorageQuery::create()->filterByIdProductConfigurationStorage(
             $productConfigurationStorageTransfer->getIdProductConfigurationStorage()
