@@ -1,5 +1,4 @@
 {% set merchantOrderItem = merchantOrderItemsWithOrderItemIdKey[orderItem.IdSalesOrderItem] %}
-{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
 
 <td class="item-checker">
     <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
@@ -72,7 +71,7 @@
         } %}
     </td>
 {% endif %}
-<td rowspan="{{ numberOfItemAdditions }}" class="state-history">
+<td class="state-history">
     <div>
         <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
     </div>
@@ -88,7 +87,7 @@
         </a>
     {% endif %}
 </td>
-<td rowspan="{{ numberOfItemAdditions }}">
+<td>
     {% include '@MerchantSalesOrderMerchantUserGui/_partials/merchant-order-item-actions.twig' with {
         redirectUrl: changeStatusRedirectUrl,
         merchantSalesOrderItemReference: merchantOrderItem.merchantOrderItemReference,

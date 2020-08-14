@@ -23,11 +23,11 @@ class IndexController extends AbstractController
      */
     public function indexAction(): array
     {
-        $merchantTable = $this->getFactory()
+        $myOrdersTable = $this->getFactory()
             ->createMyOrderTable();
 
         return $this->viewResponse([
-            'myOrders' => $merchantTable->render(),
+            'myOrdersTable' => $myOrdersTable->render(),
         ]);
     }
 

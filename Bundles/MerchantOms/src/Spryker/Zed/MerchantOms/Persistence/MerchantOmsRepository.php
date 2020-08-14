@@ -83,12 +83,10 @@ class MerchantOmsRepository extends AbstractRepository implements MerchantOmsRep
         foreach ($stateMachineItemStateHistoryEntities as $stateMachineItemStateHistoryEntity) {
             $stateMachineItemTransfer = $this->getFactory()
                 ->createStateMachineItemMapper()
-                ->mapStateMachineItemEntityToStateMachineItemTransfer(
-                    $stateMachineItemStateHistoryEntity->getState(),
-                    (new StateMachineItemTransfer())
+                ->mapStateMachineItemStateHistoryEntityToStateMachineItemTransfer(
+                    $stateMachineItemStateHistoryEntity,
+                    new StateMachineItemTransfer()
                 );
-            $stateMachineItemTransfer->setCreatedAt($stateMachineItemStateHistoryEntity->getCreatedAt());
-            $stateMachineItemTransfer->setIdentifier($stateMachineItemStateHistoryEntity->getIdentifier());
 
             $stateMachineItemTransfers[] = $stateMachineItemTransfer;
         }

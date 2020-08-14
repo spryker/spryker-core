@@ -33,7 +33,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
-    public const SERVICE_DATE_FORMATTER = 'SERVICE_DATE_FORMATTER';
+    public const SERVICE_DATE_TIME = 'SERVICE_DATE_TIME';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
@@ -91,7 +91,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMoneyFacade(Container $container)
+    protected function addMoneyFacade(Container $container): Container
     {
         $container->set(static::FACADE_MONEY, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge($container->getLocator()->money()->facade());
@@ -105,7 +105,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addMerchantUserFacade(Container $container)
+    protected function addMerchantUserFacade(Container $container): Container
     {
         $container->set(static::FACADE_MERCHANT_USER, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeBridge($container->getLocator()->merchantUser()->facade());
@@ -119,7 +119,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addCustomerFacade(Container $container)
+    protected function addCustomerFacade(Container $container): Container
     {
         $container->set(static::FACADE_CUSTOMER, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge($container->getLocator()->customer()->facade());
@@ -133,7 +133,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addUtilSanitizeService(Container $container)
+    protected function addUtilSanitizeService(Container $container): Container
     {
         $container->set(static::SERVICE_UTIL_SANITIZE, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge($container->getLocator()->utilSanitize()->service());
@@ -147,9 +147,9 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addDateTimeService(Container $container)
+    protected function addDateTimeService(Container $container): Container
     {
-        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
+        $container->set(static::SERVICE_DATE_TIME, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
         });
 
@@ -177,7 +177,7 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    protected function addShipmentService(Container $container)
+    protected function addShipmentService(Container $container): Container
     {
         $container->set(static::SERVICE_SHIPMENT, function (Container $container) {
             return new MerchantSalesOrderMerchantUserGuiToShipmentServiceBridge($container->getLocator()->shipment()->service());

@@ -15,7 +15,7 @@ class MerchantSalesOrderMerchantUserGuiConfig extends AbstractBundleConfig
      * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\DetailController::indexAction()
      */
     public const URL_DETAIL = '/merchant-sales-order-merchant-user-gui/detail';
-    public const REQUEST_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    public const REQUEST_PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
 
     /**
      * This method provides list of urls to render blocks inside order detail page.
@@ -31,7 +31,7 @@ class MerchantSalesOrderMerchantUserGuiConfig extends AbstractBundleConfig
      *
      * @return string[]
      */
-    public function getMerchantSalesOrderDetailExternalBlocksUrls()
+    public function getMerchantSalesOrderDetailExternalBlocksUrls(): array
     {
         return [];
     }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\MerchantOms\Business\Expander;
 
+use ArrayObject;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Spryker\Zed\MerchantOms\Dependency\Facade\MerchantOmsToStateMachineFacadeInterface;
 use Spryker\Zed\MerchantOms\Persistence\MerchantOmsRepositoryInterface;
@@ -51,7 +53,42 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
 
         return $merchantOrderTransfer
             ->setItemStates($this->getUniqueItemStates($stateMachineItemTransfers))
-            ->setProcess($this->getProcess($stateMachineItemTransfers));
+            ->setProcess($this->findProcess($stateMachineItemTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function expandMerchantOrderItemsWithStateHistory(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        $stateMachineItemTransfers = $this->merchantOmsRepository->findStateHistoryByMerchantOrderIds(
+            array_map(
+                function (MerchantOrderItemTransfer $merchantOrderItemTransfer) {
+                    return $merchantOrderItemTransfer->getIdMerchantOrderItem();
+                },
+                $merchantOrderTransfer->getMerchantOrderItems()->getArrayCopy()
+            )
+        );
+
+        $stateMachineItemTransfersGroupedByIdMerchantOrderItem = [];
+
+        foreach ($stateMachineItemTransfers as $stateMachineItemTransfer) {
+            $stateMachineItemTransfersGroupedByIdMerchantOrderItem[$stateMachineItemTransfer->getIdentifier()][] = $stateMachineItemTransfer;
+        }
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if (!isset($stateMachineItemTransfersGroupedByIdMerchantOrderItem[$merchantOrderItemTransfer->getIdMerchantOrderItem()])) {
+                continue;
+            }
+
+            $merchantOrderItemTransfer->setStateHistory(
+                new ArrayObject($stateMachineItemTransfersGroupedByIdMerchantOrderItem[$merchantOrderItemTransfer->getIdMerchantOrderItem()])
+            );
+        }
+
+        return $merchantOrderTransfer;
     }
 
     /**
@@ -59,9 +96,9 @@ class MerchantOrderExpander implements MerchantOrderExpanderInterface
      *
      * @return string|null
      */
-    protected function getProcess(array $stateMachineItemTransfers): ?string
+    protected function findProcess(array $stateMachineItemTransfers): ?string
     {
-        if (empty($stateMachineItemTransfers[0])) {
+        if (!isset($stateMachineItemTransfers[0])) {
             return null;
         }
 

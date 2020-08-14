@@ -1,5 +1,0 @@
-{
-  "include": {
-    "spryker/merchant-oms": "Provides a propel merchant oms dependency"
-  }
-}

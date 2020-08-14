@@ -12,6 +12,7 @@ use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\Map\SpyMerchantSalesOrderTotalsTableMap;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
@@ -24,19 +25,10 @@ use Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUser
 
 class MyOrderTable extends AbstractTable
 {
-    /**
-     * @uses \Orm\Zed\StateMachine\Persistence\Map\SpyStateMachineItemStateTableMap::COL_NAME
-     */
-    protected const COL_STATE_MACHINE_ITEM_SATATE_NAME = 'spy_state_machine_item_state.name';
-
-    protected const MERCHANT_REFERENCE = 'MER000001';
-
-    protected const REQUEST_ID_MERCHANT = 'id-order';
-
-    public const COL_FULL_CUSTOMER_NAME = 'fullCstomerName';
-    public const COL_COUNT_ITEM = 'countItem';
-    public const COL_ORDER_STATE = 'orderState';
-    public const COL_ACTIONS = 'actions';
+    protected const COL_FULL_CUSTOMER_NAME = 'fullCustomerName';
+    protected const COL_ITEM_COUNT = 'itemCount';
+    protected const COL_ORDER_STATE = 'orderState';
+    protected const COL_ACTIONS = 'actions';
 
     /**
      * @phpstan-var \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery<mixed>
@@ -110,7 +102,7 @@ class MyOrderTable extends AbstractTable
             SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
             SpyMerchantSalesOrderTableMap::COL_CREATED_AT,
             SpySalesOrderTableMap::COL_EMAIL,
-            static::COL_COUNT_ITEM,
+            static::COL_ITEM_COUNT,
         ]);
 
         $config->setRawColumns([
@@ -145,7 +137,7 @@ class MyOrderTable extends AbstractTable
             SpySalesOrderTableMap::COL_EMAIL => 'Email',
             static::COL_ORDER_STATE => 'Order State',
             SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => 'Grand Total',
-            static::COL_COUNT_ITEM => 'Number of items',
+            static::COL_ITEM_COUNT => 'Number of items',
             static::COL_ACTIONS => 'Actions',
         ];
 
@@ -159,6 +151,7 @@ class MyOrderTable extends AbstractTable
      *
      * @module MerchantSalesOrder
      * @module MerchantOms
+     * @module Sales
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
@@ -168,8 +161,7 @@ class MyOrderTable extends AbstractTable
 
         $this->merchantSalesOrderQuery
             ->groupByIdMerchantSalesOrder()
-            ->useOrderQuery()
-            ->endUse()
+            ->joinOrder()
             ->joinMerchantSalesOrderTotal()
             ->useMerchantSalesOrderItemQuery()
                 ->joinStateMachineItemState()
@@ -187,15 +179,14 @@ class MyOrderTable extends AbstractTable
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE,
                 SpyMerchantSalesOrderTableMap::COL_CREATED_AT,
                 SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER,
-
             ])
             ->withColumn(
-                sprintf('GROUP_CONCAT(%s)', static::COL_STATE_MACHINE_ITEM_SATATE_NAME),
+                sprintf('GROUP_CONCAT(%s)', SpyStateMachineItemStateTableMap::COL_NAME),
                 static::COL_ORDER_STATE
             )
             ->withColumn(
-                sprintf('count(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM),
-                static::COL_COUNT_ITEM
+                sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM),
+                static::COL_ITEM_COUNT
             );
 
         return $this->merchantSalesOrderQuery;
@@ -218,17 +209,16 @@ class MyOrderTable extends AbstractTable
                 SpySalesOrderTableMap::COL_ORDER_REFERENCE => $item[SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE],
                 SpyMerchantSalesOrderTableMap::COL_MERCHANT_SALES_ORDER_REFERENCE => $item[SpySalesOrderTableMap::COL_ORDER_REFERENCE],
                 SpyMerchantSalesOrderTableMap::COL_CREATED_AT => $this->utilDateTimeService->formatDateTime($item[SpyMerchantSalesOrderTableMap::COL_CREATED_AT]),
-                static::COL_FULL_CUSTOMER_NAME => $this->formatCustomer($item),
+                static::COL_FULL_CUSTOMER_NAME => $this->formatFullCustomerName($item),
                 SpySalesOrderTableMap::COL_EMAIL => $this->formatEmailAddress($item[SpySalesOrderTableMap::COL_EMAIL]),
                 static::COL_ORDER_STATE => $item[static::COL_ORDER_STATE],
-                SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => $this->getGrandTotal($item),
-                static::COL_COUNT_ITEM => $item[static::COL_COUNT_ITEM],
+                SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL => $this->formatGrandTotal($item),
+                static::COL_ITEM_COUNT => $item[static::COL_ITEM_COUNT],
                 static::COL_ACTIONS => $this->buildLinks($item),
             ];
 
             $results[] = $rowData;
         }
-        unset($queryResults);
 
         return $results;
     }
@@ -246,7 +236,7 @@ class MyOrderTable extends AbstractTable
         $buttons[] = $this->generateViewButton(
             Url::generate(
                 MerchantSalesOrderMerchantUserGuiConfig::URL_DETAIL,
-                [MerchantSalesOrderMerchantUserGuiConfig::REQUEST_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
+                [MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER => $item[SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER]]
             ),
             'View'
         );
@@ -261,34 +251,36 @@ class MyOrderTable extends AbstractTable
      *
      * @return string
      */
-    protected function formatCustomer(array $item)
+    protected function formatFullCustomerName(array $item): string
     {
         $salutation = $item[SpySalesOrderTableMap::COL_SALUTATION];
 
-        $customer = sprintf(
+        $fullCustomerName = sprintf(
             '%s%s %s',
             $salutation ? $salutation . ' ' : '',
             $item[SpySalesOrderTableMap::COL_FIRST_NAME],
             $item[SpySalesOrderTableMap::COL_LAST_NAME]
         );
 
-        $customer = $this->sanitizeService->escapeHtml($customer);
+        $fullCustomerName = $this->sanitizeService->escapeHtml($fullCustomerName);
 
-        if (isset($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE])) {
-            $customerTransfer = $this->customerFacade->findByReference(
-                $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
-            );
-
-            if (!$customerTransfer) {
-                return $customer;
-            }
-            $url = Url::generate('/customer/view', [
-                'id-customer' => $customerTransfer->getIdCustomer(),
-            ]);
-            $customer = '<a href="' . $url . '">' . $customer . '</a>';
+        if ($item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]) {
+            return $fullCustomerName;
         }
 
-        return $customer;
+        $customerTransfer = $this->customerFacade->findByReference(
+            $item[SpySalesOrderTableMap::COL_CUSTOMER_REFERENCE]
+        );
+
+        if (!$customerTransfer) {
+            return $fullCustomerName;
+        }
+
+        $url = Url::generate('/customer/view', [
+            'id-customer' => $customerTransfer->getIdCustomer(),
+        ]);
+
+        return '<a href="' . $url . '">' . $fullCustomerName . '</a>';
     }
 
     /**
@@ -296,7 +288,7 @@ class MyOrderTable extends AbstractTable
      *
      * @return string
      */
-    protected function formatEmailAddress(string $emailAddress)
+    protected function formatEmailAddress(string $emailAddress): string
     {
         $escapedEmailAddress = $this->sanitizeService->escapeHtml($emailAddress);
         $emailAddressLink = sprintf('<a href="mailto:%1$s">%1$s</a>', $escapedEmailAddress);
@@ -311,10 +303,11 @@ class MyOrderTable extends AbstractTable
      *
      * @return string
      */
-    protected function getGrandTotal(array $item)
+    protected function formatGrandTotal(array $item): string
     {
         $currencyIsoCode = $item[SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE];
-        if (!isset($item[SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL])) {
+
+        if (!$item[SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL]) {
             return $this->formatPrice(0, true, $currencyIsoCode);
         }
 
@@ -328,7 +321,7 @@ class MyOrderTable extends AbstractTable
      *
      * @return string
      */
-    protected function formatPrice(int $value, bool $includeSymbol = true, ?string $currencyIsoCode = null)
+    protected function formatPrice(int $value, bool $includeSymbol = true, ?string $currencyIsoCode = null): string
     {
         $moneyTransfer = $this->moneyFacade->fromInteger($value, $currencyIsoCode);
 

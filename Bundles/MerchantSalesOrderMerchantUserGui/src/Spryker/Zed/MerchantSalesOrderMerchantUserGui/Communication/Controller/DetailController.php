@@ -45,7 +45,7 @@ class DetailController extends AbstractController
      */
     public function indexAction(Request $request): array
     {
-        $idMerchantSalesOrder = $this->castId($request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_ID_MERCHANT_SALES_ORDER));
+        $idMerchantSalesOrder = $this->castId($request->query->getInt(MerchantSalesOrderMerchantUserGuiConfig::REQUEST_PARAM_ID_MERCHANT_SALES_ORDER));
         $idMerchant = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser()->getIdMerchant();
 
         $merchantOrderTransfer = $this->getFactory()->getMerchantSalesOrderFacade()->findMerchantOrder(

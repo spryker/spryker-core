@@ -37,7 +37,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     public function createMyOrderTable(): MyOrderTable
     {
         return new MyOrderTable(
-            $this->getMerchantSalesOrderQuery(),
+            $this->getMerchantSalesOrderPropelQuery(),
             $this->getMoneyFacade(),
             $this->getUtilSanitizeService(),
             $this->getDateTimeService(),
@@ -95,7 +95,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
      *
      * @return array
      */
-    public function getMerchantSalesOrderDetailExternalBlocksUrls()
+    public function getMerchantSalesOrderDetailExternalBlocksUrls(): array
     {
         return $this->getConfig()->getMerchantSalesOrderDetailExternalBlocksUrls();
     }
@@ -105,7 +105,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
      *
      * @return \Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery
      */
-    public function getMerchantSalesOrderQuery(): SpyMerchantSalesOrderQuery
+    public function getMerchantSalesOrderPropelQuery(): SpyMerchantSalesOrderQuery
     {
         return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::PROPEL_QUERY_MERCHANT_SALES_ORDER);
     }
@@ -131,7 +131,7 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
      */
     public function getDateTimeService(): MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface
     {
-        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::SERVICE_DATE_FORMATTER);
+        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::SERVICE_DATE_TIME);
     }
 
     /**

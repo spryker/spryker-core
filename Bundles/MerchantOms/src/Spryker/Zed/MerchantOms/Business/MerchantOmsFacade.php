@@ -135,7 +135,7 @@ class MerchantOmsFacade extends AbstractFacade implements MerchantOmsFacadeInter
         MerchantOrderTransfer $merchantOrderTransfer
     ): MerchantOrderTransfer {
         return $this->getFactory()
-            ->createMerchantOmsReader()
+            ->createMerchantOrderExpander()
             ->expandMerchantOrderItemsWithStateHistory($merchantOrderTransfer);
     }
 

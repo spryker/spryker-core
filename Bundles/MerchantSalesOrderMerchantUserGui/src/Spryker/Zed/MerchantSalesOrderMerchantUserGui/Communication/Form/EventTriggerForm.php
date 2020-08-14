@@ -25,10 +25,13 @@ class EventTriggerForm extends AbstractType
 
     protected const BUTTON_SUBMIT = 'submit';
 
+    /**
+     * @uses \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller\OmsTriggerController::submitTriggerEventForMerchantOrderAction()
+     */
     protected const ACTION_ROUTE = '/merchant-sales-order-merchant-user-gui/oms-trigger/submit-trigger-event-for-merchant-order';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -44,7 +47,7 @@ class EventTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -70,7 +73,7 @@ class EventTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder

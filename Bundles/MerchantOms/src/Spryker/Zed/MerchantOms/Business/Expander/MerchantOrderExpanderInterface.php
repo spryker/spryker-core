@@ -17,4 +17,11 @@ interface MerchantOrderExpanderInterface
      * @return \Generated\Shared\Transfer\MerchantOrderTransfer
      */
     public function expandMerchantOrderWithMerchantOmsData(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    public function expandMerchantOrderItemsWithStateHistory(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer;
 }

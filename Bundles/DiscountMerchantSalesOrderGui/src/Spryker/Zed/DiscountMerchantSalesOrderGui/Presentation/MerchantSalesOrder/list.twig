@@ -3,7 +3,7 @@
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Discounts & Vouchers' } %}
 
             {% block widget_content %}
-                {% if merchantOrder.order.calculatedDiscounts is defined and merchantOrder.order.calculatedDiscounts is not empty %}
+                {% if merchantOrder.order.calculatedDiscounts is not empty %}
                     <table class="footable table table-striped toggle-arrow-tiny">
                         <thead>
                         <tr class="text-left">
