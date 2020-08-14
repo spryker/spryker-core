@@ -46,7 +46,6 @@ class ProductConfigurationMapper
         ProductConfigurationTransfer $productConfigurationTransfer,
         SpyProductConfiguration $productConfigurationEntity
     ): ProductConfigurationTransfer {
-
             $productConfigurationTransfer->setSku(
                 $productConfigurationEntity->getSpyProduct()->getSku()
             );
