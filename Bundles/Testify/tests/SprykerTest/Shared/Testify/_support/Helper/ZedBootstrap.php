@@ -94,7 +94,6 @@ class ZedBootstrap extends Framework implements DependsOnModule
      */
     protected function loadApplication(): void
     {
-        Request::createFromGlobals();
         Request::setTrustedHosts(['localhost']);
 
         $this->application = new TestifyBootstrap($this->config[static::CONFIG_KEY_APPLICATION_PLUGINS], $this->config[static::CONFIG_KEY_SERVICE_PROVIDER]);
