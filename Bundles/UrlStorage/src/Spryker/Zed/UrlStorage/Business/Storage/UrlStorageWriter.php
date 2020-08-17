@@ -149,6 +149,10 @@ class UrlStorageWriter implements UrlStorageWriterInterface
 
         $resource = $this->findResourceArguments($urlStorageTransfer->toArray());
 
+        if ($resource === null) {
+            return;
+        }
+
         $urlStorageEntity->setByName('fk_' . $resource[static::RESOURCE_TYPE], $resource[static::RESOURCE_VALUE]);
         $urlStorageEntity->setUrl($urlStorageTransfer->getUrl());
         $urlStorageEntity->setFkUrl($urlStorageTransfer->getIdUrl());
@@ -160,9 +164,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
     /**
      * @param array $data
      *
-     * @throws \Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException
-     *
-     * @return array
+     * @return array|null
      */
     protected function findResourceArguments(array $data)
     {
@@ -179,12 +181,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
             ];
         }
 
-        throw new MissingResourceException(
-            sprintf(
-                'Encountered a URL entity that is missing a resource: %s',
-                json_encode($data)
-            )
-        );
+        return null;
     }
 
     /**
