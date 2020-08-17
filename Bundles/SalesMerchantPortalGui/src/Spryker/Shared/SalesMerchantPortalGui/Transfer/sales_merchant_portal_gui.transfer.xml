@@ -21,12 +21,53 @@
     </transfer>
 
     <transfer name="MerchantOrder">
+        <property name="idMerchantOrder" type="int"/>
         <property name="createdAt" type="string"/>
         <property name="merchantOrderItemCount" type="int"/>
         <property name="order" type="Order"/>
         <property name="totals" type="Totals"/>
         <property name="itemStates" type="string[]" singular="itemState"/>
         <property name="merchantOrderReference" type="string"/>
+        <property name="uniqueProductsCount" type="int"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="merchantReference" type="string"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="merchantReference" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItem">
+        <property name="fkStateMachineItemState" type="int"/>
+        <property name="idMerchantOrderItem" type="int"/>
+        <property name="state" type="string"/>
+        <property name="manualEvents" type="string[]" singular="manualEvent"/>
+        <property name="product" type="ProductConcrete"/>
+        <property name="idOrderItem" type="int"/>
+        <property name="orderItem" type="Item"/>
+        <property name="idMerchantOrder" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConcrete">
+    </transfer>
+
+    <transfer name="MerchantOrderItemTableCriteria">
+        <property name="idMerchant" type="int"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+        <property name="searchTerm" type="string"/>
+        <property name="filterOrderItemStates" type="string[]" singular="filterOrderItemState"/>
+        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCollection">
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
     <transfer name="Order">
@@ -37,6 +78,8 @@
         <property name="store" type="string"/>
         <property name="orderReference" type="string"/>
         <property name="currencyIsoCode" type="string"/>
+        <property name="customerReference" type="string"/>
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="Pagination">
@@ -53,6 +96,11 @@
 
     <transfer name="MerchantUser">
         <property name="idMerchant" type="int"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
     </transfer>
 
     <transfer name="Totals">
@@ -65,12 +113,6 @@
     </transfer>
 
     <transfer name="GuiTableConfiguration">
-        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
-        <property name="filters" type="GuiTableFiltersConfiguration"/>
-        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
-        <property name="search" type="GuiTableSearchConfiguration"/>
-        <property name="pagination" type="GuiTablePaginationConfiguration"/>
-        <property name="defaultSortColumn" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -86,10 +128,19 @@
     </transfer>
 
     <transfer name="GuiTableDataResponse">
-        <property name="data" type="array" singular="data"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
         <property name="total" type="int"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+        <property name="payload" type="GuiTableDataResponsePayload"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponsePayload">
+        <property name="item" type="Item"/>
     </transfer>
 
     <transfer name="Money">
@@ -100,29 +151,28 @@
     <transfer name="GuiTableDataRequest">
     </transfer>
 
-    <transfer name="GuiTableDataSourceConfiguration">
-        <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableFiltersConfiguration">
-        <property name="items" type="GuiTableFilter[]" singular="item"/>
-    </transfer>
-
-    <transfer name="GuiTableSearchConfiguration">
-        <property name="search" type="array" associative="true" singular="searchOption"/>
-    </transfer>
-
-    <transfer name="GuiTableColumnConfiguration">
-    </transfer>
-
-    <transfer name="GuiTablePaginationConfiguration">
-        <property name="defaultSize" type="int"/>
-    </transfer>
-
     <transfer name="Currency">
     </transfer>
 
     <transfer name="GuiTableFilter">
+    </transfer>
+
+    <transfer name="MerchantOrderCriteria">
+        <property name="idMerchantOrder" type="int"/>
+        <property name="merchantOrderReference" type="string"/>
+        <property name="merchantReference" type="string"/>
+        <property name="withOrder" type="bool"/>
+        <property name="withItems" type="bool"/>
+        <property name="withUniqueProductsCount" type="bool"/>
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="OrderItemFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="salesOrderItemId"/>
+    </transfer>
+
+    <transfer name="ItemCollection">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 
     <transfer name="MerchantOrderCounts">
@@ -140,6 +190,65 @@
     <transfer name="MerchantDashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="shipment" type="Shipment"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="concreteAttributes" type="array" singular="concreteAttribute"/>
+        <property name="images" type="ProductImage[]" singular="image"/>
+        <property name="name" type="string"/>
+        <property name="sku" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="GuiTableItemSelectionConfiguration">
+        <property name="isEnabled" type="bool"/>
+    </transfer>
+
+    <transfer name="Shipment">
+        <property name="idSalesShipment" type="int"/>
+        <property name="shippingAddress" type="Address"/>
+        <property name="carrier" type="ShipmentCarrier"/>
+        <property name="requestedDeliveryDate" type="string"/>
+    </transfer>
+
+    <transfer name="Address">
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="address2" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="company" type="string"/>
+        <property name="country" type="Country"/>
+        <property name="method" type="ShipmentMethod"/>
+    </transfer>
+
+    <transfer name="Country">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentMethod">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ShipmentCarrier">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantOmsTriggerRequest">
+        <property name="merchantOmsEventName" type="string"/>
+        <property name="merchantOrderItems" type="MerchantOrderItem[]" singular="merchantOrderItem"/>
+    </transfer>
+
+    <transfer name="MerchantOrderItemCriteria">
+        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
     </transfer>
 
 </transfers>

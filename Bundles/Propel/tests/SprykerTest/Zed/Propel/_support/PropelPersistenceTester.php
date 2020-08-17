@@ -13,8 +13,8 @@ use DateTime;
 use Faker\Factory;
 use Propel\Runtime\ActiveRecord\ActiveRecordInterface;
 use Propel\Runtime\Map\ColumnMap;
+use RuntimeException;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\VarDumper\VarDumper;
 use Throwable;
 use Zend\Filter\FilterChain;
 use Zend\Filter\StringToLower;
@@ -122,6 +122,8 @@ class PropelPersistenceTester extends Actor
     /**
      * @param \Propel\Runtime\Map\ColumnMap $columnMap
      *
+     * @throws \RuntimeException
+     *
      * @return bool|\DateTime|float|int|mixed|string
      */
     public function getValue(ColumnMap $columnMap)
@@ -148,7 +150,7 @@ class PropelPersistenceTester extends Actor
             return substr($this->faker->md5, 0, $maxSize);
         }
 
-        if ($columnMap->getType() === 'LONGVARCHAR') {
+        if ($columnMap->getType() === 'LONGVARCHAR' || $columnMap->getType() === 'CLOB') {
             return $this->faker->text;
         }
 
@@ -176,7 +178,7 @@ class PropelPersistenceTester extends Actor
             return new DateTime();
         }
 
-        echo '<pre>' . PHP_EOL . VarDumper::dump($columnMap) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+        throw new RuntimeException(sprintf('Unknown column type "%s"', $columnMap->getType()));
     }
 
     /**

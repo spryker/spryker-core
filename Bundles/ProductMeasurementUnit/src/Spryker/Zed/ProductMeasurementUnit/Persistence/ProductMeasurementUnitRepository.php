@@ -337,6 +337,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
             return [];
         }
 
+        /** @var array $productMeasurementBaseUnitsData */
         $productMeasurementBaseUnitsData = $this->getFactory()
             ->createProductMeasurementBaseUnitQuery()
             ->filterByFkProductAbstract_In($productAbstractIds)
@@ -448,6 +449,7 @@ class ProductMeasurementUnitRepository extends AbstractRepository implements Pro
     public function findIndexedStoreAwareProductMeasurementSalesUnitIds(array $productConcreteSkus, int $idStore): array
     {
         $indexedProductMeasurementSalesUnitIds = [];
+        /** @var array $productMeasurementSalesUnitIdCollection */
         $productMeasurementSalesUnitIdCollection = $this->getFactory()
             ->createProductMeasurementSalesUnitQuery()
             ->useProductQuery()

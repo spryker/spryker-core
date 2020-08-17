@@ -20,11 +20,10 @@ class ElasticsearchMarkerReader extends ElasticsearchReader
      */
     public function read($key, $type = '')
     {
-        $typeName = $this->getType()->getName();
-        $mapping = $this->getType()->getMapping();
+        $mapping = $this->getIndex()->getMapping();
 
-        if (isset($mapping[$typeName][static::META_ATTRIBUTE][$key])) {
-            return $mapping[$typeName][static::META_ATTRIBUTE][$key];
+        if (isset($mapping[static::META_ATTRIBUTE][$key])) {
+            return $mapping[static::META_ATTRIBUTE][$key];
         }
 
         return null;

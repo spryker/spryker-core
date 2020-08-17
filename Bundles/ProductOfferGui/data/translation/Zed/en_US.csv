@@ -1,0 +1,28 @@
+Actions,Actions
+Active,Active
+Approved,Approved
+approved_offer_button,Approve
+"Offer Approve",Approve
+Deny,Deny
+"Back to Offers","Back to Offers"
+denied_offer_button,Deny
+Denied,Denied
+Description,Description
+Inactive,Inactive
+"List of Offers","List of Offers"
+Name,Name
+Offer,Offer
+"Offer ID","Offer ID"
+Offers,Offers
+Product,Product
+Reference,Reference
+SKU,SKU
+Status,Status
+Stores,Stores
+"The approval status was updated","The approval status was updated"
+Type,Type
+"View Offer","View Offer"
+Visibility,Visibility
+"Volume Prices","Volume Prices"
+"Waiting for Approval","Waiting for Approval"
+waiting_for_approval,"Waiting for approval"

@@ -48,6 +48,7 @@
   },
   "bin": [
     "bin/console",
-    "bin/yves"
+    "bin/yves",
+    "bin/glue"
   ]
 }

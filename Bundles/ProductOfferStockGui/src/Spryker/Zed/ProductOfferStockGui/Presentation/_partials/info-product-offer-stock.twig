@@ -1,0 +1,42 @@
+{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Stock' | trans } %}
+    {% block widget_content %}
+        {% if productOfferStocks is empty %}
+            <div class="row">{{ 'This offer has no stocks.' | trans }}</div>
+        {% else %}
+            <table class="table table--expand">
+                <thead>
+                <tr>
+                    <td><b>{{ 'Stock Type' | trans }}</b></td>
+                    <td><b>{{ 'Quantity' | trans }}</b></td>
+                    {% set firstProductOfferStock = productOfferStocks | first %}
+                    {% for header in firstProductOfferStock.additionalColumns.headers %}
+                        <td><b>{{ header | trans }}</b></td>
+                    {% endfor %}
+                    <td><b>{{ 'Never out of stock' | trans }}</b></td>
+                </tr>
+                </thead>
+                <tbody>
+                    {% for productOfferStock in productOfferStocks %}
+                        <tr>
+                            <td>{{ productOfferStock.name }} <span class="label label-info">{{ productOfferStock.storeName }}</span></td>
+                            <td>{{ productOfferStock.quantity.trim() }}</td>
+
+                            {% for column in productOfferStock.additionalColumns.columns %}
+                                <td>{{ column | trans }}</td>
+                            {% endfor %}
+
+                            <td>
+                                {% if productOfferStock.isNeverOutOfStock %}
+                                    <span class="label">{{ 'Yes' | trans }}</span>
+                                {% else %}
+                                    <span class="label">{{ 'No' | trans }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endblock %}
+{% endembed %}
+

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CustomElementModule } from '@spryker/web-components';
+import { CustomElementModule, WebComponentDefs } from '@spryker/web-components';
 import {
     ButtonModule,
     ButtonComponent,
@@ -45,62 +45,20 @@ import { FormItemModule, FormItemComponent } from '@spryker/form-item';
     ],
 })
 export class ComponentsModule extends CustomElementModule {
-    protected components = [
-        {
-            selector: 'mp-offers-list',
-            component: OffersListComponent,
-        },
-        {
-            selector: 'mp-product-offer',
-            component: ProductOfferComponent,
-        },
-        {
-            selector: 'spy-button-link',
-            component: ButtonLinkComponent,
-        },
-        {
-            selector: 'mp-edit-offer',
-            component: EditOfferComponent,
-        },
-        {
-            selector: 'spy-button',
-            component: ButtonComponent,
-        },
-        {
-            selector: 'spy-chips',
-            component: ChipsComponent,
-        },
-        {
-            selector: 'spy-toggle',
-            component: ToggleComponent,
-        },
-        {
-            selector: 'spy-input',
-            component: InputComponent,
-        },
-        {
-            selector: 'spy-select',
-            component: SelectComponent,
-        },
-        {
-            selector: 'spy-card',
-            component: CardComponent,
-        },
-        {
-            selector: 'spy-date-range-picker',
-            component: DateRangePickerComponent,
-        },
-        {
-            selector: 'spy-checkbox',
-            component: CheckboxComponent,
-        },
-        {
-            selector: 'spy-collapsible',
-            component: CollapsibleComponent,
-        },
-        {
-            selector: 'spy-form-item',
-            component: FormItemComponent,
-        },
+    protected components: WebComponentDefs = [
+        OffersListComponent,
+        ProductOfferComponent,
+        ButtonLinkComponent,
+        EditOfferComponent,
+        ButtonComponent,
+        ChipsComponent,
+        ToggleComponent,
+        InputComponent,
+        SelectComponent,
+        CardComponent,
+        DateRangePickerComponent,
+        CheckboxComponent,
+        CollapsibleComponent,
+        FormItemComponent,
     ];
 }

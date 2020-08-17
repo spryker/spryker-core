@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\MerchantUser\Business\Reader;
 
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantUserTransfer;
 use Spryker\Zed\MerchantUser\Business\Exception\CurrentMerchantUserNotFoundException;
+use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface;
 use Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface;
 use Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface;
 
@@ -26,15 +28,23 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
     protected $merchantUserRepository;
 
     /**
+     * @var \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface
+     */
+    protected $merchantFacade;
+
+    /**
      * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToUserFacadeInterface $userFacade
      * @param \Spryker\Zed\MerchantUser\Persistence\MerchantUserRepositoryInterface $merchantUserRepository
+     * @param \Spryker\Zed\MerchantUser\Dependency\Facade\MerchantUserToMerchantFacadeInterface $merchantFacade
      */
     public function __construct(
         MerchantUserToUserFacadeInterface $userFacade,
-        MerchantUserRepositoryInterface $merchantUserRepository
+        MerchantUserRepositoryInterface $merchantUserRepository,
+        MerchantUserToMerchantFacadeInterface $merchantFacade
     ) {
         $this->userFacade = $userFacade;
         $this->merchantUserRepository = $merchantUserRepository;
+        $this->merchantFacade = $merchantFacade;
     }
 
     /**
@@ -57,6 +67,22 @@ class CurrentMerchantUserReader implements CurrentMerchantUserReaderInterface
             );
         }
 
-        return $merchantUserTransfers[0];
+        $merchantUserTransfer = reset($merchantUserTransfers);
+
+        return $this->expandWithMerchant($merchantUserTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantUserTransfer $merchantUserTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantUserTransfer
+     */
+    protected function expandWithMerchant(MerchantUserTransfer $merchantUserTransfer): MerchantUserTransfer
+    {
+        $merchantTransfer = $this->merchantFacade->findOne(
+            (new MerchantCriteriaTransfer())->setIdMerchant($merchantUserTransfer->getIdMerchant())
+        );
+
+        return $merchantUserTransfer->setMerchant($merchantTransfer);
     }
 }
