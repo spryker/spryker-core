@@ -232,11 +232,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         );
 
         foreach ($pairedEntities as $pairedEntity) {
-            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY] ?? null;
+            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
             /**
              * @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch
              */
-            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY] ?? null;
+            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
 
             if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
