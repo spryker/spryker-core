@@ -11,6 +11,7 @@ use Elastica\Client;
 use Elastica\Document;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Index\IndexFactoryInterface;
 
 class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
@@ -25,11 +26,17 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     protected $searchCollectorConfiguration;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface
+     */
+    protected $indexFactory;
+
+    /**
      * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
+     * @param \Spryker\Zed\Collector\Business\Index\IndexFactoryInterface $indexFactory
      */
-    public function __construct(Client $searchClient, $indexName, $type)
+    public function __construct(Client $searchClient, $indexName, $type, IndexFactoryInterface $indexFactory)
     {
         $this->client = $searchClient;
 
@@ -37,6 +44,8 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
         $this->searchCollectorConfiguration
             ->setIndexName($indexName)
             ->setTypeName($type);
+
+        $this->indexFactory = $indexFactory;
     }
 
     /**
@@ -46,7 +55,7 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
      */
     public function write(array $dataSet)
     {
-        $this->getType()->updateDocuments($this->createDocuments($dataSet));
+        $this->getIndex()->updateDocuments($this->createDocuments($dataSet));
         $response = $this->getIndex()->refresh();
 
         return $response->isOk();
@@ -91,19 +100,11 @@ class ElasticsearchUpdateWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @return \Elastica\Index
+     * @return \Elastica\Index|\Spryker\Zed\Collector\Business\Index\IndexAdapterInterface
      */
     protected function getIndex()
     {
-        return $this->client->getIndex($this->searchCollectorConfiguration->getIndexName());
-    }
-
-    /**
-     * @return \Elastica\Type
-     */
-    protected function getType()
-    {
-        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());
+        return $this->indexFactory->createIndex($this->client, $this->getSearchCollectorConfiguration());
     }
 
     /**

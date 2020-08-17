@@ -39,7 +39,7 @@ class ProductConfigurationPublisherTriggerPlugin extends AbstractPlugin implemen
 
     /**
      * {@inheritDoc}
-     * Retrieves product configurations by provided limit and offset.
+     * - Retrieves product configurations by provided limit and offset.
      *
      * @api
      *

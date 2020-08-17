@@ -39,7 +39,7 @@ interface ProductConfigurationStorageFacadeInterface
      *
      * @return void
      */
-    public function deleteProductConfigurationStorageCollection(array $eventTransfers): void;
+    public function deleteCollectionByProductConfigurationEvents(array $eventTransfers): void;
 
     /**
      * Specification:

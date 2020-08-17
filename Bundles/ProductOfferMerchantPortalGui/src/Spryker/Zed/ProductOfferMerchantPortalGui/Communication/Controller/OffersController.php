@@ -8,8 +8,8 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
@@ -23,31 +23,23 @@ class OffersController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'productOfferTableConfiguration' => $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration(),
+            'productOfferTableConfiguration' => $this->getFactory()
+                ->createProductOfferGuiTableConfigurationProvider()
+                ->getConfiguration(),
         ]);
     }
 
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tableDataAction(Request $request): JsonResponse
+    public function tableDataAction(Request $request): Response
     {
-        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
-        $guiTableConfigurationTransfer = $this->getFactory()
-            ->createProductOfferGuiTableConfigurationProvider()
-            ->getConfiguration();
-        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
-            $request->query->all(),
-            $guiTableConfigurationTransfer
-        );
-        $guiTableDataResponseTransfer = $this->getFactory()
-            ->createProductOfferTableDataProvider()
-            ->getData($guiTableDataRequestTransfer);
-
-        return $this->jsonResponse(
-            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createProductOfferTableDataProvider(),
+            $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration()
         );
     }
 }

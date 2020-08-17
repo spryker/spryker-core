@@ -15,9 +15,8 @@ use Propel\Runtime\Collection\ObjectCollection;
 class ProductConfigurationMapper
 {
     /**
-     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration[]|\Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
-     *
      * @param \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer $productConfigurationCollectionTransfer
+     * @param \Propel\Runtime\Collection\ObjectCollection $productConfigurationEntitiesCollection
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationCollectionTransfer
      */
@@ -37,10 +36,20 @@ class ProductConfigurationMapper
         return $productConfigurationCollectionTransfer;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfigurationTransfer $productConfigurationTransfer
+     * @param \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfiguration $productConfigurationEntity
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationTransfer
+     */
     public function mapProductConfigurationEntityToProductConfigurationTransfer(
         ProductConfigurationTransfer $productConfigurationTransfer,
         SpyProductConfiguration $productConfigurationEntity
     ): ProductConfigurationTransfer {
-       return $productConfigurationTransfer->fromArray($productConfigurationEntity->toArray(), true);
+            $productConfigurationTransfer->setSku(
+                $productConfigurationEntity->getSpyProduct()->getSku()
+            );
+
+        return $productConfigurationTransfer->fromArray($productConfigurationEntity->toArray(), true);
     }
 }

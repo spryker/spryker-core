@@ -7,9 +7,10 @@
 
 namespace Spryker\Zed\GuiTable;
 
+use Spryker\Shared\GuiTable\Configuration\GuiTableConfigInterface;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class GuiTableConfig extends AbstractBundleConfig
+class GuiTableConfig extends AbstractBundleConfig implements GuiTableConfigInterface
 {
     /**
      * @api
@@ -33,7 +34,6 @@ class GuiTableConfig extends AbstractBundleConfig
             'filters',
             'search',
             'rowActions',
-            'itemSelection',
             'syncStateUrl',
         ];
     }

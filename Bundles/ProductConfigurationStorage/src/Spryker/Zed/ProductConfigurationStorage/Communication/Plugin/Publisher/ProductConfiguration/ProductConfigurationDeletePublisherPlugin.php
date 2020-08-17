@@ -20,8 +20,8 @@ class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implement
 {
     /**
      * {@inheritDoc}
-     * Unpublishes product configuration data by unpublish ProductConfiguration event.
-     * Unpublishes product configuration data by delete events from spy_product_configuration table.
+     * - Unpublishes product configuration data by unpublish ProductConfiguration event.
+     * - Unpublishes product configuration data by delete events from spy_product_configuration table.
      *
      * @api
      *
@@ -32,7 +32,7 @@ class ProductConfigurationDeletePublisherPlugin extends AbstractPlugin implement
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->deleteProductConfigurationStorageCollection($eventTransfers);
+        $this->getFacade()->deleteCollectionByProductConfigurationEvents($eventTransfers);
     }
 
     /**

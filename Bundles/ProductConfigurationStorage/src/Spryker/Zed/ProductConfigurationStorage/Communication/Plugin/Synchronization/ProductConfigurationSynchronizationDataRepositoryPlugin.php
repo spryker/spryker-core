@@ -45,7 +45,7 @@ class ProductConfigurationSynchronizationDataRepositoryPlugin extends AbstractPl
 
     /**
      * {@inheritDoc}
-     * Retrieves a collection of product configuration synchronization data transfers according to provided offset, limit and ids.
+     * - Retrieves a collection of product configuration synchronization data transfers according to provided offset, limit and ids.
      *
      * @api
      *

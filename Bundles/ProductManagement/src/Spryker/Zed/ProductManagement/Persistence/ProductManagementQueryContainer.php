@@ -72,7 +72,7 @@ class ProductManagementQueryContainer extends AbstractQueryContainer implements 
             )
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_ID_PRODUCT_MANAGEMENT_ATTRIBUTE_VALUE, 'id_product_management_attribute_value')
             ->withColumn(SpyProductManagementAttributeValueTableMap::COL_VALUE, 'value')
-            ->withColumn($idLocale, 'fk_locale')
+            ->withColumn((string)$idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
     }
 
