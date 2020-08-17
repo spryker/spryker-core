@@ -67,7 +67,7 @@ class MerchantStatusController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 
     /**
@@ -79,6 +79,6 @@ class MerchantStatusController extends AbstractController
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 }
