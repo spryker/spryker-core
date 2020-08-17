@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductBundlesRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductBundlesRestApi\Dependency\Client\ProductBundlesRestApiToProductBundleStorageClientInterface;
 use Spryker\Glue\ProductBundlesRestApi\Dependency\Client\ProductBundlesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductBundlesRestApi\Processor\Expander\BundledProductExpander;
+use Spryker\Glue\ProductBundlesRestApi\Processor\Expander\BundledProductExpanderInterface;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Reader\BundledProductReader;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Reader\BundledProductReaderInterface;
 use Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder\BundledProductRestResponseBuilder;
@@ -21,11 +23,23 @@ use Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder\BundledProd
 class ProductBundlesRestApiFactory extends AbstractFactory
 {
     /**
+     * @return \Spryker\Glue\ProductBundlesRestApi\Processor\Expander\BundledProductExpanderInterface
+     */
+    public function createBundledProductExpander(): BundledProductExpanderInterface
+    {
+        return new BundledProductExpander($this->createBundledProductReader());
+    }
+
+    /**
      * @return \Spryker\Glue\ProductBundlesRestApi\Processor\Reader\BundledProductReaderInterface
      */
     public function createBundledProductReader(): BundledProductReaderInterface
     {
-        return new BundledProductReader();
+        return new BundledProductReader(
+            $this->getProductStorageClient(),
+            $this->getProductBundleStorageClient(),
+            $this->createBundledProductRestResponseBuilder()
+        );
     }
 
     /**

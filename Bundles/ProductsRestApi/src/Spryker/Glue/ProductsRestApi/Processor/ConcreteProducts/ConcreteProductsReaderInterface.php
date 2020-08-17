@@ -26,7 +26,7 @@ interface ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductConcretesByProductConcreteSkus(array $productConcreteSkus, RestRequestInterface $restRequest): array;
+    public function getProductConcretesBySkus(array $productConcreteSkus, RestRequestInterface $restRequest): array;
 
     /**
      * @deprecated Use ConcreteProductsReaderInterface::findProductConcreteBySku() instead.

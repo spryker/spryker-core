@@ -24,6 +24,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
     protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_SKU = 'sku';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
@@ -101,18 +102,27 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductConcretesByProductConcreteSkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
+    public function getProductConcretesBySkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
     {
-        $results = [];
-        foreach ($productConcreteSkus as $productConcreteSku) {
-            $productResource = $this->findProductConcreteBySku($productConcreteSku, $restRequest);
-            if (!$productResource) {
+        $productConcreteStorageData = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $productConcreteSkus,
+            $restRequest->getMetadata()->getLocale()
+        );
+
+        $concreteProductRestResources = [];
+        foreach ($productConcreteStorageData as $productConcreteStorageDatum) {
+            if (!isset($productConcreteStorageDatum[static::KEY_SKU])) {
                 continue;
             }
-            $results[] = $productResource;
+
+            $concreteProductRestResources[$productConcreteStorageDatum[static::KEY_SKU]] = $this->createRestResourceFromConcreteProductStorageData(
+                $productConcreteStorageDatum,
+                $restRequest
+            );
         }
 
-        return $results;
+        return $concreteProductRestResources;
     }
 
     /**

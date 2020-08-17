@@ -9,9 +9,17 @@ namespace Spryker\Client\ProductBundleStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToStorageClientBridge;
+use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToSynchronizationServiceBridge;
+use Spryker\Client\ProductBundleStorage\Dependency\Service\ProductBundleStorageToUtilEncodingServiceBridge;
 
 class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
 {
+    public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+
+    public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
+    public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
+
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
@@ -20,6 +28,57 @@ class ProductBundleStorageDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+        $container = $this->addStorageClient($container);
+        $container = $this->addSynchronizationService($container);
+        $container = $this->addUtilEncodingService($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
+            return new ProductBundleStorageToStorageClientBridge(
+                $container->getLocator()->storage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addSynchronizationService(Container $container): Container
+    {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
+            return new ProductBundleStorageToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addUtilEncodingService(Container $container): Container
+    {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
+            return new ProductBundleStorageToUtilEncodingServiceBridge(
+                $container->getLocator()->utilEncoding()->service()
+            );
+        });
 
         return $container;
     }

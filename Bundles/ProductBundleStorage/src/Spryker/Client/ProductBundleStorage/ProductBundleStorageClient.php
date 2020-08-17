@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductBundleStorage;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
- * @method \Spryker\Client\MerchantProductOfferStorage\MerchantProductOfferStorageFactory getFactory()
+ * @method \Spryker\Client\ProductBundleStorage\ProductBundleStorageFactory getFactory()
  */
 class ProductBundleStorageClient extends AbstractClient implements ProductBundleStorageClientInterface
 {
@@ -25,6 +25,8 @@ class ProductBundleStorageClient extends AbstractClient implements ProductBundle
      */
     public function getProductBundles(array $productConcreteIds): array
     {
-        return [];
+        return $this->getFactory()
+            ->createProductBundleStorageReader()
+            ->getProductBundles($productConcreteIds);
     }
 }

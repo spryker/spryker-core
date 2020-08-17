@@ -5,17 +5,11 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductBundleStorage;
+namespace Spryker\Client\ProductBundleStorage\Reader;
 
-interface ProductBundleStorageClientInterface
+interface ProductBundleStorageReaderInterface
 {
     /**
-     * Specification:
-     * - Retrieves bundle products from storage by provided product concrete ids.
-     * - Returns `ProductBundleStorageTransfer` collection indexed by product concrete id.
-     *
-     * @api
-     *
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]

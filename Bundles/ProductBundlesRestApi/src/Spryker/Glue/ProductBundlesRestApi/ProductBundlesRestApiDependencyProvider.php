@@ -29,6 +29,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
     {
         $container = parent::provideDependencies($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addProductBundleStorageClient($container);
 
         return $container;
     }
@@ -56,7 +57,7 @@ class ProductBundlesRestApiDependencyProvider extends AbstractBundleDependencyPr
      */
     protected function addProductBundleStorageClient(Container $container): Container
     {
-        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+        $container->set(static::CLIENT_PRODUCT_BUNDLE_STORAGE, function (Container $container) {
             return new ProductBundlesRestApiToProductBundleStorageClientBridge(
                 $container->getLocator()->productBundleStorage()->client()
             );

@@ -7,7 +7,10 @@
 
 namespace Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\ProductBundleStorageTransfer;
+use Generated\Shared\Transfer\RestBundledProductsAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
@@ -54,14 +57,47 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createBundledProductCollectionRestResponse(
-        array $bundledProductRestResources
-    ): RestResponseInterface {
-        $productOffersRestResponse = $this->restResourceBuilder->createRestResponse();
+    public function createBundledProductCollectionRestResponse(array $bundledProductRestResources): RestResponseInterface
+    {
+        $bundledProductsRestResponse = $this->restResourceBuilder->createRestResponse();
         foreach ($bundledProductRestResources as $bundledProductRestResource) {
-            $productOffersRestResponse->addResource($bundledProductRestResource);
+            $bundledProductsRestResponse->addResource($bundledProductRestResource);
         }
 
-        return $productOffersRestResponse;
+        return $bundledProductsRestResponse;
+    }
+
+    /**
+     * @param string $productConcreteSku
+     * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createBundledProductRestResources(
+        string $productConcreteSku,
+        ProductBundleStorageTransfer $productBundleStorageTransfer
+    ): array {
+        $bundledProductRestResources = [];
+        foreach ($productBundleStorageTransfer->getBundledProducts() as $bundledProduct) {
+            $restBundledProductsAttributesTransfer = (new RestBundledProductsAttributesTransfer())
+                ->fromArray($bundledProduct->toArray(), true);
+
+            $bundledProductRestResources[] = $this->restResourceBuilder->createRestResource(
+                ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
+                $bundledProduct->getSku(),
+                $restBundledProductsAttributesTransfer
+            )->addLink(
+                RestLinkInterface::LINK_SELF,
+                sprintf(
+                    '%s/%s/%s/%s',
+                    ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+                    $productConcreteSku,
+                    ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
+                    $bundledProduct->getSku()
+                )
+            );
+        }
+
+        return $bundledProductRestResources;
     }
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\ProductBundleStorageTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface BundledProductRestResponseBuilderInterface
@@ -26,7 +27,16 @@ interface BundledProductRestResponseBuilderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createBundledProductCollectionRestResponse(
-        array $bundledProductRestResources
-    ): RestResponseInterface;
+    public function createBundledProductCollectionRestResponse(array $bundledProductRestResources): RestResponseInterface;
+
+    /**
+     * @param string $productConcreteSku
+     * @param \Generated\Shared\Transfer\ProductBundleStorageTransfer $productBundleStorageTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    public function createBundledProductRestResources(
+        string $productConcreteSku,
+        ProductBundleStorageTransfer $productBundleStorageTransfer
+    ): array;
 }

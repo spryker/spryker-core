@@ -14,6 +14,9 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPl
 use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
 
+/**
+ * @method \Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiFactory getFactory()
+ */
 class ConcreteProductsBundledProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
