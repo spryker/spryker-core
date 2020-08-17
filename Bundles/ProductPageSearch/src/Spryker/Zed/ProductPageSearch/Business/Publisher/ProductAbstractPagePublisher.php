@@ -232,11 +232,11 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
         );
 
         foreach ($pairedEntities as $pairedEntity) {
-            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY];
+            $productAbstractLocalizedEntity = $pairedEntity[static::PRODUCT_ABSTRACT_LOCALIZED_ENTITY] ?? null;
             /**
              * @var \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearch
              */
-            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY];
+            $productAbstractPageSearchEntity = $pairedEntity[static::PRODUCT_ABSTRACT_PAGE_SEARCH_ENTITY] ?? null;
 
             if ($productAbstractLocalizedEntity === null || !$this->isActual($productAbstractLocalizedEntity)) {
                 $this->deleteProductAbstractPageSearchEntity($productAbstractPageSearchEntity);
@@ -541,7 +541,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productConcreteEntities as $key => $productConcreteEntity) {
             $productConcreteId = (int)$productConcreteEntity['id_product'];
-            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId];
+            $productConcreteEntities[$key]['SpyProductSearches'] = $productSearchByProductConcreteId[$productConcreteId] ?? [];
         }
 
         return $productConcreteEntities;
@@ -563,7 +563,8 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
-            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories'] = $productCategoriesByProductAbstractId[$productAbstractId];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProductCategories']
+                = $productCategoriesByProductAbstractId[$productAbstractId] ?? [];
         }
 
         return $productAbstractLocalizedEntities;
@@ -586,7 +587,7 @@ class ProductAbstractPagePublisher implements ProductAbstractPagePublisherInterf
 
         foreach ($productAbstractLocalizedEntities as $key => $productAbstractLocalizedEntity) {
             $productAbstractId = (int)$productAbstractLocalizedEntity['fk_product_abstract'];
-            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId];
+            $productAbstractLocalizedEntities[$key]['SpyProductAbstract']['SpyProducts'] = $productConcretesByProductAbstractId[$productAbstractId] ?? [];
         }
 
         return $productAbstractLocalizedEntities;
