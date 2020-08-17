@@ -14,6 +14,7 @@
         <property name="quantity" type="decimal"/>
         <property name="stock" type="Stock"/>
         <property name="isNeverOutOfStock" type="bool"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Store">
