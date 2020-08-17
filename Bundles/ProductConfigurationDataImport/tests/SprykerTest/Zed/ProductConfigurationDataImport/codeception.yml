@@ -13,7 +13,7 @@ coverage:
 
 suites:
     Business:
-        path: Business
+        path: Communication
         class_name: ProductConfigurationDataImportBusinessTester
         modules:
             enabled:

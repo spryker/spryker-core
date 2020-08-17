@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductConfigurationDataImport\Business\Model;
 
 use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
+use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
@@ -19,6 +20,8 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException
+     *
      * @return void
      */
     public function execute(DataSetInterface $dataSet): void
@@ -26,6 +29,16 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
         $productConfigurationEntity = SpyProductConfigurationQuery::create()
             ->filterByFkProduct($dataSet[ProductConfigurationDataSet::ID_PRODUCT_CONCRETE])
             ->findOneOrCreate();
+
+        if (empty($dataSet[ProductConfigurationDataSet::KEY_CONFIGURATION_KEY])) {
+            throw new DataKeyNotFoundInDataSetException(
+                sprintf(
+                    '"%s" key must be in the data set. Given: "%s"',
+                    ProductConfigurationDataSet::KEY_CONFIGURATION_KEY,
+                    implode(', ', array_keys($dataSet->getArrayCopy()))
+                )
+            );
+        }
 
         $productConfigurationEntity->setDefaultConfiguration($dataSet[ProductConfigurationDataSet::KEY_DEFAULT_CONFIGURATION])
             ->setDefaultDisplayData($dataSet[ProductConfigurationDataSet::KEY_DEFAULT_DISPLAY_DATA])

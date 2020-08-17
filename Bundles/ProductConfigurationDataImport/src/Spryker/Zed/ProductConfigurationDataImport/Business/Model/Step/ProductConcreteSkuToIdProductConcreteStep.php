@@ -35,7 +35,7 @@ class ProductConcreteSkuToIdProductConcreteStep implements DataImportStepInterfa
             return;
         }
 
-        if (!isset($this->idProductCache[$productConcreteSku])) {
+        if (!isset($this->productConcreteIdsCache[$productConcreteSku])) {
             /** @var \Orm\Zed\Product\Persistence\SpyProductQuery $productQuery */
             $productQuery = SpyProductQuery::create()
                 ->select(SpyProductTableMap::COL_ID_PRODUCT);

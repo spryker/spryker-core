@@ -34,7 +34,7 @@ class ProductConfigurationDataImportBusinessTester extends Actor
     /**
      * @return void
      */
-    public function cleanProductConfigurationTable()
+    public function cleanProductConfigurationTable(): void
     {
         $this->getProductConfigurationQuery()->deleteAll();
     }

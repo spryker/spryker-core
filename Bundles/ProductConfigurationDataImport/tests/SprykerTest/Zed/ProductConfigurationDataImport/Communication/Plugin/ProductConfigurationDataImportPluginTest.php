@@ -5,7 +5,7 @@
  * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
-namespace SprykerTest\Zed\ProductConfiguration\Business;
+namespace SprykerTest\Zed\ProductConfiguration\Communication\Plugin;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
@@ -22,7 +22,8 @@ use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
  * @group SprykerTest
  * @group Zed
  * @group ProductConfiguration
- * @group Business
+ * @group Communication
+ * @group Plugin
  * @group ProductConfigurationDataImportPluginTest
  * Add your own group annotations below this line
  */
@@ -40,11 +41,21 @@ class ProductConfigurationDataImportPluginTest extends Unit
     /**
      * @return void
      */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
+            $this->tester->cleanProductConfigurationTable();
+        });
+    }
+
+    /**
+     * @return void
+     */
     public function testImportImportsData(): void
     {
         // Arrange
-        $this->tester->cleanProductConfigurationTable();
-
         $this->tester->haveProduct([
             ProductConcreteTransfer::SKU => static::PRODUCT_CONFIGURATION_TEST_SKU,
         ]);
@@ -70,7 +81,6 @@ class ProductConfigurationDataImportPluginTest extends Unit
      */
     public function testImportThrowsExceptionWhenProductNotFound(): void
     {
-        $this->tester->cleanProductConfigurationTable();
         // Arrange
         $dataImporterReaderConfigurationTransfer = new DataImporterReaderConfigurationTransfer();
         $dataImporterReaderConfigurationTransfer->setFileName(codecept_data_dir() . 'import/product_configuration_product_not_exists.csv');
@@ -98,17 +108,5 @@ class ProductConfigurationDataImportPluginTest extends Unit
         $productConfigurationDataImportPlugin = new ProductConfigurationDataImportPlugin();
         // Assert
         $this->assertSame(ProductConfigurationDataImportConfig::IMPORT_TYPE_PRODUCT_CONFIGURATION, $productConfigurationDataImportPlugin->getImportType());
-    }
-
-    /**
-     * @return void
-     */
-    protected function tearDown(): void
-    {
-        parent::tearDown();
-
-        $this->getDataCleanupHelper()->_addCleanup(function (): void {
-            $this->tester->cleanProductConfigurationTable();
-        });
     }
 }
