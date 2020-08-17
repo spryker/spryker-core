@@ -17,12 +17,13 @@ class ChainRouter extends SymfonyChainRouter
     /**
      * @param \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface[] $routerPlugins
      * @param \Psr\Log\LoggerInterface|null $logger
+     * @param \Symfony\Component\Routing\RequestContext|null $requestContext
      */
-    public function __construct(array $routerPlugins, ?LoggerInterface $logger = null)
+    public function __construct(array $routerPlugins, ?LoggerInterface $logger = null, ?RequestContext $requestContext = null)
     {
         parent::__construct($logger);
 
-        $this->addRequestContext();
+        $this->addRequestContext($requestContext);
         $this->addRouterPlugins($routerPlugins);
     }
 
@@ -39,15 +40,19 @@ class ChainRouter extends SymfonyChainRouter
     }
 
     /**
+     * @param \Symfony\Component\Routing\RequestContext|null $requestContext
+     *
      * @return void
      */
-    protected function addRequestContext(): void
+    protected function addRequestContext(?RequestContext $requestContext = null): void
     {
         $request = Request::createFromGlobals();
 
-        $context = new RequestContext();
-        $context->fromRequest($request);
+        if (!$requestContext) {
+            $requestContext = new RequestContext();
+        }
+        $requestContext->fromRequest($request);
 
-        $this->setContext($context);
+        $this->setContext($requestContext);
     }
 }
