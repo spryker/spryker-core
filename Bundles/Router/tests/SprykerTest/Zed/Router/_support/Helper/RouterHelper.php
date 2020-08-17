@@ -80,12 +80,14 @@ class RouterHelper extends Module
             $this->routerPlugins[ZedRouterPlugin::class] = new ZedRouterPlugin();
         }
 
-        Request::setFactory(function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
-            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
-            $request->server->set('SERVER_NAME', 'localhost');
+        Request::setFactory(
+            function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+                $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+                $request->server->set('SERVER_NAME', 'localhost');
 
-            return $request;
-        });
+                return $request;
+            }
+        );
     }
 
     /**
