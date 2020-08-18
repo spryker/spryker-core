@@ -3,9 +3,9 @@
 
     <table name="spy_cms_slot_storage" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_cms_slot_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="cms_slot_key" required="true" type="VARCHAR"/>
+        <column name="cms_slot_key" required="true" size="1024" type="VARCHAR"/>
         <column name="data" type="LONGVARCHAR"/>
-        <column name="key" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" size="1024" required="true"/>
 
         <unique name="spy_cms_slot_storage-cms_slot_key">
             <unique-column name="cms_slot_key"/>
