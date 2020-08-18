@@ -20,7 +20,7 @@ use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
 class ConcreteProductsBundledProductsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceWithParentPluginInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      * - Configures available actions for `bundled-products` resource with `concrete-products` as a parent resource.
      *
      * @api
@@ -37,7 +37,7 @@ class ConcreteProductsBundledProductsResourceRoutePlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -49,7 +49,7 @@ class ConcreteProductsBundledProductsResourceRoutePlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -61,7 +61,7 @@ class ConcreteProductsBundledProductsResourceRoutePlugin extends AbstractPlugin 
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

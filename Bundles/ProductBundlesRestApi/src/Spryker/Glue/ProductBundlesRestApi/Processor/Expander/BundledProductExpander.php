@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Glue\ProductBundlesRestApi\Processor\Expander;
@@ -25,6 +25,7 @@ class BundledProductExpander implements BundledProductExpanderInterface
     {
         $this->bundledProductReader = $bundledProductReader;
     }
+
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
@@ -38,7 +39,8 @@ class BundledProductExpander implements BundledProductExpanderInterface
             ->getBundledProductRestResourcesByProductConcreteSkus($productConcreteSkus, $restRequest);
 
         foreach ($resources as $resource) {
-            if ($resource->getType() !== ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
+            if (
+                $resource->getType() !== ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
                 || !isset($bundledProductRestResources[$resource->getId()])
             ) {
                 continue;
