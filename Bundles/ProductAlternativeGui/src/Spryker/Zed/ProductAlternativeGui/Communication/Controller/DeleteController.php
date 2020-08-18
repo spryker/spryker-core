@@ -69,6 +69,10 @@ class DeleteController extends AbstractController
      */
     protected function redirectToReferer(Request $request): RedirectResponse
     {
-        return $this->redirectResponse($request->headers->get('referer') . static::KEY_TAB_PRODUCT_ALTERNATIVE);
+        $urlParts = parse_url($request->headers->get('referer'));
+        $redirectUrl = $urlParts['path'];
+        $redirectUrl .= isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
+
+        return $this->redirectResponse($redirectUrl . static::KEY_TAB_PRODUCT_ALTERNATIVE);
     }
 }
