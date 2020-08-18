@@ -95,7 +95,7 @@ class PriceProductScheduleImportTest extends Unit
         );
 
         $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
-        $this->assertEquals(
+        $this->assertSame(
             $count,
             $priceProductScheduleEntitiesCount,
             'Count of imported items must be equal to db rows'
@@ -136,7 +136,7 @@ class PriceProductScheduleImportTest extends Unit
         );
 
         $priceProductScheduleEntitiesCount = $this->tester->getPriceProductScheduleQuery()->count();
-        $this->assertEquals(
+        $this->assertSame(
             1,
             $priceProductScheduleEntitiesCount,
             'No rows should be saved into the db except the base one'

@@ -472,8 +472,8 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -516,8 +516,8 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -562,8 +562,8 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -602,7 +602,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame($taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**
@@ -644,7 +644,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame($taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**

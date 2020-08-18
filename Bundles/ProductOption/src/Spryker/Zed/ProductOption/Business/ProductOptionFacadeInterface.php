@@ -84,7 +84,7 @@ interface ProductOptionFacadeInterface
      * - Reads product option from persistence.
      * - Net and gross unit prices are calculated using current store, and current currency.
      * - If currency code not provided it will use default store currency.
-     * - Uses default store (fkStore = NULL) prices when the option has no currency definition for the current store.
+     * - Uses default store (fkStore = null) prices when the option has no currency definition for the current store.
      *
      * @api
      *

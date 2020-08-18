@@ -35,6 +35,6 @@ class CalculatorTest extends Unit
 
         $quantityAmountLeft = $calculator->calculateQuantityAmountLeft($spySalesOrderItem, 1);
 
-        $this->assertEquals(1, $quantityAmountLeft);
+        $this->assertSame(1, $quantityAmountLeft);
     }
 }

@@ -47,9 +47,9 @@ class MoneyValueConverterTest extends Unit
 
         $convertedValues = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
 
-        $this->assertEquals(1000, $convertedValues[0]);
-        $this->assertEquals(1212, $convertedValues[1]);
-        $this->assertEquals(1230, $convertedValues[2]);
+        $this->assertSame(1000, $convertedValues[0]);
+        $this->assertSame(1212, $convertedValues[1]);
+        $this->assertSame(1230, $convertedValues[2]);
     }
 
     /**
@@ -68,9 +68,9 @@ class MoneyValueConverterTest extends Unit
 
         $convertedValues = explode(ComparatorOperators::LIST_DELIMITER, $clauseTransfer->getValue());
 
-        $this->assertEquals(1000, $convertedValues[0]);
-        $this->assertEquals(1212, $convertedValues[1]);
-        $this->assertEquals(1230, $convertedValues[2]);
+        $this->assertSame(1000, $convertedValues[0]);
+        $this->assertSame(1212, $convertedValues[1]);
+        $this->assertSame(1230, $convertedValues[2]);
     }
 
     /**
@@ -86,7 +86,7 @@ class MoneyValueConverterTest extends Unit
 
         $currencyConverterMock->convertDecimalToCent($clauseTransfer);
 
-        $this->assertEquals(1050, $clauseTransfer->getValue());
+        $this->assertSame(1050, $clauseTransfer->getValue());
     }
 
     /**

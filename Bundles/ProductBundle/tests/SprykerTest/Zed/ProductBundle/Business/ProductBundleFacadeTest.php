@@ -165,7 +165,7 @@ class ProductBundleFacadeTest extends Unit
 
         $itemTransfer = $cartChangeTransfer->getItems()[0];
 
-        $this->assertEquals(
+        $this->assertSame(
             $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . '1',
             $itemTransfer->getGroupKey()
         );
@@ -394,7 +394,7 @@ class ProductBundleFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEquals(0, $bundledProductAvailability->getAvailability()->toString());
+        $this->assertSame(0, $bundledProductAvailability->getAvailability()->toString());
     }
 
     /**

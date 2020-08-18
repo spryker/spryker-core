@@ -46,7 +46,7 @@ class SkuIncrementGeneratorTest extends FacadeTestAbstract
         $skuGenerator = $this->createSkuGenerator();
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $newProductConcreteTransfer);
 
-        $this->assertEquals('9999999' . SkuGenerator::SKU_ABSTRACT_SEPARATOR . '10', $formattedSku);
+        $this->assertSame('9999999' . SkuGenerator::SKU_ABSTRACT_SEPARATOR . '10', $formattedSku);
     }
 
     /**
@@ -60,7 +60,7 @@ class SkuIncrementGeneratorTest extends FacadeTestAbstract
         $skuGenerator = $this->createSkuGenerator();
         $formattedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $newProductConcreteTransfer);
 
-        $this->assertEquals('9999999' . SkuGenerator::SKU_ABSTRACT_SEPARATOR . '1', $formattedSku);
+        $this->assertSame('9999999' . SkuGenerator::SKU_ABSTRACT_SEPARATOR . '1', $formattedSku);
     }
 
     /**

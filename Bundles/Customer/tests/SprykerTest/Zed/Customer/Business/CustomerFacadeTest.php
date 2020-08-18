@@ -558,7 +558,7 @@ class CustomerFacadeTest extends Unit
         $this->assertNotNull($customerResponse);
         $this->assertTrue($customerResponse->getIsSuccess());
         $customerTransfer = $customerResponse->getCustomerTransfer();
-        $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
+        $this->assertSame(self::TESTER_NAME, $customerTransfer->getLastName());
     }
 
     /**

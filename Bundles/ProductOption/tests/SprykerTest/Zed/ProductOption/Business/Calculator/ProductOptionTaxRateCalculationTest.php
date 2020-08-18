@@ -38,7 +38,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
         $quoteTransfer = $this->createQuoteTransferWithoutShippingAddress();
 
         $taxAverage = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $this->getMockDefaultTaxRates());
-        $this->assertEquals(15, $taxAverage);
+        $this->assertSame(15, $taxAverage);
     }
 
     /**
@@ -49,7 +49,7 @@ class ProductOptionTaxRateCalculationTest extends Unit
         $quoteTransfer = $this->createQuoteTransferWithShippingAddress();
 
         $taxAverage = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $this->getMockCountryBasedTaxRates());
-        $this->assertEquals(17, $taxAverage);
+        $this->assertSame(17, $taxAverage);
     }
 
     /**

@@ -74,7 +74,7 @@ class DiscountConfiguratorHydrateTest extends Unit
             $hydratedDiscountConfiguration->getDiscountCalculator()->getCalculatorPlugin()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getDisplayName(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getDisplayName()
         );
@@ -119,12 +119,12 @@ class DiscountConfiguratorHydrateTest extends Unit
             $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getName()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getSpyDiscountStores()->count(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()->count()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getSpyDiscountStores()->count(),
             count($hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getIdStores())
         );
