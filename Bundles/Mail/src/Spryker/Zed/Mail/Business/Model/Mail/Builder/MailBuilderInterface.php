@@ -54,6 +54,11 @@ interface MailBuilderInterface
     public function setSender($email, $name);
 
     /**
+     * @return $this
+     */
+    public function useDefaultSender();
+
+    /**
      * @param string $email
      * @param string $name
      *
