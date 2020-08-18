@@ -113,30 +113,6 @@
     </transfer>
 
     <transfer name="GuiTableConfiguration">
-        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
-        <property name="filters" type="GuiTableFiltersConfiguration"/>
-        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
-        <property name="search" type="GuiTableSearchConfiguration"/>
-        <property name="pagination" type="GuiTablePaginationConfiguration"/>
-        <property name="itemSelection" type="GuiTableItemSelectionConfiguration"/>
-        <property name="defaultSortColumn" type="string"/>
-        <property name="rowActions" type="GuiTableRowActionsConfiguration"/>
-        <property name="batchActions" type="GuiTableBatchActionsConfiguration"/>
-    </transfer>
-
-    <transfer name="GuiTableRowActionsConfiguration">
-        <property name="actions" type="GuiTableRowAction[]" singular="action"/>
-        <property name="click" type="string"/>
-        <property name="availableActionsPath" type="string"/>
-        <property name="rowIdPath" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableBatchActionsConfiguration">
-        <property name="noActionsMessage" type="string"/>
-        <property name="actions" type="GuiTableBatchAction[]" singular="action"/>
-        <property name="availableActionsPath" type="string"/>
-        <property name="rowIdPath" type="string"/>
-        <property name="isEnabled" type="bool"/>
     </transfer>
 
     <transfer name="Store">
@@ -173,26 +149,6 @@
     </transfer>
 
     <transfer name="GuiTableDataRequest">
-        <property name="merchantOrderItemIds" type="int[]" singular="merchantOrderItemId"/>
-    </transfer>
-
-    <transfer name="GuiTableDataSourceConfiguration">
-        <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableFiltersConfiguration">
-        <property name="items" type="GuiTableFilter[]" singular="item"/>
-    </transfer>
-
-    <transfer name="GuiTableSearchConfiguration">
-        <property name="search" type="array" associative="true" singular="searchOption"/>
-    </transfer>
-
-    <transfer name="GuiTableColumnConfiguration">
-    </transfer>
-
-    <transfer name="GuiTablePaginationConfiguration">
-        <property name="defaultSize" type="int"/>
     </transfer>
 
     <transfer name="Currency">
@@ -209,13 +165,6 @@
         <property name="withItems" type="bool"/>
         <property name="withUniqueProductsCount" type="bool"/>
         <property name="customerReference" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableRowAction">
-        <property name="id" type="string"/>
-        <property name="title" type="string"/>
-        <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
     <transfer name="OrderItemFilter">
@@ -241,13 +190,6 @@
     <transfer name="MerchantDashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableBatchAction">
-        <property name="id" type="string"/>
-        <property name="title" type="string"/>
-        <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
     </transfer>
 
     <transfer name="Item">

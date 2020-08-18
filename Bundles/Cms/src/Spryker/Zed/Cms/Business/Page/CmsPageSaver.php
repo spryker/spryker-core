@@ -152,10 +152,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         try {
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-            if ($cmsPageEntity->getFkTemplate() !== $cmsPageTransfer->getFkTemplate()) {
-                $this->cmsGlossarySaver->deleteCmsGlossary($cmsPageEntity->getIdCmsPage());
-            }
-
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();
 

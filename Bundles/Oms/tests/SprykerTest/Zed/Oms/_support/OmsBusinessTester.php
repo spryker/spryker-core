@@ -44,7 +44,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Oms\Business\OmsFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -115,6 +115,7 @@ class OmsBusinessTester extends Actor
      * @param string $eventName
      * @param string $stateName
      * @param int $orderItemsAmount
+     * @param int|null $omsProcessorIdentifier
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -122,14 +123,17 @@ class OmsBusinessTester extends Actor
         string $storeName,
         string $eventName,
         string $stateName,
-        int $orderItemsAmount
+        int $orderItemsAmount,
+        ?int $omsProcessorIdentifier = null
     ): SpySalesOrder {
         $dateTime = new DateTime('now');
         $dateTime->sub(DateInterval::createFromDateString('1 day'));
         $processName = 'DummyPayment01';
         $salesOrderTransferDE = $this->haveOrder([], $processName);
         $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
-        $salesOrderEntity->setStore($storeName)->save();
+        $salesOrderEntity->setStore($storeName)
+            ->setOmsProcessorIdentifier($omsProcessorIdentifier)
+            ->save();
 
         $salesOrderItemDefaults = [
             'state' => $stateName,
@@ -157,6 +161,7 @@ class OmsBusinessTester extends Actor
      * @param string $stateName
      * @param string $processName
      * @param int $orderItemsAmount One spy_sales_order_item is added always by the {@link \SprykerTest\Zed\Oms\_generated\OmsBusinessTesterActions::haveOrder()} method.
+     * @param int|null $omsProcessorIdentifier
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrder
      */
@@ -164,11 +169,14 @@ class OmsBusinessTester extends Actor
         string $storeName,
         string $stateName,
         string $processName,
-        int $orderItemsAmount = 0
+        int $orderItemsAmount = 0,
+        ?int $omsProcessorIdentifier = null
     ): SpySalesOrder {
         $salesOrderTransferDE = $this->haveOrder([], $processName);
         $salesOrderEntity = SpySalesOrderQuery::create()->findOneByIdSalesOrder($salesOrderTransferDE->getIdSalesOrder());
-        $salesOrderEntity->setStore($storeName)->save();
+        $salesOrderEntity->setStore($storeName)
+            ->setOmsProcessorIdentifier($omsProcessorIdentifier)
+            ->save();
 
         for ($i = 0; $i < $orderItemsAmount; $i++) {
             $salesOrderItemEntity = $this->createSalesOrderItemForOrder($salesOrderTransferDE->getIdSalesOrder(), ['state' => $stateName, 'process' => $processName]);

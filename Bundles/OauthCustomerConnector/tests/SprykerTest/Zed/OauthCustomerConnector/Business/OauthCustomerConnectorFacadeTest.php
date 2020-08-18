@@ -44,7 +44,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer = $this->tester->getFacade()->getCustomerOauthUser($oauthUserTransfer);
 
         //Assert
-        $this->assertTrue($oauthUserTransfer->getIsSuccess());
+        $this->assertTrue($oauthUserTransfer->getIsSuccess(), 'Customer must be authorized by valid credentials.');
     }
 
     /**
@@ -61,13 +61,13 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer = $this->tester->getFacade()->getCustomerOauthUser($oauthUserTransfer);
 
         //Assert
-        $this->assertFalse($oauthUserTransfer->getIsSuccess());
+        $this->assertFalse($oauthUserTransfer->getIsSuccess(), 'Customer must not be authorized by invalid credentials.');
     }
 
     /**
      * @return void
      */
-    public function testGetCustomerImpersonationOauthUserShouldReturnCustomerWhenCredentialsMatch(): void
+    public function testGetCustomerImpersonationOauthUserShouldReturnCustomerCustomerExists(): void
     {
         // Arrange
         $oauthUserTransfer = (new OauthUserTransfer())->setCustomerReference('DE--1');
@@ -76,7 +76,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer = $this->tester->getFacade()->getCustomerImpersonationOauthUser($oauthUserTransfer);
 
         //Assert
-        $this->assertTrue($oauthUserTransfer->getIsSuccess());
+        $this->assertTrue($oauthUserTransfer->getIsSuccess(), 'Customer must be authorized when the customer by the customer reference exists.');
     }
 
     /**
@@ -92,7 +92,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $oauthUserTransfer = $this->tester->getFacade()->getCustomerImpersonationOauthUser($oauthUserTransfer);
 
         //Assert
-        $this->assertFalse($oauthUserTransfer->getIsSuccess());
+        $this->assertFalse($oauthUserTransfer->getIsSuccess(), 'Customer must not be authorized when the customer is not found by the customer reference.');
     }
 
     /**
@@ -107,7 +107,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $scopes = $this->tester->getFacade()->getScopes($oauthScopeRequestTransfer);
 
         //Assert
-        $this->assertNotEmpty($scopes);
+        $this->assertNotEmpty($scopes, 'Customer scopes must be returned.');
     }
 
     /**
@@ -122,7 +122,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $scopes = $this->tester->getFacade()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
 
         //Assert
-        $this->assertNotEmpty($scopes);
+        $this->assertNotEmpty($scopes, 'Customer impersonation scopes must be returned.');
     }
 
     /**
@@ -139,7 +139,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $scopes = $this->tester->getFacade()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
 
         //Assert
-        $this->assertNotEmpty($scopes);
-        $this->assertContains($defaultScopeTransfer, $scopes);
+        $this->assertNotEmpty($scopes,'Customer impersonation scopes must be returned.');
+        $this->assertContains($defaultScopeTransfer, $scopes, 'Customer impersonation scopes must include the default one.');
     }
 }

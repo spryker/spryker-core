@@ -197,12 +197,12 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
             $value = $queryWhereConditionTransfer->getValue();
 
             $conditionName = uniqid($column, true);
-            $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::ILIKE;
+            $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::LIKE;
 
             $salesOrderQuery->addCond(
                 $conditionName,
                 $column,
-                $comparison === Criteria::ILIKE ? $this->formatFilterValue($value) : $value,
+                $comparison === Criteria::LIKE ? $this->formatFilterValue($value) : $value,
                 $comparison
             );
 

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer\Business\Customer;
 
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Spryker\Zed\Customer\Business\CustomerExpander\CustomerExpanderInterface;
 use Spryker\Zed\Customer\Persistence\CustomerEntityManagerInterface;
@@ -80,7 +81,6 @@ class CustomerReader implements CustomerReaderInterface
             ->setHasCustomer(false);
 
         if ($customerTransfer) {
-            $customerTransfer = $this->customerExpander->expand($customerTransfer);
             $customerTransfer->setAddresses($this->addressManager->getAddresses($customerTransfer));
             $customerResponseTransfer->setCustomerTransfer($customerTransfer)
                 ->setHasCustomer(true)
@@ -88,6 +88,33 @@ class CustomerReader implements CustomerReaderInterface
         }
 
         return $customerResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaTransfer $customerCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): CustomerResponseTransfer
+    {
+        $customerTransfer = $this->customerRepository->findCustomerByCriteria($customerCriteriaTransfer);
+
+        $customerResponseTransfer = (new CustomerResponseTransfer())
+            ->setIsSuccess(false)
+            ->setHasCustomer(false);
+
+        if (!$customerTransfer) {
+            return $customerResponseTransfer;
+        }
+
+        if ($customerCriteriaTransfer->getWithExpanders()) {
+            $customerTransfer->setAddresses($this->addressManager->getAddresses($customerTransfer));
+            $customerTransfer = $this->customerExpander->expand($customerTransfer);
+        }
+
+        return $customerResponseTransfer->setCustomerTransfer($customerTransfer)
+            ->setHasCustomer(true)
+            ->setIsSuccess(true);
     }
 
     /**

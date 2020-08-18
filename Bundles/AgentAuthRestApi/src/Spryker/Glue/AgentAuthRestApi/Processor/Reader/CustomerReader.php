@@ -16,7 +16,7 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
 class CustomerReader implements CustomerReaderInterface
 {
-    protected const REQUEST_PAREMETER_QUERY = 'q';
+    protected const REQUEST_PARAMETER_QUERY = 'q';
 
     /**
      * @var \Spryker\Glue\AgentAuthRestApi\Dependency\Client\AgentAuthRestApiToAgentClientInterface
@@ -82,7 +82,7 @@ class CustomerReader implements CustomerReaderInterface
         }
 
         return (new CustomerQueryTransfer())
-            ->setQuery($restRequest->getHttpRequest()->get(static::REQUEST_PAREMETER_QUERY, ''))
+            ->setQuery($restRequest->getHttpRequest()->get(static::REQUEST_PARAMETER_QUERY, ''))
             ->setOffset($offset)
             ->setLimit($limit);
     }

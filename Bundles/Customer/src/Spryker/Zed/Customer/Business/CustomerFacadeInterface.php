@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -559,4 +560,18 @@ interface CustomerFacadeInterface
         CustomerCollectionTransfer $customerCollectionTransfer,
         ?OutputInterface $output = null
     ): void;
+
+    /**
+     * Specification:
+     * - Finds customer by provided criteria.
+     * - Optionally expands customer data with `\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface` plugins stack.
+     * - Returns customer response transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaTransfer $customerCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): CustomerResponseTransfer;
 }

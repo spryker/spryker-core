@@ -44,6 +44,6 @@ class InstallAgentOauthScopeTest extends Unit
         // Assert
         $agentOauthScopeTransfer = $this->tester->getLocator()->oauth()->facade()
             ->findScopeByIdentifier($oauthScopeTransfer);
-        $this->assertNotNull($agentOauthScopeTransfer);
+        $this->assertNotNull($agentOauthScopeTransfer, 'Installed scopes should be findable by identifier.');
     }
 }

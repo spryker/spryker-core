@@ -194,46 +194,23 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      */
     protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {
-        $transferObjectsArray = new ArrayObject();
-        foreach ($arrayObject as $arrayElement) {
+        $result = new ArrayObject();
+        foreach ($arrayObject as $key => $arrayElement) {
             if (!is_array($arrayElement)) {
-                $transferObjectsArray->append(new $elementType());
+                $result->offsetSet($key, new $elementType());
 
                 continue;
             }
 
-            if ($this->isAssociativeArray($arrayElement)) {
+            if ($arrayElement) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
-
-                continue;
-            }
-
-            foreach ($arrayElement as $arrayElementItem) {
-                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
-                $transferObject = new $elementType();
-                $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
+                $result->offsetSet($key, $transferObject);
             }
         }
 
-        return $transferObjectsArray;
-    }
-
-    /**
-     * @param array $arr
-     *
-     * @return bool
-     */
-    protected function isAssociativeArray(array $arr): bool
-    {
-        if ($arr === []) {
-            return false;
-        }
-
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        return $result;
     }
 
     /**

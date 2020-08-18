@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -986,6 +987,41 @@ class CustomerFacadeTest extends Unit
             $expectedCount,
             $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerByCriteriaShouldFindExistingCustomer(): void
+    {
+        // Arrange
+        $customerTransfer = $this->tester->haveCustomer();
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()
+            ->getCustomerByCriteria($customerCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess(), 'Customer must be findable by customer reference');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerByCriteriaShouldFailToFindNonExistingCustomer(): void
+    {
+        // Arrange
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference('DE--NO-PRESENT');
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()
+            ->getCustomerByCriteria($customerCriteriaTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess(), 'Non-existing customer must be not findable.');
     }
 
     /**

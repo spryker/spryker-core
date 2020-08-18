@@ -41,7 +41,7 @@ class GetScopesTest extends Unit
         $oauthScopeTransfers = $this->tester->getFacade()->getScopes($scopesRequestTransfer);
 
         // Assert
-        $this->assertNotEmpty($oauthScopeTransfers);
+        $this->assertNotEmpty($oauthScopeTransfers, 'Agent scopes are not empty.');
     }
 
     /**
@@ -58,7 +58,7 @@ class GetScopesTest extends Unit
         $oauthScopeTransfers = $this->tester->getFacade()->getScopes($scopesRequestTransfer);
 
         // Assert
-        $this->assertNotEmpty($oauthScopeTransfers);
-        $this->assertContains($defaultScopeTransfer, $oauthScopeTransfers);
+        $this->assertNotEmpty($oauthScopeTransfers, 'Agent scopes are not empty.');
+        $this->assertContains($defaultScopeTransfer, $oauthScopeTransfers, 'Default scope should be returned with the result.');
     }
 }

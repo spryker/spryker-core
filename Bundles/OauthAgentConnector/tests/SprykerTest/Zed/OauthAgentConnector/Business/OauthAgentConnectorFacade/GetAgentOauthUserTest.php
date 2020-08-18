@@ -83,7 +83,7 @@ class GetAgentOauthUserTest extends Unit
         $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);
 
         // Assert
-        $this->assertTrue($resultingOauthUserTransfer->getIsSuccess());
+        $this->assertTrue($resultingOauthUserTransfer->getIsSuccess(), 'Agent user should be authorized with valid credentials.');
     }
 
     /**
@@ -100,6 +100,6 @@ class GetAgentOauthUserTest extends Unit
         $resultingOauthUserTransfer = $this->tester->getFacade()->getAgentOauthUser($oauthUserTransfer);
 
         // Assert
-        $this->assertFalse($resultingOauthUserTransfer->getIsSuccess());
+        $this->assertFalse($resultingOauthUserTransfer->getIsSuccess(), 'Agent should not be able to authorize with wrong credentials.');
     }
 }

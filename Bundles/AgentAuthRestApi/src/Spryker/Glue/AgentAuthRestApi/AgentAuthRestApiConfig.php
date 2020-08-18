@@ -51,7 +51,10 @@ class AgentAuthRestApiConfig extends AbstractBundleConfig
      */
     public function getAgentResources(): array
     {
-        return [];
+        return [
+            static::RESOURCE_AGENT_CUSTOMER_IMPERSONATION_ACCESS_TOKENS,
+            static::RESOURCE_AGENT_CUSTOMER_SEARCH,
+        ];
     }
 
     /**
