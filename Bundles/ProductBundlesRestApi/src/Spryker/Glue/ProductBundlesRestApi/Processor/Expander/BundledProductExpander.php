@@ -61,7 +61,7 @@ class BundledProductExpander implements BundledProductExpanderInterface
     {
         $productConcreteSkus = [];
         foreach ($resources as $resource) {
-            if ($resource->getType() !== ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS) {
+            if ($resource->getType() !== ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS || !$resource->getId()) {
                 continue;
             }
 

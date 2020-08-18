@@ -1,0 +1,79 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 58,
+            "line_to": 58,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Expander\\BundledProductExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
+            "snippet": "     * @return string[]",
+            "selected_text": "string[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 71,
+            "line_to": 71,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Expander\\BundledProductExpander::getProductConcreteSkus",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
+            "snippet": "        return $productConcreteSkus;",
+            "selected_text": "$productConcreteSkus",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "InvalidArgument",
+            "message": "Argument 1 of Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Reader\\BundledProductReader::getBundledProductRestResourcesByProductConcreteSkus expects array<array-key, string>, array{null|string} provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
+            "snippet": "            [$productConcreteResource->getId()],",
+            "selected_text": "[$productConcreteResource->getId()]",
+            "error_level": 6,
+            "shortcode": 4
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 49,
+            "line_to": 49,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $bundledProductRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
+            "snippet": "            foreach ($bundledProductRestResources[$resource->getId()] as $bundledProductRestResource) {",
+            "selected_text": "$bundledProductRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 76,
+            "line_to": 76,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $bundledProductRestResources using possibly null offset null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
+            "snippet": "            ->createBundledProductCollectionRestResponse($bundledProductRestResources[$productConcreteResource->getId()]);",
+            "selected_text": "$bundledProductRestResources",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 96,
+            "line_to": 96,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/RestResponseBuilder/BundledProductRestResponseBuilder.php",
+            "snippet": "                    $bundledProduct->getSku()",
+            "selected_text": "$bundledProduct->getSku()",
+            "error_level": 3,
+            "shortcode": 78
+        }
+    ],
+    "deprecation": []
+}
