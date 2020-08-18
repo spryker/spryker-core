@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
+namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
@@ -23,10 +23,11 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundl
  * @group Communication
  * @group Plugin
  * @group Publisher
+ * @group ProductBundle
  * @group ProductBundleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
-class ProductBundleWritePublisherPluginTest extends Unit
+class ProductBundlePublishWritePublisherPluginTest extends Unit
 {
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 

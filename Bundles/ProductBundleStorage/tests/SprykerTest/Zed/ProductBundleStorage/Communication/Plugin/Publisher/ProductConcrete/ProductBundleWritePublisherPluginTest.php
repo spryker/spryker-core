@@ -5,15 +5,15 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
+namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductConcrete;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\EventEntityTransfer;
-use Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
-use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundlePublishWritePublisherPlugin;
+use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductConcrete\ProductBundleWritePublisherPlugin;
 
 /**
  * Auto-generated group annotations
@@ -24,10 +24,11 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundl
  * @group Communication
  * @group Plugin
  * @group Publisher
- * @group BundledProductWritePublisherPluginTest
+ * @group ProductConcrete
+ * @group ProductConcreteProductBundleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
-class BundledProductWritePublisherPluginTest extends Unit
+class ProductBundleWritePublisherPluginTest extends Unit
 {
     protected const FAKE_ID_PRODUCT_CONCRETE = 6666;
 
@@ -60,16 +61,16 @@ class BundledProductWritePublisherPluginTest extends Unit
         $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
         // Act
-        $bundledProductWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
+        $productConcreteProductBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
         $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductBundleTableMap::COL_FK_PRODUCT => $productConcreteTransfer->getIdProductConcrete(),
-            ]),
+            (new EventEntityTransfer())
+                ->setId($productConcreteTransfer->getIdProductConcrete())
+                ->setModifiedColumns([SpyProductTableMap::COL_IS_ACTIVE]),
         ];
 
-        $bundledProductWritePublisherPlugin->handleBulk(
+        $productConcreteProductBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_CREATE
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
         );
 
         // Assert
@@ -109,19 +110,19 @@ class BundledProductWritePublisherPluginTest extends Unit
         $secondProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         // Act
-        $bundledProductWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
+        $productConcreteProductBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
         $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductBundleTableMap::COL_FK_PRODUCT => $firstProductConcreteTransfer->getIdProductConcrete(),
-            ]),
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductBundleTableMap::COL_FK_PRODUCT => $secondProductConcreteTransfer->getIdProductConcrete(),
-            ]),
+            (new EventEntityTransfer())
+                ->setId($firstProductConcreteTransfer->getIdProductConcrete())
+                ->setModifiedColumns([SpyProductTableMap::COL_IS_ACTIVE]),
+            (new EventEntityTransfer())
+                ->setId($secondProductConcreteTransfer->getIdProductConcrete())
+                ->setModifiedColumns([SpyProductTableMap::COL_IS_ACTIVE]),
         ];
 
-        $bundledProductWritePublisherPlugin->handleBulk(
+        $productConcreteProductBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_UPDATE
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
         );
 
         // Assert
@@ -146,16 +147,16 @@ class BundledProductWritePublisherPluginTest extends Unit
     public function testBundledProductWritePublisherPluginWithFakeProductConcreteId(): void
     {
         // Act
-        $bundledProductWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
+        $productConcreteProductBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
         $eventTransfers = [
-            (new EventEntityTransfer())->setForeignKeys([
-                SpyProductBundleTableMap::COL_FK_PRODUCT => static::FAKE_ID_PRODUCT_CONCRETE,
-            ]),
+            (new EventEntityTransfer())
+                ->setId(static::FAKE_ID_PRODUCT_CONCRETE)
+                ->setModifiedColumns([SpyProductTableMap::COL_IS_ACTIVE]),
         ];
 
-        $bundledProductWritePublisherPlugin->handleBulk(
+        $productConcreteProductBundleWritePublisherPlugin->handleBulk(
             $eventTransfers,
-            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_DELETE
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
         );
 
         // Assert
