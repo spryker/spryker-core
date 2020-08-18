@@ -25,7 +25,7 @@ use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductConcr
  * @group Plugin
  * @group Publisher
  * @group ProductConcrete
- * @group ProductConcreteProductBundleWritePublisherPluginTest
+ * @group ProductBundleWritePublisherPluginTest
  * Add your own group annotations below this line
  */
 class ProductBundleWritePublisherPluginTest extends Unit
