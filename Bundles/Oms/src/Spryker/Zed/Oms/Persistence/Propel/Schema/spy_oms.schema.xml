@@ -15,8 +15,8 @@
         <column name="params" type="ARRAY" required="false"/>
         <column name="source_state" type="VARCHAR" size="128" required="false"/>
         <column name="target_state" type="VARCHAR" size="128" required="false"/>
-        <column name="command" type="VARCHAR" size="255" required="false"/>
-        <column name="condition" type="VARCHAR" size="255" required="false"/>
+        <column name="command" type="VARCHAR" size="1000" required="false"/>
+        <column name="condition" type="VARCHAR" size="1000" required="false"/>
         <column name="is_error" type="BOOLEAN" required="false"/>
         <column name="error_message" type="LONGVARCHAR" required="false"/>
 
@@ -52,7 +52,7 @@
         <column name="id_oms_state_machine_lock" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="identifier" type="VARCHAR" size="255"  required="true"/>
         <column name="expires" type="TIMESTAMP" required="true"/>
-        <column name="details" type="VARCHAR" size="255"/>
+        <column name="details" type="LONGVARCHAR"/>
 
         <behavior name="timestampable"/>
 
