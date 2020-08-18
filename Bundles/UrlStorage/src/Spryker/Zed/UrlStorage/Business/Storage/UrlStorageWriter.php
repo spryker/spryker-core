@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
-use Spryker\Zed\UrlStorage\Business\Exception\MissingResourceException;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
 use Spryker\Zed\UrlStorage\Persistence\UrlStorageEntityManagerInterface;
