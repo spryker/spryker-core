@@ -71,7 +71,7 @@ class VersionPageController extends AbstractController
     public function discardAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
 
         $this->getFactory()
             ->getCmsFacade()
