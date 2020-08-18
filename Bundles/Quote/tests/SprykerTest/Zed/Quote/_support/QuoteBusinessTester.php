@@ -25,7 +25,7 @@ use Spryker\Shared\Quote\QuoteConstants;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Quote\Business\QuoteFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
