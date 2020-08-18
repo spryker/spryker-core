@@ -9,11 +9,11 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationStatusForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class EditController extends BaseProductRelationController
 {
@@ -24,6 +24,8 @@ class EditController extends BaseProductRelationController
     protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
     protected const MESSAGE_CSRF_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
+
+    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" was not found.';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
@@ -108,17 +110,7 @@ class EditController extends BaseProductRelationController
      */
     public function activateAction(Request $request): RedirectResponse
     {
-        $productRelationActivateForm = $this->getFactory()->createProductRelationActivateForm()->handleRequest($request);
-
-        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
-
-        if (!$productRelationActivateForm->isSubmitted() || !$productRelationActivateForm->isValid()) {
-            $this->addErrorMessage(static::MESSAGE_CSRF_TOKEN_IS_NOT_VALID);
-
-            return $this->redirectResponse($redirectUrl);
-        }
-
-        return $this->executeRelationStatusChangeAction($request, true, $redirectUrl);
+        return $this->executeRelationStatusChangeAction($request);
     }
 
     /**
@@ -128,17 +120,47 @@ class EditController extends BaseProductRelationController
      */
     public function deactivateAction(Request $request): RedirectResponse
     {
-        $productRelationDeactivateForm = $this->getFactory()->createProductRelationDeactivateForm()->handleRequest($request);
+        return $this->executeRelationStatusChangeAction($request);
+    }
 
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeRelationStatusChangeAction(Request $request): RedirectResponse
+    {
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $productRelationStatusForm = $this->getFactory()
+            ->createProductRelationStatusForm()
+            ->handleRequest($request);
 
-        if (!$productRelationDeactivateForm->isSubmitted() || !$productRelationDeactivateForm->isValid()) {
+        if (!$productRelationStatusForm->isSubmitted() || !$productRelationStatusForm->isValid()) {
             $this->addErrorMessage(static::MESSAGE_CSRF_TOKEN_IS_NOT_VALID);
 
             return $this->redirectResponse($redirectUrl);
         }
 
-        return $this->executeRelationStatusChangeAction($request, false, $redirectUrl);
+        $productRelationTransfer = $this->getFactory()
+            ->getProductRelationFacade()
+            ->findProductRelationById($this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION)))
+            ->getProductRelation();
+
+        if (!$productRelationTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $productRelationTransfer->setIsActive((bool)$request->request->get(ProductRelationStatusForm::FIELD_IS_ACTIVE));
+
+        $this->getFactory()
+            ->getProductRelationFacade()
+            ->updateProductRelation($productRelationTransfer);
+
+        $this->addSuccessMessage($productRelationTransfer->getIsActive() ? static::MESSAGE_ACTIVATE_SUCCESS : static::MESSAGE_DEACTIVATE_SUCCESS);
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -197,38 +219,5 @@ class EditController extends BaseProductRelationController
         foreach ($productRelationResponseTransfer->getMessages() as $messageTransfer) {
             $this->addErrorMessage($messageTransfer->getValue());
         }
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param bool $isActive
-     * @param string $redirectUrl
-     *
-     * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeRelationStatusChangeAction(Request $request, bool $isActive, string $redirectUrl): RedirectResponse
-    {
-        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
-
-        $productRelationTransfer = $this->getFactory()
-            ->getProductRelationFacade()
-            ->findProductRelationById($idProductRelation)
-            ->getProductRelation();
-
-        if (!$productRelationTransfer) {
-            throw new NotFoundHttpException(sprintf('Product relation not found for id %d.', $idProductRelation));
-        }
-
-        $productRelationTransfer->setIsActive($isActive);
-
-        $this->getFactory()
-            ->getProductRelationFacade()
-            ->updateProductRelation($productRelationTransfer);
-
-        $this->addSuccessMessage($isActive ? static::MESSAGE_ACTIVATE_SUCCESS : static::MESSAGE_DEACTIVATE_SUCCESS);
-
-        return $this->redirectResponse($redirectUrl);
     }
 }

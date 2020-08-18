@@ -18,10 +18,9 @@ use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\ProductRelation
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueProductRelationByProductAbstractAndRelationTypeAndStoresConstraint;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationTypeForProductAbstractAndQuerySet;
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationActivateForm;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeactivateForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationStatusForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface;
@@ -216,17 +215,9 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
     /**
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductRelationActivateForm(): FormInterface
+    public function createProductRelationStatusForm(): FormInterface
     {
-        return $this->getFormFactory()->create(ProductRelationActivateForm::class);
-    }
-
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createProductRelationDeactivateForm(): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductRelationDeactivateForm::class);
+        return $this->getFormFactory()->create(ProductRelationStatusForm::class);
     }
 
     /**

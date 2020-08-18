@@ -20,8 +20,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationActivateForm;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeactivateForm;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationStatusForm;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
@@ -350,10 +349,9 @@ class ProductRelationTable extends AbstractTable
                     EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
                 ]),
                 'Deactivate',
-                ProductRelationDeactivateForm::class,
-                [
-                    static::BUTTON_CLASS => 'btn-danger safe-submit',
-                ]
+                ProductRelationStatusForm::class,
+                [static::BUTTON_CLASS => 'btn-danger safe-submit'],
+                [ProductRelationStatusForm::OPTION_IS_ACTIVE => 0]
             );
         }
 
@@ -363,7 +361,9 @@ class ProductRelationTable extends AbstractTable
                 EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
             'Activate',
-            ProductRelationActivateForm::class
+            ProductRelationStatusForm::class,
+            [],
+            [ProductRelationStatusForm::OPTION_IS_ACTIVE => 1]
         );
     }
 
