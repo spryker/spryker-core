@@ -16,8 +16,10 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - Queue name as used for processing product_bundle messages.
      *
      * @api
+     *
+     * @uses \Spryker\Shared\ProductStorage\ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE
      */
-    public const PRODUCT_BUNDLE_SYNC_STORAGE_QUEUE = 'sync.storage.product_bundle';
+    public const PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
