@@ -130,7 +130,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
-            ->groupByIdSalesOrder();
+            ->groupByIdSalesOrder()
+            ->setIgnoreCase(true);
 
         $salesOrderQuery = $this->buildSearchOrdersQuery($salesOrderQuery, $orderListTransfer);
         $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPagination());
