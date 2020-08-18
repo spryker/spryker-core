@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace SprykerTest\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\EventEntityTransfer;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Shared\ProductBundleStorage\ProductBundleStorageConfig;
-use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundleWritePublisherPlugin;
+use Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle\ProductBundlePublishWritePublisherPlugin;
 
 /**
  * Auto-generated group annotations
@@ -59,7 +59,7 @@ class ProductBundleWritePublisherPluginTest extends Unit
         $productForBundleTransfers = $productConcreteTransfer->getProductBundle()->getBundledProducts();
 
         // Act
-        $productBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
+        $productBundleWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($productConcreteTransfer->getIdProductConcrete()),
         ];
@@ -106,7 +106,7 @@ class ProductBundleWritePublisherPluginTest extends Unit
         $secondProductConcreteTransfer = $this->tester->haveProductBundle($this->tester->haveFullProduct());
 
         // Act
-        $productBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
+        $productBundleWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
         $eventTransfers = [
             (new EventEntityTransfer())->setId($firstProductConcreteTransfer->getIdProductConcrete()),
             (new EventEntityTransfer())->setId($secondProductConcreteTransfer->getIdProductConcrete()),
@@ -139,7 +139,7 @@ class ProductBundleWritePublisherPluginTest extends Unit
     public function testProductBundleWritePublisherPluginWithFakeProductConcreteId(): void
     {
         // Act
-        $productBundleWritePublisherPlugin = new ProductBundleWritePublisherPlugin();
+        $productBundleWritePublisherPlugin = new ProductBundlePublishWritePublisherPlugin();
         $eventTransfers = [
             (new EventEntityTransfer())->setId(static::FAKE_ID_PRODUCT_CONCRETE),
         ];

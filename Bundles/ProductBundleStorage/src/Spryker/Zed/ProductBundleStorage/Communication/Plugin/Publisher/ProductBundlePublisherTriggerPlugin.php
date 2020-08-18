@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher;
@@ -26,6 +26,11 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
     protected const ID_PRODUCT_CONCRETE_BUNDLE = 'id_product_concrete_bundle';
 
     /**
+     * @uses \Orm\Zed\ProductBundle\Persistence\Map\SpyProductBundleTableMap::COL_ID_PRODUCT_BUNDLE
+     */
+    protected const COL_ID_PRODUCT_BUNDLE = 'spy_product_bundle.id_product_bundle';
+
+    /**
      * {@inheritDoc}
      * - Retrieves `ProductBundleTransfer` collection by provided limit and offset.
      *
@@ -39,6 +44,7 @@ class ProductBundlePublisherTriggerPlugin extends AbstractPlugin implements Publ
     public function getData(int $offset, int $limit): array
     {
         $filterTransfer = (new FilterTransfer())
+            ->setOrderBy(static::COL_ID_PRODUCT_BUNDLE)
             ->setOffset($offset)
             ->setLimit($limit);
 

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Shared\ProductBundleStorage;
@@ -33,7 +33,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      *
      * @api
      */
-    public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish';
+    public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
     /**
      * Specification:
@@ -65,7 +65,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      *
      * @api
      *
-     * @uses \Spryker\Shared\ProductStorage\ProductStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::ENTITY_SPY_PRODUCT_UPDATE
      */
     public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 }

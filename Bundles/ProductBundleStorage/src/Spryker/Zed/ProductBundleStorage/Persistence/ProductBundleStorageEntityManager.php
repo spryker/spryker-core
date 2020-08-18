@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Persistence;
@@ -39,9 +39,13 @@ class ProductBundleStorageEntityManager extends AbstractEntityManager implements
      */
     public function deleteProductBundleStorageEntities(array $productConcreteIds): void
     {
-        $this->getFactory()
+        $productBundleStorageEntities = $this->getFactory()
             ->getProductBundleStoragePropelQuery()
             ->filterByFkProduct_In($productConcreteIds)
-            ->delete();
+            ->find();
+
+        foreach ($productBundleStorageEntities as $productBundleStorageEntity) {
+            $productBundleStorageEntity->delete();
+        }
     }
 }

@@ -2,7 +2,7 @@
 
 /**
  * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
 namespace Spryker\Zed\ProductBundleStorage\Communication\Plugin\Publisher\ProductBundle;
@@ -20,7 +20,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
 {
     /**
      * {@inheritDoc}
-     * - Publishes product bundle data by publish product bundle event.
+     * - Publishes product bundle data by create, update and delete product bundle events.
      *
      * @api
      *
@@ -31,7 +31,7 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
      */
     public function handleBulk(array $eventTransfers, $eventName): void
     {
-        $this->getFacade()->writeCollectionByProductBundlePublishEvents($eventTransfers);
+        $this->getFacade()->writeCollectionByProductBundleEvents($eventTransfers);
     }
 
     /**
@@ -44,7 +44,9 @@ class ProductBundleWritePublisherPlugin extends AbstractPlugin implements Publis
     public function getSubscribedEvents(): array
     {
         return [
-            ProductBundleStorageConfig::PRODUCT_BUNDLE_PUBLISH,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_CREATE,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_UPDATE,
+            ProductBundleStorageConfig::ENTITY_SPY_PRODUCT_BUNDLE_DELETE,
         ];
     }
 }
