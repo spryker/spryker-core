@@ -23,7 +23,7 @@ use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Client\StorageDatabase\StorageDatabaseConfig getModuleConfig()
  *
  * @SuppressWarnings(PHPMD)
