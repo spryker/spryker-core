@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
     -
         message: '#Negated boolean expression is always false.#'
@@ -45,4 +46,13 @@ parameters:
     -
         message: '#Call to method send\(\) on an unknown class Elastica\\Type\\Mapping.#'
         path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearch/src/Spryker/Zed/SearchElasticsearch/Business/Installer/Index/Update/MappingTypeAwareIndexUpdater.php'
-
+    - '#Call to an undefined method .+Index::getDocument\(\)#'
+    - '#Call to an undefined method .+Index::addDocument\(\)#'
+    - '#Call to an undefined method .+Index::deleteById\(\)#'
+    - '#Call to method toArray\(\) on an unknown class Elastica\\Mapping#'
+    - '#Call to method setParam\(\) on an unknown class Elastica\\Mapping#'
+    - '#Call to method send\(\) on an unknown class Elastica\\Mapping#'
+    - '#Return typehint of method .+MappingBuilder::buildMapping\(\) has invalid type Elastica\\Mapping.#'
+    - '#Return typehint of method .+MappingBuilder.+::buildMapping\(\) has invalid type Elastica\\Mapping.#'
+    - '#Instantiated class Elastica\\Mapping not found.#'
+    - '#PHPDoc tag @var for variable \$mapping contains unknown class Elastica\\Mapping#'

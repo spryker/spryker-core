@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
     -
         message: '#Parameter \#1 \$filter of method Elastica\\Query\\BoolQuery::addFilter\(\) expects Elastica\\Query\\AbstractQuery, Elastica\\Query\\Type given.#'
