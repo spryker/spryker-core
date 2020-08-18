@@ -158,9 +158,15 @@ class EditController extends BaseProductRelationController
 
         $productRelationTransfer->setIsActive((bool)$request->request->get(ProductRelationStatusForm::FIELD_IS_ACTIVE));
 
-        $this->getFactory()
+        $productRelationResponseTransfer = $this->getFactory()
             ->getProductRelationFacade()
             ->updateProductRelation($productRelationTransfer);
+
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($productRelationResponseTransfer);
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $this->addSuccessMessage($productRelationTransfer->getIsActive() ? static::MESSAGE_ACTIVATE_SUCCESS : static::MESSAGE_DEACTIVATE_SUCCESS);
 
