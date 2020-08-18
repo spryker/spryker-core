@@ -25,7 +25,8 @@ class EditController extends BaseProductRelationController
     protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
     protected const MESSAGE_CSRF_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
 
-    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" was not found.';
+    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id ""%d"" not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
@@ -141,13 +142,16 @@ class EditController extends BaseProductRelationController
             return $this->redirectResponse($redirectUrl);
         }
 
+        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
         $productRelationTransfer = $this->getFactory()
             ->getProductRelationFacade()
-            ->findProductRelationById($this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION)))
+            ->findProductRelationById($idProductRelation)
             ->getProductRelation();
 
         if (!$productRelationTransfer) {
-            $this->addErrorMessage(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND);
+            $this->addErrorMessage(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idProductRelation,
+            ]);
 
             return $this->redirectResponse($redirectUrl);
         }
