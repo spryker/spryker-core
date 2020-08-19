@@ -52,7 +52,7 @@ class FileRemover implements FileRemoverInterface
      */
     public function deleteFileInfo(int $idFileInfo)
     {
-        $fileInfoTransfer = (new FileInfoTransfer())->setIdFileInfo($idFileInfo);
+        $fileInfoTransfer = $this->repository->getFileInfo($idFileInfo);
 
         return $this->getTransactionHandler()->handleTransaction(function () use ($fileInfoTransfer) {
             return $this->executeDeleteFileInfoTransaction($fileInfoTransfer);

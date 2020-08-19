@@ -138,7 +138,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
             $salesOrderQuery->add(
                 static::ORDER_SEARCH_TYPE_MAPPING[$searchType],
                 $this->generateLikePattern($searchValue),
-                Criteria::ILIKE
+                Criteria::LIKE
             );
 
             return $salesOrderQuery;
@@ -168,7 +168,7 @@ class OrderSearchFilterFieldQueryBuilder implements OrderSearchFilterFieldQueryB
                 $conditionName,
                 static::ORDER_SEARCH_TYPE_MAPPING[$searchType],
                 $this->generateLikePattern($searchValue),
-                Criteria::ILIKE
+                Criteria::LIKE
             );
 
             $conditions[] = $conditionName;
