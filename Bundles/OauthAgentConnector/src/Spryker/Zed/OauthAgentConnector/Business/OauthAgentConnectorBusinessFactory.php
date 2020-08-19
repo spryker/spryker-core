@@ -8,6 +8,8 @@
 namespace Spryker\Zed\OauthAgentConnector\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapter;
+use Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface;
 use Spryker\Zed\OauthAgentConnector\Business\Installer\AgentOauthScopeInstaller;
 use Spryker\Zed\OauthAgentConnector\Business\Installer\AgentOauthScopeInstallerInterface;
 use Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider\AgentOauthUserProvider;
@@ -18,8 +20,6 @@ use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgent
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToOauthFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
 use Spryker\Zed\OauthAgentConnector\OauthAgentConnectorDependencyProvider;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 /**
  * @method \Spryker\Zed\OauthAgentConnector\OauthAgentConnectorConfig getConfig()
@@ -34,7 +34,7 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
         return new AgentOauthUserProvider(
             $this->getAgentFacade(),
             $this->getUtilEncodingService(),
-            $this->createBCryptPasswordEncoder()
+            $this->createPasswordEncoderAdapter()
         );
     }
 
@@ -58,11 +58,11 @@ class OauthAgentConnectorBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     * @return \Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface
      */
-    public function createBCryptPasswordEncoder(): PasswordEncoderInterface
+    public function createPasswordEncoderAdapter(): PasswordEncoderAdapterInterface
     {
-        return new BCryptPasswordEncoder($this->getConfig()->getBcryptFactor());
+        return new PasswordEncoderAdapter();
     }
 
     /**

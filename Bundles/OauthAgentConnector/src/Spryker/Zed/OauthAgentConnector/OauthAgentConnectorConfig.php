@@ -12,7 +12,6 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 class OauthAgentConnectorConfig extends AbstractBundleConfig
 {
     protected const OAUTH_SCOPE_AGENT = 'agent';
-    protected const BCRYPT_FACTOR = 12;
 
     public const GRANT_TYPE_AGENT_CREDENTIALS = 'agent_credentials';
 
@@ -27,18 +26,5 @@ class OauthAgentConnectorConfig extends AbstractBundleConfig
     public function getAgentScopes(): array
     {
         return [static::OAUTH_SCOPE_AGENT];
-    }
-
-    /**
-     * Specification:
-     * - Returns the BCrypt factor value.
-     *
-     * @api
-     *
-     * @return int
-     */
-    public function getBcryptFactor(): int
-    {
-        return static::BCRYPT_FACTOR;
     }
 }

@@ -9,9 +9,9 @@ namespace Spryker\Zed\OauthAgentConnector\Business\OauthUserProvider;
 
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
+use Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface;
 use Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface;
-use Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface;
 
 class AgentOauthUserProvider implements AgentOauthUserProviderInterface
 {
@@ -26,23 +26,23 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
     protected $utilEncodingService;
 
     /**
-     * @var \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface
+     * @var \Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface
      */
-    protected $passwordEncoder;
+    protected $passwordEncoderAdapter;
 
     /**
      * @param \Spryker\Zed\OauthAgentConnector\Dependency\Facade\OauthAgentConnectorToAgentFacadeInterface $agentFacade
      * @param \Spryker\Zed\OauthAgentConnector\Dependency\Service\OauthAgentConnectorToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface $passwordEncoder
+     * @param \Spryker\Zed\OauthAgentConnector\Business\Adapter\PasswordEncoderAdapterInterface $passwordEncoderAdapter
      */
     public function __construct(
         OauthAgentConnectorToAgentFacadeInterface $agentFacade,
         OauthAgentConnectorToUtilEncodingServiceInterface $utilEncodingService,
-        PasswordEncoderInterface $passwordEncoder
+        PasswordEncoderAdapterInterface $passwordEncoderAdapter
     ) {
         $this->agentFacade = $agentFacade;
         $this->utilEncodingService = $utilEncodingService;
-        $this->passwordEncoder = $passwordEncoder;
+        $this->passwordEncoderAdapter = $passwordEncoderAdapter;
     }
 
     /**
@@ -59,7 +59,7 @@ class AgentOauthUserProvider implements AgentOauthUserProviderInterface
             return $oauthUserTransfer;
         }
 
-        $isAuthorized = $this->passwordEncoder->isPasswordValid(
+        $isAuthorized = $this->passwordEncoderAdapter->isPasswordValid(
             $findAgentResponseTransfer->getAgent()->getPassword(),
             $oauthUserTransfer->getPassword(),
             null
