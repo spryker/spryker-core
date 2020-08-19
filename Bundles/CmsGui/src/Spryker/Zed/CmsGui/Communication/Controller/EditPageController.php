@@ -82,14 +82,6 @@ class EditPageController extends AbstractController
 
         $pageTabs = $this->getFactory()->createPageTabs();
 
-        $publishForm = $this->getFactory()->createPublishVersionPageForm();
-
-        if ($cmsPageTransfer->getIsActive()) {
-            $activationForm = $this->getFactory()->createDeactivateCmsPageForm();
-        } else {
-            $activationForm = $this->getFactory()->createActivateCmsPageForm();
-        }
-
         return [
             'pageTabs' => $pageTabs->createView(),
             'pageForm' => $pageForm->createView(),
@@ -98,8 +90,8 @@ class EditPageController extends AbstractController
             'cmsVersion' => $cmsVersion,
             'cmsPage' => $cmsPageTransfer,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
-            'publishForm' => $publishForm->createView(),
-            'activationForm' => $activationForm->createView(),
+            'publishForm' => $this->getFactory()->createPublishVersionPageForm()->createView(),
+            'toggleActiveForm' => $this->getFactory()->createToggleActivateCmsPageForm()->createView(),
         ];
     }
 
@@ -154,14 +146,14 @@ class EditPageController extends AbstractController
     public function activateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->request->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
 
-        $form = $this->getFactory()->createActivateCmsPageForm()->handleRequest($request);
+        $form = $this->getFactory()->createToggleActivateCmsPageForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage('CSRF token is not valid.');
 
-            return $this->redirectResponse($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         try {
@@ -185,14 +177,14 @@ class EditPageController extends AbstractController
     public function deactivateAction(Request $request)
     {
         $idCmsPage = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_PAGE));
-        $redirectUrl = $request->request->get(static::URL_PARAM_REDIRECT_URL);
+        $redirectUrl = $request->get(static::URL_PARAM_REDIRECT_URL);
 
-        $form = $this->getFactory()->createDeactivateCmsPageForm()->handleRequest($request);
+        $form = $this->getFactory()->createToggleActivateCmsPageForm()->handleRequest($request);
 
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage('CSRF token is not valid.');
 
-            return $this->redirectResponse($redirectUrl);
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         $this->getFactory()
