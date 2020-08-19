@@ -27,7 +27,7 @@ Inactive,Inactive
 "Product relation key","Product relation key"
 "Product relation successfully created","Product relation successfully created"
 "Product relation successfully modified","Product relation successfully modified"
-"Product relation with id ""%d"" not found.","Product relation with id ""%d"" not found."
+"Product relation with id ""%id%"" not found.","Product relation with id ""%id%"" not found."
 "Product Relations","Product Relations"
 "Related products","Related products"
 related-products,"Related products"

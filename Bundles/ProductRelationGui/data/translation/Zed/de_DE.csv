@@ -27,7 +27,7 @@ Inactive,Inaktiv
 "Product relation key","Produktbeziehung Schlüssel"
 "Product relation successfully created","Produktbeziehung erfolgreich erstellt"
 "Product relation successfully modified","Produktbeziehung erfolgreich geändert"
-"Product relation with id ""%d"" not found.","Produktbeziehung mit der ID ""%d"" nicht gefunden"
+"Product relation with id ""%id%"" not found.","Produktbeziehung mit der ID ""%id%"" nicht gefunden"
 "Product Relations",Produktbeziehungen
 "Related products","Ähnliche Produkte"
 related-products,"Ähnliche Produkte"
