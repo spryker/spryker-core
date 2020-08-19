@@ -35,7 +35,10 @@ class PasswordEncoderAdapter implements PasswordEncoderAdapterInterface
     protected function getPasswordEncoder(): PasswordEncoderInterface
     {
         if (class_exists(NativePasswordEncoder::class)) {
-            return new NativePasswordEncoder();
+            /** @var \Symfony\Component\Security\Core\Encoder\PasswordEncoderInterface $nativePasswordEncoder */
+            $nativePasswordEncoder = new NativePasswordEncoder();
+
+            return $nativePasswordEncoder;
         }
 
         return new BCryptPasswordEncoder(static::BCRYPT_FACTOR);
