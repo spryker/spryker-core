@@ -4,7 +4,7 @@
     {% set buttonClass = 'btn-remove' %}
     {% set icon = 'fa-trash' %}
 {% else %}
-    {% set actionUrl = url('/cms-gui/edit-page/activate', {'id-cms-page': cmsPage.fkPage})  %}
+    {% set actionUrl = url('/cms-gui/edit-page/activate', {'id-cms-page': cmsPage.fkPage}) %}
     {% set label = 'Activate' %}
     {% set buttonClass = 'btn-view' %}
     {% set icon = 'fa-caret-right' %}
