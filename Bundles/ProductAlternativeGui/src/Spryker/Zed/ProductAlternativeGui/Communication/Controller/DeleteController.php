@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductAlternativeGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductAlternativeResponseTransfer;
-use RuntimeException;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,22 +65,10 @@ class DeleteController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @throws \RuntimeException
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectToReferer(Request $request): RedirectResponse
     {
-        $refererUrl = $request->headers->get('referer');
-
-        if (!$refererUrl) {
-            throw new RuntimeException('Referer URL is not provided.');
-        }
-
-        $urlParts = parse_url($refererUrl);
-        $redirectUrl = $urlParts['path'];
-        $redirectUrl .= isset($urlParts['query']) ? '?' . $urlParts['query'] : '';
-
-        return $this->redirectResponse($redirectUrl . static::KEY_TAB_PRODUCT_ALTERNATIVE);
+        return $this->redirectResponseExternal($request->headers->get('referer') . static::KEY_TAB_PRODUCT_ALTERNATIVE);
     }
 }
