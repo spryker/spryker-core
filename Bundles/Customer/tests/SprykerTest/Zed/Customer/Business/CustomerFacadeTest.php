@@ -996,7 +996,7 @@ class CustomerFacadeTest extends Unit
     public function testGetCustomerByCriteriaShouldFindExistingCustomer(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->createTestCustomer();
         $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference());
 
@@ -1040,7 +1040,7 @@ class CustomerFacadeTest extends Unit
     public function testGetCustomerByCriteriaShouldRunExpanders(): void
     {
         // Arrange
-        $customerTransfer = $this->tester->haveCustomer();
+        $customerTransfer = $this->createTestCustomer();
         $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
             ->setCustomerReference($customerTransfer->getCustomerReference())
             ->setWithExpanders(true);
