@@ -12,6 +12,8 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 
 class SetupFrontendConfig extends AbstractBundleConfig
 {
+    protected const NODE_JS_MINIMUM_REQUIRED_MAJOR_VERSION = 12;
+
     /**
      * @api
      *
@@ -180,5 +182,19 @@ class SetupFrontendConfig extends AbstractBundleConfig
     public function getMerchantPortalBuildCommand(): string
     {
         return 'npm run mp:build';
+    }
+
+    /**
+     * Specification:
+     * - Used to define minimum required node js version, e.g.: 12.0.0.
+     * - Used to download respective node js package for update, e.g.: https://deb.nodesource.com/setup_12.x.
+     *
+     * @api
+     *
+     * @return int
+     */
+    public function getNodeJsMinimumRequiredMajorVersion(): int
+    {
+        return static::NODE_JS_MINIMUM_REQUIRED_MAJOR_VERSION;
     }
 }
