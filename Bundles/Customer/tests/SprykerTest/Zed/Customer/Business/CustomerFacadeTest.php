@@ -1059,7 +1059,7 @@ class CustomerFacadeTest extends Unit
             ->getCustomerByCriteria($customerCriteriaTransfer);
 
         // Assert
-        $this->assertFalse($customerResponseTransfer->getIsSuccess(), 'Customer must be findable by customer reference');
+        $this->assertTrue($customerResponseTransfer->getIsSuccess(), 'Customer must be findable by customer reference');
     }
 
     /**
