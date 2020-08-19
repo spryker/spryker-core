@@ -112,7 +112,7 @@ class OrderConfirmationMailTypePlugin extends AbstractPlugin implements MailType
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }
