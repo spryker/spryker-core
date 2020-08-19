@@ -1,5 +1,5 @@
 {% if cmsPage.isActive %}
-    {% set actionUrl = url('/cms-gui/edit-page/deactivate', {'id-cms-page': cmsPage.fkPage})  %}
+    {% set actionUrl = url('/cms-gui/edit-page/deactivate', {'id-cms-page': cmsPage.fkPage}) %}
     {% set label = 'Deactivate' %}
     {% set buttonClass = 'btn-remove' %}
     {% set icon = 'fa-trash' %}
