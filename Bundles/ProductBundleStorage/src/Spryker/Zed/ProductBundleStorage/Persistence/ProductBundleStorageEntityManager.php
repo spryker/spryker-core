@@ -39,9 +39,13 @@ class ProductBundleStorageEntityManager extends AbstractEntityManager implements
      */
     public function deleteProductBundleStorageEntities(array $productConcreteIds): void
     {
-        $this->getFactory()
+        $productBundleStorageEntities = $this->getFactory()
             ->getProductBundleStoragePropelQuery()
             ->filterByFkProduct_In($productConcreteIds)
-            ->delete();
+            ->find();
+
+        foreach ($productBundleStorageEntities as $productBundleStorageEntity) {
+            $productBundleStorageEntity->delete();
+        }
     }
 }

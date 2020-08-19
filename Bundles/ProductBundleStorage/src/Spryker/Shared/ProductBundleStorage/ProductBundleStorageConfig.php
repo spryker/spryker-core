@@ -16,8 +16,10 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      * - Queue name as used for processing product_bundle messages.
      *
      * @api
+     *
+     * @uses \Spryker\Shared\ProductStorage\ProductStorageConstants::PRODUCT_SYNC_STORAGE_QUEUE
      */
-    public const PRODUCT_BUNDLE_SYNC_STORAGE_QUEUE = 'sync.storage.product_bundle';
+    public const PRODUCT_SYNC_STORAGE_QUEUE = 'sync.storage.product';
 
     /**
      * Specification:
@@ -33,7 +35,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      *
      * @api
      */
-    public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish';
+    public const PRODUCT_BUNDLE_PUBLISH = 'ProductBundle.product_bundle.publish.write';
 
     /**
      * Specification:
@@ -65,7 +67,7 @@ class ProductBundleStorageConfig extends AbstractSharedConfig
      *
      * @api
      *
-     * @uses \Spryker\Shared\ProductStorage\ProductStorageConfig::ENTITY_SPY_PRODUCT_UPDATE
+     * @uses \Spryker\Zed\Product\Dependency\ProductEvents::ENTITY_SPY_PRODUCT_UPDATE
      */
     public const ENTITY_SPY_PRODUCT_UPDATE = 'Entity.spy_product.update';
 }

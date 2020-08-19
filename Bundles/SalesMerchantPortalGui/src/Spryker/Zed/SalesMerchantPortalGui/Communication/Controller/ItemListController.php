@@ -9,8 +9,8 @@ namespace Spryker\Zed\SalesMerchantPortalGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -27,9 +27,9 @@ class ItemListController extends AbstractController
      *
      * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function tableDataAction(Request $request): JsonResponse
+    public function tableDataAction(Request $request): Response
     {
         $merchantOrderItemIds = $this->getMerchantOrderItemIds($request);
         $idMerchantOrder = $this->castId($request->get(static::PARAM_MERCHANT_ORDER_ID));
@@ -46,24 +46,10 @@ class ItemListController extends AbstractController
             throw new NotFoundHttpException(sprintf('Merchant order not found for id %d.', $idMerchantOrder));
         }
 
-        $guiTableFacade = $this->getFactory()->getGuiTableFacade();
-
-        $guiTableConfigurationTransfer = $this->getFactory()
-            ->createMerchantOrderItemGuiTableConfigurationProvider()
-            ->getConfiguration($merchantOrderTransfer);
-
-        $guiTableDataRequestTransfer = $guiTableFacade->buildGuiTableDataRequest(
-            $request->query->all(),
-            $guiTableConfigurationTransfer
-        );
-        $guiTableDataRequestTransfer->setMerchantOrderItemIds($merchantOrderItemIds);
-
-        $guiTableDataResponseTransfer = $this->getFactory()
-            ->createMerchantOrderItemGuiTableDataProvider()
-            ->getData($guiTableDataRequestTransfer);
-
-        return $this->jsonResponse(
-            $guiTableFacade->formatGuiTableDataResponse($guiTableDataResponseTransfer, $guiTableConfigurationTransfer)
+        return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
+            $request,
+            $this->getFactory()->createMerchantOrderItemGuiTableDataProvider($merchantOrderItemIds),
+            $this->getFactory()->createMerchantOrderItemGuiTableConfigurationProvider()->getConfiguration($merchantOrderTransfer)
         );
     }
 

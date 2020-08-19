@@ -94,7 +94,7 @@ class ProductBundleSynchronizationDataBulkRepositoryPlugin extends AbstractPlugi
      */
     public function getQueueName(): string
     {
-        return ProductBundleStorageConfig::PRODUCT_BUNDLE_SYNC_STORAGE_QUEUE;
+        return ProductBundleStorageConfig::PRODUCT_SYNC_STORAGE_QUEUE;
     }
 
     /**
