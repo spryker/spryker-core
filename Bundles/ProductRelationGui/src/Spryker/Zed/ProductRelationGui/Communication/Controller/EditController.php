@@ -9,7 +9,6 @@ namespace Spryker\Zed\ProductRelationGui\Communication\Controller;
 
 use Generated\Shared\Transfer\ProductRelationResponseTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationStatusForm;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -109,9 +108,9 @@ class EditController extends BaseProductRelationController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function activateAction(Request $request): RedirectResponse
+    public function toggleIsActiveAction(Request $request): RedirectResponse
     {
-        return $this->executeRelationStatusChangeAction($request);
+        return $this->executeToggleIsActiveAction($request);
     }
 
     /**
@@ -119,21 +118,11 @@ class EditController extends BaseProductRelationController
      *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
-    public function deactivateAction(Request $request): RedirectResponse
-    {
-        return $this->executeRelationStatusChangeAction($request);
-    }
-
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    protected function executeRelationStatusChangeAction(Request $request): RedirectResponse
+    protected function executeToggleIsActiveAction(Request $request): RedirectResponse
     {
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
         $productRelationStatusForm = $this->getFactory()
-            ->createProductRelationStatusForm()
+            ->createProductRelationToggleIsActiveForm()
             ->handleRequest($request);
 
         if (!$productRelationStatusForm->isSubmitted() || !$productRelationStatusForm->isValid()) {
@@ -156,7 +145,7 @@ class EditController extends BaseProductRelationController
             return $this->redirectResponse($redirectUrl);
         }
 
-        $productRelationTransfer->setIsActive((bool)$request->request->get(ProductRelationStatusForm::FIELD_IS_ACTIVE));
+        $productRelationTransfer->setIsActive(!$productRelationTransfer->getIsActive());
 
         $productRelationResponseTransfer = $this->getFactory()
             ->getProductRelationFacade()

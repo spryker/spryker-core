@@ -20,7 +20,7 @@ use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\DeleteController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\EditController;
 use Spryker\Zed\ProductRelationGui\Communication\Controller\ViewController;
-use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationStatusForm;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationToggleIsActiveForm;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductFacadeInterface;
 use Spryker\Zed\ProductRelationGui\ProductRelationGuiConfig;
@@ -40,8 +40,7 @@ class ProductRelationTable extends AbstractTable
     protected const COL_LOCALIZED_NAME = 'localized_name';
 
     protected const URL_RELATION_DELETE = '/product-relation-gui/delete/index';
-    protected const URL_RELATION_ACTIVATE = '/product-relation-gui/edit/activate';
-    protected const URL_RELATION_DEACTIVATE = '/product-relation-gui/edit/deactivate';
+    protected const URL_RELATION_TOGGLE_IS_ACTIVE = '/product-relation-gui/edit/toggle-is-active';
     protected const URL_PRODUCT_RELATION_LIST = '/product-relation-gui/list/index';
     protected const URL_PRODUCT_RELATION_VIEW = '/product-relation-gui/view/index';
 
@@ -344,26 +343,23 @@ class ProductRelationTable extends AbstractTable
     {
         if ($productRelationEntity->getIsActive()) {
             return $this->generateFormButton(
-                Url::generate(static::URL_RELATION_DEACTIVATE, [
+                Url::generate(static::URL_RELATION_TOGGLE_IS_ACTIVE, [
                     EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationEntity->getIdProductRelation(),
                     EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
                 ]),
                 'Deactivate',
-                ProductRelationStatusForm::class,
-                [static::BUTTON_CLASS => 'btn-danger safe-submit'],
-                [ProductRelationStatusForm::OPTION_IS_ACTIVE => 0]
+                ProductRelationToggleIsActiveForm::class,
+                [static::BUTTON_CLASS => 'btn-danger safe-submit']
             );
         }
 
         return $this->generateFormButton(
-            Url::generate(static::URL_RELATION_ACTIVATE, [
+            Url::generate(static::URL_RELATION_TOGGLE_IS_ACTIVE, [
                 EditController::URL_PARAM_ID_PRODUCT_RELATION => $productRelationEntity->getIdProductRelation(),
                 EditController::URL_PARAM_REDIRECT_URL => static::URL_PRODUCT_RELATION_LIST,
             ]),
             'Activate',
-            ProductRelationStatusForm::class,
-            [],
-            [ProductRelationStatusForm::OPTION_IS_ACTIVE => 1]
+            ProductRelationToggleIsActiveForm::class
         );
     }
 
