@@ -62,7 +62,7 @@ class ProductBundleStorageReader implements ProductBundleStorageReaderInterface
         }
 
         $productBundleStorageTransfers = [];
-        foreach ($productBundleStorageData as $storageKey => $productBundleStorageDatum) {
+        foreach ($productBundleStorageData as $productBundleStorageDatum) {
             $decodedProductBundleStorageData = $this->utilEncodingService
                 ->decodeJson($productBundleStorageDatum, true);
 

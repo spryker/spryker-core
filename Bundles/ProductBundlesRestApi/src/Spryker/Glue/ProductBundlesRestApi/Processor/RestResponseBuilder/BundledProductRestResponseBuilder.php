@@ -89,11 +89,10 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
             )->addLink(
                 RestLinkInterface::LINK_SELF,
                 sprintf(
-                    '%s/%s/%s/%s',
+                    '%s/%s/%s',
                     ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
                     $productConcreteSku,
-                    ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
-                    $bundledProduct->getSku()
+                    ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS
                 )
             );
         }
