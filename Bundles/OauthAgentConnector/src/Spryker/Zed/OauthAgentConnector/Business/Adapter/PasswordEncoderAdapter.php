@@ -34,7 +34,7 @@ class PasswordEncoderAdapter implements PasswordEncoderAdapterInterface
      */
     protected function getPasswordEncoder(): PasswordEncoderInterface
     {
-        if (class_exists('NativePasswordEncoder')) {
+        if (class_exists(NativePasswordEncoder::class)) {
             return new NativePasswordEncoder();
         }
 
