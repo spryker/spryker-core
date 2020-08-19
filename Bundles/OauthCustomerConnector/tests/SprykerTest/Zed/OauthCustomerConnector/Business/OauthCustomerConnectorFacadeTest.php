@@ -139,7 +139,7 @@ class OauthCustomerConnectorFacadeTest extends Unit
         $scopes = $this->tester->getFacade()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
 
         //Assert
-        $this->assertNotEmpty($scopes,'Customer impersonation scopes must be returned.');
+        $this->assertNotEmpty($scopes, 'Customer impersonation scopes must be returned.');
         $this->assertContains($defaultScopeTransfer, $scopes, 'Customer impersonation scopes must include the default one.');
     }
 }
