@@ -65,3 +65,4 @@ Delete,Löschen
 "Yes, delete this product relation","Ja, diese Produktbeziehung löschen"
 "Number of Products",Artikelanzahl
 Store,Store
+"CSRF token is not valid.","CSRF-Token ist ungültig."
