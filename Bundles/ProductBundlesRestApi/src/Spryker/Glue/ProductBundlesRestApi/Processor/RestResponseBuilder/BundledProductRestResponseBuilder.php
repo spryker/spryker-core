@@ -78,13 +78,13 @@ class BundledProductRestResponseBuilder implements BundledProductRestResponseBui
         ProductBundleStorageTransfer $productBundleStorageTransfer
     ): array {
         $bundledProductRestResources = [];
-        foreach ($productBundleStorageTransfer->getBundledProducts() as $bundledProduct) {
+        foreach ($productBundleStorageTransfer->getBundledProducts() as $productForProductBundleStorageTransfer) {
             $restBundledProductsAttributesTransfer = (new RestBundledProductsAttributesTransfer())
-                ->fromArray($bundledProduct->toArray(), true);
+                ->fromArray($productForProductBundleStorageTransfer->toArray(), true);
 
             $bundledProductRestResources[] = $this->restResourceBuilder->createRestResource(
                 ProductBundlesRestApiConfig::RESOURCE_BUNDLED_PRODUCTS,
-                $bundledProduct->getSku(),
+                $productForProductBundleStorageTransfer->getSku(),
                 $restBundledProductsAttributesTransfer
             )->addLink(
                 RestLinkInterface::LINK_SELF,

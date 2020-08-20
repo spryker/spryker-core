@@ -15,7 +15,7 @@ use Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiFactory getFactory()
  */
-class BundledProductsByProductConcreteSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class BundledProductByProductConcreteSkuResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
