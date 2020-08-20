@@ -20,6 +20,12 @@ class EditController extends BaseProductRelationController
     public const URL_PARAM_REDIRECT_URL = 'redirect-url';
 
     protected const MESSAGE_SUCCESS = 'Product relation successfully modified';
+    protected const MESSAGE_ACTIVATE_SUCCESS = 'Relation successfully activated.';
+    protected const MESSAGE_DEACTIVATE_SUCCESS = 'Relation successfully deactivated.';
+    protected const MESSAGE_CSRF_TOKEN_IS_NOT_VALID = 'CSRF token is not valid.';
+
+    protected const ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND = 'Product relation with id "%id%" not found.';
+    protected const ERROR_MESSAGE_PARAM_ID = '%id%';
 
     /**
      * @uses \Spryker\Zed\ProductRelationGui\Communication\Controller\EditController::indexAction()
@@ -95,6 +101,65 @@ class EditController extends BaseProductRelationController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function toggleIsActiveAction(Request $request): RedirectResponse
+    {
+        return $this->executeToggleIsActiveAction($request);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function executeToggleIsActiveAction(Request $request): RedirectResponse
+    {
+        $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL);
+        $productRelationStatusForm = $this->getFactory()
+            ->createProductRelationToggleIsActiveForm()
+            ->handleRequest($request);
+
+        if (!$productRelationStatusForm->isSubmitted() || !$productRelationStatusForm->isValid()) {
+            $this->addErrorMessage(static::MESSAGE_CSRF_TOKEN_IS_NOT_VALID);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $idProductRelation = $this->castId($request->query->get(static::URL_PARAM_ID_PRODUCT_RELATION));
+        $productRelationTransfer = $this->getFactory()
+            ->getProductRelationFacade()
+            ->findProductRelationById($idProductRelation)
+            ->getProductRelation();
+
+        if (!$productRelationTransfer) {
+            $this->addErrorMessage(static::ERROR_MESSAGE_PRODUCT_RELATION_NOT_FOUND, [
+                static::ERROR_MESSAGE_PARAM_ID => $idProductRelation,
+            ]);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $productRelationTransfer->setIsActive(!$productRelationTransfer->getIsActive());
+
+        $productRelationResponseTransfer = $this->getFactory()
+            ->getProductRelationFacade()
+            ->updateProductRelation($productRelationTransfer);
+
+        if (!$productRelationResponseTransfer->getIsSuccessful()) {
+            $this->processErrorMessages($productRelationResponseTransfer);
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        $this->addSuccessMessage($productRelationTransfer->getIsActive() ? static::MESSAGE_ACTIVATE_SUCCESS : static::MESSAGE_DEACTIVATE_SUCCESS);
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
