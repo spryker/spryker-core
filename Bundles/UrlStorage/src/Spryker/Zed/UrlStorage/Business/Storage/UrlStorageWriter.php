@@ -184,7 +184,7 @@ class UrlStorageWriter implements UrlStorageWriterInterface
         }
 
         $this->getLogger()->warning(sprintf(
-            "The URL entity resource type could not be defined, so it won't be published: %s",
+            "The URL entity resource type could not be determined, URL won't be published: %s",
             json_encode($data)
         ));
 
