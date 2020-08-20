@@ -10,6 +10,7 @@ namespace Spryker\Zed\UrlStorage\Business\Storage;
 use Generated\Shared\Transfer\UrlStorageTransfer;
 use Orm\Zed\Url\Persistence\SpyUrl;
 use Orm\Zed\UrlStorage\Persistence\SpyUrlStorage;
+use Spryker\Shared\Log\LoggerTrait;
 use Spryker\Zed\Url\Persistence\Propel\AbstractSpyUrl;
 use Spryker\Zed\UrlStorage\Dependency\Facade\UrlStorageToStoreFacadeInterface;
 use Spryker\Zed\UrlStorage\Dependency\Service\UrlStorageToUtilSanitizeServiceInterface;
@@ -18,6 +19,8 @@ use Spryker\Zed\UrlStorage\Persistence\UrlStorageRepositoryInterface;
 
 class UrlStorageWriter implements UrlStorageWriterInterface
 {
+    use LoggerTrait;
+
     public const RESOURCE_TYPE = 'type';
     public const RESOURCE_VALUE = 'value';
 
@@ -179,6 +182,11 @@ class UrlStorageWriter implements UrlStorageWriterInterface
                 static::RESOURCE_VALUE => $value,
             ];
         }
+
+        $this->getLogger()->warning(sprintf(
+            "The URL entity resource type could not be defined, so it won't be published: %s",
+            json_encode($data)
+        ));
 
         return null;
     }
