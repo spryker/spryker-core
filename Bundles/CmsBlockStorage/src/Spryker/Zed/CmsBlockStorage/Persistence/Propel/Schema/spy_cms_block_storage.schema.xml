@@ -4,8 +4,8 @@
     <table name="spy_cms_block_storage" identifierQuoting="true">
         <column name="id_cms_block_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_cms_block" type="INTEGER" required="true"/>
-        <column name="name" type="VARCHAR" required="true"/>
-        <column name="cms_block_key" type="VARCHAR" required="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="cms_block_key" type="VARCHAR" size="255" required="true"/>
         <index name="spy_cms_block_storage-fk_cms_block">
             <index-column name="fk_cms_block"/>
         </index>

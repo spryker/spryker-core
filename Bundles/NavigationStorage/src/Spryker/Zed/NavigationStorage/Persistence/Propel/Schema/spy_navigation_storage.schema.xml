@@ -6,7 +6,7 @@
     <table name="spy_navigation_storage" identifierQuoting="true">
         <column name="id_navigation_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_navigation" type="INTEGER" required="true"/>
-        <column name="navigation_key" type="VARCHAR" required="true"/>
+        <column name="navigation_key" type="VARCHAR" size="255" required="true"/>
         <index name="spy_navigation_storage-fk_navigation">
             <index-column name="fk_navigation"/>
         </index>
