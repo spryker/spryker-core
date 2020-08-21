@@ -40,7 +40,7 @@ class StorageRedisWrapper implements StorageRedisWrapperInterface
     /**
      * @var string
      */
-    private $connectionKey;
+    protected $connectionKey;
 
     /**
      * @param \Spryker\Client\StorageRedis\Dependency\Client\StorageRedisToRedisClientInterface $redisClient
