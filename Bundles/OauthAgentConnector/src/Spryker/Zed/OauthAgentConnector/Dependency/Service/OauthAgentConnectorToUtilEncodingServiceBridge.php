@@ -23,7 +23,7 @@ class OauthAgentConnectorToUtilEncodingServiceBridge implements OauthAgentConnec
     }
 
     /**
-     * @param mixed $value
+     * @param array $value
      * @param int|null $options
      * @param int|null $depth
      *
