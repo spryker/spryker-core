@@ -8,7 +8,7 @@
         <column name="id_sales_order_configured_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="configurable_bundle_template_uuid" required="true" type="VARCHAR" size="255"/>
         <column name="quantity" required="true" type="INTEGER" default="1"/>
-        <column name="name" required="true" type="VARCHAR"/>
+        <column name="name" required="true" type="VARCHAR" size="255"/>
 
         <behavior name="timestampable"/>
 

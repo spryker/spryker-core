@@ -72,6 +72,7 @@ class EditBlockController extends AbstractCmsBlockController
             'cmsBlockForm' => $cmsBlockForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,
+            'toggleActiveCmsBlockForm' => $this->getFactory()->createToggleActiveCmsBlockForm()->createView(),
         ]);
     }
 
