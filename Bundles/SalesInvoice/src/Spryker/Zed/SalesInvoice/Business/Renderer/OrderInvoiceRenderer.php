@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\SalesInvoice\Business\Renderer;
 
+use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OrderInvoiceTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -51,7 +52,7 @@ class OrderInvoiceRenderer implements OrderInvoiceRendererInterface
     protected function setLocaleTransfer(LocaleTransfer $localeTransfer): void
     {
         /** @var \Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin $translator */
-        $translator = $this->twigEnvironment->getExtension('translator');
+        $translator = $this->twigEnvironment->getExtension(TwigTranslatorPlugin::class);
 
         $translator->setLocaleTransfer($localeTransfer);
     }
