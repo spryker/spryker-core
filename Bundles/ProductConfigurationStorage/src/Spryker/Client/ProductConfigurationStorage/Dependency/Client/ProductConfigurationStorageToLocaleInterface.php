@@ -7,17 +7,10 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 
-interface ProductConfigurationStorageToStorageClientInterface
+interface ProductConfigurationStorageToLocaleInterface
 {
     /**
-     * Specification:
-     *  - Get data from storage by string key.
-     *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return mixed
+     * @return string
      */
-    public function get(string $key);
+    public function getCurrentLocale();
 }

@@ -34,6 +34,17 @@
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
+        <property name="quantity" type="int"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="prices" type="PriceProductTransfer[]" singular="price"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="productConfigurationConfiguratorKey" type="string"/>
     </transfer>
 
     <transfer name="ProductView">

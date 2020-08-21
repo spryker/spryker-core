@@ -7,10 +7,13 @@
 
 namespace Spryker\Client\ProductConfigurationStorage;
 
-use Spryker\Client\CategoryImageStorage\Dependency\CategoryImageStorageToSynchronizationServiceBridge;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceBridge;
 
 /**
  * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()
@@ -19,6 +22,8 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
 {
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
     /**
@@ -32,14 +37,16 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addSessionClient($container);
         $container = $this->addStorageClient($container);
         $container = $this->addSynchronizationService($container);
+        $container = $this->addLocaleClient($container);
+        $container = $this->addProductStorageClient($container);
 
         return $container;
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addSessionClient(Container $container): Container
     {
@@ -51,14 +58,30 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     }
 
     /**
-     * @param \Spryker\Zed\Kernel\Container $container
+     * @param \Spryker\Client\Kernel\Container $container
      *
-     * @return \Spryker\Zed\Kernel\Container
+     * @return \Spryker\Client\Kernel\Container
      */
     protected function addStorageClient(Container $container): Container
     {
         $container->set(static::CLIENT_STORAGE, function (Container $container) {
-            return new ProductConfigurationStorageToSessionClientBridge($container->getLocator()->session()->client());
+            return new ProductConfigurationStorageToStorageClientBridge($container->getLocator()->storage()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    public function addProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRODUCT_STORAGE, function (Container $container) {
+            return new ProductConfigurationStorageToProductStorageClientBridge(
+                $container->getLocator()->productStorage()->client()
+            );
         });
 
         return $container;
@@ -72,7 +95,23 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     protected function addSynchronizationService(Container $container): Container
     {
         $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
-            return new CategoryImageStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
+            return new ProductConfigurationStorageToSynchronizationServiceBridge(
+                $container->getLocator()->synchronization()->service()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container)
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductConfigurationStorageToLocaleBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

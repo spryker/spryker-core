@@ -14,6 +14,7 @@ use Spryker\Client\ProductStorageExtension\Dependency\Plugin\ProductViewExpander
 
 /**
  * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageClientInterface getClient()
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory getFactory()
  */
 class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin implements ProductViewExpanderByCriteriaPluginInterface
 {
@@ -34,6 +35,6 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
         $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        $this->getClient()->expandProductViewWithProductConfiguration($productViewTransfer);
+        return $this->getClient()->expandProductViewWithProductConfiguration($productViewTransfer);
     }
 }

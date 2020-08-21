@@ -33,11 +33,11 @@ class ProductViewExpander implements ProductViewExpanderInterface
      */
     public function expandWithProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
-    ): productViewTransfer {
-        $productConfigurationInstance = $this->configurationInstanceReader
+    ): ProductViewTransfer {
+        $productConfigurationInstanceTransfer = $this->configurationInstanceReader
             ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
 
-        $productViewTransfer->setProductConfigurationInstance($productConfigurationInstance);
+        $productViewTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
 
         return $productViewTransfer;
     }

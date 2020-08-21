@@ -23,37 +23,17 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
     }
 
     /**
-     * {@inheritDoc}
+     * @param mixed $default The default value if not found
      *
-     * @param string $name
-     *
-     * @return bool|void
-     */
-    public function has(string $name)
-    {
-        $this->sessionClient->has($name);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @param string $name
-     * @param null $default
-     *
-     * @return mixed|void
+     * @return mixed
      */
     public function get(string $name, $default = null)
     {
-        $this->sessionClient->get($name, $default);
+        return $this->sessionClient->get($name, $default);
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @param string $name
      * @param mixed $value
-     *
-     * @return void
      */
     public function set(string $name, $value)
     {

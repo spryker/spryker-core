@@ -13,14 +13,14 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductFilterExpanderPluginInterface;
 
 /**
- * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageClientInterface getClient()
- * @method \Spryker\Client\PriceProductOfferStorage\PriceProductOfferStorageFactory getFactory()
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageClientInterface getClient()
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory getFactory()
  */
 class ProductConfigurationPriceFilterExpanderPlugin extends AbstractPlugin implements PriceProductFilterExpanderPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Expands PriceProductFilterTransfer with isProductConfiguration parameter
+     * - Expands PriceProductFilterTransfer with product configuration instance.
      *
      * @api
      *
@@ -31,10 +31,6 @@ class ProductConfigurationPriceFilterExpanderPlugin extends AbstractPlugin imple
      */
     public function expand(ProductViewTransfer $productViewTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
     {
-        if ($productViewTransfer->getProductOfferReference()) {
-            $priceProductFilterTransfer->setProductOfferReference($productViewTransfer->getProductOfferReference());
-        }
-
-        return $priceProductFilterTransfer;
+        return $this->getClient()->expandPriceProductFilterWithProductConfiguration($productViewTransfer, $priceProductFilterTransfer);
     }
 }

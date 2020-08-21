@@ -7,17 +7,13 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 
-interface ProductConfigurationStorageToStorageClientInterface
+interface ProductConfigurationStorageToProductStorageClientInterface
 {
     /**
-     * Specification:
-     *  - Get data from storage by string key.
+     * @param int $idProductConcrete
+     * @param string $localeName
      *
-     * @api
-     *
-     * @param string $key
-     *
-     * @return mixed
+     * @return array|null
      */
-    public function get(string $key);
+    public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
 }

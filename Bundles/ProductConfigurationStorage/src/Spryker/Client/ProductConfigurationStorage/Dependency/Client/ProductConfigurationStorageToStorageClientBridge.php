@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfigurationStorage\Dependency;
+namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 
 class ProductConfigurationStorageToStorageClientBridge implements ProductConfigurationStorageToStorageClientInterface
 {
@@ -23,10 +23,6 @@ class ProductConfigurationStorageToStorageClientBridge implements ProductConfigu
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
      * @param string $key
      *
      * @return mixed

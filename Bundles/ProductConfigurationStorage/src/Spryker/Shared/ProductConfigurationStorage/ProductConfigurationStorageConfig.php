@@ -73,4 +73,14 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
      * @api
      */
     public const ENTITY_SPY_PRODUCT_CONFIGURATION_DELETE = 'Entity.spy_product_configuration.delete';
+
+    /**
+     * Specification:
+     * - Dimension type as used for product configuration price.
+     *
+     * @uses \Spryker\Shared\ProductConfiguration\ProductConfigurationConfig::PRICE_DIMENSION_PRODUCT_CONFIGURATION.
+     *
+     * @api
+     */
+    public const PRICE_DIMENSION_PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
 }

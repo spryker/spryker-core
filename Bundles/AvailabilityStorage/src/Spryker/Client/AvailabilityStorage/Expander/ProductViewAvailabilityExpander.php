@@ -73,6 +73,8 @@ class ProductViewAvailabilityExpander implements ProductViewAvailabilityExpander
                 $productViewTransfer->setAvailable(
                     $availabilityStorageStrategyPlugin->isProductAvailable($productViewTransfer)
                 );
+
+                break;
             }
         }
 

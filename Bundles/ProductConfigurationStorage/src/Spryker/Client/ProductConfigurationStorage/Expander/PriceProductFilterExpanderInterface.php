@@ -7,16 +7,19 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Expander;
 
+use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
-interface ProductViewExpanderInterface
+interface PriceProductFilterExpanderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param \Generated\Shared\Transfer\PriceProductFilterTransfer $priceProductFilterTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
     public function expandWithProductConfigurationInstance(
-        ProductViewTransfer $productViewTransfer
-    ): ProductViewTransfer;
+        ProductViewTransfer $productViewTransfer,
+        PriceProductFilterTransfer $priceProductFilterTransfer
+    ): PriceProductFilterTransfer;
 }

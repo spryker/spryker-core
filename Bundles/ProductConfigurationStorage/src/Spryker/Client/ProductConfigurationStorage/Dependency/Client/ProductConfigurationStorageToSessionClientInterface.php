@@ -10,18 +10,6 @@ namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 interface ProductConfigurationStorageToSessionClientInterface
 {
     /**
-     * Checks if an attribute is defined.
-     *
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function has(string $name);
-
-    /**
-     * Returns an attribute.
-     *
-     * @param string $name
      * @param mixed $default The default value if not found
      *
      * @return mixed
@@ -29,9 +17,6 @@ interface ProductConfigurationStorageToSessionClientInterface
     public function get(string $name, $default = null);
 
     /**
-     * Sets an attribute.
-     *
-     * @param string $name
      * @param mixed $value
      */
     public function set(string $name, $value);

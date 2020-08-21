@@ -16,7 +16,7 @@ interface ProductConfigurationStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer|null
      */
-    public function findProductConfigurationStorageBySku(
+    public function findProductConfigurationInstanceBySku(
         string $sku
     ): ?ProductConfigurationStorageTransfer;
 }

@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfigurationStorage\Mapper;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 
-class ProductConfigurationStorageMapper implements ProductConfigurationStorageMapperInterface
+interface ProductConfigurationInstanceMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
@@ -21,7 +21,5 @@ class ProductConfigurationStorageMapper implements ProductConfigurationStorageMa
     public function mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer(
         ProductConfigurationStorageTransfer $productConfigurationStorageTransfer,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
-    ): ProductConfigurationInstanceTransfer {
-        // TODO: Implement mapProductConfigurationStorageTransferToProductConfigurationInstanceTransfer() method.
-    }
+    ): ProductConfigurationInstanceTransfer;
 }
