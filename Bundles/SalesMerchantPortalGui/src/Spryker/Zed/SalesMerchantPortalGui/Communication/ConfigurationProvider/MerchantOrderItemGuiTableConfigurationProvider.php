@@ -104,10 +104,10 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
     {
         $columns = new ArrayObject([
             $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
-            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
-            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
-            $this->createColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, false),
-            $this->createColumnChip(static::COL_KEY_STATE, 'State', true, false, [
+            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, true),
+            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, true),
+            $this->createColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, true),
+            $this->createColumnChip(static::COL_KEY_STATE, 'State', true, true, [
                 'color' => 'green',
             ]),
         ]);
