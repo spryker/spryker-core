@@ -97,7 +97,7 @@ class MerchantOrderGuiTableConfigurationProvider extends AbstractGuiTableConfigu
         $columns = new ArrayObject([
             $this->createColumnText(static::COL_KEY_REFERENCE, 'Reference', true, false),
             $this->createColumnText(static::COL_KEY_MERCHANT_REFERENCE, 'Merchant Reference', true, true),
-            $this->createColumnDate(static::COL_KEY_CREATED, 'Created', true, false),
+            $this->createColumnDate(static::COL_KEY_CREATED, 'Created', true, true),
             $this->createColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true),
             $this->createColumnText(static::COL_KEY_EMAIL, 'Email', true, true),
             $this->createColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, [
