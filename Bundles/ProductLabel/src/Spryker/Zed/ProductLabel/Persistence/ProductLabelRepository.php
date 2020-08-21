@@ -133,9 +133,9 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
                 ->endUse();
         }
 
-        $productLabelEntities = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes(Criteria::LEFT_JOIN)
-            ->useSpyProductLabelLocalizedAttributesQuery(null, Criteria::LEFT_JOIN)
-                ->joinSpyLocale()
+        $productLabelEntities = $productLabelQuery->joinWithSpyProductLabelLocalizedAttributes()
+            ->useSpyProductLabelLocalizedAttributesQuery()
+                ->joinWithSpyLocale()
             ->endUse()
             ->filterByIsActive(true)
             ->filterByValidFrom('now', Criteria::LESS_EQUAL)
@@ -146,7 +146,6 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->filterByValidTo(null, Criteria::ISNULL)
             ->orderByIsExclusive(Criteria::DESC)
             ->orderByPosition(Criteria::ASC)
-            ->groupByIdProductLabel()
             ->find();
 
         return $this->getFactory()
