@@ -61,18 +61,6 @@
             "selected_text": "$bundledProductRestResources",
             "error_level": 3,
             "shortcode": 125
-        },
-        {
-            "severity": "info",
-            "line_from": 96,
-            "line_to": 96,
-            "type": "PossiblyNullArgument",
-            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/RestResponseBuilder/BundledProductRestResponseBuilder.php",
-            "snippet": "                    $bundledProduct->getSku()",
-            "selected_text": "$bundledProduct->getSku()",
-            "error_level": 3,
-            "shortcode": 78
         }
     ],
     "deprecation": []

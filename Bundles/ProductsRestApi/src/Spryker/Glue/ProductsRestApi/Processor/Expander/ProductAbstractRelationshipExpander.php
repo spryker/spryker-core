@@ -66,13 +66,13 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $productAbstractSkuList = $this->getProductAbstractSkus($resources);
-        if (!$productAbstractSkuList) {
+        $productAbstractSkus = $this->getProductAbstractSkus($resources);
+        if (!$productAbstractSkus) {
             return;
         }
 
         $abstractProductsResources = $this->abstractProductsReader
-            ->getProductAbstractsBySkus($productAbstractSkuList, $restRequest);
+            ->getProductAbstractsBySkus($productAbstractSkus, $restRequest);
         if (!$abstractProductsResources) {
             return;
         }

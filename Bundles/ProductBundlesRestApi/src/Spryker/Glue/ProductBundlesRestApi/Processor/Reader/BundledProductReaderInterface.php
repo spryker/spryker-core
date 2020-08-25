@@ -20,6 +20,8 @@ interface BundledProductReaderInterface
     public function getBundledProducts(RestRequestInterface $restRequest): RestResponseInterface;
 
     /**
+     * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     *
      * @param string[] $productConcreteSkus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *

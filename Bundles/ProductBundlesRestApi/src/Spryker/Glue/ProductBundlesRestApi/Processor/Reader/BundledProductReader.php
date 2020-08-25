@@ -77,6 +77,8 @@ class BundledProductReader implements BundledProductReaderInterface
     }
 
     /**
+     * @phpstan-return array<string, array<\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface>>
+     *
      * @param string[] $productConcreteSkus
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -115,13 +117,12 @@ class BundledProductReader implements BundledProductReaderInterface
         );
 
         $productBundleStorageTransfers = $this->productBundleStorageClient->getProductBundles($productConcreteIds);
-
+        $productBundleStorageTransfersIndexedBySku = [];
         foreach ($productBundleStorageTransfers as $idProductConcrete => $productBundleStorageTransfer) {
             $productConcreteSku = array_search($idProductConcrete, $productConcreteIds);
-            $productBundleStorageTransfers[$productConcreteSku] = $productBundleStorageTransfer;
-            unset($productBundleStorageTransfers[$idProductConcrete]);
+            $productBundleStorageTransfersIndexedBySku[$productConcreteSku] = $productBundleStorageTransfer;
         }
 
-        return $productBundleStorageTransfers;
+        return $productBundleStorageTransfersIndexedBySku;
     }
 }

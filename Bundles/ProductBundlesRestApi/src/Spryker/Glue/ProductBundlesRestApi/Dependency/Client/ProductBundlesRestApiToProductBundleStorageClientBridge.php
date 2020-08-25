@@ -23,6 +23,8 @@ class ProductBundlesRestApiToProductBundleStorageClientBridge implements Product
     }
 
     /**
+     * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
+     *
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]

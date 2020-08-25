@@ -19,6 +19,8 @@ class ProductBundleStorageClient extends AbstractClient implements ProductBundle
      *
      * @api
      *
+     * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
+     *
      * @param int[] $productConcreteIds
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
