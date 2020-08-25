@@ -394,7 +394,7 @@ class ProductBundleFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertSame(0, $bundledProductAvailability->getAvailability()->toString());
+        $this->assertSame('0.0000000000', $bundledProductAvailability->getAvailability()->toString());
     }
 
     /**

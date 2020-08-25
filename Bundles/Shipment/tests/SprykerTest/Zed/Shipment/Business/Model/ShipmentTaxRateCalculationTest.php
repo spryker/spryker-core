@@ -70,7 +70,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
 
-        $this->assertSame('0.0', $shipmentMethodTransfer->getTaxRate());
+        $this->assertSame(0.0, $shipmentMethodTransfer->getTaxRate());
     }
 
     /**
@@ -95,7 +95,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $shipmentFacadeTest = $this->createShipmentFacade();
         $shipmentFacadeTest->calculateShipmentTaxRate($quoteTransfer);
 
-        $this->assertSame('20.00', $shipmentMethodTransfer->getTaxRate());
+        $this->assertSame(20.00, $shipmentMethodTransfer->getTaxRate());
     }
 
     /**
@@ -178,7 +178,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $actualResult = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, null);
 
         // Assert
-        $this->assertEquals($expectedResult, $actualResult);
+        $this->assertSame((float) $expectedResult, $actualResult);
     }
 
     /**
@@ -194,7 +194,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $actualResult = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $expectedResult);
 
         // Assert
-        $this->assertSame($expectedResult, $actualResult);
+        $this->assertSame((float) $expectedResult, $actualResult);
     }
 
     /***
