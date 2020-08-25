@@ -205,7 +205,7 @@ class TwigFilesystemLoader implements FilesystemLoaderInterface
         $paths = $this->getPathsForBundle($bundle);
         foreach ($paths as $path) {
             if (is_file($path . '/' . $templateName)) {
-                $fullFilePath = $path . '/' . $templateName;
+                $fullFilePath = rtrim($path, '/') . '/' . $templateName;
                 $this->cache->set($name, $fullFilePath);
 
                 return $fullFilePath;

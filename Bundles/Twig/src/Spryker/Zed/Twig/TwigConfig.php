@@ -52,8 +52,8 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getProjectNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, '/') . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, '/') . '/' . $namespace . '/Zed/%s/Presentation/';
         }
 
         return $paths;
@@ -69,10 +69,10 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getCoreNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
+            $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
-        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
+        $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
 
         return $paths;
     }

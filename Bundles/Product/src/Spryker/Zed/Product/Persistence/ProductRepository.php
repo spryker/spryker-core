@@ -306,7 +306,7 @@ class ProductRepository extends AbstractRepository implements ProductRepositoryI
                 ->joinWithLocale()
             ->endUse()
             ->useSpyProductAbstractQuery()
-                ->joinWithSpyProductAbstractStore()
+                ->joinSpyProductAbstractStore()
                 ->useSpyProductAbstractStoreQuery()
                     ->joinWithSpyStore()
                 ->endUse()

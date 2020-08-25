@@ -24,7 +24,7 @@ use Spryker\Zed\Vault\VaultConfig;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Vault\Business\VaultFacade getFacade()
  *
  * @SuppressWarnings(PHPMD)
