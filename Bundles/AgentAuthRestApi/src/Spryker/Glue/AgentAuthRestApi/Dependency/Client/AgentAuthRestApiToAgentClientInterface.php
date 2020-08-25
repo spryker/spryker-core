@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Agent\Business\Customer;
+namespace Spryker\Glue\AgentAuthRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
 use Generated\Shared\Transfer\CustomerQueryTransfer;
 
-interface CustomerReaderInterface
+interface AgentAuthRestApiToAgentClientInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer

@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -27,6 +28,7 @@ use Spryker\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use Spryker\Zed\Customer\Business\Model\PreConditionChecker;
 use Spryker\Zed\Customer\CustomerDependencyProvider;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToMailInterface;
+use Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceInterface;
 
 /**
@@ -986,6 +988,78 @@ class CustomerFacadeTest extends Unit
             $expectedCount,
             $this->tester->getFacade()->getCustomerCollectionByCriteria($criteriaFilterTransfer)->getCustomers()->count()
         );
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerByCriteriaShouldFindExistingCustomer(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference());
+
+        $customerTransferExpanderPlugin = $this
+            ->getMockBuilder(CustomerTransferExpanderPluginInterface::class)
+            ->getMock();
+        $customerTransferExpanderPlugin->expects($this->never())->method('expandTransfer');
+        $this->tester->setDependency(
+            CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER,
+            [$customerTransferExpanderPlugin]
+        );
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()
+            ->getCustomerByCriteria($customerCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess(), 'Customer must be findable by customer reference');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerByCriteriaShouldFailToFindNonExistingCustomer(): void
+    {
+        // Arrange
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference('DE--NO-PRESENT');
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()
+            ->getCustomerByCriteria($customerCriteriaTransfer);
+
+        // Assert
+        $this->assertFalse($customerResponseTransfer->getIsSuccess(), 'Non-existing customer must be not findable.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerByCriteriaShouldRunExpanders(): void
+    {
+        // Arrange
+        $customerTransfer = $this->createTestCustomer();
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference($customerTransfer->getCustomerReference())
+            ->setWithExpanders(true);
+
+        $customerTransferExpanderPlugin = $this
+            ->getMockBuilder(CustomerTransferExpanderPluginInterface::class)
+            ->getMock();
+        $customerTransferExpanderPlugin->expects($this->once())->method('expandTransfer');
+        $this->tester->setDependency(
+            CustomerDependencyProvider::PLUGINS_CUSTOMER_TRANSFER_EXPANDER,
+            [$customerTransferExpanderPlugin]
+        );
+
+        // Act
+        $customerResponseTransfer = $this->tester->getFacade()
+            ->getCustomerByCriteria($customerCriteriaTransfer);
+
+        // Assert
+        $this->assertTrue($customerResponseTransfer->getIsSuccess(), 'Customer must be findable by customer reference');
     }
 
     /**

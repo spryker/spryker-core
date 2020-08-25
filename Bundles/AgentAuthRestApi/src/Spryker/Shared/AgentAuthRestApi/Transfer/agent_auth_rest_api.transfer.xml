@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="RestAgentAccessTokensRequestAttributes">
+        <property name="username" type="string" restRequestParameter="required"/>
+        <property name="password" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestAgentAccessTokensAttributes">
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
+    </transfer>
+
+    <transfer name="RestAgentCustomerImpersonationAccessTokensRequestAttributes">
+        <property name="customerReference" type="string" restRequestParameter="required"/>
+    </transfer>
+
+    <transfer name="RestAgentCustomerImpersonationAccessTokensAttributes">
+        <property name="tokenType" type="string"/>
+        <property name="expiresIn" type="string"/>
+        <property name="accessToken" type="string"/>
+        <property name="refreshToken" type="string"/>
+    </transfer>
+
+    <transfer name="RestAgentCustomerSearchAttributes">
+        <property name="customers" type="RestAgentCustomerSearchCustomersAttributes[]" singular="customer"/>
+    </transfer>
+
+    <transfer name="RestAgentCustomerSearchCustomersAttributes">
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+    <transfer name="RestUser">
+        <property name="idAgent" type="int"/>
+    </transfer>
+
+    <transfer name="CustomerQuery">
+        <property name="query" type="string"/>
+        <property name="offset" type="int"/>
+        <property name="limit" type="int"/>
+    </transfer>
+
+    <transfer name="OauthRequest">
+        <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="RestErrorCollection">
+        <property name="restErrors" type="RestErrorMessage[]" singular="restError"/>
+    </transfer>
+
+    <transfer name="RestErrorMessage">
+        <property name="code" type="string"/>
+        <property name="detail" type="string"/>
+        <property name="status" type="int"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationRequest">
+        <property name="accessToken" type="string"/>
+        <property name="type" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerAutocompleteResponse">
+        <property name="customers" type="Customer[]" singular="customer"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+    </transfer>
+
+    <transfer name="OauthResponse">
+        <property name="isValid" type="bool"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenData">
+        <property name="oauthUserId" type="string"/>
+    </transfer>
+
+    <transfer name="OauthAccessTokenValidationResponse">
+        <property name="isValid" type="bool"/>
+    </transfer>
+
+    <transfer name="Customer">
+        <property name="customerReference" type="string"/>
+        <property name="email" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+    </transfer>
+
+</transfers>
