@@ -40,7 +40,7 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_UUID
      */
-    protected const COLUMN_COMPANY_UUID = 'company_uuid';
+    protected const COLUMN_COMPANY_UUID = 'spy_sales_order.company_uuid';
 
     /**
      * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL

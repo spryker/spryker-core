@@ -26,12 +26,12 @@ use Spryker\Zed\CompanySalesConnector\CompanySalesConnectorConfig;
 class ExpandQueryJoinCollectionWithCompanyFilterTest extends Unit
 {
     /**
-     * @uses OrderSearchQueryExpander::COLUMN_COMPANY_UUID
+     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_UUID
      */
-    protected const COLUMN_COMPANY_UUID = 'company_uuid';
+    protected const COLUMN_COMPANY_UUID = 'spy_sales_order.company_uuid';
 
     /**
-     * @uses OrderSearchQueryExpander::COMPARISON_EQUAL
+     * @see \Propel\Runtime\ActiveQuery\Criteria::EQUAL
      */
     protected const COMPARISON_EQUAL = '=';
 
