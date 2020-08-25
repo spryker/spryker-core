@@ -66,7 +66,7 @@ class ReaderTest extends Unit
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxRate($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
         $this->assertSame(self::DUMMY_TAX_RATE1_NAME, $result->getName());
-        $this->assertSame(self::DUMMY_TAX_RATE1_PERCENTAGE, $result->getRate());
+        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE1_PERCENTAGE), $result->getRate());
     }
 
     /**
