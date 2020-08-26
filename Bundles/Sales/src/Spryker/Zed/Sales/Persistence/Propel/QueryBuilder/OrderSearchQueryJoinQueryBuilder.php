@@ -237,7 +237,7 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         if (mb_strpos($column, static::CONCAT) !== false) {
             return $salesOrderQuery->addCond(
                 $conditionName,
-                new CustomCriterion(new Criteria(), $column . $comparison . sprintf('\'%%%s%%\'', $value)),
+                new CustomCriterion(new Criteria(), sprintf('%s%s\'%%%s%%\'', $column, $comparison, $value)),
                 null,
                 Criteria::CUSTOM
             );
