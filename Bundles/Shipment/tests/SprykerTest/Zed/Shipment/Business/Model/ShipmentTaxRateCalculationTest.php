@@ -178,7 +178,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $actualResult = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, null);
 
         // Assert
-        $this->assertSame((float) $expectedResult, $actualResult);
+        $this->assertSame((float)$expectedResult, $actualResult);
     }
 
     /**
@@ -194,7 +194,7 @@ class ShipmentTaxRateCalculationTest extends Unit
         $actualResult = $this->getEffectiveTaxRateByQuoteTransfer($quoteTransfer, $expectedResult);
 
         // Assert
-        $this->assertSame((float) $expectedResult, $actualResult);
+        $this->assertSame((float)$expectedResult, $actualResult);
     }
 
     /***

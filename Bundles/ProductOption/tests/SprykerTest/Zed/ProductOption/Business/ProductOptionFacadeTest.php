@@ -602,7 +602,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertSame((float) $taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame((float)$taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**
@@ -644,7 +644,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertSame((float) $taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame((float)$taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**
