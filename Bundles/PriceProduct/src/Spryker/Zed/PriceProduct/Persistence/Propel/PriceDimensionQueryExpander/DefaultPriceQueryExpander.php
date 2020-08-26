@@ -18,11 +18,6 @@ use Propel\Runtime\ActiveQuery\Criteria;
 class DefaultPriceQueryExpander implements DefaultPriceQueryExpanderInterface
 {
     /**
-     * @uses \Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductStoreTableMap::COL_ID_PRICE_PRODUCT_STORE
-     */
-    public const COL_ID_PRICE_PRODUCT_STORE = 'spy_price_product_store.id_price_product_store';
-
-    /**
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\QueryCriteriaTransfer|null

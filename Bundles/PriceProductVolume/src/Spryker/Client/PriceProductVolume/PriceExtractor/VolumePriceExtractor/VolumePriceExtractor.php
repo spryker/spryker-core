@@ -120,7 +120,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     {
         $volumePriceTransfer = (new PriceProductTransfer())
             ->fromArray($priceProductTransfer->toArray(), true)
-            ->setVolumeQuantity($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
+            ->setVolumeQuantity((int)$volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
 
         $volumePriceTransfer
             ->setGroupKey(
