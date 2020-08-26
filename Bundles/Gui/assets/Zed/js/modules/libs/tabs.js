@@ -93,8 +93,10 @@ Tabs.prototype.changeTabsOnClick = function() {
     var self = this;
     self.tabUrls.on('click', function(event) {
         event.preventDefault();
+
         var selectedElement = $(this);
         var hash = selectedElement.attr('href');
+        console.log(selectedElement);
 
         var position = 0;
         var positionChanged = false;
@@ -115,7 +117,12 @@ Tabs.prototype.changeTabsOnClick = function() {
 };
 
 Tabs.prototype.activateTab = function(element, hash) {
-    window.location.hash = hash;
+    if (window.history.pushState) {
+        window.history.pushState(null, null, hash);
+    } else {
+        window.location.hash = hash;
+    }
+
     element.tab('show');
 
     this.onTabChange(element.attr('href'));
