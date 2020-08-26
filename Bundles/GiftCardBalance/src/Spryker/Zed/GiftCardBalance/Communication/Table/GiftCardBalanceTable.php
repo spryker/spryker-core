@@ -140,10 +140,7 @@ class GiftCardBalanceTable extends AbstractTable
     {
         $giftCardBalanceLogRow = $giftCardBalanceLogEntity->toArray();
 
-        $createdAt = DateTime::createFromFormat(
-            'Y-m-d H:i:s.u',
-            $giftCardBalanceLogEntity->getVirtualColumn(self::COL_CREATE_AT)
-        );
+        $createdAt = new DateTime($giftCardBalanceLogEntity->getVirtualColumn(self::COL_CREATE_AT));
 
         $giftCardBalanceLogRow[self::COL_CREATE_AT] = $createdAt->format('Y-m-d H:i:s');
         $giftCardBalanceLogRow[self::COL_ID_SALES_ORDER] = $giftCardBalanceLogEntity->getVirtualColumn(self::COL_ID_SALES_ORDER);
