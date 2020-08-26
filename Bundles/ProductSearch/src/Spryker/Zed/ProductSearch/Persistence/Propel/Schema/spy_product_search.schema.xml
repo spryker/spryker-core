@@ -24,7 +24,7 @@
 
     <table name="spy_product_search_attribute_map">
         <column name="fk_product_attribute_key" type="INTEGER" required="true" primaryKey="true"/>
-        <column name="target_field" type="VARCHAR" required="true" primaryKey="true"/>
+        <column name="target_field" type="VARCHAR" required="true" size="255" primaryKey="true"/>
         <column name="synced" type="BOOLEAN" defaultValue="false"/>
 
         <index>
@@ -41,7 +41,7 @@
     <table name="spy_product_search_attribute" idMethod="native" allowPkInsert="true">
         <column name="id_product_search_attribute" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_attribute_key" type="INTEGER" required="true"/>
-        <column name="filter_type" type="VARCHAR" required="true"/>
+        <column name="filter_type" type="VARCHAR" size="255" required="true"/>
         <column name="position" type="INTEGER" required="true" defaultValue="0"/>
         <column name="synced" type="BOOLEAN" defaultValue="false"/>
 

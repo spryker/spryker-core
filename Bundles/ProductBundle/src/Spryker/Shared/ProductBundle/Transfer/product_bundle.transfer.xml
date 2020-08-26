@@ -129,6 +129,18 @@
 
     <transfer name="ProductBundleCriteriaFilter">
         <property name="idBundledProduct" type="int"/>
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+        <property name="bundledProductIds" type="int[]" singular="idBundledProduct"/>
+        <property name="filter" type="Filter"/>
+        <property name="applyGrouped" type="bool"/>
+        <property name="isProductConcreteActive" type="bool"/>
+        <property name="isBundledProductActive" type="bool"/>
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="orderBy" type="string"/>
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="ItemMetadata">

@@ -7,14 +7,15 @@
 
 namespace Spryker\Zed\Sales\Dependency\Facade;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface SalesToCalculationInterface
 {
     /**
-     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $executeQuotePlugins
      *
-     * @return \Generated\Shared\Transfer\OrderTransfer
+     * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateOrder(OrderTransfer $orderTransfer);
+    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true);
 }

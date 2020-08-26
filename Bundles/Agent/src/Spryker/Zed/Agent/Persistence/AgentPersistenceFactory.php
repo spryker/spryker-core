@@ -10,6 +10,7 @@ namespace Spryker\Zed\Agent\Persistence;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\User\Persistence\SpyUserQuery;
 use Spryker\Zed\Agent\AgentDependencyProvider;
+use Spryker\Zed\Agent\Persistence\Propel\Mapper\AgentMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
@@ -32,5 +33,13 @@ class AgentPersistenceFactory extends AbstractPersistenceFactory
     public function getUserQuery(): SpyUserQuery
     {
         return $this->getProvidedDependency(AgentDependencyProvider::PROPEL_QUERY_USER);
+    }
+
+    /**
+     * @return \Spryker\Zed\Agent\Persistence\Propel\Mapper\AgentMapper
+     */
+    public function createAgentMapper(): AgentMapper
+    {
+        return new AgentMapper();
     }
 }
