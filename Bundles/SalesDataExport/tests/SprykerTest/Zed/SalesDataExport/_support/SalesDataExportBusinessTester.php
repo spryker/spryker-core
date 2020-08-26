@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,10 +30,6 @@ use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
 class SalesDataExportBusinessTester extends Actor
 {
     use _generated\SalesDataExportBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param int $idSalesOrder

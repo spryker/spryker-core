@@ -17,8 +17,6 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 class ProductQuantityBusinessTester extends Actor
 {
     use _generated\ProductQuantityBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer

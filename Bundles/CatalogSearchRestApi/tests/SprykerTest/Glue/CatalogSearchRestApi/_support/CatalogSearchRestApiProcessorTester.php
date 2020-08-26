@@ -10,8 +10,6 @@ namespace SprykerTest\Glue\CatalogSearchRestApi;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class CatalogSearchRestApiProcessorTester extends Actor
 {
     use _generated\CatalogSearchRestApiProcessorTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

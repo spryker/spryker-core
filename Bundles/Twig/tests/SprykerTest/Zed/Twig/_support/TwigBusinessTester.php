@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\Twig;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class TwigBusinessTester extends Actor
 {
     use _generated\TwigBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

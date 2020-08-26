@@ -13,8 +13,6 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUser;
 use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,14 +30,6 @@ use Orm\Zed\MerchantUser\Persistence\SpyMerchantUserQuery;
 class MerchantUserBusinessTester extends Actor
 {
     use _generated\MerchantUserBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     *
-     * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\MerchantUserTransfer|null
-     */
 
     /**
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer

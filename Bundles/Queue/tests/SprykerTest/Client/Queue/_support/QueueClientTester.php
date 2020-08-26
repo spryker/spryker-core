@@ -10,8 +10,6 @@ namespace SprykerTest\Client\Queue;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class QueueClientTester extends Actor
 {
     use _generated\QueueClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

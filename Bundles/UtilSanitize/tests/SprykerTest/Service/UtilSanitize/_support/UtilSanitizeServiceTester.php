@@ -12,8 +12,6 @@ use Codeception\Actor;
 use stdClass;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use stdClass;
 class UtilSanitizeServiceTester extends Actor
 {
     use _generated\UtilSanitizeServiceTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return array

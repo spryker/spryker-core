@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Zed\Navigation\Business\NavigationFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ProductReviewSearch;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class ProductReviewSearchCommunicationTester extends Actor
 {
     use _generated\ProductReviewSearchCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

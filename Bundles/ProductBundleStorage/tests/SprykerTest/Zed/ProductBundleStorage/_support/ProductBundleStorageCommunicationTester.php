@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductBundleStorageTransfer;
 use Orm\Zed\ProductBundleStorage\Persistence\SpyProductBundleStorageQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

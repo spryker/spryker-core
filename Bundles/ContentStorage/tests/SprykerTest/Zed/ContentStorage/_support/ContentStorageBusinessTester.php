@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,10 +27,6 @@ use Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface;
 class ContentStorageBusinessTester extends Actor
 {
     use _generated\ContentStorageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Spryker\Zed\ContentStorage\Business\ContentStorageFacadeInterface

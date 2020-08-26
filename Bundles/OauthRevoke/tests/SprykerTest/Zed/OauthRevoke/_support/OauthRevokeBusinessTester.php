@@ -14,8 +14,6 @@ use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshToken;
 use Orm\Zed\OauthRevoke\Persistence\SpyOauthRefreshTokenQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
