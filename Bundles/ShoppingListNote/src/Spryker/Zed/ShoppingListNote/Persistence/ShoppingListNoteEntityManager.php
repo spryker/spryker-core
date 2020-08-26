@@ -81,11 +81,19 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
                 continue;
             }
 
+            if (!$shoppingListItemNoteTransfer->getNote()) {
+                continue;
+            }
+
             $shoppingListItemNoteTransfer->setFkShoppingListItem($shoppingListItemTransfer->getIdShoppingListItem());
 
             $shoppingListItemNoteEntity = $this->getFactory()
                 ->createShoppingListItemNoteMapper()
                 ->mapShoppingListItemNoteTransferToEntity($shoppingListItemNoteTransfer, new SpyShoppingListItemNote());
+
+            if ($shoppingListItemNoteEntity->getIdShoppingListItemNote()) {
+                $shoppingListItemNoteEntity->setNew(false);
+            }
 
             $shoppingListItemNoteObjectCollection->append($shoppingListItemNoteEntity);
         }
