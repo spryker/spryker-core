@@ -93,10 +93,8 @@ Tabs.prototype.changeTabsOnClick = function() {
     var self = this;
     self.tabUrls.on('click', function(event) {
         event.preventDefault();
-
         var selectedElement = $(this);
         var hash = selectedElement.attr('href');
-        console.log(selectedElement);
 
         var position = 0;
         var positionChanged = false;
