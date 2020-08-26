@@ -10,11 +10,15 @@ namespace Spryker\Zed\Sales\Persistence\Propel\QueryBuilder;
 use ArrayObject;
 use Generated\Shared\Transfer\QueryJoinCollectionTransfer;
 use Generated\Shared\Transfer\QueryJoinTransfer;
+use Generated\Shared\Transfer\QueryWhereConditionTransfer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\ActiveQuery\Criterion\CustomCriterion;
 
 class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuilderInterface
 {
+    protected const CONCAT = 'CONCAT';
+
     /**
      * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
      * @param \Generated\Shared\Transfer\QueryJoinCollectionTransfer $queryJoinCollectionTransfer
@@ -193,18 +197,8 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         $conditions = [];
 
         foreach ($queryWhereConditionTransfers as $queryWhereConditionTransfer) {
-            $column = $queryWhereConditionTransfer->getColumn();
-            $value = $queryWhereConditionTransfer->getValue();
-
-            $conditionName = uniqid($column, true);
-            $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::LIKE;
-
-            $salesOrderQuery->addCond(
-                $conditionName,
-                $column,
-                $comparison === Criteria::LIKE ? $this->formatFilterValue($value) : $value,
-                $comparison
-            );
+            $conditionName = uniqid($queryWhereConditionTransfer->getColumn(), true);
+            $salesOrderQuery = $this->addConditionToQuery($conditionName, $queryWhereConditionTransfer, $salesOrderQuery);
 
             $combineWithCondition = $queryWhereConditionTransfer->getMergeWithCondition();
 
@@ -222,6 +216,39 @@ class OrderSearchQueryJoinQueryBuilder implements OrderSearchQueryJoinQueryBuild
         }
 
         return $conditions;
+    }
+
+    /**
+     * @param string $conditionName
+     * @param \Generated\Shared\Transfer\QueryWhereConditionTransfer $queryWhereConditionTransfer
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderQuery $salesOrderQuery
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
+     */
+    protected function addConditionToQuery(
+        string $conditionName,
+        QueryWhereConditionTransfer $queryWhereConditionTransfer,
+        SpySalesOrderQuery $salesOrderQuery
+    ): SpySalesOrderQuery {
+        $column = $queryWhereConditionTransfer->getColumn();
+        $value = $queryWhereConditionTransfer->getValue();
+        $comparison = $queryWhereConditionTransfer->getComparison() ?? Criteria::LIKE;
+
+        if (mb_strpos($column, static::CONCAT) !== false) {
+            return $salesOrderQuery->addCond(
+                $conditionName,
+                new CustomCriterion(new Criteria(), $column . $comparison . sprintf('\'%%%s%%\'', $value)),
+                null,
+                Criteria::CUSTOM
+            );
+        }
+
+        return $salesOrderQuery->addCond(
+            $conditionName,
+            $column,
+            $comparison === Criteria::LIKE ? $this->formatFilterValue($value) : $value,
+            $comparison
+        );
     }
 
     /**

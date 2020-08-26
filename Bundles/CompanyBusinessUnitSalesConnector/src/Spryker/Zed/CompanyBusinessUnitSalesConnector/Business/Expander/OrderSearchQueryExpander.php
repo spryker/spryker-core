@@ -38,14 +38,14 @@ class OrderSearchQueryExpander implements OrderSearchQueryExpanderInterface
     protected const COLUMN_LAST_NAME = 'last_name';
 
     /**
-     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
+     * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_COMPANY_BUSINESS_UNIT_UUID
      */
     protected const COLUMN_COMPANY_BUSINESS_UNIT_UUID = 'spy_sales_order.company_business_unit_uuid';
 
     /**
-     * @see \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL
+     * @uses \Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap::COL_EMAIL
      */
-    protected const COLUMN_EMAIL = 'email';
+    protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @uses \Propel\Runtime\ActiveQuery\Criteria::EQUAL
