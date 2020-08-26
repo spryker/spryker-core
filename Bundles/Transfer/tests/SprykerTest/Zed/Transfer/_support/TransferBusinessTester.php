@@ -20,8 +20,6 @@ use Spryker\Zed\Transfer\Business\TransferBusinessFactory;
 use Spryker\Zed\Transfer\Dependency\Facade\TransferToPropelFacadeBridge;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

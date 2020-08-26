@@ -17,8 +17,6 @@ use Spryker\Zed\ProductSetPageSearch\Business\ProductSetPageSearchFacade;
 use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\ProductSetPageSearchPublishListener;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Spryker\Zed\ProductSetPageSearch\Communication\Plugin\Event\Listener\Product
 class ProductSetPageSearchCommunicationTester extends Actor
 {
     use _generated\ProductSetPageSearchCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const PARAM_PROJECT = 'PROJECT';
 

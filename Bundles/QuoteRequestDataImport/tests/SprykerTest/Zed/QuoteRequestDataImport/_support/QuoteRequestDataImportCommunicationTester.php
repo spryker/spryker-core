@@ -18,8 +18,6 @@ use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestQuery;
 use Orm\Zed\QuoteRequest\Persistence\SpyQuoteRequestVersionQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

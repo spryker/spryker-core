@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,10 +27,6 @@ use Orm\Zed\ProductImage\Persistence\SpyProductImageSet;
 class ProductImageBusinessTester extends Actor
 {
     use _generated\ProductImageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param string $name

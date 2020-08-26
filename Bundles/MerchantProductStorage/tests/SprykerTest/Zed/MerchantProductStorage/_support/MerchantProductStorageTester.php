@@ -13,8 +13,6 @@ use Orm\Zed\ProductStorage\Persistence\SpyProductAbstractStorageQuery;
 use Spryker\Zed\Merchant\Business\MerchantFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

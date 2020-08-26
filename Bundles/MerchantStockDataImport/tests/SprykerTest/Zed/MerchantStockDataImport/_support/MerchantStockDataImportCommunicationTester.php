@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\MerchantStockDataImport;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

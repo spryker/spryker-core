@@ -33,8 +33,6 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -52,10 +50,6 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 class ProductOptionBusinessTester extends Actor
 {
     use _generated\ProductOptionBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer

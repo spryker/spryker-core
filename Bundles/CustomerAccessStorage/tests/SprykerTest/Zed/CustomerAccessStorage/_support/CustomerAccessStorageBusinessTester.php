@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,10 +27,6 @@ use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterf
 class CustomerAccessStorageBusinessTester extends Actor
 {
     use _generated\CustomerAccessStorageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface
