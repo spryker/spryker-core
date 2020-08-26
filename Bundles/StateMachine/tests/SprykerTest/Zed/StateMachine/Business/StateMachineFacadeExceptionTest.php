@@ -66,7 +66,7 @@ class StateMachineFacadeExceptionTest extends Unit
 
         $manualEvents = $stateMachineFacade->getManualEventsForStateMachineItem($stateMachineItemTransfer);
 
-        $this->assertEquals('invoice created', $stateMachineItemTransfer->getStateName());
+        $this->assertSame('invoice created', $stateMachineItemTransfer->getStateName());
 
         $manualEvent = array_pop($manualEvents);
         $this->assertSame('send invoice', $manualEvent, 'Does not contain the onEnter event.');

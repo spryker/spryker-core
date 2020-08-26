@@ -34,23 +34,23 @@ class ProductQuantityRounderTest extends Unit
         $this->assertInstanceOf(ProductQuantityRounder::class, $productQuantityRounder);
 
         $productQuantityTransfer = $this->createProductQuantityTransfer(1, 5, 100);
-        $this->assertEquals(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
-        $this->assertEquals(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 1));
-        $this->assertEquals(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 3));
-        $this->assertEquals(6, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 4));
-        $this->assertEquals(96, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 100));
-        $this->assertEquals(96, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 200));
+        $this->assertSame(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
+        $this->assertSame(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 1));
+        $this->assertSame(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 3));
+        $this->assertSame(6, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 4));
+        $this->assertSame(96, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 100));
+        $this->assertSame(96, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 200));
 
         $productQuantityTransfer = $this->createProductQuantityTransfer(null, null, 30);
-        $this->assertEquals(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
-        $this->assertEquals(10, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 10));
-        $this->assertEquals(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 31));
+        $this->assertSame(1, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
+        $this->assertSame(10, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 10));
+        $this->assertSame(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 31));
 
         $productQuantityTransfer = $this->createProductQuantityTransfer(5, null, 30);
-        $this->assertEquals(5, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
-        $this->assertEquals(11, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 11));
-        $this->assertEquals(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 30));
-        $this->assertEquals(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 45));
+        $this->assertSame(5, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 0));
+        $this->assertSame(11, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 11));
+        $this->assertSame(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 30));
+        $this->assertSame(30, $productQuantityRounder->getNearestQuantity($productQuantityTransfer, 45));
     }
 
     /**

@@ -44,7 +44,7 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('1-2', $cartItem->getGroupKey());
+        $this->assertSame('1-2', $cartItem->getGroupKey());
     }
 
     /**
@@ -67,7 +67,7 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('SKU-1-2', $cartItem->getGroupKey());
+        $this->assertSame('SKU-1-2', $cartItem->getGroupKey());
     }
 
     /**
@@ -96,10 +96,10 @@ class GroupKeyExpanderTest extends Unit
         $groupKeyExpander->expand($changeTransfer);
 
         $cartItem = $changeTransfer->getItems()[0];
-        $this->assertEquals('A-1-2-3', $cartItem->getGroupKey());
+        $this->assertSame('A-1-2-3', $cartItem->getGroupKey());
 
         $cartItem = $changeTransfer->getItems()[1];
-        $this->assertEquals('A-1-2-3', $cartItem->getGroupKey());
+        $this->assertSame('A-1-2-3', $cartItem->getGroupKey());
     }
 
     /**
