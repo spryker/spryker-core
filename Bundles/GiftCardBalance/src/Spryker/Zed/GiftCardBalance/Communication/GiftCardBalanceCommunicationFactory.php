@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCardBalance\Communication;
 
 use Spryker\Zed\GiftCardBalance\Communication\Table\GiftCardBalanceTable;
+use Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface;
 use Spryker\Zed\GiftCardBalance\GiftCardBalanceDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -44,7 +45,7 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
     /**
      * @return \Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface
      */
-    protected function getUtilEncodingService()
+    public function getUtilEncodingService(): GiftCardBalanceToUtilDateTimeServiceInterface
     {
         return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::SERVICE_UTIL_DATA_TIME);
     }
