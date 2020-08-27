@@ -158,7 +158,7 @@ abstract class AbstractRelatedProductTable extends AbstractTable
             RelatedProductTableQueryBuilder::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
         );
         $states = explode(',', $statesCsv);
-        $isActive = in_array('1', $states);
+        $isActive = in_array('1', $states, true);
 
         $statusName = $isActive ? 'Active' : 'Inactive';
         $statusCssClass = $isActive ? 'label-info' : 'label-danger';
