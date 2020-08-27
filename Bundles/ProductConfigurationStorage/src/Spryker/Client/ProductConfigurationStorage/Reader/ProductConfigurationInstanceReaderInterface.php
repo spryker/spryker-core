@@ -19,11 +19,4 @@ interface ProductConfigurationInstanceReaderInterface
     public function findProductConfigurationInstanceBySku(
         string $sku
     ): ?ProductConfigurationInstanceTransfer;
-
-    /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array;
 }

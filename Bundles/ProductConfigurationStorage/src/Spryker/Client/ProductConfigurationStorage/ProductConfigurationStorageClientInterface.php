@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 
 interface ProductConfigurationStorageClientInterface
@@ -52,16 +53,23 @@ interface ProductConfigurationStorageClientInterface
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductConfiguration(ProductViewTransfer $productViewTransfer): ProductViewTransfer;
+    public function expandProductViewWithProductConfigurationInstance(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        string $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ): ProductViewTransfer;
 
     /**
      * Specification:
-     * - Retrieves current store.
-     * - Retrieves product concrete storage data by id and storage.
-     * - Retrieves product configuration instance by product concrete sku.
+     * - Retrieves current store specific product concrete storage data by id.
+     * - Retrieves product configuration instance by product concrete SKU.
      * - Returns product configuration prices or empty array if prices weren't set.
      *
      * @api
@@ -72,11 +80,9 @@ interface ProductConfigurationStorageClientInterface
      */
     public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array;
 
-
-
     /**
      * Specification:
-     * - Retrieves product configuration from product view.
+     * - Retrieves product configuration instance from product view.
      * - Expands price product filter with product configuration instance.
      * - Returns expanded price product filter.
      *
@@ -87,7 +93,7 @@ interface ProductConfigurationStorageClientInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    public function expandPriceProductFilterWithProductConfiguration(
+    public function expandPriceProductFilterWithProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): PriceProductFilterTransfer;
@@ -96,8 +102,8 @@ interface ProductConfigurationStorageClientInterface
      * Specification:
      * - Checks product view for the product configuration instance existence.
      * - Returns true if exist.
-     * - Makes attempt to find it by sku.
-     * - Returns true if found or false otherwise.
+     * - Makes attempt to find it by SKU.
+     * - Returns true if found, false otherwise.
      *
      * @api
      *
@@ -105,7 +111,7 @@ interface ProductConfigurationStorageClientInterface
      *
      * @return bool
      */
-    public function isProductViewTransferHasProductConfigurationInstance(ProductViewTransfer $productViewTransfer): bool;
+    public function isProductHasProductConfigurationInstance(ProductViewTransfer $productViewTransfer): bool;
 
     /**
      * Specification:

@@ -8,8 +8,6 @@
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
-use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleInterface;
-use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
@@ -17,8 +15,6 @@ use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStora
 
 class ProductConfigurationInstanceReader implements ProductConfigurationInstanceReaderInterface
 {
-    protected const PRODUCT_DATA_SKU_KEY = 'sku';
-
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface
      */
@@ -35,39 +31,21 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     protected $productConfigurationStorageMapper;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleInterface
-     */
-    protected $localeClient;
-
-    /**
-     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface
-     */
-    protected $productStorageClient;
-
-    /**
      * @param \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface $configurationStorageReader
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface $sessionClient
      * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper
-     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleInterface $localeClient
-     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface $productStorageClient
      */
     public function __construct(
         ProductConfigurationStorageReaderInterface $configurationStorageReader,
         ProductConfigurationStorageToSessionClientInterface $sessionClient,
-        ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper,
-        ProductConfigurationStorageToLocaleInterface $localeClient,
-        ProductConfigurationStorageToProductStorageClientInterface $productStorageClient
+        ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper
     ) {
         $this->configurationStorageReader = $configurationStorageReader;
         $this->sessionClient = $sessionClient;
         $this->productConfigurationStorageMapper = $productConfigurationStorageMapper;
-        $this->localeClient = $localeClient;
-        $this->productStorageClient = $productStorageClient;
     }
 
     /**
-     * {@inheritDoc}
-     *
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
@@ -85,27 +63,6 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     }
 
     /**
-     * @param int $idProductConcrete
-     *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
-     */
-    public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array
-    {
-        $productData = $this->productStorageClient
-            ->findProductConcreteStorageData($idProductConcrete, $this->localeClient->getCurrentLocale());
-
-        $productConfigurationInstance = $this->findProductConfigurationInstanceBySku(
-            $productData[static::PRODUCT_DATA_SKU_KEY]
-        );
-
-        if (!$productConfigurationInstance) {
-            return [];
-        }
-
-        return $productConfigurationInstance->getPrices()->getArrayCopy();
-    }
-
-    /**
      * @param string $sku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
@@ -113,7 +70,7 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     protected function findProductConfigurationInstanceInStorage(string $sku): ?ProductConfigurationInstanceTransfer
     {
         $productConfigurationStorageTransfer = $this->configurationStorageReader
-            ->findProductConfigurationInstanceBySku($sku);
+            ->findProductConfigurationStorageBySku($sku);
 
         if (!$productConfigurationStorageTransfer) {
             return null;

@@ -18,12 +18,15 @@ class PriceProductFilterExpander implements PriceProductFilterExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    public function expandWithProductConfigurationInstance(
+    public function expandPriceProductFilterWithProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): PriceProductFilterTransfer {
-        return $priceProductFilterTransfer->setProductConfigurationInstance(
-            $productViewTransfer->getProductConfigurationInstance()
-        );
+        $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
+        if (!$productConfigurationInstance) {
+            return $priceProductFilterTransfer;
+        }
+
+        return $priceProductFilterTransfer->setProductConfigurationInstance($productConfigurationInstance);
     }
 }

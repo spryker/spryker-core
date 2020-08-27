@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductConfigurationAvailabilityReader implements ProductConfigurationAvailabilityReaderInterface
 {
-    protected const MINIMUM_AVAILABLE_QUANTITY = 1;
+    protected const MINIMUM_AVAILABLE_QUANTITY = 0;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface
@@ -33,12 +33,12 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
      *
      * @return bool
      */
-    public function isProductViewTransferHasProductConfigurationInstance(
+    public function isProductHasProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
     ): bool {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
-        return !empty($productConfigurationInstance);
+        return $productConfigurationInstance !== null;
     }
 
     /**
@@ -50,6 +50,10 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
         ProductViewTransfer $productViewTransfer
     ): bool {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
+
+        if (!$productConfigurationInstance) {
+            return false;
+        }
 
         return $productConfigurationInstance->getAvailableQuantity() > static::MINIMUM_AVAILABLE_QUANTITY;
     }

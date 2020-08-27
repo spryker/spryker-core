@@ -31,6 +31,9 @@ class ProductConfigurationPriceFilterExpanderPlugin extends AbstractPlugin imple
      */
     public function expand(ProductViewTransfer $productViewTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): PriceProductFilterTransfer
     {
-        return $this->getClient()->expandPriceProductFilterWithProductConfiguration($productViewTransfer, $priceProductFilterTransfer);
+        return $this->getClient()->expandPriceProductFilterWithProductConfigurationInstance(
+            $productViewTransfer,
+            $priceProductFilterTransfer
+        );
     }
 }

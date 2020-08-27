@@ -16,7 +16,7 @@ interface ProductConfigurationAvailabilityReaderInterface
      *
      * @return bool
      */
-    public function isProductViewTransferHasProductConfigurationInstance(
+    public function isProductHasProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
     ): bool;
 

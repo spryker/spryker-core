@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 
-class ProductConfigurationStorageToLocaleBridge implements ProductConfigurationStorageToLocaleInterface
+class ProductConfigurationStorageToLocaleClientBridge implements ProductConfigurationStorageToLocaleClientInterface
 {
     /**
      * @var \Spryker\Client\Locale\LocaleClientInterface

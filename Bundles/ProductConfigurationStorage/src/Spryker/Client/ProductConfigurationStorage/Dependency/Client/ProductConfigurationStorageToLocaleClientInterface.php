@@ -7,7 +7,7 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 
-interface ProductConfigurationStorageToLocaleInterface
+interface ProductConfigurationStorageToLocaleClientInterface
 {
     /**
      * @return string
