@@ -115,14 +115,8 @@ Tabs.prototype.changeTabsOnClick = function() {
 };
 
 Tabs.prototype.activateTab = function(element, hash) {
-    if (window.history.pushState) {
-        window.history.pushState(null, null, hash);
-    } else {
-        window.location.hash = hash;
-    }
-
+    window.history.pushState(null, null, hash);
     element.tab('show');
-
     this.onTabChange(element.attr('href'));
 };
 
