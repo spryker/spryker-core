@@ -7,12 +7,12 @@
 
 namespace Spryker\Zed\GiftCardBalance\Communication\Table;
 
-use DateTime;
 use Orm\Zed\GiftCard\Persistence\Map\SpyGiftCardTableMap;
 use Orm\Zed\GiftCardBalance\Persistence\SpyGiftCardBalanceLog;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\GiftCardBalance\Dependency\Facade\GiftCardBalanceToMoneyFacadeInterface;
+use Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -35,6 +35,11 @@ class GiftCardBalanceTable extends AbstractTable
     protected $moneyFacade;
 
     /**
+     * @var \Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface
+     */
+    protected $utilEncodingService;
+
+    /**
      * @var int|null
      */
     protected $idGiftCard;
@@ -42,15 +47,18 @@ class GiftCardBalanceTable extends AbstractTable
     /**
      * @param \Spryker\Zed\GiftCardBalance\Persistence\GiftCardBalanceQueryContainerInterface $giftCardBalanceQueryContainer
      * @param \Spryker\Zed\GiftCardBalance\Dependency\Facade\GiftCardBalanceToMoneyFacadeInterface $moneyFacade
+     * @param \Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface $utilEncodingService
      * @param int|null $idGiftCard
      */
     public function __construct(
         $giftCardBalanceQueryContainer,
         GiftCardBalanceToMoneyFacadeInterface $moneyFacade,
+        GiftCardBalanceToUtilDateTimeServiceInterface $utilEncodingService,
         $idGiftCard = null
     ) {
         $this->giftCardBalanceQueryContainer = $giftCardBalanceQueryContainer;
         $this->moneyFacade = $moneyFacade;
+        $this->utilEncodingService = $utilEncodingService;
         $this->idGiftCard = $idGiftCard;
     }
 
@@ -140,9 +148,7 @@ class GiftCardBalanceTable extends AbstractTable
     {
         $giftCardBalanceLogRow = $giftCardBalanceLogEntity->toArray();
 
-        $createdAt = new DateTime($giftCardBalanceLogEntity->getVirtualColumn(self::COL_CREATE_AT));
-
-        $giftCardBalanceLogRow[self::COL_CREATE_AT] = $createdAt->format('Y-m-d H:i:s');
+        $giftCardBalanceLogRow[self::COL_CREATE_AT] = $this->utilEncodingService->formatDateTime($giftCardBalanceLogEntity->getVirtualColumn(self::COL_CREATE_AT));
         $giftCardBalanceLogRow[self::COL_ID_SALES_ORDER] = $giftCardBalanceLogEntity->getVirtualColumn(self::COL_ID_SALES_ORDER);
         $giftCardBalanceLogRow[self::COL_CUSTOMER_REFERENCE] = $giftCardBalanceLogEntity->getVirtualColumn(self::COL_CUSTOMER_REFERENCE);
         $giftCardBalanceLogRow[self::COL_GIFT_CARD_NAME] = $giftCardBalanceLogEntity->getVirtualColumn(self::COL_GIFT_CARD_NAME);

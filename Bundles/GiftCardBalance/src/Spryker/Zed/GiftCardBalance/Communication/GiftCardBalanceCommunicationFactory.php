@@ -28,6 +28,7 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
         return new GiftCardBalanceTable(
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
+            $this->getUtilEncodingService(),
             $idGiftCard
         );
     }
@@ -38,5 +39,13 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface
+     */
+    protected function getUtilEncodingService()
+    {
+        return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::SERVICE_UTIL_DATA_TIME);
     }
 }
