@@ -16,6 +16,6 @@ use Spryker\Zed\Kernel\Communication\Form\AbstractType;
  * @method \Spryker\Zed\CmsGui\CmsGuiConfig getConfig()
  * @method \Spryker\Zed\CmsGui\Communication\CmsGuiCommunicationFactory getFactory()
  */
-class ActivateCmsPageForm extends AbstractType
+class ToggleActiveCmsPageForm extends AbstractType
 {
 }
