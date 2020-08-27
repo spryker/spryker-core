@@ -173,8 +173,8 @@ class RouterTester extends Actor
     {
         $this->calledControllerMethods = [];
 
-        return new class ($tester) {
-
+        return new class ($tester)
+        {
             /**
              * @var \SprykerTest\Shared\Router\RouterTester
              */
