@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 
@@ -28,4 +29,18 @@ interface ProductConfigurationFacadeInterface
     public function getProductConfigurationCollection(
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): ProductConfigurationCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Applicable to items which have product configuration attached.
+     * - Sets group key for each item.
+     * - Returns modified CartChangeTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
+     */
+    public function expandProductConfigurationItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer);
 }

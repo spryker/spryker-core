@@ -27,7 +27,7 @@ class ProductConfigurationStorageToSynchronizationServiceBridge implements Produ
      *
      * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
      */
-    public function getStorageKeyBuilder($resourceName)
+    public function getStorageKeyBuilder(string $resourceName)
     {
         return $this->synchronizationService->getStorageKeyBuilder($resourceName);
     }

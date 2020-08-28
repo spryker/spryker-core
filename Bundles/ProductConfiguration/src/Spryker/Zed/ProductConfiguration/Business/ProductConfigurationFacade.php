@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductConfiguration\Business;
 
+use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -30,5 +31,21 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
         ProductConfigurationFilterTransfer $productConfigurationFilterTransfer
     ): ProductConfigurationCollectionTransfer {
         return $this->getRepository()->getProductConfigurationCollection($productConfigurationFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartChangeTransfer|void
+     */
+    public function expandProductConfigurationItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer)
+    {
+        return $this->getFactory()
+            ->createProductConfigurationGroupKeyItemExpander()
+            ->expandProductConfigurationItemsWithGroupKey($cartChangeTransfer);
     }
 }
