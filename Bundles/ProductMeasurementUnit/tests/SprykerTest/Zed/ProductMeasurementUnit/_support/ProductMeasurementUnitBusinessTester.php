@@ -22,8 +22,6 @@ use Generated\Shared\Transfer\SpyProductMeasurementUnitEntityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -41,10 +39,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 class ProductMeasurementUnitBusinessTester extends Actor
 {
     use _generated\ProductMeasurementUnitBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer

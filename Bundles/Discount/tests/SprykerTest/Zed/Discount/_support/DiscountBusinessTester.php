@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

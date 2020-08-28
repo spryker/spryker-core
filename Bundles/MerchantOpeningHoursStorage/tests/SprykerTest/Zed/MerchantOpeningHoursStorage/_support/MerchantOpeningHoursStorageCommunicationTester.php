@@ -23,8 +23,6 @@ use Orm\Zed\WeekdaySchedule\Persistence\SpyWeekdaySchedule;
 use Orm\Zed\WeekdaySchedule\Persistence\SpyWeekdayScheduleQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

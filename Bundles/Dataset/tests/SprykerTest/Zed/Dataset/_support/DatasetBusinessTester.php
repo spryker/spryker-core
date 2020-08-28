@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\DatasetTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

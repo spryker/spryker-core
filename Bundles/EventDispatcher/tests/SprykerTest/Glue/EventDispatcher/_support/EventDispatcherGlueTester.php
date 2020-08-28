@@ -16,8 +16,6 @@ use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\Stopwatch\Stopwatch;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

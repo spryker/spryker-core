@@ -16,8 +16,6 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipToCompanyBus
 use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpander;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Spryker\Zed\MerchantRelationship\Business\Expander\MerchantRelationshipExpan
 class MerchantRelationshipBusinessTester extends Actor
 {
     use _generated\MerchantRelationshipBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param string $merchantRelationshipKey

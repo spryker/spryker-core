@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,10 +27,6 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 class PriceProductMerchantRelationshipDataImportCommunicationTester extends Actor
 {
     use _generated\PriceProductMerchantRelationshipDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

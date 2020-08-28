@@ -15,8 +15,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -175,8 +173,8 @@ class RouterTester extends Actor
     {
         $this->calledControllerMethods = [];
 
-        return new class ($tester) {
-
+        return new class ($tester)
+        {
             /**
              * @var \SprykerTest\Shared\Router\RouterTester
              */

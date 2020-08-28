@@ -16,8 +16,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

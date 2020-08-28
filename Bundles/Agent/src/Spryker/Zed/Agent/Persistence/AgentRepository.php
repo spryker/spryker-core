@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\Agent\Persistence;
 
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer;
+use Generated\Shared\Transfer\CustomerQueryTransfer;
 use Generated\Shared\Transfer\UserTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -40,14 +41,16 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
     }
 
     /**
-     * @param string $query
-     * @param int|null $limit
+     * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
      *
-     * @return \Generated\Shared\Transfer\CustomerTransfer[]
+     * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer
      */
-    public function findCustomersByQuery(string $query, ?int $limit): array
+    public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
+        $query = $customerQueryTransfer->getQuery() ?? '';
         $queryPattern = $query . '%';
+        $offset = $customerQueryTransfer->getOffset();
+        $limit = $customerQueryTransfer->getLimit();
 
         $customersQuery = $this->getFactory()
             ->getCustomerQuery()
@@ -60,31 +63,19 @@ class AgentRepository extends AbstractRepository implements AgentRepositoryInter
             ->filterByCustomerReference($query)
             ->select([
                 SpyCustomerTableMap::COL_ID_CUSTOMER,
+                SpyCustomerTableMap::COL_CUSTOMER_REFERENCE,
                 SpyCustomerTableMap::COL_FIRST_NAME,
                 SpyCustomerTableMap::COL_LAST_NAME,
                 SpyCustomerTableMap::COL_EMAIL,
             ])
-            ->setIgnoreCase(true);
+            ->setIgnoreCase(true)
+            ->orderBy(SpyCustomerTableMap::COL_ID_CUSTOMER);
 
-        if ($limit !== null) {
-            $customersQuery->limit($limit);
-        }
+        $page = $offset && $limit ? floor($offset / $limit + 1) : 1;
+        $pager = $customersQuery->paginate($page, $limit);
+        $customers = $pager->getResults()->getData();
 
-        /** @var array $customers */
-        $customers = $customersQuery->find();
-
-        $customerTransferList = [];
-
-        foreach ($customers as $customer) {
-            $customerTransfer = new CustomerTransfer();
-            $customerTransfer->setIdCustomer($customer[SpyCustomerTableMap::COL_ID_CUSTOMER]);
-            $customerTransfer->setFirstName($customer[SpyCustomerTableMap::COL_FIRST_NAME]);
-            $customerTransfer->setLastName($customer[SpyCustomerTableMap::COL_LAST_NAME]);
-            $customerTransfer->setEmail($customer[SpyCustomerTableMap::COL_EMAIL]);
-
-            $customerTransferList[] = $customerTransfer;
-        }
-
-        return $customerTransferList;
+        return $this->getFactory()->createAgentMapper()
+            ->mapCustomerDataToCustomerAutocompleteResponseTransfer($customers, $pager);
     }
 }

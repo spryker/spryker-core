@@ -56,11 +56,11 @@ class CmsGlossaryReaderTest extends CmsMocks
         $cmsGlossaryTransfer = $cmsGlossaryReaderMock->findPageGlossaryAttributes(1);
 
         $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[0];
-        $this->assertEquals('title', $cmsGlossaryAttributeTransfer->getPlaceholder());
+        $this->assertSame('title', $cmsGlossaryAttributeTransfer->getPlaceholder());
         $this->assertCount(2, $cmsGlossaryAttributeTransfer->getTranslations());
 
         $cmsGlossaryAttributeTransfer = $cmsGlossaryTransfer->getGlossaryAttributes()[1];
-        $this->assertEquals('content', $cmsGlossaryAttributeTransfer->getPlaceholder());
+        $this->assertSame('content', $cmsGlossaryAttributeTransfer->getPlaceholder());
         $this->assertCount(2, $cmsGlossaryAttributeTransfer->getTranslations());
     }
 

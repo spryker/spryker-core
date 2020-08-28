@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ContentFile;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,8 +28,4 @@ use Codeception\Actor;
 class ContentFileBusinessTester extends Actor
 {
     use _generated\ContentFileBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

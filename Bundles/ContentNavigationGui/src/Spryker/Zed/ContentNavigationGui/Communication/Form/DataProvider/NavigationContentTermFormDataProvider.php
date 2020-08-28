@@ -12,6 +12,7 @@ use Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToNav
 class NavigationContentTermFormDataProvider
 {
     protected const NAVIGATION_CHOICE_PATTERN = '%s - %s';
+
     /**
      * @var \Spryker\Zed\ContentNavigationGui\Dependency\Facade\ContentNavigationGuiToNavigationFacadeInterface
      */

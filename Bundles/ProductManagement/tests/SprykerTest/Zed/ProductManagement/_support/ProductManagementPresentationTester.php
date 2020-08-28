@@ -14,8 +14,6 @@ use Spryker\Zed\ProductManagement\ProductManagementDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -54,9 +52,7 @@ class ProductManagementPresentationTester extends Actor
         });
     }
 
-    /**
-     * Define custom actions here
-     */
+ 
 
     /**
      * @return void

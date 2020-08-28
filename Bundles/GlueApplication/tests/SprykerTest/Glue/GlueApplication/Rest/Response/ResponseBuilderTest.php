@@ -57,8 +57,8 @@ class ResponseBuilderTest extends Unit
         $response = $responseBuilder->buildResponse($restResponse, $restRequest);
 
         $this->assertArrayHasKey('data', $response);
-        $this->assertEquals('1', $response['data']['id']);
-        $this->assertEquals('tests', $response['data']['type']);
+        $this->assertSame('1', $response['data']['id']);
+        $this->assertSame('tests', $response['data']['type']);
     }
 
     /**

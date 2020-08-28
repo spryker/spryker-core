@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ProductReview;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -37,10 +35,6 @@ class ProductReviewBusinessTester extends Actor
         'created_at',
         'updated_at',
     ];
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * Note: for MySQL compatibility

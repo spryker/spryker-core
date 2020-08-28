@@ -104,7 +104,7 @@ class CmsGlossarySaverTest extends CmsMocks
         $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkCmsGlossaryMapping());
         $this->assertSame(1, $updatedCmsGlossaryAttributeTransfer->getFkGlossaryKey());
         $this->assertCount(1, $updatedCmsGlossaryAttributeTransfer->getTranslations());
-        $this->assertEquals('new_placeholder', $updatedCmsGlossaryAttributeTransfer->getPlaceholder());
+        $this->assertSame('new_placeholder', $updatedCmsGlossaryAttributeTransfer->getPlaceholder());
     }
 
     /**

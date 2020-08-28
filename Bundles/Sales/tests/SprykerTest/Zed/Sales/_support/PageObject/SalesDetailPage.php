@@ -93,7 +93,7 @@ class SalesDetailPage
      */
     public function openDetailPageForOrder(int $idSalesOrder): void
     {
-        $this->tester->amOnPage(SalesDetailPage::getOrderDetailsPageUrl($idSalesOrder));
+        $this->tester->amOnPage(self::getOrderDetailsPageUrl($idSalesOrder));
     }
 
     /**
@@ -105,7 +105,7 @@ class SalesDetailPage
      */
     public function grabIdSalesOrderItemFromRow(int $rowPosition): int
     {
-        $idSalesOrderItem = $this->tester->grabValueFrom(SalesDetailPage::getIdSalesOrderItemSelector($rowPosition));
+        $idSalesOrderItem = $this->tester->grabValueFrom(self::getIdSalesOrderItemSelector($rowPosition));
 
         return $idSalesOrderItem;
     }
