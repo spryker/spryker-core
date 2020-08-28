@@ -66,17 +66,26 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
     protected function findProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
     ): ?ProductConfigurationInstanceTransfer {
-        $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
+        if (!$this->isProductConcrete($productViewTransfer)) {
+            return null;
+        }
 
+        $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
         if ($productConfigurationInstance) {
             return $productConfigurationInstance;
         }
 
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            return null;
-        }
-
         return $this->productConfigurationInstanceReader
             ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcrete(ProductViewTransfer $productViewTransfer): bool
+    {
+        return $productViewTransfer->getIdProductConcrete() !== null;
     }
 }

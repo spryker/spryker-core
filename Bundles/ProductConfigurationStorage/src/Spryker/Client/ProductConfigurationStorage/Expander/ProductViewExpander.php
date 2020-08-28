@@ -41,7 +41,7 @@ class ProductViewExpander implements ProductViewExpanderInterface
         string $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        if (!$productViewTransfer->getIdProductConcrete()) {
+        if (!$this->isProductConcrete($productViewTransfer)) {
             return $productViewTransfer;
         }
 
@@ -55,5 +55,15 @@ class ProductViewExpander implements ProductViewExpanderInterface
         $productViewTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
 
         return $productViewTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcrete(ProductViewTransfer $productViewTransfer): bool
+    {
+        return $productViewTransfer->getIdProductConcrete() !== null;
     }
 }
