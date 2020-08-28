@@ -26,7 +26,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
 
         foreach ($productLabelTransfers as $productLabelTransfer) {
             foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
-                $productLabelDictionaryItemTransfers = $this->mapProductLabelToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
+                $productLabelDictionaryItemTransfers = $this->mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
                     $productLabelTransfer,
                     $storeName,
                     $storeLocales,
@@ -46,7 +46,7 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    protected function mapProductLabelToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
+    protected function mapProductLabelTransferToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
         ProductLabelTransfer $productLabelTransfer,
         string $storeName,
         array $storeLocales,
@@ -59,12 +59,15 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
         $mappedProductLabelLocalizedAttributesTransfer = $this->mapProductLabelLocalizedAttributeByLocale($productLabelTransfer);
 
         foreach ($storeLocales as $localeName) {
-            $productLabelLocalizedAttributesTransfer = $mappedProductLabelLocalizedAttributesTransfer[$localeName] ?? null;
-            $name = $productLabelLocalizedAttributesTransfer ? $productLabelLocalizedAttributesTransfer->getName() : $productLabelTransfer->getName();
+            $localizedProductLabelName = $this->getLocalizedProductLabelName(
+                $productLabelTransfer,
+                $mappedProductLabelLocalizedAttributesTransfer,
+                $localeName
+            );
 
             $productLabelDictionaryItemTransfer = (new ProductLabelDictionaryItemTransfer())
                 ->fromArray($productLabelTransfer->toArray(), true)
-                ->setName($name)
+                ->setName($localizedProductLabelName)
                 ->setIdProductLabel($productLabelTransfer->getIdProductLabel())
                 ->setKey($productLabelTransfer->getName());
 
@@ -107,5 +110,26 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
         }
 
         return $mappedProductLabelLocalizedAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductLabelTransfer $productLabelTransfer
+     * @param \Generated\Shared\Transfer\ProductLabelLocalizedAttributesTransfer[] $mappedProductLabelLocalizedAttributesTransfer
+     * @param string $localeName
+     *
+     * @return string
+     */
+    protected function getLocalizedProductLabelName(
+        ProductLabelTransfer $productLabelTransfer,
+        array $mappedProductLabelLocalizedAttributesTransfer,
+        string $localeName
+    ): string {
+        $productLabelLocalizedAttributesTransfer = $mappedProductLabelLocalizedAttributesTransfer[$localeName] ?? null;
+
+        if ($productLabelLocalizedAttributesTransfer && $productLabelLocalizedAttributesTransfer->getName()) {
+            return $productLabelLocalizedAttributesTransfer->getName();
+        }
+
+        return $productLabelTransfer->getName();
     }
 }
