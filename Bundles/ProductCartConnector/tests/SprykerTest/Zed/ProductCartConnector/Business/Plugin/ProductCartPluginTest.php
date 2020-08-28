@@ -102,9 +102,9 @@ class ProductCartPluginTest extends Unit
 
         $expandedItemTransfer = $changeTransfer->getItems()[0];
 
-        $this->assertEquals(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
-        $this->assertEquals(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
-        $this->assertEquals($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
-        $this->assertEquals($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
+        $this->assertSame(self::SKU_PRODUCT_ABSTRACT, $expandedItemTransfer->getAbstractSku());
+        $this->assertSame(self::SKU_PRODUCT_CONCRETE, $expandedItemTransfer->getSku());
+        $this->assertSame($productAbstractEntity->getIdProductAbstract(), $expandedItemTransfer->getIdProductAbstract());
+        $this->assertSame($productConcreteEntity->getIdProduct(), $expandedItemTransfer->getId());
     }
 }

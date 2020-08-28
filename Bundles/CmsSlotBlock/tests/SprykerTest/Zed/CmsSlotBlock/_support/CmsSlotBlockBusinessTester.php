@@ -19,8 +19,6 @@ use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

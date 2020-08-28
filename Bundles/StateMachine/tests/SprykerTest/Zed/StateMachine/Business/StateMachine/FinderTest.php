@@ -62,7 +62,7 @@ class FinderTest extends StateMachineMocks
         $subProcess = array_pop($subProcesses);
         $this->assertInstanceOf(StateMachineProcessTransfer::class, $subProcess);
         $this->assertEquals(static::TEST_STATE_MACHINE_NAME, $subProcess->getStateMachineName());
-        $this->assertEquals('Process2', $subProcess->getProcessName());
+        $this->assertSame('Process2', $subProcess->getProcessName());
     }
 
     /**

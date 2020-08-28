@@ -25,6 +25,7 @@
         <property name="isSuccess" type="bool"/>
         <property name="userIdentifier" type="string"/>
         <property name="grantType" type="string"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="OauthClient">
@@ -37,6 +38,16 @@
     <transfer name="OauthScopeRequest">
         <property name="defaultScopes" type="OauthScope[]" singular="scope"/>
         <property name="grantType" type="string"/>
+    </transfer>
+
+    <transfer name="OauthGrantTypeConfiguration">
+        <property name="identifier" type="string"/>
+        <property name="fullyQualifiedClassName" type="string"/>
+    </transfer>
+
+    <transfer name="CustomerResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="customerTransfer" type="Customer"/>
     </transfer>
 
 </transfers>

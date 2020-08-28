@@ -65,7 +65,7 @@ class CmsPageSaverTest extends CmsMocks
 
         $idCmsPage = $cmsPageSaverMock->createPage($cmsPageTransfer);
 
-        $this->assertEquals($cmsPageEntityMock->getIdCmsPage(), $idCmsPage);
+        $this->assertSame($cmsPageEntityMock->getIdCmsPage(), $idCmsPage);
     }
 
     /**
@@ -119,7 +119,7 @@ class CmsPageSaverTest extends CmsMocks
 
         $cmsPageAttributesEntity = $cmsPageEntityMock->getSpyCmsPageLocalizedAttributess()[0];
         $this->assertEquals($cmsPageAttributesEntity->getName(), $cmsPageAttributesTransfer->getName());
-        $this->assertEquals($urlEntity->getUrl(), $cmsPageAttributesTransfer->getUrlPrefix());
+        $this->assertSame($urlEntity->getUrl(), $cmsPageAttributesTransfer->getUrlPrefix());
         $this->assertEquals($cmsPageTransfer->getStoreRelation()->getIdStores(), $idStores);
     }
 

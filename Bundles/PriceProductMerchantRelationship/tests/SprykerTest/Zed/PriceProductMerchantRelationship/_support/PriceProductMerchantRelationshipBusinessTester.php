@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\PriceProductTransfer;
 use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Spryker\Zed\PriceProduct\Business\PriceProductFacadeInterface;
 class PriceProductMerchantRelationshipBusinessTester extends Actor
 {
     use _generated\PriceProductMerchantRelationshipBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param string $merchantRelationshipKey

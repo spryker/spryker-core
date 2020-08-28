@@ -57,9 +57,9 @@ class OrderItemSplitTest extends Unit
         $this->assertNotEmpty($splitResponse->getSuccessMessage());
 
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
-        $this->assertEquals(1, $createdCopy->getQuantity());
-        $this->assertEquals(4, $spySalesOrderItem->getQuantity());
-        $this->assertEquals(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
+        $this->assertSame(1, $createdCopy->getQuantity());
+        $this->assertSame(4, $spySalesOrderItem->getQuantity());
+        $this->assertSame(OrderItemSplit::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyOfItemSalesOrderItemArray = $createdCopy->toArray();

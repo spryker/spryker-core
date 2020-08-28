@@ -12,8 +12,6 @@ use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider;
 use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -23,17 +21,13 @@ use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugi
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class CmsBlockGuiCommunicationTester extends Actor
 {
     use _generated\CmsBlockGuiCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

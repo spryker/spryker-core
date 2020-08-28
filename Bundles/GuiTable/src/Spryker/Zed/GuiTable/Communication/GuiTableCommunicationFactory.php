@@ -7,37 +7,48 @@
 
 namespace Spryker\Zed\GuiTable\Communication;
 
-use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetter;
-use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface;
+use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpander;
+use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
+use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
+use Spryker\Shared\GuiTable\GuiTableFactory;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
+use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilder;
+use Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface;
+use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatter;
+use Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutor;
+use Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface;
+use Spryker\Shared\GuiTable\Http\HttpJsonResponseBuilder;
+use Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface;
+use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizer;
+use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface;
+use Spryker\Shared\GuiTable\Twig\GuiTableConfigurationFunction;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslator;
-use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface;
-use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunction;
 use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface;
-use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface;
-use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
 use Spryker\Zed\GuiTable\GuiTableDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
 /**
  * @method \Spryker\Zed\GuiTable\GuiTableConfig getConfig()
- * @method \Spryker\Zed\GuiTable\Business\GuiTableFacadeInterface getFacade()
  */
 class GuiTableCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunction
+     * @return \Spryker\Shared\GuiTable\Twig\GuiTableConfigurationFunction
      */
     public function createGuiTableConfigurationFunction(): GuiTableConfigurationFunction
     {
         return new GuiTableConfigurationFunction(
             $this->getUtilEncodingService(),
-            $this->createConfigurationDefaultValuesSetter(),
+            $this->createConfigurationDefaultValuesExpander(),
             $this->createConfigurationTranslator()
         );
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface
+     * @return \Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface
      */
     public function createConfigurationTranslator(): ConfigurationTranslatorInterface
     {
@@ -45,15 +56,71 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface
+     * @return \Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface
      */
-    public function createConfigurationDefaultValuesSetter(): ConfigurationDefaultValuesSetterInterface
+    public function createConfigurationDefaultValuesExpander(): ConfigurationDefaultValuesExpanderInterface
     {
-        return new ConfigurationDefaultValuesSetter($this->getConfig());
+        return new ConfigurationDefaultValuesExpander($this->getConfig());
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
+     * @return \Spryker\Shared\GuiTable\GuiTableFactoryInterface
+     */
+    public function createGuiTableFactory(): GuiTableFactoryInterface
+    {
+        return new GuiTableFactory();
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface
+     */
+    public function createDateRangeRequestFilterValueNormalizer(): DateRangeRequestFilterValueNormalizerInterface
+    {
+        return new DateRangeRequestFilterValueNormalizer();
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\DataRequest\DataRequestBuilderInterface
+     */
+    public function createDataRequestBuilder(): DataRequestBuilderInterface
+    {
+        return new DataRequestBuilder(
+            $this->getUtilEncodingService(),
+            $this->getConfig(),
+            $this->createDateRangeRequestFilterValueNormalizer()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\DataResponse\DataResponseFormatterInterface
+     */
+    public function createDataResponseFormatter(): DataResponseFormatterInterface
+    {
+        return new DataResponseFormatter($this->getUtilDateTimeService());
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface
+     */
+    public function createHttpJsonResponseBuilder(): HttpResponseBuilderInterface
+    {
+        return new HttpJsonResponseBuilder();
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Http\GuiTableDataRequestExecutorInterface
+     */
+    public function createGuiTableDataRequestExecutor(): GuiTableDataRequestExecutorInterface
+    {
+        return new GuiTableDataRequestExecutor(
+            $this->createDataRequestBuilder(),
+            $this->createDataResponseFormatter(),
+            $this->createHttpJsonResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
      */
     public function getUtilEncodingService(): GuiTableToUtilEncodingServiceInterface
     {
@@ -61,7 +128,7 @@ class GuiTableCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface
+     * @return \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceInterface
      */
     public function getUtilDateTimeService(): GuiTableToUtilDateTimeServiceInterface
     {

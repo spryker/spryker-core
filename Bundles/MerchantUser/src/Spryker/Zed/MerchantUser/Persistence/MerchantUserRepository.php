@@ -60,6 +60,8 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
     }
 
     /**
+     * @module Merchant
+     *
      * @param \Generated\Shared\Transfer\MerchantUserCriteriaTransfer $merchantUserCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\MerchantUserTransfer[]
@@ -69,7 +71,7 @@ class MerchantUserRepository extends AbstractRepository implements MerchantUserR
         $merchantUserQuery = $this->getFactory()->createMerchantUserPropelQuery();
         $merchantUserQuery = $this->applyCriteria($merchantUserQuery, $merchantUserCriteriaTransfer);
 
-        $merchantUserEntities = $merchantUserQuery->find();
+        $merchantUserEntities = $merchantUserQuery->joinWithSpyMerchant()->find();
 
         return $this->getFactory()
             ->createMerchantUserMapper()

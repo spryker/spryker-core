@@ -41,7 +41,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductAbstractSku($productAbstractTransfer);
 
-        $this->assertEquals('one-ONEONE-Lietuviskai', $sanitizedSku);
+        $this->assertSame('one-ONEONE-Lietuviskai', $sanitizedSku);
     }
 
     /**
@@ -62,7 +62,7 @@ class SkuGeneratorTest extends FacadeTestAbstract
 
         $sanitizedSku = $skuGenerator->generateProductConcreteSku($productAbstractTransfer, $productConcreteTransfer);
 
-        $this->assertEquals('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
+        $this->assertSame('one-ONEONE-Lietuviskai-key-value_key2-value2', $sanitizedSku);
     }
 
     /**

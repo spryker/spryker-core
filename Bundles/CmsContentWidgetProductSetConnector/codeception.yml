@@ -1,24 +1,17 @@
 namespace: SprykerTest
 include:
     - tests/SprykerTest/Zed/CmsContentWidgetProductSetConnector
-
 paths:
     tests: tests
     log: tests/_output
     data: tests/_data
     support: tests/_support
     envs: tests/_envs
-
 settings:
-    bootstrap: _bootstrap.php
     suite_class: \PHPUnit\Framework\TestSuite
     colors: true
     memory_limit: 1024M
     log: true
-
 extensions:
-    enabled:
-        - Codeception\Extension\Phantoman
-    config:
-        Codeception\Extension\Phantoman:
-            suites: ['Presentation']
+    enabled: [Codeception\Extension\Phantoman]
+    config: { Codeception\Extension\Phantoman: { suites: [Presentation] } }

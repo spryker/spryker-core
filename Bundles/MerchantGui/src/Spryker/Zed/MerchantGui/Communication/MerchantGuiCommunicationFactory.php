@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantGui\Communication;
 
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
-use Spryker\Shared\Kernel\Communication\Application;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\MerchantGui\Communication\Expander\MerchantListDataExpander;
@@ -27,8 +26,6 @@ use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterfa
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToUrlFacadeInterface;
 use Spryker\Zed\MerchantGui\MerchantGuiDependencyProvider;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * @method \Spryker\Zed\MerchantGui\MerchantGuiConfig getConfig()
@@ -109,10 +106,7 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createMerchantListDataExpander(): MerchantListDataExpanderInterface
     {
-        return new MerchantListDataExpander(
-            $this->getRequest(),
-            $this->getMerchantFacade()
-        );
+        return new MerchantListDataExpander($this->getMerchantFacade());
     }
 
     /**
@@ -225,31 +219,5 @@ class MerchantGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getStoreRelationFormTypePlugin(): FormTypeInterface
     {
         return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_STORE_RELATION_FORM_TYPE);
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return \Spryker\Shared\Kernel\Communication\Application
-     */
-    public function getApplication(): Application
-    {
-        return $this->getProvidedDependency(MerchantGuiDependencyProvider::PLUGIN_APPLICATION);
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\Request
-     */
-    public function getRequest(): Request
-    {
-        return $this->getRequestStack()->getCurrentRequest();
-    }
-
-    /**
-     * @return \Symfony\Component\HttpFoundation\RequestStack
-     */
-    public function getRequestStack(): RequestStack
-    {
-        return $this->getProvidedDependency(MerchantGuiDependencyProvider::SERVICE_REQUEST_STACK);
     }
 }

@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOfferQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -134,10 +134,10 @@ For more information on this topic, see
 
     {% if multiple %}
         {% set selectedData = choices | filter(choice => choice.value in value) %}
-        {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) | json_encode() %}
+        {% set value = selectedData | reduce((accumulator, choice) => accumulator | merge([choice.value]), []) %}
     {% endif %}
 
-    <web-spy-select control {{ block('widget_attributes') }} value="{{ value }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
+    <web-spy-select control {{ block('widget_attributes') }} value="{{ value | json_encode() }}" {{ block('choice_widget_options') }}{% if multiple %} multiple="multiple"{% endif %}>
     </web-spy-select>
 {%- endblock choice_widget -%}
 

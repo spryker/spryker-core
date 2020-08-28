@@ -50,6 +50,6 @@ class CamelCaseToSeparatorTest extends Unit
     public function testWithDifferentSeparator(string $camelCase, string $separator, string $expected): void
     {
         $filter = new CamelCaseToSeparator();
-        $this->assertEquals($expected, $filter->filter($camelCase, $separator));
+        $this->assertSame($expected, $filter->filter($camelCase, $separator));
     }
 }

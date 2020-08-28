@@ -65,7 +65,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerReader(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createAddress()
+            $this->createAddress(),
+            $this->createCustomerExpander()
         );
     }
 
