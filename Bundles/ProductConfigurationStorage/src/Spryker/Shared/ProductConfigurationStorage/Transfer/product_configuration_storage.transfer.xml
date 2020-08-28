@@ -34,9 +34,37 @@
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
         <property name="isComplete" type="bool"/>
+        <property name="quantity" type="int"/>
+        <property name="availableQuantity" type="int"/>
+        <property name="prices" type="PriceProduct[]" singular="price"/>
+    </transfer>
+
+    <transfer name="PriceProductFilter">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="PriceProductDimension">
+        <property name="productConfigurationConfiguratorKey" type="string"/>
     </transfer>
 
     <transfer name="ProductView">
+        <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="PriceProductDimension"/>
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="PriceProduct">
+        <property name="priceDimension" type="PriceProductDimension"/>
+    </transfer>
+
+    <transfer name="ProductConfiguration">
+        <property name="idProductConfiguration" type="int"/>
+    </transfer>
+
+    <transfer name="ProductConfigurationCollection">
+        <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
+    </transfer>
+
+    <transfer name="ProductStorageCriteria">
     </transfer>
 </transfers>

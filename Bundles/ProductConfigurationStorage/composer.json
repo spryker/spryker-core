@@ -4,17 +4,25 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
+    "spryker/availability-storage-extension": "^1.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/product-configuration": "^1.0.0",
+    "spryker/locale": "^3.0.0",
+    "spryker/price-product-extension": "^1.2.0",
+    "spryker/price-product-storage-extension": "^1.2.0",
+    "spryker/product-configuration": "^0.1.0",
+    "spryker/product-storage": "^1.1.0",
+    "spryker/product-storage-extension": "^1.4.0",
     "spryker/publisher-extension": "^1.0.0",
+    "spryker/session": "^4.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.9.0",
     "spryker/synchronization-behavior": "^1.0.0",
     "spryker/synchronization-extension": "^1.1.0"
   },
   "require-dev": {
+    "spryker/code-sniffer": "*",
     "spryker/product": "*",
-    "spryker/product-configuration": "*",
     "spryker/propel": "*",
     "spryker/queue": "*",
     "spryker/testify": "*"
