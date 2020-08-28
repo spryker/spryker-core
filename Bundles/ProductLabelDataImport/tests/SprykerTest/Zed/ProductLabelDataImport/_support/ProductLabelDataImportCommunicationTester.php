@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Orm\Zed\ProductLabel\Persistence\SpyProductLabelProductAbstractQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

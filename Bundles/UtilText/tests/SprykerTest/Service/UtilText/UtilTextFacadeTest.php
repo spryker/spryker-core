@@ -46,7 +46,7 @@ class UtilTextFacadeTest extends Unit
 
         $expectedSlug = 'a-value-to-slug-8-times';
 
-        $this->assertEquals($expectedSlug, $slug);
+        $this->assertSame($expectedSlug, $slug);
     }
 
     /**
@@ -61,6 +61,6 @@ class UtilTextFacadeTest extends Unit
         $string = $this->utilTextFacade->generateRandomByteString($length);
 
         //Assert
-        $this->assertEquals($length, strlen($string), 'String length did not match expected value.');
+        $this->assertSame($length, strlen($string), 'String length did not match expected value.');
     }
 }

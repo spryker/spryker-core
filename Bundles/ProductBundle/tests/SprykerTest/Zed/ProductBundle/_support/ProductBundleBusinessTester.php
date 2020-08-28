@@ -26,8 +26,6 @@ use Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSa
 use SprykerTest\Zed\Sales\Helper\BusinessHelper;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -37,7 +35,7 @@ use SprykerTest\Zed\Sales\Helper\BusinessHelper;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)

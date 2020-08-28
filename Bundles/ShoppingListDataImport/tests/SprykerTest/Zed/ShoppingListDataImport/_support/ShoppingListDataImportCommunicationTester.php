@@ -19,8 +19,6 @@ use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 use Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,7 +28,7 @@ use Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ShoppingList\Business\ShoppingListFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)

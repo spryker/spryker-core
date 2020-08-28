@@ -85,7 +85,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->findByIdProductSearchAttribute($productSearchAttributeTransfer->getIdProductSearchAttribute())
             ->count();
 
-        $this->assertEquals(0, $count, 'Deletion failed!');
+        $this->assertSame(0, $count, 'Deletion failed!');
     }
 
     /**
@@ -102,7 +102,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
         $productSearchAttributeTransfer = $this->productSearchFacade
             ->getProductSearchAttribute($productSearchAttributeEntity->getIdProductSearchAttribute());
 
-        $this->assertEquals($productSearchAttributeEntity->getFilterType(), $productSearchAttributeTransfer->getFilterType());
+        $this->assertSame($productSearchAttributeEntity->getFilterType(), $productSearchAttributeTransfer->getFilterType());
     }
 
     /**
@@ -235,7 +235,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeEntity->reload();
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
@@ -278,7 +278,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeEntity->reload();
         $this->assertTrue($productSearchAttributeEntity->getSynced(), 'Product search attribute is not marked as synced!');
@@ -318,7 +318,7 @@ class ProductSearchAttributeTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
     }
 
     /**

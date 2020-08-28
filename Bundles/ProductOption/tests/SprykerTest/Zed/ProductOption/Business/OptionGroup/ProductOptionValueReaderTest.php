@@ -58,7 +58,7 @@ class ProductOptionValueReaderTest extends MockProvider
 
         // Assert
         $this->assertInstanceOf(ProductOptionTransfer::class, $actualProductOptionTransfer);
-        $this->assertEquals($expectedIdProductOptionValue, $actualProductOptionTransfer->getIdProductOptionValue());
+        $this->assertSame($expectedIdProductOptionValue, $actualProductOptionTransfer->getIdProductOptionValue());
     }
 
     /**

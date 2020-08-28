@@ -47,13 +47,13 @@ class ResourceRouteLoaderTest extends Unit
 
         $route = $resourceRouteLoader->load('tests', [], Request::create('/tests/1'));
 
-        $this->assertEquals('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
-        $this->assertEquals('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
-        $this->assertEquals('tests', $route[RequestConstantsInterface::ATTRIBUTE_TYPE]);
-        $this->assertEquals('get', $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['action']);
+        $this->assertSame('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
+        $this->assertSame('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
+        $this->assertSame('tests', $route[RequestConstantsInterface::ATTRIBUTE_TYPE]);
+        $this->assertSame('get', $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['action']);
         $this->assertCount(1, $route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['context']);
         $this->assertTrue($route[RequestConstantsInterface::ATTRIBUTE_CONFIGURATION]['is_protected']);
-        $this->assertEquals(RestTestAttributesTransfer::class, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN]);
+        $this->assertSame(RestTestAttributesTransfer::class, $route[RequestConstantsInterface::ATTRIBUTE_RESOURCE_FQCN]);
     }
 
     /**
@@ -148,8 +148,8 @@ class ResourceRouteLoaderTest extends Unit
 
         $route = $resourceRouteLoader->load('tests', $parents, Request::create('/parent-resource2/2/tests/1'));
 
-        $this->assertEquals('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
-        $this->assertEquals('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
+        $this->assertSame('test-resource', $route[RequestConstantsInterface::ATTRIBUTE_CONTROLLER]);
+        $this->assertSame('testsRestApi', $route[RequestConstantsInterface::ATTRIBUTE_MODULE]);
     }
 
     /**

@@ -8,11 +8,9 @@
 namespace SprykerTest\Zed\Agent;
 
 use Codeception\Actor;
-use Spryker\Zed\Agent\Business\AgentFacadeInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,8 @@ use Spryker\Zed\Agent\Business\AgentFacadeInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\Agent\Business\AgentFacadeInterface getFacade() : \Spryker\Zed\Kernel\Business\AbstractFacade
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -30,18 +29,22 @@ class AgentBusinessTester extends Actor
 {
     use _generated\AgentBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    public const CUSTOMER_FIRST_NAME = 'customerFirstName';
 
     /**
-     * @return \Spryker\Zed\Agent\Business\AgentFacadeInterface
+     * @param int $count
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer[]
      */
-    public function getAgentFacade(): AgentFacadeInterface
+    public function createCustomers(int $count = 10): array
     {
-        /** @var \Spryker\Zed\Agent\Business\AgentFacadeInterface $facade */
-        $facade = $this->getFacade();
+        $customerTransfers = [];
 
-        return $facade;
+        while ($count) {
+            $customerTransfers[] = $this->haveCustomer([CustomerTransfer::FIRST_NAME => static::CUSTOMER_FIRST_NAME]);
+            $count--;
+        }
+
+        return $customerTransfers;
     }
 }

@@ -18,6 +18,7 @@ use Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContaine
 class ProductItemTaxRateCalculator implements CalculatorInterface
 {
     protected const TAX_EXEMPT_PLACEHOLDER = 'Tax Exempt';
+
     /**
      * @var \Spryker\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface
      */

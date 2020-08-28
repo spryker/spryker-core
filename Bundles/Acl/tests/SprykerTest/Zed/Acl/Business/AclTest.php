@@ -35,6 +35,7 @@ use Spryker\Zed\User\Business\UserFacade;
  * @group Acl
  * @group Business
  * @group AclTest
+ *
  * Add your own group annotations below this line
  */
 class AclTest extends Unit
