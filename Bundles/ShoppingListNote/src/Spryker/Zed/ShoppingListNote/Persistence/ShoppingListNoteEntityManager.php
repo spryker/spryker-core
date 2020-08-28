@@ -77,11 +77,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
         $shoppingListItemNoteObjectCollection->setModel(SpyShoppingListItemNote::class);
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemNoteTransfer = $shoppingListItemTransfer->getShoppingListItemNote();
-            if (!$shoppingListItemNoteTransfer) {
-                continue;
-            }
-
-            if (!$shoppingListItemNoteTransfer->getNote()) {
+            if (!$shoppingListItemNoteTransfer || !$shoppingListItemNoteTransfer->getNote()) {
                 continue;
             }
 
@@ -91,6 +87,7 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
                 ->createShoppingListItemNoteMapper()
                 ->mapShoppingListItemNoteTransferToEntity($shoppingListItemNoteTransfer, new SpyShoppingListItemNote());
 
+            // Prevent primary key duplication error
             if ($shoppingListItemNoteEntity->getIdShoppingListItemNote()) {
                 $shoppingListItemNoteEntity->setNew(false);
             }
