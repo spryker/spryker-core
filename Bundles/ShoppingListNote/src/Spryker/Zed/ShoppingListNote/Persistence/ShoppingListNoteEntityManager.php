@@ -87,9 +87,8 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
                 ->createShoppingListItemNoteMapper()
                 ->mapShoppingListItemNoteTransferToEntity($shoppingListItemNoteTransfer, new SpyShoppingListItemNote());
 
-            // Prevent primary key duplication error
             if ($shoppingListItemNoteEntity->getIdShoppingListItemNote()) {
-                $shoppingListItemNoteEntity->setNew(false);
+                $shoppingListItemNoteEntity = $this->preventPrimaryKeyDuplication($shoppingListItemNoteEntity);
             }
 
             $shoppingListItemNoteObjectCollection->append($shoppingListItemNoteEntity);
@@ -103,5 +102,17 @@ class ShoppingListNoteEntityManager extends AbstractEntityManager implements Sho
                 $shoppingListItemNoteObjectCollection,
                 $shoppingListItemCollectionTransfer
             );
+    }
+
+    /**
+     * @param \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote $shoppingListItemNoteEntity
+     *
+     * @return \Orm\Zed\ShoppingListNote\Persistence\SpyShoppingListItemNote
+     */
+    protected function preventPrimaryKeyDuplication(SpyShoppingListItemNote $shoppingListItemNoteEntity): SpyShoppingListItemNote
+    {
+        $shoppingListItemNoteEntity->setNew(false);
+
+        return $shoppingListItemNoteEntity;
     }
 }
