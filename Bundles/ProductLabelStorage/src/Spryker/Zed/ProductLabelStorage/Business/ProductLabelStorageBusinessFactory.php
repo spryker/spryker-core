@@ -34,8 +34,7 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
             $this->getProductLabelFacade(),
             $this->getRepository(),
             $this->getEntityManager(),
-            $this->createProductLabelDictionaryItemMapper(),
-            $this->getStoreFacade()
+            $this->createProductLabelDictionaryItemMapper()
         );
     }
 
@@ -69,18 +68,18 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper
+     */
+    public function createProductLabelDictionaryItemMapper()
+    {
+        return new ProductLabelDictionaryItemMapper($this->getStoreFacade());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface
      */
     public function getStoreFacade(): ProductLabelStorageToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_STORE);
-    }
-
-    /**
-     * @return \Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper
-     */
-    public function createProductLabelDictionaryItemMapper()
-    {
-        return new ProductLabelDictionaryItemMapper();
     }
 }

@@ -9,20 +9,33 @@ namespace Spryker\Zed\ProductLabelStorage\Business\Mapper;
 
 use Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer;
 use Generated\Shared\Transfer\ProductLabelTransfer;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface;
 
 class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapperInterface
 {
     /**
+     * @var \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
+     * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface $storeFacade
+     */
+    public function __construct(ProductLabelStorageToStoreFacadeInterface $storeFacade)
+    {
+        $this->storeFacade = $storeFacade;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ProductLabelTransfer[] $productLabelTransfers
-     * @param string[][] $localeNameMapByStoreName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     public function mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
-        array $productLabelTransfers,
-        array $localeNameMapByStoreName
+        array $productLabelTransfers
     ): array {
         $productLabelDictionaryItemTransfers = [];
+        $localeNameMapByStoreName = $this->getLocaleNameMapByStoreName();
 
         foreach ($productLabelTransfers as $productLabelTransfer) {
             foreach ($localeNameMapByStoreName as $storeName => $storeLocales) {
@@ -36,6 +49,21 @@ class ProductLabelDictionaryItemMapper implements ProductLabelDictionaryItemMapp
         }
 
         return $productLabelDictionaryItemTransfers;
+    }
+
+    /**
+     * @return string[][]
+     */
+    protected function getLocaleNameMapByStoreName(): array
+    {
+        $localeNameMapByStoreName = [];
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+        }
+
+        return $localeNameMapByStoreName;
     }
 
     /**
