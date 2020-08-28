@@ -43,7 +43,9 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
      */
     public function extractPriceProductVolumesForProductAbstract(array $priceProductTransfers): array
     {
-        return $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+        $extractedPrices = $this->extractPriceProductVolumeTransfersFromArray($priceProductTransfers);
+
+        return array_merge($extractedPrices, $priceProductTransfers);
     }
 
     /**
@@ -67,7 +69,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
             $extractedPrices = $this->mapConcretePriceDataToExtractedPrice($extractedPrices, $priceProductTransfers[0]);
         }
 
-        return $extractedPrices;
+        return array_merge($extractedPrices, $priceProductTransfers);
     }
 
     /**
@@ -124,7 +126,7 @@ class VolumePriceExtractor implements VolumePriceExtractorInterface
     {
         $volumePriceTransfer = (new PriceProductTransfer())
             ->fromArray($priceProductTransfer->toArray(), true)
-            ->setVolumeQuantity((int)$volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
+            ->setVolumeQuantity($volumePrice[PriceProductVolumeConfig::VOLUME_PRICE_QUANTITY]);
 
         $volumePriceTransfer
             ->setGroupKey(

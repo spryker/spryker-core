@@ -59,7 +59,7 @@ class PriceProductVolumeFacadeTest extends Unit
 
         $volumePrices = $priceProductVolumeFacade->extractPriceProductVolumesForProductConcrete($priceProducts);
 
-        $this->assertCount(0, $volumePrices);
+        $this->assertCount(1, $volumePrices);
     }
 
     /**
