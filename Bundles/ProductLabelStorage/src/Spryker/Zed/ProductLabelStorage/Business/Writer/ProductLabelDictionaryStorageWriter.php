@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ProductLabelCriteriaTransfer;
 use Generated\Shared\Transfer\ProductLabelDictionaryStorageTransfer;
 use Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface;
 use Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface;
 
@@ -38,21 +39,29 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
     protected $productLabelDictionaryItemMapper;
 
     /**
+     * @var \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageRepositoryInterface $productLabelStorageRepository
      * @param \Spryker\Zed\ProductLabelStorage\Persistence\ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager
      * @param \Spryker\Zed\ProductLabelStorage\Business\Mapper\ProductLabelDictionaryItemMapper $productLabelDictionaryItemMapper
+     * @param \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ProductLabelStorageToProductLabelFacadeInterface $productLabelFacade,
         ProductLabelStorageRepositoryInterface $productLabelStorageRepository,
         ProductLabelStorageEntityManagerInterface $productLabelStorageEntityManager,
-        ProductLabelDictionaryItemMapper $productLabelDictionaryItemMapper
+        ProductLabelDictionaryItemMapper $productLabelDictionaryItemMapper,
+        ProductLabelStorageToStoreFacadeInterface $storeFacade
     ) {
         $this->productLabelFacade = $productLabelFacade;
         $this->productLabelStorageRepository = $productLabelStorageRepository;
         $this->productLabelStorageEntityManager = $productLabelStorageEntityManager;
         $this->productLabelDictionaryItemMapper = $productLabelDictionaryItemMapper;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -71,7 +80,8 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
 
         $productLabelDictionaryItemTransfersMappedByStoreAndLocale = $this->productLabelDictionaryItemMapper
             ->mapProductLabelTransfersToProductLabelDictionaryItemTransfersByStoreNameAndLocaleName(
-                $productLabelTransfers
+                $productLabelTransfers,
+                $this->getLocaleNameMapByStoreName()
             );
 
         $productLabelDictionaryStorageTransfers = $this->productLabelStorageRepository
@@ -86,6 +96,21 @@ class ProductLabelDictionaryStorageWriter implements ProductLabelDictionaryStora
         );
 
         $this->createProductLabelDictionaryStorageData($productLabelDictionaryItemTransfersMappedByStoreAndLocale);
+    }
+
+    /**
+     * @return string[][]
+     */
+    protected function getLocaleNameMapByStoreName(): array
+    {
+        $localeNameMapByStoreName = [];
+        $storeTransfers = $this->storeFacade->getAllStores();
+
+        foreach ($storeTransfers as $storeTransfer) {
+            $localeNameMapByStoreName[$storeTransfer->getName()] = $storeTransfer->getAvailableLocaleIsoCodes();
+        }
+
+        return $localeNameMapByStoreName;
     }
 
     /**
