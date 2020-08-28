@@ -149,19 +149,6 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
-     * @deprecated Use {@link findProductConcreteBySku()} instead.
-     *
-     * @param string $sku
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
-    {
-        return $this->findProductConcreteBySku($sku, $restRequest);
-    }
-
-    /**
      * @param string $sku
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
