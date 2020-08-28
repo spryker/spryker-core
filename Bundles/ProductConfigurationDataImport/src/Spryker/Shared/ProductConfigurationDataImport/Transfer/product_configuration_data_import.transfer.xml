@@ -31,4 +31,13 @@
     <transfer name="ProductConfigurationCollection">
         <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
     </transfer>
+
+    <transfer name="DataImporterConfiguration">
+    </transfer>
+
+    <transfer name="DataImporterReport">
+    </transfer>
+
+    <transfer name="Filter">
+    </transfer>
 </transfers>

@@ -1,5 +1,6 @@
 {
   "name": "spryker/product-configuration-storage",
+  "type": "library",
   "description": "ProductConfigurationStorage module",
   "license": "proprietary",
   "require": {
@@ -29,7 +30,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductConfigurationStorage\\Helper\\": "tests/SprykerTest/Zed/ProductConfigurationStorage/_support/Helper/"
     }
   },
   "autoload-dev": {
@@ -40,8 +42,8 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/",
-    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/ tests/"
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
   },
   "extra": {
     "branch-alias": {

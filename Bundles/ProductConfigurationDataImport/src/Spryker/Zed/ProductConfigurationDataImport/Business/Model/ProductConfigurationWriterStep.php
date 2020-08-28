@@ -8,7 +8,6 @@
 namespace Spryker\Zed\ProductConfigurationDataImport\Business\Model;
 
 use Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery;
-use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 use Spryker\Zed\DataImport\Business\Exception\DataKeyNotFoundInDataSetException;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\PublishAwareStep;
@@ -17,6 +16,11 @@ use Spryker\Zed\ProductConfigurationDataImport\Business\Model\DataSet\ProductCon
 
 class ProductConfigurationWriterStep extends PublishAwareStep implements DataImportStepInterface
 {
+    /**
+     * @uses \Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_PUBLISH
+     */
+    protected const EVENT_PRODUCT_CONFIGURATION_PUBLISH = 'Entity.spy_product_configuration.publish';
+
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
@@ -48,7 +52,7 @@ class ProductConfigurationWriterStep extends PublishAwareStep implements DataImp
         $productConfigurationEntity->save();
 
         $this->addPublishEvents(
-            ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_PUBLISH,
+            static::EVENT_PRODUCT_CONFIGURATION_PUBLISH,
             $productConfigurationEntity->getIdProductConfiguration()
         );
     }
