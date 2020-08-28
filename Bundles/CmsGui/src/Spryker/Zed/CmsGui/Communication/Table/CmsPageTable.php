@@ -11,9 +11,8 @@ use Generated\Shared\Transfer\CmsPageAttributesTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\CmsGui\CmsGuiConfig;
-use Spryker\Zed\CmsGui\Communication\Form\ActivateCmsPageForm;
-use Spryker\Zed\CmsGui\Communication\Form\DeactivateCmsPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\PublishVersionPageForm;
+use Spryker\Zed\CmsGui\Communication\Form\ToggleActiveCmsPageForm;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToCmsInterface;
 use Spryker\Zed\CmsGui\Dependency\Facade\CmsGuiToLocaleInterface;
 use Spryker\Zed\CmsGui\Dependency\QueryContainer\CmsGuiToCmsQueryContainerInterface;
@@ -391,7 +390,7 @@ class CmsPageTable extends AbstractTable
                     CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
                 ]),
                 'Deactivate',
-                DeactivateCmsPageForm::class,
+                ToggleActiveCmsPageForm::class,
                 [
                     static::BUTTON_CLASS => 'btn-danger safe-submit',
                 ]
@@ -404,7 +403,7 @@ class CmsPageTable extends AbstractTable
                 CmsPageTableConstants::EDIT_PAGE_URL_PARAM_REDIRECT_URL => '/cms-gui/list-page/index',
             ]),
             'Activate',
-            ActivateCmsPageForm::class
+            ToggleActiveCmsPageForm::class
         );
     }
 

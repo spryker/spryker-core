@@ -10,8 +10,6 @@ namespace SprykerTest\Yves\Checkout;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class CheckoutModelTester extends Actor
 {
     use _generated\CheckoutModelTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

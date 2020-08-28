@@ -82,7 +82,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer = $customerGroupFacade->findCustomerGroupByIdCustomer($customerEntity->getIdCustomer());
 
         $this->assertNotEmpty($customerGroupTransfer);
-        $this->assertEquals($customerGroupEntity->getName(), $customerGroupTransfer->getName());
+        $this->assertSame($customerGroupEntity->getName(), $customerGroupTransfer->getName());
     }
 
     /**

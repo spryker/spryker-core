@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\Mail;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class MailBusinessTester extends Actor
 {
     use _generated\MailBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

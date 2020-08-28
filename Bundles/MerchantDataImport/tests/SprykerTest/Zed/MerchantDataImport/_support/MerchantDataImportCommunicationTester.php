@@ -13,8 +13,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantStoreQuery;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,10 +29,6 @@ use Orm\Zed\Url\Persistence\SpyUrlQuery;
 class MerchantDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param string[] $references

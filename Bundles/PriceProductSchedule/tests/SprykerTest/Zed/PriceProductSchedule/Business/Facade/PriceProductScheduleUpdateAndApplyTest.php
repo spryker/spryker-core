@@ -120,7 +120,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
             ->setCurrencyIsoCode($currencyTransfer->getCode());
         $actualPriceProductTransfer = $this->priceProductFacade
             ->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(
+        $this->assertSame(
             500,
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
             'Default price does not match expected value.'
@@ -181,7 +181,7 @@ class PriceProductScheduleUpdateAndApplyTest extends Unit
             ->setCurrencyIsoCode($currencyTransfer->getCode());
         $actualPriceProductTransfer = $this->priceProductFacade
             ->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(
+        $this->assertSame(
             500,
             $actualPriceProductTransfer->getMoneyValue()->getNetAmount(),
             'Default price does not match expected value.'

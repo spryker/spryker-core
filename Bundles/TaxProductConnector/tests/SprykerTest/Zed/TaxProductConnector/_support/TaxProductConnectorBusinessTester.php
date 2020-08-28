@@ -15,8 +15,6 @@ use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Spryker\Shared\Tax\TaxConstants;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

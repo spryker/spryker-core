@@ -10,8 +10,6 @@ namespace SprykerTest\Service\UtilValidate;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class UtilValidateServiceTester extends Actor
 {
     use _generated\UtilValidateServiceTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

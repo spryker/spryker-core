@@ -13,8 +13,6 @@ use Spryker\Zed\Vault\Business\VaultFacadeInterface;
 use Spryker\Zed\Vault\VaultConfig;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,10 +30,6 @@ use Spryker\Zed\Vault\VaultConfig;
 class VaultBusinessTester extends Actor
 {
     use _generated\VaultBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param \Spryker\Shared\Vault\VaultConfig $sharedVaultConfig

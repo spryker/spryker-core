@@ -133,8 +133,8 @@ class BuilderTest extends Unit
 
         $manualEventsBySource = $process->getManuallyExecutableEventsBySource();
 
-        $this->assertEquals('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
-        $this->assertEquals('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);
+        $this->assertSame('Foo 1 - action', $manualEventsBySource['Foo 1 - sub process state'][0]);
+        $this->assertSame('Leave Sub-process 2', $manualEventsBySource['Foo 1 - done'][0]);
     }
 
     /**

@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\OauthCustomerConnector;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class OauthCustomerConnectorBusinessTester extends Actor
 {
     use _generated\OauthCustomerConnectorBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 }

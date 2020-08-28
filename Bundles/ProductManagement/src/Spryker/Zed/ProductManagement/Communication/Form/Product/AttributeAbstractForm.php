@@ -122,7 +122,7 @@ class AttributeAbstractForm extends AbstractSubForm
      */
     protected function addCheckboxNameField(FormBuilderInterface $builder, array $options = [])
     {
-        $attributes = $options[AttributeAbstractForm::OPTION_ATTRIBUTE];
+        $attributes = $options[self::OPTION_ATTRIBUTE];
 
         $name = $builder->getName();
         $label = $attributes[$name][AbstractProductFormDataProvider::FORM_FIELD_LABEL];
