@@ -47,6 +47,6 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
      */
     public function getUtilEncodingService(): GiftCardBalanceToUtilDateTimeServiceInterface
     {
-        return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::SERVICE_UTIL_DATA_TIME);
+        return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

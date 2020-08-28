@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\Container;
 class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const FACADE_MONEY = 'FACADE_MONEY';
-    public const SERVICE_UTIL_DATA_TIME = 'SERVICE_UTIL_DATA_TIME';
+    public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -56,7 +56,7 @@ class GiftCardBalanceDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilDateTimeService(Container $container): Container
     {
-        $container->set(static::SERVICE_UTIL_DATA_TIME, function (Container $container) {
+        $container->set(static::SERVICE_UTIL_DATE_TIME, function (Container $container) {
             return new GiftCardBalanceToUtilDateTimeServiceBridge($container->getLocator()->utilDateTime()->service());
         });
 
