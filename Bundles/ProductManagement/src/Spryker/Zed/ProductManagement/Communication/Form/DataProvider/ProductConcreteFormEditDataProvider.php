@@ -166,12 +166,10 @@ class ProductConcreteFormEditDataProvider extends AbstractProductFormDataProvide
 
         $formData[ProductConcreteFormEdit::FIELD_ID_PRODUCT_CONCRETE] = $productTransfer->getIdProductConcrete();
 
-        if ($productAbstractTransfer) {
-            $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
-            $formData = $this->appendBundledProducts($productTransfer, $formData);
-        }
+        $formData = $this->appendVariantGeneralAndSeoData($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendVariantPriceAndStock($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendConcreteProductImages($productAbstractTransfer, $productTransfer, $formData);
+        $formData = $this->appendBundledProducts($productTransfer, $formData);
 
         foreach ($this->formEditDataProviderExpanderPlugins as $expanderPlugin) {
             $expanderPlugin->expand($productTransfer, $formData);
