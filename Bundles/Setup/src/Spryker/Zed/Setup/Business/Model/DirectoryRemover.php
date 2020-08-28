@@ -17,7 +17,7 @@ class DirectoryRemover implements DirectoryRemoverInterface
     /**
      * @var string
      */
-    private $directoryToRemove;
+    protected $directoryToRemove;
 
     /**
      * @param string $directoryToRemove

@@ -32,7 +32,7 @@ class OrderItemSplitTest extends Unit
     /**
      * @var array
      */
-    private $notCopiedOrderItemFields = [
+    protected $notCopiedOrderItemFields = [
         'id_sales_order_item',
         'last_state_change',
         'quantity',

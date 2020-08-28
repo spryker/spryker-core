@@ -14,27 +14,27 @@ class Finder
     /**
      * @var string
      */
-    private $bundleDirectory;
+    protected $moduleDirectory;
 
     /**
      * @var string
      */
-    private $application;
+    protected $application;
 
     /**
      * @var string
      */
-    private $bundle;
+    protected $module;
 
     /**
      * @var string
      */
-    private $layer;
+    protected $layer;
 
     /**
      * @var string
      */
-    private $name;
+    protected $name;
 
     /**
      * @param string $bundleDirectory

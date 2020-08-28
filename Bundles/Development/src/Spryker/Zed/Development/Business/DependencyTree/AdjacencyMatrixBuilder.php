@@ -15,22 +15,22 @@ class AdjacencyMatrixBuilder implements AdjacencyMatrixBuilderInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
-    private $dependencyTreeReader;
+    protected $dependencyTreeReader;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\TreeFilterInterface
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @var array
      */
-    private $bundleList;
+    protected $bundleList;
 
     /**
      * @var array
      */
-    private $matrix = [];
+    protected $matrix = [];
 
     /**
      * @param array $bundleList

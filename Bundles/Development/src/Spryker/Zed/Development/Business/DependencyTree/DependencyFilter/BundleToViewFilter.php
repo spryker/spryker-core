@@ -14,7 +14,7 @@ class BundleToViewFilter implements DependencyFilterInterface
     /**
      * @var string
      */
-    private $bundle;
+    protected $bundle;
 
     /**
      * @param string $bundle

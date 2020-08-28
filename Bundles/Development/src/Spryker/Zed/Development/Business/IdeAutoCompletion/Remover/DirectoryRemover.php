@@ -14,7 +14,7 @@ class DirectoryRemover implements DirectoryRemoverInterface
     /**
      * @var \Spryker\Zed\Development\Business\IdeAutoCompletion\Remover\TargetDirectoryResolver
      */
-    private $targetDirectoryResolver;
+    protected $targetDirectoryResolver;
 
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
