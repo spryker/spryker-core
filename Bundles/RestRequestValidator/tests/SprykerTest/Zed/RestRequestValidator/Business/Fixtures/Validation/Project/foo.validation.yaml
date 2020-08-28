@@ -7,7 +7,6 @@ endpoint:
   patch:
     booleanField:
     - IsTrue
-    - Required
 
 endpoint_two:
   put:

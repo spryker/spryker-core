@@ -15,7 +15,7 @@ interface DiscountRuleWithValueOptionsPluginInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getQueryStringValueOptions();
 }

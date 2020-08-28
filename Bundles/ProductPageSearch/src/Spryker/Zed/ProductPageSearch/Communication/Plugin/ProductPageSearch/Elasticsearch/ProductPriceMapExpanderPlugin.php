@@ -37,9 +37,20 @@ class ProductPriceMapExpanderPlugin extends AbstractPlugin implements ProductAbs
      *
      * @return \Generated\Shared\Transfer\PageMapTransfer
      */
-    public function expandProductMap(PageMapTransfer $pageMapTransfer, PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $localeTransfer)
-    {
+    public function expandProductMap(
+        PageMapTransfer $pageMapTransfer,
+        PageMapBuilderInterface $pageMapBuilder,
+        array $productData,
+        LocaleTransfer $localeTransfer
+    ) {
         $price = $productData[static::KEY_PRICE];
+
+        if ($price === null) {
+            $this->setPricesByType($pageMapBuilder, $pageMapTransfer, $productData);
+
+            return $pageMapTransfer;
+        }
+
         $pageMapBuilder
             ->addSearchResultData($pageMapTransfer, static::KEY_PRICE, $price)
             ->addIntegerSort($pageMapTransfer, static::KEY_PRICE, $price)

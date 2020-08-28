@@ -15,6 +15,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class ProductGroupStorageClient extends AbstractClient implements ProductGroupStorageClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract

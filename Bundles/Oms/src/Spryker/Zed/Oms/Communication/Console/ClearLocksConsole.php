@@ -42,5 +42,7 @@ class ClearLocksConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->getFacade()->clearLocks();
+
+        return static::CODE_SUCCESS;
     }
 }

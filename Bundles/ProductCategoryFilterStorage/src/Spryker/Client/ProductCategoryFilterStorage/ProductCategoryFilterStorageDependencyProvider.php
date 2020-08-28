@@ -37,9 +37,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
      */
     protected function addStorageClient(Container $container): Container
     {
-        $container[self::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductCategoryFilterStorageToStorageBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class ProductCategoryFilterStorageDependencyProvider extends AbstractDependencyP
      */
     protected function addSynchronizationService(Container $container): Container
     {
-        $container[self::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductCategoryFilterStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }

@@ -36,8 +36,10 @@ class ProductImageMapper
      *
      * @return \Generated\Shared\Transfer\ProductImageTransfer
      */
-    public function mapProductImageEntityToProductImageTransfer(SpyProductImage $productImageEntity, ProductImageTransfer $productImageTransfer): ProductImageTransfer
-    {
+    public function mapProductImageEntityToProductImageTransfer(
+        SpyProductImage $productImageEntity,
+        ProductImageTransfer $productImageTransfer
+    ): ProductImageTransfer {
         $productImageTransfer = $productImageTransfer->fromArray($productImageEntity->toArray(), true);
 
         return $productImageTransfer;

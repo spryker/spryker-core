@@ -42,8 +42,10 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateStorageByUuid(string $configurableBundleTemplateUuid, string $localeName): ?ConfigurableBundleTemplateStorageTransfer
-    {
+    public function findConfigurableBundleTemplateStorageByUuid(
+        string $configurableBundleTemplateUuid,
+        string $localeName
+    ): ?ConfigurableBundleTemplateStorageTransfer {
         return $this->getFactory()
             ->createConfigurableBundleStorageReader()
             ->findConfigurableBundleTemplateStorageByUuid($configurableBundleTemplateUuid, $localeName);

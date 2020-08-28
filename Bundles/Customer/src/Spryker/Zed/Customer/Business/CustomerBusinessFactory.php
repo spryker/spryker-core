@@ -65,7 +65,8 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
         return new CustomerReader(
             $this->getEntityManager(),
             $this->getRepository(),
-            $this->createAddress()
+            $this->createAddress(),
+            $this->createCustomerExpander()
         );
     }
 
@@ -135,7 +136,7 @@ class CustomerBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use createCheckoutCustomerOrderSaverWithMultiShippingAddress() instead.
+     * @deprecated Use {@link createCheckoutCustomerOrderSaverWithMultiShippingAddress()} instead.
      *
      * @return \Spryker\Zed\Customer\Business\Checkout\CustomerOrderSaverInterface
      */

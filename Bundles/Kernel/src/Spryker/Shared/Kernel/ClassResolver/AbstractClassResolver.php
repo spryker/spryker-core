@@ -7,15 +7,70 @@
 
 namespace Spryker\Shared\Kernel\ClassResolver;
 
-use Spryker\Shared\Config\Config;
-use Spryker\Shared\Kernel\KernelConstants;
-use Spryker\Shared\Kernel\Store;
+use Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderInterface;
+use Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderPhp;
+use Spryker\Shared\Kernel\KernelConfig;
+use Spryker\Shared\Kernel\KernelSharedFactory;
 
 abstract class AbstractClassResolver
 {
     public const KEY_NAMESPACE = '%namespace%';
     public const KEY_BUNDLE = '%bundle%';
-    public const KEY_STORE = '%store%';
+    public const KEY_CODE_BUCKET = '%codeBucket%';
+
+    protected const CLASS_NAME_PATTERN = null;
+    protected const RESOLVABLE_TYPE = null;
+
+    /**
+     * @var array|null
+     */
+    protected static $resolvableClassNamesCache;
+
+    /**
+     * @var bool|null
+     */
+    protected static $isCacheEnabled;
+
+    /**
+     * @var bool|null
+     */
+    protected static $isInstanceCacheEnabled;
+
+    /**
+     * @var string|null
+     */
+    protected static $storeName;
+
+    /**
+     * @var array|null
+     */
+    protected static $projectNamespaces;
+
+    /**
+     * @var array|null
+     */
+    protected static $coreNamespaces;
+
+    /**
+     * @var \Spryker\Shared\Kernel\KernelConfig
+     */
+    protected static $sharedConfig;
+
+    /**
+     * @var \Spryker\Shared\Kernel\KernelSharedFactory
+     */
+    protected static $sharedFactory;
+
+    /**
+     * @var string[]|null
+     */
+    protected static $resolvableTypeClassNamePatternMap;
+
+    /**
+     * @var \Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface
+     */
+    protected static $classNameFinder;
 
     /**
      * @var string
@@ -28,22 +83,64 @@ abstract class AbstractClassResolver
     protected $classInfo;
 
     /**
-     * @var array
+     * @var object[]
      */
-    protected static $cache = [];
+    protected static $cachedInstances = [];
 
     /**
-     * @return string
+     * @var \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
      */
-    abstract protected function getClassPattern();
+    protected static $resolverCacheManager;
+
+    /**
+     * @var bool|null
+     */
+    protected static $useResolverCache;
+
+    /**
+     * @param object|string $callerClass
+     *
+     * @return object|null
+     */
+    abstract public function resolve($callerClass);
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    abstract protected function buildClassName($namespace, $store = null);
+    abstract protected function buildClassName($namespace, $codeBucket = null);
+
+    /**
+     * @param object|string $callerClass
+     *
+     * @return object|null
+     */
+    public function doResolve($callerClass)
+    {
+        $this->setCallerClass($callerClass);
+
+        $cacheKey = $this->findCacheKey();
+        $isInstanceCacheEnabled = $this->isInstanceCacheEnabled();
+
+        if ($cacheKey !== null && $isInstanceCacheEnabled && isset(static::$cachedInstances[$cacheKey])) {
+            return static::$cachedInstances[$cacheKey];
+        }
+
+        $resolvedClassName = $this->resolveClassName($cacheKey);
+
+        if ($resolvedClassName !== null) {
+            $resolvedInstance = $this->createInstance($resolvedClassName);
+            if ($cacheKey !== null && $isInstanceCacheEnabled) {
+                static::$cachedInstances[$cacheKey] = $resolvedInstance;
+            }
+
+            return $resolvedInstance;
+        }
+
+        return null;
+    }
 
     /**
      * @param object|string $callerClass
@@ -71,11 +168,11 @@ abstract class AbstractClassResolver
      */
     public function canResolve()
     {
-        if (isset($this->classInfo) && $this->classInfo->getCallerClassName() !== null) {
-            $cacheKey = $this->buildCacheKey();
+        if ($this->canUseCaching()) {
+            $cacheKey = $this->getCacheKey();
 
-            if (isset(static::$cache[$cacheKey])) {
-                $this->resolvedClassName = static::$cache[$cacheKey];
+            if ($this->hasCache($cacheKey)) {
+                $this->resolvedClassName = $this->getCached($cacheKey);
 
                 return true;
             }
@@ -88,7 +185,7 @@ abstract class AbstractClassResolver
                 $this->resolvedClassName = $className;
 
                 if (isset($cacheKey)) {
-                    static::$cache[$cacheKey] = $className;
+                    $this->addCache($cacheKey, $className);
                 }
 
                 return true;
@@ -96,6 +193,221 @@ abstract class AbstractClassResolver
         }
 
         return false;
+    }
+
+    /**
+     * @deprecated Will be removed without replacement. This is no longer required as all class name patterns are now
+     * configurable in {@link \Spryker\Shared\Kernel\KernelConfig::getResolvableTypeClassNamePatternMap}
+     *
+     * @return string
+     */
+    protected function getClassPattern()
+    {
+        return '';
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function findCacheKey(): ?string
+    {
+        if (!$this->isCacheEnabled()) {
+            return null;
+        }
+
+        return $this->getCacheKey();
+    }
+
+    /**
+     * @param string|null $cacheKey
+     *
+     * @return string|null
+     */
+    protected function resolveClassName(?string $cacheKey = null): ?string
+    {
+        if ($cacheKey !== null && $this->hasCache($cacheKey)) {
+            return $this->getCached($cacheKey);
+        }
+
+        return $this->findClassName();
+    }
+
+    /**
+     * @return string|null
+     */
+    protected function findClassName(): ?string
+    {
+        $classNamePattern = $this->getResolvableTypeClassNamePatternMap()[static::RESOLVABLE_TYPE] ?? null;
+        if ($classNamePattern === null) {
+            return null;
+        }
+
+        return $this->getClassNameFinder()->findClassName($this->getClassInfo()->getModule(), $classNamePattern);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getResolvableTypeClassNamePatternMap(): array
+    {
+        if (static::$resolvableTypeClassNamePatternMap === null) {
+            static::$resolvableTypeClassNamePatternMap = $this->getSharedConfig()->getResolvableTypeClassNamePatternMap();
+        }
+
+        return static::$resolvableTypeClassNamePatternMap;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ClassNameFinder\ClassNameFinderInterface
+     */
+    protected function getClassNameFinder(): ClassNameFinderInterface
+    {
+        if (static::$classNameFinder === null) {
+            static::$classNameFinder = $this->getSharedFactory()->createClassNameFinder();
+        }
+
+        return static::$classNameFinder;
+    }
+
+    /**
+     * @param string|null $resolvedClassName
+     *
+     * @return object
+     */
+    protected function createInstance(?string $resolvedClassName = null)
+    {
+        if ($resolvedClassName !== null) {
+            return new $resolvedClassName();
+        }
+
+        return new $this->resolvedClassName();
+    }
+
+    /**
+     * @param string $cacheKey
+     *
+     * @return bool
+     */
+    protected function hasCache(string $cacheKey): bool
+    {
+        $cache = $this->getCache();
+
+        return isset($cache[$cacheKey]);
+    }
+
+    /**
+     * @param string $cacheKey
+     *
+     * @return string
+     */
+    protected function getCached(string $cacheKey): string
+    {
+        $cache = $this->getCache();
+
+        return str_replace('\\\\', '\\', $cache[$cacheKey]);
+    }
+
+    /**
+     * @param string $cacheKey
+     * @param string $className
+     *
+     * @return void
+     */
+    protected function addCache(string $cacheKey, string $className): void
+    {
+        $cache = $this->getCache();
+
+        $cache[$cacheKey] = $className;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCache(): array
+    {
+        if (static::$resolvableClassNamesCache === null) {
+            static::$resolvableClassNamesCache = [];
+
+            if ($this->canUseCaching()) {
+                static::$resolvableClassNamesCache = $this->createCacheReader()->read();
+            }
+        }
+
+        return static::$resolvableClassNamesCache;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolvableCache\CacheReader\CacheReaderInterface
+     */
+    protected function createCacheReader(): CacheReaderInterface
+    {
+        return new CacheReaderPhp($this->getSharedConfig());
+    }
+
+    /**
+     * @return bool
+     */
+    protected function canUseCaching(): bool
+    {
+        if ($this->isCacheEnabled() === false || $this->classInfo === null || static::RESOLVABLE_TYPE === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCacheEnabled(): bool
+    {
+        // For PHP versions lower 7.3 class resolver cache might not work because of bug https://bugs.php.net/bug.php?id=75765
+        if (PHP_VERSION_ID < 70300) {
+            return false;
+        }
+
+        if (static::$isCacheEnabled === null) {
+            static::$isCacheEnabled = $this->getSharedConfig()->isResolvableClassNameCacheEnabled();
+        }
+
+        return static::$isCacheEnabled;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\KernelConfig
+     */
+    protected function getSharedConfig(): KernelConfig
+    {
+        if (static::$sharedConfig === null) {
+            static::$sharedConfig = new KernelConfig();
+        }
+
+        return static::$sharedConfig;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\KernelSharedFactory
+     */
+    protected function getSharedFactory(): KernelSharedFactory
+    {
+        if (static::$sharedFactory === null) {
+            static::$sharedFactory = new KernelSharedFactory();
+            static::$sharedFactory->setSharedConfig($this->getSharedConfig());
+        }
+
+        return static::$sharedFactory;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isInstanceCacheEnabled(): bool
+    {
+        if (static::$isInstanceCacheEnabled === null) {
+            static::$isInstanceCacheEnabled = $this->getSharedConfig()->isResolvedInstanceCacheEnabled();
+        }
+
+        return static::$isInstanceCacheEnabled;
     }
 
     /**
@@ -108,7 +420,13 @@ abstract class AbstractClassResolver
      */
     protected function unsetCurrentCacheEntry()
     {
-        unset(static::$cache[$this->buildCacheKey()]);
+        if (!$this->canUseCaching()) {
+            return;
+        }
+
+        $cache = $this->getCache();
+
+        unset($cache[$this->getCacheKey()]);
     }
 
     /**
@@ -118,18 +436,42 @@ abstract class AbstractClassResolver
      */
     protected function classExists($className)
     {
-        $resolverCacheManager = $this->createResolverCacheManager();
-
-        if (!$resolverCacheManager->useCache()) {
+        if (!$this->useResolverCache()) {
             return class_exists($className);
         }
 
-        $cacheProvider = $resolverCacheManager->createClassResolverCacheProvider();
+        $cacheProvider = $this->getResolverCacheManager()->createClassResolverCacheProvider();
 
         return $cacheProvider->getCache()->classExists($className);
     }
 
     /**
+     * @return bool
+     */
+    protected function useResolverCache(): bool
+    {
+        if (static::$useResolverCache === null) {
+            static::$useResolverCache = $this->getResolverCacheManager()->useCache();
+        }
+
+        return static::$useResolverCache;
+    }
+
+    /**
+     * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
+     */
+    protected function getResolverCacheManager(): ResolverCacheFactoryInterface
+    {
+        if (static::$resolverCacheManager === null) {
+            static::$resolverCacheManager = new ResolverCacheManager();
+        }
+
+        return static::$resolverCacheManager;
+    }
+
+    /**
+     * @deprecated Use {@link \Spryker\Shared\Kernel\ClassResolver\AbstractClassResolver::getResolverCacheManager} instead.
+     *
      * @return \Spryker\Shared\Kernel\ClassResolver\ResolverCacheFactoryInterface
      */
     protected function createResolverCacheManager()
@@ -142,7 +484,17 @@ abstract class AbstractClassResolver
      */
     protected function getResolvedClassInstance()
     {
-        return new $this->resolvedClassName();
+        if (!$this->canUseCaching()) {
+            return new $this->resolvedClassName();
+        }
+
+        $cacheKey = $this->getCacheKey();
+
+        if (!isset(static::$cachedInstances[$cacheKey])) {
+            static::$cachedInstances[$cacheKey] = new $this->resolvedClassName();
+        }
+
+        return static::$cachedInstances[$cacheKey];
     }
 
     /**
@@ -165,13 +517,28 @@ abstract class AbstractClassResolver
      */
     private function addProjectClassNames(array $classNames)
     {
-        $storeName = Store::getInstance()->getStoreName();
+        $codeBucket = APPLICATION_CODE_BUCKET;
         foreach ($this->getProjectNamespaces() as $namespace) {
-            $classNames[] = $this->buildClassName($namespace, $storeName);
+            if ($codeBucket !== '') {
+                $classNames[] = $this->buildClassName($namespace, $codeBucket);
+            }
+
             $classNames[] = $this->buildClassName($namespace);
         }
 
         return $classNames;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getStoreName(): string
+    {
+        if (static::$storeName === null) {
+            static::$storeName = $this->getSharedConfig()->getCurrentStoreName();
+        }
+
+        return static::$storeName;
     }
 
     /**
@@ -193,7 +560,11 @@ abstract class AbstractClassResolver
      */
     protected function getProjectNamespaces()
     {
-        return Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACES);
+        if (static::$projectNamespaces === null) {
+            static::$projectNamespaces = $this->getSharedConfig()->getProjectOrganizations();
+        }
+
+        return static::$projectNamespaces;
     }
 
     /**
@@ -201,14 +572,18 @@ abstract class AbstractClassResolver
      */
     protected function getCoreNamespaces()
     {
-        return Config::getInstance()->get(KernelConstants::CORE_NAMESPACES);
+        if (static::$coreNamespaces === null) {
+            static::$coreNamespaces = $this->getSharedConfig()->getCoreOrganizations();
+        }
+
+        return static::$coreNamespaces;
     }
 
     /**
      * @return string
      */
-    protected function buildCacheKey()
+    protected function getCacheKey(): string
     {
-        return static::class . '-' . $this->classInfo->getCallerClassName();
+        return $this->classInfo->getCacheKey(static::RESOLVABLE_TYPE);
     }
 }

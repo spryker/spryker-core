@@ -324,8 +324,8 @@ class ConcreteManagementTest extends FacadeTestAbstract
             $this->locales['de_DE']
         );
 
-        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
-        $this->assertEquals(self::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
+        $this->assertSame(self::PRODUCT_CONCRETE_NAME['en_US'], $productNameEN);
+        $this->assertSame(self::PRODUCT_CONCRETE_NAME['de_DE'], $productNameDE);
     }
 
     /**

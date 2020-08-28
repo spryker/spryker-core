@@ -24,6 +24,7 @@ use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\ProductBundle\Persistence\SpyProductBundleQuery;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartItemGroupKeyExpander;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeBridge;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
@@ -54,6 +55,15 @@ class ProductBundleFacadeTest extends Unit
      * @var \SprykerTest\Zed\ProductBundle\ProductBundleBusinessTester
      */
     protected $tester;
+
+    /**
+     * @return void
+     */
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->cleanProductBundleCache();
+    }
 
     /**
      * @return void
@@ -155,7 +165,7 @@ class ProductBundleFacadeTest extends Unit
 
         $itemTransfer = $cartChangeTransfer->getItems()[0];
 
-        $this->assertEquals(
+        $this->assertSame(
             $groupKeyBefore . ProductBundleCartItemGroupKeyExpander::GROUP_KEY_DELIMITER . $itemTransfer->getRelatedBundleItemIdentifier() . '1',
             $itemTransfer->getGroupKey()
         );
@@ -384,7 +394,7 @@ class ProductBundleFacadeTest extends Unit
             );
 
         // Assert
-        $this->assertEquals(0, $bundledProductAvailability->getAvailability()->toString());
+        $this->assertSame('0.0000000000', $bundledProductAvailability->getAvailability()->toString());
     }
 
     /**
@@ -508,6 +518,22 @@ class ProductBundleFacadeTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testDeactivateRelatedProductBundlesWithInactiveProductConcrete(): void
+    {
+        // Arrange
+        $productConcreteTransfer = $this->tester->createProductBundle(static::BUNDLED_PRODUCT_PRICE_2, false);
+
+        // Act
+        $productConcreteTransfer = $this->getProductBundleFacade()
+            ->deactivateRelatedProductBundles($productConcreteTransfer);
+
+        // Assert
+        $this->assertFalse($productConcreteTransfer->getIsActive());
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundleFacadeInterface
      */
     protected function getProductBundleFacade()
@@ -603,5 +629,13 @@ class ProductBundleFacadeTest extends Unit
 
         return (new QuoteTransfer())
             ->setStore($storeTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    protected function cleanProductBundleCache(): void
+    {
+        (new ProductBundleCache())->cleanCache();
     }
 }

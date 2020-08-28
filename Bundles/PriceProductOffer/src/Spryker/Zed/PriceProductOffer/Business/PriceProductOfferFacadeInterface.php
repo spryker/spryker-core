@@ -7,20 +7,44 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 
 interface PriceProductOfferFacadeInterface
 {
     /**
      * Specification:
-     * - Returns list of product offer prices.
+     * - Persists Product prices using the PriceProduct facade.
      *
      * @api
      *
-     * @param string[] $skus
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array;
+    public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
+
+    /**
+     * Specification:
+     * - Persists Price Product Offer entities.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer;
+
+    /**
+     * Specification:
+     * - Expands provided ProductOfferTransfer with PriceProduct transfers.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function expandProductOfferWithPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer;
 }

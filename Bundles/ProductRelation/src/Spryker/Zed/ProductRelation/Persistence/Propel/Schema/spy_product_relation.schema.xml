@@ -3,7 +3,7 @@
 
     <table name="spy_product_relation_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_relation_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="key" required="true" type="VARCHAR"/>
+        <column name="key" required="true" type="VARCHAR" size="255"/>
 
         <behavior name="timestampable"/>
 
@@ -25,11 +25,6 @@
         <foreign-key name="spy_product-relation-type-fk_product_abstract" foreignTable="spy_product_relation_type">
             <reference local="fk_product_relation_type" foreign="id_product_relation_type"/>
         </foreign-key>
-
-        <unique name="spy_product-relation-unique-fk_product_abstract">
-            <unique-column name="fk_product_abstract"/>
-            <unique-column name="fk_product_relation_type"/>
-        </unique>
 
         <behavior name="timestampable"/>
 
@@ -55,5 +50,33 @@
         <id-method-parameter value="spy_product_rel_prod_abs_type_pk_seq"/>
     </table>
 
+    <table name="spy_product_relation_store" phpName="SpyProductRelationStore">
+        <column name="id_product_relation_store" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product_relation" type="INTEGER" required="true"/>
+        <column name="fk_store" type="INTEGER" required="true"/>
+
+        <foreign-key name="spy_product_relation_store-fk_product_relation" foreignTable="spy_product_relation" phpName="ProductRelation" refPhpName="ProductRelationStore">
+            <reference local="fk_product_relation" foreign="id_product_relation"/>
+        </foreign-key>
+
+        <foreign-key name="spy_product_relation_store-fk_store" foreignTable="spy_store" phpName="Store" refPhpName="ProductRelationStore">
+            <reference local="fk_store" foreign="id_store"/>
+        </foreign-key>
+
+        <index name="index-spy_product_relation_store-fk_product_relation">
+            <index-column name="fk_product_relation"/>
+        </index>
+
+        <index name="index-spy_product_relation_store-fk_store">
+            <index-column name="fk_store"/>
+        </index>
+
+        <unique name="spy_product_relation_store-unique-fk_product_relation-fk_store">
+            <unique-column name="fk_product_relation"/>
+            <unique-column name="fk_store"/>
+        </unique>
+
+        <id-method-parameter value="spy_product_relation_store_pk_seq"/>
+    </table>
 
 </database>

@@ -23,6 +23,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface, DiscountRuleWithAttributesPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -40,6 +42,7 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     }
 
     /**
+     * {@inheritDoc}
      * Name of field as used in query string
      *
      * @api
@@ -52,11 +55,12 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     }
 
     /**
+     * {@inheritDoc}
      * Data types used by this field. (string, integer, list)
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {
@@ -68,6 +72,8 @@ class ProductAttributeDecisionRulePlugin extends AbstractPlugin implements Decis
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string[]

@@ -133,7 +133,7 @@ class RouterResource implements ResourceInterface
         $classNameParts = explode(DIRECTORY_SEPARATOR, $fileInfo->getPathname());
         $srcPosition = array_search('src', $classNameParts);
         $className = implode('\\', array_slice($classNameParts, $srcPosition + 1));
-        $className = str_replace('.php', '', $className);
+        $className = str_replace(['.php', '\\\\'], ['', '\\'], $className);
 
         return $className;
     }
@@ -230,8 +230,13 @@ class RouterResource implements ResourceInterface
      *
      * @return \Spryker\Zed\Router\Business\Route\RouteCollection
      */
-    protected function addRouteToCollection(ReflectionMethod $method, RouteCollection $routeCollection, string $pathCandidate, string $controllerClassName, string $template): RouteCollection
-    {
+    protected function addRouteToCollection(
+        ReflectionMethod $method,
+        RouteCollection $routeCollection,
+        string $pathCandidate,
+        string $controllerClassName,
+        string $template
+    ): RouteCollection {
         $route = new Route($pathCandidate);
 
         $route->addDefaults([

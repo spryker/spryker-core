@@ -235,6 +235,7 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
 
             if (!$priceDimension) {
                 $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+
                 continue;
             }
 
@@ -516,7 +517,8 @@ class ProductFormTransferMapper implements ProductFormTransferMapperInterface
      */
     protected function getConcreteAttributes(array $formData, ?int $idProduct): array
     {
-        if ($idProduct === null &&
+        if (
+            $idProduct === null &&
             isset($formData[ProductConcreteFormAdd::CONTAINER_PRODUCT_CONCRETE_SUPER_ATTRIBUTES][ProductConcreteFormAdd::FORM_PRODUCT_CONCRETE_SUPER_ATTRIBUTES])
         ) {
             return $this

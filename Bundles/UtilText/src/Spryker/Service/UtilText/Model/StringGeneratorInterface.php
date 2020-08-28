@@ -15,4 +15,11 @@ interface StringGeneratorInterface
      * @return string
      */
     public function generateRandomString($length);
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string;
 }

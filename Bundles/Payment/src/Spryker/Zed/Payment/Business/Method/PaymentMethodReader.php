@@ -74,7 +74,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
      */
     protected function findPaymentMethods(QuoteTransfer $quoteTransfer): PaymentMethodsTransfer
     {
-        $paymentMethodsFromPersistence = $this->paymentRepository->getPaymentMethods();
+        $paymentMethodsFromPersistence = $this->paymentRepository->getPaymentMethodsWithStoreRelation();
 
         return $this->collectPaymentMethodsByStateMachineMapping(
             $paymentMethodsFromPersistence,
@@ -95,7 +95,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         $paymentMethodsTransfer = new PaymentMethodsTransfer();
         $paymentStateMachineMappings = array_keys($this->paymentConfig->getPaymentStatemachineMappings());
         $persistentMethodNames = $this->getPersistentPaymentMethodKeys($paymentMethodsFromPersistence);
-        
+
         $paymentMethodsTransfer = $this->collectPaymentMethodsFromPersistence(
             $paymentMethodsTransfer,
             $paymentMethodsFromPersistence,
@@ -103,7 +103,7 @@ class PaymentMethodReader implements PaymentMethodReaderInterface
         );
 
         $infrastructuralMethodNames = array_diff($paymentStateMachineMappings, $persistentMethodNames);
-        
+
         return $this->collectInfrastructuralPaymentMethods(
             $infrastructuralMethodNames,
             $paymentMethodsTransfer

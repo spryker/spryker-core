@@ -83,6 +83,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     protected const IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED = true;
 
     /**
+     * @api
+     *
      * @param string $paymentMethodName
      *
      * @return array
@@ -97,6 +99,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @example
      * [
      *  'PaymentProvider1' => [
@@ -113,6 +117,8 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array
@@ -121,10 +127,32 @@ class CheckoutRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isPaymentProviderMethodToStateMachineMappingEnabled(): bool
     {
         return static::IS_PAYMENT_PROVIDER_METHOD_TO_STATE_MACHINE_MAPPING_ENABLED;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isShipmentMethodsMappedToAttributes(): bool
+    {
+        return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isPaymentProvidersMappedToAttributes(): bool
+    {
+        return true;
     }
 }

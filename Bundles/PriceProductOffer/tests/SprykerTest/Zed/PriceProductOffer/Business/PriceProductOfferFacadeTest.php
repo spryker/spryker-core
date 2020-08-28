@@ -8,7 +8,15 @@
 namespace SprykerTest\Zed\PriceProductOffer\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductOfferTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
+use Spryker\Shared\PriceProductOffer\PriceProductOfferConfig;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeBridge;
+use Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface;
+use Spryker\Zed\PriceProductOffer\PriceProductOfferDependencyProvider;
+use SprykerTest\Shared\Testify\Helper\DataCleanupHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -23,7 +31,7 @@ use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
  */
 class PriceProductOfferFacadeTest extends Unit
 {
-    protected const NOT_EXISTING_SKU = 'non-existing-sku';
+    use DataCleanupHelperTrait;
 
     /**
      * @var \SprykerTest\Zed\PriceProductOffer\PriceProductOfferBusinessTester
@@ -33,38 +41,135 @@ class PriceProductOfferFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetPriceProductTransfersReturnsNothingIfPricesNotExist(): void
+    public function setUp(): void
     {
-        // Act
-        $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductTransfers(
-                [static::NOT_EXISTING_SKU],
-                new PriceProductCriteriaTransfer()
-            );
+        parent::setUp();
 
-        // Assert
-        $this->assertEmpty($priceProductOfferTransfers);
+        $this->tester->ensurePriceProductOfferTableIsEmpty();
     }
 
     /**
      * @return void
      */
-    public function testGetPriceProductTransfersReturnsProductOfferPricesIfExists(): void
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+
+        $this->getDataCleanupHelper()->_addCleanup(function (): void {
+            $this->tester->ensurePriceProductOfferTableIsEmpty();
+        });
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveProductOfferPricesCallsPriceProductFacadeWithCorrectData(): void
     {
         // Arrange
-        $priceProductOfferTransfer = $this->tester->havePriceProductOffer();
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $productOfferTransfer = ($this->tester->haveProductOffer())
+            ->addPrice($priceProductTransfer)
+            ->setIdProductConcrete(1);
+
+        $priceProductFacadeMock = $this->getPriceProductFacadeMock();
+        $priceProductFacadeMock
+            ->expects($this->once())
+            ->method('persistProductConcretePriceCollection')
+            ->will($this->returnCallback(function (ProductConcreteTransfer $productConcreteTransfer) use ($productOfferTransfer) {
+                $priceProductTransfer = $productConcreteTransfer->getPrices()[0];
+                $this->assertCount(1, $productConcreteTransfer->getPrices());
+                $this->assertEquals($productOfferTransfer->getIdProductConcrete(), $productConcreteTransfer->getIdProductConcrete());
+                $this->assertEquals($productOfferTransfer->getIdProductConcrete(), $priceProductTransfer->getIdProduct());
+                $this->assertEquals(PriceProductOfferConfig::DIMENSION_TYPE_PRODUCT_OFFER, $priceProductTransfer->getPriceDimension()->getType());
+
+                return $productConcreteTransfer;
+            }));
+
+        $this->tester->setDependency(PriceProductOfferDependencyProvider::FACADE_PRICE_PRODUCT, $priceProductFacadeMock);
 
         // Act
-        $priceProductOfferTransfers = $this->tester->getFacade()
-            ->getPriceProductTransfers(
-                [
-                    $priceProductOfferTransfer->getProductOffer()->getConcreteSku(),
-                ],
-                (new PriceProductCriteriaTransfer())
-                    ->setIdCurrency($priceProductOfferTransfer->getFkCurrency())
-            );
+        $this->tester->getFacade()->saveProductOfferPrices($productOfferTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSavePriceProductOfferRelationCreatesPriceProductOfferEntity(): void
+    {
+        // Arrange
+        $productOfferTransfer = $this->tester->haveProductOffer();
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductDimensionTransfer = $priceProductTransfer->getPriceDimension();
+        $priceProductDimensionTransfer->setIdProductOffer($productOfferTransfer->getIdProductOffer());
+        $priceProductTransfer->setPriceDimension($priceProductDimensionTransfer);
+
+        // Act
+        $this->tester->getFacade()->savePriceProductOfferRelation($priceProductTransfer);
+        $priceProductOfferTransfer = $this->tester->getPriceProductOfferByIdProductOffer($productOfferTransfer->getIdProductOffer());
 
         // Assert
-        $this->assertNotEmpty($priceProductOfferTransfers);
+        $this->assertEquals($priceProductDimensionTransfer->getIdProductOffer(), $priceProductOfferTransfer->getFkProductOffer());
+        $this->assertEquals($priceProductTransfer->getMoneyValue()->getIdEntity(), $priceProductOfferTransfer->getFkPriceProductStore());
+    }
+
+    /**
+     * @return void
+     */
+    public function testSavePriceProductOfferRelationUpdatesPriceProductOfferEntity(): void
+    {
+        // Arrange
+        $priceProductTransfer1 = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferTransfer = $this->tester->havePriceProductOffer([
+            PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE => $priceProductTransfer1->getMoneyValue()->getIdEntity(),
+        ]);
+        $priceProductTransfer2 = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductDimensionTransfer = $priceProductTransfer2->getPriceDimension();
+        $priceProductDimensionTransfer->setIdProductOffer($priceProductOfferTransfer->getFkProductOffer());
+        $priceProductDimensionTransfer->setIdPriceProductOffer($priceProductOfferTransfer->getIdPriceProductOffer());
+        $priceProductTransfer2->setPriceDimension($priceProductDimensionTransfer);
+
+        // Act
+        $this->tester->getFacade()->savePriceProductOfferRelation($priceProductTransfer2);
+        $priceProductOfferTransfer = $this->tester->getPriceProductOfferByIdProductOffer($priceProductOfferTransfer->getFkProductOffer());
+
+        // Assert
+        $this->assertEquals($priceProductOfferTransfer->getFkPriceProductStore(), $priceProductTransfer2->getMoneyValue()->getIdEntity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testExpandProductOfferWithPricesExpandsProductOfferWithCorrectPriceProduct(): void
+    {
+        // Arrange
+        $priceProductTransfer = $this->tester->havePriceProduct([PriceProductTransfer::SKU_PRODUCT_ABSTRACT => 'sku']);
+        $priceProductOfferTransfer = $this->tester->havePriceProductOffer([
+            PriceProductOfferTransfer::FK_PRICE_PRODUCT_STORE => $priceProductTransfer->getMoneyValue()->getIdEntity(),
+        ]);
+
+        // Act
+        $priceProductTransfers = $this->tester
+            ->getFacade()
+            ->expandProductOfferWithPrices((new ProductOfferTransfer())->setIdProductOffer($priceProductOfferTransfer->getFkProductOffer()))
+            ->getPrices();
+
+        // Assert
+        $this->assertCount(1, $priceProductTransfers);
+        $this->assertEquals(
+            $priceProductTransfer->getIdPriceProduct(),
+            $priceProductTransfers[0]->getIdPriceProduct()
+        );
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\PriceProductOffer\Dependency\Facade\PriceProductOfferToPriceProductFacadeInterface
+     */
+    protected function getPriceProductFacadeMock(): PriceProductOfferToPriceProductFacadeInterface
+    {
+        $priceProductFacadeMock = $this->getMockBuilder(PriceProductOfferToPriceProductFacadeBridge::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        return $priceProductFacadeMock;
     }
 }

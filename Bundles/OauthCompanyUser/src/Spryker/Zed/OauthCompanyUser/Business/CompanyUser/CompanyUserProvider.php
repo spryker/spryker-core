@@ -60,8 +60,10 @@ class CompanyUserProvider implements CompanyUserProviderInterface
 
         $companyUserTransfer = $this->findActiveCompanyUser($oauthUserTransfer);
 
-        if ($companyUserTransfer === null
-            || $companyUserTransfer->getCustomer()->getCustomerReference() !== $oauthUserTransfer->getCustomerReference()) {
+        if (
+            $companyUserTransfer === null
+            || $companyUserTransfer->getCustomer()->getCustomerReference() !== $oauthUserTransfer->getCustomerReference()
+        ) {
             return $oauthUserTransfer;
         }
 

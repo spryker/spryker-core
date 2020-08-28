@@ -94,7 +94,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
 
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
-     * @param array $contentStorageTransfers
+     * @param \Generated\Shared\Transfer\ContentStorageTransfer[][] $contentStorageTransfers
      * @param \Generated\Shared\Transfer\LocaleTransfer[] $availableLocales
      *
      * @return void
@@ -129,7 +129,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ContentTransfer $contentTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\LocalizedContentTransfer[]
      */
     protected function indexContentTransfersByLocale(ContentTransfer $contentTransfer): array
     {
@@ -146,7 +146,7 @@ class ContentStorageWriter implements ContentStorageWriterInterface
     /**
      * @param \Generated\Shared\Transfer\ContentStorageTransfer[] $contentStorageTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ContentStorageTransfer[][]
      */
     protected function groupByIdContentAndLocale(iterable $contentStorageTransfers): array
     {

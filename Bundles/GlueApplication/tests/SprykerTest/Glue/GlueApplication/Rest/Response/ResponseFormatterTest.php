@@ -47,7 +47,7 @@ class ResponseFormatterTest extends Unit
 
         $response = $responseFormatter->format($restResponse, $restRequest);
 
-        $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
     }
 
     /**
@@ -73,13 +73,13 @@ class ResponseFormatterTest extends Unit
 
         $response = $responseFormatter->format($restResponse, $restRequest);
 
-        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
 
         $responseObject = json_decode($response->getContent());
         $this->assertNotEmpty($responseObject->errors);
         $this->assertEquals(($responseObject->errors[0])->status, 400);
         $this->assertEquals(($responseObject->errors[0])->code, 1);
-        $this->assertEquals(($responseObject->errors[0])->detail, "error");
+        $this->assertEquals(($responseObject->errors[0])->detail, 'error');
     }
 
     /**
@@ -100,8 +100,8 @@ class ResponseFormatterTest extends Unit
 
         $response = $responseFormatter->format($restResponse, $restRequest);
 
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertEquals('{"data":{"type":"test"}}', $response->getContent());
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertSame('{"data":{"type":"test"}}', $response->getContent());
     }
 
     /**

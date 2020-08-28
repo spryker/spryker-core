@@ -21,6 +21,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BalanceTransactionLogPaymentSaverPlugin extends AbstractPlugin implements GiftCardPaymentSaverPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\PaymentTransfer $paymentTransfer

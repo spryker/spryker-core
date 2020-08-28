@@ -194,9 +194,9 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPriceProductScheduleQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE, function () {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE, $container->factory(function () {
             return SpyPriceProductScheduleQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -208,9 +208,9 @@ class PriceProductScheduleGuiDependencyProvider extends AbstractBundleDependency
      */
     protected function addPriceProductScheduleListQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST, function () {
+        $container->set(static::PROPEL_QUERY_PRICE_PRODUCT_SCHEDULE_LIST, $container->factory(function () {
             return SpyPriceProductScheduleListQuery::create();
-        });
+        }));
 
         return $container;
     }

@@ -23,4 +23,8 @@
     <transfer name="Quote">
     </transfer>
 
+    <transfer name="ShoppingListItemCollection">
+        <property name="items" type="ShoppingListItem[]" singular="item"/>
+    </transfer>
+
 </transfers>

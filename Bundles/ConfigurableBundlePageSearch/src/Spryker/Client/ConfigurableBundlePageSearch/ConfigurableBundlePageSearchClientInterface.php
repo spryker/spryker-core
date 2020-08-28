@@ -22,5 +22,7 @@ interface ConfigurableBundlePageSearchClientInterface
      *
      * @return array
      */
-    public function searchConfigurableBundleTemplates(ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer): array;
+    public function searchConfigurableBundleTemplates(
+        ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
+    ): array;
 }

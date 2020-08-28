@@ -7,7 +7,9 @@
 
 namespace Spryker\Zed\CompanyUserStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\SpyCompanyUserStorageEntityTransfer;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -34,6 +36,10 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
     }
 
     /**
+     * @deprecated Use {@link getSynchronizationDataTransfersByFilterAndCompanyUserIds()} instead.
+     *
+     * @see \Spryker\Zed\CompanyUserStorage\Persistence\CompanyUserStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndCompanyUserIds()
+     *
      * @return \Orm\Zed\CompanyUserStorage\Persistence\SpyCompanyUserStorage[]
      */
     public function findAllCompanyUserStorageEntities(): array
@@ -42,5 +48,29 @@ class CompanyUserStorageRepository extends AbstractRepository implements Company
             ->createCompanyUserStorageQuery()
             ->find()
             ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $companyUserIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndCompanyUserIds(FilterTransfer $filterTransfer, array $companyUserIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createCompanyUserStorageQuery();
+
+        if ($companyUserIds !== []) {
+            $query->filterByFkCompanyUser_In($companyUserIds);
+        }
+
+        $companyUserStorageEntities = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createCompanyUserStorageMapper()
+            ->mapCompanyUserStorageEntityCollectionToSynchronizationDataTransfers($companyUserStorageEntities);
     }
 }

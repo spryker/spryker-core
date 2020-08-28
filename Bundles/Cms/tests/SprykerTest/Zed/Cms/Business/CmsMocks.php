@@ -221,8 +221,10 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\Store\CmsPageStoreRelationReaderInterface
      */
-    protected function createCmsPageStoreRelationReaderMock(?CmsQueryContainerInterface $cmsQueryContainerMock = null, ?CmsRepositoryInterface $cmsRepositoryMock = null): CmsPageStoreRelationReaderInterface
-    {
+    protected function createCmsPageStoreRelationReaderMock(
+        ?CmsQueryContainerInterface $cmsQueryContainerMock = null,
+        ?CmsRepositoryInterface $cmsRepositoryMock = null
+    ): CmsPageStoreRelationReaderInterface {
         if ($cmsQueryContainerMock === null) {
             $cmsQueryContainerMock = $this->createCmsQueryContainerMock();
         }
@@ -242,8 +244,10 @@ abstract class CmsMocks extends Unit
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\Cms\Business\Page\CmsPageMapperInterface
      */
-    protected function createCmsPageMapperMock(?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null, ?CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReaderMock = null): CmsPageMapperInterface
-    {
+    protected function createCmsPageMapperMock(
+        ?CmsPageUrlBuilderInterface $cmsPageUrlBuilderMock = null,
+        ?CmsPageStoreRelationReaderInterface $cmsPageStoreRelationReaderMock = null
+    ): CmsPageMapperInterface {
         if ($cmsPageUrlBuilderMock === null) {
             $cmsPageUrlBuilderMock = $this->createCmsPageUrlBuilderMock();
         }

@@ -38,9 +38,9 @@ class QuoteRequestAgentDependencyProvider extends AbstractBundleDependencyProvid
      */
     protected function addQuoteRequestFacade(Container $container): Container
     {
-        $container[static::FACADE_QUOTE_REQUEST] = function (Container $container) {
+        $container->set(static::FACADE_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestAgentToQuoteRequestFacadeBridge($container->getLocator()->quoteRequest()->facade());
-        };
+        });
 
         return $container;
     }

@@ -7,7 +7,7 @@
 
 namespace Spryker\Zed\MerchantGui\Communication\Controller;
 
-use Generated\Shared\Transfer\MerchantCriteriaFilterTransfer;
+use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,16 +35,24 @@ class MerchantStatusController extends AbstractController
      */
     public function indexAction(Request $request): RedirectResponse
     {
-        $idMerchant = $request->query->get(static::PARAM_ID_MERCHANT);
+        $form = $this->getFactory()->createMerchantStatusForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        }
+
+        $idMerchant = $request->query->getInt(static::PARAM_ID_MERCHANT);
         $newMerchantStatus = $request->query->get(static::PARAM_MERCHANT_STATUS);
 
         if (!$idMerchant || !$newMerchantStatus) {
             return $this->returnErrorRedirect($request);
         }
 
-        $merchantCriteriaFilterTransfer = new MerchantCriteriaFilterTransfer();
-        $merchantCriteriaFilterTransfer->setIdMerchant($idMerchant);
-        $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaFilterTransfer);
+        $merchantCriteriaTransfer = new MerchantCriteriaTransfer();
+        $merchantCriteriaTransfer->setIdMerchant($idMerchant);
+        $merchantTransfer = $this->getFactory()->getMerchantFacade()->findOne($merchantCriteriaTransfer);
         if (!$merchantTransfer) {
             return $this->returnErrorRedirect($request);
         }
@@ -59,7 +67,7 @@ class MerchantStatusController extends AbstractController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 
     /**
@@ -71,6 +79,6 @@ class MerchantStatusController extends AbstractController
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponseExternal($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
+        return $this->redirectResponse($request->headers->get('referer', static::URL_REDIRECT_MERCHANT_LIST));
     }
 }

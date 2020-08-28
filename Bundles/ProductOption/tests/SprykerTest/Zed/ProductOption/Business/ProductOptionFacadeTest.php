@@ -26,6 +26,7 @@ use Spryker\Zed\Currency\Business\CurrencyFacade;
 use Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacade;
 use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
+use SprykerTest\Shared\Propel\Helper\InstancePoolingHelperTrait;
 
 /**
  * Auto-generated group annotations
@@ -40,6 +41,8 @@ use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
  */
 class ProductOptionFacadeTest extends Unit
 {
+    use InstancePoolingHelperTrait;
+
     public const DEFAULT_LOCALE_ISO_CODE = 'en_US';
 
     public const DEFAULT_ID_CURRENCY = 5;
@@ -415,7 +418,7 @@ class ProductOptionFacadeTest extends Unit
         $expectedCurrencies = ['EUR', 'USD'];
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductGroupOption = $this->getProductOptionFacade()->getProductOptionGroupById($productOptionGroupTransfer->getIdProductOptionGroup());
 
         // Assert
@@ -463,14 +466,14 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -507,14 +510,14 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -553,14 +556,14 @@ class ProductOptionFacadeTest extends Unit
         );
 
         // Act
-        $this->tester->enablePropelInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
+        $this->enableInstancePooling(); // JoinWith needs it to populate all 3rd level joinWith records
         $actualProductOptionValue = $this->getProductOptionFacade()->getProductOptionValueById(
             $productOptionGroupTransfer->getProductOptionValues()[0]->getIdProductOptionValue()
         );
 
         // Assert
-        $this->assertEquals($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
-        $this->assertEquals($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
+        $this->assertSame($expectedGrossAmount, $actualProductOptionValue->getUnitGrossPrice());
+        $this->assertSame($expectedNetAmount, $actualProductOptionValue->getUnitNetPrice());
     }
 
     /**
@@ -599,7 +602,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame((float)$taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**
@@ -641,7 +644,7 @@ class ProductOptionFacadeTest extends Unit
         $itemTransfer = $quoteTransfer->getItems()[0];
         $productOptionTransfer = $itemTransfer->getProductOptions()[0];
 
-        $this->assertEquals($taxRate, $productOptionTransfer->getTaxRate());
+        $this->assertSame((float)$taxRate, $productOptionTransfer->getTaxRate());
     }
 
     /**

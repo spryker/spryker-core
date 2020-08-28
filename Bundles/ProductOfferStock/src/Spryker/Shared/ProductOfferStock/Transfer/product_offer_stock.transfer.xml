@@ -9,15 +9,27 @@
     </transfer>
 
     <transfer name="ProductOfferStock">
+        <property name="idProductOffer" type="int"/>
         <property name="idProductOfferStock" type="int"/>
         <property name="quantity" type="decimal"/>
-        <property name="productOffer" type="ProductOffer"/>
         <property name="stock" type="Stock"/>
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
     <transfer name="Store">
         <property name="idStore" type="int"/>
         <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="ProductOffer">
+        <property name="productOfferStocks" type="ProductOfferStock[]" singular="productOfferStock"/>
+        <property name="productOfferReference" type="string"/>
+        <property name="idProductOffer" type="int"/>
+    </transfer>
+
+    <transfer name="Stock">
+        <property name="idStock" type="int"/>
     </transfer>
 
 </transfers>

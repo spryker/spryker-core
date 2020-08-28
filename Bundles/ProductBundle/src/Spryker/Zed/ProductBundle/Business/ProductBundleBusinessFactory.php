@@ -11,6 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCartAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\PreCheck\ProductBundleCheckoutAvailabilityCheck;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Availability\ProductBundleAvailabilityHandler;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCache;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Calculation\ProductBundlePriceCalculation;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartChangeObserverInterface;
@@ -24,6 +26,12 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\CartNote\QuoteBundleItemsFi
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceChecker;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\CartPriceCheck\ProductBundleCartPriceCheckerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Checkout\ProductBundleOrderSaver;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpander;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\ChangeRequestExpanderInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\PersistentCart\QuoteItemFinder;
@@ -37,6 +45,8 @@ use Spryker\Zed\ProductBundle\Business\ProductBundle\Quote\QuoteItemsGrouperInte
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleIdHydrator;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundleSalesOrderSaver;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Sales\ProductBundlesSalesOrderHydrate;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdater;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandler;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockWriter;
@@ -69,7 +79,9 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
         return new ProductBundleReader(
             $this->getQueryContainer(),
             $this->getAvailabilityFacade(),
-            $this->getStoreFacade()
+            $this->getStoreFacade(),
+            $this->getRepository(),
+            $this->createProductBundleCache()
         );
     }
 
@@ -79,11 +91,11 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartExpander()
     {
         return new ProductBundleCartExpander(
-            $this->getQueryContainer(),
             $this->getPriceProductFacade(),
             $this->getProductFacade(),
             $this->getLocaleFacade(),
-            $this->getPriceFacade()
+            $this->getPriceFacade(),
+            $this->createProductBundleReader()
         );
     }
 
@@ -146,7 +158,8 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getAvailabilityFacade(),
             $this->getQueryContainer(),
             $this->getStoreFacade(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->createProductBundleReader()
         );
     }
 
@@ -156,7 +169,7 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createProductBundleCartActiveCheck(): ProductBundleCartActiveCheckInterface
     {
         return new ProductBundleCartActiveCheck(
-            $this->getRepository()
+            $this->createProductBundleReader()
         );
     }
 
@@ -197,6 +210,17 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Status\ProductBundleStatusUpdaterInterface
+     */
+    public function createProductBundleStatusUpdater(): ProductBundleStatusUpdaterInterface
+    {
+        return new ProductBundleStatusUpdater(
+            $this->getProductFacade(),
+            $this->getRepository()
+        );
+    }
+
+    /**
      * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Stock\ProductBundleStockHandlerInterface
      */
     public function createProductBundleStockHandler(): ProductBundleStockHandlerInterface
@@ -229,6 +253,22 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
             $this->getSalesQueryContainer(),
             $this->createProductBundlePriceCalculator()
         );
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductOptionExpanderInterface
+     */
+    public function createProductOptionExpander(): ProductOptionExpanderInterface
+    {
+        return new ProductOptionExpander();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleExpanderInterface
+     */
+    public function createProductBundleExpander(): ProductBundleExpanderInterface
+    {
+        return new ProductBundleExpander();
     }
 
     /**
@@ -285,6 +325,25 @@ class ProductBundleBusinessFactory extends AbstractBusinessFactory
     public function createQuoteItemsGrouper(): QuoteItemsGrouperInterface
     {
         return new QuoteItemsGrouper();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Cache\ProductBundleCacheInterface
+     */
+    public function createProductBundleCache(): ProductBundleCacheInterface
+    {
+        return new ProductBundleCache();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductBundle\Business\ProductBundle\Expander\ProductBundleItemExpanderInterface
+     */
+    public function createProductBundleItemExpander(): ProductBundleItemExpanderInterface
+    {
+        return new ProductBundleItemExpander(
+            $this->getRepository(),
+            $this->createProductBundlePriceCalculator()
+        );
     }
 
     /**

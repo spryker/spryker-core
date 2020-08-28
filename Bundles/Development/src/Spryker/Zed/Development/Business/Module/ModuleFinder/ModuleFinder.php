@@ -115,8 +115,11 @@ class ModuleFinder implements ModuleFinderInterface
      *
      * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
-    protected function addModuleToCollection(ModuleTransfer $moduleTransfer, array $moduleTransferCollection, ?ModuleFilterTransfer $moduleFilterTransfer = null): array
-    {
+    protected function addModuleToCollection(
+        ModuleTransfer $moduleTransfer,
+        array $moduleTransferCollection,
+        ?ModuleFilterTransfer $moduleFilterTransfer = null
+    ): array {
         if ($moduleFilterTransfer !== null && !$this->moduleMatcher->matches($moduleTransfer, $moduleFilterTransfer)) {
             return $moduleTransferCollection;
         }
@@ -144,7 +147,7 @@ class ModuleFinder implements ModuleFinderInterface
 
         $description = $composerJsonAsArray['description'];
 
-        return preg_match('/\smodule$/', $description);
+        return (bool)preg_match('/\smodule$/', $description);
     }
 
     /**

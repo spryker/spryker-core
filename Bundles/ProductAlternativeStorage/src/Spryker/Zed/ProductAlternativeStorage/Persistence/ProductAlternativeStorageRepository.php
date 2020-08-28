@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\ProductAlternativeStorage\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\Product\Persistence\Map\SpyProductAbstractTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductAlternative\Persistence\Map\SpyProductAlternativeTableMap;
 use Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -212,6 +214,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
      */
     public function findAllProductAlternativeStorageEntities(): array
@@ -223,6 +227,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds()
+     *
      * @param int[] $productAlternativeStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductAlternativeStorage[]
@@ -237,6 +243,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
+     *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
      */
     public function findAllProductReplacementForStorageEntities(): array
@@ -248,6 +256,8 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
     }
 
     /**
+     * @see \Spryker\Zed\ProductAlternativeStorage\Persistence\ProductAlternativeStorageRepositoryInterface::getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds()
+     *
      * @param int[] $productReplacementForStorageIds
      *
      * @return \Orm\Zed\ProductAlternativeStorage\Persistence\SpyProductReplacementForStorage[]
@@ -259,5 +269,57 @@ class ProductAlternativeStorageRepository extends AbstractRepository implements 
             ->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds)
             ->find()
             ->getArrayCopy();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productAlternativeStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductAlternativeStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productAlternativeStorageIds = []
+    ): array {
+        $query = $this->getFactory()
+            ->createProductAlternativeStoragePropelQuery();
+
+        if ($productAlternativeStorageIds !== []) {
+            $query->filterByIdProductAlternativeStorage_In($productAlternativeStorageIds);
+        }
+
+        $productAlternativeStorageEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductAlternativeStorageMapper()
+            ->mapProductAlternativeStorageEntityCollectionToSynchronizationDataTransfers($productAlternativeStorageEntityCollection);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productReplacementForStorageIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductReplacementForStorageIds(
+        FilterTransfer $filterTransfer,
+        array $productReplacementForStorageIds = []
+    ): array {
+        $query = $this->getFactory()
+            ->createProductReplacementForStoragePropelQuery();
+
+        if ($productReplacementForStorageIds !== []) {
+            $query->filterByIdProductReplacementForStorage_In($productReplacementForStorageIds);
+        }
+
+        $productReplacementForStorageEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductReplacementStorageMapper()
+            ->mapProductReplacementForStorageEntityCollectionToSynchronizationDataTransfers($productReplacementForStorageEntityCollection);
     }
 }

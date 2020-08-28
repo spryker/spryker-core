@@ -34,8 +34,11 @@ class IndexDefinitionBuilder implements IndexDefinitionBuilderInterface
      * @param \Spryker\Zed\SearchElasticsearch\Business\Definition\Merger\IndexDefinitionMergerInterface $indexDefinitionMerger
      * @param \Spryker\Shared\SearchElasticsearch\Index\IndexNameResolverInterface $indexNameResolver
      */
-    public function __construct(IndexDefinitionLoaderInterface $indexDefinitionLoader, IndexDefinitionMergerInterface $indexDefinitionMerger, IndexNameResolverInterface $indexNameResolver)
-    {
+    public function __construct(
+        IndexDefinitionLoaderInterface $indexDefinitionLoader,
+        IndexDefinitionMergerInterface $indexDefinitionMerger,
+        IndexNameResolverInterface $indexNameResolver
+    ) {
         $this->indexDefinitionLoader = $indexDefinitionLoader;
         $this->indexDefinitionMerger = $indexDefinitionMerger;
         $this->indexNameResolver = $indexNameResolver;

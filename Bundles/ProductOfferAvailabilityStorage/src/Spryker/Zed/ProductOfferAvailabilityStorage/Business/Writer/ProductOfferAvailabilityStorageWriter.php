@@ -71,12 +71,12 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
      *
      * @return void
      */
-    public function writeCollectionByOmsProductReservationIdEvents(array $eventTransfers): void
+    public function writeCollectionByOmsProductOfferReservationIdEvents(array $eventTransfers): void
     {
-        $omsProductReservationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
+        $omsProductOfferReservationIds = $this->eventBehaviorFacade->getEventTransferIds($eventTransfers);
 
         $productOfferAvailabilityRequestTransfers = $this->productOfferAvailabilityStorageRepository
-            ->getProductOfferAvailabilityRequestsByOmsReservationIds($omsProductReservationIds);
+            ->getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds($omsProductOfferReservationIds);
 
         $this->writeProductOfferAvailabilityStorageForRequests($productOfferAvailabilityRequestTransfers);
     }
@@ -160,7 +160,10 @@ class ProductOfferAvailabilityStorageWriter implements ProductOfferAvailabilityS
         ProductConcreteAvailabilityTransfer $productConcreteAvailabilityTransfer,
         ProductOfferAvailabilityStorageTransfer $productOfferAvailabilityStorageTransfer
     ): ProductOfferAvailabilityStorageTransfer {
-         return $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability());
+         $productOfferAvailabilityStorageTransfer->setAvailability($productConcreteAvailabilityTransfer->getAvailability())
+             ->setIsNeverOutOfStock($productConcreteAvailabilityTransfer->getIsNeverOutOfStock());
+
+         return $productOfferAvailabilityStorageTransfer;
     }
 
     /**

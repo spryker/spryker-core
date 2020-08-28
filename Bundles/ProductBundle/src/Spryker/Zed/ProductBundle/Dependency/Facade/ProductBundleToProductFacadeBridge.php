@@ -57,4 +57,14 @@ class ProductBundleToProductFacadeBridge implements ProductBundleToProductFacade
     {
         return $this->productFacade->getLocalizedProductConcreteName($productConcreteTransfer, $localeTransfer);
     }
+
+    /**
+     * @param int $idProductConcrete
+     *
+     * @return void
+     */
+    public function deactivateProductConcrete($idProductConcrete)
+    {
+        $this->productFacade->deactivateProductConcrete($idProductConcrete);
+    }
 }

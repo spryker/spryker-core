@@ -18,13 +18,30 @@ use Spryker\Glue\Kernel\Controller\AbstractController;
 class CustomerForgottenPasswordResourceController extends AbstractController
 {
     /**
+     * @Glue({
+     *     "post": {
+     *          "summary": [
+     *              "Sends password restoration email."
+     *          ],
+     *          "parameters": [{
+     *              "ref": "acceptLanguage"
+     *          }],
+     *          "responses": {
+     *              "204": "No content."
+     *          },
+     *          "isEmptyResponse": true
+     *     }
+     * })
+     *
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      * @param \Generated\Shared\Transfer\RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestCustomerForgottenPasswordAttributesTransfer $restCustomerForgottenPasswordAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createCustomerForgottenPasswordProcessor()
             ->sendPasswordRestoreMail($restCustomerForgottenPasswordAttributesTransfer);

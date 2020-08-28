@@ -9,6 +9,11 @@ namespace Spryker\Zed\Transfer\Business\Model\Generator;
 
 use Symfony\Component\Finder\Finder;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\Transfer\Business\Transfer\Definition\TransferDefinitionFinder} instead.
+ * @deprecated Use {@link \Spryker\Zed\Transfer\Business\EntityTransfer\Definition\EntityTransferDefinitionFinder} instead.
+ * @deprecated Use {@link \Spryker\Zed\Transfer\Business\DataBuilder\Definition\DataBuilderDefinitionFinder} instead.
+ */
 class TransferDefinitionFinder implements FinderInterface
 {
     /**

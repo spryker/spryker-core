@@ -31,7 +31,7 @@ interface ShoppingListToZedRequestClientInterface
     public function call($url, TransferInterface $object, $requestOptions = null): TransferInterface;
 
     /**
-     * @deprecated Use addFlashMessagesFromZedRequestHistory() instead.
+     * @deprecated Use {@link addFlashMessagesFromZedRequestHistory()} instead.
      *
      * @return void
      */

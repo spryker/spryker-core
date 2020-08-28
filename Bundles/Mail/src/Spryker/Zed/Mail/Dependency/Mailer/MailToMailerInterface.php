@@ -33,6 +33,14 @@ interface MailToMailerInterface
     public function addTo($email, $name);
 
     /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return void
+     */
+    public function addBcc(string $email, ?string $name = null): void;
+
+    /**
      * @param string $content
      *
      * @return void

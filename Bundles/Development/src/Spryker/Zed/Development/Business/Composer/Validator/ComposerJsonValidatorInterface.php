@@ -17,5 +17,8 @@ interface ComposerJsonValidatorInterface
      *
      * @return \Generated\Shared\Transfer\ComposerJsonValidationResponseTransfer
      */
-    public function validate(array $composerJsonArray, ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer): ComposerJsonValidationResponseTransfer;
+    public function validate(
+        array $composerJsonArray,
+        ComposerJsonValidationResponseTransfer $composerJsonValidationResponseTransfer
+    ): ComposerJsonValidationResponseTransfer;
 }

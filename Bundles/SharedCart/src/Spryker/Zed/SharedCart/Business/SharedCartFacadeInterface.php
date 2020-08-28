@@ -225,7 +225,9 @@ interface SharedCartFacadeInterface
      *
      * @return \Generated\Shared\Transfer\ShareDetailCollectionTransfer
      */
-    public function getShareDetailCollectionByShareDetailCriteria(ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer): ShareDetailCollectionTransfer;
+    public function getShareDetailCollectionByShareDetailCriteria(
+        ShareDetailCriteriaFilterTransfer $shareDetailCriteriaFilterTransfer
+    ): ShareDetailCollectionTransfer;
 
     /**
      * Specification:

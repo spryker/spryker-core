@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\AvailabilityStorage;
 
+use Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -15,6 +16,8 @@ use Spryker\Client\Kernel\AbstractClient;
 class AvailabilityStorageClient extends AbstractClient implements AvailabilityStorageClientInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductAbstract
@@ -29,7 +32,27 @@ class AvailabilityStorageClient extends AbstractClient implements AvailabilitySt
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
+     *
+     * @param int $idProductAbstract
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractAvailabilityTransfer|null
+     */
+    public function findProductAbstractAvailability(int $idProductAbstract): ?ProductAbstractAvailabilityTransfer
+    {
+        return $this->getFactory()
+            ->createAvailabilityStorageReader()
+            ->findAbstractProductAvailability($idProductAbstract);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @deprecated Use {@link findProductAbstractAvailability()} instead.
      *
      * @param int $idProductAbstract
      *

@@ -7,13 +7,16 @@
 
 namespace Spryker\Zed\ProductPageSearch\Persistence;
 
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\ProductConcretePageSearchTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Orm\Zed\PriceProduct\Persistence\Map\SpyPriceProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\Map\SpyProductConcretePageSearchTableMap;
 use Orm\Zed\ProductPageSearch\Persistence\SpyProductConcretePageSearchQuery;
 use PDO;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Formatter\ObjectFormatter;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -21,6 +24,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductPageSearchRepository extends AbstractRepository implements ProductPageSearchRepositoryInterface
 {
+    protected const FK_PRODUCT_ABSTRACT = 'fkProductAbstract';
+
     /**
      * @param int[] $productIds
      *
@@ -39,6 +44,26 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     }
 
     /**
+     * @param string[] $productConcreteSkus
+     *
+     * @return int[]
+     */
+    public function getProductAbstractIdsByProductConcreteSkus(array $productConcreteSkus): array
+    {
+        if (!$productConcreteSkus) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterBySku_In($productConcreteSkus)
+            ->withColumn(Criteria::DISTINCT . ' ' . SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, static::FK_PRODUCT_ABSTRACT)
+            ->select([static::FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->getData();
+    }
+
+    /**
      * @param array $productAbstractStoreMap Keys are product abstract IDs, values are store IDs.
      *
      * @return \Generated\Shared\Transfer\ProductConcretePageSearchTransfer[]
@@ -50,6 +75,78 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
         return $this->mapProductConcretePageSearchEntities(
             $productConcretePageSearchEntities
         );
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return int[]
+     */
+    public function getEligibleForAddToCartProductAbstractsIds(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        return $this->getFactory()
+            ->getProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->filterByIsActive(true)
+            ->groupByFkProductAbstract()
+            ->having(sprintf('COUNT(%s) = ?', SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT), 1)
+            ->select([SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT])
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return string[]
+     */
+    public function getProductConcreteSkusByProductAbstractIds(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        $productConcreteSkuMapByIdProductAbstract = $this->getFactory()
+            ->getProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->select([
+                SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT,
+                SpyProductTableMap::COL_SKU,
+            ])
+            ->find()
+            ->toKeyValue(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT, SpyProductTableMap::COL_SKU);
+
+        return $productConcreteSkuMapByIdProductAbstract;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer[]
+     */
+    public function getConcreteProductsByProductAbstractIds(array $productAbstractIds): array
+    {
+        if (!$productAbstractIds) {
+            return [];
+        }
+
+        $productConcreteEntities = $this->getFactory()
+            ->getProductQuery()
+            ->filterByFkProductAbstract_In($productAbstractIds)
+            ->find();
+
+        $productConcreteTransfers = [];
+
+        foreach ($productConcreteEntities as $productConcreteEntity) {
+            $productConcreteTransfers[] = (new ProductConcreteTransfer())->fromArray($productConcreteEntity->toArray(), true)
+                ->setIdProductConcrete($productConcreteEntity->getIdProduct());
+        }
+
+        return $productConcreteTransfers;
     }
 
     /**
@@ -148,6 +245,8 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
     /**
      * @module Product
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @param int[] $productIds
      *
      * @return \Generated\Shared\Transfer\SpyProductEntityTransfer[]
@@ -184,5 +283,29 @@ class ProductPageSearchRepository extends AbstractRepository implements ProductP
             ->endUse()
             ->find()
             ->toArray();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer
+     * @param int[] $productIds
+     *
+     * @return \Generated\Shared\Transfer\SynchronizationDataTransfer[]
+     */
+    public function getSynchronizationDataTransfersByFilterAndProductIds(FilterTransfer $filterTransfer, array $productIds = []): array
+    {
+        $query = $this->getFactory()
+            ->createProductConcretePageSearchQuery();
+
+        if ($productIds !== []) {
+            $query->filterByFkProduct_In($productIds);
+        }
+
+        $productConcretePageSearchEntityCollection = $this->buildQueryFromCriteria($query, $filterTransfer)
+            ->setFormatter(ObjectFormatter::class)
+            ->find();
+
+        return $this->getFactory()
+            ->createProductPageSearchMapper()
+            ->mapProductConcretePageSearchEntityCollectionToSynchronizationDataTransfers($productConcretePageSearchEntityCollection);
     }
 }

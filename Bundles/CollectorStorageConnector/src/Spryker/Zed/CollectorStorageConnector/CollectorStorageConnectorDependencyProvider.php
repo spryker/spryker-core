@@ -37,9 +37,9 @@ class CollectorStorageConnectorDependencyProvider extends AbstractBundleDependen
      */
     private function addStorageFacade(Container $container)
     {
-        $container[self::FACADE_STORAGE] = function (Container $container) {
+        $container->set(static::FACADE_STORAGE, function (Container $container) {
             return new CollectorStorageConnectorToStorageBridge($container->getLocator()->storage()->facade());
-        };
+        });
 
         return $container;
     }
@@ -51,9 +51,9 @@ class CollectorStorageConnectorDependencyProvider extends AbstractBundleDependen
      */
     private function addCollectorFacade(Container $container)
     {
-        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+        $container->set(static::FACADE_COLLECTOR, function (Container $container) {
             return new CollectorStorageConnectorToCollectorBridge($container->getLocator()->collector()->facade());
-        };
+        });
 
         return $container;
     }

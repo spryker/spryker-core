@@ -1,72 +1,96 @@
-{% set numberOfItemAdditions = orderItem.productOptions | length + 1  %}
-{% set subtotal = group ? bundleItem.sumSubtotalAggregation : orderItem.sumSubtotalAggregation %}
-{% set priceToPay = group ? bundleItem.sumPriceToPayAggregation : orderItem.sumPriceToPayAggregation %}
-{% set image = image %}
+{% set numberOfItemAdditions = not isBundleProduct ? orderItem.productOptions | length + 1 %}
 
-<td class="item-checker"><input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check" /></td>
+<td class="item-checker">
+    {% if not isBundleProduct %}
+        <input type="checkbox" name="order-item" value="{{ orderItem.idSalesOrderItem }}" class="item-check">
+    {% endif %}
+</td>
 {% if displayImage %}
-    <td {% if group %}rowspan="{{ itemCount }}" {% endif %}><img class="product-image" src="{{ image }}"/></td>
+    <td>
+        <div class="image-wrap">
+            <img class="product-image" src="{{ orderItem.metadata.image }}" alt="{{ orderItem.name }}">
+        </div>
+    </td>
 {% endif %}
 <td>
     <div>
         <a target="_blank" href="{{ url('/product-management/view/variant', {'id-product-abstract': orderItem.idProductAbstract, 'id-product': orderItem.id, 'type': 'regular'}) }}">
-          {{ orderItem.name }}
+            {{ orderItem.name }}
         </a>
     </div>
     <div class="sku">
-      {{ 'Sku' | trans }}: {{ orderItem.Sku }}
+        {{ 'Sku' | trans }}: {{ orderItem.sku }}
     </div>
 
-  {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length > 0 %}
-    <div class="variant-details">
-      <h3>{{ 'Variant Details' | trans }}</h3>
-      {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0,2) %}
-          <div>{{ attributeName }}: {{ attributeValue }}</div>
-      {% endfor %}
+    {% if orderItem.metadata.superAttributes is not null and orderItem.metadata.superAttributes | length %}
+        <div class="variant-details">
+            <h3>{{ 'Variant Details' | trans }}</h3>
+            {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(0, 2) %}
+                <div>{{ attributeName }}: {{ attributeValue }}</div>
+            {% endfor %}
 
-      {% if orderItem.metadata.superAttributes | length > 2 %}
-        <div id="attribute_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
-          {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(2) %}
-            <div>{{ attributeName }}: {{ attributeValue }}</div>
-          {% endfor %}
+            {% if orderItem.metadata.superAttributes | length > 2 %}
+                <div id="attribute_details_{{ orderItem.IdSalesOrderItem }}" class="hidden">
+                    {% for attributeName, attributeValue in orderItem.metadata.superAttributes | slice(2) %}
+                        <div>{{ attributeName }}: {{ attributeValue }}</div>
+                    {% endfor %}
+                </div>
+
+                <a id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
+                    <span class="show-more">{{ 'Show more' | trans }}</span>
+                    <span class="show-less">{{ 'Show less' | trans }}</span>
+                </a>
+            {% endif %}
         </div>
+    {% endif %}
 
-        <a id="attribute-details-btn-{{ orderItem.IdSalesOrderItem }}" class="btn btn-sm more-attributes is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show more' | trans }}</span><span class="show-less">{{ 'Show less' | trans }}</span></a>
-      {% endif %}
-    </div>
-  {% endif %}
-  {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
+    {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {
+        orderItem: orderItem,
+    } %}
 </td>
 <td>
-  {{ orderItem.quantity }}
-  {% embed '@Sales/Detail/boxes/item-measurement-unit.twig' with {orderItem: orderItem} %}{% endembed %}
+    x {{ orderItem.quantity }}
+
+    {% include '@Sales/Detail/boxes/item-measurement-unit.twig' with {
+        orderItem: orderItem,
+    } %}
 </td>
 <td>
-    <div>
-      {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: orderItem.sumPrice, priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0)} %} {% endembed %}
-    </div>
-    <div class="tax-info">{{ "incl. %tax_amount% % tax" | trans({'%tax_amount%': orderItem.taxRate|default(0)}) }}</div>
-</td>
+    {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+        subtotal: orderItem.sumPrice,
+        priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
+        order: order,
+    } %}
 
+    <div class="tax-info">{{ 'incl. %tax_amount% % tax' | trans({'%tax_amount%': orderItem.taxRate | default(0)}) }}</div>
+</td>
 {% if displayTotals %}
-    <td {% if group %}rowspan="{{ rowCount }}"{% endif %} data-qa="item-total-amount" data-qa-raw="{{ priceToPay }}">
-      {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: subtotal, priceToPay: priceToPay} %} {% endembed %}
+    <td data-qa="item-total-amount" data-qa-raw="{{ orderItem.sumPriceToPayAggregation }}">
+        {% include '@Sales/Detail/boxes/discounted-price.twig' with {
+            subtotal: orderItem.sumSubtotalAggregation,
+            priceToPay: orderItem.sumPriceToPayAggregation,
+            order: order,
+        } %}
     </td>
-{% else %}
 {% endif %}
 <td rowspan="{{ numberOfItemAdditions }}" class="state-history">
-    <div>
-        <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
-    </div>
-  {% if orderItem.stateHistory | length > 1 %}
-      <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
-        {% for stateHistory in orderItem.stateHistory | slice(1) %}
-            <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
-        {% endfor %}
-      </div>
+    {% if not isBundleProduct %}
+        <div>
+            <a href="{{ url('/oms/index/draw', {'process': orderItem.process, 'state': orderItem.state.name}) }}" target="_blank">{{ (orderItem.stateHistory | first).name }}</a> ({{ orderItem.process }})
+        </div>
+        {% if orderItem.stateHistory | length > 1 %}
+            <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                {% for stateHistory in orderItem.stateHistory | slice(1) %}
+                    <div>{{ stateHistory.name }} ({{ stateHistory.createdAt | formatDateTime }})</div>
+                {% endfor %}
+            </div>
 
-      <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}"><span class="show-more">{{ 'Show history' | trans }}</span><span class="show-less">{{ 'Hide history' | trans }}</span></a>
-  {% endif %}
+            <a id="history-btn-{{ orderItem.idSalesOrderItem }}" class="btn btn-sm more-history is-hidden" data-id="{{ orderItem.IdSalesOrderItem }}">
+                <span class="show-more">{{ 'Show history' | trans }}</span>
+                <span class="show-less">{{ 'Hide history' | trans }}</span>
+            </a>
+        {% endif %}
+    {% endif %}
 </td>
 <td rowspan="{{ numberOfItemAdditions }}">
     {% if eventsGroupedByItem[orderItem.IdSalesOrderItem] is defined %}
@@ -77,3 +101,8 @@
         } only %}
     {% endif %}
 </td>
+{% if tableColumnCellsContent[orderItem.idSalesOrderItem] is defined %}
+    {% for tableColumnCellContent in tableColumnCellsContent[orderItem.idSalesOrderItem] %}
+        <td>{{ tableColumnCellContent | raw  }}</td>
+    {% endfor %}
+{% endif %}

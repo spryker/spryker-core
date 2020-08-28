@@ -42,8 +42,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function matchPriceValueByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
-    {
+    public function matchPriceValueByPriceProductCriteria(
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer {
         $priceProductCriteriaTransfer
             ->requirePriceMode()
             ->requirePriceType()
@@ -80,10 +82,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
     }
 
     /**
-     * @param array $priceProductTransfers
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
      * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
      */
     protected function findPricesByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
     {
@@ -212,6 +214,10 @@ class PriceProductMatcher implements PriceProductMatcherInterface
      */
     protected function checkPriceProductOnFilter(PriceProductTransfer $priceProductTransfer, PriceProductFilterTransfer $priceProductFilterTransfer): bool
     {
+        if ($priceProductTransfer->getSkuProduct() !== $priceProductFilterTransfer->getSku()) {
+            return false;
+        }
+
         if ($priceProductFilterTransfer->getPriceDimension() !== null) {
             $priceProductTransfer->requirePriceDimension();
 

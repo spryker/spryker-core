@@ -13,10 +13,14 @@ use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToSynchroni
 use Spryker\Client\GlossaryStorage\Dependency\Service\GlossaryStorageToUtilEncodingServiceInterface;
 use Spryker\Client\GlossaryStorage\GlossaryStorageConfig;
 use Spryker\Client\Kernel\Locator;
-use Spryker\Shared\GlossaryStorage\GlossaryStorageConstants;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
+use Spryker\Shared\GlossaryStorage\GlossaryStorageConfig as SharedGlossaryStorageConfig;
+use Symfony\Contracts\Translation\TranslatorTrait;
 
 class GlossaryStorageReader implements GlossaryStorageReaderInterface
 {
+    use TranslatorTrait;
+
     protected const KEY_VALUE = 'value';
     protected const KEY_GLOSSARY_KEY = 'GlossaryKey';
     protected const KEY_KEY = 'key';
@@ -40,6 +44,11 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
      * @var string[][]
      */
     protected static $translationsCache = [];
+
+    /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
 
     /**
      * @param \Spryker\Client\GlossaryStorage\Dependency\Client\GlossaryStorageToStorageClientInterface $storageClient
@@ -81,11 +90,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             return $translation;
         }
 
-        return str_replace(
-            array_keys($parameters),
-            array_values($parameters),
-            $translation
-        );
+        return $this->trans($translation, $parameters, null, $localeName);
     }
 
     /**
@@ -103,11 +108,7 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
                 continue;
             }
 
-            $translation = str_replace(
-                array_keys($parameters[$keyName]),
-                array_values($parameters[$keyName]),
-                $translation
-            );
+            $translation = $this->trans($translation, $parameters[$keyName], null, $localeName);
         }
 
         return $translations;
@@ -125,9 +126,19 @@ class GlossaryStorageReader implements GlossaryStorageReaderInterface
             ->setReference($keyName)
             ->setLocale($localeName);
 
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(GlossaryStorageConstants::RESOURCE_NAME)
-            ->generateKey($synchronizationDataTransfer);
+        return $this->getStorageKeyBuilder()->generateKey($synchronizationDataTransfer);
+    }
+
+    /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(SharedGlossaryStorageConfig::TRANSLATION_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
     }
 
     /**

@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,10 +30,6 @@ use Generated\Shared\Transfer\MerchantRelationshipTransfer;
 class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantRelationshipProductListDataImportCommunicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param string $merchantRelationshipKey
@@ -66,6 +60,7 @@ class MerchantRelationshipProductListDataImportCommunicationTester extends Actor
             foreach ($assigneeCompanyBusinessUnitKeys as $businessUnitKey) {
                 if ($companyBusinessUnitOwnerKey === $businessUnitKey) {
                     $companyBusinessUnits->append($companyBusinessUnitOwner);
+
                     continue;
                 }
 

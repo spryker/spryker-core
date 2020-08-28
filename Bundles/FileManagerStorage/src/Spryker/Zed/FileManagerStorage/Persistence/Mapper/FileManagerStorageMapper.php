@@ -116,8 +116,10 @@ class FileManagerStorageMapper implements FileManagerStorageMapperInterface
      *
      * @return \Generated\Shared\Transfer\FileLocalizedAttributesTransfer
      */
-    protected function mapAddSpyFileLocalizedAttributesEntityToTransfer(SpyFileLocalizedAttributes $fileLocalizedAttributes, FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer)
-    {
+    protected function mapAddSpyFileLocalizedAttributesEntityToTransfer(
+        SpyFileLocalizedAttributes $fileLocalizedAttributes,
+        FileLocalizedAttributesTransfer $fileLocalizedAttributesTransfer
+    ) {
         return $fileLocalizedAttributesTransfer->fromArray(
             $fileLocalizedAttributes->toArray(),
             true

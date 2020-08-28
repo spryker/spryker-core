@@ -65,13 +65,10 @@ class QueryFactory implements QueryFactoryInterface
         switch ($facetConfigTransfer->getType()) {
             case SearchElasticsearchConfig::FACET_TYPE_RANGE:
                 return $this->createNestedRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
-
             case SearchElasticsearchConfig::FACET_TYPE_PRICE_RANGE:
                 return $this->createNestedPriceRangeQuery($facetConfigTransfer, $filterValue)->createNestedQuery();
-
             case SearchElasticsearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createTermQuery($facetConfigTransfer, $filterValue);
-
             default:
                 return null;
         }

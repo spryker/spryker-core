@@ -1,0 +1,21 @@
+namespace: SprykerTest\Service\UtilGlob
+
+paths:
+    tests: .
+    data: ../../../_data/
+    support: _support/
+    log: ../../../_output/
+
+coverage:
+    enabled: true
+    remote: false
+    whitelist: { include: ['../../../../src/*'] }
+
+suites:
+    Service:
+        path: .
+        class_name: UtilGlobServiceTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper

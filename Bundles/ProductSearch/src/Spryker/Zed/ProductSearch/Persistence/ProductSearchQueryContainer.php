@@ -27,6 +27,8 @@ use Spryker\Zed\ProductSearch\Communication\Table\SearchPreferencesTable;
 class ProductSearchQueryContainer extends AbstractQueryContainer implements ProductSearchQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -60,6 +62,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProduct
@@ -78,6 +82,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapQuery
@@ -93,6 +99,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $fkProductAttributeKey
@@ -110,6 +118,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -132,6 +142,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -166,6 +178,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -176,6 +190,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeQuery
@@ -188,6 +204,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -200,6 +218,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -213,6 +233,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param bool $synced
@@ -228,6 +250,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeArchiveQuery
@@ -240,6 +264,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param bool $synced
@@ -255,6 +281,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributeMapArchiveQuery
@@ -267,6 +295,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $attributeNames
@@ -292,6 +322,8 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductSearch\Persistence\SpyProductSearchQuery

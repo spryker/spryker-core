@@ -8,6 +8,7 @@
 namespace Spryker\Client\ProductStorage\Finder;
 
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface;
 
@@ -26,13 +27,23 @@ class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinde
     protected static $productViewTransfersCache = [];
 
     /**
+     * @var \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface
+     */
+    protected $storeClient;
+
+    /**
      * @param \Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReaderInterface $productAbstractStorage
      * @param \Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapperInterface $productStorageDataMapper
+     * @param \Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface $storeClient
      */
-    public function __construct(ProductAbstractStorageReaderInterface $productAbstractStorage, ProductStorageDataMapperInterface $productStorageDataMapper)
-    {
+    public function __construct(
+        ProductAbstractStorageReaderInterface $productAbstractStorage,
+        ProductStorageDataMapperInterface $productStorageDataMapper,
+        ProductStorageToStoreClientInterface $storeClient
+    ) {
         parent::__construct($productStorageDataMapper);
         $this->productAbstractStorageReader = $productAbstractStorage;
+        $this->storeClient = $storeClient;
     }
 
     /**
@@ -54,9 +65,11 @@ class ProductAbstractViewTransferFinder extends AbstractProductViewTransferFinde
      */
     protected function getBulkProductStorageData(array $productIds, string $localeName): array
     {
+        $storeName = $this->storeClient->getCurrentStore()->getName();
+
         return $this
             ->productAbstractStorageReader
-            ->getBulkProductAbstractStorageDataByProductAbstractIdsAndLocaleName($productIds, $localeName);
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore($productIds, $localeName, $storeName);
     }
 
     /**

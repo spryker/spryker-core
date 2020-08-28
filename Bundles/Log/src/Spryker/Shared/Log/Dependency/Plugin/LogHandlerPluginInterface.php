@@ -7,8 +7,19 @@
 
 namespace Spryker\Shared\Log\Dependency\Plugin;
 
+use Monolog\Handler\FormattableHandlerInterface;
 use Monolog\Handler\HandlerInterface;
+use Monolog\Handler\ProcessableHandlerInterface;
+use Monolog\Logger;
 
-interface LogHandlerPluginInterface extends HandlerInterface
-{
+// phpcs:disable
+if (Logger::API === 1) {
+    interface LogHandlerPluginInterface extends HandlerInterface
+    {
+    }
+} else {
+    interface LogHandlerPluginInterface extends HandlerInterface, ProcessableHandlerInterface, FormattableHandlerInterface
+    {
+    }
 }
+// phpcs:enable

@@ -8,7 +8,6 @@
 namespace SprykerTest\Shared\PriceProductOffer\Helper;
 
 use Codeception\Module;
-use Generated\Shared\DataBuilder\PriceProductOfferBuilder;
 use Generated\Shared\Transfer\PriceProductOfferTransfer;
 use Orm\Zed\PriceProductOffer\Persistence\SpyPriceProductOffer;
 use SprykerTest\Shared\Currency\Helper\CurrencyDataHelper;
@@ -30,48 +29,39 @@ class PriceProductOfferHelper extends Module
      */
     public function havePriceProductOffer(array $seedData = []): PriceProductOfferTransfer
     {
-        /** @var \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer */
-        $priceProductOfferTransfer = (new PriceProductOfferBuilder($seedData))->build();
-        $priceProductOfferTransfer->setIdPriceProductOffer(null);
-
-        $priceProductOfferTransfer = $this->setPriceProductOfferDependencies($priceProductOfferTransfer);
+        $priceProductOfferTransfer = $this->createPriceProductOfferDependencies($seedData);
 
         $priceProductOfferEntity = new SpyPriceProductOffer();
         $priceProductOfferEntity->fromArray($priceProductOfferTransfer->toArray());
+
         $priceProductOfferEntity->save();
 
         $priceProductOfferTransfer->fromArray($priceProductOfferEntity->toArray());
 
         $this->getDataCleanupHelper()->_addCleanup(function () use ($priceProductOfferEntity): void {
-                $priceProductOfferEntity->delete();
+            $priceProductOfferEntity->delete();
         });
 
         return $priceProductOfferTransfer;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductOfferTransfer $priceProductOfferTransfer
+     * @param array $seedData
      *
      * @return \Generated\Shared\Transfer\PriceProductOfferTransfer
      */
-    protected function setPriceProductOfferDependencies(PriceProductOfferTransfer $priceProductOfferTransfer): PriceProductOfferTransfer
+    protected function createPriceProductOfferDependencies(array $seedData): PriceProductOfferTransfer
     {
-        if (!$priceProductOfferTransfer->getFkStore()) {
-            $priceProductOfferTransfer->setFkStore($this->getStoreDataHelper()->haveStore()->getIdStore());
-        }
+        $priceProductOfferTransfer = (new PriceProductOfferTransfer())->fromArray($seedData, true);
 
         if (!$priceProductOfferTransfer->getFkProductOffer()) {
             $productOfferTransfer = $this->getProductOfferHelper()->haveProductOffer();
-            $priceProductOfferTransfer->setProductOffer($productOfferTransfer);
             $priceProductOfferTransfer->setFkProductOffer($productOfferTransfer->getIdProductOffer());
         }
 
-        if (!$priceProductOfferTransfer->getFkCurrency()) {
-            $priceProductOfferTransfer->setFkCurrency($this->getCurrencyDataHelper()->haveCurrency());
-        }
-
-        if (!$priceProductOfferTransfer->getFkPriceType()) {
-            $priceProductOfferTransfer->setFkPriceType($this->getPriceProductDataHelper()->havePriceType()->getIdPriceType());
+        if (!$priceProductOfferTransfer->getFkPriceProductStore()) {
+            $priceProductTransfer = $this->getPriceProductDataHelper()->havePriceProduct($seedData);
+            $priceProductOfferTransfer->setFkPriceProductStore($priceProductTransfer->getMoneyValue()->getIdEntity());
         }
 
         return $priceProductOfferTransfer;

@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Edit Merchant user' %}
+
+{% block action %}
+    {{ backActionButton(backUrl, 'Back to Merchant Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            {{ form_start(merchantUserForm) }}
+
+            {% for field in merchantUserForm.children %}
+                {{ form_row(field) }}
+            {% endfor %}
+
+            <input type="submit" class="btn btn-primary safe-submit" value="{{ 'Save' | trans }}" />
+
+            {{ form_end(merchantUserForm) }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

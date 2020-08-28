@@ -32,6 +32,11 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
 
     public const TWIG_ENVIRONMENT = 'CMS_BLOCK_GUI:TWIG_ENVIRONMENT';
 
+    /**
+     * @uses \Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin::SERVICE_TWIG
+     */
+    public const SERVICE_TWIG = 'twig';
+
     public const PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE = 'PLUGINS_CMS_BLOCK_GLOSSARY_BEFORE_SAVE';
     public const PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND = 'PLUGINS_CMS_BLOCK_GLOSSARY_AFTER_FIND';
 
@@ -63,9 +68,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTwigEnvironment(Container $container)
     {
-        $container[static::TWIG_ENVIRONMENT] = function (Container $container) {
-            return $this->getTwigEnvironment();
-        };
+        $container->set(static::TWIG_ENVIRONMENT, function (Container $container) {
+            return $container->getApplicationService(static::SERVICE_TWIG);
+        });
 
         return $container;
     }
@@ -77,9 +82,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockQueryContainer(Container $container)
     {
-        $container[static::QUERY_CONTAINER_CMS_BLOCK] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS_BLOCK, function (Container $container) {
             return new CmsBlockGuiToCmsBlockQueryContainerBridge($container->getLocator()->cmsBlock()->queryContainer());
-        };
+        });
 
         return $container;
     }
@@ -91,9 +96,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockFacade(Container $container)
     {
-        $container[static::FACADE_CMS_BLOCK] = function (Container $container) {
+        $container->set(static::FACADE_CMS_BLOCK, function (Container $container) {
             return new CmsBlockGuiToCmsBlockBridge($container->getLocator()->cmsBlock()->facade());
-        };
+        });
 
         return $container;
     }
@@ -105,9 +110,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addLocaleFacade(Container $container)
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new CmsBlockGuiToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        });
 
         return $container;
     }
@@ -119,9 +124,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockFormPlugins(Container $container)
     {
-        $container[static::PLUGINS_CMS_BLOCK_FORM] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_BLOCK_FORM, function (Container $container) {
             return $this->getCmsBlockFormPlugins();
-        };
+        });
 
         return $container;
     }
@@ -141,9 +146,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsBlockViewPlugins(Container $container)
     {
-        $container[static::PLUGINS_CMS_BLOCK_VIEW] = function (Container $container) {
+        $container->set(static::PLUGINS_CMS_BLOCK_VIEW, function (Container $container) {
             return $this->getCmsBlockViewPlugins();
-        };
+        });
 
         return $container;
     }
@@ -157,6 +162,8 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
+     * @deprecated Will be removed without replacement.
+     *
      * @return \Twig\Environment
      */
     protected function getTwigEnvironment()
@@ -173,9 +180,9 @@ class CmsBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreRelationFormTypePlugin(Container $container)
     {
-        $container[static::PLUGIN_STORE_RELATION_FORM_TYPE] = function () {
+        $container->set(static::PLUGIN_STORE_RELATION_FORM_TYPE, function () {
             return $this->getStoreRelationFormTypePlugin();
-        };
+        });
 
         return $container;
     }

@@ -85,6 +85,7 @@ class ProductFormHandler implements FormHandlerInterface
                 $items[$itemTransfer->getSku()]->setQuantity(
                     $items[$itemTransfer->getSku()]->getQuantity() + $itemTransfer->getQuantity()
                 );
+
                 continue;
             }
 

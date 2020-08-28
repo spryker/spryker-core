@@ -19,12 +19,19 @@
         <property name="productOfferReference" type="string"/>
         <property name="isActive" type="bool"/>
         <property name="approvalStatus" type="string"/>
+        <property name="stores" type="Store[]" singular="store"/>
+    </transfer>
+
+    <transfer name="ProductOfferStore">
+        <property name="idProductOfferStore" type="int"/>
+        <property name="fkProductOffer" type="string"/>
+        <property name="fkStore" type="string"/>
     </transfer>
 
     <transfer name="ProductOfferResponse">
         <property name="productOffer" type="ProductOffer"/>
         <property name="errors" type="ProductOfferError[]" singular="error"/>
-        <property name="isSuccess" type="bool"/>
+        <property name="isSuccessful" type="bool"/>
     </transfer>
 
     <transfer name="ProductOfferError">
@@ -37,6 +44,8 @@
 
     <transfer name="ProductOfferCriteriaFilter">
         <property name="idProductOffer" type="int"/>
+        <property name="productOfferIds" type="int[]" singular="idProductOffer"/>
+        <property name="idStore" type="int"/>
         <property name="concreteSku" type="string"/>
         <property name="productOfferReference" type="string"/>
         <property name="concreteSkus" type="string[]" singular="concreteSku"/>
@@ -61,5 +70,22 @@
 
     <transfer name="Quote">
         <property name="items" type="Item[]" singular="item"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="Message">
+        <property name="type" type="string"/>
+        <property name="value" type="string"/>
+        <property name="parameters" type="array" singular="parameters"/>
+    </transfer>
+
+    <transfer name="CartPreCheckResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
     </transfer>
 </transfers>

@@ -1,66 +1,66 @@
-Name,Name
 Actions,Aktionen
 Activate,Aktivieren
-Deactivate,Deaktivieren
 Active,Aktiv
-Inactive,Inaktiv
-Status,Status
-"Configurable Bundle Template","Konfigurierbares Bündel-Vorlage"
-"Configurable Bundle Templates","Konfigurierbare Bundle-Vorlagen"
-"Nr. of Slots","Anzahl der Slots"
-"Create New Template","Neue Vorlage erstellen"
-"Are you sure you want to delete template","Möchten Sie die Vorlage wirklich löschen"
-"Delete Template","Vorlage löschen"
-"Delete Configurable Bundle Template","Die Vorlage von konfigurierbarem Bündel löschen"
-"Template ""%template_name%"" was activated.","Vorlage ""%template_name%"" wurde aktiviert."
-"Template ""%template_name%"" was deactivated.","Vorlage ""%template_name%"" wurde deaktiviert."
-General,Allgemeines
-Slots,Slots
-"Template details",Vorlagendetails
-"Create Configurable Bundle Template","Konfigurierbares Bündel-Vorlage erstellen"
-"Edit Configurable Bundle Template","Konfigurierbares Bündel-Vorlage bearbeiten"
-"Back to Template list","Zurück zur Vorlagenliste"
+"Add General Information","Allgemeine Informationen hinzufügen"
 "Add Slot","Slot hinzufügen"
-Save,Speichern
-Next,Weiter
-"Slot ID","Slot ID"
-"Slot Name","Slot Name"
-"Number of Items","Anzahl der Artikel"
-Edit,Bearbeiten
-Delete,Löschen
-SKU,SKU
-"Product ID","Produkt ID"
+"Are you sure you want to delete template","Möchten Sie die Vorlage wirklich löschen"
+"Are you sure you want to delete this slot?","Möchten Sie diesen Slot wirklich löschen?"
 "At first create Configurable bundle Template, after that you will be redirected to the page where you can create slots, and define products per each of them.","Erstellen Sie zunächst ein konfigurierbares Bündel-Vorlage. Anschließend werden Sie zu der Seite weitergeleitet, auf der Sie Slots erstellen und Produkte für jedes einzelne definieren können."
-"You can change name and define locals on this page.","Auf dieser Seite können Sie den Namen ändern und Einheimische definieren."
-"You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","Sie können Slots auf dieser Seite hinzufügen. Während der Slot-Erstellung können Sie diesem Slot nacheinander Produkte aus einem Katalog zuweisen, eine CSV-Datei importieren oder mehrere Kategorien zuweisen."
-"Configurable bundle template with id ""%id%"" was not found.","Vorlage des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
-"Configurable bundle template slot with id ""%id%"" was not found.","Vorlagenslot des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
-"Configurable bundle template slot was successfully created.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich erstellt."
-"Configurable bundle template slot was successfully updated.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich aktualisiert."
-"Configurable bundle template slot was successfully deleted.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich gelöscht."
-"Configurable bundle template has not been created.","Vorlage des konfigurierbaren Bündels wurde nicht erstellt."
-"Configurable bundle template has not been updated.","Vorlage des konfigurierbaren Bündels wurde nicht aktualisiert."
-"Configurable bundle template has not been deleted.","Vorlage des konfigurierbaren Bündels wurde nicht gelöscht."
-"Template ""%template_name%"" has not been activated.","Vorlage ""%template_name%"" wurde nicht aktiviert."
-"Template ""%template_name%"" has not been deactivated.","Vorlage ""%template_name%"" wurde nicht deaktiviert."
+Back,Zurück
+"Back to Template list","Zurück zur Vorlagenliste"
+"Below you can edit the name of your slot for different locales (in different languages).","Unten können Sie den Namen des Slots für die verschiedenen Sprachumgebungen bearbeiten."
+Cancel,Stornieren
+"Configurable Bundle Template","Konfigurierbares Bündel-Vorlage"
 "Configurable bundle template has been successfully created.","Vorlage des konfigurierbaren Bündels wurde erfolgreich erstellt."
-"Configurable bundle template has been successfully updated.","Vorlage des konfigurierbaren Bündels wurde erfolgreich aktualisiert."
 "Configurable bundle template has been successfully deleted.","Vorlage des konfigurierbaren Bündels wurde erfolgreich gelöscht."
-"Template ""%template_name%"" has been activated.","Vorlage ""%template_name%"" wurde aktiviert."
-"Template ""%template_name%"" has deactivated.","Vorlage ""%template_name%"" wurde deaktiviert."
+"Configurable bundle template has been successfully updated.","Vorlage des konfigurierbaren Bündels wurde erfolgreich aktualisiert."
+"Configurable bundle template has not been created.","Vorlage des konfigurierbaren Bündels wurde nicht erstellt."
+"Configurable bundle template has not been deleted.","Vorlage des konfigurierbaren Bündels wurde nicht gelöscht."
+"Configurable bundle template has not been updated.","Vorlage des konfigurierbaren Bündels wurde nicht aktualisiert."
 "Configurable bundle template slot has not been created.","Vorlagenslot des konfigurierbaren Bündels wurde nicht erstellt."
-"Configurable bundle template slot has not been updated.","Vorlagenslot des konfigurierbaren Bündels wurde nicht aktualisiert."
 "Configurable bundle template slot has not been deleted.","Vorlagenslot des konfigurierbaren Bündels wurde nicht gelöscht."
+"Configurable bundle template slot has not been updated.","Vorlagenslot des konfigurierbaren Bündels wurde nicht aktualisiert."
+"Configurable bundle template slot was successfully created.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich erstellt."
+"Configurable bundle template slot was successfully deleted.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich gelöscht."
+"Configurable bundle template slot was successfully updated.","Vorlagenslot des konfigurierbaren Bündels wurde erfolgreich aktualisiert."
+"Configurable bundle template slot with id ""%id%"" was not found.","Vorlagenslot des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
+"Configurable bundle template with id ""%id%"" was not found.","Vorlage des konfigurierbaren Bündels mit ID ""%id%"" wurde nicht gefunden."
+"Configurable Bundle Templates","Konfigurierbare Bundle-Vorlagen"
+Confirm,Bestätigen
+"Confirm action","Aktion bestätigen"
+"Create Configurable Bundle Template","Konfigurierbares Bündel-Vorlage erstellen"
+"Create New Template","Neue Vorlage erstellen"
 "Create Slot","Slot erstellen"
+Deactivate,Deaktivieren
+Delete,Löschen
+"Delete Configurable Bundle Template","Die Vorlage von konfigurierbarem Bündel löschen"
+"Delete Template","Vorlage löschen"
+Edit,Bearbeiten
+"Edit Configurable Bundle Template","Konfigurierbares Bündel-Vorlage bearbeiten"
 "Edit Slot","Slot bearbeiten"
 "Edit Slot for","Slot bearbeiten für die"
 for,"für die"
-Back,Zurück
-"Slot details",Slotdetaile
-"Are you sure you want to delete this slot?","Möchten Sie diesen Slot wirklich löschen?"
-"Confirm action","Aktion bestätigen"
-Confirm,Bestätigen
-Cancel,Stornieren
-"Add General Information","Allgemeine Informationen hinzufügen"
-"Below you can edit the name of your slot for different locales (in different languages).","Unten können Sie den Namen des Slots für die verschiedenen Sprachumgebungen bearbeiten."
+General,Allgemein
+Inactive,Inaktiv
+Name,Name
+Next,Weiter
 "Note: you can assign products and categories for a slot in the respective tabs.","Hinweis: Sie können Produkte und Kategorien einem Slot in den entsprechenden Tabs zuweisen."
+"Nr. of Slots","Anzahl der Slots"
+"Number of Items","Anzahl der Artikel"
+"Product ID","Produkt ID"
+Save,Speichern
+SKU,SKU
+"Slot details",Slotdetaile
+"Slot ID","Slot ID"
+"Slot Name","Slot Name"
+Slots,Slots
+Status,Status
+"Template ""%template_name%"" has been activated.","Vorlage ""%template_name%"" wurde aktiviert."
+"Template ""%template_name%"" has deactivated.","Vorlage ""%template_name%"" wurde deaktiviert."
+"Template ""%template_name%"" has not been activated.","Vorlage ""%template_name%"" wurde nicht aktiviert."
+"Template ""%template_name%"" has not been deactivated.","Vorlage ""%template_name%"" wurde nicht deaktiviert."
+"Template ""%template_name%"" was activated.","Vorlage ""%template_name%"" wurde aktiviert."
+"Template ""%template_name%"" was deactivated.","Vorlage ""%template_name%"" wurde deaktiviert."
+"Template details",Vorlagendetails
+"You can add slots on this page. During slot creation you can assign products from a catalog to this slot one by one, import CSV file or assign several categories.","Sie können Slots auf dieser Seite hinzufügen. Während der Slot-Erstellung können Sie diesem Slot nacheinander Produkte aus einem Katalog zuweisen, eine CSV-Datei importieren oder mehrere Kategorien zuweisen."
+"You can change name and define locals on this page.","Auf dieser Seite können Sie den Namen ändern und Einheimische definieren."

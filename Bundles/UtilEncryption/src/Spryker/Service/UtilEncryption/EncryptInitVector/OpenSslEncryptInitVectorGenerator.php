@@ -43,4 +43,16 @@ class OpenSslEncryptInitVectorGenerator implements OpenSslEncryptInitVectorGener
             openssl_cipher_iv_length($encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionMethod())
         );
     }
+
+    /**
+     * @param string|null $encryptionMethod
+     *
+     * @return string
+     */
+    public function generateByteStringOpenSslEncryptInitVector(?string $encryptionMethod = null): string
+    {
+        return $this->utilTextService->generateRandomByteString(
+            openssl_cipher_iv_length($encryptionMethod ?? $this->utilEncryptionConfig->getDefaultOpenSslEncryptionMethod())
+        );
+    }
 }

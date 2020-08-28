@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\Sales\Persistence"
+          package="src.Orm.Zed.Sales.Persistence">
+
+    <table name="spy_sales_order">
+        <column name="company_business_unit_uuid" type="VARCHAR" size="36" required="false"/>
+
+        <index name="index-spy_sales_order-company_business_unit_uuid">
+            <index-column name="company_business_unit_uuid"/>
+        </index>
+    </table>
+
+</database>

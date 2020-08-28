@@ -73,7 +73,7 @@ class Container implements ContainerInterface, ArrayAccess
     /**
      * This is a storage for services which should be extended, but at the point where extend was called the service was not found.
      *
-     * @var array
+     * @var \Closure[][]
      */
     protected $toBeExtended = [];
 
@@ -88,7 +88,7 @@ class Container implements ContainerInterface, ArrayAccess
     protected $currentExtendingHash;
 
     /**
-     * @var array
+     * @var bool[]
      */
     protected $sharedServiceHashes = [];
 
@@ -256,7 +256,8 @@ class Container implements ContainerInterface, ArrayAccess
             throw new NotFoundException(sprintf('The requested service "%s" was not found in the container!', $id));
         }
 
-        if (isset($this->raw[$id])
+        if (
+            isset($this->raw[$id])
             || !is_object($this->services[$id])
             || isset($this->protectedServices[$this->services[$id]])
             || !method_exists($this->services[$id], '__invoke')
@@ -589,7 +590,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::has()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::has()} instead.
      *
      * @param mixed $offset
      *
@@ -603,7 +604,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::get()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::get()} instead.
      *
      * @param mixed $offset
      *
@@ -617,7 +618,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::set()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::set()} instead.
      *
      * @param mixed $offset
      * @param mixed $value
@@ -637,7 +638,7 @@ class Container implements ContainerInterface, ArrayAccess
             return;
         }
 
-        if (method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
+        if ($value && (is_string($value) || is_object($value)) && method_exists($value, '__invoke') && !isset($this->sharedServiceHashes[spl_object_hash($value)])) {
             $value = $this->factory($value);
         }
 
@@ -645,7 +646,7 @@ class Container implements ContainerInterface, ArrayAccess
     }
 
     /**
-     * @deprecated Please use `Spryker\Service\Container\ContainerInterface::remove()` instead.
+     * @deprecated Use {@link \Spryker\Service\Container\ContainerInterface::remove()} instead.
      *
      * @param mixed $offset
      *

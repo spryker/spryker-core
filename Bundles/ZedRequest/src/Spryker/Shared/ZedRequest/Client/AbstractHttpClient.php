@@ -19,7 +19,6 @@ use Psr\Http\Message\ResponseInterface as MessageResponseInterface;
 use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
-use Spryker\Shared\Application\ApplicationConstants;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
@@ -86,6 +85,10 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      */
     public const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
 
+    protected const DEFAULT_XDEBUG_PROFILER_NAME = 'XDEBUG_PROFILE';
+
+    protected const DEFAULT_XDEBUG_SESSIOIN_NAME = 'XDEBUG_SESSION';
+
     /**
      * @var bool
      */
@@ -132,7 +135,7 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @deprecated Please use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
+     * @deprecated Use ZedRequestConstants::CLIENT_OPTIONS to change the default timeout.
      *
      * @param int $timeoutInSeconds
      *
@@ -171,18 +174,6 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     }
 
     /**
-     * @return int
-     */
-    protected function getConfigServerPort()
-    {
-        if (Config::get(static::ZED_API_SSL_ENABLED)) {
-            return Config::get(ApplicationConstants::PORT_SSL_ZED, static::DEFAULT_SSL_PORT);
-        }
-
-        return Config::get(ApplicationConstants::PORT_ZED, static::DEFAULT_PORT);
-    }
-
-    /**
      * @param string $pathInfo
      * @param \Spryker\Shared\Kernel\Transfer\TransferInterface|null $transferObject
      * @param array $metaTransfers
@@ -206,18 +197,13 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
         try {
             $response = $this->sendRequest($request, $requestTransfer, $requestOptions);
         } catch (GuzzleRequestException $e) {
-            $configHostName = Config::get(ApplicationConstants::HOST_ZED);
-            $configServerPort = $this->getConfigServerPort();
-            $hostSchema = $request->getUri()->getScheme();
-            $hostAuthority = $hostSchema . '://' . $request->getUri()->getAuthority();
-            $configFileName = $this->getConfigFilePathName();
             $message = sprintf(
                 static::ZED_REQUEST_ERROR,
-                $hostAuthority,
+                $request->getUri()->getScheme() . '://' . $request->getUri()->getAuthority(),
                 $this->setSslStatusMessage(),
-                $configHostName,
-                $configServerPort,
-                $configFileName
+                $request->getUri()->getHost(),
+                $request->getUri()->getPort(),
+                $this->getConfigFilePathName()
             );
             $response = $e->getResponse();
             if ($response) {
@@ -325,9 +311,34 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
     protected function getClientConfiguration()
     {
         $config = $this->addCookiesToForwardDebugSession($this->clientConfiguration);
+        $config = $this->addCookiesToForwardDebugProfiler($config);
         $config['handler'] = $this->getHandlerStack();
 
         return $config;
+    }
+
+    /**
+     * @param array $config
+     *
+     * @return array
+     */
+    protected function addCookiesToForwardDebugProfiler(array $config): array
+    {
+        $isProfilerForwardingEnabled = Config::get(
+            ZedRequestConstants::XDEBUG_PROFILER_FORWARD_ENABLED,
+            false
+        );
+
+        if (!$isProfilerForwardingEnabled) {
+            return $config;
+        }
+
+        $profilerName = Config::get(
+            ZedRequestConstants::XDEBUG_PROFILER_NAME,
+            static::DEFAULT_XDEBUG_PROFILER_NAME
+        );
+
+        return $this->addCookie($config, $profilerName);
     }
 
     /**
@@ -422,28 +433,47 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
      *
      * @return array
      */
-    protected function addCookiesToForwardDebugSession(array $config)
+    protected function addCookiesToForwardDebugSession(array $config): array
     {
-        $isSessionForwardingEnabled = Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED, false);
+        $isSessionForwardingEnabled = Config::get(
+            ZedRequestConstants::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED,
+            false
+        );
 
         if (!$isSessionForwardingEnabled) {
             return $config;
         }
 
-        $debugSessionName = Config::get(ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME, 'XDEBUG_SESSION');
-        if (!isset($_COOKIE[$debugSessionName])) {
+        $debugSessionName = Config::get(
+            ZedRequestConstants::TRANSFER_DEBUG_SESSION_NAME,
+            static::DEFAULT_XDEBUG_SESSIOIN_NAME
+        );
+
+        return $this->addCookie($config, $debugSessionName);
+    }
+
+    /**
+     * @param array $config
+     * @param string $name
+     *
+     * @return array
+     */
+    protected function addCookie(array $config, string $name): array
+    {
+        if (!isset($_COOKIE[$name])) {
             return $config;
         }
 
+        if (!isset($config['cookies'])) {
+            $config['cookies'] = new CookieJar();
+        }
+
         $cookie = new SetCookie();
-        $cookie->setName($debugSessionName);
-        $cookie->setValue($_COOKIE[$debugSessionName]);
+        $cookie->setName($name);
+        $cookie->setValue($_COOKIE[$name]);
         $cookie->setDomain(Config::get(ZedRequestConstants::HOST_ZED_API));
 
-        $cookieJar = new CookieJar();
-        $cookieJar->setCookie($cookie);
-
-        $config['cookies'] = $cookieJar;
+        $config['cookies']->setCookie($cookie);
 
         return $config;
     }

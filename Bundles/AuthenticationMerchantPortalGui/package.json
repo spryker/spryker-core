@@ -1,0 +1,29 @@
+{
+    "name": "mp-login",
+    "version": "0.0.0",
+    "private": true,
+    "dependencies": {
+        "@angular/animations": "^9.1.12",
+        "@angular/cdk": "^9.2.0",
+        "@angular/common": "^9.1.12",
+        "@angular/core": "^9.1.12",
+        "@angular/elements": "^9.1.12",
+        "@angular/forms": "^9.1.12",
+        "@angular/platform-browser": "^9.1.12",
+        "@spryker/ajax-action": "^0.2.0-next.0",
+        "@spryker/button": "^0.2.0-next.0",
+        "@spryker/card": "^0.2.0-next.0",
+        "@spryker/drawer": "^0.2.0-next.2",
+        "@spryker/form-item": "^0.2.0-next.0",
+        "@spryker/icon": "^0.2.0-next.0",
+        "@spryker/input": "^0.2.0-next.0",
+        "@spryker/logo": "^0.2.0-next.0",
+        "@spryker/notification": "^0.2.0-next.0",
+        "@spryker/styles": "^0.2.0-next.0",
+        "@spryker/utils": "^0.2.0-next.0",
+        "@spryker/web-components": "^0.2.1-next.3",
+        "rxjs": "^6.5.4",
+        "tslib": "^1.10.0",
+        "zone.js": "^0.10.2"
+    }
+}

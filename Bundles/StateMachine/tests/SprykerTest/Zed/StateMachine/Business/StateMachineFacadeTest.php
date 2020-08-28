@@ -10,6 +10,7 @@ namespace SprykerTest\Zed\StateMachine\Business;
 use Codeception\Test\Unit;
 use DateTime;
 use Generated\Shared\Transfer\StateMachineItemTransfer;
+use Generated\Shared\Transfer\StateMachineProcessCriteriaTransfer;
 use Generated\Shared\Transfer\StateMachineProcessTransfer;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineEventTimeoutQuery;
 use Orm\Zed\StateMachine\Persistence\SpyStateMachineItemStateQuery;
@@ -21,6 +22,7 @@ use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
 use Spryker\Zed\Graph\Communication\Plugin\GraphPlugin;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Propel\PropelConfig;
 use Spryker\Zed\StateMachine\Business\StateMachineBusinessFactory;
 use Spryker\Zed\StateMachine\Business\StateMachineFacade;
 use Spryker\Zed\StateMachine\Business\StateMachineFacadeInterface;
@@ -45,6 +47,12 @@ class StateMachineFacadeTest extends Unit
     public const TESTING_SM = 'TestingSm';
     public const TEST_PROCESS_NAME = 'TestProcess';
     public const TEST_PROCESS_WITH_LOOP_NAME = 'TestProcessWithLoop';
+    public const TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID = 0;
+
+    /**
+     * @var \SprykerTest\Zed\StateMachine\StateMachineBusinessTester
+     */
+    protected $tester;
 
     /**
      * @return void
@@ -673,7 +681,7 @@ class StateMachineFacadeTest extends Unit
     {
         // Assign
         $stateMachineHandler = new TestStateMachineHandler();
-        $stateMachineName = $stateMachineHandler->getStateMachineName() . "SomethingElse";
+        $stateMachineName = $stateMachineHandler->getStateMachineName() . 'SomethingElse';
         $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
         $expectedResult = false;
 
@@ -682,6 +690,72 @@ class StateMachineFacadeTest extends Unit
 
         // Assert
         $this->assertEquals($expectedResult, $actualResult);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsCorrectData(): void
+    {
+        // Arrange
+        $stateMachineProcessEntity = $this->tester->haveStateMachineProcess();
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
+            ->setIdStateMachineProcess($stateMachineProcessEntity->getIdStateMachineProcess());
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
+
+        // Assert
+        $this->assertNotNull($stateMachineProcessTransfer);
+        $this->assertSame($stateMachineProcessTransfer->getProcessName(), $stateMachineProcessEntity->getName());
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindStateMachineProcessReturnsNullWithIncorrectFilter(): void
+    {
+        // Arrange
+        $stateMachineProcessCriteriaTransfer = (new StateMachineProcessCriteriaTransfer())
+            ->setIdStateMachineProcess(static::TEST_NOT_EXISTING_STATE_MACHINE_PROCESS_ID);
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        // Act
+        $stateMachineProcessTransfer = $stateMachineFacade->findStateMachineProcess($stateMachineProcessCriteriaTransfer);
+
+        // Assert
+        $this->assertNull($stateMachineProcessTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetProcessStateNamesReturnsArrayOfStateNames(): void
+    {
+        // Arrange
+        $processName = static::TEST_PROCESS_NAME;
+        $identifier = 1985;
+
+        $stateMachineProcessTransfer = new StateMachineProcessTransfer();
+        $stateMachineProcessTransfer->setProcessName($processName);
+        $stateMachineProcessTransfer->setStateMachineName(static::TESTING_SM);
+
+        $stateMachineHandler = new TestStateMachineHandler();
+        $stateMachineFacade = $this->createStateMachineFacade($stateMachineHandler);
+
+        $stateMachineFacade->triggerForNewStateMachineItem($stateMachineProcessTransfer, $identifier);
+
+        // Act
+        $stateNames = $stateMachineFacade->getProcessStateNames($stateMachineProcessTransfer);
+
+        // Assert
+        $this->assertEquals('completed', array_pop($stateNames));
+        $this->assertEquals('state with condition', array_pop($stateNames));
+        $this->assertEquals('new', array_shift($stateNames));
     }
 
     /**
@@ -724,7 +798,7 @@ class StateMachineFacadeTest extends Unit
      */
     protected function sleepIfMySql(int $seconds): void
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
             sleep($seconds);
         }
     }

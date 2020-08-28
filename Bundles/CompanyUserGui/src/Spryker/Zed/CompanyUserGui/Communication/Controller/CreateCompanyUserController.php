@@ -121,6 +121,7 @@ class CreateCompanyUserController extends AbstractController
 
             return $this->viewResponse([
                 'form' => $companyUserForm->createView(),
+                'backButton' => static::URL_REDIRECT_COMPANY_USER_PAGE,
             ]);
         }
 

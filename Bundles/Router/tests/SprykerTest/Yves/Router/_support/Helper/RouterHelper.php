@@ -16,7 +16,7 @@ use Spryker\Yves\Router\Route\Route;
 use Spryker\Yves\Router\Route\RouteCollection;
 use Spryker\Yves\Router\Router\ChainRouter;
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
-use SprykerTest\Yves\Testify\Helper\ApplicationHelperTrait;
+use SprykerTest\Yves\Application\Helper\ApplicationHelperTrait;
 use Symfony\Component\Routing\Router;
 
 class RouterHelper extends Module
@@ -30,7 +30,7 @@ class RouterHelper extends Module
     protected const SERVICE_ROUTER = 'routers';
 
     /**
-     * @var \Spryker\Yves\Router\Route\RouteCollection
+     * @var \Spryker\Yves\Router\Route\RouteCollection|null
      */
     protected $routeCollection;
 
@@ -58,8 +58,18 @@ class RouterHelper extends Module
      *
      * @return void
      */
-    public function addRoute(string $name, string $path, callable $controller, array $defaults = [], array $requirements = [], array $options = [], ?string $host = '', $schemes = [], $methods = [], ?string $condition = ''): void
-    {
+    public function addRoute(
+        string $name,
+        string $path,
+        callable $controller,
+        array $defaults = [],
+        array $requirements = [],
+        array $options = [],
+        ?string $host = '',
+        $schemes = [],
+        $methods = [],
+        ?string $condition = ''
+    ): void {
         $defaults['_controller'] = $controller;
         $route = new Route($path, $defaults, $requirements, $options, $host, $schemes, $methods, $condition);
 
@@ -107,6 +117,6 @@ class RouterHelper extends Module
      */
     public function _after(TestInterface $test): void
     {
-        $this->routeCollection;
+        $this->routeCollection = null;
     }
 }

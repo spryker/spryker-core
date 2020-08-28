@@ -10,7 +10,7 @@ namespace Spryker\Zed\DataImport\Business\Model\Dump;
 interface ImporterDumperInterface
 {
     /**
-     * @return array
+     * @return string[]
      */
     public function dump(): array;
 }

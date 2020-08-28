@@ -15,6 +15,8 @@ use Generated\Shared\Transfer\ApiRequestTransfer;
 class ApiRequestTransferFilterServerDataPlugin extends ApiRequestTransferFilterAbstractPlugin
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\ApiRequestTransfer $apiRequestTransfer

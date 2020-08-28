@@ -131,7 +131,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Please use `getModules()` instead.
+     * @deprecated Use {@link getModules()} instead.
      *
      * @return array
      */
@@ -140,7 +140,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `getAllModules()` instead.
+     * @deprecated Use {@link getAllModules()} instead.
      *
      * @return array
      */
@@ -225,7 +225,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getEngineModuleList();
 
@@ -265,11 +265,31 @@ interface DevelopmentFacadeInterface
     public function generateYvesIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Yves IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeYvesIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateZedIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Zed IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeZedIdeAutoCompletion(): void;
 
     /**
      * @api
@@ -279,6 +299,16 @@ interface DevelopmentFacadeInterface
     public function generateClientIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Client IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeClientIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
@@ -286,11 +316,31 @@ interface DevelopmentFacadeInterface
     public function generateServiceIdeAutoCompletion();
 
     /**
+     * Specification:
+     * - Removes Service IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeServiceIdeAutoCompletion(): void;
+
+    /**
      * @api
      *
      * @return void
      */
     public function generateGlueIdeAutoCompletion();
+
+    /**
+     * Specification:
+     * - Removes Glue IDE autocompletion files
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeGlueIdeAutoCompletion(): void;
 
     /**
      * Run the architecture sniffer against the given module and returns the violations
@@ -316,7 +366,7 @@ interface DevelopmentFacadeInterface
     /**
      * @api
      *
-     * @deprecated Use `listAllModules` instead.
+     * @deprecated Use {@link listAllModules()} instead.
      *
      * @return array
      */
@@ -404,7 +454,7 @@ interface DevelopmentFacadeInterface
      *
      * @param \Generated\Shared\Transfer\ModuleFilterTransfer|null $moduleFilterTransfer
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\ModuleTransfer[]
      */
     public function getProjectModules(?ModuleFilterTransfer $moduleFilterTransfer = null): array;
 

@@ -15,6 +15,11 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface;
+use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface;
+use Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface;
+use Spryker\Zed\ProductBundle\ProductBundleConfig;
 
 class ProductBundleCartAvailabilityCheck extends BasePreCheck implements ProductBundleCartAvailabilityCheckInterface
 {
@@ -22,6 +27,29 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
     public const CART_PRE_CHECK_ITEM_AVAILABILITY_EMPTY = 'cart.pre.check.availability.failed.empty';
     public const STOCK_TRANSLATION_PARAMETER = '%stock%';
     public const SKU_TRANSLATION_PARAMETER = '%sku%';
+
+    /**
+     * @var \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     */
+    protected $productBundleReader;
+
+    /**
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToAvailabilityFacadeInterface $availabilityFacade
+     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface $productBundleQueryContainer
+     * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterface $storeFacade
+     * @param \Spryker\Zed\ProductBundle\ProductBundleConfig $productBundleConfig
+     * @param \Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface $productBundleReader
+     */
+    public function __construct(
+        ProductBundleToAvailabilityFacadeInterface $availabilityFacade,
+        ProductBundleQueryContainerInterface $productBundleQueryContainer,
+        ProductBundleToStoreFacadeInterface $storeFacade,
+        ProductBundleConfig $productBundleConfig,
+        ProductBundleReaderInterface $productBundleReader
+    ) {
+        parent::__construct($availabilityFacade, $productBundleQueryContainer, $storeFacade, $productBundleConfig);
+        $this->productBundleReader = $productBundleReader;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
@@ -36,11 +64,14 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $storeTransfer = $cartChangeTransfer->getQuote()->getStore();
         $storeTransfer->requireName();
 
+        $productConcreteSkus = $this->getProductCocnreteSkusFromCartChangeTransfer($cartChangeTransfer);
+        $productForBundleTransfers = $this->productBundleReader->getProductForBundleTransfersByProductConcreteSkus($productConcreteSkus);
+
         $storeTransfer = $this->storeFacade->getStoreByName($storeTransfer->getName());
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
             $itemTransfer->requireSku()->requireQuantity();
 
-            if (!$this->isProductBundle($itemTransfer)) {
+            if (!isset($productForBundleTransfers[$itemTransfer->getSku()])) {
                 continue;
             }
 
@@ -228,8 +259,10 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
 
         $availabilityTransfer = $this->findAvailabilityBySku($itemTransfer->getSku(), $storeTransfer);
 
-        if ($availabilityTransfer && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityTransfer)
-            && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)) {
+        if (
+            $availabilityTransfer && $this->isUserRequestedMoreItemsThanInStock($itemTransfer, $availabilityTransfer)
+            && $this->isAllBundleItemsUnavailable($unavailableBundleItems, $bundledProducts)
+        ) {
             $bundleAvailabilityErrorMessage = $this->createItemIsNotAvailableMessageTransfer(
                 $availabilityTransfer->getAvailability(),
                 $itemTransfer->getSku()
@@ -299,5 +332,21 @@ class ProductBundleCartAvailabilityCheck extends BasePreCheck implements Product
         $availability = $this->calculateRegularItemAvailability($itemTransfer, $itemsInCart, $storeTransfer);
 
         return $this->createItemIsNotAvailableMessageTransfer($availability, $itemTransfer->getSku());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
+     *
+     * @return string[]
+     */
+    protected function getProductCocnreteSkusFromCartChangeTransfer(CartChangeTransfer $cartChangeTransfer): array
+    {
+        $productConcreteSkus = [];
+
+        foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
+            $productConcreteSkus[] = $itemTransfer->getSku();
+        }
+
+        return $productConcreteSkus;
     }
 }

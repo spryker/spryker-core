@@ -25,8 +25,7 @@ class WishlistItemsResourceController extends AbstractController
      *              "Removes item from the wishlist."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "404": "Wishlist not found.",
@@ -53,8 +52,7 @@ class WishlistItemsResourceController extends AbstractController
      *              "Adds an item to the wishlist."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Can't add an item.",
@@ -68,8 +66,10 @@ class WishlistItemsResourceController extends AbstractController
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function postAction(RestRequestInterface $restRequest, RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer): RestResponseInterface
-    {
+    public function postAction(
+        RestRequestInterface $restRequest,
+        RestWishlistItemsAttributesTransfer $restWishlistItemsAttributesTransfer
+    ): RestResponseInterface {
         return $this->getFactory()
             ->createWishlistItemAdder()
             ->add($restWishlistItemsAttributesTransfer, $restRequest);

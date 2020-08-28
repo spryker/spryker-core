@@ -79,4 +79,7 @@
         <property name="template" type="string"/>
     </transfer>
 
+    <transfer name="Locale">
+    </transfer>
+
 </transfers>

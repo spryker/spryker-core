@@ -9,6 +9,7 @@ namespace Spryker\Zed\Touch\Business\Model;
 
 use Generated\Shared\Transfer\TouchTransfer;
 use Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use Spryker\Zed\Touch\TouchConfig;
 
 class Touch implements TouchInterface
 {
@@ -20,11 +21,20 @@ class Touch implements TouchInterface
     protected $touchQueryContainer;
 
     /**
-     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @var \Spryker\Zed\Touch\TouchConfig
      */
-    public function __construct(TouchQueryContainerInterface $queryContainer)
-    {
+    protected $touchConfig;
+
+    /**
+     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainerInterface $queryContainer
+     * @param \Spryker\Zed\Touch\TouchConfig $touchConfig
+     */
+    public function __construct(
+        TouchQueryContainerInterface $queryContainer,
+        TouchConfig $touchConfig
+    ) {
         $this->touchQueryContainer = $queryContainer;
+        $this->touchConfig = $touchConfig;
     }
 
     /**
@@ -34,6 +44,10 @@ class Touch implements TouchInterface
      */
     public function getItemsByType($itemType)
     {
+        if (!$this->touchConfig->isTouchEnabled()) {
+            return [];
+        }
+
         $entityList = $this->touchQueryContainer
             ->queryTouchListByItemType($itemType)
             ->find();

@@ -28,9 +28,9 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::STORE_CONFIG] = function (Container $container) {
+        $container->set(static::STORE_CONFIG, function (Container $container) {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -42,12 +42,14 @@ class TaxDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_COUNTRY] = function (Container $container) {
+        $container->set(static::FACADE_COUNTRY, function (Container $container) {
             return new TaxToCountryBridge($container->getLocator()->country()->facade());
-        };
+        });
 
-        $container[self::SERVICE_DATE_FORMATTER] = function (Container $container) {
+        $container->set(static::SERVICE_DATE_FORMATTER, function (Container $container) {
             return $container->getLocator()->utilDateTime()->service();
-        };
+        });
+
+        return $container;
     }
 }

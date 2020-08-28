@@ -133,8 +133,6 @@ interface WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer

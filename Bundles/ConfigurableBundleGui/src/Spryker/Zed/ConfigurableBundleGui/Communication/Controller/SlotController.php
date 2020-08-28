@@ -255,7 +255,7 @@ class SlotController extends AbstractController
 
         $request->query->set(
             static::URL_PARAM_ID_PRODUCT_LIST,
-            $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
+            (string)$configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot()->getProductList()->getIdProductList()
         );
 
         $configurableBundleTemplateTransfer = $this->findConfigurableBundleTemplateById(
@@ -300,13 +300,21 @@ class SlotController extends AbstractController
             return $this->redirectResponse(static::ROUTE_TEMPLATES_LIST);
         }
 
+        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
+                static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
+            ]) . static::SLOTS_TAB_ANCHOR;
+
+        $form = $this->getFactory()->createDeleteConfigurableBundleSlotForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
         $configurableBundleTemplateSlotResponseTransfer = $this->getFactory()
             ->getConfigurableBundleFacade()
             ->deleteConfigurableBundleTemplateSlot($configurableBundleTemplateSlotFilterTransfer);
-
-        $redirectUrl = Url::generate(static::ROUTE_EDIT_TEMPLATE, [
-            static::PARAM_ID_CONFIGURABLE_BUNDLE_TEMPLATE => $configurableBundleTemplateSlotTransfer->getFkConfigurableBundleTemplate(),
-        ]) . static::SLOTS_TAB_ANCHOR;
 
         if ($configurableBundleTemplateSlotResponseTransfer->getIsSuccessful()) {
             $this->addSuccessMessage(static::SUCCESS_MESSAGE_SLOT_DELETED);
@@ -346,8 +354,9 @@ class SlotController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer
      */
-    protected function mapFormTransferToRegularTransfer(ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer): ConfigurableBundleTemplateSlotTransfer
-    {
+    protected function mapFormTransferToRegularTransfer(
+        ConfigurableBundleTemplateSlotEditFormTransfer $configurableBundleTemplateSlotEditFormTransfer
+    ): ConfigurableBundleTemplateSlotTransfer {
         $configurableBundleTemplateSlotTransfer = $configurableBundleTemplateSlotEditFormTransfer->getConfigurableBundleTemplateSlot();
         $productListAggregateFormTransfer = $configurableBundleTemplateSlotEditFormTransfer->getProductListAggregateForm();
 

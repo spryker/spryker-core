@@ -21,9 +21,11 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductOptionStorageQueryContainer extends AbstractQueryContainer implements ProductOptionStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOptionStorage\Persistence\SpyProductAbstractOptionStorageQuery
      */
@@ -36,9 +38,11 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -52,9 +56,11 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
@@ -76,7 +82,7 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductOption\Persistence\SpyProductAbstractProductOptionGroupQuery
      */
@@ -89,6 +95,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productOptionGroupsIds
@@ -106,6 +114,8 @@ class ProductOptionStorageQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productOptionValueIds

@@ -19,6 +19,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class RemoveProductCategoryRelationPlugin extends AbstractPlugin implements CategoryRelationDeletePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory

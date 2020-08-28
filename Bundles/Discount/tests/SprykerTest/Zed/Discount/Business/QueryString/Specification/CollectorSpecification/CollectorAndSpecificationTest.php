@@ -62,8 +62,10 @@ class CollectorAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\CollectorSpecification\CollectorAndSpecification
      */
-    protected function createCollectorAndSpecification(CollectorSpecificationInterface $leftMock, CollectorSpecificationInterface $rightMock): CollectorAndSpecification
-    {
+    protected function createCollectorAndSpecification(
+        CollectorSpecificationInterface $leftMock,
+        CollectorSpecificationInterface $rightMock
+    ): CollectorAndSpecification {
         return new CollectorAndSpecification($leftMock, $rightMock);
     }
 

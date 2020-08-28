@@ -25,7 +25,7 @@ abstract class AbstractFileDependencyFinder implements DependencyFinderInterface
      */
     protected function isExtensionModule(string $moduleOrComposerName): bool
     {
-        return preg_match('/Extension$|-extension$/', $moduleOrComposerName);
+        return (bool)preg_match('/Extension$|-extension$/', $moduleOrComposerName);
     }
 
     /**

@@ -62,7 +62,6 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
         switch ($facetConfigTransfer->getType()) {
             case SharedSearchElasticsearchConfig::FACET_TYPE_CATEGORY:
                 return $this->createCategoryFacetAggregation($facetConfigTransfer);
-
             default:
                 return $this->createByFacetValueType($facetConfigTransfer);
         }
@@ -84,11 +83,9 @@ class FacetAggregationFactory implements FacetAggregationFactoryInterface
             case 'keyword':
             case 'text':
                 return $this->createStringFacetAggregation($facetConfigTransfer);
-
             case 'integer':
             case 'float':
                 return $this->createNumericFacetAggregation($facetConfigTransfer);
-
             default:
                 throw new MissingFacetAggregationException(sprintf(
                     'Missing facet aggregation for type "%s" in field "%s".',

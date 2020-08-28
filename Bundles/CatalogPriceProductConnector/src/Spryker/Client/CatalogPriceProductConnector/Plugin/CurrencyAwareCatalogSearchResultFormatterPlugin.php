@@ -8,6 +8,9 @@
 namespace Spryker\Client\CatalogPriceProductConnector\Plugin;
 
 use Elastica\ResultSet;
+use Generated\Shared\Transfer\CurrentProductPriceTransfer;
+use Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductClientInterface;
+use Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductStorageClientInterface;
 use Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface;
 use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticsearchResultFormatterPlugin;
 
@@ -16,6 +19,11 @@ use Spryker\Client\Search\Plugin\Elasticsearch\ResultFormatter\AbstractElasticse
  */
 class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlugin
 {
+    /**
+     * @var \Generated\Shared\Transfer\CurrentProductPriceTransfer[]
+     */
+    protected $productPriceTransfersByIdAbstractProduct = [];
+
     /**
      * @var \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface
      */
@@ -46,13 +54,36 @@ class CurrencyAwareCatalogSearchResultFormatterPlugin extends AbstractElasticsea
         $priceProductClient = $this->getFactory()->getPriceProductClient();
         $priceProductStorageClient = $this->getFactory()->getPriceProductStorageClient();
         foreach ($result as &$product) {
-            $priceProductTransfersFromStorage = $priceProductStorageClient->getPriceProductAbstractTransfers($product['id_product_abstract']);
-            $currentProductPriceTransfer = $priceProductClient->resolveProductPriceTransfer($priceProductTransfersFromStorage);
+            $currentProductPriceTransfer = $this->getPriceProductAbstractTransfers($product['id_product_abstract'], $priceProductClient, $priceProductStorageClient);
             $product['price'] = $currentProductPriceTransfer->getPrice();
             $product['prices'] = $currentProductPriceTransfer->getPrices();
         }
 
         return $result;
+    }
+
+    /**
+     * @param int $idProductAbstract
+     * @param \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductClientInterface $priceProductClient
+     * @param \Spryker\Client\CatalogPriceProductConnector\Dependency\CatalogPriceProductConnectorToPriceProductStorageClientInterface $priceProductStorageClient
+     *
+     * @return \Generated\Shared\Transfer\CurrentProductPriceTransfer
+     */
+    protected function getPriceProductAbstractTransfers(
+        int $idProductAbstract,
+        CatalogPriceProductConnectorToPriceProductClientInterface $priceProductClient,
+        CatalogPriceProductConnectorToPriceProductStorageClientInterface $priceProductStorageClient
+    ): CurrentProductPriceTransfer {
+        if (isset($this->productPriceTransfersByIdAbstractProduct[$idProductAbstract])) {
+            return $this->productPriceTransfersByIdAbstractProduct[$idProductAbstract];
+        }
+
+        $priceProductTransfersFromStorage = $priceProductStorageClient->getPriceProductAbstractTransfers($idProductAbstract);
+        $currentProductPriceTransfer = $priceProductClient->resolveProductPriceTransfer($priceProductTransfersFromStorage);
+
+        $this->productPriceTransfersByIdAbstractProduct[$idProductAbstract] = $currentProductPriceTransfer;
+
+        return $this->productPriceTransfersByIdAbstractProduct[$idProductAbstract];
     }
 
     /**

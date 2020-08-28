@@ -10,6 +10,8 @@ namespace SprykerTest\Client\ProductCategoryStorage;
 use Codeception\Test\Unit;
 use Spryker\Client\ProductCategoryStorage\ProductCategoryStorageClient;
 use Spryker\Client\ProductCategoryStorage\ProductCategoryStorageClientInterface;
+use Spryker\Client\Storage\StorageDependencyProvider;
+use Spryker\Client\StorageRedis\Plugin\StorageRedisPlugin;
 
 /**
  * Auto-generated group annotations
@@ -32,14 +34,37 @@ class ProductCategoryStorageClientTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(StorageDependencyProvider::PLUGIN_STORAGE, new StorageRedisPlugin());
+    }
+
+    /**
+     * @return void
+     */
     public function testFindInvalidProductAbstractCategoryReturnsNull(): void
     {
-        // Action
+        // Act
         $returnValue = $this->createProductCategoryStorageClient()
             ->findProductAbstractCategory(static::INVALID_ID_PRODUCT_ABSTRACT, 'de_DE');
 
         // Assert
         $this->assertNull($returnValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindBulkProductAbstractCategoryReturnsEmptyArray(): void
+    {
+        // Act
+        $productAbstractCategoryStorageTransfers = $this->createProductCategoryStorageClient()
+            ->findBulkProductAbstractCategory([static::INVALID_ID_PRODUCT_ABSTRACT], 'de_DE');
+
+        // Assert
+        $this->assertCount(0, $productAbstractCategoryStorageTransfers);
     }
 
     /**

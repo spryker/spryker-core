@@ -20,6 +20,8 @@ use Spryker\Zed\ProductMeasurementUnitDataImport\ProductMeasurementUnitDataImpor
 class ProductMeasurementBaseUnitDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class ProductMeasurementBaseUnitDataImportPlugin extends AbstractPlugin implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

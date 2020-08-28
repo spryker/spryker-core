@@ -13,7 +13,7 @@ interface SourceInterface
      * Specification:
      * - Returns source map properties.
      *
-     * @return array
+     * @return string[]
      */
     public function getProperties();
 

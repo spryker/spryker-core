@@ -13,6 +13,7 @@ use Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToSt
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductLabelStorage\ProductLabelStorageConfig;
+use Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ProductLabelStorage\ProductLabelStorageConfig as SharedProductLabelStorageConfig;
 
@@ -42,6 +43,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     protected $utilEncodingService;
 
     /**
+     * @var \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface|null
+     */
+    protected static $storageKeyBuilder;
+
+    /**
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Client\ProductLabelStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductLabelStorage\Dependency\Service\ProductLabelStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductLabelStorage\Storage\LabelDictionaryReaderInterface $labelDictionaryReader
@@ -62,10 +68,11 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     /**
      * @param int $idProductAbstract
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName)
+    public function findLabelsByIdProductAbstract($idProductAbstract, $localeName, string $storeName)
     {
         $productLabelIds = $this->findIdsProductLabelByIdAbstractProduct($idProductAbstract);
 
@@ -73,16 +80,17 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
             return [];
         }
 
-        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName);
+        return $this->findSortedProductLabelsInDictionary($productLabelIds, $localeName, $storeName);
     }
 
     /**
      * @param int[] $productAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
-    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName): array
+    public function getProductLabelsByProductAbstractIds(array $productAbstractIds, string $localeName, string $storeName): array
     {
         $productLabelIdsByProductAbstractIds = $this->getProductLabelIdsByProductAbstractIds($productAbstractIds);
 
@@ -92,23 +100,26 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
 
         return $this->getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
             $productLabelIdsByProductAbstractIds,
-            $localeName
+            $localeName,
+            $storeName
         );
     }
 
     /**
      * @param int[][] $productLabelIdsByProductAbstractIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[][]
      */
     protected function getProductLabelDictionaryItemTransfersGroupedByProductAbstractIds(
         array $productLabelIdsByProductAbstractIds,
-        string $localeName
+        string $localeName,
+        string $storeName
     ): array {
         $uniqueProductLabelIds = array_unique(array_merge(...$productLabelIdsByProductAbstractIds));
         $productLabelDictionaryItemTransfers = $this->getProductLabelDictionaryItemTransfersGroupedById(
-            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName)
+            $this->findSortedProductLabelsInDictionary($uniqueProductLabelIds, $localeName, $storeName)
         );
 
         $productLabelDictionaryItemTransfersByProductAbstractIds = [];
@@ -246,8 +257,7 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
      */
     protected function generateProductLabelStorageKey(int $idProductAbstract): string
     {
-        return $this->synchronizationService
-            ->getStorageKeyBuilder(SharedProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME)
+        return $this->getStorageKeyBuilder()
             ->generateKey(
                 (new SynchronizationDataTransfer())
                     ->setReference((string)$idProductAbstract)
@@ -255,13 +265,26 @@ class ProductAbstractLabelReader implements ProductAbstractLabelReaderInterface
     }
 
     /**
+     * @return \Spryker\Service\Synchronization\Dependency\Plugin\SynchronizationKeyGeneratorPluginInterface
+     */
+    protected function getStorageKeyBuilder(): SynchronizationKeyGeneratorPluginInterface
+    {
+        if (static::$storageKeyBuilder === null) {
+            static::$storageKeyBuilder = $this->synchronizationService->getStorageKeyBuilder(SharedProductLabelStorageConfig::PRODUCT_ABSTRACT_LABEL_RESOURCE_NAME);
+        }
+
+        return static::$storageKeyBuilder;
+    }
+
+    /**
      * @param int[] $productLabelIds
      * @param string $localeName
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer[]
      */
-    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName)
+    protected function findSortedProductLabelsInDictionary($productLabelIds, $localeName, string $storeName)
     {
-        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName);
+        return $this->labelDictionaryReader->findSortedLabelsByIdsProductLabel($productLabelIds, $localeName, $storeName);
     }
 }

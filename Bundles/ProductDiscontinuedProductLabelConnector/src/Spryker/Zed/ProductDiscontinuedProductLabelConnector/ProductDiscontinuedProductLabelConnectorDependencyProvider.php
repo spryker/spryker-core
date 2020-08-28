@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ProductDiscontinuedProductLabelConnector;
 
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductDiscontinuedProductLabelConnector\Dependency\Facade\ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge;
@@ -23,6 +24,7 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
     public const FACADE_PRODUCT_DISCONTINUED = 'FACADE_PRODUCT_DISCONTINUED';
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const PROPEL_QUERY_PRODUCT = 'PROPEL_QUERY_PRODUCT';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -45,13 +47,40 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function providePersistenceLayerDependencies(Container $container): Container
+    {
+        $container = parent::providePersistenceLayerDependencies($container);
+        $container = $this->addProductPropelQuery($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductPropelQuery(Container $container): Container
+    {
+        $container->set(static::PROPEL_QUERY_PRODUCT, $container->factory(function () {
+            return SpyProductQuery::create();
+        }));
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addProductLabelFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_LABEL] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_LABEL, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductLabelBridge(
                 $container->getLocator()->productLabel()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -63,11 +92,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addProductFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductBridge(
                 $container->getLocator()->product()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -79,11 +108,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addProductDiscontinuedFacade(Container $container): Container
     {
-        $container[static::FACADE_PRODUCT_DISCONTINUED] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_DISCONTINUED, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToProductDiscontinuedFacadeBridge(
                 $container->getLocator()->productDiscontinued()->facade()
             );
-        };
+        });
 
         return $container;
     }
@@ -95,11 +124,11 @@ class ProductDiscontinuedProductLabelConnectorDependencyProvider extends Abstrac
      */
     protected function addLocaleFacade(Container $container): Container
     {
-        $container[static::FACADE_LOCALE] = function (Container $container) {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
             return new ProductDiscontinuedProductLabelConnectorToLocaleFacadeBridge(
                 $container->getLocator()->locale()->facade()
             );
-        };
+        });
 
         return $container;
     }

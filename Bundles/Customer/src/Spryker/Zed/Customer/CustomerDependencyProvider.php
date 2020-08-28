@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Customer;
 
 use Spryker\Service\Customer\CustomerServiceInterface;
+use Spryker\Shared\Kernel\ContainerInterface;
 use Spryker\Shared\Kernel\Store;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryBridge;
 use Spryker\Zed\Customer\Dependency\Facade\CustomerToLocaleBridge;
@@ -17,7 +18,6 @@ use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilDateTimeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceBridge;
 use Spryker\Zed\Customer\Dependency\Service\CustomerToUtilValidateServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
-use Spryker\Zed\Kernel\Communication\Plugin\Pimple;
 use Spryker\Zed\Kernel\Container;
 
 /**
@@ -301,10 +301,8 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSubRequestHandler(Container $container): Container
     {
-        $container->set(static::SUB_REQUEST_HANDLER, function () {
-            $pimple = new Pimple();
-
-            return $pimple->getApplication()['sub_request'];
+        $container->set(static::SUB_REQUEST_HANDLER, function (ContainerInterface $container) {
+            return $container->getApplicationService(static::SERVICE_SUB_REQUEST);
         });
 
         return $container;

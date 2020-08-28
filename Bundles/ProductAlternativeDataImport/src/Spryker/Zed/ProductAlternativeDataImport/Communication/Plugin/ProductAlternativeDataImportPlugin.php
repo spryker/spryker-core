@@ -20,6 +20,8 @@ use Spryker\Zed\ProductAlternativeDataImport\ProductAlternativeDataImportConfig;
 class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class ProductAlternativeDataImportPlugin extends AbstractPlugin implements DataI
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

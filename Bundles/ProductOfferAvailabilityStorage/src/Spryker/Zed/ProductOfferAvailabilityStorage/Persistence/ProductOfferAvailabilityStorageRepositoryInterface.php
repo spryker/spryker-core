@@ -27,11 +27,11 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
     public function getProductOfferAvailabilityRequestsByProductOfferIds(array $productOfferStockIds): array;
 
     /**
-     * @param array $omsProductReservationIds
+     * @param array $omsProductOfferReservationIds
      *
      * @return \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer[]
      */
-    public function getProductOfferAvailabilityRequestsByOmsReservationIds(array $omsProductReservationIds): array;
+    public function getProductOfferAvailabilityRequestsByOmsProductOfferReservationIds(array $omsProductOfferReservationIds): array;
 
     /**
      * @param string $offerReference
@@ -39,7 +39,10 @@ interface ProductOfferAvailabilityStorageRepositoryInterface
      *
      * @return \Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabilityStorage|null
      */
-    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(string $offerReference, string $storeName): ?SpyProductOfferAvailabilityStorage;
+    public function findProductOfferAvailabilityStorageByProductOfferReferenceAndStoreName(
+        string $offerReference,
+        string $storeName
+    ): ?SpyProductOfferAvailabilityStorage;
 
     /**
      * @param \Generated\Shared\Transfer\FilterTransfer $filterTransfer

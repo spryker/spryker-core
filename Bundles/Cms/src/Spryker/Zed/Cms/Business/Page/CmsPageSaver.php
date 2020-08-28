@@ -120,6 +120,7 @@ class CmsPageSaver implements CmsPageSaverInterface
             $this->cmsQueryContainer->getConnection()->commit();
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
+
             throw $exception;
         }
 
@@ -151,10 +152,6 @@ class CmsPageSaver implements CmsPageSaverInterface
         try {
             $this->cmsQueryContainer->getConnection()->beginTransaction();
 
-            if ($cmsPageEntity->getFkTemplate() !== $cmsPageTransfer->getFkTemplate()) {
-                $this->cmsGlossarySaver->deleteCmsGlossary($cmsPageEntity->getIdCmsPage());
-            }
-
             $cmsPageEntity = $this->mapCmsPageEntity($cmsPageTransfer, $cmsPageEntity);
             $cmsPageEntity->save();
 
@@ -173,6 +170,7 @@ class CmsPageSaver implements CmsPageSaverInterface
             $this->cmsQueryContainer->getConnection()->commit();
         } catch (Throwable $exception) {
             $this->cmsQueryContainer->getConnection()->rollBack();
+
             throw $exception;
         }
 

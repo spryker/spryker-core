@@ -101,5 +101,20 @@
         <property name="sourceIdentifier" type="string"/>
     </transfer>
 
+    <transfer name="ProductView">
+        <property name="rating" type="ProductReviewSummary"/>
+    </transfer>
+
+    <transfer name="ProductReviewSummary">
+        <property name="maximumRating" type="int"/>
+        <property name="averageRating" type="float"/>
+        <property name="totalReview" type="int"/>
+        <property name="ratingAggregation" type="array" singular="ratingAggregation"/>
+    </transfer>
+
+    <transfer name="RatingAggregation">
+        <property name="ratingAggregation" type="int[]" singular="ratingAggregation"/>
+    </transfer>
+
 </transfers>
 

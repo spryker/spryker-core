@@ -28,6 +28,8 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
     protected const COL_COMPANY_UNIT_ADDRESS_LABELS = 'Labels';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array
@@ -38,6 +40,8 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
@@ -52,6 +56,8 @@ class CompanyUnitAddressTableExpanderPlugin extends AbstractPlugin implements
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $item

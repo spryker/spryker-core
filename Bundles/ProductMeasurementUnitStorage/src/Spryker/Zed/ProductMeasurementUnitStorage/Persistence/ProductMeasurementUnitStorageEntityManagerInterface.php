@@ -31,7 +31,9 @@ interface ProductMeasurementUnitStorageEntityManagerInterface
      *
      * @return void
      */
-    public function saveProductConcreteMeasurementUnitStorageEntity(SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer): void;
+    public function saveProductConcreteMeasurementUnitStorageEntity(
+        SpyProductConcreteMeasurementUnitStorageEntityTransfer $productConcreteMeasurementUnitStorageEntityTransfer
+    ): void;
 
     /**
      * @param int $idProductConcreteMeasurementUnitStorage

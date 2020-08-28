@@ -14,12 +14,13 @@ interface ProductConcreteOffersStorageDeleterInterface
      *
      * @return void
      */
-    public function deleteProductConcreteProductOffersStorageCollectionByProductSkuEvents(array $eventTransfers): void;
+    public function deleteCollectionByProductSkuEvents(array $eventTransfers): void;
 
     /**
      * @param string[] $productSkus
+     * @param string|null $storeName
      *
      * @return void
      */
-    public function deleteProductConcreteProductOffersStorageCollectionByProductSkus(array $productSkus): void;
+    public function deleteCollectionByProductSkus(array $productSkus, ?string $storeName = null): void;
 }

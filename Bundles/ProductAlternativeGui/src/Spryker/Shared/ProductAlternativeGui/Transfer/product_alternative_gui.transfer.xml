@@ -32,4 +32,10 @@
         <property name="alternativeSku" type="string"/>
     </transfer>
 
+    <transfer name="ProductAlternative">
+    </transfer>
+
+    <transfer name="ProductAlternativeListItem">
+    </transfer>
+
 </transfers>

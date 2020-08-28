@@ -19,6 +19,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ItemDiscountAmountFullAggregatorPlugin extends AbstractPlugin implements CalculationPluginInterface
 {
     /**
+     * {@inheritDoc}
      * This plugin makes calculations based on the given quote. The result is added to the quote.
      *
      * @api

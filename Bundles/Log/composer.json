@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "psr/log": "^1.0.0",
     "spryker/config": "^3.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.48.0",
     "spryker/monolog": "^2.0.0",
     "spryker/queue": "^0.3.0 || ^1.0.0",
     "spryker/symfony": "^3.0.0",
@@ -24,7 +24,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Shared\\Log\\Helper\\": "tests/SprykerTest/Shared/Log/_support/Helper/"
     }
   },
   "autoload-dev": {

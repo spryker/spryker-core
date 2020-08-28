@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductReview\Plugin\Elasticsearch\Query;
 
+use Elastica\Index;
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\Terms;
@@ -95,45 +96,59 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
      */
     protected function createSearchQuery(): Query
     {
-        $productReviewTypeFilter = $this->createProductReviewTypeFilter();
-        $productReviewsFilter = $this->createProductReviewsFilter();
+        $boolQuery = new BoolQuery();
+        $boolQuery = $this->addProductReviewTypeFilterToQuery($boolQuery);
+        $boolQuery = $this->addProductReviewsFilterToQuery($boolQuery);
 
-        $boolQuery = (new BoolQuery())
-            ->addFilter($productReviewTypeFilter)
-            ->addFilter($productReviewsFilter);
-
-        $query = (new Query())
-            ->setQuery($boolQuery)
-            ->setSource([ProductReviewIndexMap::SEARCH_RESULT_DATA]);
+        $query = (new Query())->setQuery($boolQuery)->setSource([ProductReviewIndexMap::SEARCH_RESULT_DATA]);
 
         return $query;
     }
 
     /**
-     * @return \Elastica\Query\Terms
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
      */
-    protected function createProductReviewsFilter(): Terms
+    protected function addProductReviewsFilterToQuery(BoolQuery $query): BoolQuery
     {
-        $this->bulkProductReviewSearchRequestTransfer->requireProductAbstractIds();
-
-        $productReviewsFilter = new Terms();
-        $productReviewsFilter->setTerms(
+        $productReviewsFilter = new Terms(
             ProductReviewIndexMap::ID_PRODUCT_ABSTRACT,
-            $this->bulkProductReviewSearchRequestTransfer->getProductAbstractIds()
+            $this->getSearchTermsForProductReviewsFilter()
         );
+        $query->addFilter($productReviewsFilter);
 
-        return $productReviewsFilter;
+        return $query;
     }
 
     /**
-     * @return \Elastica\Query\Type
+     * @return string[]
      */
-    protected function createProductReviewTypeFilter(): Type
+    protected function getSearchTermsForProductReviewsFilter(): array
     {
+        $this->bulkProductReviewSearchRequestTransfer->requireProductAbstractIds();
+
+        return array_map(function (int $productAbstractId) {
+            return (string)$productAbstractId;
+        }, $this->bulkProductReviewSearchRequestTransfer->getProductAbstractIds());
+    }
+
+    /**
+     * @param \Elastica\Query\BoolQuery $query
+     *
+     * @return \Elastica\Query\BoolQuery
+     */
+    protected function addProductReviewTypeFilterToQuery(BoolQuery $query): BoolQuery
+    {
+        if (!$this->supportsMappingTypes()) {
+            return $query;
+        }
+
         $productReviewTypeFilter = new Type();
         $productReviewTypeFilter->setType(ProductReviewConfig::ELASTICSEARCH_INDEX_TYPE_NAME);
+        $query->addFilter($productReviewTypeFilter);
 
-        return $productReviewTypeFilter;
+        return $query;
     }
 
     /**
@@ -153,5 +168,13 @@ class BulkProductReviewsQueryPlugin extends AbstractPlugin implements QueryInter
     protected function hasSearchContext(): bool
     {
         return (bool)$this->searchContextTransfer;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function supportsMappingTypes(): bool
+    {
+        return method_exists(Index::class, 'getType');
     }
 }

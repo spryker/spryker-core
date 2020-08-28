@@ -10,6 +10,7 @@ namespace Spryker\Zed\Product\Business\Product;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -24,6 +25,8 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductAbstractManager extends AbstractProductAbstractManagerSubject implements ProductAbstractManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Product\Persistence\ProductQueryContainerInterface
      */
@@ -121,29 +124,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      */
     public function createProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $productAbstractTransfer->setSku(
-            $this->skuGenerator->generateProductAbstractSku($productAbstractTransfer)
-        );
-
-        $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
-
-        $productAbstractTransfer = $this->notifyBeforeCreateObservers($productAbstractTransfer);
-
-        $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
-
-        $idProductAbstract = $productAbstractEntity->getPrimaryKey();
-        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
-
-        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
-
-        $this->notifyAfterCreateObservers($productAbstractTransfer);
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $idProductAbstract;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer): int {
+            return $this->executeCreateProductAbstractTransaction($productAbstractTransfer);
+        });
     }
 
     /**
@@ -153,26 +136,9 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      */
     public function saveProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $idProductAbstract = (int)$productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
-
-        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
-        $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
-
-        $productAbstractTransfer = $this->notifyBeforeUpdateObservers($productAbstractTransfer);
-
-        $this->persistEntity($productAbstractTransfer);
-        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
-        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
-
-        $this->notifyAfterUpdateObservers($productAbstractTransfer);
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $idProductAbstract;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer) {
+            return $this->executeUpdateProductAbstractTransaction($productAbstractTransfer);
+        });
     }
 
     /**
@@ -277,6 +243,59 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
     /**
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
+     * @return int
+     */
+    protected function executeCreateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
+    {
+        $productAbstractTransfer->setSku(
+            $this->skuGenerator->generateProductAbstractSku($productAbstractTransfer)
+        );
+
+        $this->productAbstractAssertion->assertSkuIsUnique($productAbstractTransfer->getSku());
+
+        $productAbstractTransfer = $this->notifyBeforeCreateObservers($productAbstractTransfer);
+
+        $productAbstractEntity = $this->persistEntity($productAbstractTransfer);
+
+        $idProductAbstract = $productAbstractEntity->getPrimaryKey();
+        $productAbstractTransfer->setIdProductAbstract($idProductAbstract);
+
+        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
+
+        $this->notifyAfterCreateObservers($productAbstractTransfer);
+
+        return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return int
+     */
+    protected function executeUpdateProductAbstractTransaction(ProductAbstractTransfer $productAbstractTransfer): int
+    {
+        $idProductAbstract = $productAbstractTransfer
+            ->requireIdProductAbstract()
+            ->getIdProductAbstract();
+
+        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+        $this->productAbstractAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProductAbstract, $productAbstractTransfer->getSku());
+
+        $productAbstractTransfer = $this->notifyBeforeUpdateObservers($productAbstractTransfer);
+
+        $this->persistEntity($productAbstractTransfer);
+        $this->persistProductAbstractLocalizedAttributes($productAbstractTransfer);
+        $this->persistProductAbstractStoreRelation($productAbstractTransfer, $idProductAbstract);
+
+        $this->notifyAfterUpdateObservers($productAbstractTransfer);
+
+        return $idProductAbstract;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstract
      */
     protected function persistEntity(ProductAbstractTransfer $productAbstractTransfer)
@@ -340,11 +359,21 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
      */
     protected function persistProductAbstractLocalizedAttributes(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $idProductAbstract = $productAbstractTransfer
-            ->requireIdProductAbstract()
-            ->getIdProductAbstract();
+        $productAbstractTransfer->requireIdProductAbstract();
 
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer): void {
+            $this->executePersistProductAbstractLocalizedAttributesTransaction($productAbstractTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function executePersistProductAbstractLocalizedAttributesTransaction(ProductAbstractTransfer $productAbstractTransfer): void
+    {
+        $idProductAbstract = $productAbstractTransfer->getIdProductAbstract();
 
         foreach ($productAbstractTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -366,7 +395,5 @@ class ProductAbstractManager extends AbstractProductAbstractManagerSubject imple
 
             $localizedProductAttributesEntity->save();
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 }

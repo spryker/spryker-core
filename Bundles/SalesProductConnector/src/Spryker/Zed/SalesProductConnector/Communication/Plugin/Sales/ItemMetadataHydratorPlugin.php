@@ -12,12 +12,16 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Spryker\Zed\Sales\Dependency\Plugin\HydrateOrderPluginInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\SalesProductConnector\Communication\Plugin\MetadataOrderItemExpanderPlugin} instead.
+ *
  * @method \Spryker\Zed\SalesProductConnector\Business\SalesProductConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface getQueryContainer()
+ * @method \Spryker\Zed\SalesProductConnector\SalesProductConnectorConfig getConfig()
  */
 class ItemMetadataHydratorPlugin extends AbstractPlugin implements HydrateOrderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *   - Its a plugin which hydrates OrderTransfer when order read is persistence,
      *   - Can be used to add additional data to OrderTransfer

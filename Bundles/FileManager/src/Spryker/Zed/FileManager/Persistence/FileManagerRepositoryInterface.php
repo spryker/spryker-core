@@ -56,7 +56,7 @@ interface FileManagerRepositoryInterface
     /**
      * @param int|null $idParentFileDirectory
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\FileDirectoryTransfer[]
      */
     public function getFileDirectories(?int $idParentFileDirectory = null);
 

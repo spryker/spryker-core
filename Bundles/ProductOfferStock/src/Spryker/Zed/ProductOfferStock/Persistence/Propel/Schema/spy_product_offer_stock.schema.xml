@@ -10,6 +10,7 @@
         <column name="fk_product_offer" required="true" type="INTEGER"/>
         <column name="fk_stock" type="INTEGER" required="true"/>
         <column name="quantity" type="DECIMAL" size="20" scale="10" defaultValue="0"/>
+        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
 
         <foreign-key name="spy_product_offer_stock-fk_product_offer" foreignTable="spy_product_offer" phpName="SpyProductOffer" refPhpName="ProductOfferStock">
             <reference local="fk_product_offer" foreign="id_product_offer"/>

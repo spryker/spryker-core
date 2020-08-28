@@ -16,6 +16,8 @@ class HttpConfig extends AbstractSharedConfig
     protected const REQUEST_TRUSTED_HEADER_SET = Request::HEADER_X_FORWARDED_ALL;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUriSignerSecret(): string
@@ -24,6 +26,8 @@ class HttpConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getHttpFragmentPath(): string
@@ -32,6 +36,8 @@ class HttpConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function getHIncludeRendererGlobalTemplate(): ?string
@@ -40,6 +46,8 @@ class HttpConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getTrustedHeaderSet(): int

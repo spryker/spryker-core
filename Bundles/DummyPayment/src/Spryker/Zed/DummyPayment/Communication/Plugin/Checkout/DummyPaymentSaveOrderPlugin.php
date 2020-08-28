@@ -20,6 +20,8 @@ use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterf
 class DummyPaymentSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

@@ -9,6 +9,7 @@ namespace Spryker\Client\PriceProductOfferStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToPriceProductStorageClientBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStorageClientBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Client\PriceProductOfferStorageToStoreClientBridge;
 use Spryker\Client\PriceProductOfferStorage\Dependency\Service\PriceProductOfferStorageToPriceProductServiceBridge;
@@ -20,6 +21,8 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const FACADE_STORE_CLIENT = 'FACADE_STORE_CLIENT';
     public const FACADE_PRICE_PRODUCT_SERVICE = 'FACADE_PRICE_PRODUCT_SERVICE';
+    public const PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR = 'PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR';
+    public const CLIENT_PRICE_PRODUCT_STORAGE = 'CLIENT_PRICE_PRODUCT_STORAGE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -34,6 +37,8 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
         $container = $this->addStorageClient($container);
         $container = $this->addStoreFacade($container);
         $container = $this->addPriceProductService($container);
+        $container = $this->addPriceProductOfferStoragePriceExtractorPlugins($container);
+        $container = $this->addPriceProductStorageClient($container);
 
         return $container;
     }
@@ -89,6 +94,44 @@ class PriceProductOfferStorageDependencyProvider extends AbstractDependencyProvi
     {
         $container->set(static::FACADE_PRICE_PRODUCT_SERVICE, function (Container $container) {
             return new PriceProductOfferStorageToPriceProductServiceBridge($container->getLocator()->priceProduct()->service());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductOfferStoragePriceExtractorPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_PRICE_PRODUCT_OFFER_STORAGE_PRICE_EXTRACTOR, function () {
+            return $this->getPriceProductOfferStoragePriceExtractorPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\PriceProductOfferStorageExtension\Dependency\Plugin\PriceProductOfferStoragePriceExtractorPluginInterface[]
+     */
+    protected function getPriceProductOfferStoragePriceExtractorPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceProductStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_PRICE_PRODUCT_STORAGE, function (Container $container) {
+            return new PriceProductOfferStorageToPriceProductStorageClientBridge(
+                $container->getLocator()->priceProductStorage()->client()
+            );
         });
 
         return $container;

@@ -17,6 +17,8 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_COMPANY_USER_ROLE = 'company-user-role';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyRoleDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -28,6 +30,8 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyRolePermissionDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -39,6 +43,8 @@ class CompanyRoleDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getCompanyUserRoleDataImporterConfiguration(): DataImporterConfigurationTransfer

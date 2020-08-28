@@ -31,4 +31,14 @@ class UtilEncryptionToUtilTextServiceBridge implements UtilEncryptionToUtilTextS
     {
         return $this->utilTextService->generateRandomString($length);
     }
+
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string
+    {
+        return $this->utilTextService->generateRandomByteString($length);
+    }
 }

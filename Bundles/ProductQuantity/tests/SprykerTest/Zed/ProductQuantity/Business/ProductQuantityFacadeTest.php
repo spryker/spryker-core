@@ -347,6 +347,38 @@ class ProductQuantityFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testNormalizeCartChangeTransferItemsWillNormalizeQuantityWhenQuoteAlreadyHaveSameItem(): void
+    {
+        //Arrange
+        $expectedQuantity = 10;
+        $productTransfer = $this->tester->createProductWithSpecificProductQuantity(10, null, 10);
+
+        $cartChangeTransfer = $this->tester->createEmptyCartChangeTransfer();
+        $cartChangeTransfer->getQuote()->addItem($this->tester->createItemTransferWithNormalizableQuantity(
+            $productTransfer->getSku(),
+            $productTransfer->getSku(),
+            60
+        ));
+        $cartChangeTransfer->addItem($this->tester->createItemTransferWithNormalizableQuantity(
+            $productTransfer->getSku(),
+            $productTransfer->getSku(),
+            8
+        ));
+
+        //Act
+        $cartChangeTransfer = $this->productQuantityFacade->normalizeCartChangeTransferItems($cartChangeTransfer);
+
+        //Assert
+        $this->assertSame(
+            $expectedQuantity,
+            $cartChangeTransfer->getItems()[0]->getQuantity(),
+            'Item quantity does not match expected value.'
+        );
+    }
+
+    /**
+     * @return void
+     */
     public function testHasCartChangeTransferNormalizableItemsShouldReturnTrue(): void
     {
         $normalizableField = 'quantity';

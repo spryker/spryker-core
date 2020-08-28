@@ -17,7 +17,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class GenerateYvesIdeAutoCompletionConsole extends Console
 {
-    public const COMMAND_NAME = 'dev:ide:generate-yves-auto-completion';
+    protected const OLD_COMMAND_NAME = 'dev:ide:generate-yves-auto-completion';
+    public const COMMAND_NAME = 'dev:ide-auto-completion:yves:generate';
 
     /**
      * @return void
@@ -28,6 +29,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
 
         $this->setName(static::COMMAND_NAME);
         $this->setDescription('Generate IDE auto completion files for Yves.');
+        $this->setAliases([static::OLD_COMMAND_NAME]);
     }
 
     /**
@@ -41,5 +43,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $this->getFacade()->generateYvesIdeAutoCompletion();
 
         $this->info('Generated Yves IDE auto-completion files');
+
+        return static::CODE_SUCCESS;
     }
 }

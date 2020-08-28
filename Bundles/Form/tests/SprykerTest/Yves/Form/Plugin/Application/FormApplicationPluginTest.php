@@ -8,9 +8,8 @@
 namespace SprykerTest\Yves\Form\Plugin\Application;
 
 use Codeception\Test\Unit;
-use Spryker\Service\Container\ContainerInterface;
 use Spryker\Yves\Form\Plugin\Application\FormApplicationPlugin;
-use Spryker\Yves\Kernel\Container;
+use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
@@ -27,6 +26,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
  */
 class FormApplicationPluginTest extends Unit
 {
+    use ContainerHelperTrait;
+
     protected const SERVICE_FORM_FACTORY = 'form.factory';
     protected const SERVICE_FORM_CSRF_PROVIDER = 'form.csrf_provider';
     protected const SERVICE_FORM_FACTORY_ALIAS = 'FORM_FACTORY';
@@ -42,7 +43,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationPluginSetFormFactoryService(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -59,7 +60,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationSetFormFactoryServiceAlias(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -76,7 +77,7 @@ class FormApplicationPluginTest extends Unit
     public function testFormApplicationSetCsrfProvider(): void
     {
         //Arrange
-        $container = $this->createContainer();
+        $container = $this->getContainerHelper()->getContainer();
         $plugin = new FormApplicationPlugin();
 
         //Act
@@ -85,13 +86,5 @@ class FormApplicationPluginTest extends Unit
         //Arrange
         $this->assertTrue($container->has(static::SERVICE_FORM_CSRF_PROVIDER));
         $this->assertInstanceOf(CsrfTokenManagerInterface::class, $container->get(static::SERVICE_FORM_CSRF_PROVIDER));
-    }
-
-    /**
-     * @return \Spryker\Service\Container\ContainerInterface
-     */
-    protected function createContainer(): ContainerInterface
-    {
-        return new Container();
     }
 }

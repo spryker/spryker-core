@@ -159,6 +159,7 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareQuery()
     {
+        /** @var \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery $query */
         $query = $this->customerGroupQueryContainer
             ->queryCustomerGroupToCustomerByFkCustomerGroup($this->customerGroupTransfer->getIdCustomerGroup())
             ->leftJoinCustomer()

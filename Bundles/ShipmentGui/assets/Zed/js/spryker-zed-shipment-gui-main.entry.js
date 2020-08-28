@@ -6,7 +6,6 @@
 'use strict';
 
 var init = require('./modules/main');
-require('../../../../Sales/assets/Zed/js/modules/main');
 
 $(document).ready(function() {
     init(

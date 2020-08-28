@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormFactoryBuilderInterface;
 class SanitizeXssTypeExtensionFormPlugin extends AbstractPlugin implements FormPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Adds `Spryker\Zed\Gui\Communication\Form\Type\Extension\SanitizeXssTypeExtension`.
      *

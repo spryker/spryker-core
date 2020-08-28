@@ -69,7 +69,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedis|\SessionHandlerInterface
      */
@@ -82,7 +82,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerRedisLocking()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerRedisLocking()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
@@ -95,7 +95,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory::createSessionHandlerFile()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionFile\Communication\SessionFileCommunicationFactory::createSessionHandlerFile()} instead.
      *
      * @return \Spryker\Shared\Session\Business\Handler\SessionHandlerRedisLocking|\SessionHandlerInterface
      */
@@ -107,7 +107,7 @@ class SessionCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated User `Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SessionRedis\Communication\SessionRedisCommunicationFactory::createSessionHandlerFactory()} instead.
      *
      * @return \Spryker\Zed\Session\Communication\SessionHandlerFactory
      */

@@ -32,6 +32,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -42,6 +44,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -55,6 +59,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -73,6 +79,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -85,6 +93,8 @@ class ShipmentManualOrderEntryFormPlugin extends AbstractPlugin implements Manua
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\HttpFoundation\Request $request

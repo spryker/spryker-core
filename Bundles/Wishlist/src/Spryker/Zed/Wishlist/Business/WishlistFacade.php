@@ -119,6 +119,8 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
@@ -202,7 +204,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
      *
      * @api
      *
-     * @deprecated Use WishlistFacade::getWishlistByFilter() instead.
+     * @deprecated Use {@link getWishlistByFilter()} instead.
      *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *

@@ -106,7 +106,8 @@ class QuoteResolver implements QuoteResolverInterface
     protected function findCustomerQuoteById(int $idQuote, CustomerTransfer $customerTransfer): ?QuoteTransfer
     {
         $quoteResponseTransfer = $this->quoteFacade->findQuoteById($idQuote);
-        if (!$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
+        if (
+            !$quoteResponseTransfer->getIsSuccessful() || !$this->isQuoteReadAllowed($quoteResponseTransfer->getQuoteTransfer(), $customerTransfer)
         ) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_QUOTE_NOT_AVAILABLE);
@@ -162,8 +163,10 @@ class QuoteResolver implements QuoteResolverInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createNewQuote(CustomerTransfer $customerTransfer, ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null): QuoteResponseTransfer
-    {
+    protected function createNewQuote(
+        CustomerTransfer $customerTransfer,
+        ?QuoteUpdateRequestAttributesTransfer $quoteUpdateRequestAttributesTransfer = null
+    ): QuoteResponseTransfer {
         $quoteTransfer = new QuoteTransfer();
         $quoteTransfer->setCustomer($customerTransfer);
         $quoteTransfer->setCustomerReference($customerTransfer->getCustomerReference());

@@ -2,12 +2,12 @@
 Active,Aktiv
 "Add Category to this Node","Kategorie zu diesem Knoten hinzufügen"
 "Additional Parents","Weitere Parents"
-"Allow to search for this category:","Ermöglicht die Suche nach dieser Kategorie:"
+"Allow to search for this category:","Die Suche nach dieser Kategorie ermöglichen:"
 "Assign products","Produkte zuweisen"
 "Assign Products to this Category","Produkte dieser Kategorie zuweisen"
 Category,Kategorien
-"Category key:",Kategorieschlüssel:
 "Category Key",Kategorieschlüssel
+"Category key:",Kategorieschlüssel:
 "Category nodes successfully re-sorted.","Kategorieknoten erfolgreich umsortiert."
 "Category nodes successfully reordered.","Kategorieknoten erfolgreich neu geordnet."
 "Category status",Kategorie-Status
@@ -29,7 +29,7 @@ no,Nein
 "Please make sure required fields are properly filled in","Bitte überprüfen, ob alle erforderlichen Felder korrekt ausgefüllt sind"
 "Re-sort Child Categories","Unterkategorien umsortieren"
 "Re-sort child-categories","Unterkategorien umsortieren"
-"Root nodes list","Root nodes list"
+"Root nodes list",Wurzelknotenliste
 Save,Speichern
 "Save Order","Bestellung speichern"
 Searchable,Suchbar
@@ -44,3 +44,4 @@ Visible,Sichtbar
 "Visible in the category tree:","Sichtbar im Kategorienbaum:"
 yes,Ja
 "Yes, I am sure","Ja, ich bin sicher."
+"View Category","Kategorie Anzeigen"

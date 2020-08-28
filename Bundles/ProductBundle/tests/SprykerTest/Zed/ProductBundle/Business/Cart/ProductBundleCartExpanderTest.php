@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
+use Generated\Shared\Transfer\ProductForBundleTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Product\Persistence\SpyProduct;
@@ -20,6 +21,7 @@ use Orm\Zed\ProductBundle\Persistence\SpyProductBundle;
 use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Shared\Price\PriceConfig;
 use Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander;
+use Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceFacadeInterface;
 use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface;
@@ -99,20 +101,14 @@ class ProductBundleCartExpanderTest extends Unit
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToPriceProductFacadeInterface|null $priceProductFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToProductFacadeInterface|null $productFacadeMock
      * @param \Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToLocaleFacadeInterface|null $localeFacadeMock
-     * @param \Spryker\Zed\ProductBundle\Persistence\ProductBundleQueryContainerInterface|null $productBundleQueryContainerMock
      *
      * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\Cart\ProductBundleCartExpander
      */
     protected function createProductExpanderMock(
         ?ProductBundleToPriceProductFacadeInterface $priceProductFacadeMock = null,
         ?ProductBundleToProductFacadeInterface $productFacadeMock = null,
-        ?ProductBundleToLocaleFacadeInterface $localeFacadeMock = null,
-        ?ProductBundleQueryContainerInterface $productBundleQueryContainerMock = null
+        ?ProductBundleToLocaleFacadeInterface $localeFacadeMock = null
     ): ProductBundleCartExpander {
-        if ($productBundleQueryContainerMock === null) {
-            $productBundleQueryContainerMock = $this->createProductBundleQueryContainerMock();
-        }
-
         if ($priceProductFacadeMock === null) {
             $priceProductFacadeMock = $this->createPriceProductFacadeMock();
         }
@@ -127,13 +123,15 @@ class ProductBundleCartExpanderTest extends Unit
 
         $priceFacadeMock = $this->createPriceFacadeMock();
 
+        $productBundleReaderMock = $this->createProductBundleReaderMock();
+
         return $this->getMockBuilder(ProductBundleCartExpander::class)
             ->setConstructorArgs([
-                $productBundleQueryContainerMock,
                 $priceProductFacadeMock,
                 $productFacadeMock,
                 $localeFacadeMock,
                 $priceFacadeMock,
+                $productBundleReaderMock,
             ])
             ->setMethods(['findBundledItemsByIdProductConcrete'])
             ->getMock();
@@ -261,5 +259,31 @@ class ProductBundleCartExpanderTest extends Unit
     protected function createPriceFacadeMock(): ProductBundleToPriceFacadeInterface
     {
         return $this->getMockBuilder(ProductBundleToPriceFacadeInterface::class)->getMock();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductForBundleTransfer
+     */
+    protected function createProductForBundleTransfer(): ProductForBundleTransfer
+    {
+        return (new ProductForBundleTransfer())
+            ->setSku($this->fixtures['bundledProductSku'])
+            ->setQuantity($this->fixtures['bundledProductQuantity'])
+            ->setIsActive(true);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\ProductBundle\Business\ProductBundle\ProductBundleReaderInterface
+     */
+    protected function createProductBundleReaderMock(): ProductBundleReaderInterface
+    {
+        $productBundleReaderMock = $this->getMockBuilder(ProductBundleReaderInterface::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $productBundleReaderMock->method('getProductForBundleTransfersByProductConcreteSkus')
+            ->willReturn([$this->fixtures['bundledProductSku'] => [$this->createProductForBundleTransfer()]]);
+
+        return $productBundleReaderMock;
     }
 }

@@ -23,17 +23,17 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 class CatalogSearchReader implements CatalogSearchReaderInterface
 {
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE;
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::DEFAULT_ITEMS_PER_PAGE
      */
     protected const DEFAULT_ITEMS_PER_PAGE = 12;
 
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE;
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_PAGE
      */
     protected const PARAMETER_NAME_PAGE = 'page';
 
     /**
-     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE;
+     * @uses \Spryker\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder::PARAMETER_NAME_ITEMS_PER_PAGE
      */
     protected const PARAMETER_NAME_ITEMS_PER_PAGE = 'ipp';
 
@@ -212,8 +212,10 @@ class CatalogSearchReader implements CatalogSearchReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function buildCatalogSearchResponse(RestRequestInterface $restRequest, RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer): RestResponseInterface
-    {
+    protected function buildCatalogSearchResponse(
+        RestRequestInterface $restRequest,
+        RestCatalogSearchAttributesTransfer $restSearchAttributesTransfer
+    ): RestResponseInterface {
         $restResource = $this->restResourceBuilder->createRestResource(
             CatalogSearchRestApiConfig::RESOURCE_CATALOG_SEARCH,
             null,

@@ -29,7 +29,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
      *
      * @return object
      */
-    public function resolve(BundleControllerActionInterface $bundleControllerAction)
+    public function resolve($bundleControllerAction)
     {
         $this->bundleControllerAction = $bundleControllerAction;
 
@@ -64,7 +64,7 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
             $this->getClassNamePattern(),
             self::KEY_NAMESPACE,
             self::KEY_BUNDLE,
-            self::KEY_STORE,
+            static::KEY_CODE_BUCKET,
             self::KEY_CONTROLLER
         );
     }
@@ -76,16 +76,16 @@ abstract class AbstractControllerResolver extends AbstractClassResolver
 
     /**
      * @param string $namespace
-     * @param string|null $store
+     * @param string|null $codeBucket
      *
      * @return string
      */
-    protected function buildClassName($namespace, $store = null)
+    protected function buildClassName($namespace, $codeBucket = null)
     {
         $searchAndReplace = [
             self::KEY_NAMESPACE => $namespace,
             self::KEY_BUNDLE => ucfirst($this->bundleControllerAction->getBundle()),
-            self::KEY_STORE => $store,
+            static::KEY_CODE_BUCKET => $codeBucket,
             self::KEY_CONTROLLER => ucfirst($this->bundleControllerAction->getController()),
         ];
 

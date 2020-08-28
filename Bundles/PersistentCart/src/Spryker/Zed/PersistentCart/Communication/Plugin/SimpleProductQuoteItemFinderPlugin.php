@@ -14,6 +14,8 @@ use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginI
 class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -25,8 +27,10 @@ class SimpleProductQuoteItemFinderPlugin implements QuoteItemFinderPluginInterfa
     public function findItem(QuoteTransfer $quoteTransfer, string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (($itemTransfer->getSku() === $sku && $groupKey === null) ||
-                $itemTransfer->getGroupKey() === $groupKey) {
+            if (
+                ($itemTransfer->getSku() === $sku && $groupKey === null) ||
+                $itemTransfer->getGroupKey() === $groupKey
+            ) {
                 return $itemTransfer;
             }
         }

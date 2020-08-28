@@ -9,6 +9,7 @@ namespace Spryker\Shared\Kernel\Transfer;
 
 use ArrayAccess;
 use ArrayObject;
+use Countable;
 use Exception;
 use InvalidArgumentException;
 use Serializable;
@@ -30,7 +31,7 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
     protected $transferMetadata = [];
 
     /**
-     * @var array
+     * @var string[]
      */
     protected $transferPropertyNameMap = [];
 
@@ -103,11 +104,13 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
             if (is_object($value) && $isRecursive) {
                 if ($value instanceof TransferInterface) {
                     $values[$arrayKey] = $value->$childConvertMethodName($isRecursive, $camelCasedKeys);
+
                     continue;
                 }
 
-                if ($this->transferMetadata[$property]['is_collection'] && is_countable($value) && count($value) >= 1) {
+                if ($this->transferMetadata[$property]['is_collection'] && ($value instanceof Countable) && count($value) >= 1) {
                     $values = $this->addValuesToCollection($value, $values, $arrayKey, $isRecursive, $childConvertMethodName, $camelCasedKeys);
+
                     continue;
                 }
             }
@@ -187,50 +190,27 @@ abstract class AbstractTransfer implements TransferInterface, Serializable, Arra
      * @param array|\ArrayObject $arrayObject
      * @param bool $ignoreMissingProperty
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Spryker\Shared\Kernel\Transfer\TransferInterface[]
      */
     protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false): ArrayObject
     {
-        $transferObjectsArray = new ArrayObject();
-        foreach ($arrayObject as $arrayElement) {
+        $result = new ArrayObject();
+        foreach ($arrayObject as $key => $arrayElement) {
             if (!is_array($arrayElement)) {
-                $transferObjectsArray->append(new $elementType());
+                $result->offsetSet($key, new $elementType());
 
                 continue;
             }
 
-            if ($this->isAssociativeArray($arrayElement)) {
+            if ($arrayElement) {
                 /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
                 $transferObject = new $elementType();
                 $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
-
-                continue;
-            }
-
-            foreach ($arrayElement as $arrayElementItem) {
-                /** @var \Spryker\Shared\Kernel\Transfer\TransferInterface $transferObject */
-                $transferObject = new $elementType();
-                $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
-                $transferObjectsArray->append($transferObject);
+                $result->offsetSet($key, $transferObject);
             }
         }
 
-        return $transferObjectsArray;
-    }
-
-    /**
-     * @param array $arr
-     *
-     * @return bool
-     */
-    protected function isAssociativeArray(array $arr): bool
-    {
-        if ($arr === []) {
-            return false;
-        }
-
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        return $result;
     }
 
     /**

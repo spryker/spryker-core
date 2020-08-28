@@ -10,11 +10,14 @@ namespace Spryker\Zed\Customer\Business;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
+use Symfony\Component\Console\Output\OutputInterface;
 
 interface CustomerFacadeInterface
 {
@@ -85,11 +88,27 @@ interface CustomerFacadeInterface
      *
      * @api
      *
+     * @deprecated Use {@link \Spryker\Zed\Customer\Business\CustomerFacadeInterface::confirmCustomerRegistration()} instead.
+     *
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerTransfer
      */
     public function confirmRegistration(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Finds customer registration confirmation by provided registration key.
+     * - If found, sets customer as registered and removes the registration key from persistent storage.
+     * - Returns response with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function confirmCustomerRegistration(CustomerTransfer $customerTransfer): CustomerResponseTransfer;
 
     /**
      * Specification:
@@ -384,7 +403,7 @@ interface CustomerFacadeInterface
      *
      * @api
      *
-     * @deprecated Use saveOrderCustomer() instead
+     * @deprecated Use {@link saveOrderCustomer()} instead
      *
      * @see CustomerFacadeInterface::registerCustomer()
      * @see CustomerFacadeInterface::updateCustomer()
@@ -509,4 +528,49 @@ interface CustomerFacadeInterface
      * @return array
      */
     public function getAllSalutations(): array;
+
+    /**
+     * Specification:
+     * - Retrieves filtered customers using CustomerCriteriaFilterTransfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerCollectionTransfer
+     */
+    public function getCustomerCollectionByCriteria(
+        CustomerCriteriaFilterTransfer $customerCriteriaFilterTransfer
+    ): CustomerCollectionTransfer;
+
+    /**
+     * Specification:
+     * - Sends a password restore link via email using a freshly generated password restore key to each customer in the collection.
+     * - Displays execution progress if the output is provided.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCollectionTransfer $customerCollectionTransfer
+     * @param \Symfony\Component\Console\Output\OutputInterface|null $output
+     *
+     * @return void
+     */
+    public function sendPasswordRestoreMailForCustomerCollection(
+        CustomerCollectionTransfer $customerCollectionTransfer,
+        ?OutputInterface $output = null
+    ): void;
+
+    /**
+     * Specification:
+     * - Finds customer by provided criteria.
+     * - Optionally expands customer data with `\Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface` plugins stack.
+     * - Returns customer response transfer.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CustomerCriteriaTransfer $customerCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerResponseTransfer
+     */
+    public function getCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): CustomerResponseTransfer;
 }

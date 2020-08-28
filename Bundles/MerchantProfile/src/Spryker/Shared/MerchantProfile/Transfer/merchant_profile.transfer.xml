@@ -26,8 +26,6 @@
         <property name="imprintGlossaryKey" type="string"/>
         <property name="dataPrivacyGlossaryKey" type="string"/>
         <property name="fkMerchant" type="int"/>
-        <property name="isActive" type="bool"/>
-        <property name="urlCollection" type="Url[]" singular="url"/>
         <property name="merchantName" type="string"/>
         <property name="latitude" type="string"/>
         <property name="longitude" type="string"/>
@@ -66,15 +64,13 @@
         <property name="idMerchantProfile" type="int"/>
         <property name="merchantIds" type="int[]" singular="idMerchant"/>
         <property name="merchantProfileIds" type="int[]" singular="idMerchantProfile"/>
-        <property name="isActive" type="bool"/>
         <property name="merchantReference" type="string"/>
+        <property name="filter" type="Filter"/>
     </transfer>
 
-    <transfer name="Url">
-        <property name="idUrl" type="int"/>
-        <property name="fkResourceMerchantProfile" type="int"/>
-        <property name="urlPrefix" type="string"/>
-        <property name="localeName" type="string"/>
+    <transfer name="Filter">
+        <property name="limit" type="int"/>
+        <property name="offset" type="int"/>
     </transfer>
 
     <transfer name="MerchantProfileAddressCollection">
@@ -95,9 +91,6 @@
     </transfer>
 
     <transfer name="Translation">
-    </transfer>
-
-    <transfer name="EventEntity">
     </transfer>
 
     <transfer name="CartChange">
@@ -132,6 +125,16 @@
     <transfer name="Item">
         <property name="merchantReference" type="string"/>
         <property name="sku" type="string"/>
+    </transfer>
+
+    <transfer name="MerchantResponse">
+        <property name="isSuccess" type="bool"/>
+        <property name="merchant" type="Merchant"/>
+    </transfer>
+
+    <transfer name="Url">
+        <property name="fkLocale" type="int"/>
+        <property name="url" type="string"/>
     </transfer>
 
 </transfers>

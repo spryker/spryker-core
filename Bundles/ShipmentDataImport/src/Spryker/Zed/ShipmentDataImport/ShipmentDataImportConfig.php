@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ShipmentDataImport;
@@ -17,6 +17,8 @@ class ShipmentDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_SHIPMENT_PRICE = 'shipment-price';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShipmentMethodStoreDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -27,6 +29,8 @@ class ShipmentDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShipmentDataImporterConfiguration(): DataImporterConfigurationTransfer
@@ -37,6 +41,8 @@ class ShipmentDataImportConfig extends DataImportConfig
     }
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getShipmentMethodPriceDataImporterConfiguration(): DataImporterConfigurationTransfer

@@ -33,7 +33,6 @@ class ProductDiscountConnectorFacade extends AbstractFacade implements ProductDi
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFactory()
             ->createProductAttributeDecisionRule()
             ->isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);

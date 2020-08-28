@@ -57,6 +57,16 @@ class DateTimeFormatter implements DateTimeFormatterInterface
      *
      * @return string
      */
+    public function formatDateTimeToIso8601($dateTime): string
+    {
+        return $this->format($dateTime, DateTime::ATOM, DateTime::ATOM);
+    }
+
+    /**
+     * @param \DateTime|string $dateTime
+     *
+     * @return string
+     */
     public function formatTime($dateTime)
     {
         return $this->format($dateTime, UtilDateTimeConstants::DATE_TIME_FORMAT_TIME, static::DEFAULT_FORMAT_TIME);

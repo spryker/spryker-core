@@ -24,8 +24,9 @@ class ConfigurableBundlePageSearchClient extends AbstractClient implements Confi
      *
      * @return array
      */
-    public function searchConfigurableBundleTemplates(ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer): array
-    {
+    public function searchConfigurableBundleTemplates(
+        ConfigurableBundleTemplatePageSearchRequestTransfer $configurableBundleTemplatePageSearchRequestTransfer
+    ): array {
         $requestParameters = $configurableBundleTemplatePageSearchRequestTransfer->getRequestParameters();
 
         $searchQuery = $this->getFactory()->createConfigurableBundleTemplateSearchQuery($configurableBundleTemplatePageSearchRequestTransfer);

@@ -31,14 +31,17 @@ class ArrayFilter implements ArrayFilterInterface
                 }
 
                 $filteredArray[$key] = $result;
+
                 continue;
             }
             if (is_string($value) && strlen($value)) {
                 $filteredArray[$key] = $value;
+
                 continue;
             }
             if ($value instanceof Countable && count($value) !== 0) {
                 $filteredArray[$key] = $value;
+
                 continue;
             }
             if (!$value instanceof Countable && $value) {

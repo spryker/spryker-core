@@ -54,12 +54,25 @@ interface MailBuilderInterface
     public function setSender($email, $name);
 
     /**
+     * @return $this
+     */
+    public function useDefaultSender();
+
+    /**
      * @param string $email
      * @param string $name
      *
      * @return $this
      */
     public function addRecipient($email, $name);
+
+    /**
+     * @param string $email
+     * @param string|null $name
+     *
+     * @return $this
+     */
+    public function addRecipientBcc(string $email, ?string $name = null);
 
     /**
      * @return \Generated\Shared\Transfer\MailTransfer

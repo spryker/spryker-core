@@ -277,16 +277,37 @@ class Operation implements OperationInterface
      */
     public function reloadItems(QuoteTransfer $quoteTransfer)
     {
-        if ($this->quoteFacade->isQuoteLocked($quoteTransfer)) {
-            return $quoteTransfer;
+        return $this->reloadItemsInQuote($quoteTransfer)->getQuoteTransfer();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $originalQuoteTransfer = (new QuoteTransfer())
+            ->fromArray($quoteTransfer->modifiedToArray(), true);
+
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setIsSuccessful(false)
+            ->setCustomer($originalQuoteTransfer->getCustomer())
+            ->setQuoteTransfer($originalQuoteTransfer);
+
+        if ($this->quoteFacade->isQuoteLocked($originalQuoteTransfer)) {
+            $this->messengerFacade->addErrorMessage(
+                $this->createMessengerMessageTransfer(static::GLOSSARY_KEY_LOCKED_CART_CHANGE_DENIED)
+            );
+
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
-        $quoteValidationResponseTransfer = $this->quoteFacade->validateQuote($quoteTransfer);
+        $quoteValidationResponseTransfer = $this->quoteFacade->validateQuote($originalQuoteTransfer);
+
         if (!$quoteValidationResponseTransfer->getIsSuccessful()) {
-            return $quoteTransfer;
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
-
-        $originalQuoteTransfer = (new QuoteTransfer())->fromArray($quoteTransfer->modifiedToArray(), true);
 
         $quoteTransfer = $this->executePreReloadPlugins($quoteTransfer);
 
@@ -298,21 +319,28 @@ class Operation implements OperationInterface
         $cartChangeTransfer->setQuote($quoteTransfer);
 
         if (!$this->preCheckCart($cartChangeTransfer)) {
-            return $originalQuoteTransfer;
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
         $expandedCartChangeTransfer = $this->expandChangedItems($cartChangeTransfer);
         $quoteTransfer = $this->cartStorageProvider->addItems($expandedCartChangeTransfer);
         $quoteTransfer = $this->executePostSavePlugins($quoteTransfer);
         $quoteTransfer = $this->recalculate($quoteTransfer);
-
         $quoteTransfer = $this->executePostReloadItemsPlugins($quoteTransfer);
 
-        if ($this->isTerminated(static::TERMINATION_EVENT_NAME_RELOAD, $cartChangeTransfer, $quoteTransfer)) {
-            return $originalQuoteTransfer;
+        if (
+            $this->isTerminated(
+                static::TERMINATION_EVENT_NAME_RELOAD,
+                $cartChangeTransfer,
+                $quoteTransfer
+            )
+        ) {
+            return $this->addQuoteErrorsToQuoteResponse($quoteResponseTransfer);
         }
 
-        return $quoteTransfer;
+        return $quoteResponseTransfer
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
     }
 
     /**
@@ -560,7 +588,7 @@ class Operation implements OperationInterface
      */
     protected function recalculate(QuoteTransfer $quoteTransfer)
     {
-        return $this->calculationFacade->recalculate($quoteTransfer);
+        return $this->calculationFacade->recalculate($quoteTransfer, false);
     }
 
     /**

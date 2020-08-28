@@ -41,9 +41,6 @@ class CmsSlotBlockStorageEventSubscriber extends AbstractPlugin implements Event
      */
     protected function addCmsSlotBlockPublishStorageListener(EventCollectionInterface $eventCollection): void
     {
-        $eventCollection->addListenerQueued(
-            CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH,
-            new CmsSlotBlockStoragePublishListener()
-        );
+        $eventCollection->addListenerQueued(CmsSlotBlockEvents::CMS_SLOT_BLOCK_PUBLISH, new CmsSlotBlockStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

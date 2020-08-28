@@ -3,3 +3,31 @@
 {{ form_row(merchantForm.registration_number) }}
 {{ form_row(merchantForm.merchant_reference) }}
 {{ form_row(merchantForm.email) }}
+{{ form_row(merchantForm.is_active) }}
+{{ form_row(merchantForm.storeRelation) }}
+
+{{ form_label(merchantForm.urlCollection) }}
+
+{% for localizedUrl in merchantForm.urlCollection %}
+    <div class="form-group {% if localizedUrl.url.vars.errors|length > 0 %}has-error{% endif %}">
+        {% if localizedUrl.vars.data.urlPrefix %}
+            <div class="input-group m-b">
+                <span class="input-group-addon">
+                    {{ localizedUrl.vars.data.urlPrefix }}
+                </span>
+                {{ form_widget(localizedUrl.url) }}
+            </div>
+        {% else %}
+            {{ form_widget(localizedUrl.url) }}
+        {% endif %}
+        {{ form_widget(localizedUrl.url) }}
+        {{ form_widget(localizedUrl.fkLocale) }}
+        {{ form_errors(localizedUrl.url) }}
+    </div>
+{% endfor %}
+
+{% do merchantForm.urlCollection.setRendered %}
+
+{% if (merchantForm.stocks is defined) %}
+    {{ form_row(merchantForm.stocks) }}
+{% endif %}

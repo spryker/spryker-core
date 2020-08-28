@@ -40,8 +40,9 @@ class MerchantRelationshipThresholdDataProviderResolver implements MerchantRelat
      *
      * @return \Spryker\Zed\MerchantRelationshipSalesOrderThresholdGui\Communication\Form\DataProvider\ThresholdGroup\ThresholdStrategyGroupDataProviderInterface
      */
-    public function resolveMerchantRelationshipThresholdDataProviderByStrategyGroup(string $salesOrderThresholdTypeGroup): ThresholdStrategyGroupDataProviderInterface
-    {
+    public function resolveMerchantRelationshipThresholdDataProviderByStrategyGroup(
+        string $salesOrderThresholdTypeGroup
+    ): ThresholdStrategyGroupDataProviderInterface {
         if (!$this->hasMerchantRelationshipThresholdDataProviderByStrategyGroup($salesOrderThresholdTypeGroup)) {
             throw new MissingThresholdDataProviderException();
         }

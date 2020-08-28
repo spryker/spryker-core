@@ -5,10 +5,10 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "propel/propel": "2.0.0-alpha8",
+    "propel/propel": "2.0.0-alpha11",
     "spryker/config": "^3.0.0",
     "spryker/error-handler": "^2.0.0",
-    "spryker/kernel": "^3.30.0",
+    "spryker/kernel": "^3.49.0",
     "spryker/symfony": "^3.0.0"
   },
   "require-dev": {

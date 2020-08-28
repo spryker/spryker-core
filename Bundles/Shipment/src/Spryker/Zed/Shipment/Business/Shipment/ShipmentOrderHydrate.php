@@ -7,7 +7,10 @@
 
 namespace Spryker\Zed\Shipment\Business\Shipment;
 
+use ArrayObject;
+use Closure;
 use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Shared\Shipment\ShipmentConfig;
@@ -138,7 +141,7 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
             );
         }
 
-        return $orderTransfer;
+        return $this->sortOrderItemsByIdShipment($orderTransfer);
     }
 
     /**
@@ -274,5 +277,36 @@ class ShipmentOrderHydrate implements ShipmentOrderHydrateInterface
         }
 
         return null;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    protected function sortOrderItemsByIdShipment(OrderTransfer $orderTransfer): OrderTransfer
+    {
+        $orderItemTransfers = $orderTransfer->getItems()->getArrayCopy();
+        if ($orderItemTransfers === []) {
+            return $orderTransfer;
+        }
+
+        uasort($orderItemTransfers, $this->getOrderItemTransfersSortCallback());
+
+        return $orderTransfer->setItems(new ArrayObject($orderItemTransfers));
+    }
+
+    /**
+     * @return \Closure
+     */
+    protected function getOrderItemTransfersSortCallback(): Closure
+    {
+        return function (ItemTransfer $itemTransferA, ItemTransfer $itemTransferB) {
+            if ($itemTransferA->getShipment() === null || $itemTransferB->getShipment() === null) {
+                return 0;
+            }
+
+            return $itemTransferA->getShipment()->getIdSalesShipment() <=> $itemTransferB->getShipment()->getIdSalesShipment();
+        };
     }
 }

@@ -77,6 +77,7 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
         $productPageSearchTransfer->setType(ProductPageSearchConstants::PRODUCT_ABSTRACT_RESOURCE_NAME);
         $productPageSearchTransfer->setLocale($productAbstractLocalizedData['Locale']['locale_name']);
         $productPageSearchTransfer->setAttributes($attributes);
+        $productPageSearchTransfer->setAddToCartSku($productAbstractLocalizedData[ProductPageSearchTransfer::ADD_TO_CART_SKU] ?? null);
 
         return $productPageSearchTransfer;
     }
@@ -197,8 +198,13 @@ class ProductPageSearchMapper implements ProductPageSearchMapperInterface
      *
      * @return void
      */
-    protected function setConcreteLocalizedProductData(array $concreteProductLocalizedAttributes, int $idLocale, array &$concreteNames, array &$concreteDescriptions, array &$concreteLocalizedAttributes)
-    {
+    protected function setConcreteLocalizedProductData(
+        array $concreteProductLocalizedAttributes,
+        int $idLocale,
+        array &$concreteNames,
+        array &$concreteDescriptions,
+        array &$concreteLocalizedAttributes
+    ) {
         $concreteNames = [];
         foreach ($concreteProductLocalizedAttributes as $concreteProductLocalizedAttribute) {
             if ($concreteProductLocalizedAttribute['fk_locale'] === $idLocale) {

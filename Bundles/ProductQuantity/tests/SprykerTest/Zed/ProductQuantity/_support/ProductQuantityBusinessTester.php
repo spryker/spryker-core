@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\ProductQuantity;
 
 use ArrayObject;
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -16,8 +17,6 @@ use Generated\Shared\Transfer\ProductQuantityTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -27,17 +26,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductQuantityBusinessTester extends Actor
 {
     use _generated\ProductQuantityBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
@@ -132,5 +127,22 @@ class ProductQuantityBusinessTester extends Actor
         );
 
         return $cartChangeTransfer;
+    }
+
+    /**
+     * @param string $sku
+     * @param string $groupKey
+     * @param int $quantity
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    public function createItemTransferWithNormalizableQuantity(string $sku, string $groupKey, int $quantity): ItemTransfer
+    {
+        return (new ItemBuilder([
+            ItemTransfer::SKU => $sku,
+            ItemTransfer::GROUP_KEY => $groupKey,
+            ItemTransfer::QUANTITY => $quantity,
+            ItemTransfer::NORMALIZABLE_FIELDS => ['quantity'],
+        ]))->build();
     }
 }

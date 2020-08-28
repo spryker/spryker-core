@@ -18,5 +18,8 @@ interface ProductPageSearchToPriceProductServiceInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;
+    public function resolveProductPriceByPriceProductCriteria(
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer;
 }

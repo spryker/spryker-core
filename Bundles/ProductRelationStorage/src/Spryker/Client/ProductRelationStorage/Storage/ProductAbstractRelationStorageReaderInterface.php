@@ -11,8 +11,9 @@ interface ProductAbstractRelationStorageReaderInterface
 {
     /**
      * @param int $idProductAbstract
+     * @param string $storeName
      *
      * @return \Generated\Shared\Transfer\ProductAbstractRelationStorageTransfer|null
      */
-    public function findProductAbstractRelation($idProductAbstract);
+    public function findProductAbstractRelation(int $idProductAbstract, string $storeName);
 }

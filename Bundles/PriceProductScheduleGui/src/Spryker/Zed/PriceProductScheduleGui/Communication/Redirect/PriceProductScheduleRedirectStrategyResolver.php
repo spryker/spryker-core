@@ -16,6 +16,7 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
     public const KEY_ABSTRACT_PRODUCT = 'abstract_product';
     public const KEY_CONCRETE_PRODUCT = 'concrete_product';
     protected const EXCEPTION_MESSAGE = 'Container is not valid';
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[]
      */
@@ -63,11 +64,13 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
      */
     protected function validateContainer(): void
     {
-        if (isset(
-            $this->priceProductScheduleStrategyContainer[static::KEY_ABSTRACT_PRODUCT],
-            $this->priceProductScheduleStrategyContainer[static::KEY_CONCRETE_PRODUCT],
-            $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST]
-        )) {
+        if (
+            isset(
+                $this->priceProductScheduleStrategyContainer[static::KEY_ABSTRACT_PRODUCT],
+                $this->priceProductScheduleStrategyContainer[static::KEY_CONCRETE_PRODUCT],
+                $this->priceProductScheduleStrategyContainer[static::KEY_SCHEDULE_LIST]
+            )
+        ) {
             return;
         }
 

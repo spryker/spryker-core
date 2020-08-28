@@ -13,4 +13,9 @@ final class IdeAutoCompletionOptionConstants
     public const TARGET_DIRECTORY_PATTERN = 'target_path_pattern';
     public const TARGET_NAMESPACE_PATTERN = 'target_namespace_pattern';
     public const APPLICATION_NAME = 'application_name';
+    public const YVES = 'Yves';
+    public const ZED = 'Zed';
+    public const CLIENT = 'Client';
+    public const GLUE = 'Glue';
+    public const SERVICE = 'Service';
 }

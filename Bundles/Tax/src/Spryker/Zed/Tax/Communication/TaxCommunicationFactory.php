@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\TaxSetTransfer;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider;
 use Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider;
+use Spryker\Zed\Tax\Communication\Form\DeleteTaxRateForm;
+use Spryker\Zed\Tax\Communication\Form\DeleteTaxSetForm;
 use Spryker\Zed\Tax\Communication\Form\TaxRateForm;
 use Spryker\Zed\Tax\Communication\Form\TaxSetForm;
 use Spryker\Zed\Tax\Communication\Form\Transform\PercentageTransformer;
 use Spryker\Zed\Tax\Communication\Table\RateTable;
 use Spryker\Zed\Tax\Communication\Table\SetTable;
 use Spryker\Zed\Tax\TaxDependencyProvider;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\Tax\Persistence\TaxQueryContainerInterface getQueryContainer()
@@ -56,7 +59,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTaxRateForm()` instead.
+     * @deprecated Use {@link getTaxRateForm()} instead.
      *
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxRateFormDataProvider|null $taxRateFormDataProvider Deprecated: TaxRateFormDataProvider must not be passed in.
      *
@@ -96,7 +99,7 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated Use `getTaxSetForm()` instead.
+     * @deprecated Use {@link getTaxSetForm()} instead.
      *
      * @param \Spryker\Zed\Tax\Communication\Form\DataProvider\TaxSetFormDataProvider|null $taxSetFormDataProvider Deprecated: TaxSetFormDataProvider must not be passed in.
      *
@@ -165,6 +168,22 @@ class TaxCommunicationFactory extends AbstractCommunicationFactory
         $taxSetQuery = $this->getQueryContainer()->queryAllTaxSets();
 
         return new SetTable($taxSetQuery, $this->getDateTimeService());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteTaxRateForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteTaxRateForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteTaxSetForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteTaxSetForm::class);
     }
 
     /**

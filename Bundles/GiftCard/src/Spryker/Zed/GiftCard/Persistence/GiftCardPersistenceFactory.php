@@ -12,11 +12,13 @@ use Orm\Zed\GiftCard\Persistence\SpyGiftCardProductConfigurationQuery;
 use Orm\Zed\GiftCard\Persistence\SpyGiftCardQuery;
 use Orm\Zed\GiftCard\Persistence\SpyPaymentGiftCardQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemGiftCardQuery;
+use Spryker\Zed\GiftCard\Persistence\Propel\Mapper\GiftCardMapper;
 use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
 
 /**
  * @method \Spryker\Zed\GiftCard\Persistence\GiftCardQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\GiftCard\GiftCardConfig getConfig()
+ * @method \Spryker\Zed\GiftCard\Persistence\GiftCardRepositoryInterface getRepository()
  */
 class GiftCardPersistenceFactory extends AbstractPersistenceFactory
 {
@@ -58,5 +60,13 @@ class GiftCardPersistenceFactory extends AbstractPersistenceFactory
     public function createSpySalesOrderItemGiftCardQuery()
     {
         return SpySalesOrderItemGiftCardQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCard\Persistence\Propel\Mapper\GiftCardMapper
+     */
+    public function createGiftCardMapper(): GiftCardMapper
+    {
+        return new GiftCardMapper();
     }
 }

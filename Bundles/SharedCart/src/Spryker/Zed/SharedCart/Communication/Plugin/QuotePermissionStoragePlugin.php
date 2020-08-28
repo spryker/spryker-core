@@ -19,6 +19,8 @@ use Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInt
 class QuotePermissionStoragePlugin extends AbstractPlugin implements PermissionStoragePluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCompanyUser

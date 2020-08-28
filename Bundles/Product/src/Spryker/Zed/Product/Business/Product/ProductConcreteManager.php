@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\SpyProductEntityTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Business\Attribute\AttributeEncoderInterface;
 use Spryker\Zed\Product\Business\Exception\MissingProductException;
 use Spryker\Zed\Product\Business\Product\Assertion\ProductAbstractAssertionInterface;
@@ -26,6 +27,8 @@ use Spryker\Zed\Product\Persistence\ProductRepositoryInterface;
 
 class ProductConcreteManager extends AbstractProductConcreteManagerSubject implements ProductConcreteManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Generated\Shared\Transfer\LocaleTransfer[]
      */
@@ -120,25 +123,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function createProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $sku = $productConcreteTransfer->getSku();
-        $this->productConcreteAssertion->assertSkuIsUnique($sku);
-
-        $productConcreteTransfer = $this->notifyBeforeCreateObservers($productConcreteTransfer);
-
-        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
-
-        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
-        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
-
-        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-
-        $this->notifyAfterCreateObservers($productConcreteTransfer);
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $idProductConcrete;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): int {
+            return $this->executeCreateProductConcrete($productConcreteTransfer);
+        });
     }
 
     /**
@@ -148,38 +135,9 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     public function saveProductConcrete(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $sku = $productConcreteTransfer
-            ->requireSku()
-            ->getSku();
-
-        $idProduct = $productConcreteTransfer
-            ->requireIdProductConcrete()
-            ->getIdProductConcrete();
-
-        $idProductAbstract = $productConcreteTransfer
-            ->requireFkProductAbstract()
-            ->getFkProductAbstract();
-
-        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
-        $this->productConcreteAssertion->assertProductExists($idProduct);
-        $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
-
-        $productConcreteTransfer = $this->notifyBeforeUpdateObservers($productConcreteTransfer);
-
-        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
-
-        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
-        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
-
-        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
-
-        $this->notifyAfterUpdateObservers($productConcreteTransfer);
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $idProductConcrete;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): int {
+            return $this->executeUpdateProductConcreteTransaction($productConcreteTransfer);
+        });
     }
 
     /**
@@ -275,7 +233,7 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     }
 
     /**
-     * @deprecated Use `Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Product\Business\Product\ProductConcreteManager::getProductConcretesByConcreteSkus()} instead.
      *
      * @param string $productConcreteSku
      *
@@ -432,6 +390,67 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      *
+     * @return int
+     */
+    protected function executeCreateProductConcrete(ProductConcreteTransfer $productConcreteTransfer): int
+    {
+        $sku = $productConcreteTransfer->getSku();
+        $this->productConcreteAssertion->assertSkuIsUnique($sku);
+
+        $productConcreteTransfer = $this->notifyBeforeCreateObservers($productConcreteTransfer);
+
+        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
+
+        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+
+        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+
+        $this->notifyAfterCreateObservers($productConcreteTransfer);
+
+        return $idProductConcrete;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return int
+     */
+    protected function executeUpdateProductConcreteTransaction(ProductConcreteTransfer $productConcreteTransfer): int
+    {
+        $sku = $productConcreteTransfer
+            ->requireSku()
+            ->getSku();
+
+        $idProduct = $productConcreteTransfer
+            ->requireIdProductConcrete()
+            ->getIdProductConcrete();
+
+        $idProductAbstract = $productConcreteTransfer
+            ->requireFkProductAbstract()
+            ->getFkProductAbstract();
+
+        $this->productAbstractAssertion->assertProductExists($idProductAbstract);
+        $this->productConcreteAssertion->assertProductExists($idProduct);
+        $this->productConcreteAssertion->assertSkuIsUniqueWhenUpdatingProduct($idProduct, $sku);
+
+        $productConcreteTransfer = $this->notifyBeforeUpdateObservers($productConcreteTransfer);
+
+        $productConcreteEntity = $this->persistEntity($productConcreteTransfer);
+
+        $idProductConcrete = $productConcreteEntity->getPrimaryKey();
+        $productConcreteTransfer->setIdProductConcrete($idProductConcrete);
+
+        $this->persistProductConcreteLocalizedAttributes($productConcreteTransfer);
+
+        $this->notifyAfterUpdateObservers($productConcreteTransfer);
+
+        return $idProductConcrete;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
      * @return \Orm\Zed\Product\Persistence\SpyProduct
      */
     protected function persistEntity(ProductConcreteTransfer $productConcreteTransfer)
@@ -574,11 +593,21 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
      */
     protected function persistProductConcreteLocalizedAttributes(ProductConcreteTransfer $productConcreteTransfer)
     {
-        $idProductConcrete = $productConcreteTransfer
-            ->requireIdProductConcrete()
-            ->getIdProductConcrete();
+        $productConcreteTransfer->requireIdProductConcrete();
 
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConcreteTransfer): void {
+            $this->executePersistProductConcreteLocalizedAttributesTransaction($productConcreteTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
+     *
+     * @return void
+     */
+    protected function executePersistProductConcreteLocalizedAttributesTransaction(ProductConcreteTransfer $productConcreteTransfer): void
+    {
+        $idProductConcrete = $productConcreteTransfer->getIdProductConcrete();
 
         foreach ($productConcreteTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
@@ -597,8 +626,6 @@ class ProductConcreteManager extends AbstractProductConcreteManagerSubject imple
 
             $localizedProductAttributesEntity->save();
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**

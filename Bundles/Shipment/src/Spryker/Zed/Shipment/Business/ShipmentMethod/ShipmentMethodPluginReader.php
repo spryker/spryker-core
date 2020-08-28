@@ -43,8 +43,9 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    protected function addAvailabilityPlugins(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): ShipmentMethodPluginCollectionTransfer
-    {
+    protected function addAvailabilityPlugins(
+        ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
+    ): ShipmentMethodPluginCollectionTransfer {
         foreach ($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS] as $name => $plugin) {
             $shipmentMethodPluginCollectionTransfer->addAvailabilityPluginOption($name);
         }
@@ -71,8 +72,9 @@ class ShipmentMethodPluginReader implements ShipmentMethodPluginReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShipmentMethodPluginCollectionTransfer
      */
-    protected function addDeliveryTimePlugins(ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer): ShipmentMethodPluginCollectionTransfer
-    {
+    protected function addDeliveryTimePlugins(
+        ShipmentMethodPluginCollectionTransfer $shipmentMethodPluginCollectionTransfer
+    ): ShipmentMethodPluginCollectionTransfer {
         foreach ($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS] as $name => $plugin) {
             $shipmentMethodPluginCollectionTransfer->addDeliveryTimePluginOption($name);
         }

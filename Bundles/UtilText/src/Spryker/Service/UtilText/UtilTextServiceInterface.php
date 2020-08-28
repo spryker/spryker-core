@@ -35,6 +35,18 @@ interface UtilTextServiceInterface
 
     /**
      * Specification:
+     * - Generates a random byte string which is suitable for usage in security relevant topics.
+     *
+     * @api
+     *
+     * @param int $length
+     *
+     * @return string
+     */
+    public function generateRandomByteString(int $length = 32): string;
+
+    /**
+     * Specification:
      * - Generates hash from value by specified algorithm.
      *
      * @api
@@ -89,6 +101,8 @@ interface UtilTextServiceInterface
     /**
      * Specification:
      * - Checks if a hash matches against a raw token that gets hashed internally.
+     *
+     * @api
      *
      * @param string $rawToken
      * @param string $hash

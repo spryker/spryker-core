@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class SetupFacade extends AbstractFacade implements SetupFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -29,6 +31,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -41,6 +45,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Method will be removed without replacement.
@@ -53,9 +59,11 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @deprecated Use emptyGeneratedDirectory() instead
+     * @deprecated Use {@link emptyGeneratedDirectory()} instead
      *
      * @return void
      */
@@ -77,6 +85,8 @@ class SetupFacade extends AbstractFacade implements SetupFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Hook in commands manually on project level

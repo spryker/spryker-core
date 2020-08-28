@@ -163,8 +163,10 @@ class SharedCartRestResponseBuilder implements SharedCartRestResponseBuilderInte
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
-    protected function createRestSharedCartsResource(string $sharedCartUuid, RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer): RestResourceInterface
-    {
+    protected function createRestSharedCartsResource(
+        string $sharedCartUuid,
+        RestSharedCartsAttributesTransfer $restSharedCartsAttributesTransfer
+    ): RestResourceInterface {
         return $this->restResourceBuilder->createRestResource(
             SharedCartsRestApiConfig::RESOURCE_SHARED_CARTS,
             $sharedCartUuid,

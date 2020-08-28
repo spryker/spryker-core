@@ -9,6 +9,7 @@ namespace Spryker\Zed\ProductOption\Business\OptionGroup;
 
 use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesRequestTransfer;
 use Generated\Shared\Transfer\ProductOptionValueStorePricesResponseTransfer;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
@@ -203,6 +204,25 @@ class ProductOptionValuePriceReader implements ProductOptionValuePriceReaderInte
         $storePrices = $this->applyDefaultStorePrices($storePrices, $defaultStorePrices);
 
         return (new ProductOptionValueStorePricesResponseTransfer())->setStorePrices($storePrices);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductOptionTransfer $productOptionTransfer
+     * @param string|null $priceMode
+     *
+     * @return int|null
+     */
+    public function resolveUnitPrice(ProductOptionTransfer $productOptionTransfer, ?string $priceMode): ?int
+    {
+        if (!$priceMode) {
+            $priceMode = $this->priceFacade->getDefaultPriceMode();
+        }
+
+        if ($priceMode === $this->getGrossPriceModeIdentifier()) {
+            return $productOptionTransfer->getUnitGrossPrice();
+        }
+
+        return $productOptionTransfer->getUnitNetPrice();
     }
 
     /**

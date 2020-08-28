@@ -39,7 +39,6 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
         ItemTransfer $itemTransfer,
         ClauseTransfer $clauseTransfer
     ) {
-
         return $this->getFacade()
             ->isCurrencyDecisionRuleSatisfiedBy(
                 $quoteTransfer,
@@ -65,7 +64,7 @@ class CurrencyDecisionRulePlugin extends AbstractPlugin implements DecisionRuleP
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function acceptedDataTypes()
     {

@@ -68,9 +68,9 @@ class OrderExpander implements OrderExpanderInterface
         $orderTransfer->setItems($this->transformItems($orderTransfer->getItems()));
 
         $this->groupOrderDiscountsByGroupKey($orderTransfer->getItems());
-        $orderTransfer = $this->calculationFacade->recalculateOrder($orderTransfer);
 
         $quoteTransfer->fromArray($orderTransfer->toArray(), true);
+        $quoteTransfer = $this->calculationFacade->recalculateQuote($quoteTransfer);
 
         return $quoteTransfer;
     }
@@ -135,10 +135,10 @@ class OrderExpander implements OrderExpanderInterface
     }
 
     /**
-     * @param array $calculatedDiscountsByGroupKey
+     * @param \Generated\Shared\Transfer\CalculatedDiscountTransfer[][] $calculatedDiscountsByGroupKey
      * @param string $groupKey
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\CalculatedDiscountTransfer[]
      */
     protected function getGroupedCalculatedDiscounts(array &$calculatedDiscountsByGroupKey, $groupKey)
     {

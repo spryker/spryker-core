@@ -43,7 +43,6 @@ class MerchantProfileDataImportBusinessFactory extends DataImportBusinessFactory
                 MerchantProfileDataSetInterface::CANCELLATION_POLICY_GLOSSARY_KEY,
                 MerchantProfileDataSetInterface::IMPRINT_GLOSSARY_KEY,
                 MerchantProfileDataSetInterface::DATA_PRIVACY_GLOSSARY_KEY,
-                MerchantProfileDataSetInterface::URL,
             ]))
             ->addStep($this->createMerchantProfileWriterStep());
 

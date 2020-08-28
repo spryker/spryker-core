@@ -20,6 +20,8 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     protected const BLOCK_KEY = 'block_key';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -34,6 +36,8 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productIds
@@ -56,6 +60,8 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $cmsBlockProductIds
@@ -73,8 +79,7 @@ class CmsBlockProductStorageQueryContainer extends AbstractQueryContainer implem
     }
 
     /**
-     * Specification:
-     * - Returns a a query for the table `spy_cms_block_product_connector` filtered by cms block product ids.
+     * {@inheritDoc}
      *
      * @api
      *

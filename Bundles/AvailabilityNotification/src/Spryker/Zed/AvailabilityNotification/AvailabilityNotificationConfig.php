@@ -15,6 +15,8 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     protected const AVAILABILITY_NOTIFICATION_UNSUBSCRIBE_BY_KEY_URI = '/%s/availability-notification/unsubscribe-by-key/%s';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getBaseUrlYves(): string
@@ -34,6 +36,8 @@ class AvailabilityNotificationConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getUnsubscribeUri(): string

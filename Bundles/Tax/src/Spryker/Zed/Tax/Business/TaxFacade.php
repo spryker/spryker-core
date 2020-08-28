@@ -19,8 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class TaxFacade extends AbstractFacade implements TaxFacadeInterface
 {
     /**
-     * Specification:
-     *  - Returns all persisted tax rates
+     * {@inheritDoc}
      *
      * @api
      *
@@ -34,8 +33,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     *  Specification:
-     *  - Returns persisted rate by primary id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -51,8 +49,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Check if rate with given primary id exists
+     * {@inheritDoc}
      *
      * @api
      *
@@ -68,8 +65,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Get all tax sets
+     * {@inheritDoc}
      *
      * @api
      *
@@ -83,8 +79,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Return tax set by primary id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,8 +95,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Check if tax set exist with given primary id
+     * {@inheritDoc}
      *
      * @api
      *
@@ -150,8 +144,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Create new tax rate
+     * {@inheritDoc}
      *
      * @api
      *
@@ -167,8 +160,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Update existing tax rate
+     * {@inheritDoc}
      *
      * @api
      *
@@ -184,8 +176,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Create new tax set
+     * {@inheritDoc}
      *
      * @api
      *
@@ -201,8 +192,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Update existing tax set
+     * {@inheritDoc}
      *
      * @api
      *
@@ -218,8 +208,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Add existing tax rate tax set
+     * {@inheritDoc}
      *
      * @api
      *
@@ -236,8 +225,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Remove tax reate from existing set
+     * {@inheritDoc}
      *
      * @api
      *
@@ -254,8 +242,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Remove tax rate
+     * {@inheritDoc}
      *
      * @api
      *
@@ -271,8 +258,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Removes tax set with all tax rates assigned
+     * {@inheritDoc}
      *
      * @api
      *
@@ -288,9 +274,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Calculate tax amount from given price and rate
-     *  - Value is not rounded
+     * {@inheritDoc}
      *
      * @api
      *
@@ -307,9 +291,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Return default country used when setting rate
-     *  - Value is read from config
+     * {@inheritDoc}
      *
      * @api
      *
@@ -323,9 +305,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Return default tax rate used when setting rate
-     *  - Value is read from config
+     * {@inheritDoc}
      *
      * @api
      *
@@ -339,9 +319,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Calculate tax amount from given price and rate
-     *  - Share rounding error between calls to this method.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -376,8 +354,7 @@ class TaxFacade extends AbstractFacade implements TaxFacadeInterface
     }
 
     /**
-     * Specification:
-     *  - Reset rounding error counter to 0
+     * {@inheritDoc}
      *
      * @api
      *

@@ -19,6 +19,8 @@ use Spryker\Zed\User\Dependency\Plugin\GroupPluginInterface;
 class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\GroupsTransfer
@@ -29,6 +31,8 @@ class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -41,6 +45,8 @@ class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser
@@ -54,6 +60,8 @@ class GroupPlugin extends AbstractPlugin implements GroupPluginInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idUser

@@ -10,7 +10,7 @@ namespace Spryker\Zed\Search\Business\Model\Elasticsearch\Copier;
 use GuzzleHttp\Client;
 
 /**
- * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopier` instead.
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\Index\Copier\IndexCopier} instead.
  */
 class IndexCopier implements IndexCopierInterface
 {

@@ -15,6 +15,8 @@ class ProductAttributeConfig extends AbstractBundleConfig
     public const DEFAULT_LOCALE = '_';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAllowedStores()
@@ -23,6 +25,8 @@ class ProductAttributeConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAttributeAvailableTypes()

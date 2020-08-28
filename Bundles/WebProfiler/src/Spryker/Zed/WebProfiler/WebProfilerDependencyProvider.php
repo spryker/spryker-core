@@ -16,7 +16,7 @@ use Spryker\Zed\Kernel\Container;
 class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
 {
     /**
-     * @deprecated Use `\Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS` instead.
+     * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::PLUGINS_DATA_COLLECTORS} instead.
      */
     public const PLUGINS_WEB_PROFILER = 'PLUGINS_WEB_PROFILER';
     public const PLUGINS_DATA_COLLECTORS = 'PLUGINS_DATA_COLLECTORS';
@@ -60,7 +60,7 @@ class WebProfilerDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @deprecated Use `\Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::getDataCollectorPlugins()` instead.
+     * @deprecated Use {@link \Spryker\Zed\WebProfiler\WebProfilerDependencyProvider::getDataCollectorPlugins()} instead.
      *
      * @return \Silex\ServiceProviderInterface[]
      */

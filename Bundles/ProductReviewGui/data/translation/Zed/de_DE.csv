@@ -5,3 +5,9 @@ Nickname,Spitzname
 "Overview of Product Reviews","Übersicht der Produktbewertungen"
 "Product Reviews",Produktbewertungen
 Reject,Ablehnen
+Pending,Ausstehend
+Rejected,Abgelehnt
+"Product Review #%id% deleted successfully.","Produktbewertung #%id% erfolgreich gelöscht."
+Date,Datum
+"Product name",Produktname
+Rating,Bewertung

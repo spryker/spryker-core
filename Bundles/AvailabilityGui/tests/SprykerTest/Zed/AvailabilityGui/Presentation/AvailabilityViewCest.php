@@ -38,14 +38,14 @@ class AvailabilityViewCest
             AvailabilityPage::AVAILABILITY_ID_STORE
         ));
 
-        $i->seeBreadcrumbNavigation('Products / Availability / Product Availability');
+        $i->seeBreadcrumbNavigation('Catalog / Availability / Product Availability');
 
         $i->wait(1);
 
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_VIEW_HEADER);
         $i->assertTableWithDataExists();
 
-        $i->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
+        $i->click('//*[@class="dataTables_scrollBody"]/table/tbody/tr/td[8]/a');
         $i->see(AvailabilityPage::PAGE_AVAILABILITY_EDIT_HEADER);
 
         $i->amOnPage(sprintf(AvailabilityPage::AVAILABILITY_VIEW_URL, AvailabilityPage::AVAILABILITY_ID, AvailabilityPage::AVAILABILITY_ID_STORE));

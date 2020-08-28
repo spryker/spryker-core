@@ -216,9 +216,9 @@ class DistributorTest extends Unit
 
         $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
-        $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
     }
 
     /**
@@ -243,9 +243,9 @@ class DistributorTest extends Unit
 
         $this->discountFacade->distributeAmount($collectedDiscountTransfer);
 
-        $this->assertEquals(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
-        $this->assertEquals(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[0]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[1]->getOriginalItemCalculatedDiscounts()->count());
+        $this->assertSame(0, $items[2]->getOriginalItemCalculatedDiscounts()->count());
     }
 
     /**
@@ -470,13 +470,13 @@ class DistributorTest extends Unit
         $unitGrossPrice = $discountableItemTransfer->getOriginalItemCalculatedDiscounts()[0]->getUnitAmount();
         $this->assertSame(33, $unitGrossPrice);
 
-        $this->assertEquals(100, $totalAmount);
+        $this->assertSame(100, $totalAmount);
     }
 
     /**
      * @param array $items
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\DiscountableItemTransfer[]
      */
     protected function createDiscountableObjects(array $items = []): ArrayObject
     {

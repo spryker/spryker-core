@@ -71,8 +71,10 @@ class QueueMessageHelper implements QueueMessageHelperInterface
      *
      * @return \Generated\Shared\Transfer\QueueReceiveMessageTransfer
      */
-    protected function addErrorMessageToQueueReceiveMessageBody(QueueReceiveMessageTransfer $queueReceiveMessageTransfer, string $message): QueueReceiveMessageTransfer
-    {
+    protected function addErrorMessageToQueueReceiveMessageBody(
+        QueueReceiveMessageTransfer $queueReceiveMessageTransfer,
+        string $message
+    ): QueueReceiveMessageTransfer {
         $queueMessageBody = $this->getDecodedMessageBody($queueReceiveMessageTransfer);
         $queueMessageBody[static::ERROR_MESSAGE] = $message;
         $queueReceiveMessageTransfer->getQueueMessage()->setBody($this->utilEncodingService->encodeJson($queueMessageBody));

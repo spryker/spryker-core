@@ -101,11 +101,13 @@
     <transfer name="ProductConcrete">
         <property name="sku" type="string"/>
         <property name="fkProductAbstract" type="int"/>
+        <property name="idProductConcrete" type="int"/>
     </transfer>
 
     <transfer name="Message">
         <property name="value" type="string"/>
         <property name="parameters" type="array" singular="parameters"/>
+        <property name="type" type="string"/>
     </transfer>
 
     <transfer name="CheckoutResponse">
@@ -150,6 +152,12 @@
 
     <transfer name="Translation">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="sku" type="string"/>
+        <property name="reservedStates" type="OmsStateCollection"/>
+        <property name="store" type="Store"/>
     </transfer>
 
 </transfers>

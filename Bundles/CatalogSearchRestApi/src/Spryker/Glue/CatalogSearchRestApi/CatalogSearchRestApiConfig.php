@@ -21,6 +21,8 @@ class CatalogSearchRestApiConfig extends AbstractBundleConfig
     public const ERROR_MESSAGE_PARAMETER_MUST_BE_INTEGER = 'Value of %s must be of type integer.';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getIntegerRequestParameterNames(): array

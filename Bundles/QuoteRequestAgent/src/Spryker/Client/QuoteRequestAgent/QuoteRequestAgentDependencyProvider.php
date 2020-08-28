@@ -44,9 +44,9 @@ class QuoteRequestAgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addZedRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new QuoteRequestAgentToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -58,9 +58,9 @@ class QuoteRequestAgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE, function (Container $container) {
             return new QuoteRequestAgentToQuoteClientBridge($container->getLocator()->quote()->client());
-        };
+        });
 
         return $container;
     }
@@ -72,9 +72,9 @@ class QuoteRequestAgentDependencyProvider extends AbstractDependencyProvider
      */
     protected function addQuoteRequestClient(Container $container): Container
     {
-        $container[static::CLIENT_QUOTE_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_QUOTE_REQUEST, function (Container $container) {
             return new QuoteRequestAgentToQuoteRequestClientBridge($container->getLocator()->quoteRequest()->client());
-        };
+        });
 
         return $container;
     }

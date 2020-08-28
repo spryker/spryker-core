@@ -17,6 +17,11 @@ class IndexNameResolver implements IndexNameResolverInterface
     protected $storeClient;
 
     /**
+     * @var string|null
+     */
+    protected static $storeName;
+
+    /**
      * @param \Spryker\Shared\SearchElasticsearch\Dependency\Client\SearchElasticsearchToStoreClientInterface $storeClient
      */
     public function __construct(SearchElasticsearchToStoreClientInterface $storeClient)
@@ -45,8 +50,12 @@ class IndexNameResolver implements IndexNameResolverInterface
      */
     protected function getStoreName(): string
     {
-        $storeTransfer = $this->storeClient->getCurrentStore();
+        if (static::$storeName === null) {
+            $storeTransfer = $this->storeClient->getCurrentStore();
 
-        return $storeTransfer->requireName()->getName();
+            static::$storeName = $storeTransfer->requireName()->getName();
+        }
+
+        return static::$storeName;
     }
 }

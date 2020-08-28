@@ -42,8 +42,11 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
      * @param \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $dependencyFilter
      */
-    public function __construct(DependencyTreeReaderInterface $treeReader, ViolationFinderInterface $violationFinder, DependencyFilterInterface $dependencyFilter)
-    {
+    public function __construct(
+        DependencyTreeReaderInterface $treeReader,
+        ViolationFinderInterface $violationFinder,
+        DependencyFilterInterface $dependencyFilter
+    ) {
         $this->treeReader = $treeReader;
         $this->violationFinder = $violationFinder;
         $this->dependencyFilter = $dependencyFilter;

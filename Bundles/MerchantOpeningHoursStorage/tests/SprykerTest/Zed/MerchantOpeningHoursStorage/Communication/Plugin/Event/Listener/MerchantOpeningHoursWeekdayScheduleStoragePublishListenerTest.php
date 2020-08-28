@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\MerchantOpeningHoursStorage\Communication\Plugin\Event
 
 use Codeception\Test\Unit;
 use Generated\Shared\DataBuilder\EventEntityBuilder;
+use Orm\Zed\MerchantOpeningHours\Persistence\Map\SpyMerchantOpeningHoursWeekdayScheduleTableMap;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\Queue\QueueDependencyProvider;
 use Spryker\Zed\MerchantOpeningHours\Dependency\MerchantOpeningHoursEvents;
@@ -61,7 +62,9 @@ class MerchantOpeningHoursWeekdayScheduleStoragePublishListenerTest extends Unit
         $merchantOpeningHoursWeekdayScheduleStoragePublishListener = new MerchantOpeningHoursWeekdayScheduleStoragePublishListener();
         $merchantOpeningHoursWeekdayScheduleStoragePublishListener->setFacade($this->tester->getFacade());
         $eventTransfers = [
-            (new EventEntityBuilder())->build()->setId($merchantTransfer->getIdMerchant()),
+            (new EventEntityBuilder())
+                ->build()
+                ->setForeignKeys([SpyMerchantOpeningHoursWeekdayScheduleTableMap::COL_FK_MERCHANT => $merchantTransfer->getIdMerchant()]),
         ];
 
         // Act

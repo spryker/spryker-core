@@ -15,6 +15,8 @@ class PriceConfig extends AbstractSharedConfig
     public const PRICE_MODE_GROSS = 'GROSS_MODE';
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getPriceModes()
@@ -26,14 +28,18 @@ class PriceConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultPriceMode()
     {
-        return PriceConfig::PRICE_MODE_GROSS;
+        return static::PRICE_MODE_GROSS;
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getNetPriceModeIdentifier()
@@ -42,6 +48,8 @@ class PriceConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGrossPriceModeIdentifier()

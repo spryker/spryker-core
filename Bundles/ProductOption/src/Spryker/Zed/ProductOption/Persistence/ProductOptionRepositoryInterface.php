@@ -15,4 +15,18 @@ interface ProductOptionRepositoryInterface
      * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
      */
     public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array;
+
+    /**
+     * @param int[] $salesOrderItemIds
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getOrderItemsWithProductOptions(array $salesOrderItemIds): array;
+
+    /**
+     * @param string[] $productOptionSkus
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionValueTransfer[]
+     */
+    public function getProductOptionValuesBySkus(array $productOptionSkus): array;
 }

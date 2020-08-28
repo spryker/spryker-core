@@ -15,14 +15,9 @@ interface ProductOfferAvailabilityProviderInterface
     /**
      * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
      *
-     * @return bool
-     */
-    public function isProductSellableForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): bool;
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
-     *
      * @return \Generated\Shared\Transfer\ProductConcreteAvailabilityTransfer|null
      */
-    public function findProductConcreteAvailabilityForRequest(ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer): ?ProductConcreteAvailabilityTransfer;
+    public function findProductConcreteAvailabilityForRequest(
+        ProductOfferAvailabilityRequestTransfer $productOfferAvailabilityRequestTransfer
+    ): ?ProductConcreteAvailabilityTransfer;
 }

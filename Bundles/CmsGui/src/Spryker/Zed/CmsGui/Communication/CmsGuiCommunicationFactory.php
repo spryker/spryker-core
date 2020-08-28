@@ -20,6 +20,8 @@ use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvid
 use Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider;
 use Spryker\Zed\CmsGui\Communication\Form\Glossary\CmsGlossaryFormType;
 use Spryker\Zed\CmsGui\Communication\Form\Page\CmsPageFormType;
+use Spryker\Zed\CmsGui\Communication\Form\PublishVersionPageForm;
+use Spryker\Zed\CmsGui\Communication\Form\ToggleActiveCmsPageForm;
 use Spryker\Zed\CmsGui\Communication\Form\Version\CmsVersionFormType;
 use Spryker\Zed\CmsGui\Communication\Mapper\CmsVersionMapper;
 use Spryker\Zed\CmsGui\Communication\Table\CmsPageTable;
@@ -69,7 +71,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsVersionForm
+     * @deprecated Use {@link getCmsVersionForm()} instead.
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsVersionDataProvider $cmsVersionDataProvider
      * @param int|null $idCmsPage
@@ -99,7 +101,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsPageForm
+     * @deprecated Use {@link getCmsPageForm()} instead.
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsPageFormTypeDataProvider $cmsPageFormTypeDataProvider
      * @param int|null $idCmsPage
@@ -122,7 +124,7 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @deprecated use instead getCmsGlossaryForm
+     * @deprecated Use {@link getCmsGlossaryForm()} instead.
      *
      * @param \Spryker\Zed\CmsGui\Communication\Form\DataProvider\CmsGlossaryFormTypeDataProvider $cmsGlossaryFormTypeDataProvider
      * @param int $idCmsPage
@@ -248,6 +250,22 @@ class CmsGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createCmsGlossaryUpdater(): CmsGlossaryUpdaterInterface
     {
         return new CmsGlossaryUpdater($this->getCmsGlossaryAfterFindPlugins(), $this->getCmsGlossaryBeforeSavePlugins());
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createToggleActivateCmsPageForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ToggleActiveCmsPageForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createPublishVersionPageForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(PublishVersionPageForm::class);
     }
 
     /**

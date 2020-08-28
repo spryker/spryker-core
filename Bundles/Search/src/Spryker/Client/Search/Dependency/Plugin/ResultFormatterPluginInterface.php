@@ -5,10 +5,38 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface;
+namespace Spryker\Client\Search\Dependency\Plugin;
 
-// @deprecated Use `Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface` instead.
+use Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface as ExtensionResultFormatterPluginInterface;
+
+/**
+ * @deprecated Use {@link \Spryker\Client\SearchExtension\Dependency\Plugin\ResultFormatterPluginInterface} instead.
+ */
 class_alias(
-    ResultFormatterPluginInterface::class,
+    ExtensionResultFormatterPluginInterface::class,
     'Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface'
 );
+
+// This is done to support Composer's --classmap-authoritative option.
+// phpcs:ignore
+if (false) {
+    interface ResultFormatterPluginInterface
+    {
+        /**
+         * @api
+         *
+         * @return string
+         */
+        public function getName();
+
+        /**
+         * @api
+         *
+         * @param mixed $searchResult
+         * @param array $requestParameters
+         *
+         * @return mixed
+         */
+        public function formatResult($searchResult, array $requestParameters = []);
+    }
+}

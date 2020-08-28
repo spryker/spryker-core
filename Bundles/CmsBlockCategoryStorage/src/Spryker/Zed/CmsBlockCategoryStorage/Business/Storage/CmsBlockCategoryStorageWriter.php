@@ -39,7 +39,7 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
     protected $utilSanitizeService;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -126,8 +126,10 @@ class CmsBlockCategoryStorageWriter implements CmsBlockCategoryStorageWriterInte
      *
      * @return void
      */
-    protected function storeDataSet(CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer, ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null): void
-    {
+    protected function storeDataSet(
+        CmsBlockCategoriesTransfer $cmsBlockCategoriesTransfer,
+        ?SpyCmsBlockCategoryStorage $spyCmsBlockCategoryStorage = null
+    ): void {
         if ($spyCmsBlockCategoryStorage === null) {
             $spyCmsBlockCategoryStorage = new SpyCmsBlockCategoryStorage();
         }

@@ -46,6 +46,6 @@ class ContentBannerContentGuiEditorConfigurationMapper implements ContentBannerC
      */
     public function getTwigFunctionTemplate(): string
     {
-        return "{{ " . $this->contentBannerGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
+        return '{{ ' . $this->contentBannerGuiConfig->getTwigFunctionName() . "('%KEY%', '%TEMPLATE%') }}";
     }
 }

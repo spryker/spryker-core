@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CustomerGroupQueryContainer extends AbstractQueryContainer implements CustomerGroupQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\CustomerGroup\Persistence\SpyCustomerGroupQuery
@@ -26,6 +28,8 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomerGroup
@@ -39,6 +43,8 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomerGroup
@@ -53,6 +59,8 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -69,6 +77,8 @@ class CustomerGroupQueryContainer extends AbstractQueryContainer implements Cust
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomerQuery

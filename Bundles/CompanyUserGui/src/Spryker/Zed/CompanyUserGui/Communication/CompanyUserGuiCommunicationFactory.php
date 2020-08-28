@@ -16,6 +16,9 @@ use Spryker\Zed\CompanyUserGui\Communication\Form\CompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\CustomerCompanyAttachForm;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CompanyUserFormDataProvider;
 use Spryker\Zed\CompanyUserGui\Communication\Form\DataProvider\CustomerCompanyAttachFormDataProvider;
+use Spryker\Zed\CompanyUserGui\Communication\Form\DeleteCompanyUserForm;
+use Spryker\Zed\CompanyUserGui\Communication\Form\DisableCompanyUserForm;
+use Spryker\Zed\CompanyUserGui\Communication\Form\EnableCompanyUserForm;
 use Spryker\Zed\CompanyUserGui\Communication\Table\CompanyUserTable;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutor;
 use Spryker\Zed\CompanyUserGui\Communication\Table\PluginExecutor\CompanyUserTableExpanderPluginExecutorInterface;
@@ -166,6 +169,30 @@ class CompanyUserGuiCommunicationFactory extends AbstractCommunicationFactory
             $this->getCompanyUserTableActionExpanderPlugins(),
             $this->getCompanyUserTableDeleteActionPlugin()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createEnableCompanyUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(EnableCompanyUserForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDisableCompanyUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DisableCompanyUserForm::class);
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createDeleteCompanyUserForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(DeleteCompanyUserForm::class);
     }
 
     /**

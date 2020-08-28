@@ -12,6 +12,8 @@ use Spryker\Client\Kernel\AbstractBundleConfig;
 class StorageConfig extends AbstractBundleConfig
 {
     /**
+     * @api
+     *
      * @return int
      */
     public function getStorageCacheIncrementalStrategyKeySizeLimit()
@@ -20,6 +22,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getStorageCacheTtl()
@@ -32,6 +36,8 @@ class StorageConfig extends AbstractBundleConfig
      * - Defines parameter names which will be used for kv multi get optimisation.
      * - Please make sure you use an expected case for parameter names.
      *
+     * @api
+     *
      * @return string[]
      */
     public function getAllowedGetParametersList(): array
@@ -40,6 +46,8 @@ class StorageConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isStorageCachingEnabled(): bool

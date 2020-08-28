@@ -9,7 +9,9 @@ namespace Spryker\Zed\ShoppingListProductOptionConnector\Business\ShoppingListPr
 
 use Generated\Shared\Transfer\ProductOptionCollectionTransfer;
 use Generated\Shared\Transfer\ProductOptionCriteriaTransfer;
+use Generated\Shared\Transfer\ShoppingListItemCollectionTransfer;
 use Generated\Shared\Transfer\ShoppingListItemTransfer;
+use Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer;
 use Spryker\Zed\ShoppingListProductOptionConnector\Dependency\Facade\ShoppingListProductOptionConnectorToProductOptionFacadeInterface;
 use Spryker\Zed\ShoppingListProductOptionConnector\Persistence\ShoppingListProductOptionConnectorRepositoryInterface;
 
@@ -38,6 +40,8 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     }
 
     /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCollectionTransfer
@@ -50,6 +54,37 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
+     */
+    public function getShoppingListProductOptionCollectionByShoppingListItemCollection(
+        ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+    ): ShoppingListProductOptionCollectionTransfer {
+        $shoppingListItemIds = $this->getShoppingListItemIdsFromShoppingListItemCollection($shoppingListItemCollectionTransfer);
+
+        return $this->shoppingListProductOptionRepository
+            ->getShoppingListProductOptionCollectionByShoppingListItemIds($shoppingListItemIds);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer
+     *
+     * @return int[]
+     */
+    protected function getShoppingListItemIdsFromShoppingListItemCollection(ShoppingListItemCollectionTransfer $shoppingListItemCollectionTransfer): array
+    {
+        $shoppingListItemIds = [];
+        foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
+            $shoppingListItemIds[] = $shoppingListItemTransfer->getIdShoppingListItem();
+        }
+
+        return $shoppingListItemIds;
+    }
+
+    /**
+     * @deprecated Will be removed in the next major release.
+     *
      * @param \Generated\Shared\Transfer\ShoppingListItemTransfer $shoppingListItemTransfer
      *
      * @return \Generated\Shared\Transfer\ProductOptionCriteriaTransfer
@@ -66,6 +101,14 @@ class ShoppingListProductOptionReader implements ShoppingListProductOptionReader
         $productOptionCriteriaTransfer->setProductOptionIds($shoppingListItemProductOptionIds)
             ->setProductConcreteSku($shoppingListItemTransfer->getSku())
             ->setProductOptionGroupIsActive(true);
+
+        $productOptionCriteriaTransfer->setCurrencyIsoCode(
+            $shoppingListItemTransfer->getCurrencyIsoCode()
+        );
+
+        $productOptionCriteriaTransfer->setPriceMode(
+            $shoppingListItemTransfer->getPriceMode()
+        );
 
         return $productOptionCriteriaTransfer;
     }

@@ -17,7 +17,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -30,7 +30,7 @@ interface ProductCategoryStorageFacadeInterface
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

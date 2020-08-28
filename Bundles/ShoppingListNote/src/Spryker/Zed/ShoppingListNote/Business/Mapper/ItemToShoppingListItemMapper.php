@@ -19,8 +19,10 @@ class ItemToShoppingListItemMapper implements ItemToShoppingListItemMapperInterf
      *
      * @return \Generated\Shared\Transfer\ShoppingListItemTransfer
      */
-    public function mapItemCartNoteToShoppingListItemNote(ItemTransfer $itemTransfer, ShoppingListItemTransfer $shoppingListItemTransfer): ShoppingListItemTransfer
-    {
+    public function mapItemCartNoteToShoppingListItemNote(
+        ItemTransfer $itemTransfer,
+        ShoppingListItemTransfer $shoppingListItemTransfer
+    ): ShoppingListItemTransfer {
         $shoppingListItemTransfer->setShoppingListItemNote(
             (new ShoppingListItemNoteTransfer())->setNote($itemTransfer->getCartNote())
         );

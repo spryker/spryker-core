@@ -22,8 +22,10 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer
      */
-    public function mapPriceProductOfferStorageDataToPriceProductTransfer(array $priceProductOffer, PriceProductTransfer $priceProductTransfer): PriceProductTransfer
-    {
+    public function mapPriceProductOfferStorageDataToPriceProductTransfer(
+        array $priceProductOffer,
+        PriceProductTransfer $priceProductTransfer
+    ): PriceProductTransfer {
         $priceProductOfferStorageTransfer = (new PriceProductOfferStorageTransfer())->fromArray($priceProductOffer);
 
         $priceProductTransfer
@@ -36,6 +38,7 @@ class PriceProductOfferStorageMapper implements PriceProductOfferStorageMapperIn
             ->setPriceTypeName($priceProductOfferStorageTransfer->getPriceType())
             ->setMoneyValue(
                 (new MoneyValueTransfer())
+                    ->setPriceData($priceProductOfferStorageTransfer->getPriceData() ?: null)
                     ->setCurrency(
                         (new CurrencyTransfer())->setCode($priceProductOfferStorageTransfer->getCurrency())
                     )

@@ -23,8 +23,7 @@ class ConcreteProductAvailabilitiesResourceController extends AbstractController
      *              "Retrieves concrete product availabilities."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Concrete product id is not specified.",

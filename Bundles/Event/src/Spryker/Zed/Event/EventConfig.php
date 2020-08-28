@@ -21,6 +21,8 @@ class EventConfig extends AbstractBundleConfig
     public const NO_RETRY = 0;
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function findEventLogPath()
@@ -33,6 +35,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isLoggerActivated()
@@ -45,6 +49,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getEventQueueMessageChunkSize()
@@ -53,6 +59,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxRetryAmount()
@@ -71,6 +79,8 @@ class EventConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getEnqueueEventMessageChunkSize(): int

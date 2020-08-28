@@ -20,26 +20,32 @@ class SearchConfig extends AbstractBundleConfig
     protected const DEFAULT_SOURCE_IDENTIFIER = 'page';
 
     /**
+     * @api
+     *
      * @deprecated Use source identifiers instead.
      *
      * @return string
      */
     public function getSearchIndexName()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__INDEX_NAME, sprintf('%s_search', strtolower(APPLICATION_STORE)));
     }
 
     /**
-     * @deprecated Use `\Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier` instead for vendor specific source identification.
+     * @api
+     *
+     * @deprecated Use {@link \Spryker\Client\Search\SearchConfig::getDefaultSourceIdentifier()} instead for vendor specific source identification.
      *
      * @return string
      */
     public function getSearchDocumentType()
     {
-        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE);
+        return $this->get(SearchConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE, 'page');
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getElasticsearchConfig()
@@ -69,6 +75,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getFacetNameAggregationSize()
@@ -77,6 +85,8 @@ class SearchConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultSourceIdentifier(): string

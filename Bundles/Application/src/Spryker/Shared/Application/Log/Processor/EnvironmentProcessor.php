@@ -19,6 +19,7 @@ class EnvironmentProcessor
     public const APPLICATION = 'application';
     public const ENVIRONMENT = 'environment';
     public const STORE = 'store';
+    public const CODE_BUCKET = 'codeBucket';
     public const LOCALE = 'locale';
     public const RECORD_EXTRA = 'extra';
 
@@ -45,6 +46,7 @@ class EnvironmentProcessor
             static::APPLICATION => APPLICATION,
             static::ENVIRONMENT => APPLICATION_ENV,
             static::STORE => $store->getStoreName(),
+            static::CODE_BUCKET => APPLICATION_CODE_BUCKET,
             static::LOCALE => $store->getCurrentLocale(),
         ];
     }

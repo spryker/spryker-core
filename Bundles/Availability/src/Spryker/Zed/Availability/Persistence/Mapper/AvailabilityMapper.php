@@ -63,8 +63,10 @@ class AvailabilityMapper implements AvailabilityMapperInterface
             $availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK] = $this->isNeverOutOfStock($availabilityAbstractData[ProductAbstractAvailabilityTransfer::IS_NEVER_OUT_OF_STOCK]);
         }
 
-        if (isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]) &&
-            isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::STOCK_QUANTITY])) {
+        if (
+            isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]) &&
+            isset($availabilityAbstractData[ProductAbstractAvailabilityTransfer::STOCK_QUANTITY])
+        ) {
             $availabilityAbstractData[ProductAbstractAvailabilityTransfer::AVAILABILITY] = (new Decimal($availabilityAbstractData[ProductAbstractAvailabilityTransfer::STOCK_QUANTITY]))
                 ->subtract($availabilityAbstractData[ProductAbstractAvailabilityTransfer::RESERVATION_QUANTITY]);
         }

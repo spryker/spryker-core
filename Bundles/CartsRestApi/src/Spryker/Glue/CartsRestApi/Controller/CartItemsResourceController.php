@@ -24,8 +24,7 @@ class CartItemsResourceController extends AbstractController
      *              "Adds an item to the cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -60,8 +59,7 @@ class CartItemsResourceController extends AbstractController
      *              "Updates cart item quantity."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *          "responses": {
@@ -96,8 +94,7 @@ class CartItemsResourceController extends AbstractController
      *              "Removes item from the cart."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Cart id or item id is not specified.",

@@ -1,0 +1,127 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 236,
+            "line_to": 236,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface&static' for Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface::addAccessDeniedHandler is more specific than the implemented return type for Spryker\\Shared\\Security\\Configuration\\SecurityConfiguration::addaccessdeniedhandler 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Shared/Security/Configuration/SecurityConfiguration.php",
+            "snippet": "     * @return \\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 260,
+            "line_to": 260,
+            "type": "LessSpecificImplementedReturnType",
+            "message": "The inherited return type 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface&static' for Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface::addEventSubscriber is more specific than the implemented return type for Spryker\\Shared\\Security\\Configuration\\SecurityConfiguration::addeventsubscriber 'Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface'",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Shared/Security/Configuration/SecurityConfiguration.php",
+            "snippet": "     * @return \\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "selected_text": "\\Spryker\\Shared\\SecurityExtension\\Configuration\\SecurityBuilderInterface",
+            "error_level": 5,
+            "shortcode": 166
+        },
+        {
+            "severity": "info",
+            "line_from": 621,
+            "line_to": 621,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                if (!$container->has('security.authentication_provider.' . $firewallName . '.' . $provider)) {",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 622,
+            "line_to": 622,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    $container->set('security.authentication_provider.' . $firewallName . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($firewallName, $options));",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 622,
+            "line_to": 622,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    $container->set('security.authentication_provider.' . $firewallName . '.' . $provider, $container->get('security.authentication_provider.' . $provider . '._proto')($firewallName, $options));",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 626,
+            "line_to": 626,
+            "type": "PossiblyNullOperand",
+            "message": "Cannot concatenate with a possibly null null|string",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "                    'security.authentication_provider.' . $firewallName . '.' . $provider,",
+            "selected_text": "$provider",
+            "error_level": 1,
+            "shortcode": 80
+        },
+        {
+            "severity": "info",
+            "line_from": 123,
+            "line_to": 123,
+            "type": "TypeDoesNotContainType",
+            "message": "Found a contradiction when evaluating $options and trying to reconcile type 'array<array-key, mixed>' to !array",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Security/RememberMeSecurityPlugin.php",
+            "snippet": "                if (!is_array($options)) {",
+            "selected_text": "is_array($options)",
+            "error_level": 4,
+            "shortcode": 56
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "InvalidDocblock",
+            "message": "Found duplicated @return or prefixed @return tag in docblock for Spryker\\Yves\\Security\\SecurityDependencyProvider::provideDependencies",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/SecurityDependencyProvider.php",
+            "snippet": "    /**\n     * @param \\Spryker\\Yves\\Kernel\\Container $container\n     *\n     * @return \\Spryker\\Yves\\Kernel\\Container\n     * @return \\Spryker\\Yves\\Kernel\\Container\n     */\n    public function provideDependencies(Container $container): Container",
+            "selected_text": "public function provideDependencies(Container $container): Container",
+            "error_level": 4,
+            "shortcode": 8
+        }
+    ],
+    "deprecation": [
+        {
+            "severity": "info",
+            "line_from": 367,
+            "line_to": 367,
+            "type": "DeprecatedMethod",
+            "message": "The method Spryker\\Yves\\Security\\Plugin\\Application\\SecurityApplicationPlugin::addUserPasswordValidator has been marked as deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/Plugin/Application/SecurityApplicationPlugin.php",
+            "snippet": "            $this->addUserPasswordValidator($container);",
+            "selected_text": "addUserPasswordValidator",
+            "error_level": 2,
+            "shortcode": 1
+        },
+        {
+            "severity": "info",
+            "line_from": 35,
+            "line_to": 35,
+            "type": "DeprecatedClass",
+            "message": "Symfony\\Component\\Security\\Core\\Encoder\\BCryptPasswordEncoder is marked deprecated",
+            "file_name": "vendor/spryker/spryker/Bundles/Security/src/Spryker/Yves/Security/SecurityFactory.php",
+            "snippet": "        return new BCryptPasswordEncoder($this->getConfig()->getBCryptCost());",
+            "selected_text": "new BCryptPasswordEncoder($this->getConfig()->getBCryptCost())",
+            "error_level": 2,
+            "shortcode": 98
+        }
+    ]
+}

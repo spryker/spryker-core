@@ -10,6 +10,9 @@ namespace Spryker\Shared\Kernel\ClassResolver\Cache\Provider;
 use Spryker\Shared\Kernel\ClassResolver\Cache\AbstractProvider;
 use Spryker\Shared\Kernel\ClassResolver\Cache\Storage\File as FileStorage;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+ */
 class File extends AbstractProvider
 {
     /**

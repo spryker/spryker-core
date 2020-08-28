@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class BusinessOnBehalfCompanyUserDataImportPlugin extends AbstractPlugin implements DataImportPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\DataImporterConfigurationTransfer|null $dataImporterConfigurationTransfer
@@ -32,6 +34,8 @@ class BusinessOnBehalfCompanyUserDataImportPlugin extends AbstractPlugin impleme
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string

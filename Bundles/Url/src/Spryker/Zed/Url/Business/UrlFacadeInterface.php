@@ -271,8 +271,6 @@ interface UrlFacadeInterface
      * - Checks if the provided URL redirect is valid or not.
      * - URL redirect is invalid if it results in a redirect loop.
      *
-     * {@inheritDoc}
-     *
      * @api
      *
      * @param \Generated\Shared\Transfer\UrlRedirectTransfer $urlRedirectTransfer

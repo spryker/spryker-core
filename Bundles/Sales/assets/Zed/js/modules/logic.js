@@ -37,7 +37,7 @@ $(document).ready(function () {
 
     $('.item-check').click(function(){
         var $table = $(this).closest('table');
-        var $checkAllOrders = $table.find('.check-all-orders');
+        var $checkAllOrders = $table.find('#check-all-orders');
         var countChecked = $table.find('.item-check[type="checkbox"]:checked').length;
         var totalCheckboxItems = $table.find('.item-check').length;
 
@@ -62,18 +62,6 @@ $(document).ready(function () {
         $button.toggleClass('is-shown', isHidden);
     });
 
-    $('.more-history').click(function(e){
-        e.preventDefault();
-        var idProductItem = $(this).data('id');
-        var $history = $('#history_details_' + idProductItem);
-        var $button = $('#history-btn-' + idProductItem);
-        var isHidden = $history.hasClass('hidden');
-
-        $history.toggleClass('hidden', !isHidden);
-        $button.toggleClass('is-hidden', !isHidden);
-        $button.toggleClass('is-shown', isHidden);
-    });
-
     $('.item-split').click(function(e){
         e.preventDefault();
         var theID = $(this).data('id');
@@ -81,7 +69,7 @@ $(document).ready(function () {
         $('#split_form_row_' + theID).toggle();
     });
 
-    $('.check-all-orders').click(function(){
+    $('#check-all-orders').click(function(){
         $(this).closest('table').find('.item-check').prop('checked', $(this).prop('checked'));
     });
 });

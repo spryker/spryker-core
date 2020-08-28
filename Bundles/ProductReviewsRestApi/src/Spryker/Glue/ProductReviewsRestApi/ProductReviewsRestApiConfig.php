@@ -52,6 +52,8 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
     protected const DEFAULT_REVIEWS_PER_PAGE = 10;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaximumNumberOfResults(): int
@@ -60,6 +62,8 @@ class ProductReviewsRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getDefaultReviewsPerPage(): int

@@ -32,6 +32,6 @@ class ProductOptionViewCest
     {
         $i->listDataTable(ProductOptionListPage::URL . '/list-table');
         $i->clickDataTableViewButton();
-        $i->seeBreadcrumbNavigation('Products / Product Options / View Product Option');
+        $i->seeBreadcrumbNavigation('Catalog / Product Options / View Product Option');
     }
 }

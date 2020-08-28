@@ -133,8 +133,9 @@ class QuoteRequestStub implements QuoteRequestStubInterface
      *
      * @return \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer
      */
-    public function getQuoteRequestVersionCollectionByFilter(QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer): QuoteRequestVersionCollectionTransfer
-    {
+    public function getQuoteRequestVersionCollectionByFilter(
+        QuoteRequestVersionFilterTransfer $quoteRequestVersionFilterTransfer
+    ): QuoteRequestVersionCollectionTransfer {
         /** @var \Generated\Shared\Transfer\QuoteRequestVersionCollectionTransfer $quoteRequestVersionCollectionTransfer */
         $quoteRequestVersionCollectionTransfer = $this->zedRequestClient->call(
             '/quote-request/gateway/get-quote-request-version-collection-by-filter',

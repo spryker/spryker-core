@@ -16,6 +16,8 @@ class MerchantConfig extends AbstractBundleConfig
     public const STATUS_DENIED = 'denied';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultMerchantStatus(): string
@@ -24,6 +26,8 @@ class MerchantConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getStatusTree(): array

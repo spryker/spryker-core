@@ -9,10 +9,10 @@ namespace SprykerTest\Zed\ProductOfferValidity;
 
 use Codeception\Actor;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
+use Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepository;
+use Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,9 +31,15 @@ class ProductOfferValidityBusinessTester extends Actor
 {
     use _generated\ProductOfferValidityBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return void
+     */
+    public function ensureProductOfferValidityTableIsEmpty(): void
+    {
+        $productOfferValidityQuery = $this->getProductOfferValidityPropelQuery();
+        $this->ensureDatabaseTableIsEmpty($productOfferValidityQuery);
+        $productOfferValidityQuery->deleteAll();
+    }
 
     /**
      * @return void
@@ -49,5 +55,13 @@ class ProductOfferValidityBusinessTester extends Actor
     public function getProductOfferValidityPropelQuery(): SpyProductOfferValidityQuery
     {
         return SpyProductOfferValidityQuery::create();
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface
+     */
+    public function getProductOfferValidityRepository(): ProductOfferValidityRepositoryInterface
+    {
+        return new ProductOfferValidityRepository();
     }
 }

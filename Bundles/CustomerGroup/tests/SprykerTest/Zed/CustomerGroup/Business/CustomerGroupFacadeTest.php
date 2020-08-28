@@ -82,7 +82,7 @@ class CustomerGroupFacadeTest extends Unit
         $customerGroupTransfer = $customerGroupFacade->findCustomerGroupByIdCustomer($customerEntity->getIdCustomer());
 
         $this->assertNotEmpty($customerGroupTransfer);
-        $this->assertEquals($customerGroupEntity->getName(), $customerGroupTransfer->getName());
+        $this->assertSame($customerGroupEntity->getName(), $customerGroupTransfer->getName());
     }
 
     /**
@@ -317,8 +317,12 @@ class CustomerGroupFacadeTest extends Unit
      *
      * @return \Orm\Zed\Customer\Persistence\SpyCustomer
      */
-    protected function createCustomer(string $email = 'one@first.de', string $lastName = 'First', string $firstName = 'One', string $reference = 'one'): SpyCustomer
-    {
+    protected function createCustomer(
+        string $email = 'one@first.de',
+        string $lastName = 'First',
+        string $firstName = 'One',
+        string $reference = 'one'
+    ): SpyCustomer {
         $customerEntity = new SpyCustomer();
         $customerEntity->setFirstName($firstName);
         $customerEntity->setFirstName($lastName);

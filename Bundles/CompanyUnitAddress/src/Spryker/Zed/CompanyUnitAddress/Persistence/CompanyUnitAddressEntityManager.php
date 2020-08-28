@@ -103,8 +103,9 @@ class CompanyUnitAddressEntityManager extends AbstractEntityManager implements C
      *
      * @return void
      */
-    public function saveAddressToBusinessUnitRelation(SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer): void
-    {
+    public function saveAddressToBusinessUnitRelation(
+        SpyCompanyUnitAddressToCompanyBusinessUnitEntityTransfer $companyUnitAddressToCompanyBusinessUnitEntityTransfer
+    ): void {
         $this->save($companyUnitAddressToCompanyBusinessUnitEntityTransfer);
     }
 }

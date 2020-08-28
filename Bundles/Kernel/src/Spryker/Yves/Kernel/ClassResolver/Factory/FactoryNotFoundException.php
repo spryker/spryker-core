@@ -33,7 +33,7 @@ class FactoryNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sFactory for your bundle "%1$s"',
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing Factory to your bundle.' . PHP_EOL;
@@ -41,7 +41,7 @@ class FactoryNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %s\\Yves\\%2$s\\%2$sFactory' . PHP_EOL . PHP_EOL,
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         );
 
         $message .= new Backtrace();

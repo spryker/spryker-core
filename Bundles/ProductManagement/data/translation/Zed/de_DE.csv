@@ -1,5 +1,5 @@
-Active,Aktiv
 Activate,Aktivieren
+Active,Aktiv
 "Add General Information","Allgemeine Informationen hinzufügen"
 "Add image","Bild hinzufügen"
 "Add image set","Bilderset hinzufügen"
@@ -77,3 +77,31 @@ Type,Typ
 Variants,Varianten
 "View Product Abstract","Abstraktes Produkt anzeigen"
 "View Product Concrete","Konkretes Produkt anzeigen"
+Product,Produkt
+Products,Produkte
+Availability,Produkt-Verfügbarkeit
+"New from","Neu von"
+"New to","Neu bis"
+"At least one price should be specified","Geben Sie mindestens ein Preis an."
+"Please enter at least an SKU and a Name of the product in every locale in the General section","Geben Sie mindestens eine SKU und einen Namen des Produktes für jede Region (in jeder Sprache) im Abschnitt ""Allgemein"" an."
+"The product [%s] was added successfully.","Produkt [%s] wurde erfolgreich hinzugefügt."
+Images,Bilder
+"Add Product Volume Price","Staffelpreise hinzufügen"
+"Is bundle","Ist ein Bündelprodukt"
+"View Concrete Product","Konkretes Produkt anzeigen"
+"Edit Concrete Product","Konkretes Produkt bearbeiten"
+"Super attributes",Superattribute
+"Valid from","Gültig ab"
+"Valid to","Gültig bis"
+Searchable,"Ist suchbar"
+Stock,Bestand
+"Sort order",Sortierreihenfolge
+"Assign bundled products","Bündelprodukte zuordnen"
+"Valid From (GMT)","Gültig ab (GMT)"
+"Valid To (GMT)","Gültig bis (GMT)"
+Remove,Entfernen
+quantity,Menge
+Price,Preis
+"id product",Produkt-ID
+select,auswählen
+"Product name",Produktname

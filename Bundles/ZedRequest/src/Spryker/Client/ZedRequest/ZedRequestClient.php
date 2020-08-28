@@ -51,6 +51,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -63,6 +65,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]
@@ -75,6 +79,8 @@ class ZedRequestClient extends AbstractClient implements ZedRequestClientInterfa
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Generated\Shared\Transfer\MessageTransfer[]

@@ -25,14 +25,15 @@ class CalculationFacade extends AbstractFacade implements CalculationFacadeInter
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param bool $executeQuotePlugins
      *
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
-    public function recalculateQuote(QuoteTransfer $quoteTransfer)
+    public function recalculateQuote(QuoteTransfer $quoteTransfer, bool $executeQuotePlugins = true)
     {
         return $this->getFactory()
             ->createQuoteCalculatorExecutor()
-            ->recalculate($quoteTransfer);
+            ->recalculate($quoteTransfer, $executeQuotePlugins);
     }
 
     /**

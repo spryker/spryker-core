@@ -144,7 +144,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use executePreConditionPluginsForPayments() instead. Will be removed along with QuoteTransfer::getPayment().
+     * @deprecated Use {@link executePreConditionPluginsForPayments()} instead. Will be removed along with QuoteTransfer::getPayment().
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -195,7 +195,7 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
     }
 
     /**
-     * @deprecated Use executePreCheckPluginPaymentPlugin() instead.
+     * @deprecated Use {@link executePreCheckPluginPaymentPlugin()} instead.
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
@@ -203,8 +203,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      *
      * @return bool
      */
-    protected function executePreCheckPluginPayment(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
-    {
+    protected function executePreCheckPluginPayment(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        CheckoutPreCheckPluginInterface $plugin
+    ) {
         $errorCount = $checkoutResponseTransfer->getErrors()->count();
         $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
 
@@ -218,8 +221,11 @@ class PaymentPluginExecutor implements PaymentPluginExecutorInterface
      *
      * @return void
      */
-    protected function executePreCheckPluginPaymentPlugin(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer, CheckoutPreCheckPluginInterface $plugin)
-    {
+    protected function executePreCheckPluginPaymentPlugin(
+        QuoteTransfer $quoteTransfer,
+        CheckoutResponseTransfer $checkoutResponseTransfer,
+        CheckoutPreCheckPluginInterface $plugin
+    ) {
         $plugin->execute($quoteTransfer, $checkoutResponseTransfer);
     }
 

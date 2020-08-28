@@ -21,6 +21,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class StockForm extends AbstractType
 {
@@ -121,7 +122,7 @@ class StockForm extends AbstractType
      */
     protected function addIsNeverOutOfStockCheckbox(FormBuilderInterface $builder)
     {
-        $builder->add(StockForm::FIELD_IS_NEVER_OUT_OF_STOCK, CheckboxType::class, [
+        $builder->add(self::FIELD_IS_NEVER_OUT_OF_STOCK, CheckboxType::class, [
             'label' => 'Never out of stock',
         ]);
 

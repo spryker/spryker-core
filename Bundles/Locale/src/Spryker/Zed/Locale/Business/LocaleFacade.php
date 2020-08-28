@@ -18,9 +18,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
 {
     /**
-     * Specification:
-     * - Checks if the given $localeName exists in database or not.
-     * - Returns true if it exists, false otherwise.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -36,9 +34,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Reads persisted locale by given locale name.
-     * - Returns a LocaleTransfer if it's found, throws exception otherwise.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -50,19 +46,17 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
      */
     public function getLocale($localeName)
     {
-        $localeManager = $this->getFactory()->createLocaleManager();
+        $localeManager = $this->getFactory()->createLocaleReader();
 
-        return $localeManager->getLocale($localeName);
+        return $localeManager->getLocaleByName($localeName);
     }
 
     /**
-     * Specification:
-     * - Reads persisted locale by given locale name.
-     * - Returns a LocaleTransfer if it's found, throws exception otherwise.
+     * {@inheritDoc}
      *
      * @api
      *
-     * @deprecated Use getLocale($localeName) instead
+     * @deprecated Use {@link \Spryker\Zed\Locale\Business\LocaleFacade::getLocale()} instead.
      *
      * @param string $localeCode
      *
@@ -76,9 +70,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Reads persisted locale by given locale id
-     * - Returns a LocaleTransfer if it's found, throws exception otherwise.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -94,8 +86,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns the name of the currently used locale.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -107,13 +98,11 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns an associative array of [id_locale => locale_name] pairs.
-     * - The locales returned are read from the store configuration and their data is read from database.
+     * {@inheritDoc}
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function getAvailableLocales()
     {
@@ -123,8 +112,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Returns a LocaleTransfer with the data of the currently used locale.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -138,10 +126,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Persists a new locale entity to database.
-     * - The locale name must be unique otherwise exception is thrown.
-     * - Returns a LocaleTransfer with the data of the persisted locale.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -157,8 +142,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - "Soft delete" the locale entity by setting it inactive.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -173,9 +157,7 @@ class LocaleFacade extends AbstractFacade implements LocaleFacadeInterface
     }
 
     /**
-     * Specification:
-     * - Reads a list of predefined locales from a file, specified in the LocaleConfig.
-     * - Persists new locale entities from the list to database.
+     * {@inheritDoc}
      *
      * @api
      *

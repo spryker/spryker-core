@@ -14,6 +14,7 @@ use Spryker\Zed\ProductManagementExtension\Dependency\Plugin\ProductConcreteForm
 class DiscontinueProductConcreteFormEditTabsExpanderPlugin implements ProductConcreteFormEditTabsExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Expands form tabs for ProductConcreteEditForm
      *

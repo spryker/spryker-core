@@ -22,9 +22,9 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
      */
     public function provideServiceLayerDependencies(Container $container)
     {
-        $container[self::SERVICE_ZED] = function (Container $container) {
+        $container->set(static::SERVICE_ZED, function (Container $container) {
             return $container->getLocator()->zedRequest()->client();
-        };
+        });
 
         $container = $this->addCheckoutPreCheckPlugins($container);
 
@@ -38,9 +38,9 @@ class CheckoutDependencyProvider extends AbstractDependencyProvider
      */
     protected function addCheckoutPreCheckPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_CHECKOUT_PRE_CHECK] = function () {
+        $container->set(static::PLUGINS_CHECKOUT_PRE_CHECK, function () {
             return $this->getCheckoutPreCheckPlugins();
-        };
+        });
 
         return $container;
     }

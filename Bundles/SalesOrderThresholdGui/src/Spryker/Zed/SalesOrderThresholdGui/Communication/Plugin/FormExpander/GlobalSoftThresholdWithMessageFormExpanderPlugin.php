@@ -21,6 +21,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin implements SalesOrderThresholdFormExpanderPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -31,6 +33,8 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -41,6 +45,8 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -51,6 +57,8 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -64,6 +72,8 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer $salesOrderThresholdValueTransfer
@@ -77,6 +87,8 @@ class GlobalSoftThresholdWithMessageFormExpanderPlugin extends AbstractPlugin im
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $data

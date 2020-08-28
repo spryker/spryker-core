@@ -13,6 +13,9 @@ use Symfony\Component\Console\Event\ConsoleTerminateEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\Monitoring\Communication\Plugin\Console\MonitoringConsolePlugin} instead.
+ *
+ * @method \Spryker\Zed\Monitoring\Business\MonitoringFacade getFacade()
  * @method \Spryker\Zed\Monitoring\Communication\MonitoringCommunicationFactory getFactory()
  * @method \Spryker\Zed\Monitoring\MonitoringConfig getConfig()
  */
@@ -21,6 +24,8 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     public const TRANSACTION_NAME_PREFIX = 'vendor/bin/console ';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Symfony\Component\Console\Event\ConsoleTerminateEvent $event
@@ -52,6 +57,8 @@ class MonitoringConsolePlugin extends AbstractPlugin implements EventSubscriberI
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return array

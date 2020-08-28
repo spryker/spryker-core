@@ -8,10 +8,13 @@
 namespace Spryker\Zed\Locale\Business\Internal\Install;
 
 use Orm\Zed\Locale\Persistence\SpyLocale;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 
 class LocaleInstaller implements LocaleInstallerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var string
      */
@@ -45,9 +48,16 @@ class LocaleInstaller implements LocaleInstallerInterface
      */
     protected function installLocales()
     {
-        $this->localeQueryContainer->getConnection()
-            ->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function (): void {
+            $this->executeInstallLocalesTransaction();
+        });
+    }
 
+    /**
+     * @return void
+     */
+    protected function executeInstallLocalesTransaction(): void
+    {
         $localeFile = fopen($this->localeFile, 'r');
 
         while (!feof($localeFile)) {
@@ -62,8 +72,5 @@ class LocaleInstaller implements LocaleInstallerInterface
                 $entity->save();
             }
         }
-
-        $this->localeQueryContainer->getConnection()
-            ->commit();
     }
 }

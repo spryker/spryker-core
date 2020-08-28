@@ -110,4 +110,7 @@
 
     <transfer name="Order">
     </transfer>
+
+    <transfer name="User">
+    </transfer>
 </transfers>

@@ -11,11 +11,10 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 use Generated\Shared\Transfer\CompanyTransfer;
 use Generated\Shared\Transfer\CompanyUserTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -77,5 +76,19 @@ class ShoppingListBusinessTester extends Actor
             ShoppingListTransfer::CUSTOMER_REFERENCE => $companyUserTransfer->getCustomer()->getCustomerReference(),
             ShoppingListTransfer::ID_COMPANY_USER => $companyUserTransfer->getIdCompanyUser(),
         ]);
+    }
+
+    /**
+     * @param bool $isActive
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    public function createProductConcrete(bool $isActive): ProductConcreteTransfer
+    {
+        $productConcreteOverride = [
+            ProductConcreteTransfer::IS_ACTIVE => $isActive,
+        ];
+
+        return $this->haveFullProduct($productConcreteOverride);
     }
 }

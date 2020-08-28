@@ -23,6 +23,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     public const PAYMENT_PROVIDER = 'DummyPayment';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Spryker\Zed\Kernel\Communication\Form\AbstractType
@@ -33,6 +35,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -43,6 +47,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -53,6 +59,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -63,6 +71,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return string
@@ -73,6 +83,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -85,6 +97,8 @@ class DummyPaymentInvoicePaymentSubFormPlugin extends AbstractPlugin implements 
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

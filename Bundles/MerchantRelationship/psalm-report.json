@@ -1,0 +1,199 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 189,
+            "line_to": 189,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationship\\Business\\Model\\MerchantRelationshipWriter::getIdAssignedCompanyBusinessUnits is incorrect, got 'list<int|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 208,
+            "line_to": 208,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'non-empty-list<int|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\MerchantRelationship\\Business\\Model\\MerchantRelationshipWriter::getIdAssignedCompanyBusinessUnits",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "        return $ids;",
+            "selected_text": "$ids",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 37,
+            "line_to": 37,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Expander/MerchantRelationshipExpander.php",
+            "snippet": "            $merchantRelationshipTransfer->getIdMerchantRelationship(),",
+            "selected_text": "$merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Expander/MerchantRelationshipExpander.php",
+            "snippet": "            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "selected_text": "$merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getName on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Expander/MerchantRelationshipExpander.php",
+            "snippet": "            $merchantRelationshipTransfer->getOwnerCompanyBusinessUnit()->getName()",
+            "selected_text": "getName",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 52,
+            "line_to": 52,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipRepositoryInterface::getMerchantRelationshipById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipReader.php",
+            "snippet": "            $merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "selected_text": "$merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 74,
+            "line_to": 74,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipRepositoryInterface::findMerchantRelationshipByKey cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipReader.php",
+            "snippet": "            $merchantRelationshipTransfer->getMerchantRelationshipKey()",
+            "selected_text": "$merchantRelationshipTransfer->getMerchantRelationshipKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 120,
+            "line_to": 120,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipRepositoryInterface::getMerchantRelationshipById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipReader.php",
+            "snippet": "            $merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "selected_text": "$merchantRelationshipTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 170,
+            "line_to": 170,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipRepositoryInterface::getIdAssignedBusinessUnitsByMerchantRelationshipId cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "            ->getIdAssignedBusinessUnitsByMerchantRelationshipId($merchantRelationTransfer->getIdMerchantRelationship());",
+            "selected_text": "$merchantRelationTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 178,
+            "line_to": 178,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManagerInterface::addAssignedCompanyBusinessUnits cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "            $merchantRelationTransfer->getIdMerchantRelationship()",
+            "selected_text": "$merchantRelationTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 182,
+            "line_to": 182,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 2 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManagerInterface::removeAssignedCompanyBusinessUnits cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "            $merchantRelationTransfer->getIdMerchantRelationship()",
+            "selected_text": "$merchantRelationTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 219,
+            "line_to": 219,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipEntityManagerInterface::deleteMerchantRelationshipById cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Business/Model/MerchantRelationshipWriter.php",
+            "snippet": "        $this->entityManager->deleteMerchantRelationshipById($merchantRelationTransfer->getIdMerchantRelationship());",
+            "selected_text": "$merchantRelationTransfer->getIdMerchantRelationship()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 39,
+            "line_to": 39,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Spryker\\Zed\\MerchantRelationship\\Persistence\\MerchantRelationshipRepositoryInterface::getAssignedMerchantRelationshipsByIdCompanyBusinessUnit cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Communication/Hydrator/MerchantRelationshipHydrator.php",
+            "snippet": "                $companyUserTransfer->getFkCompanyBusinessUnit()",
+            "selected_text": "$companyUserTransfer->getFkCompanyBusinessUnit()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 79,
+            "line_to": 79,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationshipToCompanyBusinessUnit|Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface|mixed> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipRepository.php",
+            "snippet": "            ->toArray();",
+            "selected_text": "toArray",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 132,
+            "line_to": 132,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Orm\\Zed\\MerchantRelationship\\Persistence\\SpyMerchantRelationship> variable $merchantRelationshipEntities",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/MerchantRelationshipRepository.php",
+            "snippet": "        if ($merchantRelationshipEntities->isEmpty()) {",
+            "selected_text": "isEmpty",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 95,
+            "line_to": 95,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method addCompanyBusinessUnit on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/MerchantRelationship/src/Spryker/Zed/MerchantRelationship/Persistence/Propel/Mapper/MerchantRelationshipMapper.php",
+            "snippet": "                ->addCompanyBusinessUnit(",
+            "selected_text": "addCompanyBusinessUnit",
+            "error_level": 3,
+            "shortcode": 83
+        }
+    ],
+    "deprecation": []
+}

@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -38,6 +40,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -60,6 +64,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -78,6 +84,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -118,6 +126,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -140,6 +150,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -182,6 +194,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -220,6 +234,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -260,6 +276,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -278,6 +296,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -331,6 +351,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -350,6 +372,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -386,6 +410,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -405,6 +431,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -420,6 +448,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -440,6 +470,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -458,6 +490,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -476,6 +510,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -546,6 +582,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -563,6 +601,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with next major release
@@ -612,6 +652,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name
@@ -626,6 +668,8 @@ class CategoryFacade extends AbstractFacade implements CategoryFacadeInterface
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $name

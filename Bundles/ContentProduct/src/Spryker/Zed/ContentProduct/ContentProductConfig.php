@@ -14,6 +14,8 @@ class ContentProductConfig extends AbstractBundleConfig
     protected const MAX_NUMBER_PRODUCTS_IN_PRODUCT_ABSTRACT_LIST = 20;
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getMaxProductsInProductAbstractList(): int

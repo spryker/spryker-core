@@ -27,6 +27,7 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\Plugin\TestResou
 class ResourceRelationshipsPluginAnalyzerTest extends Unit
 {
     protected const RELATIONSHIP_VALUE = 'test-resource-with-relationship';
+    protected const RELATIONSHIP_RESOURCE = 'test-resource';
 
     /**
      * @return void
@@ -40,7 +41,8 @@ class ResourceRelationshipsPluginAnalyzerTest extends Unit
 
         $this->assertNotEmpty($relationships);
         $this->assertCount(1, $relationships);
-        $this->assertEquals(static::RELATIONSHIP_VALUE, $relationships[0]);
+        $relationship = array_shift($relationships);
+        $this->assertEquals(static::RELATIONSHIP_VALUE, $relationship->getRelationshipResourceType());
     }
 
     /**

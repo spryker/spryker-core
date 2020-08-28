@@ -9,6 +9,9 @@ namespace Spryker\Zed\ProductAlternativeStorage\Communication\ProductAlternative
 
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class ProductReplacementForStorageMapper implements ProductReplacementForStorageMapperInterface
 {
     /**

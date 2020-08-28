@@ -19,6 +19,7 @@ use Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface;
 class DeactivateSharedQuotesBeforeQuoteSavePlugin extends AbstractPlugin implements QuoteWritePluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      * - Deactivates shared quote for current customer/
      *

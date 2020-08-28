@@ -1,0 +1,43 @@
+{
+  "name": "spryker/oms-multi-thread",
+  "type": "library",
+  "description": "OmsMultiThread module",
+  "license": "proprietary",
+  "require": {
+    "php": ">=7.2",
+    "spryker/kernel": "^3.30.0"
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*",
+    "spryker/sales": "*",
+    "spryker/testify": "*"
+  },
+  "suggest": {
+    "spryker/oms": "If you want to have OMS multi-threading enabled, minimum required version: 11.13.0",
+    "spryker/sales": "If you want to use OmsMultiThreadProcessorIdentifierOrderExpanderPreSave plugin."
+  },
+  "autoload": {
+    "psr-4": {
+      "Spryker\\": "src/Spryker/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "SprykerTest\\": "tests/SprykerTest/"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "scripts": {
+    "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/",
+    "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/SprykerStrict/ruleset.xml src/ tests/"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0.x-dev"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  }
+}

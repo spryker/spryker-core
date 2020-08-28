@@ -110,6 +110,13 @@ class ProductDiscontinuedRepository extends AbstractRepository implements Produc
                 ->filterByIdProductDiscontinued_In($criteriaFilterTransfer->getIds());
         }
 
+        if ($criteriaFilterTransfer->getSkus()) {
+            $productDiscontinuedQuery
+                ->useProductQuery()
+                    ->filterBySku_In($criteriaFilterTransfer->getSkus())
+                ->endUse();
+        }
+
         $productDiscontinuedEntityCollection = $productDiscontinuedQuery->find();
 
         if ($productDiscontinuedEntityCollection->count()) {

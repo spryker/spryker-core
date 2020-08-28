@@ -16,5 +16,7 @@ interface AvailabilityNotificationSubscriptionSaverInterface
      *
      * @return \Generated\Shared\Transfer\AvailabilityNotificationSubscriptionTransfer
      */
-    public function save(AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer): AvailabilityNotificationSubscriptionTransfer;
+    public function save(
+        AvailabilityNotificationSubscriptionTransfer $availabilityNotificationSubscriptionTransfer
+    ): AvailabilityNotificationSubscriptionTransfer;
 }

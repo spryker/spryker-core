@@ -43,9 +43,9 @@ class PaymentGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPaymentMethodQuery(Container $container): Container
     {
-        $container->set(static::PROPEL_QUERY_PAYMENT_METHOD, function () {
+        $container->set(static::PROPEL_QUERY_PAYMENT_METHOD, $container->factory(function () {
             return SpyPaymentMethodQuery::create();
-        });
+        }));
 
         return $container;
     }

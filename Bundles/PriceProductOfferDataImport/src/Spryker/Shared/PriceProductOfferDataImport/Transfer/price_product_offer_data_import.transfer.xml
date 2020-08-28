@@ -10,4 +10,7 @@
     <transfer name="DataImporterReport">
     </transfer>
 
+    <transfer name="DataImporterReaderConfiguration">
+    </transfer>
+
 </transfers>

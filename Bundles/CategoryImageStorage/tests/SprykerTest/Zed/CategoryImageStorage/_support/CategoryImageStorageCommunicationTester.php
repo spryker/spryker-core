@@ -17,8 +17,6 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,17 +26,13 @@ use Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class CategoryImageStorageCommunicationTester extends Actor
 {
     use _generated\CategoryImageStorageCommunicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer
@@ -57,7 +51,7 @@ class CategoryImageStorageCommunicationTester extends Actor
     /**
      * @param int $idCategory
      *
-     * @return array[]
+     * @return array
      */
     public function getCategoryImages(int $idCategory): array
     {

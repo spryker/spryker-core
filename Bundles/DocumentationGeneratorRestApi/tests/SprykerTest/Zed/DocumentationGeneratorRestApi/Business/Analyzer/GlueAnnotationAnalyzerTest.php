@@ -39,6 +39,7 @@ class GlueAnnotationAnalyzerTest extends Unit
     protected const SUMMARY = 'Summary example';
     protected const ALTERNATIVE_RESPONSE_CLASS = RestTestAlternativeAttributesTransfer::class;
     protected const HEADER_ACCEPT_LANGUAGE = 'Accept-Language';
+    protected const HEADER_ACCEPT_LANGUAGE_REF = 'acceptLanguage';
     protected const KEY_RESPONSE_BAD_REQUEST = 400;
     protected const KEY_RESPONSE_NOT_FOUND = 404;
     protected const VALUE_RESPONSE_BAD_REQUEST = 'Bad Request';
@@ -77,7 +78,7 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEmpty($parameters->getDelete());
         $this->assertEquals([static::SUMMARY], $parameters->getGetResourceById()->getSummary());
         $this->assertNotEmpty($parameters->getGetResourceById()->getParameters());
-        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE, $parameters->getGetResourceById()->getParameters()[0]->getName());
+        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE_REF, $parameters->getGetResourceById()->getParameters()[0]->getRef());
         $this->assertNotEmpty($parameters->getGetResourceById()->getResponses());
         $this->assertArrayHasKey(static::KEY_RESPONSE_BAD_REQUEST, $parameters->getGetResourceById()->getResponses());
         $this->assertArrayHasKey(static::KEY_RESPONSE_NOT_FOUND, $parameters->getGetResourceById()->getResponses());

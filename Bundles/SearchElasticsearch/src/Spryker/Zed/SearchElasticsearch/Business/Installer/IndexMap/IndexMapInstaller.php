@@ -34,8 +34,11 @@ class IndexMapInstaller implements IndexMapInstallerInterface
      * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Cleaner\IndexMapCleanerInterface $indexMapCleaner
      * @param \Spryker\Zed\SearchElasticsearch\Business\Installer\IndexMap\Generator\IndexMapGeneratorInterface $indexMapGenerator
      */
-    public function __construct(IndexDefinitionBuilderInterface $indexDefinitionBuilder, IndexMapCleanerInterface $indexMapCleaner, IndexMapGeneratorInterface $indexMapGenerator)
-    {
+    public function __construct(
+        IndexDefinitionBuilderInterface $indexDefinitionBuilder,
+        IndexMapCleanerInterface $indexMapCleaner,
+        IndexMapGeneratorInterface $indexMapGenerator
+    ) {
         $this->indexDefinitionBuilder = $indexDefinitionBuilder;
         $this->indexMapCleaner = $indexMapCleaner;
         $this->indexMapGenerator = $indexMapGenerator;

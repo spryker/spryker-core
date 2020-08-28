@@ -65,7 +65,7 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      * @param string $localeName
      * @param string $storeName
      *
-     * @return array[]
+     * @return array
      */
     public function getCmsBlocksByOptions(array $options, string $localeName, string $storeName): array
     {

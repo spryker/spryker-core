@@ -19,7 +19,7 @@ interface CsvReaderInterface
     public function setHeaderOffset(int $offset);
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getHeader(): array;
 

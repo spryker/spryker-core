@@ -16,6 +16,8 @@ class MultiCartDataImportConfig extends DataImportConfig
     protected const FILE_NAME = 'multi_cart.csv';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMultiCartDataImporterConfiguration(): DataImporterConfigurationTransfer

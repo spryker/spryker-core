@@ -10,6 +10,9 @@ namespace Spryker\Shared\Kernel\ClassResolver;
 use Everon\Component\Collection\Lazy;
 use Spryker\Shared\Kernel\ClassResolver\Cache\StorageInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Shared\Kernel\KernelConstants::RESOLVABLE_CLASS_NAMES_CACHE_ENABLED} instead.
+ */
 class ResolverCache implements ResolverCacheInterface
 {
     /**

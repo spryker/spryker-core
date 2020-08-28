@@ -64,13 +64,15 @@ class CartsRestApiConfig extends AbstractBundleConfig
     public const HEADER_ANONYMOUS_CUSTOMER_UNIQUE_ID = 'X-Anonymous-Customer-Unique-Id';
 
     protected const GUEST_CART_RESOURCES = [
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS,
-        CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
+        self::RESOURCE_GUEST_CARTS,
+        self::RESOURCE_GUEST_CARTS_ITEMS,
     ];
 
     protected const ALLOWED_CART_ITEM_EAGER_RELATIONSHIP = true;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array
@@ -160,6 +162,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string[]
      */
     public function getGuestCartResources(): array
@@ -168,6 +172,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function getAllowedCartItemEagerRelationship(): bool

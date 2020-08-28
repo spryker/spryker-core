@@ -28,6 +28,7 @@ class ProductOptionMapper implements ProductOptionMapperInterface
             }
 
             $itemTransfer->setProductOptions($cartItemRequestTransfer->getProductOptions());
+
             break;
         }
 

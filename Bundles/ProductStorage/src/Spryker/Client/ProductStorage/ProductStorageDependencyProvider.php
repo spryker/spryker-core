@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToLocaleBridge;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStorageClientBridge;
+use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToSynchronizationServiceBridge;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceBridge;
 use Spryker\Shared\Kernel\Store;
@@ -22,6 +23,7 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
 {
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
+    public const CLIENT_STORE = 'CLIENT_STORE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const STORE = 'STORE';
@@ -51,6 +53,23 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductConcreteExpanderPlugins($container);
         $container = $this->addProductAbstractRestrictionFilterPlugins($container);
         $container = $this->addProductConcreteRestrictionFilterPlugins($container);
+        $container = $this->addStoreClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductStorageToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
+        });
 
         return $container;
     }
@@ -62,9 +81,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStorageClient(Container $container)
     {
-        $container[static::CLIENT_STORAGE] = function (Container $container) {
+        $container->set(static::CLIENT_STORAGE, function (Container $container) {
             return new ProductStorageToStorageClientBridge($container->getLocator()->storage()->client());
-        };
+        });
 
         return $container;
     }
@@ -76,9 +95,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addSynchronizationService(Container $container)
     {
-        $container[static::SERVICE_SYNCHRONIZATION] = function (Container $container) {
+        $container->set(static::SERVICE_SYNCHRONIZATION, function (Container $container) {
             return new ProductStorageToSynchronizationServiceBridge($container->getLocator()->synchronization()->service());
-        };
+        });
 
         return $container;
     }
@@ -106,9 +125,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addLocaleClient(Container $container)
     {
-        $container[static::CLIENT_LOCALE] = function (Container $container) {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
             return new ProductStorageToLocaleBridge($container->getLocator()->locale()->client());
-        };
+        });
 
         return $container;
     }
@@ -120,9 +139,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -134,9 +153,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductViewExpanderPlugins(Container $container)
     {
-        $container[static::PLUGIN_PRODUCT_VIEW_EXPANDERS] = function () {
+        $container->set(static::PLUGIN_PRODUCT_VIEW_EXPANDERS, function () {
             return $this->getProductViewExpanderPlugins();
-        };
+        });
 
         return $container;
     }
@@ -148,9 +167,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductAbstractRestrictionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION] = function () {
+        $container->set(static::PLUGINS_PRODUCT_ABSTRACT_RESTRICTION, function () {
             return $this->getProductAbstractRestrictionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -162,9 +181,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteRestrictionPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_RESTRICTION] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_RESTRICTION, function () {
             return $this->getProductConcreteRestrictionPlugins();
-        };
+        });
 
         return $container;
     }
@@ -176,9 +195,9 @@ class ProductStorageDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConcreteExpanderPlugins(Container $container): Container
     {
-        $container[static::PLUGINS_PRODUCT_CONCRETE_EXPANDER] = function () {
+        $container->set(static::PLUGINS_PRODUCT_CONCRETE_EXPANDER, function () {
             return $this->getProductConcreteExpanderPlugins();
-        };
+        });
 
         return $container;
     }

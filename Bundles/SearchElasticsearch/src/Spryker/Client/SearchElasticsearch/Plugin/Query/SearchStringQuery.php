@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\SearchContextTransfer;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
+/**
+ * @deprecated Will be removed without replacement.
+ */
 class SearchStringQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
     protected const SOURCE_IDENTIFIER = 'page';

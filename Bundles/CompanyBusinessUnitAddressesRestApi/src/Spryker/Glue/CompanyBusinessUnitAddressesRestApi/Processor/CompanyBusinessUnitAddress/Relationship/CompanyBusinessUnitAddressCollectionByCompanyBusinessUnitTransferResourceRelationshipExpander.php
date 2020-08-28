@@ -25,7 +25,8 @@ class CompanyBusinessUnitAddressCollectionByCompanyBusinessUnitTransferResourceR
          */
         $payload = $resource->getPayload();
 
-        if (!$payload
+        if (
+            !$payload
             || !($payload instanceof CompanyBusinessUnitTransfer)
             || !$this->hasAddressCollection($payload)
         ) {

@@ -111,7 +111,8 @@ class ProductAbstractReviewResourceRelationshipExpander implements ProductAbstra
             }
 
             $productAbstractData = $productAbstractDataCollection[$idProductAbstract];
-            if ($resource->getId() !== $productAbstractData[static::KEY_SKU]
+            if (
+                $resource->getId() !== $productAbstractData[static::KEY_SKU]
                 || $productAbstractData[static::KEY_ID_PRODUCT_ABSTRACT] !== $idProductAbstract
             ) {
                 continue;

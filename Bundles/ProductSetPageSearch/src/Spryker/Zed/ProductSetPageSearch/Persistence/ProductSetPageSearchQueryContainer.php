@@ -24,6 +24,8 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     public const FK_PRODUCT_RESOURCE_SET = 'fkProductSet';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productSetIds
@@ -51,6 +53,8 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productSetIds
@@ -65,6 +69,8 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productImageIds
@@ -83,6 +89,8 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $productImageSetToProductImageIds
@@ -103,6 +111,8 @@ class ProductSetPageSearchQueryContainer extends AbstractQueryContainer implemen
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $ids

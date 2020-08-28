@@ -44,5 +44,7 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
         $message = '<info>' . $message . '</info>';
 
         $output->write($message);
+
+        return static::CODE_SUCCESS;
     }
 }

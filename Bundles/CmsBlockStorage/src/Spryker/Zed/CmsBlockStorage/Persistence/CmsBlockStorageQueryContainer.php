@@ -18,6 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements CmsBlockStorageQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsBlockIds
@@ -32,6 +34,8 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $cmsBlockIds
@@ -58,6 +62,8 @@ class CmsBlockStorageQueryContainer extends AbstractQueryContainer implements Cm
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int[] $cmsBlockIds

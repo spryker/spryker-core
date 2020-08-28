@@ -78,8 +78,10 @@ class DecisionRuleAndSpecificationTest extends Unit
      *
      * @return \Spryker\Zed\Discount\Business\QueryString\Specification\DecisionRuleSpecification\DecisionRuleAndSpecification
      */
-    protected function createDecisionRuleAndSpecification(DecisionRuleSpecificationInterface $leftMock, DecisionRuleSpecificationInterface $rightMock): DecisionRuleAndSpecification
-    {
+    protected function createDecisionRuleAndSpecification(
+        DecisionRuleSpecificationInterface $leftMock,
+        DecisionRuleSpecificationInterface $rightMock
+    ): DecisionRuleAndSpecification {
         return new DecisionRuleAndSpecification($leftMock, $rightMock);
     }
 

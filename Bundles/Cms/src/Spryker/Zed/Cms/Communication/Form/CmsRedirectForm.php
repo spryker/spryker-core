@@ -21,7 +21,6 @@ use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
@@ -51,7 +50,8 @@ class CmsRedirectForm extends AbstractType
         $resolver->setDefaults([
             'validation_groups' => function (FormInterface $form) {
                 $defaultData = $form->getConfig()->getData();
-                if (array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
+                if (
+                    array_key_exists(self::FIELD_FROM_URL, $defaultData) === false ||
                     $defaultData[self::FIELD_FROM_URL] !== $form->getData()[self::FIELD_FROM_URL]
                 ) {
                     return [Constraint::DEFAULT_GROUP, self::GROUP_UNIQUE_URL_CHECK];
@@ -180,7 +180,6 @@ class CmsRedirectForm extends AbstractType
     protected function getMandatoryConstraints(): array
     {
         return [
-            $this->createRequiredConstraint(),
             $this->createNotBlankConstraint(),
             $this->createLengthConstraint(self::MAX_COUNT_CHARACTERS_REDIRECT_URL),
             new Callback([
@@ -199,14 +198,6 @@ class CmsRedirectForm extends AbstractType
     protected function createNotBlankConstraint(): NotBlank
     {
         return new NotBlank();
-    }
-
-    /**
-     * @return \Symfony\Component\Validator\Constraints\Required
-     */
-    protected function createRequiredConstraint(): Required
-    {
-        return new Required();
     }
 
     /**

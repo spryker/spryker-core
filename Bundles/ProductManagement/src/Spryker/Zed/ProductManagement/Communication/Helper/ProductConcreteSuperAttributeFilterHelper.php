@@ -23,6 +23,7 @@ class ProductConcreteSuperAttributeFilterHelper implements ProductConcreteSuperA
         foreach ($submittedAttributes as $attributeKey => $attributeData) {
             if (!empty($attributeData[ProductConcreteSuperAttributeForm::FIELD_CHECKBOX])) {
                 $attributes[$attributeKey] = $attributeData[ProductConcreteSuperAttributeForm::FIELD_INPUT] ?? null;
+
                 continue;
             }
 

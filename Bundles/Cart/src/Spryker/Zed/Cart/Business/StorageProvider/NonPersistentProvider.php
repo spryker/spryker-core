@@ -159,6 +159,7 @@ class NonPersistentProvider implements StorageProviderInterface
             if ($this->getItemIdentifier($currentItemTransfer) === $itemIdentifier) {
                 $existingItemTransfer = $currentItemTransfer;
                 $itemIndex = $index;
+
                 break;
             }
         }

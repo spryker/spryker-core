@@ -21,7 +21,7 @@ interface TestifyFacadeInterface
      *
      * @api
      *
-     * @return array
+     * @return string[]
      */
     public function cleanUpOutputDirectories(): array;
 }

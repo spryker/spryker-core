@@ -33,7 +33,7 @@ class SharedConfigNotFoundException extends Exception
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
             'Can not resolve %1$sConfig for your module "%1$s"',
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing shared Config to your module.';
@@ -41,7 +41,7 @@ class SharedConfigNotFoundException extends Exception
         $message .= sprintf(
             'E.g. %s\\Shared\\%2$s\\%2$sConfig',
             Config::getInstance()->get(KernelConstants::PROJECT_NAMESPACE),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getModule()
         ) . PHP_EOL;
 
         $message .= new Backtrace();

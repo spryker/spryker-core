@@ -1,0 +1,30 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Warning' %}
+
+{% block action %}
+    {{ backActionButton(backUrl, 'Back to Merchant Users' | trans) }}
+{% endblock %}
+
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_content %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>{{ "You are trying to delete merchant user" | trans }}: <b>{{ merchantUser.user.firstName ~ ' ' ~ merchantUser.user.lastName }}</b></p>
+                    <p>{{ "It will be deleted from everywhere" | trans }}</p>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="{{ backUrl }}" class="btn btn-back">{{ 'Back' | trans }}</a>
+                    {{ form_start(merchantUserDeleteConfirmForm) }}
+                        <input type="hidden" name="merchant-user-id" value="{{ merchantUser.idMerchantUser }}" />
+                        <input type="submit" class="btn btn-danger safe-submit" value="{{ 'Delete' | trans }}" />
+                    {{ form_end(merchantUserDeleteConfirmForm) }}
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

@@ -88,7 +88,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     /**
      * @param string $html
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\TwigExpressionTransfer[]
      */
     protected function findTwigExpressions(string $html): array
     {
@@ -119,11 +119,11 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
     }
 
     /**
-     * @param array $twigExpressionMatches
-     * @param array $contentWidgetTemplateTransfers
-     * @param array $twigExpressionTransfers
+     * @param string[][] $twigExpressionMatches
+     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
+     * @param \Generated\Shared\Transfer\TwigExpressionTransfer[] $twigExpressionTransfers
      *
-     * @return array
+     * @return \Generated\Shared\Transfer\TwigExpressionTransfer[]
      */
     protected function mapTwigExpressionsToTransfers(
         array $twigExpressionMatches,
@@ -175,7 +175,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
 
     /**
      * @param string $templateIdentifier
-     * @param array $contentWidgetTemplateTransfers
+     * @param \Generated\Shared\Transfer\ContentWidgetTemplateTransfer[] $contentWidgetTemplateTransfers
      *
      * @return \Generated\Shared\Transfer\ContentWidgetTemplateTransfer
      */
@@ -198,7 +198,7 @@ class TwigExpressionsToHtmlConverter implements TwigExpressionsToHtmlConverterIn
 
     /**
      * @param string $html
-     * @param array $twigExpressionTransfers
+     * @param \Generated\Shared\Transfer\TwigExpressionTransfer[] $twigExpressionTransfers
      *
      * @return string
      */

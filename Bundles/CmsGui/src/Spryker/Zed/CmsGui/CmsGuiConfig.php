@@ -18,6 +18,8 @@ class CmsGuiConfig extends AbstractBundleConfig
     protected const REDIRECT_URL_DEFAULT = '/cms-gui/list-page';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getCmsFolderPath(): string
@@ -26,6 +28,8 @@ class CmsGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string|null
      */
     public function findYvesHost()
@@ -45,6 +49,8 @@ class CmsGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @param int $idCmsPage
      *
      * @return string
@@ -61,6 +67,8 @@ class CmsGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedirectUrl(): string

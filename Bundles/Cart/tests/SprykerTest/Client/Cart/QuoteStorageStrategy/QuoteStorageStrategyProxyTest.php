@@ -126,7 +126,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->expectsErrorMessageNotAdded();
         $this->assertCallForwardedToSubject(
             'removeItem',
-            ["sku"],
+            ['sku'],
             QuoteTransfer::class
         );
     }
@@ -140,7 +140,7 @@ class QuoteStorageStrategyProxyTest extends Unit
         $this->expectsErrorMessageAdded();
         $this->assertCallNotForwardedToSubject(
             'removeItem',
-            ["sku"],
+            ['sku'],
             QuoteTransfer::class
         );
     }

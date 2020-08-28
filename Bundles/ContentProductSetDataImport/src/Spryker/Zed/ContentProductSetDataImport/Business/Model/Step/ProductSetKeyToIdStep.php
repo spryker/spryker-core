@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ContentProductSetDataImport\Business\Model\Step;
@@ -60,11 +60,14 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
+     *
      * @return void
      */
     protected function assureDefaultProductSetKeyExists(DataSetInterface $dataSet): void
     {
-        if (!isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
+        if (
+            !isset($dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT])
             || !$dataSet[ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT]
         ) {
             $parameters = [
@@ -72,13 +75,15 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
                 static::ERROR_MESSAGE_PARAMETER_COLUMN => ContentProductSetDataSetInterface::COLUMN_PRODUCT_SET_KEY_DEFAULT,
             ];
 
-            $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT, $parameters);
+            throw $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_KEY_DEFAULT, $parameters);
         }
     }
 
     /**
      * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
      * @param string $productSetKeyColumn
+     *
+     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      *
      * @return int
      */
@@ -88,30 +93,28 @@ class ProductSetKeyToIdStep implements DataImportStepInterface
             ->clear()
             ->findOneByProductSetKey($dataSet[$productSetKeyColumn]);
 
-        if ($productSetEntity) {
-            return $productSetEntity->getIdProductSet();
+        if (!$productSetEntity) {
+            $parameters = [
+                static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::COLUMN_KEY],
+                static::ERROR_MESSAGE_PARAMETER_COLUMN => $productSetKeyColumn,
+            ];
+
+            throw $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY, $parameters);
         }
 
-        $parameters = [
-            static::ERROR_MESSAGE_PARAMETER_KEY => $dataSet[ContentProductSetDataSetInterface::COLUMN_KEY],
-            static::ERROR_MESSAGE_PARAMETER_COLUMN => $productSetKeyColumn,
-        ];
-
-        $this->createInvalidDataImportException(static::ERROR_MESSAGE_PRODUCT_SET_WRONG_KEY, $parameters);
+        return $productSetEntity->getIdProductSet();
     }
 
     /**
      * @param string $message
      * @param array $parameters
      *
-     * @throws \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
-     *
-     * @return void
+     * @return \Spryker\Zed\DataImport\Business\Exception\InvalidDataException
      */
-    protected function createInvalidDataImportException(string $message, array $parameters = []): void
+    protected function createInvalidDataImportException(string $message, array $parameters = []): InvalidDataException
     {
         $errorMessage = strtr($message, $parameters);
 
-        throw new InvalidDataException($errorMessage);
+        return new InvalidDataException($errorMessage);
     }
 }

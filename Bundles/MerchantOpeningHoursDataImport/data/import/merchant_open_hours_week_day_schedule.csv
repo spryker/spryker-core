@@ -1,17 +1,1 @@
 merchant_key,week_day_key,time_from,time_to
-roan-gmbh-und-co-k-g,MONDAY,7:00:00,13:00:00
-roan-gmbh-und-co-k-g,MONDAY,14:00:00,20:00:00
-roan-gmbh-und-co-k-g,TUESDAY,7:00:00,20:00:00
-roan-gmbh-und-co-k-g,WEDNESDAY,7:00:00,20:00:00
-roan-gmbh-und-co-k-g,THURSDAY,7:00:00,20:00:00
-roan-gmbh-und-co-k-g,FRIDAY,7:00:00,20:00:00
-roan-gmbh-und-co-k-g,SATURDAY,7:00:00,20:00:00
-roan-gmbh-und-co-k-g,SUNDAY,,
-steenbok,MONDAY,8:00:00,13:00:00
-steenbok,MONDAY,14:00:00,19:00:00
-steenbok,TUESDAY,8:00:00,19:00:00
-steenbok,WEDNESDAY,8:00:00,19:00:00
-steenbok,THURSDAY,8:00:00,19:00:00
-steenbok,FRIDAY,8:00:00,19:00:00
-steenbok,SATURDAY,8:00:00,19:00:00
-steenbok,SUNDAY,,

@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Codeception\Scenario;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,7 @@ use Codeception\Scenario;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -61,6 +59,6 @@ class AvailabilityGuiPresentationTester extends Actor
      */
     public function clickViewButton(): void
     {
-        $this->click("//*[@class=\"dataTables_scrollBody\"]/table/tbody/tr/td[8]/a");
+        $this->click('//*[@class="dataTables_scrollBody"]/table/tbody/tr/td[8]/a');
     }
 }

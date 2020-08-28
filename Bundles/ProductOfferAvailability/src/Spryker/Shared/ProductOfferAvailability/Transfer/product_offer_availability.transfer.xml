@@ -30,4 +30,18 @@
         <property name="store" type="Store"/>
     </transfer>
 
+    <transfer name="ProductOfferStock">
+        <property name="isNeverOutOfStock" type="bool"/>
+        <property name="quantity" type="decimal"/>
+    </transfer>
+
+    <transfer name="ReservationRequest">
+        <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
+    </transfer>
+
+    <transfer name="ReservationResponse">
+        <property name="reservationQuantity" type="decimal"/>
+    </transfer>
+
 </transfers>

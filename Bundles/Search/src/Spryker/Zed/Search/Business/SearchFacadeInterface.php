@@ -39,6 +39,8 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return int
      */
     public function getTotalCount();
@@ -50,18 +52,19 @@ interface SearchFacadeInterface
      *
      * @api
      *
+     * @deprecated Use corresponding API from search provider-specific modules (e.g. spryker/search-elasticsearch) instead.
+     *
      * @return array
      */
     public function getMetaData();
 
     /**
      * Specification:
-     * - Removes the current index if no indexName is passed.
-     * - Removes the passed indexName.
+     * - Removes the current index.
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteIndex()} instead.
      *
      * @return \Elastica\Response
      */
@@ -142,7 +145,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::generateSourceMap()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchFacadeInterface::generateSourceMap()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -171,7 +174,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -187,7 +190,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -202,7 +205,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::deleteSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -217,7 +220,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshotRepository()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::existsSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      *
@@ -231,7 +234,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::createSnapshotRepository()} instead.
      *
      * @param string $repositoryName
      * @param string $type
@@ -247,7 +250,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::restoreSnapshot()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::restoreSnapshot()} instead.
      *
      * @param string $repositoryName
      * @param string $snapshotName
@@ -263,7 +266,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()} instead.
      *
      * @return bool
      */
@@ -275,7 +278,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::openIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::openIndex()} instead.
      *
      * @return bool
      */
@@ -287,7 +290,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::closeIndex()} instead.
      *
      * @return bool
      */
@@ -299,7 +302,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::copyIndex()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SearchElasticsearch\Business\SearchElasticsearchFacadeInterface::copyIndex()} instead.
      *
      * @param string $source
      * @param string $target
@@ -317,7 +320,7 @@ interface SearchFacadeInterface
      *
      * @api
      *
-     * @deprecated Use `\Spryker\Zed\Search\Business\SearchFacadeInterface::installSources()` instead.
+     * @deprecated Use {@link \Spryker\Zed\Search\Business\SearchFacadeInterface::installSources()} instead.
      *
      * @param \Psr\Log\LoggerInterface $messenger
      *
@@ -346,4 +349,27 @@ interface SearchFacadeInterface
      * @return \Generated\Shared\Transfer\HealthCheckServiceResponseTransfer
      */
     public function executeSearchHealthCheck(): HealthCheckServiceResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks whether the search operates in legacy mode.
+     * - In legacy mode all search activities are done by this module, rather than being delegated to the search vendor specific modules.
+     *
+     * @api
+     *
+     * @deprecated Will be remove without replacement.
+     *
+     * @return bool
+     */
+    public function isInLegacyMode(): bool;
+    
+    /**
+     * Specification:
+     * - Removes previously generated map class.
+     *
+     * @api
+     *
+     * @return void
+     */
+    public function removeSourceMap(): void;
 }

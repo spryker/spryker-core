@@ -21,6 +21,8 @@ use Spryker\Zed\Propel\PropelFilterCriteria;
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderQuery
@@ -31,6 +33,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
@@ -41,6 +45,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesExpenseQuery
@@ -51,6 +57,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -65,6 +73,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -81,6 +91,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrderAddress
@@ -96,6 +108,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrder
@@ -111,6 +125,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idOrderItem
@@ -126,6 +142,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery
@@ -138,6 +156,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -150,6 +170,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -165,6 +187,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -184,9 +208,11 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
-     * @deprecated Use querySalesOrderDetailsWithoutShippingAddress() instead.
+     * @deprecated Use {@link querySalesOrderDetailsWithoutShippingAddress()} instead.
      *
      * @param int $idSalesOrder
      *
@@ -206,6 +232,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -226,6 +254,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCustomer
@@ -246,8 +276,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
     /**
      * {@inheritDoc}
-     *
-     * Note: For performance reasons, the state history join is separated into this method.
      *
      * @api
      *
@@ -270,7 +298,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @api
      *
-     * @deprecated Use SalesQueryContainerInterface::fillOrderItemsWithLatestStates() instead.
+     * @deprecated Use {@link fillOrderItemsWithLatestStates()} instead.
      *
      * @param \Propel\Runtime\Collection\ObjectCollection $salesOrderItems
      *
@@ -282,6 +310,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @deprecated Will be removed with the next major
@@ -301,6 +331,8 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idSalesOrder
@@ -313,6 +345,6 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
             ->withColumn('COUNT(*)', 'Count')
             ->select(['Count'])
             ->groupBySku()
-            ->orderByCount();
+            ->orderBy('Count');
     }
 }

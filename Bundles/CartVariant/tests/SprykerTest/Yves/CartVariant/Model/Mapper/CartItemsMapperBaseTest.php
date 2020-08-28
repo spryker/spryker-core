@@ -103,7 +103,7 @@ class CartItemsMapperBaseTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getItems(): ArrayObject
     {
@@ -119,7 +119,7 @@ class CartItemsMapperBaseTest extends Unit
     }
 
     /**
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[]
      */
     protected function getNestedItems(): ArrayObject
     {

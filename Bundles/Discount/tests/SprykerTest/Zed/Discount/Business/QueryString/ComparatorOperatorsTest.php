@@ -152,8 +152,8 @@ class ComparatorOperatorsTest extends Unit
         $expressions = $comparatorOperators->getOperatorExpressionsByTypes([ComparatorOperators::TYPE_NUMBER]);
 
         $this->assertCount(2, $expressions);
-        $this->assertEquals('=', $expressions[0]);
-        $this->assertEquals('>', $expressions[1]);
+        $this->assertSame('=', $expressions[0]);
+        $this->assertSame('>', $expressions[1]);
     }
 
     /**
@@ -176,8 +176,8 @@ class ComparatorOperatorsTest extends Unit
         $expressions = $comparatorOperators->getAvailableComparatorExpressions();
 
         $this->assertCount(2, $expressions);
-        $this->assertEquals('=', $expressions[0]);
-        $this->assertEquals('>', $expressions[1]);
+        $this->assertSame('=', $expressions[0]);
+        $this->assertSame('>', $expressions[1]);
     }
 
     /**

@@ -19,11 +19,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFacadeInterface
 {
     /**
-     * Specification:
-     * - Creates and persists new category mapping entries to database.
-     * - If a product category mapping already exists, same logic will still apply.
-     * - Touches affected category.
-     * - Touches affected abstract products.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -40,10 +36,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * Specification:
-     * - Removes existing product category mapping entries from database.
-     * - Touches affected category.
-     * - Touches affected abstract products.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -60,10 +53,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * Specification:
-     * - Updates order of existing product category mapping entries in database.
-     * - Touches affected category.
-     * - Touches affected abstract products.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -80,10 +70,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * Specification:
-     * - Removes all existing product category mapping entries from database.
-     * - Touches affected category.
-     * - Touches affected abstract products.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -100,9 +87,7 @@ class ProductCategoryFacade extends AbstractFacade implements ProductCategoryFac
     }
 
     /**
-     * Specification:
-     * - Returns all abstract products that are assigned to the given category.
-     * - The data of the returned products are localized based on the given locale transfer.
+     * {@inheritDoc}
      *
      * @api
      *

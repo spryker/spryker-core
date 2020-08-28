@@ -32,6 +32,8 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
      * @param \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface $responseType
      * @param \DateInterval $accessTokenTTL
      *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
      * @return \League\OAuth2\Server\ResponseTypes\ResponseTypeInterface
      */
     public function respondToAccessTokenRequest(
@@ -87,6 +89,8 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
      * @param \Psr\Http\Message\ServerRequestInterface $request
      * @param string $clientId
      *
+     * @throws \League\OAuth2\Server\Exception\OAuthServerException
+     *
      * @return array
      */
     protected function validateOldRefreshToken(ServerRequestInterface $request, $clientId)
@@ -106,6 +110,7 @@ class RefreshTokenGrantType extends AbstractGrant implements GrantTypeInterface
         $refreshTokenData = json_decode($refreshToken, true);
         if ($refreshTokenData[static::KEY_CLIENT_ID] !== $clientId) {
             $this->getEmitter()->emit($this->createRequestEvent(RequestEvent::REFRESH_TOKEN_CLIENT_FAILED, $request));
+
             throw OAuthServerException::invalidRefreshToken('Token is not linked to client');
         }
 

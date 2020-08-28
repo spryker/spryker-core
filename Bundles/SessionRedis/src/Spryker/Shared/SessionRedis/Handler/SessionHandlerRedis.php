@@ -10,6 +10,7 @@ namespace Spryker\Shared\SessionRedis\Handler;
 use SessionHandlerInterface;
 use Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface;
 use Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface;
+use Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface;
 use Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface;
 
 class SessionHandlerRedis implements SessionHandlerInterface
@@ -34,27 +35,31 @@ class SessionHandlerRedis implements SessionHandlerInterface
     protected $savePath;
 
     /**
-     * @var int
-     */
-    protected $lifetime;
-
-    /**
      * @var \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface
      */
     protected $monitoringService;
 
     /**
+     * @var \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface
+     */
+    protected $sessionRedisLifeTimeCalculator;
+
+    /**
      * @param \Spryker\Shared\SessionRedis\Redis\SessionRedisWrapperInterface $redisClient
      * @param \Spryker\Shared\SessionRedis\Handler\KeyBuilder\SessionKeyBuilderInterface $keyBuilder
      * @param \Spryker\Shared\SessionRedis\Dependency\Service\SessionRedisToMonitoringServiceInterface $monitoringService
-     * @param int $lifetime
+     * @param \Spryker\Shared\SessionRedis\Handler\LifeTime\SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
      */
-    public function __construct(SessionRedisWrapperInterface $redisClient, SessionKeyBuilderInterface $keyBuilder, SessionRedisToMonitoringServiceInterface $monitoringService, $lifetime)
-    {
+    public function __construct(
+        SessionRedisWrapperInterface $redisClient,
+        SessionKeyBuilderInterface $keyBuilder,
+        SessionRedisToMonitoringServiceInterface $monitoringService,
+        SessionRedisLifeTimeCalculatorInterface $sessionRedisLifeTimeCalculator
+    ) {
         $this->redisClient = $redisClient;
         $this->keyBuilder = $keyBuilder;
-        $this->lifetime = $lifetime;
         $this->monitoringService = $monitoringService;
+        $this->sessionRedisLifeTimeCalculator = $sessionRedisLifeTimeCalculator;
     }
 
     /**
@@ -115,7 +120,11 @@ class SessionHandlerRedis implements SessionHandlerInterface
         }
 
         $startTime = microtime(true);
-        $result = $this->redisClient->setex($key, $this->lifetime, json_encode($sessionData));
+        $result = $this->redisClient->setex(
+            $key,
+            $this->sessionRedisLifeTimeCalculator->getSessionLifeTime(),
+            json_encode($sessionData)
+        );
         $this->monitoringService->addCustomParameter(static::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result;

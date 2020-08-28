@@ -26,7 +26,7 @@ class ImporterDumper implements ImporterDumperInterface
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function dump(): array
     {

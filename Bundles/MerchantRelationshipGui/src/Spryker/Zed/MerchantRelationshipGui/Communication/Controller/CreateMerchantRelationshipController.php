@@ -30,7 +30,7 @@ class CreateMerchantRelationshipController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $isSubmitPersist = $request->request->get(static::PARAM_SUBMIT_PERSIST, false);
+        $isSubmitPersist = (bool)$request->request->get(static::PARAM_SUBMIT_PERSIST, false);
 
         $dataProvider = $this->getFactory()->createMerchantRelationshipFormDataProvider();
         $idCompany = $this->getCompanyIdFromRequest($request);

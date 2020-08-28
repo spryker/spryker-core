@@ -48,7 +48,7 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
      */
     protected function addProductAbstractPublishListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new TaxProductStoragePublishListener());
+        return $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, new TaxProductStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -58,7 +58,7 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
      */
     protected function addProductAbstractUnpublishListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new TaxProductStorageUnpublishListener());
+        return $eventCollection->addListenerQueued(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, new TaxProductStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -68,7 +68,7 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
      */
     protected function addProductAbstractCreateListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new TaxProductStoragePublishListener());
+        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new TaxProductStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -78,7 +78,7 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
      */
     protected function addProductAbstractUpdateListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new TaxProductStoragePublishListener());
+        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new TaxProductStoragePublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 
     /**
@@ -88,6 +88,6 @@ class TaxProductStorageSubscriber extends AbstractPlugin implements EventSubscri
      */
     protected function addProductAbstractDeleteListener(EventCollectionInterface $eventCollection): EventCollectionInterface
     {
-        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new TaxProductStorageUnpublishListener());
+        return $eventCollection->addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new TaxProductStorageUnpublishListener(), 0, null, $this->getConfig()->getEventQueueName());
     }
 }

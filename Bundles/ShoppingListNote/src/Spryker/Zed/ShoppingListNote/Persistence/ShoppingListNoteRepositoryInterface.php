@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\ShoppingListNote\Persistence;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ShoppingListItemNoteTransfer;
 
 interface ShoppingListNoteRepositoryInterface
@@ -17,4 +18,11 @@ interface ShoppingListNoteRepositoryInterface
      * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer|null
      */
     public function findShoppingListItemNoteByFkShoppingListItem(int $idShoppingListItem): ?ShoppingListItemNoteTransfer;
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListItemNoteTransfer[]|\ArrayObject
+     */
+    public function getShoppingListItemNoteTransfersByShoppingListItemIds(array $shoppingListItemIds): ArrayObject;
 }

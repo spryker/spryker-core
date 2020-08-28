@@ -7,12 +7,14 @@
 
 namespace Spryker\Zed\PriceProductOffer\Business;
 
-use Generated\Shared\Transfer\PriceProductCriteriaTransfer;
+use Generated\Shared\Transfer\PriceProductTransfer;
+use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferRepositoryInterface getRepository()
  * @method \Spryker\Zed\PriceProductOffer\Business\PriceProductOfferBusinessFactory getFactory()
+ * @method \Spryker\Zed\PriceProductOffer\Persistence\PriceProductOfferEntityManagerInterface getEntityManager()
  */
 class PriceProductOfferFacade extends AbstractFacade implements PriceProductOfferFacadeInterface
 {
@@ -21,14 +23,40 @@ class PriceProductOfferFacade extends AbstractFacade implements PriceProductOffe
      *
      * @api
      *
-     * @param string[] $skus
-     * @param \Generated\Shared\Transfer\PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
      *
-     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
      */
-    public function getPriceProductTransfers(array $skus, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): array
+    public function saveProductOfferPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
-        return $this->getRepository()
-            ->getPriceProductTransfers($skus, $priceProductCriteriaTransfer);
+        return $this->getFactory()->createPriceProductOfferWriter()->saveProductOfferPrices($productOfferTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer
+     */
+    public function savePriceProductOfferRelation(PriceProductTransfer $priceProductTransfer): PriceProductTransfer
+    {
+        return $this->getFactory()->createPriceProductOfferWriter()->savePriceProductOfferRelation($priceProductTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferTransfer $productOfferTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductOfferTransfer
+     */
+    public function expandProductOfferWithPrices(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
+    {
+        return $this->getFactory()->createProductOfferExpander()->expandProductOfferWithPrices($productOfferTransfer);
     }
 }

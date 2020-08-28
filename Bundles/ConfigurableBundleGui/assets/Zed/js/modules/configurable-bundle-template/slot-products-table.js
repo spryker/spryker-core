@@ -18,38 +18,19 @@ var isInitialDraw = true,
     $slotProductsTableWrapper = $('#slot-products-table-wrapper'),
     $slotProductsTableName = $('#slot-products-table-name');
 
-/**
- * @return {void}
- */
 function init() {
     addSlotTableRowClickHandler();
     addSlotTableDrawHandler();
 }
 
-/**
- * @return {void}
- */
 function addSlotTableRowClickHandler() {
     var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
     $slotTable.on('click', 'tbody tr[role="row"]', function () {
-        var rowData = $slotTable.row(this).data();
-        var idSlot = rowData[config.slotTableColumnsMapping.idSlot];
-
-        if (idSlot === selectedIdSlot) {
-            return;
-        }
-
-        selectedIdSlot = idSlot;
-        loadSlotProductsTable();
-        markSelectedRow($(this));
-        $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
+        updateSlotProductsTable(this, $slotTable);
     });
 }
 
-/**
- * @return {void}
- */
 function addSlotTableDrawHandler() {
     var $slotTable = $slotTableWrapper.find('.dataTables_scrollBody table').first().DataTable();
 
@@ -66,12 +47,8 @@ function addSlotTableDrawHandler() {
             }
         });
     });
-
 }
 
-/**
- * @return {void}
- */
 function loadSlotProductsTable() {
     var $slotProductsTable = $slotProductsTableWrapper.find('.dataTables_scrollBody table').first(),
         slotProductsTableLoadUrl = '/configurable-bundle-gui/template/slot-products-table?id-configurable-bundle-template-slot=';
@@ -79,26 +56,17 @@ function loadSlotProductsTable() {
     $slotProductsTable.DataTable().ajax.url(slotProductsTableLoadUrl + selectedIdSlot).load();
 }
 
-/**
- * @return {void}
- */
 function markSelectedRow($row) {
     $row.siblings().removeClass('selected');
     $row.addClass('selected');
 }
 
-/**
- * @return {int}
- */
 function getInitialSelectedIdSlot() {
     var selectedIdSlot = $('#selected-id-configurable-bundle-template-slot').val();
 
     return selectedIdSlot.length ? parseInt(selectedIdSlot) : 0;
 }
 
-/**
- * @return {void}
- */
 function performInitialDraw($slotTable, $rows) {
     isInitialDraw = false;
     $slotProductsTableWrapper.removeClass('hidden');
@@ -110,24 +78,32 @@ function performInitialDraw($slotTable, $rows) {
     var initialSelectedIdSlot = getInitialSelectedIdSlot();
 
     if (!initialSelectedIdSlot) {
-        $rows.first().click();
+        updateSlotProductsTable($rows.first(), $slotTable);
 
         return;
     }
 
     $.each($rows, function (index, row) {
         if ($slotTable.row(row).data()[config.slotTableColumnsMapping.idSlot] === initialSelectedIdSlot) {
-            $(row).click();
-
-            return;
+            updateSlotProductsTable(row, $slotTable);
         }
     });
 }
 
+function updateSlotProductsTable(row, $slotTable) {
+    var rowData = $slotTable.row(row).data();
+    var idSlot = rowData[config.slotTableColumnsMapping.idSlot];
 
-/**
- * Open public methods
- */
+    if (idSlot === selectedIdSlot) {
+        return;
+    }
+
+    selectedIdSlot = idSlot;
+    loadSlotProductsTable();
+    markSelectedRow($(row));
+    $slotProductsTableName.text(rowData[config.slotTableColumnsMapping.slotName]);
+}
+
 module.exports = {
     init: init
 };

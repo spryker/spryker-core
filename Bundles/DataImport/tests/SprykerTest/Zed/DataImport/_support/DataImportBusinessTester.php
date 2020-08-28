@@ -8,11 +8,8 @@
 namespace SprykerTest\Zed\DataImport;
 
 use Codeception\Actor;
-use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,19 +19,11 @@ use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class DataImportBusinessTester extends Actor
 {
     use _generated\DataImportBusinessTesterActions;
-
-    /**
-     * @return \Spryker\Zed\DataImport\Business\DataImportBusinessFactory
-     */
-    public function getFactory(): DataImportBusinessFactory
-    {
-        return new DataImportBusinessFactory();
-    }
 }

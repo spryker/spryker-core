@@ -46,12 +46,14 @@ class WishlistMapper implements WishlistMapperInterface
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer {
         $wishlistTransfer = $wishlistTransfer->fromArray($wishlistEntity->toArray(), false);
-
-        foreach ($wishlistEntity->getSpyWishlistItems() as $wishlistItemEntity) {
+        $wishlistItemEntities = $wishlistEntity->getSpyWishlistItems();
+        foreach ($wishlistItemEntities as $wishlistItemEntity) {
             $wishlistTransfer->addWishlistItem(
                 $this->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer())
             );
         }
+
+        $wishlistTransfer->setNumberOfItems($wishlistItemEntities->count());
 
         return $wishlistTransfer;
     }

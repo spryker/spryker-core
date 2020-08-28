@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Propel\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReader;
+use Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReaderInterface;
 use Spryker\Zed\Propel\Business\Model\DirectoryRemover;
 use Spryker\Zed\Propel\Business\Model\HealthCheck\HealthCheckInterface;
 use Spryker\Zed\Propel\Business\Model\HealthCheck\PropelHealthCheck;
@@ -26,6 +28,8 @@ use Spryker\Zed\Propel\Business\Model\PropelSchemaMerger;
 use Spryker\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Spryker\Zed\Propel\Business\Model\Schema\Validator\PropelSchemaValidator;
 use Spryker\Zed\Propel\Business\Model\Schema\XmlValidator\PropelSchemaXmlNameValidator;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\PropelSchemaElementFilter;
+use Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface;
 use Spryker\Zed\Propel\Communication\Console\BuildModelConsole;
 use Spryker\Zed\Propel\Communication\Console\BuildSqlConsole;
 use Spryker\Zed\Propel\Communication\Console\ConvertConfigConsole;
@@ -45,6 +49,14 @@ use Symfony\Component\Filesystem\Filesystem;
  */
 class PropelBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Propel\Business\ConfigReader\PropelConfigReaderInterface
+     */
+    public function createPropelConfigReader(): PropelConfigReaderInterface
+    {
+        return new PropelConfigReader($this->getConfig());
+    }
+
     /**
      * @return \Spryker\Zed\Propel\Business\Model\PropelSchemaInterface
      */
@@ -113,6 +125,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     {
         $propelSchemaMerger = new PropelSchemaMerger(
             $this->getUtilTextService(),
+            $this->createPropelSchemaElementFilter(),
             $this->getConfig()
         );
 
@@ -170,7 +183,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabaseInterface
      */
@@ -182,7 +195,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorCollectionInterface
      */
@@ -197,7 +210,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
@@ -207,7 +220,7 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @deprecated Use `createPropelDatabaseAdapterCollection` instead.
+     * @deprecated Use {@link createPropelDatabaseAdapterCollection()} instead.
      *
      * @return \Spryker\Zed\Propel\Business\Model\PropelDatabase\DatabaseCreatorInterface
      */
@@ -415,5 +428,21 @@ class PropelBusinessFactory extends AbstractBusinessFactory
     public function createPropelHealthChecker(): HealthCheckInterface
     {
         return new PropelHealthCheck();
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Business\SchemaElementFilter\SchemaElementFilterInterface
+     */
+    public function createPropelSchemaElementFilter(): SchemaElementFilterInterface
+    {
+        return new PropelSchemaElementFilter($this->getPropelSchemaElementFilterPlugins());
+    }
+
+    /**
+     * @return \Spryker\Zed\Propel\Dependency\Plugin\PropelSchemaElementFilterPluginInterface[]
+     */
+    public function getPropelSchemaElementFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(PropelDependencyProvider::PLUGINS_PROPEL_SCHEMA_ELEMENT_FILTER);
     }
 }

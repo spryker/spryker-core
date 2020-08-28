@@ -23,8 +23,7 @@ class HealthCheckResourceController extends AbstractController
      *              "Retrieve services status."
      *          ],
      *          "parameters": [{
-     *              "name": "Accept-Language",
-     *              "in": "header"
+     *              "ref": "acceptLanguage"
      *          }],
      *          "responses": {
      *              "400": "Bad request.",

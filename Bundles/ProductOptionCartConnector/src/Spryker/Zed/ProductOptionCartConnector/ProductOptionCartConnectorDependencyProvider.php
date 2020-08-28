@@ -40,9 +40,9 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
      */
     protected function addProductOptionFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT_OPTION] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT_OPTION, function (Container $container) {
             return new ProductOptionCartConnectorToProductOptionFacadeBridge($container->getLocator()->productOption()->facade());
-        };
+        });
 
         return $container;
     }
@@ -54,9 +54,9 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
      */
     protected function addPriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new ProductOptionCartConnectorToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }

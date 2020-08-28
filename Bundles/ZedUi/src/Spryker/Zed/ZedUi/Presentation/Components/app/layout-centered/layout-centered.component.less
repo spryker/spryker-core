@@ -1,0 +1,32 @@
+@import '~@spryker/styles/src/lib/themes/default/external-variables.less';
+
+web-mp-layout-centered {
+    height: 100%;
+}
+
+.mp-layout-centered {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+
+    &__content,
+    &__footer {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__content {
+        flex-direction: column;
+        align-items: center;
+        flex-grow: 1;
+
+        > span {
+            width: 100%;
+        }
+    }
+
+    &__footer {
+        flex-shrink: 0;
+    }
+}

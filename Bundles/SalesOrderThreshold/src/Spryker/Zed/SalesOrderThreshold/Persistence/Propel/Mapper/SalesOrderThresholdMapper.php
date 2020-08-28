@@ -74,8 +74,10 @@ class SalesOrderThresholdMapper implements SalesOrderThresholdMapperInterface
      *
      * @return \Generated\Shared\Transfer\SalesOrderThresholdValueTransfer
      */
-    protected function mapSalesOrderThresholdValueTransfer(SalesOrderThresholdTransfer $salesOrderThresholdTransfer, SpySalesOrderThreshold $salesOrderThresholdEntity): SalesOrderThresholdValueTransfer
-    {
+    protected function mapSalesOrderThresholdValueTransfer(
+        SalesOrderThresholdTransfer $salesOrderThresholdTransfer,
+        SpySalesOrderThreshold $salesOrderThresholdEntity
+    ): SalesOrderThresholdValueTransfer {
         $salesOrderThresholdValueTransfer = $salesOrderThresholdTransfer->getSalesOrderThresholdValue() ?? (new SalesOrderThresholdValueTransfer());
         $salesOrderThresholdValueTransfer = $salesOrderThresholdValueTransfer
             ->fromArray($salesOrderThresholdEntity->toArray(), true)

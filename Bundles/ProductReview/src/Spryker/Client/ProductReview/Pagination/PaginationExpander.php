@@ -38,7 +38,8 @@ class PaginationExpander implements PaginationExpanderInterface
     {
         /** @var \Elastica\Query $query */
         $query = $searchQuery->getSearchQuery();
-        if (isset($requestParameters[static::PARAMETER_NAME_OFFSET])
+        if (
+            isset($requestParameters[static::PARAMETER_NAME_OFFSET])
             && isset($requestParameters[static::PARAMETER_NAME_LIMIT])
         ) {
             $query->setSize($requestParameters[static::PARAMETER_NAME_LIMIT]);

@@ -17,6 +17,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class ProductAlternativeProductLabelConnectorInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * {@inheritDoc}
      * Specification:
      *  - Installs label for alternative products.
      *

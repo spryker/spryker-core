@@ -35,8 +35,10 @@ class FileManagerStorage implements FileManagerStorageInterface
      * @param \Spryker\Client\FileManagerStorage\Dependency\Client\FileManagerStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\FileManagerStorage\Dependency\Service\FileManagerStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(FileManagerStorageToStorageClientInterface $storageClient, FileManagerStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        FileManagerStorageToStorageClientInterface $storageClient,
+        FileManagerStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }

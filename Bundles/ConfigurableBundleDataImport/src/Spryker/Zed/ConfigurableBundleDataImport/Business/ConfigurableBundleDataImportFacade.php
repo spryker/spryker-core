@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\ConfigurableBundleDataImport\Business;
@@ -41,8 +41,9 @@ class ConfigurableBundleDataImportFacade extends AbstractFacade implements Confi
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importConfigurableBundleTemplateSlots(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importConfigurableBundleTemplateSlots(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()
             ->getConfigurableBundleTemplateSlotDataImporter()
             ->import($dataImporterConfigurationTransfer);
@@ -57,8 +58,9 @@ class ConfigurableBundleDataImportFacade extends AbstractFacade implements Confi
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importConfigurableBundleTemplateImages(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importConfigurableBundleTemplateImages(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()
             ->getConfigurableBundleTemplateImageDataImporter()
             ->import($dataImporterConfigurationTransfer);

@@ -32,7 +32,15 @@ class CompanyUserStatusController extends AbstractController
      */
     public function enableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $form = $this->getFactory()->createEnableCompanyUserForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_ENABLE);
 
@@ -64,7 +72,15 @@ class CompanyUserStatusController extends AbstractController
      */
     public function disableCompanyUserAction(Request $request): RedirectResponse
     {
-        $idCompanyUser = $request->query->get(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
+        $form = $this->getFactory()->createDisableCompanyUserForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse(static::URL_REDIRECT_COMPANY_USER_PAGE);
+        }
+
+        $idCompanyUser = $request->query->getInt(CompanyUserGuiConfig::PARAM_ID_COMPANY_USER);
         if (!$idCompanyUser) {
             $this->addErrorMessage(static::MESSAGE_ERROR_COMPANY_USER_DISABLE);
 

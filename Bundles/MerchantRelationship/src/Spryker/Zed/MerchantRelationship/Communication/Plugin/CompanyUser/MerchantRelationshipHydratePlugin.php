@@ -20,6 +20,8 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class MerchantRelationshipHydratePlugin extends AbstractPlugin implements CompanyUserHydrationPluginInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param \Generated\Shared\Transfer\CompanyUserTransfer $companyUserTransfer

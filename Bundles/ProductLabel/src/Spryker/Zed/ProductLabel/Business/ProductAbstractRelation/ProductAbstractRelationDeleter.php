@@ -40,28 +40,32 @@ class ProductAbstractRelationDeleter implements ProductAbstractRelationDeleterIn
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    public function removeRelations($idProductLabel, array $idsProductAbstract)
+    public function removeRelations($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
-        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract) {
-            $this->executeDeleteRelationsTransaction($idProductLabel, $idsProductAbstract);
+        $this->handleDatabaseTransaction(function () use ($idProductLabel, $idsProductAbstract, $isTouchEnabled) {
+            $this->executeDeleteRelationsTransaction($idProductLabel, $idsProductAbstract, $isTouchEnabled);
         });
     }
 
     /**
      * @param int $idProductLabel
      * @param int[] $idsProductAbstract
+     * @param bool $isTouchEnabled
      *
      * @return void
      */
-    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract)
+    protected function executeDeleteRelationsTransaction($idProductLabel, array $idsProductAbstract, bool $isTouchEnabled = true)
     {
         foreach ($this->findRelationEntities($idProductLabel, $idsProductAbstract) as $relationEntity) {
             $relationEntity->delete();
 
-            $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
+            if ($isTouchEnabled) {
+                $this->touchRelationsForAbstractProduct($relationEntity->getFkProductAbstract());
+            }
         }
     }
 

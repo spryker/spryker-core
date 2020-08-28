@@ -47,7 +47,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $storeFacade;
 
     /**
-     * @deprecated Use `\Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()` instead.
+     * @deprecated Use {@link \Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig::isSynchronizationEnabled()} instead.
      *
      * @var bool
      */
@@ -59,28 +59,36 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     protected $superAttributeKeyBuffer = [];
 
     /**
+     * @var \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[]
+     */
+    protected $productAbstractStorageExpanderPlugins = [];
+
+    /**
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToProductInterface $productFacade
      * @param \Spryker\Zed\ProductStorage\Business\Attribute\AttributeMapInterface $attributeMap
      * @param \Spryker\Zed\ProductStorage\Persistence\ProductStorageQueryContainerInterface $queryContainer
      * @param \Spryker\Zed\ProductStorage\Dependency\Facade\ProductStorageToStoreFacadeInterface $storeFacade
      * @param bool $isSendingToQueue
+     * @param \Spryker\Zed\ProductStorageExtension\Dependency\Plugin\ProductAbstractStorageExpanderPluginInterface[] $productAbstractStorageExpanderPlugins
      */
     public function __construct(
         ProductStorageToProductInterface $productFacade,
         AttributeMapInterface $attributeMap,
         ProductStorageQueryContainerInterface $queryContainer,
         ProductStorageToStoreFacadeInterface $storeFacade,
-        $isSendingToQueue
+        $isSendingToQueue,
+        array $productAbstractStorageExpanderPlugins
     ) {
         $this->productFacade = $productFacade;
         $this->storeFacade = $storeFacade;
         $this->attributeMap = $attributeMap;
         $this->queryContainer = $queryContainer;
         $this->isSendingToQueue = $isSendingToQueue;
+        $this->productAbstractStorageExpanderPlugins = $productAbstractStorageExpanderPlugins;
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -99,7 +107,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -301,6 +309,8 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
             $attributeMapBulk
         );
 
+        $productAbstractStorageTransfer = $this->executeProductAbstractStorageExpanderPlugins($productAbstractStorageTransfer);
+
         $spyProductStorageEntity
             ->setFkProductAbstract($productAbstractLocalizedEntity['SpyProductAbstract'][static::COL_ID_PRODUCT_ABSTRACT])
             ->setData($productAbstractStorageTransfer->toArray())
@@ -432,7 +442,7 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
     }
 
     /**
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return array
      */
@@ -464,5 +474,20 @@ class ProductAbstractStorageWriter implements ProductAbstractStorageWriterInterf
         }
 
         return $mappedProductAbstractStorageEntities;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractStorageTransfer $productAbstractStorageTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductAbstractStorageTransfer
+     */
+    protected function executeProductAbstractStorageExpanderPlugins(
+        ProductAbstractStorageTransfer $productAbstractStorageTransfer
+    ): ProductAbstractStorageTransfer {
+        foreach ($this->productAbstractStorageExpanderPlugins as $productAbstractStorageExpanderPlugin) {
+            $productAbstractStorageTransfer = $productAbstractStorageExpanderPlugin->expand($productAbstractStorageTransfer);
+        }
+
+        return $productAbstractStorageTransfer;
     }
 }

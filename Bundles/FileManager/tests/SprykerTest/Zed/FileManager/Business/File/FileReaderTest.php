@@ -81,12 +81,12 @@ class FileReaderTest extends Unit
      */
     protected function assertFileInfo(FileManagerDataTransfer $fileManagerDataTransfer): void
     {
-        $this->assertEquals('the content of the file', $fileManagerDataTransfer->getContent());
-        $this->assertEquals('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(1024, $fileManagerDataTransfer->getFileInfo()->getSize());
-        $this->assertEquals(1, $fileManagerDataTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('report.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertSame('the content of the file', $fileManagerDataTransfer->getContent());
+        $this->assertSame('v. 1', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertSame(1024, $fileManagerDataTransfer->getFileInfo()->getSize());
+        $this->assertSame(1, $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertSame('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertSame('report.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
     }
 
     /**

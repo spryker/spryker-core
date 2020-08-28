@@ -41,8 +41,13 @@ class RouteProviderPlugin extends AbstractRouteProviderPlugin
      *
      * @return \Spryker\Yves\Router\Route\Route
      */
-    protected function buildRoute(string $path, string $moduleName, string $controllerName, string $actionName = 'indexAction', bool $parseJsonBody = false): Route
-    {
+    protected function buildRoute(
+        string $path,
+        string $moduleName,
+        string $controllerName,
+        string $actionName = 'indexAction',
+        bool $parseJsonBody = false
+    ): Route {
         $route = new Route($path);
 
         $template = sprintf(

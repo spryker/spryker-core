@@ -30,6 +30,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     public const LOCALE_CODE = 'locale_code';
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -40,6 +42,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -50,6 +54,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAttributeKeyQuery
@@ -60,6 +66,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string[] $keys
@@ -74,6 +82,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueQuery
@@ -84,6 +94,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslationQuery
@@ -94,6 +106,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $attributeKeys
@@ -109,6 +123,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $searchText
@@ -135,6 +151,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -164,7 +182,7 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
                     SpyProductManagementAttributeValueTranslationTableMap::COL_FK_LOCALE,
                 ], Criteria::LEFT_JOIN)
             ->clearSelectColumns()
-            ->withColumn($idLocale, 'fk_locale')
+            ->withColumn((string)$idLocale, 'fk_locale')
             ->withColumn(SpyProductManagementAttributeValueTranslationTableMap::COL_TRANSLATION, 'translation');
 
         $searchText = trim($searchText);
@@ -186,6 +204,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $searchText
@@ -212,6 +232,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -228,6 +250,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param array $attributes
@@ -256,6 +280,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute
@@ -270,6 +296,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeQuery
@@ -282,6 +310,8 @@ class ProductAttributeQueryContainer extends AbstractQueryContainer implements P
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idProductManagementAttribute

@@ -31,8 +31,10 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
      * @param \Spryker\Client\ProductCategoryStorage\Dependency\Client\ProductCategoryStorageToStorageClientInterface $storageClient
      * @param \Spryker\Client\ProductCategoryStorage\Dependency\Service\ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService
      */
-    public function __construct(ProductCategoryStorageToStorageClientInterface $storageClient, ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService)
-    {
+    public function __construct(
+        ProductCategoryStorageToStorageClientInterface $storageClient,
+        ProductCategoryStorageToSynchronizationServiceInterface $synchronizationService
+    ) {
         $this->storageClient = $storageClient;
         $this->synchronizationService = $synchronizationService;
     }
@@ -65,6 +67,7 @@ class ProductAbstractCategoryStorageReader implements ProductAbstractCategorySto
     public function findBulkProductAbstractCategory(array $productAbstractIds, string $localeName): array
     {
         $productAbstractCategoryStorageData = $this->findBulkStorageData($productAbstractIds, $localeName);
+        $productAbstractCategoryStorageData = array_filter($productAbstractCategoryStorageData);
 
         if (!$productAbstractCategoryStorageData) {
             return [];

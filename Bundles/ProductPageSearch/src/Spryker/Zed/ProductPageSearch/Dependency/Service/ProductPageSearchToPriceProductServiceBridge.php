@@ -31,8 +31,10 @@ class ProductPageSearchToPriceProductServiceBridge implements ProductPageSearchT
      *
      * @return \Generated\Shared\Transfer\PriceProductTransfer|null
      */
-    public function resolveProductPriceByPriceProductCriteria(array $priceProductTransfers, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer
-    {
+    public function resolveProductPriceByPriceProductCriteria(
+        array $priceProductTransfers,
+        PriceProductCriteriaTransfer $priceProductCriteriaTransfer
+    ): ?PriceProductTransfer {
         return $this->priceProductService->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
     }
 }

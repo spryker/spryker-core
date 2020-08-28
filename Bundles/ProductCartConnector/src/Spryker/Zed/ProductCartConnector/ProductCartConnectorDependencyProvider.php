@@ -12,6 +12,7 @@ use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToLocaleBridge;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToMessengerFacadeBridge;
 use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToProductBridge;
+use Spryker\Zed\ProductCartConnector\Dependency\Facade\ProductCartConnectorToStoreFacadeBridge;
 
 /**
  * @method \Spryker\Zed\ProductCartConnector\ProductCartConnectorConfig getConfig()
@@ -20,6 +21,7 @@ class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyPro
 {
     public const FACADE_PRODUCT = 'FACADE_PRODUCT';
     public const FACADE_LOCALE = 'FACADE_LOCALE';
+    public const FACADE_STORE = 'FACADE_STORE';
     public const FACADE_MESSENGER = 'FACADE_MESSENGER';
 
     /**
@@ -27,17 +29,42 @@ class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyPro
      *
      * @return \Spryker\Zed\Kernel\Container
      */
-    public function provideBusinessLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container): Container
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return new ProductCartConnectorToLocaleBridge($container->getLocator()->locale()->facade());
-        };
+        $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[self::FACADE_PRODUCT] = function (Container $container) {
-            return new ProductCartConnectorToProductBridge($container->getLocator()->product()->facade());
-        };
-
+        $container = $this->addLocaleFacade($container);
+        $container = $this->addProductFacade($container);
         $container = $this->addMessengerFacade($container);
+        $container = $this->addStoreFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addLocaleFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_LOCALE, function (Container $container) {
+            return new ProductCartConnectorToLocaleBridge($container->getLocator()->locale()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addProductFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
+            return new ProductCartConnectorToProductBridge($container->getLocator()->product()->facade());
+        });
 
         return $container;
     }
@@ -49,9 +76,23 @@ class ProductCartConnectorDependencyProvider extends AbstractBundleDependencyPro
      */
     protected function addMessengerFacade(Container $container): Container
     {
-        $container[static::FACADE_MESSENGER] = function (Container $container) {
+        $container->set(static::FACADE_MESSENGER, function (Container $container) {
             return new ProductCartConnectorToMessengerFacadeBridge($container->getLocator()->messenger()->facade());
-        };
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductCartConnectorToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
 
         return $container;
     }

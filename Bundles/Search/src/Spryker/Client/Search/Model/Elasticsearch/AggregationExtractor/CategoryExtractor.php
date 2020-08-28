@@ -13,11 +13,12 @@ use Generated\Shared\Transfer\FacetSearchResultTransfer;
 use Generated\Shared\Transfer\FacetSearchResultValueTransfer;
 
 /**
- * @deprecated Use `\Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor` instead.
+ * @deprecated Use {@link \Spryker\Client\SearchElasticsearch\AggregationExtractor\CategoryExtractor} instead.
  */
 class CategoryExtractor implements AggregationExtractorInterface
 {
     public const DOC_COUNT = 'doc_count';
+
     /**
      * @var \Generated\Shared\Transfer\FacetConfigTransfer
      */
@@ -59,7 +60,7 @@ class CategoryExtractor implements AggregationExtractorInterface
     /**
      * @param array $aggregation
      *
-     * @return \ArrayObject
+     * @return \ArrayObject|\Generated\Shared\Transfer\FacetSearchResultValueTransfer[]
      */
     protected function extractFacetData(array $aggregation)
     {

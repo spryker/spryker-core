@@ -15,7 +15,7 @@ use Spryker\Zed\ShipmentDiscountConnector\Business\Model\ShipmentDiscountDecisio
 use Spryker\Zed\ShipmentDiscountConnector\Dependency\Facade\ShipmentDiscountConnectorToDiscountInterface;
 
 /**
- * @deprecated Use \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule instead.
+ * @deprecated Use {@link \Spryker\Zed\ShipmentDiscountConnector\Business\DecisionRule\MethodDiscountDecisionRule} instead.
  */
 class MethodDiscountDecisionRule implements ShipmentDiscountDecisionRuleInterface
 {

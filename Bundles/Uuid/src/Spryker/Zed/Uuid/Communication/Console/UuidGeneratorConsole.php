@@ -56,6 +56,8 @@ class UuidGeneratorConsole extends Console
         );
 
         $this->info($this->getSuccessMessage($uuidGeneratorReportTransfer));
+
+        return static::CODE_SUCCESS;
     }
 
     /**

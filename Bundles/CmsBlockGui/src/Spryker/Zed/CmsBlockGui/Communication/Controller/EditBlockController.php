@@ -37,7 +37,7 @@ class EditBlockController extends AbstractCmsBlockController
             ->getCmsBlockFacade()
             ->syncTemplate($this->getFactory()->getConfig()->getTemplatePath());
 
-        $idCmsBlock = $request->query->get(static::URL_PARAM_ID_CMS_BLOCK);
+        $idCmsBlock = $request->query->getInt(static::URL_PARAM_ID_CMS_BLOCK);
         $cmsBlockTransfer = $this->findCmsBlockById($idCmsBlock);
 
         if (!$cmsBlockTransfer) {
@@ -72,6 +72,7 @@ class EditBlockController extends AbstractCmsBlockController
             'cmsBlockForm' => $cmsBlockForm->createView(),
             'availableLocales' => $availableLocales,
             'cmsBlock' => $cmsBlockTransfer,
+            'toggleActiveCmsBlockForm' => $this->getFactory()->createToggleActiveCmsBlockForm()->createView(),
         ]);
     }
 
@@ -84,6 +85,14 @@ class EditBlockController extends AbstractCmsBlockController
     {
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+
+        $form = $this->getFactory()->createToggleActiveCmsBlockForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $this->getFactory()
             ->getCmsBlockFacade()
@@ -103,6 +112,14 @@ class EditBlockController extends AbstractCmsBlockController
     {
         $idCmsBlock = $this->castId($request->query->get(static::URL_PARAM_ID_CMS_BLOCK));
         $redirectUrl = $request->query->get(static::URL_PARAM_REDIRECT_URL, static::REDIRECT_URL_DEFAULT);
+
+        $form = $this->getFactory()->createToggleActiveCmsBlockForm()->handleRequest($request);
+
+        if (!$form->isSubmitted() || !$form->isValid()) {
+            $this->addErrorMessage('CSRF token is not valid');
+
+            return $this->redirectResponse($redirectUrl);
+        }
 
         $this->getFactory()
             ->getCmsBlockFacade()

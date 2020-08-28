@@ -19,6 +19,8 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * Specification:
      *  - Domain name of glue application to build API links.
      *
+     * @api
+     *
      * @return string
      */
     public function getGlueDomainName(): string
@@ -29,6 +31,8 @@ class GlueApplicationConfig extends AbstractBundleConfig
     /**
      * Specification:
      *  - Indicates whether debug of rest is enabled.
+     *
+     * @api
      *
      * @return bool
      */
@@ -41,6 +45,8 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * Specification:
      *  - Specifies a URI that may access the resources.
      *
+     * @api
+     *
      * @return string
      */
     public function getCorsAllowOrigin(): string
@@ -51,6 +57,8 @@ class GlueApplicationConfig extends AbstractBundleConfig
     /**
      * Specification:
      *  - List of allowed CORS headers.
+     *
+     * @api
      *
      * @return string[]
      */
@@ -69,10 +77,22 @@ class GlueApplicationConfig extends AbstractBundleConfig
      * Specification:
      *  - Indicates whether all relationships should be included in response by default.
      *
+     * @api
+     *
      * @return bool
      */
     public function isEagerRelationshipsLoadingEnabled(): bool
     {
         return true;
+    }
+
+    /**
+     * @api
+     *
+     * @return bool
+     */
+    public function isDebugModeEnabled(): bool
+    {
+        return $this->get(GlueApplicationConstants::ENABLE_APPLICATION_DEBUG, false);
     }
 }

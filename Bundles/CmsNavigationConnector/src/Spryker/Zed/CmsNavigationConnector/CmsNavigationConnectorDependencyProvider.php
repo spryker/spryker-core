@@ -43,9 +43,9 @@ class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addCmsQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_CMS] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS, function (Container $container) {
             return new CmsNavigationConnectorToCmsQueryContainerBridge($container->getLocator()->cms()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -55,9 +55,9 @@ class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addNavigationQueryContainer(Container $container)
     {
-        $container[self::QUERY_CONTAINER_NAVIGATION] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_NAVIGATION, function (Container $container) {
             return new CmsNavigationConnectorToNavigationQueryContainerBridge($container->getLocator()->navigation()->queryContainer());
-        };
+        });
     }
 
     /**
@@ -67,8 +67,8 @@ class CmsNavigationConnectorDependencyProvider extends AbstractBundleDependencyP
      */
     protected function addNavigationFacade(Container $container)
     {
-        $container[self::FACADE_NAVIGATION] = function (Container $container) {
+        $container->set(static::FACADE_NAVIGATION, function (Container $container) {
             return new CmsNavigationConnectorToNavigationFacadeBridge($container->getLocator()->navigation()->facade());
-        };
+        });
     }
 }

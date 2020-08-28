@@ -92,8 +92,10 @@ class CategoryNodeStorage implements CategoryNodeStorageInterface
      *
      * @return \Generated\Shared\Transfer\CategoryNodeStorageTransfer|null
      */
-    protected function mapCategoryNodeStorageDataToCategoryNodeStorageTransfer(string $categoryNodeStorageData, string $localeName): ?CategoryNodeStorageTransfer
-    {
+    protected function mapCategoryNodeStorageDataToCategoryNodeStorageTransfer(
+        string $categoryNodeStorageData,
+        string $localeName
+    ): ?CategoryNodeStorageTransfer {
         $decodedCategoryNodeStorageData = json_decode($categoryNodeStorageData, true);
 
         if (!$decodedCategoryNodeStorageData) {

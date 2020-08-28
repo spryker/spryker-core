@@ -8,10 +8,14 @@
 namespace SprykerTest\Zed\ProductOption;
 
 use Codeception\Actor;
+use Generated\Shared\DataBuilder\QuoteBuilder;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CountryTransfer;
 use Generated\Shared\Transfer\MoneyValueTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\ProductOptionValueTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstract;
@@ -22,14 +26,13 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
-use Propel\Runtime\Propel;
+use Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToCurrencyFacadeBridge;
 use Spryker\Zed\ProductOption\Dependency\Facade\ProductOptionToStoreFacadeBridge;
 use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
+use SprykerTest\Shared\ProductOption\Helper\ProductOptionGroupDataHelper;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -39,17 +42,14 @@ use Spryker\Zed\ProductOption\ProductOptionDependencyProvider;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductOption\Business\ProductOptionFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductOptionBusinessTester extends Actor
 {
     use _generated\ProductOptionBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param \Generated\Shared\Transfer\ProductOptionValueTransfer $productOptionValueTransfer
@@ -124,14 +124,6 @@ class ProductOptionBusinessTester extends Actor
             ->save();
 
         return $taxSetEntity;
-    }
-
-    /**
-     * @return void
-     */
-    public function enablePropelInstancePooling(): void
-    {
-        Propel::enableInstancePooling();
     }
 
     /**
@@ -227,5 +219,75 @@ class ProductOptionBusinessTester extends Actor
     public function getCountryIdByIso2Code(string $iso2Code): int
     {
         return $this->haveCountryWithIso2Code($iso2Code)->getIdCountry();
+    }
+
+    /**
+     * @param string $stateMachineProcessName
+     *
+     * @return \Generated\Shared\Transfer\OrderTransfer
+     */
+    public function createOrderWithProductOptions(string $stateMachineProcessName): OrderTransfer
+    {
+        $storeTransfer = $this->haveStore([StoreTransfer::NAME => 'DE']);
+
+        $quoteTransfer = (new QuoteBuilder())
+            ->withItem()
+            ->withTotals()
+            ->withShippingAddress()
+            ->withBillingAddress()
+            ->withCurrency()
+            ->build();
+
+        $quoteTransfer->getItems()
+            ->getIterator()
+            ->current()
+            ->addProductOption($this->createProductOption($storeTransfer));
+
+        $quoteTransfer
+            ->setCustomer($this->haveCustomer())
+            ->setStore($storeTransfer);
+
+        $saveOrderTransfer = $this->haveOrderFromQuote($quoteTransfer, $stateMachineProcessName, [new ProductOptionOrderSaverPlugin()]);
+
+        return (new OrderTransfer())
+            ->setIdSalesOrder($saveOrderTransfer->getIdSalesOrder())
+            ->setOrderReference($saveOrderTransfer->getOrderReference())
+            ->setStore($quoteTransfer->getStore()->getName())
+            ->setCustomer($quoteTransfer->getCustomer())
+            ->setItems($saveOrderTransfer->getOrderItems());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
+     * ˝
+     *
+     * @return \Generated\Shared\Transfer\ProductOptionTransfer
+     */
+    protected function createProductOption(StoreTransfer $storeTransfer): ProductOptionTransfer
+    {
+        $productOptionGroupTransfer = $this->haveProductOptionGroupWithValues(
+            [],
+            [
+                [
+                    [],
+                    [
+                        [
+                            ProductOptionGroupDataHelper::STORE_NAME => $storeTransfer->getName(),
+                            MoneyValueTransfer::GROSS_AMOUNT => 123,
+                            MoneyValueTransfer::NET_AMOUNT => 123,
+                        ],
+                    ],
+                ],
+            ]
+        );
+
+        $productOptionTransfer = (new ProductOptionTransfer())
+            ->fromArray($productOptionGroupTransfer->getProductOptionValues()[0]->toArray(), true)
+            ->setGroupName($productOptionGroupTransfer->getName())
+            ->setQuantity(1)
+            ->setUnitGrossPrice(123)
+            ->setTaxRate(19.0);
+
+        return $productOptionTransfer;
     }
 }

@@ -1,0 +1,54 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set title = 'Overview of Return' | trans ~ ': ' ~ return.returnReference %}
+
+{% block head_title title | trans %}
+{% block section_title title | trans %}
+
+{% block action %}
+    {{ backActionButton(url('/sales-return-gui'), 'Back to Returns' | trans) }}
+    {{ createActionButton(url('/sales-return-gui/return-slip', {'id-return': return.idSalesReturn}), 'Print Return Slip' | trans) }}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-8">
+            {% include '@SalesReturnGui/Detail/_partials/returned-items-column.twig' with {
+                return: return,
+                orderItemManualEvents: orderItemManualEvents,
+                uniqueOrderItemManualEvents: uniqueOrderItemManualEvents,
+                salesOrderItemIds: salesOrderItemIds,
+            } only %}
+        </div>
+        <div class="col-lg-4">
+            {% include '@SalesReturnGui/Detail/_partials/general-information-column.twig' with {
+                return: return,
+                uniqueOrderReferences: uniqueOrderReferences,
+                uniqueItemStateLabels: uniqueItemStateLabels,
+            } only %}
+
+            {% if customer is not null %}
+                {% include '@SalesReturnGui/Detail/_partials/customer-column.twig' with {
+                    customer: customer,
+                } only %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-8">
+            {% include '@SalesReturnGui/Detail/_partials/total-column.twig' with {
+                return: return,
+            } only %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ assetsPath('css/spryker-zed-sales-return-gui-main.css') }}">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-sales-return-gui-main.js') }}"></script>
+{% endblock %}

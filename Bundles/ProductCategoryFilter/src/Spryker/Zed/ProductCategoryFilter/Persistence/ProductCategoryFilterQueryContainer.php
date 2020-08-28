@@ -15,6 +15,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class ProductCategoryFilterQueryContainer extends AbstractQueryContainer implements ProductCategoryFilterQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $idCategory
@@ -27,6 +29,8 @@ class ProductCategoryFilterQueryContainer extends AbstractQueryContainer impleme
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\ProductCategoryFilter\Persistence\SpyProductCategoryFilterQuery

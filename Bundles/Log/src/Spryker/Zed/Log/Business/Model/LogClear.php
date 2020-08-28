@@ -37,9 +37,21 @@ class LogClear implements LogClearInterface
     public function clearLogs()
     {
         foreach ($this->logFileDirectories as $logFileDirectory) {
-            if (is_dir($logFileDirectory)) {
-                $this->filesystem->remove($logFileDirectory);
-            }
+            $this->removeLogFiles($logFileDirectory);
         }
+    }
+
+    /**
+     * @param string $logFileDirectory
+     *
+     * @return void
+     */
+    protected function removeLogFiles(string $logFileDirectory): void
+    {
+        if (!$this->filesystem->exists($logFileDirectory)) {
+            return;
+        }
+
+        $this->filesystem->remove($logFileDirectory);
     }
 }

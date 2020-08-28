@@ -27,17 +27,19 @@ abstract class AbstractSpySalesOrderThresholdQuery extends BaseSpySalesOrderThre
      *
      * @param \Generated\Shared\Transfer\StoreTransfer $storeTransfer
      *
-     * @return $this
+     * @return static|$this
      */
     public function filterByStoreTransfer(StoreTransfer $storeTransfer)
     {
-        return $this->_if($storeTransfer->getIdStore() !== null)
-                ->filterByFkStore($storeTransfer->getIdStore())
-            ->_else()
-                ->useStoreQuery()
-                    ->filterByName($storeTransfer->getName())
-                ->endUse()
-            ->_endif();
+        if ($storeTransfer->getIdStore() !== null) {
+            return $this->filterByFkStore($storeTransfer->getIdStore());
+        }
+
+        $this->useStoreQuery()
+                ->filterByName($storeTransfer->getName())
+            ->endUse();
+
+        return $this;
     }
 
     /**
@@ -45,16 +47,18 @@ abstract class AbstractSpySalesOrderThresholdQuery extends BaseSpySalesOrderThre
      *
      * @param \Generated\Shared\Transfer\CurrencyTransfer $currencyTransfer
      *
-     * @return $this
+     * @return static|$this
      */
     public function filterByCurrencyTransfer(CurrencyTransfer $currencyTransfer)
     {
-        return $this->_if($currencyTransfer->getIdCurrency() !== null)
-                ->filterByFkCurrency($currencyTransfer->getIdCurrency())
-            ->_else()
-                ->useCurrencyQuery()
-                    ->filterByCode($currencyTransfer->getCode())
-                ->endUse()
-            ->_endif();
+        if ($currencyTransfer->getIdCurrency() !== null) {
+            return $this->filterByFkCurrency($currencyTransfer->getIdCurrency());
+        }
+
+        $this->useCurrencyQuery()
+                ->filterByCode($currencyTransfer->getCode())
+            ->endUse();
+
+        return $this;
     }
 }

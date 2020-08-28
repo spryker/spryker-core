@@ -33,6 +33,8 @@ class CartsRestApiConfig extends AbstractBundleConfig
     protected const MESSAGE_PRICE_MODE_DATA_IS_INCORRECT = 'quote.validation.error.price_mode_is_incorrect';
 
     /**
+     * @api
+     *
      * @return array
      */
     public static function getErrorToErrorIdentifierMapping(): array

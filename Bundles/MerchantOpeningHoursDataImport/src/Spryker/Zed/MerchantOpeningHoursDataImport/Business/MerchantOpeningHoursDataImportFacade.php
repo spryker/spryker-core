@@ -25,8 +25,9 @@ class MerchantOpeningHoursDataImportFacade extends AbstractFacade implements Mer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importMerchantOpeningHoursWeekdaySchedule(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importMerchantOpeningHoursWeekdaySchedule(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()->getMerchantOpeningHoursWeekdayScheduleDataImporter()->import($dataImporterConfigurationTransfer);
     }
 
@@ -39,8 +40,9 @@ class MerchantOpeningHoursDataImportFacade extends AbstractFacade implements Mer
      *
      * @return \Generated\Shared\Transfer\DataImporterReportTransfer
      */
-    public function importMerchantOpeningHoursDateSchedule(?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null): DataImporterReportTransfer
-    {
+    public function importMerchantOpeningHoursDateSchedule(
+        ?DataImporterConfigurationTransfer $dataImporterConfigurationTransfer = null
+    ): DataImporterReportTransfer {
         return $this->getFactory()->getMerchantOpeningHoursDateScheduleDataImporter()->import($dataImporterConfigurationTransfer);
     }
 }

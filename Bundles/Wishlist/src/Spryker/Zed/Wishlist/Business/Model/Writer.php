@@ -288,9 +288,11 @@ class Writer implements WriterInterface
 
         $productConcreteTransfer = (new ProductConcreteTransfer())->setSku($wishlistItemTransfer->getSku());
 
-        if ($this->productFacade
+        if (
+            $this->productFacade
             && (!$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSku())
-                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))) {
+                || !$this->productFacade->isProductConcreteActive($productConcreteTransfer))
+        ) {
             return $wishlistItemTransfer;
         }
 

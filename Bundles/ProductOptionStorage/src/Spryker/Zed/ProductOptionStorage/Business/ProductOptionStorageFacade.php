@@ -15,14 +15,11 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class ProductOptionStorageFacade extends AbstractFacade implements ProductOptionStorageFacadeInterface
 {
     /**
-     * Specification:
-     * - Queries all productOptions with the given productAbstractIds
-     * - Stores data as json encoded to storage table
-     * - Sends a copy of data to queue based on module config
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */
@@ -32,13 +29,11 @@ class ProductOptionStorageFacade extends AbstractFacade implements ProductOption
     }
 
     /**
-     * Specification:
-     * - Finds and deletes productOptions storage entities with the given productAbstractIds
-     * - Sends delete message to queue based on module config
+     * {@inheritDoc}
      *
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return void
      */

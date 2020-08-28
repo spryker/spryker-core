@@ -9,12 +9,15 @@ namespace Spryker\Shared\Twig;
 
 use Spryker\Shared\Kernel\AbstractSharedConfig;
 use Spryker\Shared\Kernel\KernelConstants;
+use Twig\Cache\FilesystemCache;
 
 class TwigConfig extends AbstractSharedConfig
 {
     protected const THEME_NAME_DEFAULT = 'default';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeName(): string
@@ -23,6 +26,8 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getYvesThemeNameDefault(): string
@@ -31,6 +36,8 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getProjectNamespaces(): array
@@ -39,10 +46,56 @@ class TwigConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getCoreNamespaces(): array
     {
         return $this->get(KernelConstants::CORE_NAMESPACES);
+    }
+
+    /**
+     * Specification:
+     * - Defines the default path to the Twig `.pathCache` file.
+     * - Can be redefined on Yves or Zed configs.
+     *
+     * @api
+     *
+     * @return string
+     */
+    public function getDefaultPathCache(): string
+    {
+        $projectNamespaces = implode('/', $this->getProjectNamespaces());
+
+        return sprintf(
+            '%s/src/Generated/%s/Twig/codeBucket%s/%s/.pathCache',
+            APPLICATION_ROOT_DIR,
+            ucfirst(strtolower(APPLICATION)),
+            APPLICATION_CODE_BUCKET,
+            $projectNamespaces
+        );
+    }
+
+    /**
+     * Specification:
+     * - Defines the default twig options.
+     *
+     * @api
+     *
+     * @return array
+     */
+    public function getDefaultTwigOptions(): array
+    {
+        return [
+            'cache' => new FilesystemCache(
+                sprintf(
+                    '%s/src/Generated/%s/Twig/codeBucket',
+                    APPLICATION_ROOT_DIR,
+                    ucfirst(strtolower(APPLICATION))
+                ),
+                FilesystemCache::FORCE_BYTECODE_INVALIDATION
+            ),
+        ];
     }
 }

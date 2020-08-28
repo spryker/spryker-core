@@ -15,7 +15,14 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
     protected const GLOSSARY_KEY_VOUCHER_NON_APPLICABLE = 'cart.voucher.apply.non_applicable';
     protected const GLOSSARY_KEY_VOUCHER_APPLY_SUCCESSFUL = 'cart.voucher.apply.successful';
 
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_SUCCESS
+     */
     protected const MESSAGE_TYPE_SUCCESS = 'success';
+
+    /**
+     * @uses \Spryker\Shared\CartCode\CartCodesConfig::MESSAGE_TYPE_ERROR
+     */
     protected const MESSAGE_TYPE_ERROR = 'error';
 
     /**
@@ -47,7 +54,8 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findVoucherApplySuccessMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
+        if (
+            in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)
             || !$this->isVoucherCodeApplied($quoteTransfer, $code)
         ) {
             return null;
@@ -83,7 +91,7 @@ class VoucherCartCodeOperationMessageFinder implements VoucherCartCodeOperationM
      */
     protected function findNonApplicableErrorMessage(QuoteTransfer $quoteTransfer, string $code): ?MessageTransfer
     {
-        if (!in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
+        if (in_array($code, $quoteTransfer->getUsedNotAppliedVoucherCodes(), true)) {
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue(static::GLOSSARY_KEY_VOUCHER_NON_APPLICABLE);
             $messageTransfer->setType(static::MESSAGE_TYPE_ERROR);

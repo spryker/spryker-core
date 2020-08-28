@@ -42,9 +42,9 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addOauthService(Container $container): Container
     {
-        $container[static::SERVICE_OAUTH] = function (Container $container) {
+        $container->set(static::SERVICE_OAUTH, function (Container $container) {
             return new OauthPermissionToOauthServiceBridge($container->getLocator()->oauth()->service());
-        };
+        });
 
         return $container;
     }
@@ -56,9 +56,9 @@ class OauthPermissionDependencyProvider extends AbstractDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new OauthPermissionToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }

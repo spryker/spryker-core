@@ -18,10 +18,6 @@ class ProductDiscontinuedBusinessTester extends Actor
     use _generated\ProductDiscontinuedBusinessTesterActions;
 
     /**
-     * Define custom actions here
-     */
-
-    /**
      * @return \Spryker\Zed\Product\Business\ProductFacadeInterface
      */
     public function getProductFacade(): ProductFacadeInterface

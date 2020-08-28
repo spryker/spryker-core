@@ -35,4 +35,14 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->removeCartCode($cartCodeRequestTransfer);
     }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartCodeRequestTransfer $cartCodeRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\CartCodeResponseTransfer
+     */
+    public function removeCartCodeFromQuoteAction(CartCodeRequestTransfer $cartCodeRequestTransfer): CartCodeResponseTransfer
+    {
+        return $this->getFacade()->removeCartCodeFromQuote($cartCodeRequestTransfer);
+    }
 }

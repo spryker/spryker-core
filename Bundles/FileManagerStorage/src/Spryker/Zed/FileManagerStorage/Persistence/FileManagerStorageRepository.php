@@ -60,7 +60,7 @@ class FileManagerStorageRepository extends AbstractRepository implements FileMan
             ->createFileStorageQuery()
             ->filterByFkFile_In($fileStorageIds)
             ->withColumn(
-                "CONCAT(" . SpyFileStorageTableMap::COL_FK_FILE . ", '_', " . SpyFileStorageTableMap::COL_LOCALE . ")",
+                'CONCAT(' . SpyFileStorageTableMap::COL_FK_FILE . ", '_', " . SpyFileStorageTableMap::COL_LOCALE . ')',
                 $storageCompositeKey
             );
 

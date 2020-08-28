@@ -24,7 +24,11 @@ use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\Constraint\Shipmen
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\ShipmentMethod\ViewShipmentMethodForm;
 use Spryker\Zed\ShipmentGui\Communication\Form\Transformer\StringToNumberTransformer;
+use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouper;
+use Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouperInterface;
 use Spryker\Zed\ShipmentGui\Communication\Mapper\ShipmentCarrierMapper;
+use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProvider;
+use Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProviderInterface;
 use Spryker\Zed\ShipmentGui\Communication\Table\ShipmentMethodTable;
 use Spryker\Zed\ShipmentGui\Communication\Tabs\ShipmentMethodTabs;
 use Spryker\Zed\ShipmentGui\Dependency\Facade\ShipmentGuiToCustomerFacadeInterface;
@@ -58,6 +62,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function createShipmentCarrierFormDataProvider(): ShipmentCarrierFormDataProvider
     {
         return new ShipmentCarrierFormDataProvider($this->getShipmentFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Grouper\ProductBundleGrouperInterface
+     */
+    public function createProductBundleGrouper(): ProductBundleGrouperInterface
+    {
+        return new ProductBundleGrouper();
     }
 
     /**
@@ -204,6 +216,14 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @return \Spryker\Zed\ShipmentGui\Communication\Provider\ShipmentOrderItemTemplateProviderInterface
+     */
+    public function createShipmentOrderItemTemplateProvider(): ShipmentOrderItemTemplateProviderInterface
+    {
+        return new ShipmentOrderItemTemplateProvider($this->getShipmentOrderItemTemplatePlugins());
+    }
+
+    /**
      * @return \Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery
      */
     public function getShipmentMethodQuery(): SpyShipmentMethodQuery
@@ -265,5 +285,13 @@ class ShipmentGuiCommunicationFactory extends AbstractCommunicationFactory
     public function getTaxFacade(): ShipmentGuiToTaxFacadeInterface
     {
         return $this->getProvidedDependency(ShipmentGuiDependencyProvider::FACADE_TAX);
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentGuiExtension\Dependency\Plugin\ShipmentOrderItemTemplatePluginInterface[]
+     */
+    public function getShipmentOrderItemTemplatePlugins(): array
+    {
+        return $this->getProvidedDependency(ShipmentGuiDependencyProvider::PLUGIN_SHIPMENT_ORDER_ITEM_TEMPLATE);
     }
 }

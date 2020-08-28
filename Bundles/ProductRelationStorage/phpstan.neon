@@ -1,3 +1,2 @@
 parameters:
     ignoreErrors:
-    - '#Cannot access offset .+spy_product.+ on .+SpyProductRelation#'

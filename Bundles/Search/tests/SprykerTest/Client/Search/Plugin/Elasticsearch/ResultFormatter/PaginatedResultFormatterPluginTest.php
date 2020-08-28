@@ -38,8 +38,12 @@ class PaginatedResultFormatterPluginTest extends AbstractResultFormatterPluginTe
      *
      * @return void
      */
-    public function testFormatResultShouldReturnCorrectFormat(SearchConfigInterface $searchConfig, int $totalHits, array $requestParameters, PaginationSearchResultTransfer $expectedResult): void
-    {
+    public function testFormatResultShouldReturnCorrectFormat(
+        SearchConfigInterface $searchConfig,
+        int $totalHits,
+        array $requestParameters,
+        PaginationSearchResultTransfer $expectedResult
+    ): void {
         /** @var \Spryker\Client\Search\SearchFactory|\PHPUnit\Framework\MockObject\MockObject $searchFactoryMock */
         $searchFactoryMock = $this->getMockBuilder(SearchFactory::class)
             ->setMethods(['getSearchConfig'])

@@ -13,6 +13,10 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
 class CartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

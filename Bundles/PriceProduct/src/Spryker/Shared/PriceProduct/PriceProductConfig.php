@@ -55,6 +55,8 @@ class PriceProductConfig extends AbstractSharedConfig
     protected const PRICE_DIMENSION_DEFAULT_NAME = 'Default';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceTypeDefaultName(): string
@@ -63,6 +65,8 @@ class PriceProductConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefault(): string
@@ -71,6 +75,8 @@ class PriceProductConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForBothType(): string
@@ -79,6 +85,8 @@ class PriceProductConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForNetType(): string
@@ -87,6 +95,8 @@ class PriceProductConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceModeIdentifierForGrossType(): string
@@ -95,6 +105,8 @@ class PriceProductConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getPriceDimensionDefaultName(): string

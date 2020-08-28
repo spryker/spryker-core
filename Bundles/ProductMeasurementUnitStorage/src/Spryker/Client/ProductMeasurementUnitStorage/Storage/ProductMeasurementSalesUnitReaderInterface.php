@@ -15,4 +15,11 @@ interface ProductMeasurementSalesUnitReaderInterface
      * @return \Generated\Shared\Transfer\ProductMeasurementSalesUnitTransfer[]|null
      */
     public function findProductMeasurementSalesUnitByIdProduct(int $idProduct): ?array;
+
+    /**
+     * @param int[] $productConcreteIds
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteProductMeasurementSalesUnitTransfer[]
+     */
+    public function getProductMeasurementSalesUnitsByProductConcreteIds(array $productConcreteIds): array;
 }

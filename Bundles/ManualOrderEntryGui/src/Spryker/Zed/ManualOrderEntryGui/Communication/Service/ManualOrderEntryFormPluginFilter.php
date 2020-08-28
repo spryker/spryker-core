@@ -51,6 +51,7 @@ class ManualOrderEntryFormPluginFilter
 
             if ($this->isFormSkipped($formPlugin, $request, $quoteTransfer)) {
                 $skippedPlugins[] = $formPlugin;
+
                 continue;
             }
 
@@ -96,6 +97,7 @@ class ManualOrderEntryFormPluginFilter
         foreach ($formPlugins as $formPlugin) {
             if ($this->isFormSkipped($formPlugin, $request, $quoteTransfer)) {
                 $skippedPlugins[] = $formPlugin;
+
                 continue;
             }
 
@@ -180,12 +182,14 @@ class ManualOrderEntryFormPluginFilter
                 foreach ($skippedPlugins as $skippedPlugin) {
                     if ($formPlugin->getName() == $skippedPlugin->getName()) {
                         $isSkipped = true;
+
                         break;
                     }
                 }
 
                 if (!$isSkipped) {
                     $filteredPlugins[] = $formPlugin;
+
                     break;
                 }
             }

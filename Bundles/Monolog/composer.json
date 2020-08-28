@@ -4,7 +4,7 @@
   "description": "Monolog module",
   "license": "proprietary",
   "require": {
-    "monolog/monolog": "^1.21.0",
+    "monolog/monolog": "^1.25.0 || ^2.0.0",
     "php": ">=7.2"
   },
   "minimum-stability": "dev",

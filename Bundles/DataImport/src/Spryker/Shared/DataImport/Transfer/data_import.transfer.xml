@@ -48,6 +48,7 @@
         <property name="importedDataSetCount" type="int"/>
         <property name="importTime" type="float"/>
         <property name="importType" type="string"/>
+        <property name="source" type="string"/>
     </transfer>
 
     <transfer name="DataImporterReportMessage">
@@ -69,6 +70,15 @@
     <transfer name="DataImporterQueueWriterConfiguration">
         <property name="chunkSize" type="int"/>
         <property name="queueName" type="string"/>
+    </transfer>
+
+    <transfer name="DataImportConfiguration">
+        <property name="actions" type="DataImportConfigurationAction[]" singular="action"/>
+    </transfer>
+
+    <transfer name="DataImportConfigurationAction">
+        <property name="dataEntity" type="string"/>
+        <property name="source" type="string"/>
     </transfer>
 
     <transfer name="EventEntity">

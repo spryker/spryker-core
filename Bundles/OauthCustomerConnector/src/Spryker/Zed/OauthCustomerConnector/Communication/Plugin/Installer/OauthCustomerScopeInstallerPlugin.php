@@ -17,6 +17,11 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class OauthCustomerScopeInstallerPlugin extends AbstractPlugin implements InstallerPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Installs customer-specific OAuth scopes.
+     * - Scopes are defined in `OauthCustomerConnectorConfig::getCustomerScopes()`, `OauthCustomerConnectorConfig::getCustomerImpersonationScopes()`.
+     * - Skips scope if it already exists in persistent storage.
+     *
      * @api
      *
      * @return void

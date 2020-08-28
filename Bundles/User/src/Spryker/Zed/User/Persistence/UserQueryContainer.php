@@ -16,6 +16,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
 class UserQueryContainer extends AbstractQueryContainer implements UserQueryContainerInterface
 {
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param string $username
@@ -31,6 +33,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @param int $id
@@ -46,6 +50,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery
@@ -59,6 +65,8 @@ class UserQueryContainer extends AbstractQueryContainer implements UserQueryCont
     }
 
     /**
+     * {@inheritDoc}
+     *
      * @api
      *
      * @return \Orm\Zed\User\Persistence\SpyUserQuery

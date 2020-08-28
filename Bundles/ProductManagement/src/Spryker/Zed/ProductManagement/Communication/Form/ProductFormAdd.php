@@ -43,6 +43,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
  * @method \Spryker\Zed\ProductManagement\Communication\ProductManagementCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\ProductManagement\ProductManagementConfig getConfig()
+ * @method \Spryker\Zed\ProductManagement\Persistence\ProductManagementRepositoryInterface getRepository()
  */
 class ProductFormAdd extends AbstractType
 {
@@ -222,8 +223,8 @@ class ProductFormAdd extends AbstractType
             $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(
-            ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT,
+        $defaultName = self::getLocalizedPrefixName(
+            self::FORM_ATTRIBUTE_ABSTRACT,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
@@ -250,8 +251,8 @@ class ProductFormAdd extends AbstractType
             $this->addImageSetForm($builder, $name);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(
-            ProductFormAdd::FORM_IMAGE_SET,
+        $defaultName = self::getLocalizedPrefixName(
+            self::FORM_IMAGE_SET,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
@@ -296,7 +297,7 @@ class ProductFormAdd extends AbstractType
                     new Callback([
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
-                            $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+                            $idProductAbstract = $form->get(self::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()
@@ -399,7 +400,7 @@ class ProductFormAdd extends AbstractType
                     'callback' => function ($dataToValidate, ExecutionContextInterface $context) {
                         $selectedAttributes = array_filter(array_values($dataToValidate));
                         if (empty($selectedAttributes) && !array_key_exists($context->getGroup(), GeneralForm::$errorFieldsDisplayed)) {
-                            $context->addViolation('Please enter at least Sku and Name of the product in every locale under General');
+                            $context->addViolation('Please enter at least an SKU and a Name of the product in every locale in the General section');
                             GeneralForm::$errorFieldsDisplayed[$context->getGroup()] = true;
                         }
                     },

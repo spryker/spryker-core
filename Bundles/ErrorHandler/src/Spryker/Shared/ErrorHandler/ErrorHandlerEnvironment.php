@@ -9,6 +9,7 @@ namespace Spryker\Shared\ErrorHandler;
 
 use ErrorException;
 use Spryker\Shared\Config\Config;
+use Throwable;
 
 class ErrorHandlerEnvironment
 {
@@ -76,7 +77,7 @@ class ErrorHandlerEnvironment
      */
     protected function setExceptionHandler()
     {
-        $exceptionHandler = function ($exception) {
+        $exceptionHandler = function (Throwable $exception): void {
             $errorHandler = $this->getErrorHandler();
             $errorHandler()->handleException($exception);
         };
@@ -89,7 +90,7 @@ class ErrorHandlerEnvironment
      */
     protected function registerShutDownFunction()
     {
-        $shutDownFunction = function () {
+        $shutDownFunction = function (): void {
             $lastError = error_get_last();
             $fatalErrors = [
             E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR,

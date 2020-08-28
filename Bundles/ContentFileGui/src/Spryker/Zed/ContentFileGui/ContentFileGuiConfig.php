@@ -20,6 +20,8 @@ class ContentFileGuiConfig extends AbstractBundleConfig
     public const MAX_NUMBER_SELECTABLE_FILES_IN_FILE_LIST = 30;
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getContentWidgetTemplates(): array
@@ -28,6 +30,8 @@ class ContentFileGuiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getTwigFunctionName(): string

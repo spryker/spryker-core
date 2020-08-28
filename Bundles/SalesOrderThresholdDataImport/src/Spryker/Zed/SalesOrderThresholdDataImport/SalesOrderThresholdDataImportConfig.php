@@ -15,6 +15,8 @@ class SalesOrderThresholdDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_SALES_ORDER_THRESHOLD = 'sales-order-threshold';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getSalesOrderThresholdDataImporterConfiguration(): DataImporterConfigurationTransfer

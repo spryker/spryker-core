@@ -13,7 +13,8 @@ use Spryker\Zed\Navigation\Dependency\NavigationEvents;
 use Spryker\Zed\PropelOrm\Business\Transaction\DatabaseTransactionHandlerTrait;
 
 /**
- * @deprecated Use `\Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStoragePublishListener` and `\Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageUnpublishListener` instead.
+ * @deprecated Use {@link \Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStoragePublishListener}
+ *   and {@link \Spryker\Zed\NavigationStorage\Communication\Plugin\Event\Listener\NavigationStorageUnpublishListener} instead.
  *
  * @method \Spryker\Zed\NavigationStorage\Persistence\NavigationStorageQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\NavigationStorage\Communication\NavigationStorageCommunicationFactory getFactory()
@@ -37,7 +38,8 @@ class NavigationStorageListener extends AbstractPlugin implements EventBulkHandl
         $this->preventTransaction();
         $navigationIds = $this->getFactory()->getEventBehaviorFacade()->getEventTransferIds($eventTransfers);
 
-        if ($eventName === NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE ||
+        if (
+            $eventName === NavigationEvents::ENTITY_SPY_NAVIGATION_DELETE ||
             $eventName === NavigationEvents::NAVIGATION_KEY_UNPUBLISH
         ) {
             $this->getFacade()->unpublish($navigationIds);

@@ -31,7 +31,7 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
      */
     public function getResourceName(): string
     {
-        return MerchantProductOfferStorageConfig::RESOURCE_CONCRETE_PRODUCT_PRODUCT_OFFERS_NAME;
+        return MerchantProductOfferStorageConfig::RESOURCE_PRODUCT_CONCRETE_PRODUCT_OFFERS_NAME;
     }
 
     /**
@@ -112,8 +112,9 @@ class ProductConcreteProductOffersSynchronizationDataPlugin extends AbstractPlug
      *
      * @return \Generated\Shared\Transfer\SynchronizationDataTransfer
      */
-    protected function createSynchronizationDataTransfer(SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity): SynchronizationDataTransfer
-    {
+    protected function createSynchronizationDataTransfer(
+        SpyProductConcreteProductOffersStorage $productConcreteProductOffersStorageEntity
+    ): SynchronizationDataTransfer {
         $synchronizationDataTransfer = new SynchronizationDataTransfer();
 
         /** @var string $data */

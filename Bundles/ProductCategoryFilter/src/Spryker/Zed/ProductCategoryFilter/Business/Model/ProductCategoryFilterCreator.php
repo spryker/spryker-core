@@ -29,8 +29,10 @@ class ProductCategoryFilterCreator implements ProductCategoryFilterCreatorInterf
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTouchInterface $productCategoryFilterTouch
      * @param \Spryker\Zed\ProductCategoryFilter\Business\Model\ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
      */
-    public function __construct(ProductCategoryFilterTouchInterface $productCategoryFilterTouch, ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator)
-    {
+    public function __construct(
+        ProductCategoryFilterTouchInterface $productCategoryFilterTouch,
+        ProductCategoryFilterTransferGenerator $productCategoryFilterTransferGenerator
+    ) {
         $this->productCategoryFilterTouch = $productCategoryFilterTouch;
         $this->productCategoryFilterTransferGenerator = $productCategoryFilterTransferGenerator;
     }

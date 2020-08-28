@@ -22,9 +22,29 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     protected $priceClient;
 
     /**
+     * @var string|null
+     */
+    protected static $currentPriceMode;
+
+    /**
+     * @var string|null
+     */
+    protected static $grossPriceModeIdentifier;
+
+    /**
+     * @var string|null
+     */
+    protected static $netPriceModeIdentifier;
+
+    /**
      * @var \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToCurrencyClientInterface
      */
     protected $currencyClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\RestCurrencyTransfer
+     */
+    protected static $restCurrencyTransfer;
 
     /**
      * @param \Spryker\Glue\ProductPricesRestApi\Dependency\Client\ProductPricesRestApiToPriceClientInterface $priceClient
@@ -69,12 +89,12 @@ class ProductPricesMapper implements ProductPricesMapperInterface
 
         $restProductPriceAttributesTransfer->setPriceTypeName($priceType);
         $restProductPriceAttributesTransfer->setCurrency($this->getRestCurrencyTransfer());
-        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getGrossPriceModeIdentifier()) {
+        if ($this->getCurrentPriceMode() === $this->getGrossPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setGrossAmount($amount);
 
             return $restProductPriceAttributesTransfer;
         }
-        if ($this->priceClient->getCurrentPriceMode() === $this->priceClient->getNetPriceModeIdentifier()) {
+        if ($this->getCurrentPriceMode() === $this->getNetPriceModeIdentifier()) {
             $restProductPriceAttributesTransfer->setNetAmount($amount);
 
             return $restProductPriceAttributesTransfer;
@@ -84,11 +104,51 @@ class ProductPricesMapper implements ProductPricesMapperInterface
     }
 
     /**
+     * @return string
+     */
+    protected function getCurrentPriceMode(): string
+    {
+        if (!static::$currentPriceMode) {
+            static::$currentPriceMode = $this->priceClient->getCurrentPriceMode();
+        }
+
+        return static::$currentPriceMode;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGrossPriceModeIdentifier(): string
+    {
+        if (static::$grossPriceModeIdentifier === null) {
+            static::$grossPriceModeIdentifier = $this->priceClient->getGrossPriceModeIdentifier();
+        }
+
+        return static::$grossPriceModeIdentifier;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNetPriceModeIdentifier(): string
+    {
+        if (static::$netPriceModeIdentifier === null) {
+            static::$netPriceModeIdentifier = $this->priceClient->getNetPriceModeIdentifier();
+        }
+
+        return static::$netPriceModeIdentifier;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\RestCurrencyTransfer
      */
     protected function getRestCurrencyTransfer(): RestCurrencyTransfer
     {
-        return (new RestCurrencyTransfer())
-            ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
+        if (static::$restCurrencyTransfer === null) {
+            static::$restCurrencyTransfer = (new RestCurrencyTransfer())
+                ->fromArray($this->currencyClient->getCurrent()->toArray(), true);
+        }
+
+        return static::$restCurrencyTransfer;
     }
 }

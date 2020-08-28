@@ -8,11 +8,11 @@
 namespace SprykerTest\Client\ProductStorage;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\AttributeMapStorageTransfer;
+use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductStorage\ProductStorageClientInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,6 +30,8 @@ class ProductStorageClientTester extends Actor
 {
     use _generated\ProductStorageClientTesterActions;
 
+    protected const TEST_PRODUCT_CONCRETE_ID = 777;
+
     /**
      * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
      */
@@ -38,5 +40,16 @@ class ProductStorageClientTester extends Actor
         return $this->getLocator()
             ->productStorage()
             ->client();
+    }
+
+    /**
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function createProductViewTransfer(): ProductViewTransfer
+    {
+        return (new ProductViewTransfer())
+            ->setAttributeMap(
+                (new AttributeMapStorageTransfer())->setProductConcreteIds([static::TEST_PRODUCT_CONCRETE_ID])
+            );
     }
 }

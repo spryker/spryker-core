@@ -48,3 +48,8 @@ time,time
 Values,Values
 "View Attribute","View Attribute"
 "You can add new values by pressing ""Enter"" after each element","You can add new values by pressing ""Enter"" after each element"
+Remove,Remove
+"Edit Product Attribute","Edit Product Attribute"
+"Edit Attribute Translations","Edit Attribute Translations"
+"Predefined Values","Predefined Values"
+"Please select attribute key first","Please select attribute key first."

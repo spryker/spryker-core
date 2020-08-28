@@ -32,9 +32,9 @@ class YamlBatchIteratorTest extends Unit
      */
     public function testThrowsExceptionIfFileNotValid(): void
     {
+        $this->expectException(ResourceNotFoundException::class);
         $yamlBatchIterator = $this->getYamlBatchIteratorWithInvalidFile();
 
-        $this->expectException(ResourceNotFoundException::class);
         $this->assertNotNull($yamlBatchIterator->current());
     }
 
@@ -112,6 +112,25 @@ class YamlBatchIteratorTest extends Unit
         $yamlBatchIterator = $this->getYamlBatchIterator();
 
         $this->assertTrue($yamlBatchIterator->count() > 0, 'Count was expected to be higher then zero');
+    }
+
+    /**
+     * @return void
+     */
+    public function testIteratorWillReturnExpectedData(): void
+    {
+        //Arrange
+        $expectedData = [
+            'foo' => 'bar',
+            'baz' => 'bat',
+        ];
+
+        //Act
+        $yamlBatchIterator = $this->getYamlBatchIterator();
+        $resultedData = $yamlBatchIterator->current();
+
+        //Assert
+        $this->assertEquals($expectedData, $resultedData, 'Resulted data does not match expected result.');
     }
 
     /**

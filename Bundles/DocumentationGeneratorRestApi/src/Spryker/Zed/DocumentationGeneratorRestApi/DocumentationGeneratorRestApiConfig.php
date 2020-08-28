@@ -21,10 +21,16 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     public const REST_API_DOCUMENTATION_INFO_TITLE = 'Spryker API';
     public const REST_API_DOCUMENTATION_INFO_LICENSE_NAME = 'MIT';
 
+    protected const REST_API_DOCUMENTATION_CONTACT_NAME = 'Spryker';
+    protected const REST_API_DOCUMENTATION_CONTACT_URL = 'https://support.spryker.com/';
+    protected const REST_API_DOCUMENTATION_CONTACT_EMAIL = 'support@spryker.com';
+
     protected const APPLICATION_PROJECT_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/Glue/%1$s/Controller/';
     protected const APPLICATION_CORE_ANNOTATION_SOURCE_DIRECTORY_PATTERN = '/*/*/src/*/Glue/%1$s/Controller/';
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedFileOutputDirectory(): string
@@ -33,6 +39,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getGeneratedFilePrefix(): string
@@ -41,6 +49,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationVersionInfo(): string
@@ -49,6 +59,38 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
+     * @return string
+     */
+    public function getApiDocumentationContactName(): string
+    {
+        return static::REST_API_DOCUMENTATION_CONTACT_NAME;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getApiDocumentationContactUrl(): string
+    {
+        return static::REST_API_DOCUMENTATION_CONTACT_URL;
+    }
+
+    /**
+     * @api
+     *
+     * @return string
+     */
+    public function getApiDocumentationContactEmail(): string
+    {
+        return static::REST_API_DOCUMENTATION_CONTACT_EMAIL;
+    }
+
+    /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationTitleInfo(): string
@@ -57,6 +99,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getApiDocumentationLicenceNameInfo(): string
@@ -65,6 +109,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getRestApplicationDomain(): string
@@ -73,6 +119,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getAnnotationSourceDirectories(): array
@@ -104,6 +152,8 @@ class DocumentationGeneratorRestApiConfig extends AbstractBundleConfig
     }
 
     /**
+     * @api
+     *
      * @return bool
      */
     public function isRestApiDocumentationGeneratorEnabled(): bool

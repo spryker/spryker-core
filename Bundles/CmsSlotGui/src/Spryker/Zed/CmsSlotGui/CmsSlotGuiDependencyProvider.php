@@ -44,9 +44,9 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsSlotTemplateQuery(Container $container): Container
     {
-        $container->set(static::PROPER_QUERY_CMS_SLOT_TEMPLATE, function () {
+        $container->set(static::PROPER_QUERY_CMS_SLOT_TEMPLATE, $container->factory(function () {
             return SpyCmsSlotTemplateQuery::create();
-        });
+        }));
 
         return $container;
     }
@@ -58,9 +58,9 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCmsSlotQuery(Container $container): Container
     {
-        $container->set(static::PROPER_QUERY_CMS_SLOT, function () {
+        $container->set(static::PROPER_QUERY_CMS_SLOT, $container->factory(function () {
             return SpyCmsSlotQuery::create();
-        });
+        }));
 
         return $container;
     }

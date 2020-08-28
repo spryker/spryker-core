@@ -21,6 +21,7 @@ use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 class GiftCardOrderItemSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
 {
     /**
+     * {@inheritDoc}
      * This plugin retrieves (its) data from the quote object and saves it to the database.
      *
      * @api

@@ -27,13 +27,13 @@ class CmsUserConnectorDependencyProvider extends AbstractBundleDependencyProvide
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_USER] = function (Container $container) {
+        $container->set(static::FACADE_USER, function (Container $container) {
             return new CmsUserConnectorToUserBridge($container->getLocator()->user()->facade());
-        };
+        });
 
-        $container[self::QUERY_CONTAINER_CMS] = function (Container $container) {
+        $container->set(static::QUERY_CONTAINER_CMS, function (Container $container) {
             return new CmsUserConnectorToCmsQueryContainer($container->getLocator()->cms()->queryContainer());
-        };
+        });
 
         return $container;
     }

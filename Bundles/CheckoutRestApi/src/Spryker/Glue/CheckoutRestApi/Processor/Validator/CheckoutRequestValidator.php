@@ -68,8 +68,10 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer|null
      */
-    protected function validateCustomer(RestRequestInterface $restRequest, RestErrorCollectionTransfer $restErrorCollectionTransfer): ?RestErrorCollectionTransfer
-    {
+    protected function validateCustomer(
+        RestRequestInterface $restRequest,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): ?RestErrorCollectionTransfer {
         if ($restRequest->getUser() === null) {
             $resErrorMessageTransfer = (new RestErrorMessageTransfer())
                 ->setStatus(Response::HTTP_BAD_REQUEST)
@@ -88,8 +90,13 @@ class CheckoutRequestValidator implements CheckoutRequestValidatorInterface
      *
      * @return \Generated\Shared\Transfer\RestErrorCollectionTransfer
      */
-    protected function validatePayments(RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer, RestErrorCollectionTransfer $restErrorCollectionTransfer): RestErrorCollectionTransfer
-    {
+    protected function validatePayments(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        RestErrorCollectionTransfer $restErrorCollectionTransfer
+    ): RestErrorCollectionTransfer {
+        if (!$this->config->isPaymentProviderMethodToStateMachineMappingEnabled()) {
+            return $restErrorCollectionTransfer;
+        }
         $paymentProviderMethodToStateMachineMapping = $this->config->getPaymentProviderMethodToStateMachineMapping();
         foreach ($restCheckoutRequestAttributesTransfer->getPayments() as $restPaymentTransfer) {
             if (!isset($paymentProviderMethodToStateMachineMapping[$restPaymentTransfer->getPaymentProviderName()][$restPaymentTransfer->getPaymentMethodName()])) {

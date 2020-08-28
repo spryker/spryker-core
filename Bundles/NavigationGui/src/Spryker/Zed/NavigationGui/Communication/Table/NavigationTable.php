@@ -13,7 +13,7 @@ use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 use Spryker\Zed\NavigationGui\Communication\Controller\DeleteController;
-use Spryker\Zed\NavigationGui\Communication\Controller\ToggleStatusController;
+use Spryker\Zed\NavigationGui\Communication\Controller\DuplicateController;
 use Spryker\Zed\NavigationGui\Communication\Controller\UpdateController;
 use Spryker\Zed\NavigationGui\Persistence\NavigationGuiQueryContainerInterface;
 
@@ -110,8 +110,8 @@ class NavigationTable extends AbstractTable
         $urls = [];
 
         $urls[] = $this->createEditButton($navigationEntity->getIdNavigation());
+        $urls[] = $this->createDuplicateButton($navigationEntity->getIdNavigation());
         $urls[] = $this->createRemoveButton($navigationEntity->getIdNavigation());
-        $urls[] = $this->createStatusToggleButton($navigationEntity);
 
         return $urls;
     }
@@ -138,27 +138,21 @@ class NavigationTable extends AbstractTable
     {
         return $this->generateRemoveButton(
             Url::generate('/navigation-gui/delete', [DeleteController::PARAM_ID_NAVIGATION => $idNavigation]),
-            'Delete'
+            'Delete',
+            [static::DELETE_FORM_NAME_SUFFIX => $idNavigation]
         );
     }
 
     /**
-     * @param \Orm\Zed\Navigation\Persistence\SpyNavigation $navigationEntity
+     * @param int $idNavigation
      *
      * @return string
      */
-    protected function createStatusToggleButton(SpyNavigation $navigationEntity)
+    protected function createDuplicateButton(int $idNavigation): string
     {
-        if ($navigationEntity->getIsActive()) {
-            return $this->generateRemoveButton(
-                Url::generate('/navigation-gui/toggle-status', [ToggleStatusController::PARAM_ID_NAVIGATION => $navigationEntity->getIdNavigation()]),
-                'Deactivate'
-            );
-        }
-
         return $this->generateViewButton(
-            Url::generate('/navigation-gui/toggle-status', [ToggleStatusController::PARAM_ID_NAVIGATION => $navigationEntity->getIdNavigation()]),
-            'Activate'
+            Url::generate('/navigation-gui/duplicate', [DuplicateController::PARAM_ID_NAVIGATION => $idNavigation]),
+            'Duplicate'
         );
     }
 

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ShoppingListProductOptionConnector\Persistence;
 
+use Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer;
+
 interface ShoppingListProductOptionConnectorRepositoryInterface
 {
     /**
@@ -15,4 +17,11 @@ interface ShoppingListProductOptionConnectorRepositoryInterface
      * @return int[]
      */
     public function getShoppingListItemProductOptionIdsByIdShoppingListItem(int $idShoppingListItem): array;
+
+    /**
+     * @param int[] $shoppingListItemIds
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListProductOptionCollectionTransfer
+     */
+    public function getShoppingListProductOptionCollectionByShoppingListItemIds(array $shoppingListItemIds): ShoppingListProductOptionCollectionTransfer;
 }

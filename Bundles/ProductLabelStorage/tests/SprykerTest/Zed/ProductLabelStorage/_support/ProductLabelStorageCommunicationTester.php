@@ -15,8 +15,6 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuer
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -26,7 +24,7 @@ use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -63,11 +61,12 @@ class ProductLabelStorageCommunicationTester extends Actor
     }
 
     /**
+     * @param string $storeName
      * @param string $localeName
      *
      * @return int
      */
-    public function getProductLabelsCountByLocaleName(string $localeName): int
+    public function getProductLabelsCountByStoreNameAndLocaleName(string $storeName, string $localeName): int
     {
         return SpyProductLabelQuery::create()
             ->filterByValidTo(null)
@@ -76,6 +75,11 @@ class ProductLabelStorageCommunicationTester extends Actor
             ->useSpyProductLabelLocalizedAttributesQuery()
                 ->useSpyLocaleQuery()
                     ->filterByLocaleName($localeName)
+                ->endUse()
+            ->endUse()
+            ->useProductLabelStoreQuery()
+                ->useStoreQuery()
+                    ->filterByName($storeName)
                 ->endUse()
             ->endUse()
             ->count();

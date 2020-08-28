@@ -179,8 +179,11 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      *
      * @return void
      */
-    protected function setupGetBundleItemsByIdProduct(int $bundleQuantity, string $bundledItemSku, ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock): void
-    {
+    protected function setupGetBundleItemsByIdProduct(
+        int $bundleQuantity,
+        string $bundledItemSku,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
         $bundleItems = [];
         $productBundleEntity = new SpyProductBundle();
         $productBundleEntity->setQuantity($bundleQuantity);
@@ -200,8 +203,10 @@ class ProductBundleAvailabilityHandlerTest extends Unit
      *
      * @return void
      */
-    protected function setupProductBundleAvailability(Decimal $bundledItemAvailability, ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock): void
-    {
+    protected function setupProductBundleAvailability(
+        Decimal $bundledItemAvailability,
+        ProductBundleAvailabilityHandlerInterface $productBundleAvailabilityHandlerMock
+    ): void {
         $availabilityTransfer = new ProductConcreteAvailabilityTransfer();
         $availabilityTransfer->setAvailability($bundledItemAvailability);
 

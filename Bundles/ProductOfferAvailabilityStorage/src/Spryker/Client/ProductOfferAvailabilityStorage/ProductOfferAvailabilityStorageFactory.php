@@ -11,6 +11,7 @@ use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStorageClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Client\ProductOfferAvailabilityStorageToStoreClientInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductOfferAvailabilityStorage\Reader\ProductOfferAvailabilityStorageReader;
 use Spryker\Client\ProductOfferAvailabilityStorage\Reader\ProductOfferAvailabilityStorageReaderInterface;
 
@@ -23,7 +24,8 @@ class ProductOfferAvailabilityStorageFactory extends AbstractFactory
     {
         return new ProductOfferAvailabilityStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -49,5 +51,13 @@ class ProductOfferAvailabilityStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ProductOfferAvailabilityStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ProductOfferAvailabilityStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductOfferAvailabilityStorage\Dependency\Service\ProductOfferAvailabilityStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ProductOfferAvailabilityStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ProductOfferAvailabilityStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

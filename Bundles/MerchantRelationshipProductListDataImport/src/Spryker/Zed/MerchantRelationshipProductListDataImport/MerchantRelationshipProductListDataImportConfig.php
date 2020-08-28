@@ -15,6 +15,8 @@ class MerchantRelationshipProductListDataImportConfig extends DataImportConfig
     public const IMPORT_TYPE_MERCHANT_RELATIONSHIP_PRODUCT_LIST = 'merchant-relationship-product-list';
 
     /**
+     * @api
+     *
      * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
      */
     public function getMerchantRelationshipProductListDataImporterConfiguration(): DataImporterConfigurationTransfer

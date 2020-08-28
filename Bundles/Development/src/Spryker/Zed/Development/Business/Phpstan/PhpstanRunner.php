@@ -13,7 +13,10 @@ use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileFinderInter
 use Spryker\Zed\Development\Business\Phpstan\Config\PhpstanConfigFileManagerInterface;
 use Spryker\Zed\Development\Business\Traits\PathTrait;
 use Spryker\Zed\Development\DevelopmentConfig;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\ConsoleOutputInterface;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Process\Process;
@@ -29,12 +32,15 @@ class PhpstanRunner implements PhpstanRunnerInterface
     public const NAMESPACE_SPRYKER = 'Spryker';
 
     public const DEFAULT_LEVEL = 'defaultLevel';
-    public const MEMORY_LIMIT = '512M';
+    public const MEMORY_LIMIT = '-1';
     public const CODE_SUCCESS = 0;
 
     public const OPTION_DRY_RUN = 'dry-run';
     public const OPTION_VERBOSE = 'verbose';
     public const OPTION_MODULE = 'module';
+
+    protected const PROGRESS_BAR_FREQUENCY = 50;
+    protected const PROGRESS_BAR_SECONDS_FORCE_REDRAW = 5 * 60;
 
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
@@ -108,18 +114,52 @@ class PhpstanRunner implements PhpstanRunnerInterface
 
         asort($paths);
 
+        $progressBar = $this->getProgressBar($output, $total);
+        $progressBar->display();
+
         foreach ($paths as $path => $configFilePath) {
-            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output);
+            $progressBar->advance();
+
+            $resultCode |= $this->runCommand($path, $configFilePath, $input, $output, $progressBar);
             $count++;
-            if ($input->getOption(static::OPTION_VERBOSE)) {
+
+            if ($output->isVerbose()) {
                 $output->writeln(sprintf('Finished %s/%s.', $count, $total));
             }
         }
+
+        $progressBar->finish();
+
+        if (!$output->isDecorated() && $output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln('');
+        }
+
         if ($this->getErrorCount()) {
             $output->writeln('<error>Total errors found: ' . $this->errorCount . '</error>');
         }
 
         return $resultCode;
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param int $stepsCount
+     *
+     * @return \Symfony\Component\Console\Helper\ProgressBar
+     */
+    protected function getProgressBar(OutputInterface $output, int $stepsCount): ProgressBar
+    {
+        $progressBarOutput = new NullOutput();
+
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL && $stepsCount > 1) {
+            $progressBarOutput = $output instanceof ConsoleOutputInterface ? $output->section() : $output;
+        }
+
+        $progressBar = new ProgressBar($progressBarOutput, $stepsCount);
+        $progressBar->setRedrawFrequency(static::PROGRESS_BAR_FREQUENCY);
+        $progressBar->maxSecondsBetweenRedraws(static::PROGRESS_BAR_SECONDS_FORCE_REDRAW);
+
+        return $progressBar;
     }
 
     /**
@@ -135,11 +175,17 @@ class PhpstanRunner implements PhpstanRunnerInterface
      * @param string $configFilePath
      * @param \Symfony\Component\Console\Input\InputInterface $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
      *
      * @return int Exit code
      */
-    protected function runCommand($path, $configFilePath, InputInterface $input, OutputInterface $output)
-    {
+    protected function runCommand(
+        $path,
+        $configFilePath,
+        InputInterface $input,
+        OutputInterface $output,
+        ProgressBar $progressBar
+    ) {
         $command = 'php -d memory_limit=%s vendor/bin/phpstan analyze --no-progress -c %s %s -l %s';
 
         $defaultLevel = $this->getDefaultLevel($path, $configFilePath);
@@ -169,29 +215,71 @@ class PhpstanRunner implements PhpstanRunnerInterface
         }
 
         $process = $this->getProcess($command);
-
-        $processOutputBuffer = '';
-
-        $process->run(function ($type, $buffer) use ($output, &$processOutputBuffer) {
-            $this->addErrors($buffer);
-
-            preg_match('#\[ERROR\] Found (\d+) error#i', $buffer, $matches);
-            if (!$matches && !$output->isVeryVerbose()) {
-                $processOutputBuffer .= $buffer;
-
-                return;
-            }
-
-            $processOutputBuffer .= $buffer;
-            $output->write($processOutputBuffer);
-            $processOutputBuffer = '';
-        });
+        $process = $this->executeAndDispatchProcess($process, $output, $progressBar, $path);
 
         if ($this->phpstanConfigFileManager->isMergedConfigFile($configFilePath)) {
             $this->phpstanConfigFileManager->deleteConfigFile($configFilePath);
         }
 
         return $process->getExitCode();
+    }
+
+    /**
+     * @param \Symfony\Component\Process\Process $process
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param \Symfony\Component\Console\Helper\ProgressBar $progressBar
+     * @param string $path
+     *
+     * @return \Symfony\Component\Process\Process
+     */
+    protected function executeAndDispatchProcess(
+        Process $process,
+        OutputInterface $output,
+        ProgressBar $progressBar,
+        string $path
+    ): Process {
+        $outputBuffer = '';
+        $isAttemptSuccess = true;
+
+        $callback = function ($type, $buffer) use (&$outputBuffer, &$isAttemptSuccess) {
+            if ($type === Process::ERR) {
+                $isAttemptSuccess = false;
+            }
+
+            $outputBuffer .= $buffer;
+        };
+
+        $process->run($callback);
+
+        if ($isAttemptSuccess) {
+            $this->addErrors($outputBuffer);
+            preg_match('#\[ERROR\] Found (\d+) error#i', $outputBuffer, $matches);
+
+            if (!$matches) {
+                return $process;
+            }
+        }
+
+        $progressBar->clear();
+
+        if (!$output->isDecorated() && $output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+            $output->writeln('');
+        }
+
+        $output->write($outputBuffer);
+
+        if ($output->getVerbosity() === OutputInterface::VERBOSITY_NORMAL) {
+            $module = str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $path);
+            $output->writeln(sprintf('Errors in module %s', $module));
+
+            if ($output->isDecorated()) {
+                $output->writeln('');
+            }
+        }
+
+        $progressBar->display();
+
+        return $process;
     }
 
     /**
@@ -404,7 +492,8 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $directories = (new Finder())
             ->directories()
             ->in($path)
-            ->depth('== 0');
+            ->depth('== 0')
+            ->sortByName();
 
         $modules = [];
         foreach ($directories as $dir) {

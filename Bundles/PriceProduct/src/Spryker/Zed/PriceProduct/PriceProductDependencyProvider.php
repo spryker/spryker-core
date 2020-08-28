@@ -82,9 +82,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addTouchFacade(Container $container)
     {
-        $container[static::FACADE_TOUCH] = function (Container $container) {
+        $container->set(static::FACADE_TOUCH, function (Container $container) {
             return new PriceProductToTouchFacadeBridge($container->getLocator()->touch()->facade());
-        };
+        });
 
         return $container;
     }
@@ -96,9 +96,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addProductFacade(Container $container)
     {
-        $container[static::FACADE_PRODUCT] = function (Container $container) {
+        $container->set(static::FACADE_PRODUCT, function (Container $container) {
             return new PriceProductToProductFacadeBridge($container->getLocator()->product()->facade());
-        };
+        });
 
         return $container;
     }
@@ -110,9 +110,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new PriceProductToCurrencyFacadeBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -124,9 +124,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceFacade(Container $container)
     {
-        $container[static::FACADE_PRICE] = function (Container $container) {
+        $container->set(static::FACADE_PRICE, function (Container $container) {
             return new PriceProductToPriceFacadeBridge($container->getLocator()->price()->facade());
-        };
+        });
 
         return $container;
     }
@@ -138,9 +138,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new PriceProductToStoreFacadeBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -152,9 +152,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceDimensionQueryCriteriaPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA] = function (Container $container) {
+        $container->set(static::PLUGIN_PRICE_DIMENSION_QUERY_CRITERIA, function (Container $container) {
             return $this->getPriceDimensionQueryCriteriaPlugins();
-        };
+        });
 
         return $container;
     }
@@ -166,9 +166,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceDimensionAbstractSaverPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER] = function (Container $container) {
+        $container->set(static::PLUGIN_PRICE_DIMENSION_ABSTRACT_SAVER, function (Container $container) {
             return $this->getPriceDimensionAbstractSaverPlugins();
-        };
+        });
 
         return $container;
     }
@@ -180,9 +180,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceDimensionConcreteSaverPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER] = function (Container $container) {
+        $container->set(static::PLUGIN_PRICE_DIMENSION_CONCRETE_SAVER, function (Container $container) {
             return $this->getPriceDimensionConcreteSaverPlugins();
-        };
+        });
 
         return $container;
     }
@@ -194,9 +194,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductDimensionExpanderStrategyPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER] = function (Container $container) {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_DIMENSION_TRANSFER_EXPANDER, function (Container $container) {
             return $this->getPriceProductDimensionExpanderStrategyPlugins();
-        };
+        });
 
         return $container;
     }
@@ -208,9 +208,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductPricesExtractorPlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR] = function (Container $container) {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_PRICES_EXTRACTOR, function (Container $container) {
             return $this->getPriceProductPricesExtractorPlugins();
-        };
+        });
 
         return $container;
     }
@@ -222,9 +222,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductStorePreDeletePlugins(Container $container): Container
     {
-        $container[static::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE] = function () {
+        $container->set(static::PLUGIN_PRICE_PRODUCT_STORE_PRE_DELETE, function () {
             return $this->getPriceProductStorePreDeletePlugins();
-        };
+        });
 
         return $container;
     }
@@ -250,9 +250,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addUtilEncodingService(Container $container): Container
     {
-        $container[static::SERVICE_UTIL_ENCODING] = function (Container $container) {
+        $container->set(static::SERVICE_UTIL_ENCODING, function (Container $container) {
             return new PriceProductToUtilEncodingServiceBridge($container->getLocator()->utilEncoding()->service());
-        };
+        });
 
         return $container;
     }
@@ -330,9 +330,9 @@ class PriceProductDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addPriceProductService(Container $container): Container
     {
-        $container[static::SERVICE_PRICE_PRODUCT] = function (Container $container) {
+        $container->set(static::SERVICE_PRICE_PRODUCT, function (Container $container) {
             return $container->getLocator()->priceProduct()->service();
-        };
+        });
 
         return $container;
     }

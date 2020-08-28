@@ -17,5 +17,8 @@ interface ConfigurableBundleTemplateImageStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer|null
      */
-    public function findConfigurableBundleTemplateImageStorage(int $idConfigurableBundleTemplate, string $localeName): ?ConfigurableBundleTemplateImageStorageTransfer;
+    public function findConfigurableBundleTemplateImageStorage(
+        int $idConfigurableBundleTemplate,
+        string $localeName
+    ): ?ConfigurableBundleTemplateImageStorageTransfer;
 }

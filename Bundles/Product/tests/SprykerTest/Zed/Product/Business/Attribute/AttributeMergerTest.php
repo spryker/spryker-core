@@ -63,8 +63,10 @@ class AttributeMergerTest extends Unit
      *
      * @return void
      */
-    public function testGetCombinedAttributesReturnsCorrectAttributeMergeResults(RawProductAttributesTransfer $rawProductAttributesTransfer, array $expectedAttributes): void
-    {
+    public function testGetCombinedAttributesReturnsCorrectAttributeMergeResults(
+        RawProductAttributesTransfer $rawProductAttributesTransfer,
+        array $expectedAttributes
+    ): void {
         $actualAttributes = $this->attributeMerger->merge($rawProductAttributesTransfer);
 
         $this->assertEquals($expectedAttributes, $actualAttributes);

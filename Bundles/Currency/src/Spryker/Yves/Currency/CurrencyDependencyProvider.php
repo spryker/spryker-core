@@ -51,9 +51,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStore(Container $container)
     {
-        $container[static::STORE] = function () {
+        $container->set(static::STORE, function () {
             return Store::getInstance();
-        };
+        });
 
         return $container;
     }
@@ -65,13 +65,13 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addInternationalization(Container $container)
     {
-        $container[static::INTERNATIONALIZATION] = function () {
+        $container->set(static::INTERNATIONALIZATION, function () {
             $currencyToInternationalizationBridge = new CurrencyToInternationalizationBridge(
                 Intl::getCurrencyBundle()
             );
 
             return $currencyToInternationalizationBridge;
-        };
+        });
 
         return $container;
     }
@@ -83,9 +83,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addSessionClient(Container $container)
     {
-        $container[static::CLIENT_SESSION] = function (Container $container) {
+        $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new CurrencyToSessionBridge($container->getLocator()->session()->client());
-        };
+        });
 
         return $container;
     }
@@ -97,9 +97,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addZedRequestClient(Container $container)
     {
-        $container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+        $container->set(static::CLIENT_ZED_REQUEST, function (Container $container) {
             return new CurrencyToZedRequestClientBridge($container->getLocator()->zedRequest()->client());
-        };
+        });
 
         return $container;
     }
@@ -111,9 +111,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMessengerClient(Container $container)
     {
-        $container[static::CLIENT_MESSENGER] = function (Container $container) {
+        $container->set(static::CLIENT_MESSENGER, function (Container $container) {
             return new CurrencyToMessengerClientBridge($container->getLocator()->messenger()->client());
-        };
+        });
 
         return $container;
     }
@@ -125,9 +125,9 @@ class CurrencyDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyPostChangePlugins(Container $container)
     {
-        $container[static::PLUGINS_CURRENCY_POST_CHANGE] = function () {
+        $container->set(static::PLUGINS_CURRENCY_POST_CHANGE, function () {
             return $this->getCurrencyPostChangePlugins();
-        };
+        });
 
         return $container;
     }

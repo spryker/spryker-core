@@ -18,7 +18,7 @@ interface CmsPageMapperInterface
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPage $cmsPageEntity
      *
-     * @return array
+     * @return string[]
      */
     public function mapCmsPageUrlLocale(SpyCmsPage $cmsPageEntity): array;
 
@@ -28,7 +28,10 @@ interface CmsPageMapperInterface
      *
      * @return \Generated\Shared\Transfer\CmsPageAttributesTransfer
      */
-    public function mapCmsLocalizedAttributesTransfer(SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity, ?string $url = null): CmsPageAttributesTransfer;
+    public function mapCmsLocalizedAttributesTransfer(
+        SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity,
+        ?string $url = null
+    ): CmsPageAttributesTransfer;
 
     /**
      * @param \Orm\Zed\Cms\Persistence\SpyCmsPageLocalizedAttributes $cmsPageLocalizedAttributesEntity

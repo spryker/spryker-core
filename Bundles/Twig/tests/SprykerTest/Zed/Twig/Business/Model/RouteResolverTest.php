@@ -31,7 +31,7 @@ class RouteResolverTest extends Unit
         $routeResolver = new RouteResolver();
         $incomingString = 'controller.service.DummyBundle.Index.camelCase:camelCaseAction';
 
-        $this->assertEquals(
+        $this->assertSame(
             'DummyBundle/Index/camel-case',
             $routeResolver->buildRouteFromControllerServiceName($incomingString)
         );

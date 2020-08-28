@@ -17,6 +17,9 @@ use Spryker\Client\SearchElasticsearch\SearchElasticsearchConfig;
 use Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface;
 use Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface;
 
+/**
+ * @deprecated Use {@link \Spryker\Zed\SearchElasticsearchGui\Communication\Plugin\Query\DocumentListQuery} instead.
+ */
 class SearchKeysQuery implements QueryInterface, SearchContextAwareQueryInterface
 {
     protected const SOURCE_IDENTIFIER = 'page';

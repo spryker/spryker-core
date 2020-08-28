@@ -48,6 +48,8 @@ class WishlistsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_DETAIL_MISSING_ACCESS_TOKEN = 'Missing access token.';
 
     /**
+     * @api
+     *
      * @return array
      */
     public function getErrorIdentifierToRestErrorMapping(): array

@@ -65,6 +65,7 @@
         <property name="companyRoleCollection" type="CompanyRoleCollection"/>
         <property name="customer" type="Customer"/>
         <property name="fkCompanyBusinessUnit" type="int"/>
+        <property name="fkCompany" type="int"/>
     </transfer>
 
     <transfer name="CompanyRoleCollection">
@@ -155,6 +156,23 @@
     </transfer>
 
     <transfer name="QuotePermissionGroup">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="Address">
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="firstName" type="string"/>
+        <property name="lastName" type="string"/>
+        <property name="address1" type="string"/>
+        <property name="company" type="string"/>
+        <property name="city" type="string"/>
+        <property name="zipCode" type="string"/>
+        <property name="phone" type="string"/>
+        <property name="state" type="string"/>
+        <property name="iso2Code" type="string"/>
     </transfer>
 
 </transfers>

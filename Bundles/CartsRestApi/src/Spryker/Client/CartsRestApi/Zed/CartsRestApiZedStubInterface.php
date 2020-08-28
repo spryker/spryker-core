@@ -53,7 +53,7 @@ interface CartsRestApiZedStubInterface
     public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer;
 
     /**
-     * @deprecated Use updateItemQuantity() instead.
+     * @deprecated Use {@link updateItemQuantity()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -69,7 +69,7 @@ interface CartsRestApiZedStubInterface
     public function updateItemQuantity(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
-     * @deprecated Use addToCart() instead().
+     * @deprecated Use {@link addToCart()} instead().
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -85,7 +85,7 @@ interface CartsRestApiZedStubInterface
     public function addToCart(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
-     * @deprecated Use removeItem() instead.
+     * @deprecated Use {@link removeItem()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -101,7 +101,7 @@ interface CartsRestApiZedStubInterface
     public function removeItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
 
     /**
-     * @deprecated Use addToGuestCart() instead.
+     * @deprecated Use {@link addToGuestCart()} instead.
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *

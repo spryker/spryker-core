@@ -73,12 +73,7 @@
             }
           },
           {
-            "name": "Accept-Language",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
+              "$ref": "#\/components\/parameters\/acceptLanguage"
           }
         ],
         "responses": {
@@ -244,12 +239,7 @@
             }
           },
           {
-            "name": "Accept-Language",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
+              "$ref": "#\/components\/parameters\/acceptLanguage"
           }
         ],
         "responses": {
@@ -361,12 +351,7 @@
         ],
         "parameters": [
           {
-            "name": "Accept-Language",
-            "in": "header",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
+              "$ref": "#\/components\/parameters\/acceptLanguage"
           }
         ],
         "responses": {
@@ -414,7 +399,21 @@
       }
     }
   },
-  "schemas": {
+  "tags": {
+      "0": {
+          "name": "test-resource-with-all-methods"
+      },
+      "1": {
+          "name": "test-resource-with-empty-annotations"
+      },
+      "2": {
+          "name": "test-resource-with-get-collection"
+      },
+      "3": {
+          "name": "test-resource-with-get-resource-by-id"
+      }
+  },
+    "schemas": {
     "RestErrorMessage": {
       "properties": {
         "status": {
@@ -514,6 +513,9 @@
         },
         "links": {
           "$ref": "#\/components\/schemas\/RestLinks"
+        },
+        "included": {
+            "$ref": "#\/components\/schemas\/RestTestIncluded"
         }
       }
     },
@@ -532,12 +534,32 @@
           "$ref": "#\/components\/schemas\/RestLinks"
         }
       }
+    },
+    "RestTestIncluded": {
+        "items": {
+            "oneOf": {
+                "0": {
+                    "$ref": "#\/components\/schemas\/RestTestAnnotationResourceRelationshipResponseData"
+                }
+            }
+        },
+        "type": "array"
     }
   },
   "securitySchemes": {
     "BearerAuth": {
       "type": "http",
       "scheme": "bearer"
+    }
+  },
+  "parameters": {
+    "acceptLanguage": {
+      "name": "Accept-Language",
+      "in": "header",
+      "scheme": {
+          "type": "string"
+      },
+      "description": "Locale value relevant for the store."
     }
   }
 }

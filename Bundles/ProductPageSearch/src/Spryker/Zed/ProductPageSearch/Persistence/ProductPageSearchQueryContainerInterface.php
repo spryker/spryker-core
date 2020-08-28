@@ -21,7 +21,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
@@ -39,7 +39,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductPageSearch\Persistence\SpyProductAbstractPageSearchQuery
      */
@@ -120,7 +120,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSetQuery
      */
@@ -129,7 +129,7 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
     /**
      * @api
      *
-     * @param array $productAbstractIds
+     * @param int[] $productAbstractIds
      *
      * @return \Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery
      */
@@ -176,7 +176,10 @@ interface ProductPageSearchQueryContainerInterface extends QueryContainerInterfa
      *
      * @return \Orm\Zed\Product\Persistence\SpyProductAbstractLocalizedAttributesQuery
      */
-    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(array $productAbstractIds, StoreTransfer $storeTransfer): SpyProductAbstractLocalizedAttributesQuery;
+    public function queryProductAbstractLocalizedEntitiesByProductAbstractIdsAndStore(
+        array $productAbstractIds,
+        StoreTransfer $storeTransfer
+    ): SpyProductAbstractLocalizedAttributesQuery;
 
     /**
      * Specification:

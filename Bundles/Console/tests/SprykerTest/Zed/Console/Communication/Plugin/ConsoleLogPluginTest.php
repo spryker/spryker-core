@@ -84,6 +84,20 @@ class ConsoleLogPluginTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testOnConsoleExceptionWithoutCommandShouldCallLogger(): void
+    {
+        $loggerMock = $this->getLoggerMock();
+        $loggerMock->expects($this->once())->method('error');
+
+        $consoleLogPlugin = $this->getConsoleLogPluginMock($loggerMock);
+        $event = new ConsoleErrorEvent(new ArrayInput([]), new ConsoleOutput(), new Exception());
+
+        $consoleLogPlugin->onConsoleError($event);
+    }
+
+    /**
      * @return \PHPUnit\Framework\MockObject\MockObject|\Psr\Log\LoggerInterface
      */
     protected function getLoggerMock(): LoggerInterface

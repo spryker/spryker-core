@@ -17,6 +17,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     protected const DEFAULT_REDIS_DATABASE = 0;
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerRedisName(): string
@@ -25,6 +27,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getSessionHandlerRedisLockingName(): string
@@ -33,6 +37,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return string
      */
     public function getDefaultRedisDatabase(): string
@@ -41,6 +47,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingTimeoutMilliseconds(): int
@@ -49,6 +57,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingRetryDelayMicroseconds(): int
@@ -57,6 +67,8 @@ class SessionRedisConfig extends AbstractSharedConfig
     }
 
     /**
+     * @api
+     *
      * @return int
      */
     public function getLockingLockTtlMilliseconds(): int

@@ -35,6 +35,8 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     public const SHIPMENT_METHOD_FILTER_PLUGINS = 'SHIPMENT_METHOD_FILTER_PLUGINS';
     public const SHIPMENT_GROUPS_SANITIZER_PLUGINS = 'SHIPMENT_GROUPS_SANITIZER_PLUGINS';
 
+    public const PLUGINS_SHIPMENT_EXPENSE_EXPANDER = 'PLUGINS_SHIPMENT_EXPENSE_EXPANDER';
+
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
 
     /**
@@ -112,9 +114,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addStoreFacade(Container $container)
     {
-        $container[static::FACADE_STORE] = function (Container $container) {
+        $container->set(static::FACADE_STORE, function (Container $container) {
             return new ShipmentToStoreBridge($container->getLocator()->store()->facade());
-        };
+        });
 
         return $container;
     }
@@ -126,9 +128,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addCurrencyFacade(Container $container)
     {
-        $container[static::FACADE_CURRENCY] = function (Container $container) {
+        $container->set(static::FACADE_CURRENCY, function (Container $container) {
             return new ShipmentToCurrencyBridge($container->getLocator()->currency()->facade());
-        };
+        });
 
         return $container;
     }
@@ -182,9 +184,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_TAX] = function (Container $container) {
+        $container->set(static::FACADE_TAX, function (Container $container) {
             return new ShipmentToTaxBridge($container->getLocator()->tax()->facade());
-        };
+        });
 
         $container = $this->addCurrencyFacade($container);
         $container = $this->addSalesFacade($container);
@@ -195,6 +197,7 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addPricePlugins($container);
         $container = $this->addDeliveryTimePlugins($container);
         $container = $this->addShipmentGroupsSanitizerPlugins($container);
+        $container = $this->addShipmentExpenseExpanderPlugins($container);
         $container = $this->addPriceFacade($container);
         $container = $this->addCalculationFacade($container);
 
@@ -208,9 +211,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function addMethodFilterPlugins(Container $container)
     {
-        $container[static::SHIPMENT_METHOD_FILTER_PLUGINS] = function (Container $container) {
+        $container->set(static::SHIPMENT_METHOD_FILTER_PLUGINS, function (Container $container) {
             return $this->getMethodFilterPlugins($container);
-        };
+        });
 
         return $container;
     }
@@ -224,6 +227,20 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container->set(static::SHIPMENT_GROUPS_SANITIZER_PLUGINS, function () {
             return $this->getShipmentGroupsSanitizerPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentExpenseExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_SHIPMENT_EXPENSE_EXPANDER, function () {
+            return $this->getShipmentExpenseExpanderPlugins();
         });
 
         return $container;
@@ -273,6 +290,14 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentGroupsSanitizerPluginInterface[]
      */
     protected function getShipmentGroupsSanitizerPlugins()
+    {
+        return [];
+    }
+
+    /**
+     * @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentExpenseExpanderPluginInterface[]
+     */
+    protected function getShipmentExpenseExpanderPlugins(): array
     {
         return [];
     }

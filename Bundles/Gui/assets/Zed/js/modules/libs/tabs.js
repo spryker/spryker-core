@@ -58,6 +58,7 @@ Tabs.prototype.listenNavigationButtons = function() {
         self.navigateElement();
         self.showHideNavigationButtons();
     });
+
     self.tabsContainer.find('.btn-tab-next').on('click', function(event) {
         event.preventDefault();
         var element = $(this);
@@ -114,9 +115,8 @@ Tabs.prototype.changeTabsOnClick = function() {
 };
 
 Tabs.prototype.activateTab = function(element, hash) {
-    window.location.hash = hash;
+    window.history.pushState(null, null, hash);
     element.tab('show');
-
     this.onTabChange(element.attr('href'));
 };
 
@@ -137,8 +137,7 @@ Tabs.prototype.showHideNavigationButtons = function() {
 
 Tabs.prototype.navigateElement = function() {
     var self = this;
-
-    var element = self.tabsContainer.find('li:eq(' + this.currentTabPosition + ') a');
+    var element = self.tabsContainer.find('[data-toggle="tab"]:eq(' + this.currentTabPosition + ')');
     var hash = element.attr('href');
 
     this.proceedChange(element, hash);

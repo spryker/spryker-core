@@ -28,6 +28,7 @@ class ResourcePluginAnalyzerTest extends Unit
 
     protected const EXPECTED_KEYS = [
         'paths',
+        'tags',
         'schemas',
         'securitySchemes',
     ];

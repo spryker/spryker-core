@@ -55,8 +55,8 @@ class VersionResolverTest extends Unit
 
         $restVersionTransfer = $versionResolver->findVersion($request);
 
-        $this->assertEquals(1, $restVersionTransfer->getMajor());
-        $this->assertEquals(0, $restVersionTransfer->getMinor());
+        $this->assertSame(1, $restVersionTransfer->getMajor());
+        $this->assertSame(0, $restVersionTransfer->getMinor());
     }
 
     /**

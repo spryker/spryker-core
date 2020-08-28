@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocalizedUrlTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductUrlTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\Product\Dependency\Facade\ProductToLocaleInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToTouchInterface;
 use Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface;
@@ -18,6 +19,8 @@ use Spryker\Zed\Product\Persistence\ProductQueryContainerInterface;
 
 class ProductUrlManager implements ProductUrlManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\Product\Dependency\Facade\ProductToUrlInterface
      */
@@ -71,23 +74,9 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     public function createProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
-
-        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
-            $urlTransfer = new UrlTransfer();
-            $urlTransfer
-                ->setUrl($localizedUrlTransfer->getUrl())
-                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
-                ->setFkResourceProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract());
-
-            $this->urlFacade->createUrl($urlTransfer);
-        }
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $productUrl;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer): ProductUrlTransfer {
+            return $this->executeCreateProductUrlTransaction($productAbstractTransfer);
+        });
     }
 
     /**
@@ -97,31 +86,9 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     public function updateProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
-        $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
-
-        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
-            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
-                $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
-                $localizedUrlTransfer->getLocale()->getIdLocale()
-            );
-
-            $urlTransfer
-                ->setUrl($localizedUrlTransfer->getUrl())
-                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
-                ->setFkResourceProductAbstract($productAbstractTransfer->getIdProductAbstract());
-
-            if ($urlTransfer->getIdUrl()) {
-                $this->urlFacade->updateUrl($urlTransfer);
-            } else {
-                $this->urlFacade->createUrl($urlTransfer);
-            }
-        }
-
-        $this->productQueryContainer->getConnection()->commit();
-
-        return $productUrl;
+        return $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer): ProductUrlTransfer {
+            return $this->executeUpdateProductUrlTransaction($productAbstractTransfer);
+        });
     }
 
     /**
@@ -158,8 +125,94 @@ class ProductUrlManager implements ProductUrlManagerInterface
      */
     public function deleteProductUrl(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
+        $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer) {
+            $this->executeDeleteProductUrlTransaction($productAbstractTransfer);
+        });
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer) {
+            $this->executeTouchProductAbstractUrlActiveTransaction($productAbstractTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $this->getTransactionHandler()->handleTransaction(function () use ($productAbstractTransfer) {
+            $this->executeTouchProductAbstractUrlDeletedTransaction($productAbstractTransfer);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    protected function executeCreateProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): ProductUrlTransfer
+    {
+        $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
+
+        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer
+                ->setUrl($localizedUrlTransfer->getUrl())
+                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
+                ->setFkResourceProductAbstract($productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract());
+
+            $this->urlFacade->createUrl($urlTransfer);
+        }
+
+        return $productUrl;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductUrlTransfer
+     */
+    protected function executeUpdateProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): ProductUrlTransfer
+    {
+        $productUrl = $this->urlGenerator->generateProductUrl($productAbstractTransfer);
+
+        foreach ($productUrl->getUrls() as $localizedUrlTransfer) {
+            $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
+                $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
+                $localizedUrlTransfer->getLocale()->getIdLocale()
+            );
+
+            $urlTransfer
+                ->setUrl($localizedUrlTransfer->getUrl())
+                ->setFkLocale($localizedUrlTransfer->getLocale()->getIdLocale())
+                ->setFkResourceProductAbstract($productAbstractTransfer->getIdProductAbstract());
+
+            if ($urlTransfer->getIdUrl()) {
+                $this->urlFacade->updateUrl($urlTransfer);
+            } else {
+                $this->urlFacade->createUrl($urlTransfer);
+            }
+        }
+
+        return $productUrl;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return void
+     */
+    protected function executeDeleteProductUrlTransaction(ProductAbstractTransfer $productAbstractTransfer): void
+    {
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
@@ -170,8 +223,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
                 $this->urlFacade->deleteUrl($urlTransfer);
             }
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -179,10 +230,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
      *
      * @return void
      */
-    public function touchProductAbstractUrlActive(ProductAbstractTransfer $productAbstractTransfer)
+    protected function executeTouchProductAbstractUrlActiveTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
@@ -191,8 +240,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
             $this->urlFacade->activateUrl($urlTransfer);
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
@@ -200,10 +247,8 @@ class ProductUrlManager implements ProductUrlManagerInterface
      *
      * @return void
      */
-    public function touchProductAbstractUrlDeleted(ProductAbstractTransfer $productAbstractTransfer)
+    protected function executeTouchProductAbstractUrlDeletedTransaction(ProductAbstractTransfer $productAbstractTransfer): void
     {
-        $this->productQueryContainer->getConnection()->beginTransaction();
-
         foreach ($this->localeFacade->getLocaleCollection() as $localeTransfer) {
             $urlTransfer = $this->getUrlByIdProductAbstractAndIdLocale(
                 $productAbstractTransfer->requireIdProductAbstract()->getIdProductAbstract(),
@@ -216,8 +261,6 @@ class ProductUrlManager implements ProductUrlManagerInterface
 
             $this->urlFacade->deactivateUrl($urlTransfer);
         }
-
-        $this->productQueryContainer->getConnection()->commit();
     }
 
     /**
