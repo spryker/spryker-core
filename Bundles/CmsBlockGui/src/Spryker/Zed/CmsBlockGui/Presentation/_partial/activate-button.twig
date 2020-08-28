@@ -1,5 +1,21 @@
 {% if isActive %}
-    {{ removeActionButton(url('/cms-block-gui/edit-block/deactivate', {'id-cms-block': idCmsBlock, 'redirect-url' : redirectUrl}), 'Deactivate' | trans) }}
+    {% set actionUrl = url('/cms-block-gui/edit-block/deactivate', {'id-cms-block': idCmsBlock, 'redirect-url' : redirectUrl}) %}
+    {% set buttonClass = 'btn-remove' %}
+    {% set iconClass = 'fa-trash' %}
+    {% set formLabel = 'Deactivate' %}
 {% else %}
-    {{ viewActionButton(url('/cms-block-gui/edit-block/activate', {'id-cms-block': idCmsBlock, 'redirect-url' : redirectUrl }), 'Activate' | trans) }}
+    {% set actionUrl = url('/cms-block-gui/edit-block/activate', {'id-cms-block': idCmsBlock, 'redirect-url' : redirectUrl }) %}
+    {% set buttonClass = 'btn-view' %}
+    {% set iconClass = 'fa-caret-right' %}
+    {% set formLabel = 'Activate' %}
 {% endif %}
+
+{{ form_start(toggleActiveCmsBlockForm, {
+    'action': actionUrl,
+    'attr': {'class': 'form-inline'},
+}) }}
+    <button type="submit" class="btn btn-sm btn-outline safe-submit {{ buttonClass }}">
+        <i class="fa {{ iconClass }}"></i>
+        {{ formLabel | trans }}
+    </button>
+{{ form_end(toggleActiveCmsBlockForm) }}

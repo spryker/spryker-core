@@ -44,6 +44,7 @@ class ViewBlockController extends AbstractCmsBlockController
             'cmsBlockGlossary' => $cmsBlockGlossary,
             'renderedPlugins' => $this->getRenderedViewPlugins($cmsBlockTransfer->getIdCmsBlock()),
             'relatedStoreNames' => $relatedStoreNames,
+            'toggleActiveCmsBlockForm' => $this->getFactory()->createToggleActiveCmsBlockForm()->createView(),
         ]);
     }
 

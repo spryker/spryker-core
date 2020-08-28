@@ -78,11 +78,11 @@ class RequestMetadataExtractorTest extends Unit
 
         $metadata = $requestMetadataExtractor->extract($request);
 
-        $this->assertEquals('json', $metadata->getAcceptFormat());
-        $this->assertEquals('json', $metadata->getContentTypeFormat());
+        $this->assertSame('json', $metadata->getAcceptFormat());
+        $this->assertSame('json', $metadata->getContentTypeFormat());
         $this->assertFalse($metadata->isProtected());
-        $this->assertEquals('de_DE', $metadata->getLocale());
-        $this->assertEquals(Request::METHOD_GET, $metadata->getMethod());
+        $this->assertSame('de_DE', $metadata->getLocale());
+        $this->assertSame(Request::METHOD_GET, $metadata->getMethod());
     }
 
     /**

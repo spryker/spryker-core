@@ -34,7 +34,7 @@ class PriceConfig extends AbstractSharedConfig
      */
     public function getDefaultPriceMode()
     {
-        return PriceConfig::PRICE_MODE_GROSS;
+        return static::PRICE_MODE_GROSS;
     }
 
     /**

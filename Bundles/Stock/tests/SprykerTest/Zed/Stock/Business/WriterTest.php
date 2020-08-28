@@ -63,7 +63,7 @@ class WriterTest extends Unit
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals((new Decimal($oldQuantity))->subtract(1)->toString(), $newQuantity);
+        $this->assertSame((new Decimal($oldQuantity))->subtract(1)->toString(), $newQuantity);
     }
 
     /**
@@ -83,7 +83,7 @@ class WriterTest extends Unit
         $stockEntity = SpyStockProductQuery::create()->findOneByIdStockProduct($stockProductEntity->getIdStockProduct());
         $newQuantity = $stockEntity->getQuantity();
 
-        $this->assertEquals((new Decimal($oldQuantity))->add(1)->toString(), $newQuantity);
+        $this->assertSame((new Decimal($oldQuantity))->add(1)->toString(), $newQuantity);
     }
 
     /**

@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,17 +20,13 @@ use Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterf
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class CustomerAccessStorageBusinessTester extends Actor
 {
     use _generated\CustomerAccessStorageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Spryker\Zed\CustomerAccessStorage\Business\CustomerAccessStorageFacadeInterface

@@ -133,7 +133,7 @@ class OrderInvoiceMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender(static::GLOSSARY_KEY_MAIL_SENDER_EMAIL, static::GLOSSARY_KEY_MAIL_SENDER_NAME);
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

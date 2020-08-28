@@ -56,8 +56,8 @@ class UpdateMerchantTest extends Unit
 
         // Assert
         $this->assertSame($expectedIdMerchant, $updatedMerchant->getIdMerchant());
-        $this->assertEquals('second-key', $updatedMerchant->getMerchantKey());
-        $this->assertEquals('Second Company', $updatedMerchant->getName());
+        $this->assertSame('second-key', $updatedMerchant->getMerchantKey());
+        $this->assertSame('Second Company', $updatedMerchant->getName());
     }
 
     /**

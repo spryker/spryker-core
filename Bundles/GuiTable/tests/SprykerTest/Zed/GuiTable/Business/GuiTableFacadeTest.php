@@ -129,8 +129,8 @@ class GuiTableFacadeTest extends Unit
         $this->assertIsArray($guiTableDataRequestTransfer->getFilters());
         $this->assertCount(0, $guiTableDataRequestTransfer->getFilters());
         $this->assertEquals(static::TEST_PARAM_SORT_DIRECTION_ASC, $guiTableDataRequestTransfer->getOrderDirection());
-        $this->assertEquals(1, $guiTableDataRequestTransfer->getPage());
-        $this->assertEquals($guiTableConfig->getDefaultPageSize(), $guiTableDataRequestTransfer->getPageSize());
+        $this->assertSame(1, $guiTableDataRequestTransfer->getPage());
+        $this->assertSame($guiTableConfig->getDefaultPageSize(), $guiTableDataRequestTransfer->getPageSize());
     }
 
     /**

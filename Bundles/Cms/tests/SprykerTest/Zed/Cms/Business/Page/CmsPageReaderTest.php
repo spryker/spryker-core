@@ -47,7 +47,7 @@ class CmsPageReaderTest extends CmsMocks
 
         $cmsPageTransfer = $cmsPageReaderMock->findCmsPageById(1);
 
-        $this->assertEquals($cmsPageEntity->getIdCmsPage(), $cmsPageTransfer->getFkPage());
+        $this->assertSame($cmsPageEntity->getIdCmsPage(), $cmsPageTransfer->getFkPage());
         $this->assertCount(2, $cmsPageTransfer->getPageAttributes());
     }
 
