@@ -17,6 +17,8 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    protected const APPLICATION_YVES = 'YVES';
+    
     /**
      * @api
      *
@@ -124,7 +126,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache(self::APPLICATION_YVES));
     }
 
     /**
