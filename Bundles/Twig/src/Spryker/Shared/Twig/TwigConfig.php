@@ -68,14 +68,11 @@ class TwigConfig extends AbstractSharedConfig
      */
     public function getDefaultPathCache($application = APPLICATION): string
     {
-        $projectNamespaces = implode('/', $this->getProjectNamespaces());
-
         return sprintf(
-            '%s/src/Generated/%s/Twig/codeBucket%s/%s/.pathCache',
+            '%s/src/Generated/%s/Twig/codeBucket%s/.pathCache',
             APPLICATION_ROOT_DIR,
             ucfirst(strtolower($application)),
-            APPLICATION_CODE_BUCKET,
-            $projectNamespaces
+            APPLICATION_CODE_BUCKET
         );
     }
 
