@@ -23,6 +23,11 @@
         <property name="priceMode" type="string"/>
     </transfer>
 
+    <transfer name="CalculableObject">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+    </transfer>
+
     <transfer name="CalculatedDiscount">
         <property name="idDiscount" type="int"/>
         <property name="displayName" type="string"/>

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Discount\Business\Calculator;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
@@ -104,6 +105,20 @@ class Discount implements DiscountInterface
         $this->addNonApplicableDiscountsToQuote($quoteTransfer, $nonApplicableDiscounts);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        $quoteTransfer = (new QuoteTransfer())->fromArray($calculableObjectTransfer->toArray(), true);
+        $quoteTransfer = $this->calculate($quoteTransfer);
+        $calculableObjectTransfer->fromArray($quoteTransfer->toArray(), true);
+
+        return $calculableObjectTransfer;
     }
 
     /**

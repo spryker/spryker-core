@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscountInterface
@@ -32,5 +33,15 @@ class DiscountCalculationToDiscountBridge implements DiscountCalculationToDiscou
     public function calculateDiscounts(QuoteTransfer $quoteTransfer)
     {
         return $this->discountFacade->calculateDiscounts($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculateDiscounts(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        return $this->discountFacade->recalculateDiscounts($calculableObjectTransfer);
     }
 }
