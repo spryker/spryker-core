@@ -36,7 +36,7 @@ class ReaderTest extends Unit
     /**
      * @var \Spryker\Zed\Tax\Business\TaxFacadeInterface
      */
-    private $taxFacade;
+    protected $taxFacade;
 
     /**
      * @return void

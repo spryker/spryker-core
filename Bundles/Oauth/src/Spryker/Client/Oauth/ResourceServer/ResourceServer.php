@@ -22,7 +22,7 @@ class ResourceServer extends LeagueResourceServer
     /**
      * @var \League\OAuth2\Server\CryptKey[]
      */
-    private $publicKeys;
+    protected $publicKeys;
 
     /**
      * @var \League\OAuth2\Server\Repositories\AccessTokenRepositoryInterface

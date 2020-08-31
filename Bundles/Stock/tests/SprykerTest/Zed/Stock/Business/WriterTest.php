@@ -32,7 +32,7 @@ class WriterTest extends Unit
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
-    private $stockFacade;
+    protected $stockFacade;
 
     /**
      * @return void

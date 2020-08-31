@@ -37,7 +37,7 @@ class QueueReader implements DataReaderInterface
     /**
      * @var \Generated\Shared\Transfer\DataImporterQueueReaderConfigurationTransfer
      */
-    private $queueReaderConfigurationTransfer;
+    protected $queueReaderConfigurationTransfer;
 
     /**
      * @param \Spryker\Zed\DataImport\Dependency\Client\DataImportToQueueClientInterface $queueClient

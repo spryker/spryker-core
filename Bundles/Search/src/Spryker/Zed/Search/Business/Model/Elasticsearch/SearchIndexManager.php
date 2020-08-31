@@ -18,7 +18,7 @@ class SearchIndexManager implements SearchIndexManagerInterface
     /**
      * @var \Elastica\Index
      */
-    private $index;
+    protected $index;
 
     /**
      * @param \Elastica\Index $index

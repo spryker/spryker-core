@@ -22,7 +22,7 @@ class ItemMetadataSaver implements ItemMetadataSaverInterface
     /**
      * @var \Spryker\Zed\SalesProductConnector\Dependency\Service\SalesProductConnectorToUtilEncodingInterface
      */
-    private $utilEncodingService;
+    protected $utilEncodingService;
 
     /**
      * @var \Spryker\Zed\SalesProductConnector\Persistence\SalesProductConnectorQueryContainerInterface
