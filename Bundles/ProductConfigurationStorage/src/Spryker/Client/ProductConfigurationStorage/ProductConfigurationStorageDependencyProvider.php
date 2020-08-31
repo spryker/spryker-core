@@ -9,7 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
-use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleBridge;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientBridge;
@@ -108,10 +108,10 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addLocaleClient(Container $container)
+    protected function addLocaleClient(Container $container): Container
     {
         $container->set(static::CLIENT_LOCALE, function (Container $container) {
-            return new ProductConfigurationStorageToLocaleBridge($container->getLocator()->locale()->client());
+            return new ProductConfigurationStorageToLocaleClientBridge($container->getLocator()->locale()->client());
         });
 
         return $container;

@@ -20,7 +20,7 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
 {
     /**
      * {@inheritDoc}
-     * - Expands the transfer object with the product offer reference according to provided criteria.
+     * - Expands the product view with the product configuration instance according to provided criteria.
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      * @param array $productData
@@ -35,6 +35,11 @@ class ProductViewProductConfigurationExpanderPlugin extends AbstractPlugin imple
         $localeName,
         ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
-        return $this->getClient()->expandProductViewWithProductConfiguration($productViewTransfer);
+        return $this->getClient()->expandProductViewWithProductConfigurationInstance(
+            $productViewTransfer,
+            $productData,
+            $localeName,
+            $productStorageCriteriaTransfer
+        );
     }
 }

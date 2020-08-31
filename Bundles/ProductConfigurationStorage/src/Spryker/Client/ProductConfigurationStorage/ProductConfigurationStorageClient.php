@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -30,7 +31,8 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         string $sku
     ): ?ProductConfigurationInstanceTransfer {
         return $this->getFactory()
-            ->createProductConfigurationInstanceReader()->findProductConfigurationInstanceBySku($sku);
+            ->createProductConfigurationInstanceReader()
+            ->findProductConfigurationInstanceBySku($sku);
     }
 
     /**
@@ -58,14 +60,26 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      * @api
      *
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductViewTransfer
      */
-    public function expandProductViewWithProductConfiguration(
-        ProductViewTransfer $productViewTransfer
+    public function expandProductViewWithProductConfigurationInstance(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
     ): ProductViewTransfer {
         return $this->getFactory()
-            ->createProductViewExpander()->expandWithProductConfigurationInstance($productViewTransfer);
+            ->createProductViewExpander()
+            ->expandProductViewWithProductConfigurationInstance(
+                $productViewTransfer,
+                $productData,
+                $localeName,
+                $productStorageCriteriaTransfer
+            );
     }
 
     /**
@@ -80,7 +94,7 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
     public function findProductConcretePricesByIdProductConcrete(int $idProductConcrete): array
     {
         return $this->getFactory()
-            ->createProductConfigurationInstanceReader()
+            ->createProductConfigurationPriceReader()
             ->findProductConcretePricesByIdProductConcrete($idProductConcrete);
     }
 
@@ -94,13 +108,13 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    public function expandPriceProductFilterWithProductConfiguration(
+    public function expandPriceProductFilterWithProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): PriceProductFilterTransfer {
         return $this->getFactory()
             ->createPriceProductFilterExpander()
-            ->expandWithProductConfigurationInstance($productViewTransfer, $priceProductFilterTransfer);
+            ->expandPriceProductFilterWithProductConfigurationInstance($productViewTransfer, $priceProductFilterTransfer);
     }
 
     /**
@@ -112,11 +126,11 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
      *
      * @return bool
      */
-    public function isProductViewTransferHasProductConfigurationInstance(ProductViewTransfer $productViewTransfer): bool
+    public function isProductHasProductConfigurationInstance(ProductViewTransfer $productViewTransfer): bool
     {
         return $this->getFactory()
             ->createProductConfigurationAvailabilityReader()
-            ->isProductViewTransferHasProductConfigurationInstance($productViewTransfer);
+            ->isProductHasProductConfigurationInstance($productViewTransfer);
     }
 
     /**

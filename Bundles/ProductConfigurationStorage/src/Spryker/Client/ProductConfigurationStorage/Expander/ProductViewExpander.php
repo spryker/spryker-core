@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Expander;
 
+use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface;
 
@@ -15,30 +16,54 @@ class ProductViewExpander implements ProductViewExpanderInterface
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface
      */
-    protected $configurationInstanceReader;
+    protected $productConfigurationInstanceReader;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface $configurationInstanceReader
+     * @param \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface $productConfigurationInstanceReader
      */
     public function __construct(
-        ProductConfigurationInstanceReaderInterface $configurationInstanceReader
+        ProductConfigurationInstanceReaderInterface $productConfigurationInstanceReader
     ) {
-        $this->configurationInstanceReader = $configurationInstanceReader;
+        $this->productConfigurationInstanceReader = $productConfigurationInstanceReader;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     * @param array $productData
+     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ProductStorageCriteriaTransfer|null $productStorageCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     */
+    public function expandProductViewWithProductConfigurationInstance(
+        ProductViewTransfer $productViewTransfer,
+        array $productData,
+        string $localeName,
+        ?ProductStorageCriteriaTransfer $productStorageCriteriaTransfer = null
+    ): ProductViewTransfer {
+        if (!$this->isProductConcrete($productViewTransfer)) {
+            return $productViewTransfer;
+        }
+
+        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader
+            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
+
+        if (!$productConfigurationInstanceTransfer) {
+            return $productViewTransfer;
+        }
+
+        $productViewTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+
+        return $productViewTransfer;
     }
 
     /**
      * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
      *
-     * @return \Generated\Shared\Transfer\ProductViewTransfer
+     * @return bool
      */
-    public function expandWithProductConfigurationInstance(
-        ProductViewTransfer $productViewTransfer
-    ): ProductViewTransfer {
-        $productConfigurationInstanceTransfer = $this->configurationInstanceReader
-            ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
-
-        $productViewTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
-
-        return $productViewTransfer;
+    protected function isProductConcrete(ProductViewTransfer $productViewTransfer): bool
+    {
+        return $productViewTransfer->getIdProductConcrete() !== null;
     }
 }

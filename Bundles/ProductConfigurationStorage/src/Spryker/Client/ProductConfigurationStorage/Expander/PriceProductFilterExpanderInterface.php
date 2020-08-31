@@ -18,7 +18,7 @@ interface PriceProductFilterExpanderInterface
      *
      * @return \Generated\Shared\Transfer\PriceProductFilterTransfer
      */
-    public function expandWithProductConfigurationInstance(
+    public function expandPriceProductFilterWithProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): PriceProductFilterTransfer;

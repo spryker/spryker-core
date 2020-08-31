@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ProductViewTransfer;
 
 class ProductConfigurationAvailabilityReader implements ProductConfigurationAvailabilityReaderInterface
 {
-    protected const MINIMUM_AVAILABLE_QUANTITY = 1;
+    protected const MINIMUM_AVAILABLE_QUANTITY = 0;
 
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface
@@ -33,12 +33,12 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
      *
      * @return bool
      */
-    public function isProductViewTransferHasProductConfigurationInstance(
+    public function isProductHasProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
     ): bool {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
-        return !empty($productConfigurationInstance);
+        return $productConfigurationInstance !== null;
     }
 
     /**
@@ -51,6 +51,10 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
     ): bool {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
+        if (!$productConfigurationInstance) {
+            return false;
+        }
+
         return $productConfigurationInstance->getAvailableQuantity() > static::MINIMUM_AVAILABLE_QUANTITY;
     }
 
@@ -62,17 +66,26 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
     protected function findProductConfigurationInstance(
         ProductViewTransfer $productViewTransfer
     ): ?ProductConfigurationInstanceTransfer {
-        $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
+        if (!$this->isProductConcrete($productViewTransfer)) {
+            return null;
+        }
 
+        $productConfigurationInstance = $productViewTransfer->getProductConfigurationInstance();
         if ($productConfigurationInstance) {
             return $productConfigurationInstance;
         }
 
-        if (!$productViewTransfer->getIdProductConcrete()) {
-            return null;
-        }
-
         return $this->productConfigurationInstanceReader
             ->findProductConfigurationInstanceBySku($productViewTransfer->getSku());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductViewTransfer $productViewTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcrete(ProductViewTransfer $productViewTransfer): bool
+    {
+        return $productViewTransfer->getIdProductConcrete() !== null;
     }
 }

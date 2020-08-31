@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
+use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
 use Spryker\Shared\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfigurationStorageReader implements ProductConfigurationStorageReaderInterface
@@ -26,15 +27,23 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
     protected $storageClient;
 
     /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface
+     */
+    protected $productConfigurationStorageMapper;
+
+    /**
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface $synchronizationService
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToStorageClientInterface $storageClient
+     * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface $productConfigurationStorageMapper
      */
     public function __construct(
         ProductConfigurationStorageToSynchronizationServiceInterface $synchronizationService,
-        ProductConfigurationStorageToStorageClientInterface $storageClient
+        ProductConfigurationStorageToStorageClientInterface $storageClient,
+        ProductConfigurationStorageMapperInterface $productConfigurationStorageMapper
     ) {
         $this->synchronizationService = $synchronizationService;
         $this->storageClient = $storageClient;
+        $this->productConfigurationStorageMapper = $productConfigurationStorageMapper;
     }
 
     /**
@@ -42,19 +51,35 @@ class ProductConfigurationStorageReader implements ProductConfigurationStorageRe
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationStorageTransfer|null
      */
-    public function findProductConfigurationInstanceBySku(
+    public function findProductConfigurationStorageBySku(
         string $sku
     ): ?ProductConfigurationStorageTransfer {
-        $key = $this->synchronizationService
-            ->getStorageKeyBuilder(ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_RESOURCE_NAME)
-            ->generateKey((new SynchronizationDataTransfer())->setReference($sku));
+        $productConfigurationStorageData = $this->storageClient->get(
+            $this->generateKey($sku)
+        );
 
-        $productConfigurationStorageData = $this->storageClient->get($key);
-
-        if (empty($productConfigurationStorageData)) {
+        if (!$productConfigurationStorageData) {
             return null;
         }
 
-        return (new ProductConfigurationStorageTransfer())->fromArray($productConfigurationStorageData, true);
+        return $this->productConfigurationStorageMapper->mapProductConfigurationStorageDataToProductConfigurationStorageTransfer(
+            $productConfigurationStorageData,
+            new ProductConfigurationStorageTransfer()
+        );
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return string
+     */
+    protected function generateKey(string $reference): string
+    {
+        $synchronizationDataTransfer = (new SynchronizationDataTransfer())
+            ->setReference($reference);
+
+        return $this->synchronizationService
+            ->getStorageKeyBuilder(ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION_RESOURCE_NAME)
+            ->generateKey($synchronizationDataTransfer);
     }
 }

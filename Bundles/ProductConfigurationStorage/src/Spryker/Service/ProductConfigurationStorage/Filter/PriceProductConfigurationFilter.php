@@ -21,18 +21,23 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
         array $priceProductTransfers,
         PriceProductFilterTransfer $priceProductFilterTransfer
     ): array {
-        if ($priceProductFilterTransfer->getProductConfigurationInstance()) {
+        if (!$priceProductFilterTransfer->getProductConfigurationInstance()) {
             return $priceProductTransfers;
         }
 
-        $priceProductTransfers = array_filter(
-            $priceProductTransfers,
-            function ($priceProductTransfer) {
-                /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
-                return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;
-            }
-        );
+        return $this->filterOutProductConfigurationPrices($priceProductTransfers);
+    }
 
-        return $priceProductTransfers;
+    /**
+     * @param \Generated\Shared\Transfer\PriceProductTransfer[] $priceProductTransfers
+     *
+     * @return \Generated\Shared\Transfer\PriceProductTransfer[]
+     */
+    protected function filterOutProductConfigurationPrices(array $priceProductTransfers): array
+    {
+        return array_filter($priceProductTransfers, function ($priceProductTransfer) {
+            /** @var \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer */
+            return $priceProductTransfer->getPriceDimension()->getProductConfigurationConfiguratorKey() !== null;
+        });
     }
 }

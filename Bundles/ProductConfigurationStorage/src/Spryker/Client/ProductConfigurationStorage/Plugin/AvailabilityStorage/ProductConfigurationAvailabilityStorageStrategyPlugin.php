@@ -29,7 +29,7 @@ class ProductConfigurationAvailabilityStorageStrategyPlugin extends AbstractPlug
      */
     public function isApplicable(ProductViewTransfer $productViewTransfer): bool
     {
-        return $this->getClient()->isProductViewTransferHasProductConfigurationInstance($productViewTransfer);
+        return $this->getClient()->isProductHasProductConfigurationInstance($productViewTransfer);
     }
 
     /**

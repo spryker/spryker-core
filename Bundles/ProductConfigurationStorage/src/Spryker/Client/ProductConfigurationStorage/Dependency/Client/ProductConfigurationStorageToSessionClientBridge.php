@@ -23,20 +23,24 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
     }
 
     /**
-     * @param mixed $default The default value if not found
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function set(string $name, $value)
+    {
+        $this->sessionClient->set($name, $value);
+    }
+
+    /**
+     * @param string $name The attribute name
+     * @param mixed|null $default The default value if not found
      *
      * @return mixed
      */
     public function get(string $name, $default = null)
     {
         return $this->sessionClient->get($name, $default);
-    }
-
-    /**
-     * @param mixed $value
-     */
-    public function set(string $name, $value)
-    {
-        $this->sessionClient->set($name, $value);
     }
 }
