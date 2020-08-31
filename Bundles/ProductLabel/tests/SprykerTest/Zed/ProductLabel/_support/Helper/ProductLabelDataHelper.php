@@ -36,10 +36,12 @@ class ProductLabelDataHelper extends Module
         $productLabelTransfer->setIdProductLabel(null);
         $productLabelTransfer->setPosition($seedData[ProductLabelTransfer::POSITION] ?? 0);
 
-        $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
-            ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $this->getLocator()->locale()->facade()->getCurrentLocale()->getIdLocale(),
-        ]))->build();
-        $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
+        foreach ($this->getLocator()->locale()->facade()->getLocaleCollection() as $localeTransfer) {
+            $productLabelLocalizedAttributesTransfer = (new ProductLabelLocalizedAttributesBuilder([
+                ProductLabelLocalizedAttributesTransfer::FK_LOCALE => $localeTransfer->getIdLocale(),
+            ]))->build();
+            $productLabelTransfer->addLocalizedAttributes($productLabelLocalizedAttributesTransfer);
+        }
 
         $this->getProductLabelFacade()->createLabel($productLabelTransfer);
 

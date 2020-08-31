@@ -4,7 +4,7 @@ Approved,Genehmigt
 approved_offer_button,Genehmigen
 "Offer Approve",Genehmigen
 Deny,Ablehnen
-"Back to Offers","Zurück zu Angeboten"
+"Back to Offers","Zurück zu Angebote"
 denied_offer_button,Ablehnen
 Denied,Abgelehnt
 Description,Beschreibung
@@ -13,7 +13,7 @@ Inactive,Inaktiv
 Name,Name
 Offer,Angebot
 "Offer ID","Angebot ID"
-Offers,Angeboten
+Offers,Angebote
 Product,Produkt
 Reference,Referenz
 SKU,Artikelnummer
