@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
+use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepositoryInterface getRepository()
@@ -15,4 +17,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class ProductConfigurationBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface
+     */
+    public function createProductConfigurationChecker(): ProductConfigurationCheckerInterface
+    {
+        return new ProductConfigurationChecker();
+    }
 }

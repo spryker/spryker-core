@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<transfers xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns="spryker:transfer-01"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="ProductConfigurationInstance">
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+    </transfer>
+
+    <transfer name="SalesOrderItemConfiguration">
+        <property name="idSalesOrderItemConfiguration" type="int"/>
+        <property name="fkSalesOrderItem" type="int"/>
+        <property name="displayData" type="string"/>
+        <property name="configuration" type="string"/>
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
+</transfers>
