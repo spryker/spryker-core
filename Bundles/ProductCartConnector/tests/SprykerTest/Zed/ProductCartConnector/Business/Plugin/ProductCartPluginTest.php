@@ -42,12 +42,12 @@ class ProductCartPluginTest extends Unit
     /**
      * @var \Spryker\Zed\ProductCartConnector\Business\ProductCartConnectorFacade
      */
-    private $productCartConnectorFacade;
+    protected $productCartConnectorFacade;
 
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
-    private $localeFacade;
+    protected $localeFacade;
 
     /**
      * @return void

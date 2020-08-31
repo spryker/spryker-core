@@ -105,11 +105,11 @@ class ShoppingListItemNoteWriter implements ShoppingListItemNoteWriterInterface
         $shoppingListItemNoteIds = [];
         foreach ($shoppingListItemCollectionTransfer->getItems() as $shoppingListItemTransfer) {
             $shoppingListItemNoteTransfer = $shoppingListItemTransfer->getShoppingListItemNote();
-            if (!$shoppingListItemNoteTransfer || !$shoppingListItemNoteTransfer->getNote() || !$shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
+            if (!$shoppingListItemNoteTransfer || $shoppingListItemNoteTransfer->getNote() || !$shoppingListItemNoteTransfer->getIdShoppingListItemNote()) {
                 continue;
             }
 
-            $shoppingListItemIds[] = $shoppingListItemNoteTransfer->getIdShoppingListItemNote();
+            $shoppingListItemNoteIds[] = $shoppingListItemNoteTransfer->getIdShoppingListItemNote();
         }
 
         $this->shoppingListNoteEntityManager->deleteShoppingListItemNoteByShoppingListItemNoteIds($shoppingListItemNoteIds);

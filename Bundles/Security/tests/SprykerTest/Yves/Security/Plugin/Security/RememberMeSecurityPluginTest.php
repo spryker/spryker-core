@@ -140,8 +140,8 @@ class RememberMeSecurityPluginTest extends Unit
      */
     protected function getEventDispatcherPlugin(RememberMeSecurityPluginTest $testClass): EventDispatcherPluginInterface
     {
-        return new class ($testClass) implements EventDispatcherPluginInterface {
-
+        return new class ($testClass) implements EventDispatcherPluginInterface
+        {
             /**
              * @var \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest
              */

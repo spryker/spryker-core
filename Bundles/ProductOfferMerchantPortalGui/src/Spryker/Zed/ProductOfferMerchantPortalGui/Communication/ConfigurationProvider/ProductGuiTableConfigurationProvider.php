@@ -105,8 +105,8 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
                 '0' => 'Without Offers',
             ])
             ->addFilterSelect('isActive', 'Status', false, [
-                '1' => 'Active',
-                '0' => 'Inactive',
+                '1' => 'Online',
+                '0' => 'Offline',
             ]);
 
         return $guiTableConfigurationBuilder;
