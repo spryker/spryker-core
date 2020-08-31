@@ -40,10 +40,11 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
      *
      * @param \Generated\Shared\Transfer\CartChangeTransfer $cartChangeTransfer
      *
-     * @return \Generated\Shared\Transfer\CartChangeTransfer|void
+     * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductConfigurationItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer)
-    {
+    public function expandProductConfigurationItemsWithGroupKey(
+        CartChangeTransfer $cartChangeTransfer
+    ): CartChangeTransfer {
         return $this->getFactory()
             ->createProductConfigurationGroupKeyItemExpander()
             ->expandProductConfigurationItemsWithGroupKey($cartChangeTransfer);

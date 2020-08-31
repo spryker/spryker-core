@@ -23,12 +23,12 @@ class ProductConfigurationToUtilTextServiceBridge implements ProductConfiguratio
     }
 
     /**
-     * @param string $value
+     * @param mixed $value
      * @param string $algorithm
      *
      * @return string
      */
-    public function hashValue(string $value, string $algorithm)
+    public function hashValue($value, $algorithm)
     {
         return $this->utilTextService->hashValue($value, $algorithm);
     }

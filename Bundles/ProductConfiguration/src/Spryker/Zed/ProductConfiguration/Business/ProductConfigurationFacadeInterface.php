@@ -33,7 +33,7 @@ interface ProductConfigurationFacadeInterface
     /**
      * Specification:
      * - Applicable to items which have product configuration attached.
-     * - Sets group key for each item.
+     * - Expands item group key to include the product configuration key as it's key part.
      * - Returns modified CartChangeTransfer.
      *
      * @api
@@ -42,5 +42,7 @@ interface ProductConfigurationFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CartChangeTransfer
      */
-    public function expandProductConfigurationItemsWithGroupKey(CartChangeTransfer $cartChangeTransfer);
+    public function expandProductConfigurationItemsWithGroupKey(
+        CartChangeTransfer $cartChangeTransfer
+    ): CartChangeTransfer;
 }

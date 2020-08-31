@@ -69,7 +69,7 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
      */
     protected function isProductConfigurationItem(ItemTransfer $itemTransfer): bool
     {
-        return (bool)$itemTransfer->getProductConfigurationInstance();
+        return $itemTransfer->getProductConfigurationInstance() !== null;
     }
 
     /**

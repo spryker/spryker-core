@@ -8,7 +8,9 @@
 namespace Spryker\Client\ProductConfigurationStorage\Expander;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface;
 
 class ProductConfigurationInstanceCartChangeExpander implements ProductConfigurationInstanceCartChangeExpanderInterface
@@ -45,7 +47,10 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
                 continue;
             }
 
-            $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+            $itemTransfer = $this->expandItemWithProductConfigurationInstance(
+                $itemTransfer,
+                $productConfigurationInstanceTransfer
+            );
         }
 
         return $cartChangeTransfer;
@@ -70,9 +75,25 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
                 continue;
             }
 
-            $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+            $itemTransfer = $this->expandItemWithProductConfigurationInstance(
+                $itemTransfer,
+                $productConfigurationInstanceTransfer
+            );
         }
 
         return $persistentCartChangeTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer
+     */
+    protected function expandItemWithProductConfigurationInstance(
+        ItemTransfer $itemTransfer,
+        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+    ): ItemTransfer {
+        return $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
     }
 }
