@@ -8,13 +8,13 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
+use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpander;
 use Spryker\Zed\ProductConfiguration\Business\Expander\ProductConfigurationGroupKeyItemExpanderInterface;
 use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface;
 use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilTextServiceInterface;
 use Spryker\Zed\ProductConfiguration\ProductConfigurationDependencyProvider;
-use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationChecker;
-use Spryker\Zed\ProductConfiguration\Business\Checker\ProductConfigurationCheckerInterface;
 
 /**
  * @method \Spryker\Zed\ProductConfiguration\Persistence\ProductConfigurationRepositoryInterface getRepository()

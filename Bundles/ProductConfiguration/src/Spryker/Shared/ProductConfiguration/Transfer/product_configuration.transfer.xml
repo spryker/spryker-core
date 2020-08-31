@@ -42,4 +42,16 @@
     <transfer name="CartChange">
         <property name="items" type="Item[]" singular="item"/>
     </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="errors" type="CheckoutError[]" singular="error"/>
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="message" type="string"/>
+    </transfer>
 </transfers>

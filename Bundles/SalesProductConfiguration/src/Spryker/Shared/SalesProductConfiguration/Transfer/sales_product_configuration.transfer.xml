@@ -5,6 +5,7 @@
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
     <transfer name="ProductConfigurationInstance">
@@ -19,6 +20,13 @@
         <property name="displayData" type="string"/>
         <property name="configuration" type="string"/>
         <property name="configuratorKey" type="string"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="SaveOrder">
     </transfer>
 
 </transfers>
