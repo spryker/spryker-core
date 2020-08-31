@@ -15,7 +15,7 @@ trait BundleConfigResolverAwareTrait
     /**
      * @var \Spryker\Glue\Kernel\AbstractBundleConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Glue\Kernel\AbstractBundleConfig $config

@@ -14,7 +14,7 @@ class AbstractService
     /**
      * @var \Spryker\Service\Kernel\AbstractServiceFactory
      */
-    private $factory;
+    protected $factory;
 
     /**
      * @api
