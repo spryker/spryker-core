@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Discount\Business\Calculator;
 
-use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface DiscountInterface
@@ -18,11 +17,4 @@ interface DiscountInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function calculate(QuoteTransfer $quoteTransfer);
-
-    /**
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
-     */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer;
 }

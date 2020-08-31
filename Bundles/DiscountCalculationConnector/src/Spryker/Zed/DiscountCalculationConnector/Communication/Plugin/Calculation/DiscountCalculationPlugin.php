@@ -30,6 +30,6 @@ class DiscountCalculationPlugin extends AbstractPlugin implements CalculationPlu
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): void
     {
-        $this->getFactory()->getDiscountFacade()->recalculateDiscounts($calculableObjectTransfer);
+        $this->getFacade()->recalculateDiscounts($calculableObjectTransfer);
     }
 }
