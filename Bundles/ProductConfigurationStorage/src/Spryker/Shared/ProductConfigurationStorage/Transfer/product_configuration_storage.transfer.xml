@@ -49,7 +49,6 @@
 
     <transfer name="ProductView">
         <property name="idProductConcrete" type="int"/>
-        <property name="sku" type="PriceProductDimension"/>
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
     </transfer>
 
