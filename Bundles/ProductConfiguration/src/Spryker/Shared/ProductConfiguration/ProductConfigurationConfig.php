@@ -33,5 +33,5 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      *
      * @api
      */
-    public const SOURCE_TYPE_CART = 'SOURCE_TYPE_PDP';
+    public const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
 }
