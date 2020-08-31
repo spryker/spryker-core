@@ -91,7 +91,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_OFFER_REFERENCE, 'Reference', true, false)
-            ->addColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, false)
+            ->addColumnText(static::COL_KEY_MERCHANT_SKU, 'Merchant SKU', true, true)
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
