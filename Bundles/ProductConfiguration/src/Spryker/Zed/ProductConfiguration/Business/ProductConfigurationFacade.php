@@ -8,8 +8,10 @@
 namespace Spryker\Zed\ProductConfiguration\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\ProductConfigurationCollectionTransfer;
 use Generated\Shared\Transfer\ProductConfigurationFilterTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -48,5 +50,22 @@ class ProductConfigurationFacade extends AbstractFacade implements ProductConfig
         return $this->getFactory()
             ->createProductConfigurationGroupKeyItemExpander()
             ->expandProductConfigurationItemsWithGroupKey($cartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer): bool
+    {
+        return $this->getFactory()
+            ->createProductConfigurationChecker()
+            ->isQuoteProductConfigurationValid($quoteTransfer, $checkoutResponseTransfer);
     }
 }
