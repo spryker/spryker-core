@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductConfigurationStorage\Expander;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface;
 
 class ProductConfigurationInstanceCartChangeExpander implements ProductConfigurationInstanceCartChangeExpanderInterface
@@ -39,18 +38,7 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
         array $params = []
     ): CartChangeTransfer {
         foreach ($cartChangeTransfer->getItems() as $itemTransfer) {
-            $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
-                $itemTransfer->getSku()
-            );
-
-            if (!$productConfigurationInstanceTransfer) {
-                continue;
-            }
-
-            $itemTransfer = $this->expandItemWithProductConfigurationInstance(
-                $itemTransfer,
-                $productConfigurationInstanceTransfer
-            );
+            $itemTransfer = $this->expandItemWithProductConfigurationInstance($itemTransfer);
         }
 
         return $cartChangeTransfer;
@@ -67,18 +55,7 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
         array $params = []
     ): PersistentCartChangeTransfer {
         foreach ($persistentCartChangeTransfer->getItems() as $itemTransfer) {
-            $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
-                $itemTransfer->getSku()
-            );
-
-            if (!$productConfigurationInstanceTransfer) {
-                continue;
-            }
-
-            $itemTransfer = $this->expandItemWithProductConfigurationInstance(
-                $itemTransfer,
-                $productConfigurationInstanceTransfer
-            );
+            $itemTransfer = $this->expandItemWithProductConfigurationInstance($itemTransfer);
         }
 
         return $persistentCartChangeTransfer;
@@ -86,14 +63,20 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer
      */
     protected function expandItemWithProductConfigurationInstance(
-        ItemTransfer $itemTransfer,
-        ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
+        ItemTransfer $itemTransfer
     ): ItemTransfer {
-        return $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+        $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
+            $itemTransfer->getSku()
+        );
+
+        if ($productConfigurationInstanceTransfer) {
+            $itemTransfer->setProductConfigurationInstance($productConfigurationInstanceTransfer);
+        }
+
+        return $itemTransfer;
     }
 }
