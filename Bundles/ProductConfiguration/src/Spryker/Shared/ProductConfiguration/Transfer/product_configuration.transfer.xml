@@ -21,6 +21,7 @@
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="groupKey" type="string"/>
     </transfer>
 
     <transfer name="ProductConfigurationFilter">
@@ -36,5 +37,9 @@
 
     <transfer name="ProductConfigurationCollection">
         <property name="productConfigurations" type="ProductConfiguration[]" singular="productConfiguration"/>
+    </transfer>
+
+    <transfer name="CartChange">
+        <property name="items" type="Item[]" singular="item"/>
     </transfer>
 </transfers>
