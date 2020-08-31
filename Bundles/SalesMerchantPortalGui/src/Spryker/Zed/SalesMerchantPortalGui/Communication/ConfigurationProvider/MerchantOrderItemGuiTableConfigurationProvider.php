@@ -138,7 +138,7 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setIdMerchant($idMerchant);
         $stateMachineProcessTransfer = $this->merchantOmsFacade->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
 
-        return array_map(function(string $stateName) {
+        return array_map(function (string $stateName) {
             return mb_convert_case($stateName, MB_CASE_TITLE);
         }, $stateMachineProcessTransfer->getStateNames());
     }
