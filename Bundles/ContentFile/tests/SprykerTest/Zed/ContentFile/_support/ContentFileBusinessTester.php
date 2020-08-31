@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ContentFile;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -21,7 +19,7 @@ use Codeception\Actor;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\ContentFile\Business\ContentFileFacadeInterface getFacade()
  * @method \Spryker\Zed\ContentFile\ContentFileConfig getModuleConfig()
  *
@@ -30,8 +28,4 @@ use Codeception\Actor;
 class ContentFileBusinessTester extends Actor
 {
     use _generated\ContentFileBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

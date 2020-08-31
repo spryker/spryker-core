@@ -14,6 +14,7 @@ use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEvent
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToEventBehaviorFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerBridge;
 use Spryker\Zed\ProductLabelStorage\Dependency\QueryContainer\ProductLabelStorageToProductLabelQueryContainerInterface;
 
@@ -28,6 +29,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
 
     public const FACADE_EVENT_BEHAVIOR = 'FACADE_EVENT_BEHAVIOR';
     public const FACADE_PRODUCT_LABEL = 'FACADE_PRODUCT_LABEL';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -53,6 +55,7 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
         $container = parent::provideBusinessLayerDependencies($container);
         $container = $this->addEventBehaviorFacade($container);
         $container = $this->addProductLabelFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -128,6 +131,20 @@ class ProductLabelStorageDependencyProvider extends AbstractBundleDependencyProv
             return new ProductLabelStorageToProductLabelFacadeBridge(
                 $container->getLocator()->productLabel()->facade()
             );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ProductLabelStorageToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

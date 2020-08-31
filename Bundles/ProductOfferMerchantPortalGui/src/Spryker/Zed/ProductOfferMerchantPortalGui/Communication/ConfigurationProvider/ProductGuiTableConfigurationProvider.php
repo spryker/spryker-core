@@ -7,19 +7,14 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableRowActionTransfer;
-use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
-class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
+class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
 {
     public const COL_KEY_NAME = 'name';
     public const COL_KEY_SKU = 'sku';
@@ -43,11 +38,20 @@ class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfiguration
     protected $translatorFacade;
 
     /**
-     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
      */
-    public function __construct(ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade)
-    {
+    protected $guiTableFactory;
+
+    /**
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
+     * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
+     */
+    public function __construct(
+        ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
+        GuiTableFactoryInterface $guiTableFactory
+    ) {
         $this->translatorFacade = $translatorFacade;
+        $this->guiTableFactory = $guiTableFactory;
     }
 
     /**
@@ -55,123 +59,75 @@ class ProductGuiTableConfigurationProvider extends AbstractGuiTableConfiguration
      */
     public function getConfiguration(): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
-        $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addSearchToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer->setDefaultSortColumn($this->getDefaultSortColumnKey());
-        $guiTableConfigurationTransfer->setDataSource(
-            (new GuiTableDataSourceConfigurationTransfer())->setUrl(static::DATA_URL)
-        );
+        $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
 
-        return $guiTableConfigurationTransfer;
+        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
+
+        $guiTableConfigurationBuilder
+            ->setDataSourceUrl(static::DATA_URL)
+            ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
+
+        return $guiTableConfigurationBuilder->createConfiguration();
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $columns = new ArrayObject([
-            $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
-            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
-            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
-            $this->createColumnChips(static::COL_KEY_STORES, 'Stores', false, true, [
-                'limit' => 2,
-                'typeOptions' => [
-                    'color' => 'grey',
-                ],
-            ]),
-            $this->createColumnChip(static::COL_KEY_STATUS, 'Status', true, false, [
-                'color' => 'grey',
-            ], [
-                'color' => [$this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green'],
-            ]),
-            $this->createColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false),
-            $this->createColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false),
-            $this->createColumnText(static::COL_KEY_OFFERS, 'Offers', true, false),
-        ]);
+        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnText(static::COL_KEY_NAME, 'Name', true, true)
+            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+                $this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green',
+            ])
+            ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
+            ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true)
+            ->addColumnText(static::COL_KEY_OFFERS, 'Offers', true, true);
 
-        $guiTableConfigurationTransfer->setColumns($columns);
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addFilters(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $filters = new ArrayObject([
-            $this->createFilterSelect('hasOffers', 'Offers', false, [
+        $guiTableConfigurationBuilder->addFilterSelect('hasOffers', 'Offers', false, [
                 '1' => 'With Offers',
                 '0' => 'Without Offers',
-            ]),
-            $this->createFilterSelect('isActive', 'Status', false, [
-                '1' => 'Active',
-                '0' => 'Inactive',
-            ]),
-        ]);
-        $guiTableConfigurationTransfer->setFilters(
-            (new GuiTableFiltersConfigurationTransfer())->setItems($filters)
-        );
+            ])
+            ->addFilterSelect('isActive', 'Status', false, [
+                '1' => 'Online',
+                '0' => 'Offline',
+            ]);
 
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**
-     * @return string
-     */
-    protected function getDefaultSortColumnKey(): string
-    {
-        return static::COL_KEY_SKU;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addRowActionsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addRowActions(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
-            ->setId('create-offer')
-            ->setTitle('Create Offer')
-            ->setType('form-overlay')
-            ->addTypeOption(
-                'url',
-                sprintf(
-                    '/product-offer-merchant-portal-gui/create-product-offer?product-id=${row.%s}',
-                    ProductConcreteTransfer::ID_PRODUCT_CONCRETE
-                )
-            );
+        $guiTableConfigurationBuilder->addRowActionOpenFormOverlay(
+            'create-offer',
+            'Create Offer',
+            sprintf(
+                '/product-offer-merchant-portal-gui/create-product-offer?product-id=${row.%s}',
+                ProductConcreteTransfer::ID_PRODUCT_CONCRETE
+            )
+        )->setRowClickAction('create-offer');
 
-        $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())
-                ->addAction($guiTableRowActionTransfer)
-                ->setClick('create-offer')
-        );
-
-        return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    protected function addSearchToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
-    {
-        $guiTableConfigurationTransfer->setSearch(
-            (new GuiTableSearchConfigurationTransfer())
-                ->addSearchOption('placeholder', static::SEARCH_PLACEHOLDER)
-        );
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 }

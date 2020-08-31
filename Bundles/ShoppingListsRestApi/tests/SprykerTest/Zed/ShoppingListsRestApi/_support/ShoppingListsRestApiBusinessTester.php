@@ -18,8 +18,6 @@ use Spryker\Shared\ShoppingListsRestApi\ShoppingListsRestApiConfig as SharedShop
 use Spryker\Zed\ShoppingListsRestApi\ShoppingListsRestApiConfig;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

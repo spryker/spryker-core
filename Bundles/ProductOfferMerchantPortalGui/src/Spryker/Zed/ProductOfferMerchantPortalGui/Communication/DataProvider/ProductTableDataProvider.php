@@ -10,21 +10,21 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider;
 use Generated\Shared\Transfer\GuiTableDataRequestTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductTableCriteriaTransfer;
+use Spryker\Shared\GuiTable\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Zed\GuiTable\Communication\DataProvider\AbstractGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductGuiTableConfigurationProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
 class ProductTableDataProvider extends AbstractGuiTableDataProvider
 {
-    public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
-    protected const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
+    public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+    protected const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
@@ -47,21 +47,29 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     protected $merchantUserFacade;
 
     /**
+     * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface
+     */
+    protected $localeFacade;
+
+    /**
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Builder\ProductNameBuilderInterface $productNameBuilder
      * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
      */
     public function __construct(
         ProductOfferMerchantPortalGuiRepositoryInterface $productOfferMerchantPortalGuiRepository,
         ProductOfferMerchantPortalGuiToTranslatorFacadeInterface $translatorFacade,
         ProductNameBuilderInterface $productNameBuilder,
-        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+        ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
+        ProductOfferMerchantPortalGuiToLocaleFacadeInterface $localeFacade
     ) {
         $this->productOfferMerchantPortalGuiRepository = $productOfferMerchantPortalGuiRepository;
         $this->translatorFacade = $translatorFacade;
         $this->productNameBuilder = $productNameBuilder;
         $this->merchantUserFacade = $merchantUserFacade;
+        $this->localeFacade = $localeFacade;
     }
 
     /**
@@ -72,6 +80,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     protected function createCriteria(GuiTableDataRequestTransfer $guiTableDataRequestTransfer): AbstractTransfer
     {
         return (new ProductTableCriteriaTransfer())
+            ->setLocale($this->localeFacade->getCurrentLocale())
             ->setIdMerchant($this->merchantUserFacade->getCurrentMerchantUser()->getIdMerchant());
     }
 
@@ -82,7 +91,6 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
      */
     protected function fetchData(AbstractTransfer $criteriaTransfer): GuiTableDataResponseTransfer
     {
-        $localeTransfer = (new LocaleTransfer())->setIdLocale($criteriaTransfer->getIdLocale());
         $productConcreteCollectionTransfer = $this->productOfferMerchantPortalGuiRepository->getProductTableData($criteriaTransfer);
         $guiTableDataResponseTransfer = new GuiTableDataResponseTransfer();
 
@@ -90,7 +98,7 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
             $responseData = [
                 ProductConcreteTransfer::ID_PRODUCT_CONCRETE => $productConcreteTransfer->getIdProductConcrete(),
                 ProductGuiTableConfigurationProvider::COL_KEY_SKU => $productConcreteTransfer->getSku(),
-                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
+                ProductGuiTableConfigurationProvider::COL_KEY_NAME => $this->productNameBuilder->buildProductConcreteName($productConcreteTransfer, $criteriaTransfer->getLocale()),
                 ProductGuiTableConfigurationProvider::COL_KEY_STORES => $this->getStoresColumnData($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_IMAGE => $this->getImageUrl($productConcreteTransfer),
                 ProductGuiTableConfigurationProvider::COL_KEY_STATUS => $this->getStatusColumnData($productConcreteTransfer),

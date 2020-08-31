@@ -16,8 +16,6 @@ use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -27,7 +25,7 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Kernel\Business\AbstractFacade|\Spryker\Zed\CompanyRole\Business\CompanyRoleFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -35,10 +33,6 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 class CompanyRoleBusinessTester extends Actor
 {
     use _generated\CompanyRoleBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param array $seedData

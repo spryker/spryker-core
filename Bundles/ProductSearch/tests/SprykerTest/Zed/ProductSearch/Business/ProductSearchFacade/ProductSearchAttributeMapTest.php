@@ -43,7 +43,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByFkProductAttributeKey($productSearchPreferencesTransfer->getIdProductAttributeKey())
             ->count();
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -66,7 +66,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByFkProductAttributeKey($productSearchAttributeMapEntity->getFkProductAttributeKey())
             ->count();
 
-        $this->assertEquals(2, $count);
+        $this->assertSame(2, $count);
     }
 
     /**
@@ -86,7 +86,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByFkProductAttributeKey($productSearchAttributeMapEntity->getFkProductAttributeKey())
             ->count();
 
-        $this->assertEquals(0, $count);
+        $this->assertSame(0, $count);
     }
 
     /**
@@ -154,7 +154,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeMapEntity->reload();
         $this->assertTrue($productSearchAttributeMapEntity->getSynced(), 'Product search attribute map is not marked as synced!');
@@ -191,7 +191,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
 
         $productSearchAttributeMapEntity->reload();
         $this->assertTrue($productSearchAttributeMapEntity->getSynced(), 'Product search attribute map is not marked as synced!');
@@ -224,7 +224,7 @@ class ProductSearchAttributeMapTest extends AbstractProductSearchFacadeTest
             ->filterByItemId($productAbstractEntity->getIdProductAbstract())
             ->filterByItemType('product_abstract')
             ->count();
-        $this->assertEquals(1, $touchCount, 'Failed to touch abstract product!');
+        $this->assertSame(1, $touchCount, 'Failed to touch abstract product!');
     }
 
     /**

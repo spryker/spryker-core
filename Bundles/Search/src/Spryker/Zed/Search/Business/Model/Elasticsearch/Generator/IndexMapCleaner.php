@@ -14,7 +14,7 @@ class IndexMapCleaner implements IndexMapCleanerInterface
     /**
      * @var string
      */
-    private $directory;
+    protected $directory;
 
     /**
      * @param string $directory

@@ -94,7 +94,7 @@ class AuthTest extends Unit
         $token = $this->authFacade->getUserToken($userDto);
         $fakeToken = hash('sha256', sprintf('%s%s', $userDto->getPassword(), $userDto->getIdUser()));
 
-        $this->assertEquals($fakeToken, $token);
+        $this->assertSame($fakeToken, $token);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $userDto);
         $this->assertNotEquals($userData['password'], $userDto->getPassword());

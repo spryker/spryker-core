@@ -55,7 +55,7 @@ class MerchantUserStatusController extends AbstractCrudMerchantUserController
 
         $this->addSuccessMessage(static::MESSAGE_SUCCESS_MERCHANT_STATUS_UPDATE);
 
-        return $this->redirectResponseExternal($merchantUserListUrl);
+        return $this->redirectResponse($merchantUserListUrl);
     }
 
     /**
@@ -67,6 +67,6 @@ class MerchantUserStatusController extends AbstractCrudMerchantUserController
     {
         $this->addErrorMessage(static::MESSAGE_ERROR_MERCHANT_WRONG_PARAMETERS);
 
-        return $this->redirectResponseExternal($redirectUrl);
+        return $this->redirectResponse($redirectUrl);
     }
 }

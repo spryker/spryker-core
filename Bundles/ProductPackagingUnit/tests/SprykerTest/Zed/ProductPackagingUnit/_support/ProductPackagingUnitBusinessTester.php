@@ -32,8 +32,6 @@ use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\DecimalObject\Decimal;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

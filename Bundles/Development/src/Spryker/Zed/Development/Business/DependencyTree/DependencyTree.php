@@ -32,12 +32,12 @@ class DependencyTree extends AbstractDependencyTree
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor
      */
-    private $fileInfoExtractor;
+    protected $fileInfoExtractor;
 
     /**
      * @var array
      */
-    private $engineBundles;
+    protected $engineBundles;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\FileInfoExtractor $fileInfoExtractor

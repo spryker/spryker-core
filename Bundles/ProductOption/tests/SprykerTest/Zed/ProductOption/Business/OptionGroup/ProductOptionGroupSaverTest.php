@@ -86,7 +86,7 @@ class ProductOptionGroupSaverTest extends MockProvider
 
         $idOfPersistedGroup = $productOptionGroupSaverMock->saveProductOptionGroup($productOptionGroupTransfer);
 
-        $this->assertEquals($idOfPersistedGroup, 1);
+        $this->assertSame($idOfPersistedGroup, 1);
     }
 
     /**

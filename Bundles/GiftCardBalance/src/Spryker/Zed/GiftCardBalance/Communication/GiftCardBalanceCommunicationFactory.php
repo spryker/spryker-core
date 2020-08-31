@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GiftCardBalance\Communication;
 
 use Spryker\Zed\GiftCardBalance\Communication\Table\GiftCardBalanceTable;
+use Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface;
 use Spryker\Zed\GiftCardBalance\GiftCardBalanceDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 
@@ -28,6 +29,7 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
         return new GiftCardBalanceTable(
             $this->getQueryContainer(),
             $this->getMoneyFacade(),
+            $this->getUtilDateTimeService(),
             $idGiftCard
         );
     }
@@ -38,5 +40,13 @@ class GiftCardBalanceCommunicationFactory extends AbstractCommunicationFactory
     protected function getMoneyFacade()
     {
         return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::FACADE_MONEY);
+    }
+
+    /**
+     * @return \Spryker\Zed\GiftCardBalance\Dependency\Service\GiftCardBalanceToUtilDateTimeServiceInterface
+     */
+    public function getUtilDateTimeService(): GiftCardBalanceToUtilDateTimeServiceInterface
+    {
+        return $this->getProvidedDependency(GiftCardBalanceDependencyProvider::SERVICE_UTIL_DATE_TIME);
     }
 }

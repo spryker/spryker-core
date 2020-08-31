@@ -13,8 +13,6 @@ use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,7 +22,7 @@ use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CompanyBusinessUnit\Business\CompanyBusinessUnitFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -35,10 +33,6 @@ class CompanyBusinessUnitTester extends Actor
 
     protected const LEVEL = 'level';
     protected const CHILDREN = 'children';
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return array

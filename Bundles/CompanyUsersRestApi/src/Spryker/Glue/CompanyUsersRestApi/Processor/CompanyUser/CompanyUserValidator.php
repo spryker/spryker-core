@@ -17,7 +17,7 @@ class CompanyUserValidator implements CompanyUserValidatorInterface
     /**
      * @var \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Glue\CompanyUsersRestApi\CompanyUsersRestApiConfig $config

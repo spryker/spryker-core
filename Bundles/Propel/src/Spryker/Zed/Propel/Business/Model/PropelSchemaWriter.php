@@ -14,12 +14,12 @@ class PropelSchemaWriter implements PropelSchemaWriterInterface
     /**
      * @var \Symfony\Component\Filesystem\Filesystem
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var string
      */
-    private $targetDirectory;
+    protected $targetDirectory;
 
     /**
      * @param \Symfony\Component\Filesystem\Filesystem $filesystem

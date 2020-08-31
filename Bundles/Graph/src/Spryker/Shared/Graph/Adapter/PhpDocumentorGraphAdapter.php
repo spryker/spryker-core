@@ -18,7 +18,7 @@ class PhpDocumentorGraphAdapter implements GraphAdapterInterface
     /**
      * @var \phpDocumentor\GraphViz\Graph
      */
-    private $graph;
+    protected $graph;
 
     /**
      * @return \phpDocumentor\GraphViz\Graph

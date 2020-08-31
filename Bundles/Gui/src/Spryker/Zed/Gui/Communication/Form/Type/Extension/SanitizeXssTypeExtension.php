@@ -46,6 +46,14 @@ class SanitizeXssTypeExtension extends AbstractTypeExtension
     }
 
     /**
+     * @return string
+     */
+    public function getExtendedType(): string
+    {
+        return TextareaType::class;
+    }
+
+    /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
      *
      * @return void

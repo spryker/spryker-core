@@ -146,7 +146,6 @@ class ProductLabelRepository extends AbstractRepository implements ProductLabelR
             ->filterByValidTo(null, Criteria::ISNULL)
             ->orderByIsExclusive(Criteria::DESC)
             ->orderByPosition(Criteria::ASC)
-            ->groupByIdProductLabel()
             ->find();
 
         return $this->getFactory()
