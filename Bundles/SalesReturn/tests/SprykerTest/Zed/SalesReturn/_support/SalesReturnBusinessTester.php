@@ -22,8 +22,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

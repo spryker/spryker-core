@@ -255,7 +255,7 @@ class MerchantSalesOrderFacadeTest extends Unit
         }
 
         if ($merchantOrderCriteriaTransfer->getWithUniqueProductsCount()) {
-            $this->assertEquals($expectedUniqueProductCount, $foundMerchantOrderTransfer->getUniqueProductsCount());
+            $this->assertSame($expectedUniqueProductCount, $foundMerchantOrderTransfer->getUniqueProductsCount());
         }
 
         $this->assertCount($merchantOrderItemsCount, $foundMerchantOrderTransfer->getMerchantOrderItems());
@@ -536,7 +536,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             ->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
 
         //Assert
-        $this->assertEquals($expectedMerchantOrdersCount, $merchantOrdersCount);
+        $this->assertSame($expectedMerchantOrdersCount, $merchantOrdersCount);
     }
 
     /**
@@ -558,7 +558,7 @@ class MerchantSalesOrderFacadeTest extends Unit
             ->getMerchantOrdersCount($merchantOrderCriteriaTransfer);
 
         //Assert
-        $this->assertEquals($expectedMerchantOrdersCount, $merchantOrdersCount);
+        $this->assertSame($expectedMerchantOrdersCount, $merchantOrdersCount);
     }
 
     /**

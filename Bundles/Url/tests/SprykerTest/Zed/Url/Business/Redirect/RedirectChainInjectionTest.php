@@ -58,7 +58,7 @@ class RedirectChainInjectionTest extends Unit
 
         $actualRedirectEntity = SpyUrlRedirectQuery::create()->findOneByIdUrlRedirect($bazUrlRedirectTransfer->getIdUrlRedirect());
 
-        $this->assertEquals(
+        $this->assertSame(
             '/test-foo',
             $actualRedirectEntity->getToUrl(),
             'Redirect to already redirected target should resolve in target\'s target.'

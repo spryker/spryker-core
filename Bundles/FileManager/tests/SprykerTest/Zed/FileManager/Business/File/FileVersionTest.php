@@ -75,7 +75,7 @@ class FileVersionTest extends Unit
 
         $fileVersion = new FileVersion($fileManagerRepositoryMock);
 
-        $this->assertEquals(2, $fileVersion->getNextVersionNumber(1));
+        $this->assertSame(2, $fileVersion->getNextVersionNumber(1));
     }
 
     /**
@@ -86,6 +86,6 @@ class FileVersionTest extends Unit
         $fileManagerRepositoryMock = $this->createFileManagerRepositoryMock();
         $fileVersion = new FileVersion($fileManagerRepositoryMock);
 
-        $this->assertEquals('v.2', $fileVersion->getNextVersionName(2));
+        $this->assertSame('v.2', $fileVersion->getNextVersionName(2));
     }
 }

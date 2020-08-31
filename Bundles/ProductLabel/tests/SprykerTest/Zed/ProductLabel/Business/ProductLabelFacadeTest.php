@@ -122,13 +122,25 @@ class ProductLabelFacadeTest extends Unit
         $this->assertCount(
             1,
             $activeProductLabelsByTheGivenCriteria,
-            'Product label not found'
+            'Product label not found.'
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $idProductLabel,
             $activeProductLabelsByTheGivenCriteria[0]->getIdProductLabel(),
-            'Wrong product label'
+            'Wrong product label.'
+        );
+
+        $this->assertCount(
+            2,
+            $activeProductLabelsByTheGivenCriteria[0]->getStoreRelation()->getStores(),
+            'Stores relations number is incorrect.'
+        );
+
+        $this->assertCount(
+            $productLabelTransfer->getLocalizedAttributesCollection()->count(),
+            $activeProductLabelsByTheGivenCriteria[0]->getLocalizedAttributesCollection(),
+            'Localized attributes number is incorrect.'
         );
     }
 

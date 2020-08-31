@@ -1,13 +1,16 @@
 {
   "name": "spryker/product-configuration-storage",
+  "type": "library",
   "description": "ProductConfigurationStorage module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
     "spryker/availability-storage-extension": "^1.0.0",
+    "spryker/cart-extension": "^4.0.0",
     "spryker/event-behavior": "^1.0.0",
     "spryker/kernel": "^3.30.0",
     "spryker/locale": "^3.0.0",
+    "spryker/persistent-cart-extension": "^1.0.0",
     "spryker/price-product-extension": "^1.2.0",
     "spryker/price-product-storage-extension": "^1.2.0",
     "spryker/product-configuration": "^0.1.0",
@@ -29,7 +32,8 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/"
+      "Spryker\\": "src/Spryker/",
+      "SprykerTest\\Zed\\ProductConfigurationStorage\\Helper\\": "tests/SprykerTest/Zed/ProductConfigurationStorage/_support/Helper/"
     }
   },
   "autoload-dev": {

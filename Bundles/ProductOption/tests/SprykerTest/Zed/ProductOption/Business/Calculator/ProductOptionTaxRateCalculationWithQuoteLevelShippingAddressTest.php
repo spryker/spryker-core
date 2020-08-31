@@ -114,7 +114,7 @@ class ProductOptionTaxRateCalculationWithQuoteLevelShippingAddressTest extends U
         // Assert
         foreach ($quoteTransfer->getItems() as $iterator => $itemTransfer) {
             foreach ($itemTransfer->getProductOptions() as $productOptionTransfer) {
-                $this->assertEquals(
+                $this->assertSame(
                     $expectedTaxRate,
                     $productOptionTransfer->getTaxRate(),
                     sprintf(

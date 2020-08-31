@@ -39,7 +39,7 @@ class ExpandQueryJoinCollectionWithCustomerFilterTest extends Unit
     /**
      * @uses \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::COLUMN_EMAIL
      */
-    protected const COLUMN_EMAIL = 'email';
+    protected const COLUMN_EMAIL = 'spy_sales_order.email';
 
     /**
      * @see \Spryker\Zed\CompanySalesConnector\Business\Expander\OrderSearchQueryExpander::getConcatenatedFullNameColumn()

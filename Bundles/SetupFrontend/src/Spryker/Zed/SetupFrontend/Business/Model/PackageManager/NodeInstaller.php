@@ -8,10 +8,24 @@
 namespace Spryker\Zed\SetupFrontend\Business\Model\PackageManager;
 
 use Psr\Log\LoggerInterface;
+use Spryker\Zed\SetupFrontend\SetupFrontendConfig;
 use Symfony\Component\Process\Process;
 
 class NodeInstaller implements PackageManagerInstallerInterface
 {
+    /**
+     * @var \Spryker\Zed\SetupFrontend\SetupFrontendConfig
+     */
+    protected $setupFrontendConfig;
+
+    /**
+     * @param \Spryker\Zed\SetupFrontend\SetupFrontendConfig $setupFrontendConfig
+     */
+    public function __construct(SetupFrontendConfig $setupFrontendConfig)
+    {
+        $this->setupFrontendConfig = $setupFrontendConfig;
+    }
+
     /**
      * @param \Psr\Log\LoggerInterface $logger
      *
@@ -22,7 +36,7 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $nodeVersion = $this->getNodeJsVersion($logger);
         $nodeInstalled = true;
 
-        if (preg_match('/^v[0-7](\..+)?$/', $nodeVersion)) {
+        if (version_compare($nodeVersion, $this->getNodeJsMinimumRequiredVersion()) === -1) {
             $nodeInstalled = $this->installNodeJs($logger);
         }
 
@@ -92,7 +106,10 @@ class NodeInstaller implements PackageManagerInstallerInterface
      */
     protected function getDownloadCommand()
     {
-        return 'curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -';
+        return sprintf(
+            'curl -sL https://deb.nodesource.com/setup_%s.x | sudo -E bash -',
+            $this->setupFrontendConfig->getNodeJsMinimumRequiredMajorVersion()
+        );
     }
 
     /**
@@ -134,5 +151,13 @@ class NodeInstaller implements PackageManagerInstallerInterface
         $logger->info(sprintf('Yarn Version "%s"', $version));
 
         return $version;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNodeJsMinimumRequiredVersion(): string
+    {
+        return sprintf('%s.0.0', $this->setupFrontendConfig->getNodeJsMinimumRequiredMajorVersion());
     }
 }

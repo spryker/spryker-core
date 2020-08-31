@@ -30,6 +30,7 @@ class ProductConfigurationStorageHelper extends Module
 
         $productConfigurationStorageEntity = new SpyProductConfigurationStorage();
         $productConfigurationStorageEntity->fromArray($productConfigurationStorageTransfer->toArray());
+        $productConfigurationStorageEntity->setData($productConfigurationStorageTransfer->toArray());
         $productConfigurationStorageEntity->save();
 
         $productConfigurationStorageTransfer->setIdProductConfigurationStorage(

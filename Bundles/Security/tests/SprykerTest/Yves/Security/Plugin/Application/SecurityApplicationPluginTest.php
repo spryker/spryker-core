@@ -285,7 +285,8 @@ class SecurityApplicationPluginTest extends Unit
             ],
         ]);
         $securityConfiguration->addAuthenticationSuccessHandler('default', function () {
-            return new class implements AuthenticationSuccessHandlerInterface {
+            return new class implements AuthenticationSuccessHandlerInterface
+            {
                 /**
                  * @param \Symfony\Component\HttpFoundation\Request $request
                  * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
@@ -326,7 +327,8 @@ class SecurityApplicationPluginTest extends Unit
             ],
         ]);
         $securityConfiguration->addAuthenticationFailureHandler('default', function () {
-            return new class implements AuthenticationFailureHandlerInterface {
+            return new class implements AuthenticationFailureHandlerInterface
+            {
                 /**
                  * @param \Symfony\Component\HttpFoundation\Request $request
                  * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception

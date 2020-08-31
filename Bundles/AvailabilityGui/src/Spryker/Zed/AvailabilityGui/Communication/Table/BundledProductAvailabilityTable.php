@@ -107,8 +107,8 @@ class BundledProductAvailabilityTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $url = Url::generate('bundled-product-availability-table', [
-            BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
-            BundledProductAvailabilityTable::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
+            static::URL_PARAM_ID_PRODUCT_BUNDLE => $this->idProductBundle,
+            static::URL_PARAM_ID_PRODUCT_ABSTRACT => $this->idBundleProductAbstract,
             static::URL_PARAM_ID_STORE => $this->idStore,
         ])->build();
 
