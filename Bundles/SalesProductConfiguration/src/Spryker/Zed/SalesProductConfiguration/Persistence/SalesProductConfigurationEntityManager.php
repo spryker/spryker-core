@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\SalesProductConfiguration\Persistence;
 
+use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
+use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
 /**
@@ -14,4 +16,22 @@ use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
  */
 class SalesProductConfigurationEntityManager extends AbstractEntityManager implements SalesProductConfigurationEntityManagerInterface
 {
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer
+     *
+     * @return void
+     */
+    public function saveSalesOrderItemConfiguration(SalesOrderItemConfigurationTransfer $salesOrderItemConfigurationTransfer): void
+    {
+        $salesOrderItemConfigurationTransfer->requireIdSalesOrderItem();
+
+        $salesOrderItemConfigurationEntity = $this->getFactory()
+            ->createSalesOrderItemConfigurationMapper()
+            ->mapSalesOrderItemConfigurationTransferToSalesOrderItemConfigurationEntity(
+                $salesOrderItemConfigurationTransfer,
+                new SpySalesOrderItemConfiguration()
+            );
+
+        $salesOrderItemConfigurationEntity->save();
+    }
 }

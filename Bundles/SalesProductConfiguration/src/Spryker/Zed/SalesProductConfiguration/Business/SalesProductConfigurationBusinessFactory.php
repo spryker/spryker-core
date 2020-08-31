@@ -8,6 +8,8 @@
 namespace Spryker\Zed\SalesProductConfiguration\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+use Spryker\Zed\SalesProductConfiguration\Business\Writer\SalesOrderItemConfigurationWriter;
+use Spryker\Zed\SalesProductConfiguration\Business\Writer\SalesOrderItemConfigurationWriterInterface;
 
 /**
  * @method \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface getEntityManager()
@@ -16,4 +18,13 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class SalesProductConfigurationBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\SalesProductConfiguration\Business\Writer\SalesOrderItemConfigurationWriterInterface
+     */
+    public function createSalesOrderItemConfigurationWriter(): SalesOrderItemConfigurationWriterInterface
+    {
+        return new SalesOrderItemConfigurationWriter(
+            $this->getEntityManager()
+        );
+    }
 }

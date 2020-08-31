@@ -5,19 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\SalesProductConfiguration\Business;
+namespace Spryker\Zed\SalesProductConfiguration\Business\Writer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface SalesProductConfigurationFacadeInterface
+interface SalesOrderItemConfigurationWriterInterface
 {
     /**
-     * Specification:
-     * - Persists product configuration from ItemTransfer in Quote to sales_order_item_configuration table.
-     * - Expects the product configuration instance to be provided.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return void
