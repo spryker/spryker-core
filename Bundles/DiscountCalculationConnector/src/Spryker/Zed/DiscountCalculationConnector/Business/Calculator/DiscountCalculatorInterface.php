@@ -9,7 +9,7 @@ namespace Spryker\Zed\DiscountCalculationConnector\Business\Calculator;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 
-interface DiscountInterface
+interface DiscountCalculatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer

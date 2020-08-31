@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
-use Spryker\Zed\DiscountCalculationConnector\Business\Calculator\Discount;
-use Spryker\Zed\DiscountCalculationConnector\Business\Calculator\DiscountInterface;
+use Spryker\Zed\DiscountCalculationConnector\Business\Calculator\DiscountCalculator;
+use Spryker\Zed\DiscountCalculationConnector\Business\Calculator\DiscountCalculatorInterface;
 use Spryker\Zed\DiscountCalculationConnector\Dependency\Facade\DiscountCalculationToDiscountInterface;
 use Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorDependencyProvider;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -19,11 +19,11 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 class DiscountCalculationConnectorBusinessFactory extends AbstractBusinessFactory
 {
     /**
-     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Calculator\DiscountInterface
+     * @return \Spryker\Zed\DiscountCalculationConnector\Business\Calculator\DiscountCalculatorInterface
      */
-    public function createDiscount(): DiscountInterface
+    public function createDiscountCalculator(): DiscountCalculatorInterface
     {
-        return new Discount(
+        return new DiscountCalculator(
             $this->getDiscountFacade()
         );
     }

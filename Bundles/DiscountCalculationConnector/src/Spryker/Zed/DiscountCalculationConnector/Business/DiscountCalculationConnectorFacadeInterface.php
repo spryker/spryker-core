@@ -16,12 +16,14 @@ interface DiscountCalculationConnectorFacadeInterface
 {
     /**
      * Specification:
+     * - Converts CalculableObjectTransfer to Quote transfer.
      * - Finds all discounts with voucher within the provided Store.
      * - Finds all discounts matching decision rules.
      * - Collects discountable items for each discount type.
      * - Applies discount to exclusive if exists.
      * - Distributes discount amount throw all discountable items.
-     * - Adds discount totals to quote calculatable object properties.
+     * - Adds discount totals to quote object properties.
+     * - Converts Quote transfer to CalculableObjectTransfer.
      *
      * @api
      *

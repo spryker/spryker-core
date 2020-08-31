@@ -27,7 +27,7 @@ class DiscountCalculationConnectorFacade extends AbstractFacade implements Disco
     public function recalculateDiscounts(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
         return $this->getFactory()
-            ->createDiscount()
+            ->createDiscountCalculator()
             ->recalculate($calculableObjectTransfer);
     }
 }
