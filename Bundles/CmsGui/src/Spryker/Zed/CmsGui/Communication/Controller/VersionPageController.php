@@ -41,7 +41,7 @@ class VersionPageController extends AbstractController
         if (!$form->isSubmitted() || !$form->isValid()) {
             $this->addErrorMessage('CSRF token is not valid.');
 
-            return $this->redirectResponse($request->headers->get('referer'));
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
         try {
@@ -57,10 +57,10 @@ class VersionPageController extends AbstractController
         } catch (CannotActivatePageException $exception) {
             $this->addErrorMessage('Cannot publish the CMS page. Please fill in all placeholders for this page.');
 
-            return $this->redirectResponseExternal($request->headers->get('referer'));
+            return $this->redirectResponseExternal($redirectUrl);
         }
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponseExternal($redirectUrl);
     }
 
     /**
@@ -79,7 +79,7 @@ class VersionPageController extends AbstractController
 
         $this->addSuccessMessage('Draft data successfully discarded.');
 
-        return $this->redirectResponse($redirectUrl);
+        return $this->redirectResponseExternal($redirectUrl);
     }
 
     /**

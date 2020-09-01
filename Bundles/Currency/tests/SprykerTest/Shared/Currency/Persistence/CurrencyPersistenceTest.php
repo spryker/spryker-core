@@ -39,7 +39,7 @@ class CurrencyPersistenceTest extends Unit
 
         $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $storeMock);
 
-        $this->assertEquals($defaultCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
+        $this->assertSame($defaultCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
     }
 
     /**
@@ -58,7 +58,7 @@ class CurrencyPersistenceTest extends Unit
 
         $currencyPersistence = $this->createCurrencyPersistence($sessionClientMock, $storeMock);
 
-        $this->assertEquals($sessionCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
+        $this->assertSame($sessionCurrency, $currencyPersistence->getCurrentCurrencyIsoCode());
     }
 
     /**

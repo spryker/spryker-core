@@ -54,11 +54,11 @@ class LocaleTest extends Unit
     public function testCreateLocaleInsertsSomething(): void
     {
         $localeQuery = $this->localeQueryContainer->queryLocaleByName('xy_ab');
-        $this->assertEquals(0, $localeQuery->count());
+        $this->assertSame(0, $localeQuery->count());
 
         $this->localeFacade->createLocale('xy_ab');
 
-        $this->assertEquals(1, $localeQuery->count());
+        $this->assertSame(1, $localeQuery->count());
     }
 
     /**

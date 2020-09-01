@@ -42,6 +42,10 @@
 
     <transfer name="Item">
         <property name="idDiscountPromotion" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="unitGrossPrice" type="int"/>
+        <property name="sumGrossPrice" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="PersistentCartChange">

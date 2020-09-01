@@ -12,8 +12,6 @@ use Codeception\Configuration;
 use Spryker\Service\DataExport\DataExportServiceInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Spryker\Service\DataExport\DataExportServiceInterface;
 class DataExportServiceTester extends Actor
 {
     use _generated\DataExportServiceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @return \Spryker\Service\DataExport\DataExportServiceInterface

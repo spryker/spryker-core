@@ -77,9 +77,10 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     ): SpySalesOrderItemQuery {
         $storeName = $omsCheckConditionsQueryCriteriaTransfer->getStoreName();
         $limit = $omsCheckConditionsQueryCriteriaTransfer->getLimit();
+        $omsProcessorIdentifiers = $omsCheckConditionsQueryCriteriaTransfer->getOmsProcessorIdentifiers();
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
-        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit), 't', false)
+        $baseQuery->addSelectQuery($this->buildSubQueryForSalesOrderByItemStateQuery($idOmsOrderProcess, $omsOrderItemStateIds, $storeName, $limit, $omsProcessorIdentifiers), 't', false)
             ->addSelectColumn('*')
             ->addSelectColumn('t.fk_sales_order')
             ->filterByFkOmsOrderProcess($idOmsOrderProcess)
@@ -108,6 +109,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      * @param array $omsOrderItemStateIds
      * @param string|null $storeName
      * @param int|null $limit
+     * @param int[] $omsProcessorIdentifiers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
@@ -115,7 +117,8 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         int $idOmsOrderProcess,
         array $omsOrderItemStateIds,
         ?string $storeName = null,
-        ?int $limit = null
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
     ) {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
@@ -125,6 +128,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
             ->filterByFkOmsOrderItemState_In($omsOrderItemStateIds);
 
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
+        $subQuery = $this->addOmsProcessorIdentifierFilterToSalesOrderItemQuery($subQuery, $omsProcessorIdentifiers);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
 
         return $subQuery;
@@ -217,12 +221,13 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         $storeName = $this->getStoreNameFromOmsCheckTimeoutCriteria($omsCheckTimeoutsQueryCriteriaTransfer);
         $limit = $this->getLimitFromOmsCheckTimeoutCriteria($omsCheckTimeoutsQueryCriteriaTransfer);
+        $omsProcessorIdentifiers = $this->getOmsProcessorIdentifiersFromOmsCheckTimeoutCriteria($omsCheckTimeoutsQueryCriteriaTransfer);
 
-        if ($storeName === null && $limit === null) {
+        if ($storeName === null && $limit === null && !$omsProcessorIdentifiers) {
             return $this->querySalesOrderItemsWithExpiredTimeoutsBackwardsCompatible($now);
         }
 
-        $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $limit);
+        $subQuery = $this->buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery($storeName, $limit, $omsProcessorIdentifiers);
 
         $baseQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $baseQuery
@@ -241,11 +246,15 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @param string|null $storeName
      * @param int|null $limit
+     * @param int[] $omsProcessorIdentifiers
      *
      * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
      */
-    protected function buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery(?string $storeName = null, ?int $limit = null): SpySalesOrderItemQuery
-    {
+    protected function buildSubQueryForSalesOrderItemsWithExpiredTimeoutsQuery(
+        ?string $storeName = null,
+        ?int $limit = null,
+        array $omsProcessorIdentifiers = []
+    ): SpySalesOrderItemQuery {
         $subQuery = $this->getFactory()->getSalesQueryContainer()->querySalesOrderItem();
         $subQuery
             ->distinct()
@@ -253,6 +262,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
         $subQuery = $this->addEventTimeoutFilterToSalesOrderItemQuery($subQuery, $storeName);
         $subQuery = $this->addStoreFilterToSalesOrderItemQuery($subQuery, $storeName);
+        $subQuery = $this->addOmsProcessorIdentifierFilterToSalesOrderItemQuery($subQuery, $omsProcessorIdentifiers);
         $subQuery = $this->addLimitToSalesOrderItemQuery($subQuery, $limit);
 
         return $subQuery;
@@ -333,6 +343,21 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         }
 
         return $omsCheckTimeoutsQueryCriteriaTransfer->getLimit();
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\OmsCheckTimeoutsQueryCriteriaTransfer|null $omsCheckTimeoutsQueryCriteriaTransfer
+     *
+     * @return int[]
+     */
+    protected function getOmsProcessorIdentifiersFromOmsCheckTimeoutCriteria(
+        ?OmsCheckTimeoutsQueryCriteriaTransfer $omsCheckTimeoutsQueryCriteriaTransfer = null
+    ): array {
+        if ($omsCheckTimeoutsQueryCriteriaTransfer === null) {
+            return [];
+        }
+
+        return $omsCheckTimeoutsQueryCriteriaTransfer->getOmsProcessorIdentifiers();
     }
 
     /**
@@ -803,5 +828,27 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $this->getFactory()
             ->createOmsStateMachineLockQuery()
             ->filterByIdentifier_In($identifiers);
+    }
+
+    /**
+     * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery $salesOrderItemQuery
+     * @param int[] $omsProcessorIdentifiers
+     *
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery
+     */
+    protected function addOmsProcessorIdentifierFilterToSalesOrderItemQuery(
+        SpySalesOrderItemQuery $salesOrderItemQuery,
+        array $omsProcessorIdentifiers
+    ): SpySalesOrderItemQuery {
+        if (!$omsProcessorIdentifiers) {
+            return $salesOrderItemQuery;
+        }
+
+        $salesOrderItemQuery
+            ->useOrderQuery()
+                ->filterByOmsProcessorIdentifier_In($omsProcessorIdentifiers)
+            ->endUse();
+
+        return $salesOrderItemQuery;
     }
 }

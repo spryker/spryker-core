@@ -90,7 +90,7 @@ class UpdateProductRelationTest extends Unit
             ->filterByFkProductRelation($productRelationTransfer->getIdProductRelation())
             ->exists();
 
-        $this->assertEquals('test', $resultProductRelationEntity->getProductRelationKey(), 'Product relation key should match to the expected value');
+        $this->assertSame('test', $resultProductRelationEntity->getProductRelationKey(), 'Product relation key should match to the expected value');
         $this->assertTrue($storeRelationExist, 'Product relation store relation should exists');
     }
 }

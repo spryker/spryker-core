@@ -3,53 +3,31 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="GuiTableColumnConfiguration">
+        <property name="id" type="string"/>
+        <property name="title" type="string"/>
+        <property name="sortable" type="bool"/>
+        <property name="hideable" type="bool"/>
+        <property name="type" type="string"/>
+    </transfer>
+
     <transfer name="GuiTableDataResponse">
-        <property name="data" type="array" singular="data"/>
-        <property name="total" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
+        <property name="total" type="int"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+        <property name="payload" type="GuiTableDataResponsePayload"/>
+    </transfer>
+
+    <transfer name="GuiTableDataResponsePayload">
+        <property name="item" type="Item"/>
     </transfer>
 
     <transfer name="GuiTableConfiguration">
-        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
-        <property name="dataSource" type="GuiTableDataSourceConfiguration"/>
-        <property name="rowActions" type="GuiTableRowActionsConfiguration"/>
-        <property name="pagination" type="GuiTablePaginationConfiguration"/>
-        <property name="search" type="GuiTableSearchConfiguration"/>
-        <property name="filters" type="GuiTableFiltersConfiguration"/>
-        <property name="defaultSortColumn" type="string"/>
-        <property name="defaultSortDirection" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableDataSourceConfiguration">
-        <property name="url" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTableRowActionsConfiguration">
-        <property name="actions" type="GuiTableRowAction[]" singular="action"/>
-        <property name="click" type="string"/>
-    </transfer>
-
-    <transfer name="GuiTablePaginationConfiguration">
-        <property name="defaultSize" type="int"/>
-    </transfer>
-
-    <transfer name="GuiTableSearchConfiguration">
-        <property name="search" type="array" associative="true" singular="searchOption"/>
-    </transfer>
-
-    <transfer name="GuiTableFiltersConfiguration">
-        <property name="items" type="GuiTableFilter[]" singular="item"/>
-    </transfer>
-
-    <transfer name="GuiTableRowAction">
-        <property name="id" type="string"/>
-        <property name="title" type="string"/>
-        <property name="type" type="string"/>
-        <property name="typeOptions" type="array" singular="typeOption" associative="true"/>
-    </transfer>
-
-    <transfer name="GuiTableColumnConfiguration">
     </transfer>
 
     <transfer name="GuiTableDataRequest">
@@ -59,7 +37,7 @@
         <property name="filterIsActive" type="bool"/>
         <property name="filterHasOffers" type="bool"/>
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
+        <property name="locale" type="Locale"/>
         <property name="idMerchant" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
@@ -80,7 +58,7 @@
         <property name="filterCreatedAt" type="CriteriaRangeFilter"/>
         <property name="filterUpdatedAt" type="CriteriaRangeFilter"/>
         <property name="searchTerm" type="string"/>
-        <property name="idLocale" type="int"/>
+        <property name="locale" type="Locale"/>
         <property name="idMerchant" type="int"/>
         <property name="page" type="int"/>
         <property name="pageSize" type="int"/>
@@ -138,7 +116,6 @@
 
     <transfer name="Locale">
         <property name="idLocale" type="int"/>
-        <property name="localeName" type="string"/>
     </transfer>
 
     <transfer name="Store">
@@ -213,6 +190,7 @@
 
     <transfer name="ProductOfferCriteriaFilter">
         <property name="idProductOffer" type="int"/>
+        <property name="productOfferReferences" type="string[]" singular="productOfferReference"/>
     </transfer>
 
     <transfer name="StoreWithCurrency">
@@ -300,6 +278,12 @@
     <transfer name="MerchantDashboardActionButton">
         <property name="title" type="string"/>
         <property name="url" type="string"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="merchantSku" type="string"/>
+        <property name="idSalesOrderItem" type="int"/>
+        <property name="productOfferReference" type="string"/>
     </transfer>
 
 </transfers>

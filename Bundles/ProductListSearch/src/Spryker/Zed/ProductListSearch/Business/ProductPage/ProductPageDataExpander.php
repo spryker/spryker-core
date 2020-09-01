@@ -15,7 +15,7 @@ class ProductPageDataExpander implements ProductPageDataExpanderInterface
     /**
      * @var \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface
      */
-    private $productListFacade;
+    protected $productListFacade;
 
     /**
      * @param \Spryker\Zed\ProductListSearch\Dependency\Facade\ProductListSearchToProductListFacadeInterface $productListFacade

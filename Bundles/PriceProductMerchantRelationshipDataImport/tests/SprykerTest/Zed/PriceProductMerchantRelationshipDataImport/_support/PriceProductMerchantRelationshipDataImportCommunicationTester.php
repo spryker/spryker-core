@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,17 +20,13 @@ use Orm\Zed\MerchantRelationship\Persistence\SpyMerchantRelationshipQuery;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class PriceProductMerchantRelationshipDataImportCommunicationTester extends Actor
 {
     use _generated\PriceProductMerchantRelationshipDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

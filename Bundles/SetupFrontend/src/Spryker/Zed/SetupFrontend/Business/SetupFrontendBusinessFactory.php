@@ -31,7 +31,7 @@ class SetupFrontendBusinessFactory extends AbstractBusinessFactory
      */
     public function createPackageManagerInstaller()
     {
-        return new NodeInstaller();
+        return new NodeInstaller($this->getConfig());
     }
 
     /**

@@ -54,8 +54,8 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductFormEdit(
-                $dataProvider->getData($idProductAbstract, $priceDimension),
-                $dataProvider->getOptions($idProductAbstract)
+                $dataProvider->getData($productAbstractTransfer, $priceDimension),
+                $dataProvider->getOptions($productAbstractTransfer)
             )
             ->handleRequest($request);
 
@@ -144,6 +144,10 @@ class EditController extends AddController
             return new RedirectResponse('/product-management/edit?id-product-abstract=' . $idProductAbstract);
         }
 
+        $productAbstractTransfer = $this->getFactory()
+            ->getProductFacade()
+            ->findProductAbstractById($productTransfer->getFkProductAbstract());
+
         $productTransfer = $this->getFactory()->createProductStockHelper()->trimStockQuantities($productTransfer);
 
         $type = ProductManagementConfig::PRODUCT_TYPE_REGULAR;
@@ -159,8 +163,8 @@ class EditController extends AddController
         $form = $this
             ->getFactory()
             ->createProductVariantFormEdit(
-                $dataProvider->getData($idProductAbstract, $idProduct, $priceDimension),
-                $dataProvider->getOptions($idProductAbstract, $type)
+                $dataProvider->getData($productAbstractTransfer, $idProduct, $priceDimension),
+                $dataProvider->getOptions($productAbstractTransfer, $type)
             )
             ->handleRequest($request);
 
@@ -169,10 +173,6 @@ class EditController extends AddController
 
         if ($form->isSubmitted() && $form->isValid()) {
             try {
-                $productAbstractTransfer = $this->getFactory()
-                    ->getProductFacade()
-                    ->findProductAbstractById($idProductAbstract);
-
                 $productConcreteTransfer = $this->getFactory()
                     ->createProductFormTransferGenerator()
                     ->buildProductConcreteTransfer($productAbstractTransfer, $form, $idProduct);

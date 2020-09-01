@@ -97,7 +97,7 @@ class SessionHandlerRedisLocking implements SessionHandlerInterface
             throw new LockCouldNotBeAcquiredException(
                 sprintf(
                     '%s could not acquire access to the session %s',
-                    SessionHandlerRedisLocking::class,
+                    self::class,
                     $sessionId
                 )
             );

@@ -1,0 +1,20 @@
+{% extends '@Gui/layout/layout.twig' %}
+
+{% set widget_title = 'Offers' | trans %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block content %}
+
+    {% include '@ProductOfferGui/_partials/filters.twig' %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+        {% block widget_title -%}
+            <h5>{{ 'List of Offers' | trans}}</h5>
+        {%- endblock %}
+        {% block widget_content %}
+            {{ productOfferTable | raw }}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}

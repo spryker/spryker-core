@@ -223,8 +223,8 @@ class ProductFormAdd extends AbstractType
             $this->addAttributeAbstractForm($builder, $name, $localeTransfer, $options[$localeTransfer->getLocaleName()]);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(
-            ProductFormAdd::FORM_ATTRIBUTE_ABSTRACT,
+        $defaultName = self::getLocalizedPrefixName(
+            self::FORM_ATTRIBUTE_ABSTRACT,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
@@ -251,8 +251,8 @@ class ProductFormAdd extends AbstractType
             $this->addImageSetForm($builder, $name);
         }
 
-        $defaultName = ProductFormAdd::getLocalizedPrefixName(
-            ProductFormAdd::FORM_IMAGE_SET,
+        $defaultName = self::getLocalizedPrefixName(
+            self::FORM_IMAGE_SET,
             ProductManagementConstants::PRODUCT_MANAGEMENT_DEFAULT_LOCALE
         );
 
@@ -297,7 +297,7 @@ class ProductFormAdd extends AbstractType
                     new Callback([
                         'callback' => function ($sku, ExecutionContextInterface $context) {
                             $form = $context->getRoot();
-                            $idProductAbstract = $form->get(ProductFormAdd::FIELD_ID_PRODUCT_ABSTRACT)->getData();
+                            $idProductAbstract = $form->get(self::FIELD_ID_PRODUCT_ABSTRACT)->getData();
 
                             $skuCount = $this->getFactory()->getProductQueryContainer()
                                 ->queryProduct()

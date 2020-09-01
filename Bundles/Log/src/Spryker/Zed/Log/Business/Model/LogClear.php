@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Log\Business\Model;
 
-use Symfony\Component\Filesystem\Exception\IOException;
 use Symfony\Component\Filesystem\Filesystem;
 
 class LogClear implements LogClearInterface
@@ -39,7 +38,6 @@ class LogClear implements LogClearInterface
     {
         foreach ($this->logFileDirectories as $logFileDirectory) {
             $this->removeLogFiles($logFileDirectory);
-            $this->removeLogDirectory($logFileDirectory);
         }
     }
 
@@ -50,47 +48,10 @@ class LogClear implements LogClearInterface
      */
     protected function removeLogFiles(string $logFileDirectory): void
     {
-        $this->filesystem->remove(
-            $this->getLogFilePathsFromDirectory($logFileDirectory)
-        );
-    }
-
-    /**
-     * @param string $logFileDirectory
-     *
-     * @return void
-     */
-    protected function removeLogDirectory(string $logFileDirectory)
-    {
         if (!$this->filesystem->exists($logFileDirectory)) {
             return;
         }
 
-        try {
-            $this->filesystem->remove($logFileDirectory);
-        } catch (IOException $e) {
-        }
-    }
-
-    /**
-     * @param string $logFileDirectory
-     *
-     * @return string[]
-     */
-    protected function getLogFilePathsFromDirectory(string $logFileDirectory): array
-    {
-        if (!is_dir($logFileDirectory)) {
-            return [];
-        }
-
-        $excludeDirPathValues = [
-            '.',
-            '..',
-        ];
-
-        return array_diff(
-            scandir($logFileDirectory),
-            $excludeDirPathValues
-        );
+        $this->filesystem->remove($logFileDirectory);
     }
 }

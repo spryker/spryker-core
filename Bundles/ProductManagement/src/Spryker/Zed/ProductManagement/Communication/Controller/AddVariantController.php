@@ -56,7 +56,7 @@ class AddVariantController extends AbstractController
             ->getFactory()
             ->getProductVariantFormAdd(
                 $dataProvider->getData($priceDimension),
-                $dataProvider->getOptions($idProductAbstract, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
+                $dataProvider->getOptions($productAbstractTransfer, ProductManagementConfig::PRODUCT_TYPE_REGULAR)
             )
             ->handleRequest($request);
 

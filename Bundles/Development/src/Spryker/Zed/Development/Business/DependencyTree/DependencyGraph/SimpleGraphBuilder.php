@@ -18,7 +18,7 @@ class SimpleGraphBuilder implements GraphBuilderInterface
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
-    private $graph;
+    protected $graph;
 
     /**
      * @param \Spryker\Shared\Graph\GraphInterface $graph

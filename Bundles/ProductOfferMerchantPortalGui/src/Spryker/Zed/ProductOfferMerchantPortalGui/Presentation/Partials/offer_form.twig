@@ -1,10 +1,8 @@
 {#
 @var product \Generated\Shared\Transfer\ProductConcreteTransfer
 @var imageSet \Generated\Shared\Transfer\ProductImageSetTransfer
-@var imageSet.locale \Generated\Shared\Transfer\LocaleTransfer
 @var image \Generated\Shared\Transfer\ProductImageTransfer
 @var localizedAttribute \Generated\Shared\Transfer\LocalizedAttributesTransfer
-@var localizedAttribute.locale \Generated\Shared\Transfer\LocaleTransfer
 #}
 
 {% form_theme form '@ZedUi/Form/form-webcomponent-layout.twig' %}
@@ -22,7 +20,7 @@
     {% endif %}
 {% endfor %}
 
-{% set productDetailsTitle = 'Details & Description' | trans %}
+{% set productDetailsTitle = 'Description & Details' | trans %}
 
 {% set productData = {
     name: productName,
@@ -92,7 +90,7 @@
     <web-spy-chips
         product-status
         color="{{ product.isActive ? 'green' : 'red' }}"
-    >{{ product.isActive ? 'Active' | trans : 'Inactive' | trans }}</web-spy-chips>
+    >{{ product.isActive ? 'Online' | trans : 'Offline' | trans }}</web-spy-chips>
 
     <div product-details>
         {% for localizedAttribute in product.localizedAttributes %}
@@ -105,7 +103,7 @@
             <div class="mp-edit-offer__details">
                 {% for attributeKey, attribute in productAttributes %}
                     <div class="mp-edit-offer__details-col">
-                        <span class="mp-edit-offer__details-text mp-edit-offer__details-text--title">{{ attributeKey }}</span>
+                        <span class="mp-edit-offer__details-text mp-edit-offer__details-text--title">{{ attributeKey | replace('_', ' ') }}</span>
                         <span class="mp-edit-offer__details-text">{{ attribute }}</span>
                     </div>
                 {% endfor %}

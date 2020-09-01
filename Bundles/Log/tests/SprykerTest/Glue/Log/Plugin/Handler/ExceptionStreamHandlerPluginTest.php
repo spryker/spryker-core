@@ -27,6 +27,7 @@ use Spryker\Glue\Log\Plugin\Handler\ExceptionStreamHandlerPlugin;
 class ExceptionStreamHandlerPluginTest extends Unit
 {
     public const FILENAME = 'exception.log';
+
     /**
      * @var \SprykerTest\Glue\Log\LogPluginTester
      */

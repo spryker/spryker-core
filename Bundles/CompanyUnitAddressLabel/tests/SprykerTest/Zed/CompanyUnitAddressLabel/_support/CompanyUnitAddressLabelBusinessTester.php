@@ -15,8 +15,6 @@ use Generated\Shared\Transfer\CompanyUnitAddressTransfer;
 use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepository;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -26,7 +24,7 @@ use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepos
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CompanyUnitAddressLabel\Business\CompanyUnitAddressLabelFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -34,10 +32,6 @@ use Spryker\Zed\CompanyUnitAddressLabel\Persistence\CompanyUnitAddressLabelRepos
 class CompanyUnitAddressLabelBusinessTester extends Actor
 {
     use _generated\CompanyUnitAddressLabelBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Generated\Shared\Transfer\CompanyUnitAddressLabelCollectionTransfer

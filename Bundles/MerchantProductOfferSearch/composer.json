@@ -9,7 +9,7 @@
     "spryker/kernel": "^3.33.0",
     "spryker/merchant": "^3.0.0",
     "spryker/product": "^6.0.0",
-    "spryker/product-offer": "^0.4.0",
+    "spryker/product-offer": "^0.4.0 || ^0.5.0",
     "spryker/product-page-search": "^3.2.0",
     "spryker/product-page-search-extension": "^1.2.0",
     "spryker/propel-orm": "^1.0.0",

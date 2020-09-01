@@ -16,7 +16,7 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     /**
      * @var \Generated\Shared\Transfer\CheckoutResponseTransfer
      */
-    private $checkoutResponse;
+    protected $checkoutResponse;
 
     /**
      * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponse
