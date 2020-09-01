@@ -61,9 +61,6 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     public function getSourceContext(string $name): Source
     {
         $path = $this->findTemplate($name);
-        if ($path === null) {
-            return new Source('', $name, '');
-        }
 
         return new Source(file_get_contents($path), $name, $path);
     }

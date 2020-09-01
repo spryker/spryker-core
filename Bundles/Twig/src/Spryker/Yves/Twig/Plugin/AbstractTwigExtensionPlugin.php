@@ -67,7 +67,7 @@ abstract class AbstractTwigExtensionPlugin extends AbstractPlugin implements Twi
      *
      * @api
      *
-     * @return \Twig_NodeVisitorInterface[] An array of Twig_NodeVisitorInterface instances
+     * @return \Twig\NodeVisitorInterface[] An array of Twig\NodeVisitorInterface instances
      */
     public function getNodeVisitors()
     {
