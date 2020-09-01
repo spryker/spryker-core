@@ -491,7 +491,7 @@ class PriceProductFacadeTest extends Unit
         $actualResult = $priceProductFacade->groupPriceProductCollection($priceProductCollection);
 
         // Assert
-        $this->assertEquals($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
+        $this->assertSame($expectedPriceData, $actualResult['dummy currency 1']['priceData']);
     }
 
     /**
@@ -503,7 +503,7 @@ class PriceProductFacadeTest extends Unit
 
         $actualResult = $priceProductFacade->getPriceModeIdentifierForBothType();
 
-        $this->assertEquals('BOTH', $actualResult);
+        $this->assertSame('BOTH', $actualResult);
     }
 
     /**
@@ -515,7 +515,7 @@ class PriceProductFacadeTest extends Unit
 
         $actualResult = $priceProductFacade->generatePriceDataChecksum(['11', '22']);
 
-        $this->assertEquals('3b513d6f', $actualResult);
+        $this->assertSame('3b513d6f', $actualResult);
     }
 
     /**
@@ -587,7 +587,7 @@ class PriceProductFacadeTest extends Unit
 
         $foundPrices = $priceProductFacade->findProductAbstractPricesWithoutPriceExtractionByIdProductAbstractIn([$productAbstractTransfer->getIdProductAbstract()]);
 
-        $this->assertEquals(
+        $this->assertSame(
             count($foundPrices),
             count($prices)
         );

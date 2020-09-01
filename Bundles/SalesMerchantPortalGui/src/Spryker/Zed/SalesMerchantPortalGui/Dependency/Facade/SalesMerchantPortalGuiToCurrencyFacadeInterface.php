@@ -14,5 +14,5 @@ interface SalesMerchantPortalGuiToCurrencyFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CurrencyTransfer
      */
-    public function fromIsoCode($isoCode);
+    public function fromIsoCode(string $isoCode);
 }

@@ -9,9 +9,9 @@ namespace Spryker\Zed\GuiTable\Communication\Twig;
 
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Spryker\Shared\Twig\TwigFunctionProvider;
-use Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface;
-use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface;
-use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
+use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
+use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
 
 class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 {
@@ -36,32 +36,32 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     protected const CONFIG_ITEMS = 'items';
 
     /**
-     * @var \Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
+     * @var \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
 
     /**
-     * @var \Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface
+     * @var \Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface
      */
-    protected $configurationDefaultValuesSetter;
+    protected $configurationDefaultValuesExpander;
 
     /**
-     * @var \Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface
+     * @var \Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface
      */
     protected $configurationTranslator;
 
     /**
-     * @param \Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface $utilEncodingService
-     * @param \Spryker\Zed\GuiTable\Communication\Setter\ConfigurationDefaultValuesSetterInterface $configurationDefaultValuesSetter
-     * @param \Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslatorInterface $configurationTranslator
+     * @param \Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface $utilEncodingService
+     * @param \Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface $configurationDefaultValuesExpander
+     * @param \Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface $configurationTranslator
      */
     public function __construct(
         GuiTableToUtilEncodingServiceInterface $utilEncodingService,
-        ConfigurationDefaultValuesSetterInterface $configurationDefaultValuesSetter,
+        ConfigurationDefaultValuesExpanderInterface $configurationDefaultValuesExpander,
         ConfigurationTranslatorInterface $configurationTranslator
     ) {
         $this->utilEncodingService = $utilEncodingService;
-        $this->configurationDefaultValuesSetter = $configurationDefaultValuesSetter;
+        $this->configurationDefaultValuesExpander = $configurationDefaultValuesExpander;
         $this->configurationTranslator = $configurationTranslator;
     }
 
@@ -79,7 +79,7 @@ class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
     public function getFunction(): callable
     {
         return function (GuiTableConfigurationTransfer $guiTableConfigurationTransfer, bool $jsonEncode = true, array $overwrite = []) {
-            $guiTableConfigurationTransfer = $this->configurationDefaultValuesSetter->setDefaultValues($guiTableConfigurationTransfer);
+            $guiTableConfigurationTransfer = $this->configurationDefaultValuesExpander->setDefaultValues($guiTableConfigurationTransfer);
             $guiTableConfigurationTransfer = $this->configurationTranslator->translateConfiguration($guiTableConfigurationTransfer);
 
             $configuration = [

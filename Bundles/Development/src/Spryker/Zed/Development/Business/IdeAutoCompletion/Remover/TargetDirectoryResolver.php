@@ -17,7 +17,7 @@ class TargetDirectoryResolver
     /**
      * @var \Spryker\Zed\Development\DevelopmentConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\Development\DevelopmentConfig $config

@@ -348,7 +348,7 @@ class CmsFacadePageTest extends Unit
 
         $versions = $this->cmsFacade->findAllCmsVersionByIdCmsPage($idCmsPage);
 
-        $this->assertEquals(count($versions), 2);
+        $this->assertSame(count($versions), 2);
     }
 
     /**

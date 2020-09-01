@@ -71,7 +71,7 @@ class GlueControllerFilterPluginTest extends Unit
                 $request
             );
 
-        $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $response->getStatusCode());
     }
 
     /**
@@ -95,7 +95,7 @@ class GlueControllerFilterPluginTest extends Unit
                 $request
             );
 
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
     }
 
     /**
@@ -125,9 +125,9 @@ class GlueControllerFilterPluginTest extends Unit
         $content = json_decode($response->getContent(), true);
 
         $data = $content[RestResponseInterface::RESPONSE_DATA];
-        $this->assertEquals(Response::HTTP_CREATED, $response->getStatusCode());
-        $this->assertEquals('1', $data[RestResourceInterface::RESOURCE_ID]);
-        $this->assertEquals('tests', $data[RestResourceInterface::RESOURCE_TYPE]);
+        $this->assertSame(Response::HTTP_CREATED, $response->getStatusCode());
+        $this->assertSame('1', $data[RestResourceInterface::RESOURCE_ID]);
+        $this->assertSame('tests', $data[RestResourceInterface::RESOURCE_TYPE]);
         $this->assertCount(2, $data[RestResourceInterface::RESOURCE_ATTRIBUTES]);
     }
 
@@ -158,12 +158,12 @@ class GlueControllerFilterPluginTest extends Unit
         $content = json_decode($response->getContent(), true);
 
         $errors = $content[RestResponseInterface::RESPONSE_ERRORS];
-        $this->assertEquals(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $response->getStatusCode());
         $this->assertCount(1, $errors);
 
-        $this->assertEquals(1, $errors[0]['code']);
-        $this->assertEquals('Invalid data', $errors[0]['detail']);
-        $this->assertEquals(Response::HTTP_BAD_REQUEST, $errors[0]['status']);
+        $this->assertSame(1, $errors[0]['code']);
+        $this->assertSame('Invalid data', $errors[0]['detail']);
+        $this->assertSame(Response::HTTP_BAD_REQUEST, $errors[0]['status']);
     }
 
     /**
@@ -189,7 +189,7 @@ class GlueControllerFilterPluginTest extends Unit
                 $request
             );
 
-        $this->assertEquals(Response::HTTP_NO_CONTENT, $response->getStatusCode());
+        $this->assertSame(Response::HTTP_NO_CONTENT, $response->getStatusCode());
     }
 
     /**
@@ -218,9 +218,9 @@ class GlueControllerFilterPluginTest extends Unit
 
         $content = json_decode($response->getContent(), true);
         $data = $content[RestResponseInterface::RESPONSE_DATA];
-        $this->assertEquals(Response::HTTP_OK, $response->getStatusCode());
-        $this->assertEquals('1', $data[RestResourceInterface::RESOURCE_ID]);
-        $this->assertEquals('tests', $data[RestResourceInterface::RESOURCE_TYPE]);
+        $this->assertSame(Response::HTTP_OK, $response->getStatusCode());
+        $this->assertSame('1', $data[RestResourceInterface::RESOURCE_ID]);
+        $this->assertSame('tests', $data[RestResourceInterface::RESOURCE_TYPE]);
         $this->assertCount(2, $data[RestResourceInterface::RESOURCE_ATTRIBUTES]);
     }
 
@@ -297,7 +297,7 @@ class GlueControllerFilterPluginTest extends Unit
 
         $link = parse_url($content[RestResponseInterface::RESPONSE_LINKS][$field]);
         parse_str($link['query'], $queryParts);
-        $this->assertEquals($limit, $queryParts['page']['limit']);
-        $this->assertEquals($offset, $queryParts['page']['offset']);
+        $this->assertSame($limit, $queryParts['page']['limit']);
+        $this->assertSame($offset, $queryParts['page']['offset']);
     }
 }

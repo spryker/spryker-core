@@ -181,11 +181,11 @@ class StorageDatabaseClientTest extends Unit
         $this->storageDatabaseClient->resetAccessStats();
 
         $this->storageDatabaseClient->get(static::FIRST_DUMMY_KEY);
-        $this->assertEquals(1, $this->storageDatabaseClient->getAccessStats()['count']['read']);
+        $this->assertSame(1, $this->storageDatabaseClient->getAccessStats()['count']['read']);
         $this->assertContains(static::FIRST_DUMMY_KEY, $this->storageDatabaseClient->getAccessStats()['keys']['read']);
 
         $this->storageDatabaseClient->getMulti([static::SECOND_DUMMY_KEY, static::THIRD_DUMMY_KEY]);
-        $this->assertEquals(3, $this->storageDatabaseClient->getAccessStats()['count']['read']);
+        $this->assertSame(3, $this->storageDatabaseClient->getAccessStats()['count']['read']);
         $this->assertEmpty(array_diff([static::FIRST_DUMMY_KEY, static::SECOND_DUMMY_KEY, static::THIRD_DUMMY_KEY], $this->storageDatabaseClient->getAccessStats()['keys']['read']));
     }
 
@@ -208,7 +208,7 @@ class StorageDatabaseClientTest extends Unit
      */
     protected function assertMultipleKeyResults(array $rowIds, array $result): void
     {
-        $this->assertEquals(count($rowIds), count($result), 'Number of data sets returned does not match the number of keys, used for search.');
+        $this->assertSame(count($rowIds), count($result), 'Number of data sets returned does not match the number of keys, used for search.');
 
         foreach ($rowIds as $rowId) {
             $expectedKey = $this->getPrefixedKey($this->fixtureDataSet[$rowId][StorageDatabaseHelper::COLUMN_KEY]);
@@ -239,7 +239,7 @@ class StorageDatabaseClientTest extends Unit
      */
     protected function assertMultipleAliasKeyResults(array $aliasKeys, array $result): void
     {
-        $this->assertEquals(count($aliasKeys), count($result));
+        $this->assertSame(count($aliasKeys), count($result));
 
         foreach ($aliasKeys as $aliasKey) {
             foreach ($this->fixtureDataSet as $fixtureRowData) {

@@ -13,8 +13,6 @@ use Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepository;
 use Spryker\Zed\ProductOfferValidity\Persistence\ProductOfferValidityRepositoryInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

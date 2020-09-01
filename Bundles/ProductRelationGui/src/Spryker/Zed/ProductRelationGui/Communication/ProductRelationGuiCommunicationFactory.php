@@ -20,6 +20,7 @@ use Spryker\Zed\ProductRelationGui\Communication\Form\Constraint\UniqueRelationT
 use Spryker\Zed\ProductRelationGui\Communication\Form\DataProvider\ProductRelationTypeDataProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationDeleteForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationFormType;
+use Spryker\Zed\ProductRelationGui\Communication\Form\ProductRelationToggleIsActiveForm;
 use Spryker\Zed\ProductRelationGui\Communication\Form\Transformer\RuleQuerySetTransformer;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProvider;
 use Spryker\Zed\ProductRelationGui\Communication\Provider\FilterProviderInterface;
@@ -209,6 +210,14 @@ class ProductRelationGuiCommunicationFactory extends AbstractCommunicationFactor
             $this->createMappingProvider(),
             $this->getPropelQueryBuilderQueryContainer()
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createProductRelationToggleIsActiveForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(ProductRelationToggleIsActiveForm::class);
     }
 
     /**

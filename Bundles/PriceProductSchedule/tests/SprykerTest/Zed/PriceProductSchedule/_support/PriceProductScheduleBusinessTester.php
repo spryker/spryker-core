@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleQuery;
 class PriceProductScheduleBusinessTester extends Actor
 {
     use _generated\PriceProductScheduleBusinessTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @return void

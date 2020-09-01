@@ -27,7 +27,7 @@ class EditControllerCest
     /**
      * @var \Generated\Shared\Transfer\CustomerTransfer
      */
-    private $customer;
+    protected $customer;
 
     /**
      * @param \SprykerTest\Zed\Customer\CustomerCommunicationTester $i

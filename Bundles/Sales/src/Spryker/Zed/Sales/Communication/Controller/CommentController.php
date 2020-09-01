@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\CommentTransfer;
+use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\Sales\SalesConfig;
 use Symfony\Component\Form\FormInterface;
@@ -21,6 +22,15 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CommentController extends AbstractController
 {
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::indexAction()
+     */
+    protected const ROUTE_REDIRECT = '/sales/detail';
+    /**
+     * @uses \Spryker\Zed\Sales\Communication\Controller\DetailController::PARAM_ID_SALES_ORDER
+     */
+    protected const PARAM_ID_SALES_ORDER = 'id-sales-order';
+
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
@@ -86,6 +96,10 @@ class CommentController extends AbstractController
 
         $this->addSuccessMessage('Comment successfully added');
 
-        return $this->redirectResponseExternal($request->headers->get('referer'));
+        return $this->redirectResponse(
+            Url::generate(static::ROUTE_REDIRECT, [
+                static::PARAM_ID_SALES_ORDER => $idSalesOrder,
+            ])
+        );
     }
 }

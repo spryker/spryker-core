@@ -7,7 +7,7 @@
         <column name="id_product_packaging_unit_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_product" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" size="1024" required="true"/>
 
         <index name="spy_product_packaging_unit_storage-fk_product">
             <index-column name="fk_product"/>

@@ -14,7 +14,7 @@ class JsonDependencyTreeWriter implements DependencyTreeWriterInterface
     /**
      * @var string
      */
-    private $pathToFile;
+    protected $pathToFile;
 
     /**
      * @param string $pathToFile

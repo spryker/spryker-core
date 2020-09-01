@@ -9,8 +9,8 @@
         <column name="id_category_image_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/>
         <column name="fk_category" type="INTEGER" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
-        <column name="key" type="VARCHAR" required="true"/>
-        <column name="locale" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" size="1024" required="true"/>
+        <column name="locale" type="VARCHAR" size="5" required="true"/>
 
         <index name="spy_category_image_storage-fk_category">
             <index-column name="fk_category"/>

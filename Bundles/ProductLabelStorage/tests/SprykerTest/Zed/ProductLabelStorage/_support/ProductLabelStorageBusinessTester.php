@@ -14,8 +14,6 @@ use Orm\Zed\ProductLabelStorage\Persistence\SpyProductLabelDictionaryStorageQuer
 use Spryker\Zed\Locale\Business\LocaleFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -9,7 +9,7 @@
         <column name="fk_cms_slot" required="true" type="INTEGER"/>
         <column name="fk_cms_slot_template" required="true" type="INTEGER"/>
         <column name="slot_template_key" required="true" type="VARCHAR" size="255"/>
-        <column name="key" type="VARCHAR" required="true"/>
+        <column name="key" type="VARCHAR" size="1024" required="true"/>
         <column name="data" type="LONGVARCHAR" required="false"/>
 
         <unique name="spy_cms_slot_block_storage-unique-key">

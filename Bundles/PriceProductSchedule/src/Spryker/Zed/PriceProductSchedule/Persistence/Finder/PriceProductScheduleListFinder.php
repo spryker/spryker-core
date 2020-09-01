@@ -22,6 +22,7 @@ class PriceProductScheduleListFinder implements PriceProductScheduleListFinderIn
     protected const COL_ID_PRICE_PRODUCT_SCHEDULE = 'id_price_product_schedule';
     protected const COL_FK_PRODUCT = 'fk_product';
     protected const COL_FK_PRODUCT_ABSTRACT = 'fk_product_abstract';
+
     /**
      * @var \Orm\Zed\PriceProductSchedule\Persistence\SpyPriceProductScheduleListQuery
      */

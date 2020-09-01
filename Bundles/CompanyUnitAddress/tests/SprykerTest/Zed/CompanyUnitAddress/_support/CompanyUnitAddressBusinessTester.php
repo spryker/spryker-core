@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,7 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CompanyUnitAddress\Business\CompanyUnitAddressFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -30,10 +28,6 @@ use Generated\Shared\Transfer\CompanyUnitAddressCollectionTransfer;
 class CompanyUnitAddressBusinessTester extends Actor
 {
     use _generated\CompanyUnitAddressBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param array $seedData

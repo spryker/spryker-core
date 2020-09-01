@@ -36,8 +36,6 @@ use Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -47,7 +45,7 @@ use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -57,10 +55,6 @@ class ShipmentBusinessTester extends Actor
     use _generated\ShipmentBusinessTesterActions;
 
     protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface
