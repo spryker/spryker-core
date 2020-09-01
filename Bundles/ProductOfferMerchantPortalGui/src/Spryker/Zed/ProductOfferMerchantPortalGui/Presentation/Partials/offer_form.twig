@@ -32,7 +32,7 @@
 } %}
 
 {% macro spyFormItemCardInput(formField, attrs = {}) %}
-    <web-spy-card title="{{ formField.vars.label | trans }} {{ formField.vars.required ? '*' }}">
+    <web-spy-card spy-title="{{ formField.vars.label | trans }} {{ formField.vars.required ? '*' }}">
         <div class="mp-edit-offer__form-row">
             <div class="mp-edit-offer__form-row-col">
                 {{ form_row(formField, {label: false, row_attr: {'no-spaces': 'true'}}) }}
@@ -42,11 +42,11 @@
 {% endmacro %}
 
 {% macro spyFormItemPriceProduct(priceProduct) %}
-    <web-spy-card title="{{ 'Price' | trans }}">
+    <web-spy-card spy-title="{{ 'Price' | trans }}">
         {% for storeName, pricesByStore in priceProduct.vars.pricesFormTable %}
             <web-spy-collapsible
                 class="mp-edit-offer__prices-container"
-                title="{{ storeName }}"
+                spy-title="{{ storeName }}"
                 {% if loop.first %}active{% endif %}
             >
                 <div class="mp-edit-offer__prices">
@@ -80,6 +80,7 @@
     images="{{ images | json_encode() }}"
     product-details-title="{{ productDetailsTitle }}"
     product="{{ productData | json_encode() }}"
+    cloak
 >
     <h3 title>
         {{ productOfferReference is defined ? 'Offer' | trans ~ ': ' ~ productOfferReference  : 'Create Offer' | trans }}
@@ -114,7 +115,7 @@
     <div>
         {{ form_start(form) }}
 
-            <web-spy-card title="{{ "Offer visibility" | trans }}">
+            <web-spy-card spy-title="{{ "Offer visibility" | trans }}">
                 <div class="mp-edit-offer__visibility">
                     <div class="mp-edit-offer__visibility-row">
                         <div class="spy-toggle__label">{{ form.children.isActive.vars.checked ? 'Offer is online' : 'Offer is offline' | trans }}</div>
@@ -132,7 +133,7 @@
                 {{ _self.spyFormItemCardInput(form.children.productOfferReference) }}
             {% endif %}
 
-            <web-spy-card title="{{ form.children.stores.vars.label | trans }} {{ form.children.stores.vars.required ? '*' }}">
+            <web-spy-card spy-title="{{ form.children.stores.vars.label | trans }} {{ form.children.stores.vars.required ? '*' }}">
                 <div class="mp-edit-offer__form-row">
                     <div class="mp-edit-offer__form-row-col">
                         {{ form_row(form.children.stores, {label: false, row_attr: {'no-spaces': 'true'}}) }}
@@ -140,7 +141,7 @@
                 </div>
             </web-spy-card>
 
-            <web-spy-card title="{{ 'Stock' | trans }}">
+            <web-spy-card spy-title="{{ 'Stock' | trans }}">
                 <div class="mp-edit-offer__form-row">
                     <div class="mp-edit-offer__form-row-col">
                         {{ form_row(form.children.productOfferStocks.quantity, {row_attr: {'no-spaces': 'true'}}) }}
@@ -159,7 +160,7 @@
                 to: form.children.productOfferValidity.children.validTo.vars.value,
             } %}
 
-            <web-spy-card title="{{ 'Validity Dates' | trans }}">
+            <web-spy-card spy-title="{{ 'Validity Dates' | trans }}">
                 <div class="mp-edit-offer__form-row">
                     <div class="mp-edit-offer__form-row-col mp-edit-offer__form-row-col--dates">
                         {% set productOfferValidityErrors = form.children.productOfferValidity.children.validFrom.vars.errors | merge(
