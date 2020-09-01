@@ -2,13 +2,13 @@ import { ChangeDetectionStrategy, Component, Input, ViewEncapsulation } from '@a
 import { TableConfig } from '@spryker/table';
 
 @Component({
-    selector: 'mp-offer-orders-table',
-    templateUrl: './offer-orders-table.component.html',
-    styleUrls: ['./offer-orders-table.component.less'],
+    selector: 'mp-sales-orders-table',
+    templateUrl: './sales-orders-table.component.html',
+    styleUrls: ['./sales-orders-table.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
     encapsulation: ViewEncapsulation.None
 })
-export class OfferOrdersTableComponent {
+export class SalesOrdersTableComponent {
     @Input() config: TableConfig;
     @Input() tableId?: string;
 }
