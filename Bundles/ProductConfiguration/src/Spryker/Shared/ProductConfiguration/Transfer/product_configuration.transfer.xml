@@ -49,6 +49,7 @@
 
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="CheckoutError">

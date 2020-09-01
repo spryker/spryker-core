@@ -7,7 +7,9 @@
 
 namespace Spryker\Client\ProductConfigurationStorage;
 
-class ProductConfigurationStorageConfig
+use Spryker\Client\Kernel\AbstractBundleConfig;
+
+class ProductConfigurationStorageConfig extends AbstractBundleConfig
 {
     /**
      * Product configuration session key
