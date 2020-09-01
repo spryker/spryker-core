@@ -98,7 +98,7 @@ describe('EditOfferComponent', () => {
         component.productDetailsTitle = mockProductDetailsTitle;
         fixture.detectChanges();
 
-        expect(collapsibleElem.properties.title).toBe(mockProductDetailsTitle);
+        expect(collapsibleElem.properties.spyTitle).toBe(mockProductDetailsTitle);
     });
 
     it('should bind @Input(images) to input `images` of `mp-image-slider` component', () => {
@@ -108,10 +108,11 @@ describe('EditOfferComponent', () => {
                 alt: 'mockImages',
             },
         ];
-        const imageSliderElem = fixture.debugElement.query(By.css('mp-image-slider'));
-
+        
         component.images = mockImages;
         fixture.detectChanges();
+
+        const imageSliderElem = fixture.debugElement.query(By.css('mp-image-slider'));
 
         expect(imageSliderElem.properties.images).toEqual(mockImages);
     });
