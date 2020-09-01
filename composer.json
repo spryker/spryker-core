@@ -633,6 +633,7 @@
     "spryker/sales-order-threshold-extension": "*",
     "spryker/sales-order-threshold-gui": "*",
     "spryker/sales-order-threshold-gui-extension": "*",
+    "spryker/sales-product-configuration": "*",
     "spryker/sales-product-connector": "*",
     "spryker/sales-quantity": "*",
     "spryker/sales-reclamation": "*",
