@@ -13,6 +13,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 /**
  * @method \Spryker\Zed\SalesProductConfiguration\Business\SalesProductConfigurationBusinessFactory getFactory()
  * @method \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface getEntityManager()
+ * @method \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationRepositoryInterface getRepository()
  */
 class SalesProductConfigurationFacade extends AbstractFacade implements SalesProductConfigurationFacadeInterface
 {
@@ -30,5 +31,21 @@ class SalesProductConfigurationFacade extends AbstractFacade implements SalesPro
         $this->getFactory()
             ->createSalesOrderItemConfigurationWriter()
             ->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductConfiguration(array $itemTransfers): array
+    {
+        return $this->getFactory()
+            ->createOrderItemExpander()
+            ->expandOrderItemsWithProductConfiguration($itemTransfers);
     }
 }
