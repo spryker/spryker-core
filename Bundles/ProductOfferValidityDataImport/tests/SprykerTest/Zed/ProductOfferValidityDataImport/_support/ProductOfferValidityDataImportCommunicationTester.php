@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\ProductOfferValidity\Persistence\SpyProductOfferValidityQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

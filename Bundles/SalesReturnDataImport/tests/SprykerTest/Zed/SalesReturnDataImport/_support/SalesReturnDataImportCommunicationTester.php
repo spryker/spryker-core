@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -22,7 +20,7 @@ use Orm\Zed\SalesReturn\Persistence\SpySalesReturnReasonQuery;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void sales-return($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\SalesReturn\Business\SalesReturnFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)

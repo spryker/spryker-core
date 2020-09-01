@@ -22,11 +22,16 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/event-dispatcher": "*",
     "spryker/config": "*",
     "spryker/container": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "autoload": {

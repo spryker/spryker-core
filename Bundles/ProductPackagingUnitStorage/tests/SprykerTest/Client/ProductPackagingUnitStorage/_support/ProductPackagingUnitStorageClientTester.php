@@ -12,8 +12,6 @@ use Spryker\Client\ProductPackagingUnitStorage\Dependency\Client\ProductPackagin
 use Spryker\Client\ProductPackagingUnitStorage\ProductPackagingUnitStorageDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -16,27 +16,27 @@ class StepMock implements StepInterface
     /**
      * @var bool
      */
-    private $postCondition;
+    protected $postCondition;
 
     /**
      * @var bool
      */
-    private $preCondition;
+    protected $preCondition;
 
     /**
      * @var bool
      */
-    private $requireInput;
+    protected $requireInput;
 
     /**
      * @var string
      */
-    private $stepRoute;
+    protected $stepRoute;
 
     /**
      * @var string|null
      */
-    private $escapeRoute;
+    protected $escapeRoute;
 
     /**
      * @param bool $preCondition

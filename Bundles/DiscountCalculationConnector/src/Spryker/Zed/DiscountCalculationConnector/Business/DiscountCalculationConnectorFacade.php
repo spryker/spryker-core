@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\DiscountCalculationConnector\Business;
 
+use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -14,4 +15,19 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
  */
 class DiscountCalculationConnectorFacade extends AbstractFacade implements DiscountCalculationConnectorFacadeInterface
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+     *
+     * @return \Generated\Shared\Transfer\CalculableObjectTransfer
+     */
+    public function recalculateDiscounts(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
+    {
+        return $this->getFactory()
+            ->createDiscountCalculator()
+            ->recalculate($calculableObjectTransfer);
+    }
 }

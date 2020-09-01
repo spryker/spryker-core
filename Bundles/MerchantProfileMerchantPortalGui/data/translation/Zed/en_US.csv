@@ -38,11 +38,10 @@ profile.status.message.offline,"<p><br>This means that your store is not availab
 "Provide Average Delivery Time","Provide Average Delivery Time"
 "Provide Data Privacy","Provide Data Privacy"
 "Provide Imprint","Provide Imprint"
-"Provide Return Policy","Provide Return Policy"
+"Provide Cancellation Policy","Provide Cancellation Policy"
 "Provide Terms & Conditions","Provide Terms & Conditions"
 "Provide the URL of your Store","Provide the URL of your Store"
 "Registration number","Registration Number"
-"Return Policy","Return Policy"
 Role,Role
 Save,Save
 select.default.placeholder,Select

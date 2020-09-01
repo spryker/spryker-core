@@ -23,7 +23,7 @@ class DocumentTable extends AbstractTable
     /**
      * @var \Spryker\Zed\SearchElasticsearchGui\Dependency\Client\SearchElasticsearchGuiToSearchElasticsearchClientInterface
      */
-    private $searchElasticsearchClient;
+    protected $searchElasticsearchClient;
 
     /**
      * @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface

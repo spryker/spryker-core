@@ -16,8 +16,6 @@ use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -27,7 +25,7 @@ use Spryker\Zed\Stock\Business\StockFacadeInterface;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\DiscountPromotion\Business\DiscountPromotionFacadeInterface|\Spryker\Zed\Kernel\Business\AbstractFacade
  *
  * @SuppressWarnings(PHPMD)

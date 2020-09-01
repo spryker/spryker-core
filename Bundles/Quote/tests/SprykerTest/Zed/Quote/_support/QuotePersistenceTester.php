@@ -21,8 +21,6 @@ use Generated\Shared\Transfer\TotalsTransfer;
 use Orm\Zed\Quote\Persistence\SpyQuote;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -39,10 +37,6 @@ use Orm\Zed\Quote\Persistence\SpyQuote;
 class QuotePersistenceTester extends Actor
 {
     use _generated\QuotePersistenceTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param array $quoteAllowedFields

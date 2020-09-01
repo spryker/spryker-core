@@ -20,7 +20,7 @@
         />
         <column name="fk_product_label" type="INTEGER" required="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
-        <column name="name" type="VARCHAR" required="false"/>
+        <column name="name" type="VARCHAR" size="255" required="false"/>
 
         <id-method-parameter value="spy_product_label_localized_attributes_pk_seq"/>
 

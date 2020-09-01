@@ -23,8 +23,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPo
 
 class ProductTableDataProvider extends AbstractGuiTableDataProvider
 {
-    public const COLUMN_DATA_STATUS_ACTIVE = 'Active';
-    protected const COLUMN_DATA_STATUS_INACTIVE = 'Inactive';
+    public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+    protected const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface

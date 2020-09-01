@@ -14,7 +14,7 @@ class PriceItemFixture extends CartItemFixture
     /**
      * @var int
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @return int

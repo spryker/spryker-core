@@ -33,7 +33,7 @@ class ProductListReader implements ProductListReaderInterface
     /**
      * @var \Spryker\Zed\ProductList\Business\ProductListProductConcreteRelation\ProductListProductConcreteRelationReaderInterface
      */
-    private $productListProductConcreteRelationReader;
+    protected $productListProductConcreteRelationReader;
 
     /**
      * @var \Spryker\Zed\ProductList\Dependency\Facade\ProductListToProductFacadeInterface

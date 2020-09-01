@@ -30,6 +30,7 @@ use SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Business\BusinessHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelperTrait;
+use Symfony\Component\HttpFoundation\Request;
 
 class RouterHelper extends Module
 {
@@ -67,7 +68,7 @@ class RouterHelper extends Module
     protected $routeCollection;
 
     /**
-     * @var \Spryker\Zed\RouterExtension\Dependency\Plugin\RouterPluginInterface|null
+     * @var \Spryker\Zed\Router\Communication\Plugin\Router\ZedRouterPlugin|null
      */
     protected static $routerPlugin;
 
@@ -83,6 +84,14 @@ class RouterHelper extends Module
         if (!isset($this->routerPlugins[ZedRouterPlugin::class])) {
             $this->routerPlugins[ZedRouterPlugin::class] = $this->getRouterPlugin();
         }
+
+        $requestFactory = function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+            $request->server->set('SERVER_NAME', 'localhost');
+
+            return $request;
+        };
+        Request::setFactory($requestFactory);
     }
 
     /**
@@ -91,10 +100,11 @@ class RouterHelper extends Module
     protected function getRouterPlugin(): RouterPluginInterface
     {
         if (static::$routerPlugin === null) {
-            $controllerDirectories = [sprintf('%s/spryker/spryker/Bundles/*/src/Spryker/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR)];
-            $this->getConfigHelper()->mockConfigMethod('getControllerDirectories', $controllerDirectories, static::MODULE_NAME);
+            $controllerDirectories = sprintf('%s/spryker/spryker/Bundles/*/src/Spryker/Zed/*/Communication/Controller/', APPLICATION_VENDOR_DIR);
+            $this->getConfigHelper()->mockConfigMethod('getControllerDirectories', [$controllerDirectories], static::MODULE_NAME);
+            $routerFacade = $this->getBusinessHelper()->getFacade(static::MODULE_NAME);
             $routerPlugin = new ZedRouterPlugin();
-            $routerPlugin->setFacade($this->getBusinessHelper()->getFacade(static::MODULE_NAME));
+            $routerPlugin->setFacade($routerFacade);
 
             static::$routerPlugin = $routerPlugin;
         }

@@ -112,7 +112,7 @@ class DoubleSubmitProtectionExtensionTest extends Unit
             ->createNamed('FORM_NAME', FormType::class, null, ['token_field_name' => '_requestToken'])
             ->createView();
 
-        $this->assertEquals($expectedToken, $view['_requestToken']->vars['value']);
+        $this->assertSame($expectedToken, $view['_requestToken']->vars['value']);
     }
 
     /**
