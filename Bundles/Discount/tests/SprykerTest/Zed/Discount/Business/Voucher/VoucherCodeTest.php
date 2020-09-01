@@ -63,7 +63,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
@@ -81,7 +81,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
@@ -105,7 +105,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
@@ -141,7 +141,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->useCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
@@ -177,7 +177,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(1, $updated);
+        $this->assertSame(1, $updated);
     }
 
     /**
@@ -195,7 +195,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**
@@ -219,7 +219,7 @@ class VoucherCodeTest extends Unit
         $voucherCode = $this->createVoucherCode($discountQueryContainerMock);
         $updated = $voucherCode->releaseUsedCodes(['123']);
 
-        $this->assertEquals(0, $updated);
+        $this->assertSame(0, $updated);
     }
 
     /**

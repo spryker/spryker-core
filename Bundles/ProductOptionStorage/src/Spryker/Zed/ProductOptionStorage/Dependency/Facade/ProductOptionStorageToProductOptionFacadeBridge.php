@@ -43,14 +43,4 @@ class ProductOptionStorageToProductOptionFacadeBridge implements ProductOptionSt
     {
         return $this->productOptionFacade->getAllProductOptionValuePrices($storePricesRequestTransfer);
     }
-
-    /**
-     * @param int[] $productAbstractIds
-     *
-     * @return \Generated\Shared\Transfer\ProductAbstractOptionGroupStatusTransfer[]
-     */
-    public function getProductAbstractOptionGroupStatusesByProductAbstractIds(array $productAbstractIds): array
-    {
-        return $this->productOptionFacade->getProductAbstractOptionGroupStatusesByProductAbstractIds($productAbstractIds);
-    }
 }

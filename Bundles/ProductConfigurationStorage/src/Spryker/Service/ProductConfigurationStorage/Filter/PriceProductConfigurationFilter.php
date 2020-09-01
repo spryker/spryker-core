@@ -25,7 +25,12 @@ class PriceProductConfigurationFilter implements PriceProductConfigurationFilter
             return $priceProductTransfers;
         }
 
-        return $this->filterOutProductConfigurationPrices($priceProductTransfers);
+        $productConfigurationPriceProductTransfers = $this->filterOutProductConfigurationPrices($priceProductTransfers);
+        if ($productConfigurationPriceProductTransfers !== []) {
+            return $productConfigurationPriceProductTransfers;
+        }
+
+        return $priceProductTransfers;
     }
 
     /**

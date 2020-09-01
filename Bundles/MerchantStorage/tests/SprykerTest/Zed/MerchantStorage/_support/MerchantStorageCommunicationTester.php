@@ -16,8 +16,6 @@ use Orm\Zed\MerchantStorage\Persistence\SpyMerchantStorageQuery;
 use Propel\Runtime\Collection\ObjectCollection;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

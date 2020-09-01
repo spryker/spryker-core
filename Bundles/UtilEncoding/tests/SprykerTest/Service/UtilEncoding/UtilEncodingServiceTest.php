@@ -58,7 +58,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData);
 
-        $this->assertEquals(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
+        $this->assertSame(self::JSON_ENCODED_VALUE, $jsonEncodeValue);
     }
 
     /**
@@ -68,7 +68,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson('A string!');
 
-        $this->assertEquals('"A string!"', $jsonEncodeValue);
+        $this->assertSame('"A string!"', $jsonEncodeValue);
     }
 
     /**
@@ -78,15 +78,15 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(true);
 
-        $this->assertEquals('true', $jsonEncodeValue);
+        $this->assertSame('true', $jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(false);
 
-        $this->assertEquals('false', $jsonEncodeValue);
+        $this->assertSame('false', $jsonEncodeValue);
 
         $jsonEncodeValue = $this->utilEncodingService->encodeJson(null);
 
-        $this->assertEquals('null', $jsonEncodeValue);
+        $this->assertSame('null', $jsonEncodeValue);
     }
 
     /**
@@ -106,7 +106,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->encodeJson($this->jsonData, Json::DEFAULT_OPTIONS | JSON_PRETTY_PRINT);
 
-        $this->assertEquals(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
+        $this->assertSame(self::JSON_ENCODED_VALUE_PRETTY_PRINT, $jsonEncodeValue);
     }
 
     /**
@@ -136,7 +136,7 @@ JSON;
     {
         $jsonEncodeValue = $this->utilEncodingService->decodeJson('"A string!"');
 
-        $this->assertEquals('A string!', $jsonEncodeValue);
+        $this->assertSame('A string!', $jsonEncodeValue);
     }
 
     /**

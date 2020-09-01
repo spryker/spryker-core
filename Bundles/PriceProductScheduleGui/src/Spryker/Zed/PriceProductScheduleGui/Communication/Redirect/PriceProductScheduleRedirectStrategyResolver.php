@@ -16,6 +16,7 @@ class PriceProductScheduleRedirectStrategyResolver implements PriceProductSchedu
     public const KEY_ABSTRACT_PRODUCT = 'abstract_product';
     public const KEY_CONCRETE_PRODUCT = 'concrete_product';
     protected const EXCEPTION_MESSAGE = 'Container is not valid';
+
     /**
      * @var \Spryker\Zed\PriceProductScheduleGui\Communication\Redirect\PriceProductScheduleRedirectInterface[]
      */

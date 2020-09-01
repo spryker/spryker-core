@@ -83,8 +83,8 @@ class WriterTest extends Unit
         $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
-        $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $taxRateQuery->getRate());
-        $this->assertEquals(self::DUMMY_TAX_RATE1_NAME, $taxRateQuery->getName());
+        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE1_PERCENTAGE), $taxRateQuery->getRate());
+        $this->assertSame(self::DUMMY_TAX_RATE1_NAME, $taxRateQuery->getName());
     }
 
     /**
@@ -142,8 +142,8 @@ class WriterTest extends Unit
         $taxRateQuery = SpyTaxRateQuery::create()->filterByIdTaxRate($id)->findOne();
 
         $this->assertNotEmpty($taxRateQuery);
-        $this->assertEquals(self::DUMMY_TAX_RATE2_PERCENTAGE, $taxRateQuery->getRate());
-        $this->assertEquals(self::DUMMY_TAX_RATE2_NAME, $taxRateQuery->getName());
+        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateQuery->getRate());
+        $this->assertSame(self::DUMMY_TAX_RATE2_NAME, $taxRateQuery->getName());
     }
 
     /**
@@ -169,11 +169,11 @@ class WriterTest extends Unit
         $taxSetQuery = SpyTaxSetQuery::create()->filterByIdTaxSet($taxSetId)->findOne();
 
         $this->assertNotEmpty($taxSetQuery);
-        $this->assertEquals('Foobar', $taxSetQuery->getName());
+        $this->assertSame('Foobar', $taxSetQuery->getName());
         $this->assertCount(1, $taxSetQuery->getSpyTaxRates());
         $taxRateEntity = $taxSetQuery->getSpyTaxRates()[0];
-        $this->assertEquals(self::DUMMY_TAX_RATE2_PERCENTAGE, $taxRateEntity->getRate());
-        $this->assertEquals(self::DUMMY_TAX_RATE2_NAME, $taxRateEntity->getName());
+        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxRateEntity->getRate());
+        $this->assertSame(self::DUMMY_TAX_RATE2_NAME, $taxRateEntity->getName());
     }
 
     /**
@@ -195,7 +195,7 @@ class WriterTest extends Unit
 
         $this->assertNotEmpty($taxSetQuery);
         $this->assertCount(2, $taxSetQuery->getSpyTaxRates());
-        $this->assertEquals(self::DUMMY_TAX_RATE2_PERCENTAGE, $taxSetQuery->getSpyTaxRates()[1]->getRate());
+        $this->assertSame(sprintf('%.2f', self::DUMMY_TAX_RATE2_PERCENTAGE), $taxSetQuery->getSpyTaxRates()[1]->getRate());
     }
 
     /**

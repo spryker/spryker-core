@@ -51,8 +51,8 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
     ): bool {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
-        if (!$productConfigurationInstance) {
-            return false;
+        if (!$productConfigurationInstance || !$productConfigurationInstance->getAvailableQuantity()) {
+            return $productViewTransfer->getAvailable();
         }
 
         return $productConfigurationInstance->getAvailableQuantity() > static::MINIMUM_AVAILABLE_QUANTITY;

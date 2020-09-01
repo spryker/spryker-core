@@ -15,6 +15,8 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 use Spryker\Client\ProductConfigurationStorage\Dependency\Service\ProductConfigurationStorageToSynchronizationServiceInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\PriceProductFilterExpanderInterface as PriceProductFilterExpanderInterfaceAlias;
+use Spryker\Client\ProductConfigurationStorage\Expander\ProductConfigurationInstanceCartChangeExpander;
+use Spryker\Client\ProductConfigurationStorage\Expander\ProductConfigurationInstanceCartChangeExpanderInterface;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpander;
 use Spryker\Client\ProductConfigurationStorage\Expander\ProductViewExpanderInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapper;
@@ -122,6 +124,16 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationPriceReader(
             $this->getLocaleClient(),
             $this->getProductStorageClient(),
+            $this->createProductConfigurationInstanceReader()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Expander\ProductConfigurationInstanceCartChangeExpanderInterface
+     */
+    public function createProductConfigurationInstanceCartChangeExpander(): ProductConfigurationInstanceCartChangeExpanderInterface
+    {
+        return new ProductConfigurationInstanceCartChangeExpander(
             $this->createProductConfigurationInstanceReader()
         );
     }

@@ -57,6 +57,7 @@ class ProductConfigurationRepository extends AbstractRepository implements Produ
         }
 
         if ($productConfigurationFilterTransfer->getFilter()) {
+            /** @var \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery $productConfigurationQuery */
             $productConfigurationQuery = $this->buildQueryFromCriteria(
                 $productConfigurationQuery,
                 $productConfigurationFilterTransfer->getFilter()
