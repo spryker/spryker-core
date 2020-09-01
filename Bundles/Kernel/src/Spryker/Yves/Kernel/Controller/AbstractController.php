@@ -135,8 +135,6 @@ abstract class AbstractController
      * @param string $absoluteUrl
      * @param int $code
      *
-     * @throws \Spryker\Yves\Kernel\Exception\ForbiddenExternalRedirectException
-     *
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
      */
     protected function redirectResponseExternal($absoluteUrl, $code = 302)
