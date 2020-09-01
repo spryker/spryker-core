@@ -60,7 +60,9 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationInstanceReader(
             $this->createProductConfigurationStorageReader(),
             $this->getSessionClient(),
-            $this->createProductConfigurationInstanceMapper()
+            $this->createProductConfigurationInstanceMapper(),
+            $this->getProductStorageClient(),
+            $this->getLocaleClient()
         );
     }
 

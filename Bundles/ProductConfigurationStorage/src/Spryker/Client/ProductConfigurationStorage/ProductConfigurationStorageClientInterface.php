@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductConfigurationStorageClientInterface
 {
@@ -27,6 +28,25 @@ interface ProductConfigurationStorageClientInterface
      */
     public function findProductConfigurationInstanceBySku(
         string $sku
+    ): ?ProductConfigurationInstanceTransfer;
+
+    /**
+     * Specification:
+     * - Finds the appropriate item in the quote by groupKey.
+     * - Reads product configuration instance from session.
+     * - Returns the found item's ProductConfigurationInstanceTransfer when available.
+     * - Returns NULL otherwise.
+     *
+     *  @api
+     *
+     * @param string $groupKey
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    public function findProductConfigurationInstanceByGroupKey(
+        string $groupKey,
+        QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer;
 
     /**
