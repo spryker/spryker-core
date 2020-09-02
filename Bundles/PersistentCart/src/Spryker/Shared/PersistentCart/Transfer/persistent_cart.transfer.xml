@@ -11,6 +11,14 @@
         <property name="quote" type="Quote"/>
     </transfer>
 
+    <transfer name="PersistentItemReplace">
+        <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+        <property name="itemToBeReplaced" type="Item"/>
+        <property name="newItem" type="Item"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
     <transfer name="QuoteSyncRequest">
         <property name="quoteTransfer" type="Quote"/>
         <property name="customerTransfer" type="Customer"/>

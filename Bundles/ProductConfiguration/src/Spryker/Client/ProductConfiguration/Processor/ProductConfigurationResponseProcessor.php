@@ -45,8 +45,6 @@ class ProductConfigurationResponseProcessor implements ProductConfigurationRespo
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
-        $this->assertMandatoryFields($productConfiguratorResponseTransfer);
-
         foreach ($this->productConfiguratorResponsePlugins as $configuratorKey => $productConfiguratorResponsePlugin) {
             if ($configuratorKey === $productConfiguratorResponseTransfer->getProductConfigurationInstance()->getConfiguratorKey()) {
                 return $productConfiguratorResponsePlugin->processProductConfiguratorResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
@@ -55,19 +53,5 @@ class ProductConfigurationResponseProcessor implements ProductConfigurationRespo
 
         return $this->defaultProductConfiguratorResponsePlugin
             ->processProductConfiguratorResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
-     *
-     * @return void
-     */
-    protected function assertMandatoryFields(ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer): void
-    {
-        $productConfiguratorResponseTransfer
-            ->requireSourceType()
-            ->requireProductConfigurationInstance()
-            ->getProductConfigurationInstance()
-                ->requireConfiguratorKey();
     }
 }

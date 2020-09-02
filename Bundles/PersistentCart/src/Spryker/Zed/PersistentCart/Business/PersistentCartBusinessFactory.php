@@ -12,6 +12,8 @@ use Spryker\Zed\PersistentCart\Business\Locker\QuoteLocker;
 use Spryker\Zed\PersistentCart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
+use Spryker\Zed\PersistentCart\Business\Model\CartItemOperation;
+use Spryker\Zed\PersistentCart\Business\Model\CartItemOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
@@ -45,6 +47,19 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new CartOperation(
             $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResponseExpander(),
+            $this->createQuoteResolver(),
+            $this->createQuoteItemOperation(),
+            $this->getQuoteFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Model\CartItemOperationInterface
+     */
+    public function createCartItemOperation(): CartItemOperationInterface
+    {
+        return new CartItemOperation(
+            $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
             $this->getQuoteFacade()
