@@ -51,6 +51,7 @@
         <property name="idProductConcrete" type="int"/>
         <property name="sku" type="string"/>
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="available" type="bool"/>
     </transfer>
 
     <transfer name="PriceProduct">
@@ -78,5 +79,6 @@
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="sku" type="string"/>
     </transfer>
 </transfers>

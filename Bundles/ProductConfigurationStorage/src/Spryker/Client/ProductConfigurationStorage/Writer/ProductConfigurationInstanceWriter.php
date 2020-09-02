@@ -8,8 +8,8 @@
 namespace Spryker\Client\ProductConfigurationStorage\Writer;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
-use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig;
 
 class ProductConfigurationInstanceWriter implements ProductConfigurationInstanceWriterInterface
 {
@@ -19,12 +19,20 @@ class ProductConfigurationInstanceWriter implements ProductConfigurationInstance
     protected $sessionClient;
 
     /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface
+     */
+    protected $productConfigurationSessionKeyBuilder;
+
+    /**
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface $sessionClient
+     * @param \Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder
      */
     public function __construct(
-        ProductConfigurationStorageToSessionClientInterface $sessionClient
+        ProductConfigurationStorageToSessionClientInterface $sessionClient,
+        ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder
     ) {
         $this->sessionClient = $sessionClient;
+        $this->productConfigurationSessionKeyBuilder = $productConfigurationSessionKeyBuilder;
     }
 
     /**
@@ -37,9 +45,8 @@ class ProductConfigurationInstanceWriter implements ProductConfigurationInstance
         string $sku,
         ProductConfigurationInstanceTransfer $productConfigurationInstanceTransfer
     ): void {
-        $this->sessionClient->set(
-            sprintf('%s:%s', ProductConfigurationStorageConfig::PRODUCT_CONFIGURATION, $sku),
-            $productConfigurationInstanceTransfer
-        );
+        $productConfigurationSessionKey = $this->productConfigurationSessionKeyBuilder->getProductConfigurationSessionKey($sku);
+
+        $this->sessionClient->set($productConfigurationSessionKey, $productConfigurationInstanceTransfer);
     }
 }

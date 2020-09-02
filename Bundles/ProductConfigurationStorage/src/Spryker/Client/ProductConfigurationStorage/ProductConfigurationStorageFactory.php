@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductConfigurationStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilder;
+use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
@@ -62,7 +64,8 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationInstanceReader(
             $this->createProductConfigurationStorageReader(),
             $this->getSessionClient(),
-            $this->createProductConfigurationInstanceMapper()
+            $this->createProductConfigurationInstanceMapper(),
+            $this->createProductConfigurationSessionKeyBuilder()
         );
     }
 
@@ -72,7 +75,8 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfigurationInstanceWriter(): ProductConfigurationInstanceWriterInterface
     {
         return new ProductConfigurationInstanceWriter(
-            $this->getSessionClient()
+            $this->getSessionClient(),
+            $this->createProductConfigurationSessionKeyBuilder()
         );
     }
 
@@ -134,6 +138,14 @@ class ProductConfigurationStorageFactory extends AbstractFactory
         return new ProductConfigurationInstanceCartChangeExpander(
             $this->createProductConfigurationInstanceReader()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface
+     */
+    public function createProductConfigurationSessionKeyBuilder(): ProductConfigurationSessionKeyBuilderInterface
+    {
+        return new ProductConfigurationSessionKeyBuilder();
     }
 
     /**

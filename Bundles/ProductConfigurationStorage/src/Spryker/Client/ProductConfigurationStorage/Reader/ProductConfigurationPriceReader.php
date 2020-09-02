@@ -7,13 +7,12 @@
 
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 
 class ProductConfigurationPriceReader implements ProductConfigurationPriceReaderInterface
 {
-    protected const PRODUCT_DATA_SKU_KEY = 'sku';
-
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientInterface
      */
@@ -58,8 +57,11 @@ class ProductConfigurationPriceReader implements ProductConfigurationPriceReader
             return [];
         }
 
+        $productConcreteTransfer = $this->mapProductStorageDataToProductConcreteTransfer($productConcreteStorageData);
+        $productConcreteTransfer->requireSku();
+
         $productConfigurationInstance = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
-            $productConcreteStorageData[static::PRODUCT_DATA_SKU_KEY]
+            $productConcreteTransfer->getSku()
         );
 
         if (!$productConfigurationInstance) {
@@ -67,5 +69,15 @@ class ProductConfigurationPriceReader implements ProductConfigurationPriceReader
         }
 
         return $productConfigurationInstance->getPrices()->getArrayCopy();
+    }
+
+    /**
+     * @param array $productConcreteStorageData
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function mapProductStorageDataToProductConcreteTransfer(array $productConcreteStorageData): ProductConcreteTransfer
+    {
+        return (new ProductConcreteTransfer())->fromArray($productConcreteStorageData, true);
     }
 }
