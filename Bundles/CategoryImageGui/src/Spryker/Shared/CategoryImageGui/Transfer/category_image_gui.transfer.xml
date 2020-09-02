@@ -9,6 +9,7 @@
 
     <transfer name="Locale">
         <property name="localeName" type="string"/>
+        <property name="idLocale" type="int"/>
     </transfer>
 
     <transfer name="TabItem">
