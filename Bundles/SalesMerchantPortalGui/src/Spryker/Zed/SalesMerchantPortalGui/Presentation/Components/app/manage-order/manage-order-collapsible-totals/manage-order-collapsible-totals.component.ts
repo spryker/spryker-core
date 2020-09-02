@@ -8,7 +8,7 @@ import { ChangeDetectionStrategy, Component, ViewEncapsulation, Input } from '@a
     encapsulation: ViewEncapsulation.None,
 })
 export class ManageOrderCollapsibleTotalsComponent {
-    @Input() title: string;
+    @Input() spyTitle: string;
     @Input() url: string;
 
     internalUrl?: string;

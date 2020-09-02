@@ -104,10 +104,10 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
-            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, false)
-            ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, false)
-            ->addColumnChip(static::COL_KEY_STATE, 'State', true, false, 'green');
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnText(static::COL_KEY_NAME, 'Name', true, true)
+            ->addColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, true)
+            ->addColumnChip(static::COL_KEY_STATE, 'State', true, true, 'green');
 
         return $guiTableConfigurationBuilder;
     }
