@@ -50,7 +50,7 @@
 </td>
 <td>
     <div>
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: orderItem.unitPrice,
             priceToPay: orderItem.unitPrice - orderItem.unitDiscountAmountFullAggregation | default(0)
         } %} {% endembed %}
@@ -60,7 +60,7 @@
 
 {% if displayTotals %}
     <td {% if group %}rowspan="{{ rowCount }}"{% endif %} data-qa="item-total-amount" data-qa-raw="{{ priceToPay }}">
-        {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+        {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
             subtotal: subtotal,
             priceToPay: priceToPay
         } %} {% endembed %}

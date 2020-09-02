@@ -16,7 +16,7 @@
         <td>
 
             <div>
-                {% embed '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+                {% embed '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
                     subtotal: productOption.unitPrice,
                     priceToPay: productOption.unitPrice - productOption.unitDiscountAmountFullAggregation | default(0)
                 } %} {% endembed %}
