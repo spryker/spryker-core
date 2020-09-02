@@ -43,20 +43,33 @@ class SearchDelegator implements SearchDelegatorInterface
      * @param array $resultFormatters
      * @param array $requestParameters
      *
-     * @throws \Exception
-     *
      * @return mixed
      */
     public function search(QueryInterface $searchQuery, array $resultFormatters = [], array $requestParameters = [])
     {
-        if (!$searchQuery instanceof SearchContextAwareQueryInterface) {
-            throw new Exception(sprintf('Your query class "%s" must implement %s interface.', get_class($searchQuery), SearchContextAwareQueryInterface::class));
-        }
+        $this->assertSearchContextAwareQueryInterface($searchQuery);
 
         $searchQuery = $this->expandSearchContextTransferForQuery($searchQuery);
 
+        /** @var \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery */
         return $this->getSearchAdapter($searchQuery->getSearchContext())
             ->search($searchQuery, $resultFormatters, $requestParameters);
+    }
+
+    /**
+     * @deprecated Will be removed without replacement.
+     *
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
+    protected function assertSearchContextAwareQueryInterface(QueryInterface $searchQuery): void
+    {
+        if (!$searchQuery instanceof SearchContextAwareQueryInterface) {
+            throw new Exception(sprintf('Your query class "%s" must implement %s interface.', get_class($searchQuery), SearchContextAwareQueryInterface::class));
+        }
     }
 
     /**
@@ -196,11 +209,11 @@ class SearchDelegator implements SearchDelegatorInterface
     }
 
     /**
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $searchQuery
      *
      * @return \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface
      */
-    protected function expandSearchContextTransferForQuery(QueryInterface $searchQuery): QueryInterface
+    protected function expandSearchContextTransferForQuery($searchQuery): QueryInterface
     {
         $mappedSearchContextTransfer = $this->expandSearchContext($searchQuery->getSearchContext());
         $searchQuery->setSearchContext($mappedSearchContextTransfer);
