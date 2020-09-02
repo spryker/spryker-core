@@ -11,6 +11,7 @@
 
     <transfer name="ProductForProductBundleStorage">
         <property name="idProductConcrete" type="int"/>
+        <property name="sku" type="string"/>
         <property name="quantity" type="int"/>
     </transfer>
 
