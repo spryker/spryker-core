@@ -100,37 +100,25 @@ class Search implements SearchInterface
     /**
      * @deprecated Will be replaced with inline usage when SearchContextAwareQueryInterface is merged into QueryInterface.
      *
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $query
-     *
-     * @return \Generated\Shared\Transfer\SearchContextTransfer
-     */
-    protected function getSearchContext($query): SearchContextTransfer
-    {
-        $this->assertSearchContextAwareQueryInterface($query);
-
-        return $query->getSearchContext();
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface $query
+     * @param \Spryker\Client\SearchExtension\Dependency\Plugin\SearchContextAwareQueryInterface|\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface $searchQuery
      *
      * @throws \Spryker\Client\SearchElasticsearch\Exception\InvalidSearchQueryException
      *
-     * @return void
+     * @return \Generated\Shared\Transfer\SearchContextTransfer
      */
-    protected function assertSearchContextAwareQueryInterface($query): void
+    protected function getSearchContext($searchQuery): SearchContextTransfer
     {
-        if (!$query instanceof SearchContextAwareQueryInterface) {
+        if (!$searchQuery instanceof SearchContextAwareQueryInterface) {
             throw new InvalidSearchQueryException(
                 sprintf(
                     'Query class %s doesn\'t implement %s interface.',
-                    get_class($query),
+                    get_class($searchQuery),
                     SearchContextAwareQueryInterface::class
                 )
             );
         }
+
+        return $searchQuery->getSearchContext();
     }
 
     /**
