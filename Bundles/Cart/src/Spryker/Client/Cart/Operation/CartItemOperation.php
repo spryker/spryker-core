@@ -164,7 +164,7 @@ class CartItemOperation implements CartItemOperationInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer|null
      */
-    protected function findItem($sku, $groupKey = null): ?ItemTransfer
+    protected function findItem(string $sku, ?string $groupKey = null): ?ItemTransfer
     {
         $quoteTransfer = $this->quoteClient->getQuote();
 
