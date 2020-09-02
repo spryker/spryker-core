@@ -11,8 +11,6 @@ use Codeception\Actor;
 use SprykerTest\Zed\CategoryImage\_generated\CategoryImageBusinessTesterActions;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use SprykerTest\Zed\CategoryImage\_generated\CategoryImageBusinessTesterActions;
 class CategoryImageBusinessTester extends Actor
 {
     use CategoryImageBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

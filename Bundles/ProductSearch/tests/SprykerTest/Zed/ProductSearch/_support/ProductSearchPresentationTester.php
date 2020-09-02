@@ -13,8 +13,6 @@ use SprykerTest\Zed\ProductSearch\PageObject\FilterPreferencesPage;
 use SprykerTest\Zed\ProductSearch\PageObject\SearchPreferencesPage;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

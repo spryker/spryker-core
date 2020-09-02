@@ -12,7 +12,7 @@ class ZedNavigationCacheRemover
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface
      */
-    private $navigationCache;
+    protected $navigationCache;
 
     /**
      * @param \Spryker\Zed\ZedNavigation\Business\Model\Cache\ZedNavigationCacheInterface $navigationCache

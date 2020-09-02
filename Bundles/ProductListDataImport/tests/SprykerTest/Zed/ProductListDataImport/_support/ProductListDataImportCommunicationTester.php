@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\DataImporterConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 class ProductListDataImportCommunicationTester extends Actor
 {
     use _generated\ProductListDataImportCommunicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param string $filePath

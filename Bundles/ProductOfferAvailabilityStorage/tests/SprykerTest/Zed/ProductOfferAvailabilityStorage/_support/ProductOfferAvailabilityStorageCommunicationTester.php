@@ -14,8 +14,6 @@ use Orm\Zed\ProductOfferAvailabilityStorage\Persistence\SpyProductOfferAvailabil
 use Spryker\DecimalObject\Decimal;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -16,8 +16,6 @@ use Spryker\Shared\CompanyUser\Plugin\AddCompanyUserPermissionPlugin;
 use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Spryker\Zed\CompanyRole\Communication\Plugin\PermissionStoragePlugin;
 class CompanyRoleBusinessTester extends Actor
 {
     use _generated\CompanyRoleBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param array $seedData

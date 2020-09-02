@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\CmsBlockProductStorage;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class CmsBlockProductStorageCommunicationTester extends Actor
 {
     use _generated\CmsBlockProductStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

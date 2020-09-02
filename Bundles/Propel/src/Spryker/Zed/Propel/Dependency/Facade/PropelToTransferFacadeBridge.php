@@ -14,7 +14,7 @@ class PropelToTransferFacadeBridge implements PropelToTransferFacadeInterface
     /**
      * @var \Spryker\Zed\Transfer\Business\TransferFacadeInterface
      */
-    private $transferFacade;
+    protected $transferFacade;
 
     /**
      * @param \Spryker\Zed\Transfer\Business\TransferFacadeInterface $transferFacade

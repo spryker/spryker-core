@@ -18,8 +18,6 @@ use Orm\Zed\FileManager\Persistence\SpyMimeType;
 use Orm\Zed\FileManager\Persistence\SpyMimeTypeQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

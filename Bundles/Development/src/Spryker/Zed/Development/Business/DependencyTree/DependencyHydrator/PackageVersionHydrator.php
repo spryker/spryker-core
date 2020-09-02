@@ -17,7 +17,7 @@ class PackageVersionHydrator implements DependencyHydratorInterface
     /**
      * @var array
      */
-    private $installedPackages;
+    protected $installedPackages;
 
     /**
      * @param array $installedPackages

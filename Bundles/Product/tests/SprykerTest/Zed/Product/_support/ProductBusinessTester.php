@@ -22,8 +22,6 @@ use Spryker\Zed\Product\Business\ProductFacadeInterface;
 use Spryker\Zed\Store\Business\StoreFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

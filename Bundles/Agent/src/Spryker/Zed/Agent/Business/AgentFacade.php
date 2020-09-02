@@ -45,8 +45,6 @@ class AgentFacade extends AbstractFacade implements AgentFacadeInterface
      */
     public function findCustomersByQuery(CustomerQueryTransfer $customerQueryTransfer): CustomerAutocompleteResponseTransfer
     {
-        return $this->getFactory()
-            ->createCustomerReader()
-            ->findCustomersByQuery($customerQueryTransfer);
+        return $this->getRepository()->findCustomersByQuery($customerQueryTransfer);
     }
 }

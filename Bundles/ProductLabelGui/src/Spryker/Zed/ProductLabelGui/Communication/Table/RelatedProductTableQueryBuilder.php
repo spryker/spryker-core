@@ -173,7 +173,7 @@ class RelatedProductTableQueryBuilder implements RelatedProductTableQueryBuilder
         $query
             ->useSpyProductQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
-                    sprintf('GROUP_CONCAT(%s)', SpyProductTableMap::COL_IS_ACTIVE),
+                    sprintf('GROUP_CONCAT(CAST(%s AS int))', SpyProductTableMap::COL_IS_ACTIVE),
                     static::RESULT_FIELD_PRODUCT_CONCRETE_STATES_CSV
                 )
             ->endUse()

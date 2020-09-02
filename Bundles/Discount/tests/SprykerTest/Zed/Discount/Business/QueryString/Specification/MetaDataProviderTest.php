@@ -44,7 +44,7 @@ class MetaDataProviderTest extends Unit
         $availableFields = $metaDataProvider->getAvailableFields();
 
         $this->assertCount(1, $availableFields);
-        $this->assertEquals($fieldName, $availableFields[0]);
+        $this->assertSame($fieldName, $availableFields[0]);
     }
 
     /**
@@ -113,7 +113,7 @@ class MetaDataProviderTest extends Unit
         $acceptedDataTypes = $metaDataProvider->getAcceptedTypesByFieldName($fieldName);
 
         $this->assertCount(1, $acceptedDataTypes);
-        $this->assertEquals(ComparatorOperators::TYPE_NUMBER, $acceptedDataTypes[0]);
+        $this->assertSame(ComparatorOperators::TYPE_NUMBER, $acceptedDataTypes[0]);
     }
 
     /**
@@ -145,7 +145,7 @@ class MetaDataProviderTest extends Unit
         $comparatorExpressions = $metaDataProvider->getAvailableOperatorExpressionsForField($fieldName);
 
         $this->assertCount(1, $comparatorExpressions);
-        $this->assertEquals($comparatorExpression, $comparatorExpressions[0]);
+        $this->assertSame($comparatorExpression, $comparatorExpressions[0]);
     }
 
     /**

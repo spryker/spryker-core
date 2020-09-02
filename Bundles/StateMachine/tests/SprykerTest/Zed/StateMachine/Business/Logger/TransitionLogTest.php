@@ -65,11 +65,11 @@ class TransitionLogTest extends StateMachineMocks
         $transitionLog->save($stateMachineItemTransfer);
         $transitionLog->saveAll();
 
-        $this->assertEquals(get_class($commandMock), $stateMachineTransitionLogEntityMock->getCommand());
-        $this->assertEquals(get_class($conditionMock), $stateMachineTransitionLogEntityMock->getCondition());
-        $this->assertEquals($sourceState, $stateMachineTransitionLogEntityMock->getSourceState());
-        $this->assertEquals($targetState, $stateMachineTransitionLogEntityMock->getTargetState());
-        $this->assertEquals($event->getName(), $stateMachineTransitionLogEntityMock->getEvent());
+        $this->assertSame(get_class($commandMock), $stateMachineTransitionLogEntityMock->getCommand());
+        $this->assertSame(get_class($conditionMock), $stateMachineTransitionLogEntityMock->getCondition());
+        $this->assertSame($sourceState, $stateMachineTransitionLogEntityMock->getSourceState());
+        $this->assertSame($targetState, $stateMachineTransitionLogEntityMock->getTargetState());
+        $this->assertSame($event->getName(), $stateMachineTransitionLogEntityMock->getEvent());
     }
 
     /**
@@ -86,8 +86,8 @@ class TransitionLogTest extends StateMachineMocks
 
         $storedParams = $stateMachineTransitionLogEntityMock->getParams();
 
-        $this->assertEquals('one=1', $storedParams[0]);
-        $this->assertEquals('two=2', $storedParams[1]);
+        $this->assertSame('one=1', $storedParams[0]);
+        $this->assertSame('two=2', $storedParams[1]);
     }
 
     /**

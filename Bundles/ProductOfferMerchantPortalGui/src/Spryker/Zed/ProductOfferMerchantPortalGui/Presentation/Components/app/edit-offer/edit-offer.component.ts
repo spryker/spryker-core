@@ -24,7 +24,7 @@ export interface ProductDetails {
 export class EditOfferComponent implements OnChanges {
     @Input() @ToJson() product?: ProductDetails;
     @Input() productDetailsTitle?: string;
-    @Input() images?: Image[];
+    @Input() @ToJson() images?: Image[];
 
     validFrom?: string | Date;
     validTo?: string | Date;

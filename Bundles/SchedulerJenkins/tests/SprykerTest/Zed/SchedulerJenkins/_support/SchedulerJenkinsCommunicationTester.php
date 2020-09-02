@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\SchedulerJenkins;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class SchedulerJenkinsCommunicationTester extends Actor
 {
     use _generated\SchedulerJenkinsCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

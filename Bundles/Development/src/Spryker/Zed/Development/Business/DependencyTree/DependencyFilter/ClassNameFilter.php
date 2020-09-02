@@ -14,7 +14,7 @@ class ClassNameFilter implements DependencyFilterInterface
     /**
      * @var string
      */
-    private $pattern;
+    protected $pattern;
 
     /**
      * @param string $pattern

@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <web-mp-product-offer cloak table-config='{{ guiTableConfiguration(productTableConfiguration) }}'>
+    <web-mp-product-offer
+        cloak
+        table-id="web-mp-product-offer"
+        table-config='{{ guiTableConfiguration(productTableConfiguration) }}'>
         <span title>{{ 'Create Offer' | trans }}</span>
     </web-mp-product-offer>
 {% endblock %}
