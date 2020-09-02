@@ -15,11 +15,12 @@ use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
 /**
  * @method \Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiFactory getFactory()
  */
-class BundledItemByBundleItemResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
      * - Adds `bundled-items` resource as relationship to `bundle-items`.
+     * - Uses `QuoteTransfer` payload of the `bundle-items` resource.
      *
      * @api
      *
