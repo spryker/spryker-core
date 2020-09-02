@@ -10,10 +10,13 @@ namespace Spryker\Zed\SalesProductConfiguration\Business\Writer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 use Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface;
 
 class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWriterInterface
 {
+    use TransactionTrait;
+
     /**
      * @var \Spryker\Zed\SalesProductConfiguration\Persistence\SalesProductConfigurationEntityManagerInterface
      */
@@ -36,6 +39,19 @@ class SalesOrderItemConfigurationWriter implements SalesOrderItemConfigurationWr
     {
         $salesOrderItemConfigurationTransfers = $this->mapSalesOrderItemConfigurations($quoteTransfer);
 
+        $this->getTransactionHandler()->handleTransaction(function () use ($salesOrderItemConfigurationTransfers): void {
+            $this->executeSaveSalesOrderItemConfigurationsFromQuoteTransaction($salesOrderItemConfigurationTransfers);
+        });
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\SalesOrderItemConfigurationTransfer[] $salesOrderItemConfigurationTransfers
+     *
+     * @return void
+     */
+    protected function executeSaveSalesOrderItemConfigurationsFromQuoteTransaction(
+        array $salesOrderItemConfigurationTransfers
+    ): void {
         foreach ($salesOrderItemConfigurationTransfers as $salesOrderItemConfigurationTransfer) {
             $this->salesProductConfigurationEntityManager->saveSalesOrderItemConfiguration($salesOrderItemConfigurationTransfer);
         }

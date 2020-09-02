@@ -14,5 +14,5 @@ class ProductConfigurationStorageConfig extends AbstractBundleConfig
     /**
      * Product configuration session key
      */
-    public const PRODUCT_CONFIGURATION = 'PRODUCT_CONFIGURATION';
+    public const SESSION_KEY = 'PRODUCT_CONFIGURATION';
 }

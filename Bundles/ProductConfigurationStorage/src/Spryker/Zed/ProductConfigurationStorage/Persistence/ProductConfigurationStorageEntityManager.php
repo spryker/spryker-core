@@ -9,12 +9,15 @@ namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
 /**
  * @method \Spryker\Zed\ProductConfigurationStorage\Persistence\ProductConfigurationStoragePersistenceFactory getFactory()
  */
 class ProductConfigurationStorageEntityManager extends AbstractEntityManager implements ProductConfigurationStorageEntityManagerInterface
 {
+    use TransactionTrait;
+
     /**
      * @param \Generated\Shared\Transfer\ProductConfigurationStorageTransfer $productConfigurationStorageTransfer
      *
@@ -50,11 +53,25 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
      */
     public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void
     {
+        /** @var \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities */
         $productConfigurationStorageEntities = $this->getFactory()
             ->createProductConfigurationStorageQuery()
             ->filterByFkProductConfiguration_In($productConfigurationIds)
             ->find();
 
+        $this->getTransactionHandler()->handleTransaction(function () use ($productConfigurationStorageEntities): void {
+            $this->executeDeleteProductConfigurationStorageByProductConfigurationIds($productConfigurationStorageEntities);
+        });
+    }
+
+    /**
+     * @param \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities
+     *
+     * @return void
+     */
+    protected function executeDeleteProductConfigurationStorageByProductConfigurationIds(
+        array $productConfigurationStorageEntities
+    ): void {
         foreach ($productConfigurationStorageEntities as $productConfigurationStorageEntity) {
             $productConfigurationStorageEntity->delete();
         }
