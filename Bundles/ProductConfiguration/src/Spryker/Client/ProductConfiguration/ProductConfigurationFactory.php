@@ -8,9 +8,12 @@
 namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessor;
+use Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessorInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolverInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
@@ -39,5 +42,32 @@ class ProductConfigurationFactory extends AbstractFactory
             $this->getProductConfigurationRequestPlugins(),
             $this->getProductConfiguratorRequestDefaultPlugin()
         );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessorInterface
+     */
+    public function createProductConfigurationResponseProcessor(): ProductConfigurationResponseProcessorInterface
+    {
+        return new ProductConfigurationResponseProcessor(
+            $this->getProductConfiguratorResponsePlugins(),
+            $this->getDefaultProductConfiguratorResponsePlugin()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface[]
+     */
+    public function getProductConfiguratorResponsePlugins(): array
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface
+     */
+    public function getDefaultProductConfiguratorResponsePlugin(): ProductConfiguratorResponsePluginInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE);
     }
 }

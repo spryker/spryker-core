@@ -17,6 +17,7 @@ class ProductConfigurationRedirectResolver implements ProductConfigurationRedire
      * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface[]
      */
     protected $productConfiguratorRequestPlugins;
+
     /**
      * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface
      */

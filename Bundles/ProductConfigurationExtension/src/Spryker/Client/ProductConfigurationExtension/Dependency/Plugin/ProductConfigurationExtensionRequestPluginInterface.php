@@ -25,5 +25,7 @@ interface ProductConfigurationExtensionRequestPluginInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer): ProductConfiguratorRedirectTransfer;
+    public function resolveProductConfiguratorRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer;
 }
