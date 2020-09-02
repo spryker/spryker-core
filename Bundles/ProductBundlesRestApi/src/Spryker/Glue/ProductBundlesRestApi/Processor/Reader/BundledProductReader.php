@@ -93,6 +93,10 @@ class BundledProductReader implements BundledProductReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
+        if (!$productBundleStorageTransfers) {
+            return [];
+        }
+
         $bundledProductRestResources = [];
         foreach ($productBundleStorageTransfers as $productConcreteSku => $productBundleStorageTransfer) {
             $bundledProductRestResources[$productConcreteSku] = $this->bundledProductRestResponseBuilder
@@ -115,6 +119,10 @@ class BundledProductReader implements BundledProductReaderInterface
             $productConcreteSkus,
             $localeName
         );
+
+        if (!$productConcreteIds) {
+            return [];
+        }
 
         $productBundleStorageTransfers = $this->productBundleStorageClient->getProductBundles($productConcreteIds);
         $productBundleStorageTransfersIndexedBySku = [];

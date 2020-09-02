@@ -38,6 +38,10 @@ class BundledProductExpander implements BundledProductExpanderInterface
         $bundledProductRestResources = $this->bundledProductReader
             ->getBundledProductRestResourcesByProductConcreteSkus($productConcreteSkus, $restRequest);
 
+        if (!$bundledProductRestResources) {
+            return;
+        }
+
         foreach ($resources as $resource) {
             if (
                 $resource->getType() !== ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS

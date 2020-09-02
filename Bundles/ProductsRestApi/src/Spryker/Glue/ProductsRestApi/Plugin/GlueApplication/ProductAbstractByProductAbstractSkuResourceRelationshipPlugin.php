@@ -19,7 +19,7 @@ class ProductAbstractByProductAbstractSkuResourceRelationshipPlugin extends Abst
 {
     /**
      * {@inheritDoc}
-     * - Adds abstract-products resource as relationship by `productAbstractSku` provided in the attributes.
+     * - Adds `abstract-products` resource as relationship by `productAbstractSku` provided in the attributes.
      *
      * @api
      *

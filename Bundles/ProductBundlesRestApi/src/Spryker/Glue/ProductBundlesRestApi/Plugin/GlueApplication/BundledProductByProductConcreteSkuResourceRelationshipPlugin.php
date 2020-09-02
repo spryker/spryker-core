@@ -19,7 +19,7 @@ class BundledProductByProductConcreteSkuResourceRelationshipPlugin extends Abstr
 {
     /**
      * {@inheritDoc}
-     * - Adds bundled products as a relationship to concrete-products resource by product concrete sku.
+     * - Adds `bundled-products` as a relationship to `concrete-products` resource by product concrete sku.
      *
      * @api
      *
