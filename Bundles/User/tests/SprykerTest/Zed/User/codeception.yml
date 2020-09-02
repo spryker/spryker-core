@@ -47,11 +47,6 @@ suites:
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\Cms\Helper\CmsRedirectHelper
-                - \SprykerTest\Zed\Form\Helper\FormHelper:
-                      formPlugins:
-                          - \Spryker\Zed\Validator\Communication\Plugin\Form\ValidatorFormPlugin
-                          - \Spryker\Zed\Http\Communication\Plugin\Form\HttpFoundationFormPlugin
-                          - \Spryker\Zed\Form\Communication\Plugin\Form\CsrfFormPlugin
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
