@@ -570,7 +570,7 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                 if ($listener instanceof AbstractAuthenticationListener || $listener instanceof GuardAuthenticationListener) {
                     $listener->setRememberMeServices($container->get('security.remember_me.service.' . $firewallName));
                 }
-                if ($listener instanceof LogoutListener) {
+                if ($listener instanceof LogoutListener /* && !class_exists(LogoutEvent::class) */) {
                     $listener->addHandler($container->get('security.remember_me.service.' . $firewallName));
                 }
             }

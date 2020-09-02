@@ -53,6 +53,21 @@ abstract class AbstractApplicationHelper extends Framework
     protected $request;
 
     /**
+     * @return void
+     */
+    public function _initialize(): void
+    {
+        $requestFactory = function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+            $request->server->set('SERVER_NAME', 'localhost');
+
+            return $request;
+        };
+
+        Request::setFactory($requestFactory);
+    }
+
+    /**
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface $applicationPlugin
      *
      * @return $this
