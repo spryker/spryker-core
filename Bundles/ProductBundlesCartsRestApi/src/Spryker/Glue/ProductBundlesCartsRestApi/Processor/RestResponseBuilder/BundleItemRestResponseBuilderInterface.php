@@ -18,13 +18,15 @@ interface BundleItemRestResponseBuilderInterface
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param string $parentResourceType
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createBundleItemResource(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        string $parentResourceType
     ): RestResourceInterface;
 
     /**

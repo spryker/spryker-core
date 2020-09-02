@@ -34,13 +34,15 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param string $parentResourceType
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createBundleItemResource(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        string $parentResourceType
     ): RestResourceInterface {
         $bundleItemRestResource = $this->restResourceBuilder->createRestResource(
             ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
@@ -51,7 +53,7 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
 
         $bundleItemSelfLink = sprintf(
             '%s/%s/%s/%s/',
-            ProductBundlesCartsRestApiConfig::RESOURCE_CARTS,
+            $parentResourceType,
             $quoteTransfer->getUuid(),
             ProductBundlesCartsRestApiConfig::RESOURCE_CART_ITEMS,
             $itemTransfer->getGroupKey()

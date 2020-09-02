@@ -14,7 +14,6 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\RestResource\ProductBundlesCartsRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\RestResponseBuilder\BundleItemRestResponseBuilderInterface;
-use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
 
 class BundleItemExpander implements BundleItemExpanderInterface
 {
@@ -67,11 +66,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     public function addBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_CARTS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
+            if (!$resource->getPayload() || !$resource->getPayload() instanceof QuoteTransfer) {
                 continue;
             }
 
@@ -88,7 +83,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
                 );
 
                 $bundleItemRestResource = $this->bundleItemRestResponseBuilder
-                    ->createBundleItemResource($quoteTransfer, $bundleItemTransfer, $restItemsAttributesTransfer);
+                    ->createBundleItemResource($quoteTransfer, $bundleItemTransfer, $restItemsAttributesTransfer, $resource->getType());
 
                 $resource->addRelationship($bundleItemRestResource);
             }
@@ -104,11 +99,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     public function addBundledItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
+            if (!$resource->getPayload() || !$resource->getPayload() instanceof QuoteTransfer) {
                 continue;
             }
 
