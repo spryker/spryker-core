@@ -120,32 +120,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             $restRequest->getMetadata()->getLocale()
         );
 
-        $productAbstractIds = [];
-        foreach ($productConcreteStorageData as $productConcreteStorageDatum) {
-            if (!isset($productConcreteStorageDatum[static::KEY_ID_PRODUCT_ABSTRACT])) {
-                continue;
-            }
-
-            $productAbstractIds[] = $productConcreteStorageDatum[static::KEY_ID_PRODUCT_ABSTRACT];
-        }
-
-        $productAbstractSkus = $this->getProductAbstractSkus($productAbstractIds, $restRequest);
-
-        $concreteProductRestResources = [];
-        foreach ($productConcreteStorageData as $productConcreteStorageDatum) {
-            if (!isset($productConcreteStorageDatum[static::KEY_SKU])) {
-                continue;
-            }
-
-            $productConcreteStorageDatum[static::KEY_PRODUCT_ABSTRACT_SKU] = $productAbstractSkus[$productConcreteStorageDatum[static::KEY_ID_PRODUCT_ABSTRACT]];
-
-            $concreteProductRestResources[$productConcreteStorageDatum[static::KEY_SKU]] = $this->createRestResourceFromConcreteProductStorageData(
-                $productConcreteStorageDatum,
-                $restRequest
-            );
-        }
-
-        return $concreteProductRestResources;
+        return $this->createRestResourcesFromConcreteProductStorageData(
+            $productConcreteStorageData,
+            $restRequest
+        );
     }
 
     /**
@@ -166,13 +144,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
-        $productAbstractSkus = $this->getProductAbstractSkus(
-            [$concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]],
-            $restRequest
-        );
-        $concreteProductData[static::KEY_PRODUCT_ABSTRACT_SKU] = current($productAbstractSkus);
-
-        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+        return current($this->createRestResourcesFromConcreteProductStorageData([$concreteProductData], $restRequest));
     }
 
     /**
@@ -192,38 +164,42 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
-        $productAbstractSkus = $this->getProductAbstractSkus(
-            [$concreteProductData[static::KEY_ID_PRODUCT_ABSTRACT]],
-            $restRequest
-        );
-        $concreteProductData[static::KEY_PRODUCT_ABSTRACT_SKU] = current($productAbstractSkus);
-
-        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+        return current($this->createRestResourcesFromConcreteProductStorageData([$concreteProductData], $restRequest));
     }
 
     /**
-     * @param array $concreteProductData
+     * @param array $multipleProductConcreteStorageData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function createRestResourceFromConcreteProductStorageData(
-        array $concreteProductData,
+    protected function createRestResourcesFromConcreteProductStorageData(
+        array $multipleProductConcreteStorageData,
         RestRequestInterface $restRequest
-    ): RestResourceInterface {
-        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
-            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
+    ): array {
+        $concreteProductRestResources = [];
 
-        $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
-            $restConcreteProductsAttributesTransfer,
-            $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
-            $restRequest
-        );
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
+                ->mapConcreteProductsDataToConcreteProductsRestAttributes($productConcreteStorageData);
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $restConcreteProductsAttributesTransfer->getSku(),
-            $restConcreteProductsAttributesTransfer
+            $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
+                $restConcreteProductsAttributesTransfer,
+                $productConcreteStorageData[static::KEY_ID_PRODUCT_CONCRETE],
+                $restRequest
+            );
+
+            $concreteProductRestResources[$restConcreteProductsAttributesTransfer->getSku()] = $this->restResourceBuilder->createRestResource(
+                ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+                $restConcreteProductsAttributesTransfer->getSku(),
+                $restConcreteProductsAttributesTransfer
+            );
+        }
+
+        return $this->expandWithProductAbstractSku(
+            $concreteProductRestResources,
+            $multipleProductConcreteStorageData,
+            $restRequest->getMetadata()->getLocale()
         );
     }
 
@@ -284,17 +260,55 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     }
 
     /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $concreteProductRestResources
+     * @param array $multipleProductConcreteStorageData
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    protected function expandWithProductAbstractSku(array $concreteProductRestResources, array $multipleProductConcreteStorageData, string $localeName): array
+    {
+        $productAbstractIds = [];
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            $productAbstractIds[] = $productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        $productAbstractSkus = $this->getProductAbstractSkus($productAbstractIds, $localeName);
+
+        $expandedRestResources = [];
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            foreach ($concreteProductRestResources as $concreteProductRestResource) {
+                if (
+                    $productConcreteStorageData[static::KEY_SKU] !== $concreteProductRestResource->getId()
+                    || !isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])
+                ) {
+                    continue;
+                }
+
+                $concreteProductRestResource->getAttributes()->offsetSet(
+                    ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU,
+                    $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]]
+                );
+
+                $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
+            }
+        }
+
+        return $expandedRestResources;
+    }
+
+    /**
      * @param int[] $productAbstractIds
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param string $localeName
      *
      * @return string[]
      */
-    protected function getProductAbstractSkus(array $productAbstractIds, RestRequestInterface $restRequest): array
+    protected function getProductAbstractSkus(array $productAbstractIds, string $localeName): array
     {
         $productAbstractData = $this->productStorageClient
             ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
                 $productAbstractIds,
-                $restRequest->getMetadata()->getLocale(),
+                $localeName,
                 $this->storeClient->getCurrentStore()->getName()
             );
 
