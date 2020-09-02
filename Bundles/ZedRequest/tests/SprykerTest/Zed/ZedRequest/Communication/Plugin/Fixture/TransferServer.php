@@ -13,11 +13,6 @@ use Spryker\Zed\ZedRequest\Communication\Plugin\TransferObject\TransferServer as
 class TransferServer extends CoreTransferServer
 {
     /**
-     * @var \Spryker\Zed\ZedRequest\Business\Client\Request
-     */
-    private $fixtureRequest;
-
-    /**
      * @param \Spryker\Zed\ZedRequest\Business\Client\Request $request
      *
      * @return $this

@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\PriceProductStorage;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,10 +26,6 @@ use Codeception\Actor;
 class PriceProductStorageCommunicationTester extends Actor
 {
     use _generated\PriceProductStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const PARAM_PROJECT = 'PROJECT';
 

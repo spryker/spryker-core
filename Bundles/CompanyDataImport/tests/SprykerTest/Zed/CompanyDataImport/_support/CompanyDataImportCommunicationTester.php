@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,10 +27,6 @@ use Orm\Zed\Company\Persistence\SpyCompanyQuery;
 class CompanyDataImportCommunicationTester extends Actor
 {
     use _generated\CompanyDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

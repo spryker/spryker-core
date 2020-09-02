@@ -18,6 +18,9 @@ class OauthCustomerScopeInstallerPlugin extends AbstractPlugin implements Instal
 {
     /**
      * {@inheritDoc}
+     * - Installs customer-specific OAuth scopes.
+     * - Scopes are defined in `OauthCustomerConnectorConfig::getCustomerScopes()`, `OauthCustomerConnectorConfig::getCustomerImpersonationScopes()`.
+     * - Skips scope if it already exists in persistent storage.
      *
      * @api
      *

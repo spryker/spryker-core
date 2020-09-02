@@ -288,8 +288,8 @@ class DiscountOrderHydratePluginTest extends Unit
 
         //Assert
         foreach ($orderTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-            $this->assertEquals($discountQuantity, $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
-            $this->assertEquals($discountAmount, $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
+            $this->assertSame($discountQuantity, $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+            $this->assertSame($discountAmount, $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
         }
     }
 

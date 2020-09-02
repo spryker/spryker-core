@@ -108,7 +108,7 @@ class VoucherEngineTest extends Unit
 
         $voucherCreateInfoTransfer = $voucherEngine->createVoucherCodes($discountVoucherTransfer);
 
-        $this->assertEquals(DiscountConstants::MESSAGE_TYPE_SUCCESS, $voucherCreateInfoTransfer->getType());
+        $this->assertSame(DiscountConstants::MESSAGE_TYPE_SUCCESS, $voucherCreateInfoTransfer->getType());
     }
 
     /**
@@ -151,7 +151,7 @@ class VoucherEngineTest extends Unit
 
         $voucherCreateInfoTransfer = $voucherEngine->createVoucherCodes($discountVoucherTransfer);
 
-        $this->assertEquals(DiscountConstants::MESSAGE_TYPE_ERROR, $voucherCreateInfoTransfer->getType());
+        $this->assertSame(DiscountConstants::MESSAGE_TYPE_ERROR, $voucherCreateInfoTransfer->getType());
     }
 
     /**
@@ -198,7 +198,7 @@ class VoucherEngineTest extends Unit
 
         $voucherCreateInfoTransfer = $voucherEngine->createVoucherCodes($discountVoucherTransfer);
 
-        $this->assertEquals(DiscountConstants::MESSAGE_TYPE_ERROR, $voucherCreateInfoTransfer->getType());
+        $this->assertSame(DiscountConstants::MESSAGE_TYPE_ERROR, $voucherCreateInfoTransfer->getType());
     }
 
     /**

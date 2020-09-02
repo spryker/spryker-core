@@ -29,12 +29,12 @@ class CalculatorTest extends Unit
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
-    private $stockFacade;
+    protected $stockFacade;
 
     /**
      * @var \Orm\Zed\Product\Persistence\SpyProduct
      */
-    private $productEntity;
+    protected $productEntity;
 
     /**
      * @var \Orm\Zed\Stock\Persistence\SpyStock

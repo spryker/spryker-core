@@ -17,8 +17,6 @@ use Spryker\Zed\Category\Business\CategoryFacadeInterface;
 use Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ use Spryker\Zed\CategoryImage\Business\CategoryImageFacadeInterface;
 class CategoryImageStorageCommunicationTester extends Actor
 {
     use _generated\CategoryImageStorageCommunicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @param \Generated\Shared\Transfer\CategoryImageSetTransfer $categoryImageSetTransfer

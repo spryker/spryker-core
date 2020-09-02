@@ -10,8 +10,6 @@ namespace SprykerTest\Service\FlysystemAws3v3FileSystem;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class FlysystemAws3v3FileSystemBusinessTester extends Actor
 {
     use _generated\FlysystemAws3v3FileSystemBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

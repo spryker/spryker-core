@@ -22,6 +22,7 @@ class FilterProvider implements FilterProviderInterface
     protected const COL_CATEGORY_NAME = 'spy_category_attribute.name';
 
     protected const PATTERN_ATTRIBUTE_KEY = 'product.json.%s';
+
     /**
      * @var \Spryker\Zed\ProductRelationGui\Dependency\Facade\ProductRelationGuiToProductAttributeFacadeInterface
      */

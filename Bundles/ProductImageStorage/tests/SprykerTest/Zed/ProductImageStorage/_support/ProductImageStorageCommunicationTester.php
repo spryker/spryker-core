@@ -12,8 +12,6 @@ use Generated\Shared\DataBuilder\ProductImageBuilder;
 use Generated\Shared\Transfer\ProductImageTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Generated\Shared\Transfer\ProductImageTransfer;
 class ProductImageStorageCommunicationTester extends Actor
 {
     use _generated\ProductImageStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const PARAM_PROJECT = 'PROJECT';
 

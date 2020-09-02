@@ -14,7 +14,7 @@ class ForeignEngineBundleFilter implements DependencyFilterInterface
     /**
      * @var array
      */
-    private $filterBundles = [];
+    protected $filterBundles = [];
 
     /**
      * @param string $pathToBundleConfig

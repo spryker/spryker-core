@@ -12,8 +12,6 @@ use Spryker\Client\StorageDatabase\Plugin\PostgreSqlStorageReaderPlugin;
 use Spryker\Client\StorageDatabase\StorageDatabaseDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

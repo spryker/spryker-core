@@ -36,8 +36,6 @@ use Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin;
 use Spryker\Zed\Shipment\Communication\Plugin\ShipmentOrderHydratePlugin;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -57,10 +55,6 @@ class ShipmentBusinessTester extends Actor
     use _generated\ShipmentBusinessTesterActions;
 
     protected const FAKE_EXPENSE_TYPE = 'FAKE_EXPENSE_TYPE';
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Spryker\Zed\Shipment\Business\ShipmentFacadeInterface

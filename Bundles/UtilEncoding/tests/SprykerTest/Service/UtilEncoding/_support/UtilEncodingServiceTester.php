@@ -10,8 +10,6 @@ namespace SprykerTest\Service\UtilEncoding;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class UtilEncodingServiceTester extends Actor
 {
     use _generated\UtilEncodingServiceTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

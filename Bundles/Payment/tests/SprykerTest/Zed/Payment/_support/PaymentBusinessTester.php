@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\Payment;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class PaymentBusinessTester extends Actor
 {
     use _generated\PaymentBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

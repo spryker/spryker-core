@@ -12,7 +12,7 @@ class ViolationFinder implements ViolationFinderInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface[]
      */
-    private $violationFinder;
+    protected $violationFinder;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface $violationFinder

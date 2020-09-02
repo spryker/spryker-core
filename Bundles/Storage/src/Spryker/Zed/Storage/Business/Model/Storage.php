@@ -14,7 +14,7 @@ class Storage implements StorageInterface
     /**
      * @var \Spryker\Client\Storage\StorageClientInterface
      */
-    private $storageClient;
+    protected $storageClient;
 
     /**
      * @param \Spryker\Client\Storage\StorageClientInterface $storageClient

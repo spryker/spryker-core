@@ -14,6 +14,7 @@ use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductAbstractLabelStorageW
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriter;
 use Spryker\Zed\ProductLabelStorage\Business\Writer\ProductLabelDictionaryStorageWriterInterface;
 use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToProductLabelFacadeInterface;
+use Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface;
 use Spryker\Zed\ProductLabelStorage\ProductLabelStorageDependencyProvider;
 
 /**
@@ -71,6 +72,14 @@ class ProductLabelStorageBusinessFactory extends AbstractBusinessFactory
      */
     public function createProductLabelDictionaryItemMapper()
     {
-        return new ProductLabelDictionaryItemMapper();
+        return new ProductLabelDictionaryItemMapper($this->getStoreFacade());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductLabelStorage\Dependency\Facade\ProductLabelStorageToStoreFacadeInterface
+     */
+    public function getStoreFacade(): ProductLabelStorageToStoreFacadeInterface
+    {
+        return $this->getProvidedDependency(ProductLabelStorageDependencyProvider::FACADE_STORE);
     }
 }
