@@ -23,4 +23,17 @@ interface SalesProductConfigurationFacadeInterface
      * @return void
      */
     public function saveSalesOrderItemConfigurationsFromQuote(QuoteTransfer $quoteTransfer): void;
+
+    /**
+     * Specification:
+     * - Expands items with product configuration.
+     * - Expects ItemTransfer::ID_SALES_ORDER_ITEM to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function expandOrderItemsWithProductConfiguration(array $itemTransfers): array;
 }
