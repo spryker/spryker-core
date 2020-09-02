@@ -14,6 +14,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface;
 use Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface;
 use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
@@ -23,11 +24,19 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 {
     protected const PRODUCT_CONCRETE_MAPPING_TYPE = 'sku';
     protected const KEY_ID_PRODUCT_CONCRETE = 'id_product_concrete';
+    protected const KEY_ID_PRODUCT_ABSTRACT = 'id_product_abstract';
+    protected const KEY_SKU = 'sku';
+    protected const KEY_PRODUCT_ABSTRACT_SKU = 'product_abstract_sku';
 
     /**
      * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface
      */
     protected $productStorageClient;
+
+    /**
+     * @var \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientInterface
+     */
+    protected $storeClient;
 
     /**
      * @var \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface
@@ -51,6 +60,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
 
     /**
      * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface $productStorageClient
+     * @param \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientInterface $storeClient
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\ProductsRestApi\Processor\Mapper\ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper
      * @param \Spryker\Glue\ProductsRestApi\Processor\ProductAttribute\ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander
@@ -58,12 +68,14 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      */
     public function __construct(
         ProductsRestApiToProductStorageClientInterface $productStorageClient,
+        ProductsRestApiToStoreClientInterface $storeClient,
         RestResourceBuilderInterface $restResourceBuilder,
         ConcreteProductsResourceMapperInterface $concreteProductsResourceMapper,
         ConcreteProductAttributeTranslationExpanderInterface $concreteProductAttributeTranslationExpander,
         array $concreteProductsResourceExpanderPlugins
     ) {
         $this->productStorageClient = $productStorageClient;
+        $this->storeClient = $storeClient;
         $this->restResourceBuilder = $restResourceBuilder;
         $this->concreteProductsResourceMapper = $concreteProductsResourceMapper;
         $this->concreteProductAttributeTranslationExpander = $concreteProductAttributeTranslationExpander;
@@ -100,31 +112,18 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    public function findProductConcretesByProductConcreteSkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
+    public function getProductConcretesBySkus(array $productConcreteSkus, RestRequestInterface $restRequest): array
     {
-        $results = [];
-        foreach ($productConcreteSkus as $productConcreteSku) {
-            $productResource = $this->findProductConcreteBySku($productConcreteSku, $restRequest);
-            if (!$productResource) {
-                continue;
-            }
-            $results[] = $productResource;
-        }
+        $productConcreteStorageData = $this->productStorageClient->getBulkProductConcreteStorageDataByMapping(
+            static::PRODUCT_CONCRETE_MAPPING_TYPE,
+            $productConcreteSkus,
+            $restRequest->getMetadata()->getLocale()
+        );
 
-        return $results;
-    }
-
-    /**
-     * @deprecated Use {@link findProductConcreteBySku()} instead.
-     *
-     * @param string $sku
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface|null
-     */
-    public function findOneByProductConcrete(string $sku, RestRequestInterface $restRequest): ?RestResourceInterface
-    {
-        return $this->findProductConcreteBySku($sku, $restRequest);
+        return $this->createRestResourcesFromConcreteProductStorageData(
+            $productConcreteStorageData,
+            $restRequest
+        );
     }
 
     /**
@@ -145,7 +144,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
-        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+        return current($this->createRestResourcesFromConcreteProductStorageData([$concreteProductData], $restRequest));
     }
 
     /**
@@ -165,31 +164,42 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             return null;
         }
 
-        return $this->createRestResourceFromConcreteProductStorageData($concreteProductData, $restRequest);
+        return current($this->createRestResourcesFromConcreteProductStorageData([$concreteProductData], $restRequest));
     }
 
     /**
-     * @param array $concreteProductData
+     * @param array $multipleProductConcreteStorageData
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
      */
-    protected function createRestResourceFromConcreteProductStorageData(
-        array $concreteProductData,
+    protected function createRestResourcesFromConcreteProductStorageData(
+        array $multipleProductConcreteStorageData,
         RestRequestInterface $restRequest
-    ): RestResourceInterface {
-        $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
-            ->mapConcreteProductsDataToConcreteProductsRestAttributes($concreteProductData);
-        $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
-            $restConcreteProductsAttributesTransfer,
-            $concreteProductData[static::KEY_ID_PRODUCT_CONCRETE],
-            $restRequest
-        );
+    ): array {
+        $concreteProductRestResources = [];
 
-        return $this->restResourceBuilder->createRestResource(
-            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
-            $restConcreteProductsAttributesTransfer->getSku(),
-            $restConcreteProductsAttributesTransfer
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            $restConcreteProductsAttributesTransfer = $this->concreteProductsResourceMapper
+                ->mapConcreteProductsDataToConcreteProductsRestAttributes($productConcreteStorageData);
+
+            $restConcreteProductsAttributesTransfer = $this->expandRestConcreteProductsAttributesTransfer(
+                $restConcreteProductsAttributesTransfer,
+                $productConcreteStorageData[static::KEY_ID_PRODUCT_CONCRETE],
+                $restRequest
+            );
+
+            $concreteProductRestResources[$restConcreteProductsAttributesTransfer->getSku()] = $this->restResourceBuilder->createRestResource(
+                ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+                $restConcreteProductsAttributesTransfer->getSku(),
+                $restConcreteProductsAttributesTransfer
+            );
+        }
+
+        return $this->expandWithProductAbstractSku(
+            $concreteProductRestResources,
+            $multipleProductConcreteStorageData,
+            $restRequest->getMetadata()->getLocale()
         );
     }
 
@@ -247,5 +257,66 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
             ->setDetail(ProductsRestApiConfig::RESPONSE_DETAIL_CANT_FIND_CONCRETE_PRODUCT);
 
         return $response->addError($restErrorTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $concreteProductRestResources
+     * @param array $multipleProductConcreteStorageData
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[]
+     */
+    protected function expandWithProductAbstractSku(array $concreteProductRestResources, array $multipleProductConcreteStorageData, string $localeName): array
+    {
+        $productAbstractIds = [];
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            $productAbstractIds[] = $productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT];
+        }
+
+        $productAbstractSkus = $this->getProductAbstractSkus($productAbstractIds, $localeName);
+
+        $expandedRestResources = [];
+        foreach ($multipleProductConcreteStorageData as $productConcreteStorageData) {
+            foreach ($concreteProductRestResources as $concreteProductRestResource) {
+                if (
+                    $productConcreteStorageData[static::KEY_SKU] !== $concreteProductRestResource->getId()
+                    || !isset($productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]])
+                ) {
+                    continue;
+                }
+
+                $concreteProductRestResource->getAttributes()->offsetSet(
+                    ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU,
+                    $productAbstractSkus[$productConcreteStorageData[static::KEY_ID_PRODUCT_ABSTRACT]]
+                );
+
+                $expandedRestResources[$productConcreteStorageData[static::KEY_SKU]] = $concreteProductRestResource;
+            }
+        }
+
+        return $expandedRestResources;
+    }
+
+    /**
+     * @param int[] $productAbstractIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function getProductAbstractSkus(array $productAbstractIds, string $localeName): array
+    {
+        $productAbstractData = $this->productStorageClient
+            ->getBulkProductAbstractStorageDataByProductAbstractIdsForLocaleNameAndStore(
+                $productAbstractIds,
+                $localeName,
+                $this->storeClient->getCurrentStore()->getName()
+            );
+
+        $productAbstractSkus = [];
+        foreach ($productAbstractData as $productAbstractDatum) {
+            $productAbstractSkus[$productAbstractDatum[static::KEY_ID_PRODUCT_ABSTRACT]] = $productAbstractDatum[static::KEY_SKU];
+        }
+
+        return $productAbstractSkus;
     }
 }

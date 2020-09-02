@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductsRestApi\Processor\Expander;
 
+use Generated\Shared\Transfer\ConcreteProductsRestAttributesTransfer;
 use Generated\Shared\Transfer\RestPromotionalItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
@@ -59,6 +60,35 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return void
+     */
+    public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    {
+        $productAbstractSkus = $this->getProductAbstractSkus($resources);
+        if (!$productAbstractSkus) {
+            return;
+        }
+
+        $abstractProductsResources = $this->abstractProductsReader
+            ->getProductAbstractsBySkus($productAbstractSkus, $restRequest);
+        if (!$abstractProductsResources) {
+            return;
+        }
+
+        foreach ($resources as $resource) {
+            $productAbstractSku = $this->findProductSkuInAttributes($resource);
+            if (!isset($abstractProductsResources[$productAbstractSku])) {
+                continue;
+            }
+
+            $resource->addRelationship($abstractProductsResources[$productAbstractSku]);
+        }
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
      *
      * @return string[]
      */
@@ -87,6 +117,36 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
         $attributes = $resource->getAttributes();
         if ($attributes && $attributes instanceof RestPromotionalItemsAttributesTransfer) {
             return $attributes->offsetGet(static::KEY_SKU);
+        }
+
+        return null;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
+     *
+     * @return string[]
+     */
+    protected function getProductAbstractSkus(array $resources): array
+    {
+        $productAbstractSkuList = [];
+        foreach ($resources as $resource) {
+            $productAbstractSkuList[] = $this->findProductSkuInAttributes($resource);
+        }
+
+        return array_filter($productAbstractSkuList);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return string|null
+     */
+    protected function findProductSkuInAttributes(RestResourceInterface $resource): ?string
+    {
+        $attributes = $resource->getAttributes();
+        if ($attributes && $attributes->offsetExists(ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU)) {
+            return $attributes->offsetGet(ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU);
         }
 
         return null;
