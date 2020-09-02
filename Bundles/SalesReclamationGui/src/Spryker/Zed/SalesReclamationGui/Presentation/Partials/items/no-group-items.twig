@@ -1,6 +1,6 @@
 {% for reclamationItem in items %}
   <tr>
-      {% embed '@SalesReclamationGui/partials/items/order-item.twig' with {
+      {% embed '@SalesReclamationGui/Partials/items/order-item.twig' with {
           orderItem: reclamationItem.orderItem,
           displayImage: true,
           image: reclamationItem.orderItem.metadata.image,
@@ -8,6 +8,6 @@
           group: false
       } %}{% endembed %}
   </tr>
-  {% embed '@SalesReclamationGui/partials/items/order-item-option.twig' with {orderItem: reclamationItem.orderItem} %}
+  {% embed '@SalesReclamationGui/Partials/items/order-item-option.twig' with {orderItem: reclamationItem.orderItem} %}
   {% endembed %}
 {% endfor %}
