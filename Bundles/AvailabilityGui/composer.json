@@ -23,18 +23,18 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
-    "spryker/propel": "*",
-    "spryker/testify": "*",
-    "spryker/zed-navigation": "*",
-    "spryker/cms": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
     "spryker/form": "*",
+    "spryker/propel": "*",
     "spryker/router": "*",
+    "spryker/testify": "*",
     "spryker/twig": "*",
-    "spryker/validator": "*"
+    "spryker/validator": "*",
+    "spryker/zed-navigation": "*"
   },
   "autoload": {
     "psr-4": {
