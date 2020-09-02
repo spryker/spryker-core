@@ -555,7 +555,7 @@ abstract class AbstractTable
      */
     public function getSearchTerm()
     {
-        return $this->request->query->get('search', null);
+        return $this->request->query->has('search') ? $this->request->query->all('search') : null;
     }
 
     /**

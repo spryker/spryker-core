@@ -131,6 +131,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             DateTimeType::class,
             [
                 'format' => static::VALIDITY_DATETIME_FORMAT,
+                'html5' => false,
                 'label' => 'Valid From (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
@@ -183,6 +184,7 @@ class ProductConcreteFormEdit extends ProductFormAdd
             DateTimeType::class,
             [
                 'format' => static::VALIDITY_DATETIME_FORMAT,
+                'html5' => false,
                 'label' => 'Valid To (GMT)',
                 'widget' => 'single_text',
                 'required' => false,
