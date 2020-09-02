@@ -10,8 +10,6 @@ namespace SprykerTest\Client\ContentNavigation;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class ContentNavigationClientTester extends Actor
 {
     use _generated\ContentNavigationClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

@@ -18,8 +18,6 @@ use Spryker\Zed\Development\DevelopmentConfig;
 use Symfony\Component\Yaml\Parser;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -10,8 +10,6 @@ namespace SprykerTest\Yves\CartVariant\Model;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class CartVariantModelTester extends Actor
 {
     use _generated\CartVariantModelTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

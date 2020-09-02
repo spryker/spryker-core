@@ -48,11 +48,11 @@ class GlueFragmentControllerResolverTest extends Unit
     public function getController(): array
     {
         return [
-            ['index/index/index', GlueFragmentControllerResolverTest::class . '::indexAction'],
-            ['/index/index/index', GlueFragmentControllerResolverTest::class . '::indexAction'],
-            ['Index/Index/Index', GlueFragmentControllerResolverTest::class . '::indexAction'],
-            ['/Index/Index/Index', GlueFragmentControllerResolverTest::class . '::indexAction'],
-            ['foo-bar/baz-bat/zip-zap', GlueFragmentControllerResolverTest::class . '::zipZapAction'],
+            ['index/index/index', self::class . '::indexAction'],
+            ['/index/index/index', self::class . '::indexAction'],
+            ['Index/Index/Index', self::class . '::indexAction'],
+            ['/Index/Index/Index', self::class . '::indexAction'],
+            ['foo-bar/baz-bat/zip-zap', self::class . '::zipZapAction'],
         ];
     }
 

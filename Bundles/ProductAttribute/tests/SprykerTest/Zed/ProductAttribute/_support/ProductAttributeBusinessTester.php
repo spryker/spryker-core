@@ -22,8 +22,6 @@ use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInte
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -218,7 +216,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAbstractProduct(string $sku, ?array $data = null): ProductAbstractTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productAbstractTransfer = $this->haveProductAbstract([
             'attributes' => $data,
@@ -243,7 +241,7 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleProduct(ProductAbstractTransfer $productAbstractTransfer, string $sku, ?array $data = null): ProductConcreteTransfer
     {
-        $data = (!is_array($data)) ? ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
+        $data = (!is_array($data)) ? self::DATA_PRODUCT_ATTRIBUTES_VALUES : $data;
 
         $productConcreteTransfer = new ProductConcreteTransfer();
         $productConcreteTransfer->setSku($sku);
@@ -280,11 +278,11 @@ class ProductAttributeBusinessTester extends Actor
      */
     public function createSampleAttributeMetadataWithSuperAttributeData(): array
     {
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::FOO_ATTRIBUTE_KEY, false);
-        $this->createSampleAttributeMetadata(ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY, true);
+        $this->createSampleAttributeMetadata(self::FOO_ATTRIBUTE_KEY, false);
+        $this->createSampleAttributeMetadata(self::SUPER_ATTRIBUTE_KEY, true);
 
-        $data = ProductAttributeBusinessTester::DATA_PRODUCT_ATTRIBUTES_VALUES;
-        $data[ProductAttributeBusinessTester::SUPER_ATTRIBUTE_KEY] = ProductAttributeBusinessTester::SUPER_ATTRIBUTE_VALUE;
+        $data = self::DATA_PRODUCT_ATTRIBUTES_VALUES;
+        $data[self::SUPER_ATTRIBUTE_KEY] = self::SUPER_ATTRIBUTE_VALUE;
 
         return $data;
     }

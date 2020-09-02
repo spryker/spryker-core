@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ProductLabelSearch;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class ProductLabelSearchBusinessTester extends Actor
 {
     use _generated\ProductLabelSearchBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

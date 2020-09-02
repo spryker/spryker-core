@@ -17,8 +17,6 @@ use Spryker\Zed\ProductBundleProductListConnector\Dependency\Facade\ProductBundl
 use Spryker\Zed\ProductBundleProductListConnector\ProductBundleProductListConnectorDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

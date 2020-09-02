@@ -13,8 +13,6 @@ use SprykerTest\Zed\Refund\PageObject\RefundListPage;
 use SprykerTest\Zed\Refund\PageObject\SalesDetailPage;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -10,8 +10,6 @@ namespace SprykerTest\Client\Availability;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class AvailabilityClientTester extends Actor
 {
     use _generated\AvailabilityClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

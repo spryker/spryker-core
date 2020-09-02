@@ -10,8 +10,6 @@ namespace SprykerTest\Client\Search;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class SearchClientTester extends Actor
 {
     use _generated\SearchClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

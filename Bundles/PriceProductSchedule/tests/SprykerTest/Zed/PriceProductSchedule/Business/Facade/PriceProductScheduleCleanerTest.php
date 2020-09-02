@@ -81,7 +81,7 @@ class PriceProductScheduleCleanerTest extends Unit
         $this->priceProductScheduleFacade->cleanAppliedScheduledPrices($daysRetained);
 
         // Assert
-        $this->assertEquals($expectedCount, $this->tester->getPriceProductScheduleQuery()->find()->count());
+        $this->assertSame($expectedCount, $this->tester->getPriceProductScheduleQuery()->find()->count());
     }
 
     /**

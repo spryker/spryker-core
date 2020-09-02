@@ -319,16 +319,16 @@ class GetReturnsTest extends Unit
         // Assert
         $this->assertCount(2, $returnCollectionTransfer->getReturns());
         $this->assertEquals($lastReturnTransfer, $returnCollectionTransfer->getReturns()->offsetGet(0));
-        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getNextPage());
-        $this->assertEquals(3, $returnCollectionTransfer->getPagination()->getLastPage());
-        $this->assertEquals(1, $returnCollectionTransfer->getPagination()->getPage());
-        $this->assertEquals(2, $returnCollectionTransfer->getPagination()->getMaxPerPage());
+        $this->assertSame(2, $returnCollectionTransfer->getPagination()->getNextPage());
+        $this->assertSame(3, $returnCollectionTransfer->getPagination()->getLastPage());
+        $this->assertSame(1, $returnCollectionTransfer->getPagination()->getPage());
+        $this->assertSame(2, $returnCollectionTransfer->getPagination()->getMaxPerPage());
 
         $this->assertCount(2, $secondPageReturnCollectionTransfer->getReturns());
         $this->assertEquals($secondPageLastReturnTransfer, $secondPageReturnCollectionTransfer->getReturns()->offsetGet(0));
-        $this->assertEquals(3, $secondPageReturnCollectionTransfer->getPagination()->getNextPage());
-        $this->assertEquals(1, $secondPageReturnCollectionTransfer->getPagination()->getPreviousPage());
-        $this->assertEquals(2, $secondPageReturnCollectionTransfer->getPagination()->getPage());
+        $this->assertSame(3, $secondPageReturnCollectionTransfer->getPagination()->getNextPage());
+        $this->assertSame(1, $secondPageReturnCollectionTransfer->getPagination()->getPreviousPage());
+        $this->assertSame(2, $secondPageReturnCollectionTransfer->getPagination()->getPage());
     }
 
     /**

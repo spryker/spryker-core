@@ -121,7 +121,7 @@ class PriceProductScheduleCreateAndApplyTest extends Unit
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
             ->setCurrencyIsoCode($currencyTransfer->getCode());
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(300, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(300, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 
     /**
@@ -178,6 +178,6 @@ class PriceProductScheduleCreateAndApplyTest extends Unit
             ->setPriceTypeName($defaultPriceTypeTransfer->getName())
             ->setCurrencyIsoCode($currencyTransfer->getCode());
         $actualPriceProductTransfer = $this->priceProductFacade->findPriceProductFor($priceProductFilterTransfer);
-        $this->assertEquals(300, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
+        $this->assertSame(300, $actualPriceProductTransfer->getMoneyValue()->getNetAmount(), 'Default price does not match expected value.');
     }
 }

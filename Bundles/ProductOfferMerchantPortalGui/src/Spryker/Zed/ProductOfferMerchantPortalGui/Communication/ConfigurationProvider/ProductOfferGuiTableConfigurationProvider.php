@@ -95,7 +95,7 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
-            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 3, 'grey')
+            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
             ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])
             ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'grey', [
                 $this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',

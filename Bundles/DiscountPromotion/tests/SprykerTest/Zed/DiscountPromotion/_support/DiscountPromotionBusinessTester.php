@@ -16,8 +16,6 @@ use Spryker\Zed\Availability\Business\AvailabilityFacadeInterface;
 use Spryker\Zed\Stock\Business\StockFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -75,14 +75,14 @@ class RequestTest extends Unit
         $transfer->setFoo('bar');
         $request = $this->createFullRequest($transfer);
 
-        $this->assertEquals('password', $request->getPassword());
-        $this->assertEquals('host', $request->getHost());
-        $this->assertEquals('sessionId', $request->getSessionId());
-        $this->assertEquals(1234567, $request->getTime());
+        $this->assertSame('password', $request->getPassword());
+        $this->assertSame('host', $request->getHost());
+        $this->assertSame('sessionId', $request->getSessionId());
+        $this->assertSame(1234567, $request->getTime());
         $this->assertEquals($transfer, $request->getTransfer());
         $this->assertNotSame($transfer, $request->getTransfer());
         $this->assertNotSame($request->getTransfer(), $request->getTransfer());
-        $this->assertEquals('username', $request->getUsername());
+        $this->assertSame('username', $request->getUsername());
     }
 
     /**

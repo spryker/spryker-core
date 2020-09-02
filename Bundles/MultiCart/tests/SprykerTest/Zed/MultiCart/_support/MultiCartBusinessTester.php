@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\MultiCart;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class MultiCartBusinessTester extends Actor
 {
     use _generated\MultiCartBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

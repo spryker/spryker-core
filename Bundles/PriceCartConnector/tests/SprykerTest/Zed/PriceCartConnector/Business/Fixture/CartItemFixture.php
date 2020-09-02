@@ -15,7 +15,7 @@ class CartItemFixture extends AbstractTransfer
     /**
      * @var string
      */
-    private $id;
+    protected $id;
 
     /**
      * @return string

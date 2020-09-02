@@ -13,8 +13,6 @@ use Generated\Shared\DataBuilder\CompanyBusinessUnitBuilder;
 use Generated\Shared\Transfer\CompanyBusinessUnitTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -35,10 +33,6 @@ class CompanyBusinessUnitTester extends Actor
 
     protected const LEVEL = 'level';
     protected const CHILDREN = 'children';
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return array

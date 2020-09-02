@@ -10,8 +10,6 @@ namespace SprykerTest\Zed\ShipmentCartConnector;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -29,8 +27,4 @@ use Codeception\Actor;
 class ShipmentCartConnectorBusinessTester extends Actor
 {
     use _generated\ShipmentCartConnectorBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

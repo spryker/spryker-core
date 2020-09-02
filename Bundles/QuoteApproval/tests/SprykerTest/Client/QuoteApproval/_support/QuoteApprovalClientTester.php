@@ -10,8 +10,6 @@ namespace SprykerTest\Client\QuoteApproval;
 use Codeception\Actor;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -28,8 +26,4 @@ use Codeception\Actor;
 class QuoteApprovalClientTester extends Actor
 {
     use _generated\QuoteApprovalClientTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 }

@@ -10,7 +10,7 @@ Created,Erstellt
 Denied,Abgelehnt
 "Expiring in %daysNumber% days","Expiring in %daysNumber% days"
 From,Von
-"Has stock","Has stock"
+"Has stock","Auf Lager"
 Image,Bild
 Inactive,Inaktiv
 "Low on Stock","Low on Stock"
@@ -47,10 +47,10 @@ Valid,Gültig
 "Valid, online & with Stock","Valid, online & with Stock"
 "Valid To","Gültig Bis"
 Visibility,Sichtbarkeit
-"With Offers","Mit Angeboten"
+"With Offers","Mit Angebote"
 "With Stock","With Stock"
-"Without Offers","Ohne Angeboten"
-"Details & Description","Details & Description"
+"Without Offers","Ohne Angebote"
+"Description & Details","Description & Details"
 "The first date cannot be later than the second one.","The first date cannot be later than the second one."
 "The first date is the same as the second one.","The first date is the same as the second one."
 "The second date cannot be earlier than the first one.","The second date cannot be earlier than the first one."
