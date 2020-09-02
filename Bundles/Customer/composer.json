@@ -29,7 +29,14 @@
     "spryker/code-sniffer": "*",
     "spryker/sales": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/zed-navigation": "*",
+    "spryker/cms": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
+    "spryker/router": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*"
   },
   "suggest": {
     "spryker/checkout": "If you want to use Checkout plugins.",

@@ -27,7 +27,13 @@
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/zed-navigation": "*",
+    "spryker/cms": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
+    "spryker/router": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*"
   },
   "autoload": {
     "psr-4": {

@@ -24,7 +24,12 @@
     "spryker/propel": "*",
     "spryker/store": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/zed-navigation": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
+    "spryker/router": "*",
+    "spryker/validator": "*"
   },
   "autoload": {
     "psr-4": {

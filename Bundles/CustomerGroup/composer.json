@@ -18,7 +18,14 @@
     "spryker/code-sniffer": "*",
     "spryker/propel": "*",
     "spryker/testify": "*",
-    "spryker/zed-navigation": "*"
+    "spryker/zed-navigation": "*",
+    "spryker/cms": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
+    "spryker/router": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*"
   },
   "autoload": {
     "psr-4": {
