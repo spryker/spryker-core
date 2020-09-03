@@ -28,7 +28,7 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
                 continue;
             }
 
-            if ($this->isMinGreaterThan($minPriceProductTransfer, $priceProductTransfer, $priceProductFilterTransfer->getPriceMode())) {
+            if ($this->isMinGreaterThan($priceProductFilterTransfer->getPriceMode(), $priceProductTransfer, $minPriceProductTransfer)) {
                 $minPriceProductTransfer = $priceProductTransfer;
             }
         }
@@ -37,13 +37,13 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
     }
 
     /**
-     * @param \Generated\Shared\Transfer\PriceProductTransfer|null $minPriceProductTransfer
-     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
      * @param string $priceMode
+     * @param \Generated\Shared\Transfer\PriceProductTransfer $priceProductTransfer
+     * @param \Generated\Shared\Transfer\PriceProductTransfer|null $minPriceProductTransfer
      *
      * @return bool
      */
-    protected function isMinGreaterThan(?PriceProductTransfer $minPriceProductTransfer, PriceProductTransfer $priceProductTransfer, string $priceMode)
+    protected function isMinGreaterThan(string $priceMode, PriceProductTransfer $priceProductTransfer, ?PriceProductTransfer $minPriceProductTransfer)
     {
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
             if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {

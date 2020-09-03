@@ -228,6 +228,87 @@ class PriceProductServiceTest extends Unit
     }
 
     /**
+     * @return void
+     */
+    public function testResolveProductPriceByPriceProductCriteriaReturnsNullIfThereAreNoPricesWithRequestedType(): void
+    {
+        // Arrange
+        $priceProductTransferGrossFirst = (new PriceProductTransfer())
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setGrossAmount(100)
+                    ->setCurrency(
+                        (new CurrencyTransfer())
+                            ->setIdCurrency(static::TEST_ID_CURRENCY)
+                    )
+            )
+            ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(static::TEST_DIMENSION)
+            );
+
+        $priceProductTransferGrossSecond = clone $priceProductTransferGrossFirst;
+        $priceProductTransferGrossSecond->setMoneyValue(
+            (clone $priceProductTransferGrossSecond->getMoneyValue())
+                ->setGrossAmount(200)
+        );
+
+        $priceProductTransfers = [
+            $priceProductTransferGrossFirst,
+            $priceProductTransferGrossSecond,
+        ];
+
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceMode(static::PRICE_MODE_NET)
+            ->setPriceType(static::PRICE_TYPE_DEFAULT)
+            ->setIdCurrency(static::TEST_ID_CURRENCY);
+
+        // Act
+        $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals(null, $result);
+    }
+
+    /**
+     * @return void
+     */
+    public function testResolveProductPriceByPriceProductCriteriaReturnsPriceMatchedByType(): void
+    {
+        // Arrange
+        $priceProductTransferNet = (new PriceProductTransfer())
+            ->setMoneyValue(
+                (new MoneyValueTransfer())
+                    ->setNetAmount(100)
+                    ->setCurrency(
+                        (new CurrencyTransfer())
+                            ->setIdCurrency(static::TEST_ID_CURRENCY)
+                    )
+            )
+            ->setPriceTypeName(static::PRICE_TYPE_DEFAULT)
+            ->setPriceDimension(
+                (new PriceProductDimensionTransfer())
+                    ->setType(static::TEST_DIMENSION)
+            );
+
+        $priceProductTransfers = [
+            $priceProductTransferNet,
+        ];
+
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceMode(static::PRICE_MODE_NET)
+            ->setPriceType(static::PRICE_TYPE_DEFAULT)
+            ->setIdCurrency(static::TEST_ID_CURRENCY);
+
+        // Act
+        $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
+
+        // Assert
+        $this->assertEquals($priceProductTransferNet, $result);
+    }
+
+    /**
      * @return \Spryker\Service\PriceProduct\PriceProductServiceInterface
      */
     protected function getPriceProductService(): PriceProductServiceInterface
