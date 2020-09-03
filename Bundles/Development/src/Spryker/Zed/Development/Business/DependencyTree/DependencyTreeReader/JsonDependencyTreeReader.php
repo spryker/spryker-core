@@ -14,7 +14,7 @@ class JsonDependencyTreeReader implements DependencyTreeReaderInterface
     /**
      * @var string
      */
-    private $pathToJson;
+    protected $pathToJson;
 
     /**
      * @param string $pathToJson

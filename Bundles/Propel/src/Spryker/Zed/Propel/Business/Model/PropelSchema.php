@@ -12,17 +12,17 @@ class PropelSchema implements PropelSchemaInterface
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaWriterInterface
      */
-    private $writer;
+    protected $writer;
 
     /**
      * @var \Spryker\Zed\Propel\Business\Model\PropelSchemaMergerInterface
      */
-    private $merger;
+    protected $merger;
 
     /**
      * @param \Spryker\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface $finder

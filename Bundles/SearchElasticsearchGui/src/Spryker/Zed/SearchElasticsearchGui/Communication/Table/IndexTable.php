@@ -18,7 +18,7 @@ class IndexTable extends AbstractTable
     /**
      * @var \Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiToSearchElasticsearchFacadeInterface
      */
-    private $searchElasticsearchFacade;
+    protected $searchElasticsearchFacade;
 
     /**
      * @param \Spryker\Zed\SearchElasticsearchGui\Dependency\Facade\SearchElasticsearchGuiToSearchElasticsearchFacadeInterface $searchElasticsearchFacade
