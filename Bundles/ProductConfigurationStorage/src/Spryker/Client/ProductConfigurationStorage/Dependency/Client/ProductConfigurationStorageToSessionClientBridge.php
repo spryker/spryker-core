@@ -23,7 +23,10 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
     }
 
     /**
-     * @param mixed $value
+     * @param string $name
+     * @param $value
+     *
+     * @return mixed|void
      */
     public function set(string $name, $value)
     {
@@ -31,7 +34,8 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
     }
 
     /**
-     * @param mixed $default The default value if not found
+     * @param string $name
+     * @param null $default
      *
      * @return mixed
      */
