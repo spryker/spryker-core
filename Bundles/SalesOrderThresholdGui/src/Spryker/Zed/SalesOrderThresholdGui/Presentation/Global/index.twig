@@ -100,10 +100,12 @@
                     <div class="panel-body">
                         {{ form_row(globalThresholdForm.softThreshold.strategy) }}
                         {{ form_row(globalThresholdForm.softThreshold.threshold) }}
-                        {% for child in globalThresholdForm.softThreshold if child.vars.attr.threshold_key is defined %}
-                            <div class="threshold_group_soft threshold-key-{{ child.vars.attr.threshold_key }}">
-                                {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
-                            </div>
+                        {% for child in globalThresholdForm.softThreshold %}
+                            {% if child.vars.attr.threshold_key is defined %}
+                                <div class="threshold_group_soft threshold-key-{{ child.vars.attr.threshold_key }}">
+                                    {% include '@SalesOrderThresholdGui/_partials/form-row.twig' with {form: child} %}
+                                </div>
+                            {% endif %}
                         {% endfor %}
 
                         {% for localeTransfer in localeCollection %}
