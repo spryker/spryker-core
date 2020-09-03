@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ProductConfigurationStorage\Persistence;
 
 use Generated\Shared\Transfer\ProductConfigurationStorageTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
 
@@ -53,7 +54,7 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
      */
     public function deleteProductConfigurationStorageByProductConfigurationIds(array $productConfigurationIds): void
     {
-        /** @var \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities */
+        /** @var \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities */
         $productConfigurationStorageEntities = $this->getFactory()
             ->createProductConfigurationStorageQuery()
             ->filterByFkProductConfiguration_In($productConfigurationIds)
@@ -65,12 +66,12 @@ class ProductConfigurationStorageEntityManager extends AbstractEntityManager imp
     }
 
     /**
-     * @param \Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities
+     * @param \Propel\Runtime\Collection\ObjectCollection|\Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorage[] $productConfigurationStorageEntities
      *
      * @return void
      */
     protected function executeDeleteProductConfigurationStorageByProductConfigurationIds(
-        array $productConfigurationStorageEntities
+        ObjectCollection $productConfigurationStorageEntities
     ): void {
         foreach ($productConfigurationStorageEntities as $productConfigurationStorageEntity) {
             $productConfigurationStorageEntity->delete();
