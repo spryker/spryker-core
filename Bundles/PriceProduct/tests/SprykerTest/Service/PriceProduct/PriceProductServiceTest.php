@@ -204,7 +204,7 @@ class PriceProductServiceTest extends Unit
                     ->setType(static::TEST_DIMENSION)
             );
 
-        $priceWithoutNetAmount = clone $priceWithNetAmount;
+        $priceWithoutNetAmount = (new PriceProductTransfer())->fromArray($priceWithNetAmount->toArray());
         $priceWithoutNetAmount->setMoneyValue(
             (clone $priceWithNetAmount->getMoneyValue())
                 ->setNetAmount(null)
@@ -224,7 +224,7 @@ class PriceProductServiceTest extends Unit
         $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         // Assert
-        $this->assertEquals($priceWithNetAmount, $result);
+        $this->assertSame($priceWithNetAmount, $result);
     }
 
     /**
@@ -248,7 +248,7 @@ class PriceProductServiceTest extends Unit
                     ->setType(static::TEST_DIMENSION)
             );
 
-        $priceProductTransferGrossSecond = clone $priceProductTransferGrossFirst;
+        $priceProductTransferGrossSecond = (new PriceProductTransfer())->fromArray($priceProductTransferGrossFirst->toArray());
         $priceProductTransferGrossSecond->setMoneyValue(
             (clone $priceProductTransferGrossSecond->getMoneyValue())
                 ->setGrossAmount(200)
@@ -268,7 +268,7 @@ class PriceProductServiceTest extends Unit
         $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         // Assert
-        $this->assertEquals(null, $result);
+        $this->assertSame(null, $result);
     }
 
     /**
@@ -305,7 +305,7 @@ class PriceProductServiceTest extends Unit
         $result = $this->getPriceProductService()->resolveProductPriceByPriceProductCriteria($priceProductTransfers, $priceProductCriteriaTransfer);
 
         // Assert
-        $this->assertEquals($priceProductTransferNet, $result);
+        $this->assertSame($priceProductTransferNet, $result);
     }
 
     /**

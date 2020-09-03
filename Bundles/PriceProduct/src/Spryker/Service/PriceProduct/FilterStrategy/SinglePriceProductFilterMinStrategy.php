@@ -43,7 +43,7 @@ class SinglePriceProductFilterMinStrategy implements SinglePriceProductFilterStr
      *
      * @return bool
      */
-    protected function isMinGreaterThan(string $priceMode, PriceProductTransfer $priceProductTransfer, ?PriceProductTransfer $minPriceProductTransfer)
+    protected function isMinGreaterThan(string $priceMode, PriceProductTransfer $priceProductTransfer, ?PriceProductTransfer $minPriceProductTransfer = null)
     {
         if ($priceMode === PriceProductConfig::PRICE_GROSS_MODE) {
             if ($priceProductTransfer->getMoneyValue()->getGrossAmount() === null) {
