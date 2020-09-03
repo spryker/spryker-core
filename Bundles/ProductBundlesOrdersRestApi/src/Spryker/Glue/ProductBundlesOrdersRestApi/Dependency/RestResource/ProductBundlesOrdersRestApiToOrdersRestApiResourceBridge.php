@@ -5,22 +5,27 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OrdersRestApi;
+namespace Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Spryker\Glue\Kernel\AbstractRestResource;
 
-/**
- * @method \Spryker\Glue\OrdersRestApi\OrdersRestApiFactory getFactory()
- */
-class OrdersRestApiResource extends AbstractRestResource implements OrdersRestApiResourceInterface
+class ProductBundlesOrdersRestApiToOrdersRestApiResourceBridge implements ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface
 {
     /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
+     * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface
+     */
+    protected $ordersRestApiResource;
+
+    /**
+     * @param \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface $ordersRestApiResource
+     */
+    public function __construct($ordersRestApiResource)
+    {
+        $this->ordersRestApiResource = $ordersRestApiResource;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
      *
@@ -30,8 +35,7 @@ class OrdersRestApiResource extends AbstractRestResource implements OrdersRestAp
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
-        return $this->getFactory()
-            ->createOrderMapper()
+        return $this->ordersRestApiResource
             ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, $restOrderItemsAttributesTransfer);
     }
 }

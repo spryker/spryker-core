@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\ProductBundlesOrdersRestApi\Plugin\OrdersRestApi;
+
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
+use Spryker\Glue\Kernel\AbstractPlugin;
+use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface;
+
+/**
+ * @method \Spryker\Glue\ProductBundlesOrdersRestApi\ProductBundlesOrdersRestApiFactory getFactory()
+ */
+class BundleItemRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements RestOrderDetailsAttributesMapperPluginInterface
+{
+    /**
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     * @param \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer
+     */
+    public function mapOrderTransferToRestOrderDetailsAttributesTransfer(
+        OrderTransfer $orderTransfer,
+        RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
+    ): RestOrderDetailsAttributesTransfer {
+        return $this->getFactory()
+            ->createOrderMapper()
+            ->mapOrderTransferToRestOrderDetailsAttributesTransfer($orderTransfer, $restOrderDetailsAttributesTransfer);
+    }
+}

@@ -5,19 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\OrdersRestApi;
+namespace Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 
-interface OrdersRestApiResourceInterface
+interface ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface
 {
     /**
-     * Specification:
-     * - Maps `ItemTransfer` to `RestOrderItemsAttributesTransfer`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
      *
