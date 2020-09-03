@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander;
 
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-interface BundleItemExpanderInterface
+interface BundledItemExpanderInterface
 {
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
@@ -17,13 +17,5 @@ interface BundleItemExpanderInterface
      *
      * @return void
      */
-    public function addBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return void
-     */
-    public function addGuestBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
+    public function addBundledItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void;
 }

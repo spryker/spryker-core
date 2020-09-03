@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductBundlesCartsRestApi\Plugin\GlueApplication;
+namespace Spryker\Glue\CartsRestApi\Plugin\GlueApplication;
 
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipPluginInterface;
 use Spryker\Glue\Kernel\AbstractPlugin;
-use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
 
 /**
  * @Glue({
  *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
  * })
  *
- * @method \Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiFactory getFactory()
+ * @method \Spryker\Glue\CartsRestApi\CartsRestApiFactory getFactory()
  */
-class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class GuestCartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds `bundled-items` resource as relationship to `bundle-items`.
-     * - Uses `QuoteTransfer` payload of the `bundle-items` resource.
+     * - Adds guest-cart-items resource as relationship by quote.
+     * - Requires QuoteTransfer be provided in resource payload.
      *
      * @api
      *
@@ -36,8 +36,8 @@ class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implem
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createBundledItemExpander()
-            ->addBundledItemResourceRelationships($resources, $restRequest);
+            ->createCartItemByQuoteResourceRelationshipExpander()
+            ->addGuestCartItemResourceRelationships($resources, $restRequest);
     }
 
     /**
@@ -49,6 +49,6 @@ class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implem
      */
     public function getRelationshipResourceType(): string
     {
-        return ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLED_ITEMS;
+        return CartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS;
     }
 }

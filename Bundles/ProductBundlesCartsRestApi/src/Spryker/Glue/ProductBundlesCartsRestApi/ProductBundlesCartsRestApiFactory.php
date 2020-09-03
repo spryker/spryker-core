@@ -10,6 +10,8 @@ namespace Spryker\Glue\ProductBundlesCartsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\RestResource\ProductBundlesCartsRestApiToCartsRestApiResourceInterface;
+use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundledItemExpander;
+use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundledItemExpanderInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundleItemExpander;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundleItemExpanderInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer\BundleItemFilterer;
@@ -25,6 +27,18 @@ class ProductBundlesCartsRestApiFactory extends AbstractFactory
     public function createBundleItemExpander(): BundleItemExpanderInterface
     {
         return new BundleItemExpander(
+            $this->getProductBundleClient(),
+            $this->getCartsRestApiResource(),
+            $this->createBundleItemRestResponseBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundledItemExpanderInterface
+     */
+    public function createBundledItemExpander(): BundledItemExpanderInterface
+    {
+        return new BundledItemExpander(
             $this->getProductBundleClient(),
             $this->getCartsRestApiResource(),
             $this->createBundleItemRestResponseBuilder()

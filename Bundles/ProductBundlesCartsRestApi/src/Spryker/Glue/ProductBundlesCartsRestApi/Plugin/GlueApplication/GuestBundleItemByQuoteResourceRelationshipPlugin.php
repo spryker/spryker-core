@@ -19,12 +19,12 @@ use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
  *
  * @method \Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiFactory getFactory()
  */
-class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
+class GuestBundleItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
 {
     /**
      * {@inheritDoc}
-     * - Adds `bundled-items` resource as relationship to `bundle-items`.
-     * - Uses `QuoteTransfer` payload of the `bundle-items` resource.
+     * - Adds `bundle-items` resource as relationship by `QuoteTransfer` provided as a payload.
+     * - Works only on `guest-carts` parent resources.
      *
      * @api
      *
@@ -36,8 +36,8 @@ class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implem
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         $this->getFactory()
-            ->createBundledItemExpander()
-            ->addBundledItemResourceRelationships($resources, $restRequest);
+            ->createBundleItemExpander()
+            ->addGuestBundleItemResourceRelationships($resources, $restRequest);
     }
 
     /**
@@ -49,6 +49,6 @@ class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implem
      */
     public function getRelationshipResourceType(): string
     {
-        return ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLED_ITEMS;
+        return ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS;
     }
 }

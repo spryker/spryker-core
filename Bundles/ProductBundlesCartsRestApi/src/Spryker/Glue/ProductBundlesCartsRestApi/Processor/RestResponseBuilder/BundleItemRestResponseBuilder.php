@@ -34,15 +34,13 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
-     * @param string $parentResourceType
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
      */
     public function createBundleItemResource(
         QuoteTransfer $quoteTransfer,
         ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer,
-        string $parentResourceType
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
     ): RestResourceInterface {
         $bundleItemRestResource = $this->restResourceBuilder->createRestResource(
             ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
@@ -53,9 +51,39 @@ class BundleItemRestResponseBuilder implements BundleItemRestResponseBuilderInte
 
         $bundleItemSelfLink = sprintf(
             '%s/%s/%s/%s/',
-            $parentResourceType,
+            ProductBundlesCartsRestApiConfig::RESOURCE_CARTS,
             $quoteTransfer->getUuid(),
             ProductBundlesCartsRestApiConfig::RESOURCE_CART_ITEMS,
+            $itemTransfer->getGroupKey()
+        );
+
+        return $bundleItemRestResource->addLink(RestLinkInterface::LINK_SELF, $bundleItemSelfLink);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    public function createGuestBundleItemResource(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
+    ): RestResourceInterface {
+        $bundleItemRestResource = $this->restResourceBuilder->createRestResource(
+            ProductBundlesCartsRestApiConfig::RESOURCE_BUNDLE_ITEMS,
+            $itemTransfer->getGroupKey(),
+            $restItemsAttributesTransfer
+        );
+        $bundleItemRestResource->setPayload($quoteTransfer);
+
+        $bundleItemSelfLink = sprintf(
+            '%s/%s/%s/%s/',
+            ProductBundlesCartsRestApiConfig::RESOURCE_GUEST_CARTS,
+            $quoteTransfer->getUuid(),
+            ProductBundlesCartsRestApiConfig::RESOURCE_GUEST_CARTS_ITEMS,
             $itemTransfer->getGroupKey()
         );
 

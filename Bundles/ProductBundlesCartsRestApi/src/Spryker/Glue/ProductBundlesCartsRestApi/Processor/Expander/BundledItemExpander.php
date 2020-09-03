@@ -14,9 +14,8 @@ use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\RestResource\ProductBundlesCartsRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\RestResponseBuilder\BundleItemRestResponseBuilderInterface;
-use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
 
-class BundleItemExpander implements BundleItemExpanderInterface
+class BundledItemExpander implements BundledItemExpanderInterface
 {
     /**
      * @uses \Spryker\Client\ProductBundle\Grouper\ProductBundleGrouper::BUNDLE_ITEMS
@@ -64,70 +63,35 @@ class BundleItemExpander implements BundleItemExpanderInterface
      *
      * @return void
      */
-    public function addBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
+    public function addBundledItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_CARTS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
+            if (!$resource->getPayload() || !$resource->getPayload() instanceof QuoteTransfer) {
                 continue;
             }
 
             /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
             $quoteTransfer = $resource->getPayload();
 
-            $bundleItemTransfers = $this->getGroupedBundleItems($quoteTransfer);
+            $groupedBundledItems = $this->getGroupedBundledItems($quoteTransfer);
 
-            foreach ($bundleItemTransfers as $bundleItemTransfer) {
-                $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
-                    $bundleItemTransfer,
-                    (new RestItemsAttributesTransfer()),
-                    $restRequest->getMetadata()->getLocale()
-                );
+            foreach ($groupedBundledItems as $itemGroupKey => $groupedBundledItem) {
+                if ($itemGroupKey !== $resource->getId()) {
+                    continue;
+                }
 
-                $bundleItemRestResource = $this->bundleItemRestResponseBuilder
-                    ->createBundleItemResource($quoteTransfer, $bundleItemTransfer, $restItemsAttributesTransfer);
+                foreach ($groupedBundledItem as $bundledItemTransfer) {
+                    $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
+                        $bundledItemTransfer,
+                        (new RestItemsAttributesTransfer()),
+                        $restRequest->getMetadata()->getLocale()
+                    );
 
-                $resource->addRelationship($bundleItemRestResource);
-            }
-        }
-    }
+                    $bundledItemRestResource = $this->bundleItemRestResponseBuilder
+                        ->createBundledItemResource($bundledItemTransfer, $restItemsAttributesTransfer);
 
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $resources
-     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
-     *
-     * @return void
-     */
-    public function addGuestBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
-    {
-        foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_GUEST_CARTS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
-                continue;
-            }
-
-            /** @var \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer */
-            $quoteTransfer = $resource->getPayload();
-
-            $bundleItemTransfers = $this->getGroupedBundleItems($quoteTransfer);
-
-            foreach ($bundleItemTransfers as $bundleItemTransfer) {
-                $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
-                    $bundleItemTransfer,
-                    (new RestItemsAttributesTransfer()),
-                    $restRequest->getMetadata()->getLocale()
-                );
-
-                $bundleItemRestResource = $this->bundleItemRestResponseBuilder
-                    ->createGuestBundleItemResource($quoteTransfer, $bundleItemTransfer, $restItemsAttributesTransfer);
-
-                $resource->addRelationship($bundleItemRestResource);
+                    $resource->addRelationship($bundledItemRestResource);
+                }
             }
         }
     }
@@ -135,23 +99,24 @@ class BundleItemExpander implements BundleItemExpanderInterface
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
-     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     * @return \Generated\Shared\Transfer\ItemTransfer[][]
      */
-    protected function getGroupedBundleItems(QuoteTransfer $quoteTransfer): array
+    protected function getGroupedBundledItems(QuoteTransfer $quoteTransfer): array
     {
         $groupedBundleItems = $this->productBundleClient
             ->getGroupedBundleItems($quoteTransfer->getItems(), $quoteTransfer->getBundleItems());
 
-        /** @var \Generated\Shared\Transfer\ItemTransfer[] $bundleItemTransfers */
-        $bundleItemTransfers = [];
+        /** @var \Generated\Shared\Transfer\ItemTransfer[] $bundledItemTransfers */
+        $bundledItemTransfers = [];
         foreach ($groupedBundleItems as $groupedBundleItem) {
             if ($groupedBundleItem instanceof ItemTransfer) {
                 continue;
             }
 
-            $bundleItemTransfers[] = $groupedBundleItem[static::BUNDLE_PRODUCT];
+            $bundledItemTransfers[$groupedBundleItem[static::BUNDLE_PRODUCT]->getGroupKey()]
+                = $groupedBundleItem[static::BUNDLE_ITEMS];
         }
 
-        return $bundleItemTransfers;
+        return $bundledItemTransfers;
     }
 }
