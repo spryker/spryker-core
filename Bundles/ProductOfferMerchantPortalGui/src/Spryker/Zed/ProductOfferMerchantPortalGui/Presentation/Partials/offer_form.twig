@@ -104,7 +104,7 @@
             <div class="mp-edit-offer__details">
                 {% for attributeKey, attribute in productAttributes %}
                     <div class="mp-edit-offer__details-col">
-                        <span class="mp-edit-offer__details-text mp-edit-offer__details-text--title">{{ attributeKey | replace('_', ' ') }}</span>
+                        <span class="mp-edit-offer__details-text mp-edit-offer__details-text--title">{{ attributeKey | replace({'_', ' '}) }}</span>
                         <span class="mp-edit-offer__details-text">{{ attribute }}</span>
                     </div>
                 {% endfor %}
