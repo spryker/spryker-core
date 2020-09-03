@@ -13,6 +13,10 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiConfig;
 
 /**
+ * @Glue({
+ *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\RestItemsAttributesTransfer"
+ * })
+ *
  * @method \Spryker\Glue\ProductBundlesCartsRestApi\ProductBundlesCartsRestApiFactory getFactory()
  */
 class BundledItemByQuoteResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface

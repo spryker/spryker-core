@@ -118,7 +118,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
                 $itemFound = true;
             }
 
-            if ($itemFound) {
+            if ($itemFound && !$itemTransfer->getRelatedBundleItemIdentifier()) {
                 return true;
             }
         }

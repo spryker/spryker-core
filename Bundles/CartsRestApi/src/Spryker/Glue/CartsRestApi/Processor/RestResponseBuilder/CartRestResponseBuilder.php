@@ -8,7 +8,6 @@
 namespace Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder;
 
 use ArrayObject;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteCollectionTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
@@ -43,21 +42,29 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
     protected $cartsRestApiConfig;
 
     /**
+     * @var \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     */
+    protected $cartItemFilterPlugins;
+
+    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
      * @param \Spryker\Glue\CartsRestApi\Processor\Mapper\CartMapperInterface $cartMapper
      * @param \Spryker\Glue\CartsRestApi\Processor\RestResponseBuilder\ItemResponseBuilderInterface $itemResponseBuilder
      * @param \Spryker\Glue\CartsRestApi\CartsRestApiConfig $cartsRestApiConfig
+     * @param \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[] $cartItemFilterPlugins
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
         CartMapperInterface $cartMapper,
         ItemResponseBuilderInterface $itemResponseBuilder,
-        CartsRestApiConfig $cartsRestApiConfig
+        CartsRestApiConfig $cartsRestApiConfig,
+        array $cartItemFilterPlugins
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
         $this->cartMapper = $cartMapper;
         $this->itemResponseBuilder = $itemResponseBuilder;
         $this->cartsRestApiConfig = $cartsRestApiConfig;
+        $this->cartItemFilterPlugins = $cartItemFilterPlugins;
     }
 
     /**
@@ -139,36 +146,7 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
 
         $cartResource->setPayload($quoteTransfer);
 
-        foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            $this->addCartItemRelationships($cartResource, $itemTransfer, $localeName);
-        }
-
-        return $cartResource;
-    }
-
-    /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param string $localeName
-     *
-     * @return void
-     */
-    protected function addCartItemRelationships(
-        RestResourceInterface $cartResource,
-        ItemTransfer $itemTransfer,
-        string $localeName
-    ): void {
-        if (!$this->cartsRestApiConfig->getAllowedCartItemEagerRelationship()) {
-            return;
-        }
-
-        $itemResource = $this->itemResponseBuilder->createCartItemResource(
-            $cartResource,
-            $itemTransfer,
-            $localeName
-        );
-
-        $cartResource->addRelationship($itemResource);
+        return $this->addCartItemRelationships($cartResource, $quoteTransfer, $localeName);
     }
 
     /**
@@ -184,5 +162,59 @@ class CartRestResponseBuilder implements CartRestResponseBuilderInterface
         return $this->restResourceBuilder
             ->createRestResponse()
             ->addError($restErrorMessageTransfer);
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $cartResource
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param string $localeName
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface
+     */
+    protected function addCartItemRelationships(
+        RestResourceInterface $cartResource,
+        QuoteTransfer $quoteTransfer,
+        string $localeName
+    ): RestResourceInterface {
+        if (!$this->cartsRestApiConfig->getAllowedCartItemEagerRelationship()) {
+            return $cartResource;
+        }
+
+        $filteredItemTransfers = $this->executeCartItemFilterPlugins(
+            $quoteTransfer->getItems()->getArrayCopy(),
+            $quoteTransfer
+        );
+
+        foreach ($filteredItemTransfers as $itemTransfer) {
+            $itemResource = $this->itemResponseBuilder->createCartItemResource(
+                $cartResource,
+                $itemTransfer,
+                $localeName
+            );
+
+            $cartResource->addRelationship($itemResource);
+        }
+
+        return $cartResource;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    protected function executeCartItemFilterPlugins(array $itemTransfers, QuoteTransfer $quoteTransfer): array
+    {
+        if (!$this->cartItemFilterPlugins) {
+            return $itemTransfers;
+        }
+
+        $filteredItemTransfers = [];
+        foreach ($this->cartItemFilterPlugins as $cartItemFilterPlugin) {
+            $filteredItemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
+        }
+
+        return $filteredItemTransfers;
     }
 }

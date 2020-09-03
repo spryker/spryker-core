@@ -1,0 +1,51 @@
+<?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer;
+
+use ArrayObject;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
+
+class BundleItemFilterer implements BundleItemFiltererInterface
+{
+    /**
+     * @var \Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface
+     */
+    protected $productBundleClient;
+
+    /**
+     * @param \Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface $productBundleClient
+     */
+    public function __construct(ProductBundlesCartsRestApiToProductBundleClientInterface $productBundleClient)
+    {
+        $this->productBundleClient = $productBundleClient;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ItemTransfer[]
+     */
+    public function getFilteredItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
+    {
+        $filteredItemTransfers = [];
+        $groupedCartItems = $this->productBundleClient->getGroupedBundleItems(new ArrayObject($itemTransfers), $quoteTransfer->getBundleItems());
+
+        foreach ($groupedCartItems as $cartItem) {
+            if (!$cartItem instanceof ItemTransfer) {
+                continue;
+            }
+
+            $filteredItemTransfers[] = $cartItem;
+        }
+
+        return $filteredItemTransfers;
+    }
+}
