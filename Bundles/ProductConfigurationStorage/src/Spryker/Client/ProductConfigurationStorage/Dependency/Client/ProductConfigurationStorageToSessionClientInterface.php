@@ -10,12 +10,16 @@ namespace Spryker\Client\ProductConfigurationStorage\Dependency\Client;
 interface ProductConfigurationStorageToSessionClientInterface
 {
     /**
+     * @param string $name
      * @param mixed $value
+     *
+     * @return void
      */
     public function set(string $name, $value);
 
     /**
-     * @param mixed $default The default value if not found
+     * @param string $name The attribute name
+     * @param mixed $default The default value if not found.
      *
      * @return mixed
      */

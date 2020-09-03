@@ -22,9 +22,11 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
         $this->sessionClient = $sessionClient;
     }
 
-
     /**
+     * @param string $name
      * @param mixed $value
+     *
+     * @return void
      */
     public function set(string $name, $value)
     {
@@ -32,7 +34,8 @@ class ProductConfigurationStorageToSessionClientBridge implements ProductConfigu
     }
 
     /**
-     * @param mixed $default The default value if not found
+     * @param string $name The attribute name
+     * @param mixed $default The default value if not found.
      *
      * @return mixed
      */
