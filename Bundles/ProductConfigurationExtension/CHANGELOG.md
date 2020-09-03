@@ -1,3 +1,3 @@
-# ProductConfiguratorExtension Changelog
+# ProductConfigurationExtension Changelog
 
-[Release Changelog](https://github.com/spryker/product-configurator-extension/releases)
+[Release Changelog](https://github.com/spryker/product-configuration-extension/releases)

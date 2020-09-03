@@ -8,11 +8,11 @@
 namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
+use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolverInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface;
-use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
-use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
