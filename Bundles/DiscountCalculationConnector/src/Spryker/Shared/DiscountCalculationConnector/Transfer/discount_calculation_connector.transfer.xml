@@ -6,6 +6,14 @@
     <transfer name="CalculableObject">
         <property name="store" type="Store"/>
         <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
     </transfer>
 
     <transfer name="Currency">
