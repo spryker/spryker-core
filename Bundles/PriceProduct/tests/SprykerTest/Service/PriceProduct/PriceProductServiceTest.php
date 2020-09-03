@@ -206,7 +206,8 @@ class PriceProductServiceTest extends Unit
 
         $priceWithoutNetAmount = (new PriceProductTransfer())->fromArray($priceWithNetAmount->toArray());
         $priceWithoutNetAmount->setMoneyValue(
-            (clone $priceWithNetAmount->getMoneyValue())
+            (new MoneyValueTransfer())
+                ->fromArray($priceWithNetAmount->getMoneyValue()->toArray())
                 ->setNetAmount(null)
         );
 
@@ -250,7 +251,8 @@ class PriceProductServiceTest extends Unit
 
         $priceProductTransferGrossSecond = (new PriceProductTransfer())->fromArray($priceProductTransferGrossFirst->toArray());
         $priceProductTransferGrossSecond->setMoneyValue(
-            (clone $priceProductTransferGrossSecond->getMoneyValue())
+            (new MoneyValueTransfer())
+                ->fromArray($priceProductTransferGrossFirst->getMoneyValue()->toArray())
                 ->setGrossAmount(200)
         );
 
