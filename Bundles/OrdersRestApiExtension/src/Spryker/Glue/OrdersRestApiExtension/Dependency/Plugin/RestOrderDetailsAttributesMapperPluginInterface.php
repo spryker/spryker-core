@@ -14,7 +14,7 @@ interface RestOrderDetailsAttributesMapperPluginInterface
 {
     /**
      * Specification:
-     * - Maps OrderTransfer to RestOrderDetailsAttributesTransfer.
+     * - Maps `OrderTransfer` to `RestOrderDetailsAttributesTransfer`.
      *
      * @api
      *
