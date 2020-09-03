@@ -10,7 +10,7 @@ namespace Spryker\Client\SearchExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\SearchContextTransfer;
 
 /**
- * @deprecated This interface will be merged to `\Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface`.
+ * @deprecated This interface will be merged to {@link \Spryker\Client\SearchExtension\Dependency\Plugin\QueryInterface}.
  */
 interface SearchContextAwareQueryInterface
 {
