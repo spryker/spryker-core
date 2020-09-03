@@ -31,7 +31,6 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addProductConfiguratorRequestPlugins($container);
         $container = $this->addProductConfiguratorRequestDefaultPlugin($container);
 
-
         return $container;
     }
 
@@ -57,13 +56,10 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         return [];
     }
 
-
     /**
      * @param \Spryker\Client\Kernel\Container $container
      *
      * @return \Spryker\Client\Kernel\Container
-     *
-     * @throws \Spryker\Service\Container\Exception\FrozenServiceException
      */
     protected function addProductConfiguratorRequestDefaultPlugin(Container $container): Container
     {
@@ -72,7 +68,6 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
-
     }
 
     /**

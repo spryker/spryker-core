@@ -41,18 +41,17 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
     /**
      * {@inheritDoc}
      *
-     *  @api
+     * @api
      *
      * @param string $groupKey
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quote
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
     public function findProductConfigurationInstanceByGroupKey(
         string $groupKey,
         QuoteTransfer $quoteTransfer
-    ): ?ProductConfigurationInstanceTransfer
-    {
+    ): ?ProductConfigurationInstanceTransfer {
         return $this->getFactory()
             ->createProductConfigurationInstanceReader()->findProductConfigurationInstanceByGroupKey($groupKey, $quoteTransfer);
     }

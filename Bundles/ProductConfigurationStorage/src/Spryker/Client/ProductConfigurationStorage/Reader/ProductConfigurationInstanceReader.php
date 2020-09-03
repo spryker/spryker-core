@@ -98,6 +98,8 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
                 return $this->findProductConfigurationInstanceBySku($itemTransfer->getSku());
             }
         }
+
+        return null;
     }
 
     /**
