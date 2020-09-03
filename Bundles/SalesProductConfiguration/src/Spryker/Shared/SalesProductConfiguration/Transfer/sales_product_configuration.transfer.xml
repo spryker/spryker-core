@@ -5,6 +5,7 @@
 
     <transfer name="Item">
         <property name="productConfigurationInstance" type="ProductConfigurationInstance"/>
+        <property name="salesOrderItemConfiguration" type="SalesOrderItemConfiguration"/>
         <property name="idSalesOrderItem" type="int"/>
     </transfer>
 
@@ -27,6 +28,10 @@
     </transfer>
 
     <transfer name="SaveOrder">
+    </transfer>
+
+    <transfer name="SalesOrderItemConfigurationFilter">
+        <property name="salesOrderItemIds" type="int[]" singular="idSalesOrderItem"/>
     </transfer>
 
 </transfers>

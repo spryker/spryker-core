@@ -16,11 +16,6 @@ use Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUt
 class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGroupKeyItemExpanderInterface
 {
     /**
-     * @uses \Spryker\Service\UtilText\Model\Hash::MD5
-     */
-    protected const MD5 = 'md5';
-
-    /**
      * @var \Spryker\Zed\ProductConfiguration\Dependency\Service\ProductConfigurationToUtilEncodingServiceInterface
      */
     protected $utilEncodingService;
@@ -105,6 +100,6 @@ class ProductConfigurationGroupKeyItemExpander implements ProductConfigurationGr
             $productConfigurationInstanceTransfer->toArray()
         );
 
-        return $this->utilTextService->hashValue($encodedProductConfigurationInstanceData, static::MD5);
+        return $this->utilTextService->hashValue($encodedProductConfigurationInstanceData, 'md5');
     }
 }

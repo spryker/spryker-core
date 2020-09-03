@@ -440,6 +440,7 @@
     "spryker/persistent-cart-share-extension": "*",
     "spryker/price": "*",
     "spryker/price-cart-connector": "*",
+    "spryker/price-cart-connector-extension": "*",
     "spryker/price-data-feed": "*",
     "spryker/price-extension": "*",
     "spryker/price-product": "*",

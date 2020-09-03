@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfiguration;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -31,5 +32,21 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         return $this->getFactory()
             ->createProductConfigurationRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer): bool
+    {
+        return $this->getFactory()
+            ->createQuoteProductConfigurationChecker()
+            ->isQuoteProductConfigurationValid($quoteTransfer);
     }
 }
