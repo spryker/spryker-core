@@ -49,7 +49,7 @@ class SearchDelegator implements SearchDelegatorInterface
     {
         $searchContextTransfer = $this->getSearchContext($searchQuery);
         $searchContextTransfer = $this->expandSearchContext($searchContextTransfer);
-        $this->setSearchContext($searchQuery, $searchContextTransfer);
+        $searchQuery = $this->setSearchContext($searchQuery, $searchContextTransfer);
 
         return $this->getSearchAdapter($searchContextTransfer)
             ->search($searchQuery, $resultFormatters, $requestParameters);
