@@ -11,7 +11,7 @@ use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingProductConfigurationRequestDefaultPluginException;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
 /**
@@ -70,7 +70,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface[]
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
      */
     protected function getProductConfiguratorRequestPlugins(): array
     {
@@ -92,7 +92,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConfiguratorRequestDefaultPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT, function (): ProductConfigurationExtensionRequestPluginInterface {
+        $container->set(static::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT, function (): ProductConfiguratorRequestPluginInterface {
             return $this->getProductConfiguratorRequestDefaultPlugin();
         });
 
@@ -106,7 +106,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDefaultProductConfiguratorResponsePlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function () {
+        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function (): ProductConfiguratorResponsePluginInterface {
             return $this->getDefaultProductConfiguratorResponsePlugin();
         });
 
@@ -116,15 +116,15 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     /**
      * @throws \Spryker\Client\ProductConfiguration\Exception\MissingProductConfigurationRequestDefaultPluginException
      *
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
      */
-    protected function getProductConfiguratorRequestDefaultPlugin(): ProductConfigurationExtensionRequestPluginInterface
+    protected function getProductConfiguratorRequestDefaultPlugin(): ProductConfiguratorRequestPluginInterface
     {
         throw new MissingProductConfigurationRequestDefaultPluginException(
             sprintf(
                 "Missing instance of %s! You need to provide default product configurator request plugin
-                      in your own ProductConfiguration::getProductConfiguratorRequestDefaultPlugin().",
-                ProductConfigurationExtensionRequestPluginInterface::class
+                      in your own ProductConfigurationDependencyProvider::getProductConfiguratorRequestDefaultPlugin().",
+                ProductConfiguratorRequestPluginInterface::class
             )
         );
     }

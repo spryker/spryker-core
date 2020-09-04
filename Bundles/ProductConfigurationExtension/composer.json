@@ -1,6 +1,6 @@
 {
-  "name": "spryker/product-configurator-extension",
-  "description": "ProductConfiguratorExtension module",
+  "name": "spryker/product-configuration-extension",
+  "description": "ProductConfigurationExtension module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2"

@@ -49,6 +49,7 @@
 
     <transfer name="CheckoutResponse">
         <property name="errors" type="CheckoutError[]" singular="error"/>
+        <property name="isSuccess" type="bool"/>
     </transfer>
 
     <transfer name="CheckoutError">
@@ -74,6 +75,13 @@
         <property name="sourceType" type="string"/>
         <property name="timestamp" type="int"/>
         <property name="checkSum" type="string"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRequest">
+        <property name="ProductConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+    </transfer>
+
+    <transfer name="ProductConfiguratorRedirect">
     </transfer>
 
 </transfers>

@@ -39,7 +39,7 @@ interface ProductConfigurationStorageClientInterface
      * - Returns the found item's ProductConfigurationInstanceTransfer when available.
      * - Returns NULL otherwise.
      *
-     *  @api
+     * @api
      *
      * @param string $groupKey
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer

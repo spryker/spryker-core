@@ -7,6 +7,8 @@
 
 namespace Spryker\Client\ProductConfiguration;
 
-class ProductConfigurationConfig
+use Spryker\Client\Kernel\AbstractBundleConfig;
+
+class ProductConfigurationConfig extends AbstractBundleConfig
 {
 }

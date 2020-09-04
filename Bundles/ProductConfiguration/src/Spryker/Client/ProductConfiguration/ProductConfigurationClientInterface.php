@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductConfigurationClientInterface
 {
@@ -43,4 +44,16 @@ interface ProductConfigurationClientInterface
         ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer;
+
+    /**
+     * Specification:
+     * - Returns false if any item with product configuration is not fully configured, true otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isQuoteProductConfigurationValid(QuoteTransfer $quoteTransfer): bool;
 }

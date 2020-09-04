@@ -9,27 +9,27 @@ namespace Spryker\Client\ProductConfiguration\Resolver;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 
 class ProductConfigurationRedirectResolver implements ProductConfigurationRedirectResolverInterface
 {
     /**
-     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface[]
+     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
      */
     protected $productConfiguratorRequestPlugins;
 
     /**
-     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface
+     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
      */
     protected $productConfiguratorRequestDefaultPlugin;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface[] $productConfiguratorRequestPlugins
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface $productConfiguratorRequestDefaultPlugin
+     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[] $productConfiguratorRequestPlugins
+     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface $productConfiguratorRequestDefaultPlugin
      */
     public function __construct(
         array $productConfiguratorRequestPlugins,
-        ProductConfigurationExtensionRequestPluginInterface $productConfiguratorRequestDefaultPlugin
+        ProductConfiguratorRequestPluginInterface $productConfiguratorRequestDefaultPlugin
     ) {
         $this->productConfiguratorRequestPlugins = $productConfiguratorRequestPlugins;
         $this->productConfiguratorRequestDefaultPlugin = $productConfiguratorRequestDefaultPlugin;

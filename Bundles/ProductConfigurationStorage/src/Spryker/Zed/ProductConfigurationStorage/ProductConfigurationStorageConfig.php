@@ -7,9 +7,9 @@
 
 namespace Spryker\Zed\ProductConfigurationStorage;
 
-use Spryker\Zed\SynchronizationBehavior\SynchronizationBehaviorConfig;
+use Spryker\Zed\Kernel\AbstractBundleConfig;
 
-class ProductConfigurationStorageConfig extends SynchronizationBehaviorConfig
+class ProductConfigurationStorageConfig extends AbstractBundleConfig
 {
     /**
      * @api
