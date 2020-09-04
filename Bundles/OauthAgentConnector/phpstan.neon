@@ -1,3 +1,5 @@
 parameters:
     checkMissingIterableValueType: false
+    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
+        - '#Method .+PasswordEncoderAdapter::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+NativePasswordEncoder.#'

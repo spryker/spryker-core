@@ -1,2 +1,4 @@
 parameters:
     ignoreErrors:
+        - '#Instantiated class .+BCryptPasswordEncoder not found.#'
+        - '#Method .+Customer::getPasswordEncoder\(\) should return .+PasswordEncoderInterface but returns .+BCryptPasswordEncoder.#'

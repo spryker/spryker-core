@@ -14,6 +14,7 @@ use Spryker\Shared\EventDispatcher\EventDispatcherInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Bridge\Twig\Extension\CodeExtension;
 use Symfony\Bridge\Twig\Extension\ProfilerExtension;
+use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ExceptionPanelController;
 use Symfony\Bundle\WebProfilerBundle\Controller\ProfilerController;
 use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
@@ -217,9 +218,17 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
         };
 
         $exceptionController = function () use ($container) {
-            return new ExceptionPanelController(
+            if (class_exists(ExceptionPanelController::class)) {
+                return new ExceptionPanelController(
+                    $container->get(static::SERVICE_PROFILER),
+                    $container->get(static::SERVICE_TWIG)
+                );
+            }
+
+            return new ExceptionController(
                 $container->get(static::SERVICE_PROFILER),
-                $container->get(static::SERVICE_TWIG)
+                $container->get(static::SERVICE_TWIG),
+                $container->get('debug')
             );
         };
 

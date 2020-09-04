@@ -25,6 +25,8 @@ use Symfony\Component\Security\Core\Authentication\AuthenticationProviderManager
 use Symfony\Component\Security\Core\Authentication\AuthenticationTrustResolver;
 use Symfony\Component\Security\Core\Authentication\Provider\AnonymousAuthenticationProvider;
 use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
+use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
+use Symfony\Component\Security\Core\Authentication\Token\RememberMeToken;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManager;
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
@@ -723,6 +725,10 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
     protected function addTrustResolver(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_SECURITY_TRUST_RESOLVER, function () {
+            if (method_exists(AuthenticationTrustResolver::class, '__construct')) {
+                return new AuthenticationTrustResolver(AnonymousToken::class, RememberMeToken::class);
+            }
+
             return new AuthenticationTrustResolver();
         });
 
@@ -1120,6 +1126,8 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
                     $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
+                    // Does a RememberMeLogoutListener exist in latest version??
+//                    $this->getDispatcher($container)->addSubscriber(new RememberMeLogoutListener());
                 }
 
                 /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */
