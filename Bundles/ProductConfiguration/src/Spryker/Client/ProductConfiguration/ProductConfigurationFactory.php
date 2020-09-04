@@ -12,12 +12,12 @@ use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolverInterface;
-use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface[]
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
      */
     public function getProductConfigurationRequestPlugins(): array
     {
@@ -25,9 +25,9 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfigurationExtensionRequestPluginInterface
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
      */
-    public function getProductConfiguratorRequestDefaultPlugin(): ProductConfigurationExtensionRequestPluginInterface
+    public function getProductConfiguratorRequestDefaultPlugin(): ProductConfiguratorRequestPluginInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT);
     }

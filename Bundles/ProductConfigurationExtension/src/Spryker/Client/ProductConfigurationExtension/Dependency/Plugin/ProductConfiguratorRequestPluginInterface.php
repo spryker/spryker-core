@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 /**
  * Use this plugin to prepare configurator page requests.
  */
-interface ProductConfigurationExtensionRequestPluginInterface
+interface ProductConfiguratorRequestPluginInterface
 {
     /**
      * Specification:
