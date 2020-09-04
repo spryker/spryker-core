@@ -3,7 +3,7 @@
           namespace="Orm\Zed\ProductConfigurationStorage\Persistence"
           package="src.Orm.Zed.ProductConfigurationStorage.Persistence">
 
-    <table name="spy_product_configuration_storage">
+    <table name="spy_product_configuration_storage" identifierQuoting="true">
         <column name="id_product_configuration_storage" type="integer" autoIncrement="true" primaryKey="true"/>
         <column name="sku" type="VARCHAR" required="true"/>
         <column name="fk_product_configuration" type="integer" required="true"/>
