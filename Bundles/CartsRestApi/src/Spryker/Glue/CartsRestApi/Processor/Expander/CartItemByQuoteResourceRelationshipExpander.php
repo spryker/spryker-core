@@ -60,9 +60,11 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
             if (!$quoteTransfer instanceof QuoteTransfer) {
                 continue;
             }
-            $itemTransfers = $quoteTransfer->getItems();
 
-            $filteredItemTransfers = $this->executeCartItemFilterPlugins($itemTransfers->getArrayCopy(), $quoteTransfer);
+            $filteredItemTransfers = $this->executeCartItemFilterPlugins(
+                $quoteTransfer->getItems()->getArrayCopy(),
+                $quoteTransfer
+            );
 
             foreach ($filteredItemTransfers as $itemTransfer) {
                 $itemResource = $this->itemResponseBuilder->createCartItemResource(
@@ -92,9 +94,11 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
             if (!$quoteTransfer instanceof QuoteTransfer) {
                 continue;
             }
-            $itemTransfers = $quoteTransfer->getItems();
 
-            $filteredItemTransfers = $this->executeCartItemFilterPlugins($itemTransfers->getArrayCopy(), $quoteTransfer);
+            $filteredItemTransfers = $this->executeCartItemFilterPlugins(
+                $quoteTransfer->getItems()->getArrayCopy(),
+                $quoteTransfer
+            );
 
             foreach ($filteredItemTransfers as $itemTransfer) {
                 $itemResource = $this->itemResponseBuilder->createGuestCartItemResource(
@@ -116,15 +120,10 @@ class CartItemByQuoteResourceRelationshipExpander implements CartItemByQuoteReso
      */
     protected function executeCartItemFilterPlugins(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {
-        if (!$this->cartItemFilterPlugins) {
-            return $itemTransfers;
-        }
-
-        $filteredItemTransfers = [];
         foreach ($this->cartItemFilterPlugins as $cartItemFilterPlugin) {
-            $filteredItemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
+            $itemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
         }
 
-        return $filteredItemTransfers;
+        return $itemTransfers;
     }
 }

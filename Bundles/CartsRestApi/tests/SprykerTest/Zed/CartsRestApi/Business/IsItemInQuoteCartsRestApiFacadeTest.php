@@ -75,8 +75,8 @@ class IsItemInQuoteCartsRestApiFacadeTest extends Unit
                 'Item must be findable by sku',
             ],
             [
-                (new CartItemRequestBuilder([CartItemRequestTransfer::SKU => 'groupKey']))->build(),
-                (new QuoteBuilder())->withItem([ItemTransfer::SKU => 'Some other group key'])->build(),
+                (new CartItemRequestBuilder([CartItemRequestTransfer::GROUP_KEY => 'groupKey']))->build(),
+                (new QuoteBuilder())->withItem([ItemTransfer::GROUP_KEY => 'Some other group key'])->build(),
                 false,
                 'Missing item must not be findable',
             ],

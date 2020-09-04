@@ -9,7 +9,7 @@ namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer;
 
 use Generated\Shared\Transfer\QuoteTransfer;
 
-interface BundleItemFiltererInterface
+interface BundleItemFilterInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
@@ -17,5 +17,5 @@ interface BundleItemFiltererInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getFilteredItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array;
+    public function filteredBundleItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array;
 }

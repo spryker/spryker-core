@@ -160,15 +160,10 @@ class GuestCartRestResponseBuilder implements GuestCartRestResponseBuilderInterf
      */
     protected function executeCartItemFilterPlugins(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {
-        if (!$this->cartItemFilterPlugins) {
-            return $itemTransfers;
-        }
-
-        $filteredItemTransfers = [];
         foreach ($this->cartItemFilterPlugins as $cartItemFilterPlugin) {
-            $filteredItemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
+            $itemTransfers = $cartItemFilterPlugin->filterCartItems($itemTransfers, $quoteTransfer);
         }
 
-        return $filteredItemTransfers;
+        return $itemTransfers;
     }
 }

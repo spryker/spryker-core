@@ -85,26 +85,9 @@ class QuoteItemReader implements QuoteItemReaderInterface
      *
      * @return bool
      */
-    protected function isCartItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
-    {
-        foreach ($this->quoteItemCheckerPlugins as $quoteItemCheckerPlugin) {
-            if ($quoteItemCheckerPlugin->checkItemIsInQuote($cartItemRequestTransfer, $quoteTransfer)) {
-                return true;
-            }
-        }
-
-        return $this->isItemInQuote($cartItemRequestTransfer, $quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
     public function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        if (count($quoteTransfer->getItems()) === 0) {
+        if (!$quoteTransfer->getItems()->count()) {
             return false;
         }
 
@@ -124,5 +107,22 @@ class QuoteItemReader implements QuoteItemReaderInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isCartItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        foreach ($this->quoteItemCheckerPlugins as $quoteItemCheckerPlugin) {
+            if ($quoteItemCheckerPlugin->checkItemIsInQuote($cartItemRequestTransfer, $quoteTransfer)) {
+                return true;
+            }
+        }
+
+        return $this->isItemInQuote($cartItemRequestTransfer, $quoteTransfer);
     }
 }

@@ -277,7 +277,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionExpanderPluginInterface[]
      */
-    protected function getQuoteCollectionExpanderPlugins(): array
+    public function getQuoteCollectionExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_COLLECTION_EXPANDER);
     }
@@ -285,7 +285,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteExpanderPluginInterface[]
      */
-    protected function getQuoteExpanderPlugins(): array
+    public function getQuoteExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_EXPANDER);
     }
@@ -293,7 +293,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\CartItemMapperPluginInterface[]
      */
-    protected function getCartItemMapperPlugins(): array
+    public function getCartItemMapperPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_MAPPER);
     }
@@ -301,7 +301,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemCheckerPluginInterface[]
      */
-    protected function getQuoteItemCheckerPlugins(): array
+    public function getQuoteItemCheckerPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_CHECKER);
     }

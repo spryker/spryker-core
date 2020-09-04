@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 
-class BundleItemFilterer implements BundleItemFiltererInterface
+class BundleItemFilter implements BundleItemFilterInterface
 {
     /**
      * @var \Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface
@@ -33,7 +33,7 @@ class BundleItemFilterer implements BundleItemFiltererInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function getFilteredItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
+    public function filteredBundleItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {
         $filteredItemTransfers = [];
         $groupedCartItems = $this->productBundleClient->getGroupedBundleItems(new ArrayObject($itemTransfers), $quoteTransfer->getBundleItems());

@@ -38,17 +38,17 @@ class CartItemMapper implements CartItemMapperInterface
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        $itemData = $itemTransfer->toArray();
-
-        $restItemsAttributesTransfer->fromArray($itemData, true);
+        $restItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
 
         $restCartItemCalculationsTransfer = $restItemsAttributesTransfer->getCalculations();
         if (!$restCartItemCalculationsTransfer) {
             $restCartItemCalculationsTransfer = new RestCartItemCalculationsTransfer();
         }
-        $restItemsAttributesTransfer->setCalculations($restCartItemCalculationsTransfer->fromArray($itemData, true));
+        $restItemsAttributesTransfer->setCalculations(
+            $restCartItemCalculationsTransfer->fromArray($itemTransfer->toArray(), true)
+        );
 
-        return $this->expandRestItemsAttributesTransfer(
+        return $this->executeRestCartItemsAttributesMapperPlugins(
             $itemTransfer,
             $restItemsAttributesTransfer,
             $localeName
@@ -62,7 +62,7 @@ class CartItemMapper implements CartItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    protected function expandRestItemsAttributesTransfer(
+    protected function executeRestCartItemsAttributesMapperPlugins(
         ItemTransfer $itemTransfer,
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName

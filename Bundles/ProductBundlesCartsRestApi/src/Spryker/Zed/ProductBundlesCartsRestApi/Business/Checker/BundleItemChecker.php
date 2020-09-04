@@ -22,7 +22,7 @@ class BundleItemChecker implements BundleItemCheckerInterface
         CartItemRequestTransfer $cartItemRequestTransfer,
         QuoteTransfer $quoteTransfer
     ): bool {
-        if (count($quoteTransfer->getBundleItems()) === 0) {
+        if (!$quoteTransfer->getBundleItems()->count()) {
             return false;
         }
 

@@ -23,8 +23,8 @@ class GuestCartItemsByQuoteResourceRelationshipPlugin extends AbstractPlugin imp
 {
     /**
      * {@inheritDoc}
-     * - Adds guest-cart-items resource as relationship by quote.
-     * - Requires QuoteTransfer be provided in resource payload.
+     * - Adds `guest-cart-items` resource as relationship by quote.
+     * - Requires `QuoteTransfer` be provided in resource payload.
      *
      * @api
      *

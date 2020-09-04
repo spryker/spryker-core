@@ -20,7 +20,7 @@ class ItemQuoteItemCheckerPlugin extends AbstractPlugin implements QuoteItemChec
 {
     /**
      * {@inheritDoc}
-     * - Checks is cart item is a simple item in `QuoteTransfer`.
+     * - Checks if cart item is a simple item in `QuoteTransfer`.
      *
      * @api
      *

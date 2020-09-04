@@ -29,6 +29,6 @@ class ProductBundleCartItemFilterPlugin extends AbstractPlugin implements CartIt
      */
     public function filterCartItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {
-        return $this->getFactory()->createBundleItemFilterer()->getFilteredItems($itemTransfers, $quoteTransfer);
+        return $this->getFactory()->createBundleItemFilterer()->filteredBundleItems($itemTransfers, $quoteTransfer);
     }
 }
