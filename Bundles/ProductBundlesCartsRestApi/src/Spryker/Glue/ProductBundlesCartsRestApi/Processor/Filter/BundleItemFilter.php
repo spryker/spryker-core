@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer;
+namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filter;
 
 use ArrayObject;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -33,7 +33,7 @@ class BundleItemFilter implements BundleItemFilterInterface
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[]
      */
-    public function filteredBundleItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
+    public function filterBundleItems(array $itemTransfers, QuoteTransfer $quoteTransfer): array
     {
         $filteredItemTransfers = [];
         $groupedCartItems = $this->productBundleClient->getGroupedBundleItems(new ArrayObject($itemTransfers), $quoteTransfer->getBundleItems());

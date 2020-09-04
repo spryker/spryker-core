@@ -14,8 +14,8 @@ use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundledItemExpand
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundledItemExpanderInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundleItemExpander;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander\BundleItemExpanderInterface;
-use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer\BundleItemFilter;
-use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer\BundleItemFilterInterface;
+use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filter\BundleItemFilter;
+use Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filter\BundleItemFilterInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\RestResponseBuilder\BundleItemRestResponseBuilder;
 use Spryker\Glue\ProductBundlesCartsRestApi\Processor\RestResponseBuilder\BundleItemRestResponseBuilderInterface;
 
@@ -54,9 +54,9 @@ class ProductBundlesCartsRestApiFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filterer\BundleItemFilterInterface
+     * @return \Spryker\Glue\ProductBundlesCartsRestApi\Processor\Filter\BundleItemFilterInterface
      */
-    public function createBundleItemFilterer(): BundleItemFilterInterface
+    public function createBundleItemFilter(): BundleItemFilterInterface
     {
         return new BundleItemFilter($this->getProductBundleClient());
     }
