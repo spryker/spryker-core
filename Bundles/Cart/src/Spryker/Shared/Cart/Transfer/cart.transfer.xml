@@ -78,5 +78,11 @@
     <transfer name="Expense">
     </transfer>
 
+    <transfer name="ItemReplace">
+        <property name="quote" type="Quote"/>
+        <property name="itemToBeReplaced" type="Item"/>
+        <property name="newItem" type="Item"/>
+    </transfer>
+
 </transfers>
 

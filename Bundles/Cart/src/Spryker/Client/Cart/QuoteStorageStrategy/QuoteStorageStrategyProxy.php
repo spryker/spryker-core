@@ -10,12 +10,14 @@ namespace Spryker\Client\Cart\QuoteStorageStrategy;
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\CurrencyTransfer;
+use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartItemOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
@@ -224,6 +226,34 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
         }
 
         return $this->quoteStorageStrategy->updateQuantity($cartChangeTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer
+     *
+     * @throws \Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
+    {
+        $itemReplaceTransfer
+            ->requireItemToBeReplaced()
+            ->requireNewItem();
+
+        if ($this->isQuoteLocked()) {
+            $this->addPermissionFailedMessage();
+
+            return $this->createNotSuccessfulQuoteResponseTransfer();
+        }
+
+        if (!$this->quoteStorageStrategy instanceof CartItemOperationQuoteStorageStrategyPluginInterface) {
+            throw new QuoteStorageStrategyPluginNotFound(
+                'Quote storage strategy should implement CartItemOperationQuoteStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
+            );
+        }
+
+        return $this->quoteStorageStrategy->replaceItem($itemReplaceTransfer);
     }
 
     /**
