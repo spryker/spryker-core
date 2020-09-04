@@ -318,7 +318,6 @@ interface PersistentCartFacadeInterface
      * - Adds `PersistentItemReplaceTransfer::newItem` to quote.
      * - Recalculates quote totals.
      * - Saves updated quote to database.
-     * - Stores quote in session internally after zed request.
      * - Returns quote response.
      *
      * @api

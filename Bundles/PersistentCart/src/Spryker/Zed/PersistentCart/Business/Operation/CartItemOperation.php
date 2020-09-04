@@ -5,12 +5,14 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Model;
+namespace Spryker\Zed\PersistentCart\Business\Operation;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteItemOperationInterface;
+use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
@@ -113,7 +115,7 @@ class CartItemOperation implements CartItemOperationInterface
         $quoteResponseTransfer = $this->quoteItemOperation->removeItems($itemsToRemoval, $quoteTransfer);
 
         if ($quoteResponseTransfer->getIsSuccessful()) {
-            return $this->quoteItemOperation->addItems($itemsToAdding, $quoteTransfer);
+            return $this->quoteItemOperation->addItems($itemsToAdding, $quoteResponseTransfer->getQuoteTransfer());
         }
 
         return $quoteResponseTransfer;

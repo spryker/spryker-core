@@ -391,10 +391,6 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
     {
-        $itemReplaceTransfer
-            ->requireItemToBeReplaced()
-            ->requireNewItem();
-
         return $this->getFactory()->createQuoteStorageStrategyProxy()->replaceItem($itemReplaceTransfer);
     }
 }

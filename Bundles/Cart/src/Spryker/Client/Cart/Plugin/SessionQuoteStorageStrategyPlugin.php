@@ -266,8 +266,9 @@ class SessionQuoteStorageStrategyPlugin extends AbstractPlugin implements QuoteS
     /**
      * Specification:
      * - Makes Zed request.
-     * - Removes `ItemReplaceTransfer::itemToBeReplaced` from cart.
+     * - Removes `ItemReplaceTransfer::itemToBeReplaced` from the cart.
      * - Adds `ItemReplaceTransfer::newItem` to cart.
+     * - Stores quote in session internally after zed request.
      * - Returns response with updated quote.
      *
      * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer

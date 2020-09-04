@@ -237,6 +237,10 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
      */
     public function replaceItem(ItemReplaceTransfer $itemReplaceTransfer): QuoteResponseTransfer
     {
+        $itemReplaceTransfer
+            ->requireItemToBeReplaced()
+            ->requireNewItem();
+
         if ($this->isQuoteLocked()) {
             $this->addPermissionFailedMessage();
 

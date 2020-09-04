@@ -12,8 +12,6 @@ use Spryker\Zed\PersistentCart\Business\Locker\QuoteLocker;
 use Spryker\Zed\PersistentCart\Business\Locker\QuoteLockerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpander;
 use Spryker\Zed\PersistentCart\Business\Model\CartChangeRequestExpanderInterface;
-use Spryker\Zed\PersistentCart\Business\Model\CartItemOperation;
-use Spryker\Zed\PersistentCart\Business\Model\CartItemOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperation;
 use Spryker\Zed\PersistentCart\Business\Model\CartOperationInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteDeleter;
@@ -30,6 +28,8 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
+use Spryker\Zed\PersistentCart\Business\Operation\CartItemOperation;
+use Spryker\Zed\PersistentCart\Business\Operation\CartItemOperationInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
@@ -54,7 +54,7 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\PersistentCart\Business\Model\CartItemOperationInterface
+     * @return \Spryker\Zed\PersistentCart\Business\Operation\CartItemOperationInterface
      */
     public function createCartItemOperation(): CartItemOperationInterface
     {

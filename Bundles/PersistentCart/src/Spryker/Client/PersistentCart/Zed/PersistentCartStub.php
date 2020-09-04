@@ -284,6 +284,8 @@ class PersistentCartStub implements PersistentCartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\PersistentCart\Communication\Controller\GatewayController::replaceItemAction()
+     *
      * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

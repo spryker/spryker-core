@@ -10,12 +10,15 @@ namespace Spryker\Client\CartExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
+/**
+ * Use this plugin to provide cart item replace functionality.
+ */
 interface CartItemOperationQuoteStorageStrategyPluginInterface
 {
     /**
      * Specification:
      * - Makes Zed request.
-     * - Removes `ItemReplaceTransfer::itemToBeReplaced` for quote.
+     * - Removes `ItemReplaceTransfer::itemToBeReplaced` from the quote.
      * - Adds `ItemReplaceTransfer::newItem` to quote.
      * - Stores quote in session internally after success zed request.
      * - Returns response with updated quote.
