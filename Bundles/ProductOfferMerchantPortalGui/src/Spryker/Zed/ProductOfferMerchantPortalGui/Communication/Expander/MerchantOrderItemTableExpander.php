@@ -50,13 +50,13 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
                 ->setTitle('Merchant SKU')
                 ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(false)
-                ->setHideable(false))
+                ->setHideable(true))
             ->addColumn((new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_PRODUCT_OFFER_REFERENCE)
                 ->setTitle('Offer Reference')
                 ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(false)
-                ->setHideable(false));
+                ->setHideable(true));
 
         return $guiTableConfigurationTransfer;
     }

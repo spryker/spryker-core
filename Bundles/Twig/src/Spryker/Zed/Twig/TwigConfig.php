@@ -18,6 +18,13 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    protected const APPLICATION_ZED = 'ZED';
+    
+    /**
+     * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     */
+    protected const APPLICATION_YVES = 'YVES';
+
     /**
      * @api
      *
@@ -104,7 +111,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
+        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache(static::APPLICATION_ZED));
     }
 
     /**
@@ -114,7 +121,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePathForYves()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache());
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache(static::APPLICATION_YVES));
     }
 
     /**

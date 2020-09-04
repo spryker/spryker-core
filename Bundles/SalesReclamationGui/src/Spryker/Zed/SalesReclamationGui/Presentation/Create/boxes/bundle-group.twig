@@ -16,7 +16,7 @@
             </div>
         </td>
         <td>
-            {% include '@SalesReclamationGui/partials/items/discounted-price.twig' with {
+            {% include '@SalesReclamationGui/Partials/items/discounted-price.twig' with {
                 subtotal: orderItem.sumPrice,
                 priceToPay: orderItem.sumPrice - orderItem.sumDiscountAmountFullAggregation | default(0),
                 reclamation: reclamation,
