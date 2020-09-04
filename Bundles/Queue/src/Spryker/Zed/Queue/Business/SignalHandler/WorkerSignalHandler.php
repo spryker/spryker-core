@@ -75,10 +75,6 @@ class WorkerSignalHandler implements WorkerSignalHandlerInterface
 
                 if (!$busyProcessIndex) {
                     unset($queueProcesses[$queueName]);
-
-                    if (!count($queueProcesses)) {
-                        $queueProcesses['test'] = 'test';
-                    }
                 }
             }
         }
