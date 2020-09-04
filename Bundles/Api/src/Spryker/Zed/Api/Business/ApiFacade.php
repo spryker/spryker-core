@@ -10,6 +10,7 @@ namespace Spryker\Zed\Api\Business;
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
+use Symfony\Component\Routing\RouterInterface;
 
 /**
  * @method \Spryker\Zed\Api\Business\ApiBusinessFactory getFactory()
@@ -65,5 +66,17 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
             ->filter(clone $apiRequestTransfer);
 
         return $filteredApiRequestTransfer;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @return \Symfony\Component\Routing\RouterInterface
+     */
+    public function getRouter(): RouterInterface
+    {
+        return $this->getFactory()->createRouter();
     }
 }
