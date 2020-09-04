@@ -102,8 +102,8 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
         QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getGroupKey() === $groupKey) {
-                return $this->findProductConfigurationInstanceBySku($itemTransfer->getSku());
+            if ($itemTransfer->getGroupKey() === $groupKey && $itemTransfer->getProductConfigurationInstance()) {
+                return $itemTransfer->getProductConfigurationInstance();
             }
         }
 
