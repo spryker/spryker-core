@@ -80,6 +80,7 @@
     </transfer>
 
     <transfer name="MerchantStorage">
+        <property name="idMerchant" type="int"/>
     </transfer>
 
 </transfers>

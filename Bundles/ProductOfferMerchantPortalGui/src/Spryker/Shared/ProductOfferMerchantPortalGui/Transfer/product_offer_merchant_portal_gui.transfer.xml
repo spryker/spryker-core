@@ -28,6 +28,7 @@
     </transfer>
 
     <transfer name="GuiTableConfiguration">
+        <property name="columns" type="GuiTableColumnConfiguration[]" singular="column"/>
     </transfer>
 
     <transfer name="GuiTableDataRequest">

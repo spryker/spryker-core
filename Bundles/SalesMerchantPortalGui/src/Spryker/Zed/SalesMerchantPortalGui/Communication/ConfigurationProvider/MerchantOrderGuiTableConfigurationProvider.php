@@ -100,13 +100,13 @@ class MerchantOrderGuiTableConfigurationProvider implements MerchantOrderGuiTabl
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_REFERENCE, 'Reference', true, false)
             ->addColumnText(static::COL_KEY_MERCHANT_REFERENCE, 'Merchant Reference', true, true)
-            ->addColumnDate(static::COL_KEY_CREATED, 'Created', true, false)
+            ->addColumnDate(static::COL_KEY_CREATED, 'Created', true, true)
             ->addColumnText(static::COL_KEY_CUSTOMER, 'Customer', true, true)
             ->addColumnText(static::COL_KEY_EMAIL, 'Email', true, true)
-            ->addColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, 3, 'green')
+            ->addColumnChips(static::COL_KEY_ITEMS_STATES, 'Items States', false, true, 2, 'green')
             ->addColumnText(static::COL_KEY_GRAND_TOTAL, 'Grand Total', true, true)
             ->addColumnText(static::COL_KEY_NUMBER_OF_ITEMS, 'No. of Items', true, true)
-            ->addColumnChip(static::COL_KEY_STORE, 'Store', false, true, 'green');
+            ->addColumnChip(static::COL_KEY_STORE, 'Store', true, true, 'grey');
 
         return $guiTableConfigurationBuilder;
     }
