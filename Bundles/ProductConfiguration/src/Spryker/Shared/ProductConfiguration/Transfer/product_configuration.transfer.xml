@@ -78,7 +78,7 @@
     </transfer>
 
     <transfer name="ProductConfiguratorRequest">
-        <property name="ProductConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
+        <property name="productConfiguratorRequestData" type="ProductConfiguratorRequestData"/>
     </transfer>
 
     <transfer name="ProductConfiguratorRedirect">
