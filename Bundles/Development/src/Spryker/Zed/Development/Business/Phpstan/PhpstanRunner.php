@@ -203,6 +203,7 @@ class PhpstanRunner implements PhpstanRunnerInterface
         $configFilePath .= $this->config->getPhpstanConfigFilename();
 
         $command = sprintf($command, static::MEMORY_LIMIT, $configFilePath, $path, $level);
+        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($command) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
 
         if ($input->getOption(static::OPTION_DRY_RUN)) {
             $output->writeln($command);
