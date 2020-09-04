@@ -171,4 +171,17 @@ class QueueConfig extends AbstractBundleConfig
     {
         return $this->get(QueueConstants::QUEUE_WORKER_LOOP, false);
     }
+
+    /**
+     * Specification:
+     * - Defines the list of signals that will be handled for the graceful worker shutdown.
+     *
+     * @api
+     *
+     * @return int[]
+     */
+    public function getSignalsToHandle(): array
+    {
+        return [];
+    }
 }

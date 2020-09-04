@@ -10,6 +10,7 @@ namespace Spryker\Zed\Queue\Business\Worker;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedQueueConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
+use Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 /**
@@ -50,24 +51,37 @@ class Worker implements WorkerInterface
     protected $queueNames;
 
     /**
+     * @var \Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface
+     */
+    protected $workerSignalHandler;
+
+    /**
      * @param \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface $processManager
      * @param \Spryker\Zed\Queue\QueueConfig $queueConfig
      * @param \Spryker\Zed\Queue\Business\Worker\WorkerProgressBarInterface $workerProgressBar
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param array $queueNames
+     * @param \Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface $workerSignalHandler
      */
     public function __construct(
         ProcessManagerInterface $processManager,
         QueueConfig $queueConfig,
         WorkerProgressBarInterface $workerProgressBar,
         QueueClientInterface $queueClient,
-        array $queueNames
+        array $queueNames,
+        WorkerSignalHandlerInterface $workerSignalHandler
     ) {
         $this->processManager = $processManager;
         $this->workerProgressBar = $workerProgressBar;
         $this->queueConfig = $queueConfig;
         $this->queueClient = $queueClient;
         $this->queueNames = $queueNames;
+        $this->workerSignalHandler = $workerSignalHandler;
+
+        $this->workerSignalHandler->attach(
+            $this->queueConfig->getSignalsToHandle(),
+            [$this->workerSignalHandler, 'handle']
+        );
     }
 
     /**

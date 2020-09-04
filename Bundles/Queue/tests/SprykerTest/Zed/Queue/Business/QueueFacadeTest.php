@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\Queue\Communication\Console;
+namespace SprykerTest\Zed\Queue\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\QueueDumpRequestTransfer;
@@ -29,8 +29,7 @@ use Spryker\Zed\Queue\QueueDependencyProvider;
  * @group SprykerTest
  * @group Zed
  * @group Queue
- * @group Communication
- * @group Console
+ * @group Business
  * @group Facade
  * @group QueueFacadeTest
  * Add your own group annotations below this line
@@ -163,7 +162,7 @@ class QueueFacadeTest extends Unit
             return $queueReceiverOptions[QueueConstants::QUEUE_DEFAULT_RECEIVER];
         }
 
-        return null;
+        return [];
     }
 
     /**
