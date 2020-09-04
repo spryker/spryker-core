@@ -23,11 +23,6 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
     Business:
         path: Business
         class_name: CurrencyBusinessTester
@@ -35,13 +30,7 @@ suites:
             enabled:
                 - Asserts
                 - \SprykerTest\Shared\Testify\Helper\Environment
-                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
-                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
+                - \SprykerTest\Service\Container\Helper\ContainerHelper
                 - \SprykerTest\Shared\Currency\Helper\CurrencyDataHelper
