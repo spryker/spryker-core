@@ -21,7 +21,10 @@ class MailConfig extends AbstractBundleConfig
      */
     public function getSenderName()
     {
-        return 'mail.sender.name';
+        return $this->get(
+            MailConstants::SENDER_NAME,
+            ''
+        );
     }
 
     /**
@@ -31,7 +34,10 @@ class MailConfig extends AbstractBundleConfig
      */
     public function getSenderEmail()
     {
-        return 'mail.sender.email';
+        return $this->get(
+            MailConstants::SENDER_EMAIL,
+            ''
+        );
     }
 
     /**

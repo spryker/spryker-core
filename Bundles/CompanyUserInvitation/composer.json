@@ -10,7 +10,7 @@
     "spryker/company-user": "^1.0.0 || ^2.0.0",
     "spryker/customer-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/mail": "^4.0.2",
+    "spryker/mail": "^4.6.0",
     "spryker/permission-extension": "^1.0.0",
     "spryker/propel-orm": "^1.6.1",
     "spryker/util-text": "^1.2.1",

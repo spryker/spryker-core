@@ -25,7 +25,7 @@ class LocatorTest extends Unit
     /**
      * @var \Spryker\Zed\Kernel\Locator
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @return void

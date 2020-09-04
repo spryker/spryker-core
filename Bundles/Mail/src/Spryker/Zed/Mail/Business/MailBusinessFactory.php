@@ -37,7 +37,8 @@ class MailBusinessFactory extends AbstractBusinessFactory
     protected function createMailBuilder()
     {
         return new MailBuilder(
-            $this->getGlossaryFacade()
+            $this->getGlossaryFacade(),
+            $this->getConfig()
         );
     }
 

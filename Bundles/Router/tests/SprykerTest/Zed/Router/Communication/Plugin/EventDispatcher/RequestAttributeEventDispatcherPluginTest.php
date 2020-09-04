@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\Router\Communication\Plugin\EventDispatcher;
 
 use Codeception\Test\Unit;
+use Spryker\Shared\Kernel\KernelConstants;
 use Spryker\Zed\Router\Communication\Plugin\EventDispatcher\RequestAttributesEventDispatcherPlugin;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -62,6 +63,7 @@ class RequestAttributeEventDispatcherPluginTest extends Unit
         string $expectedAction
     ): void {
         // Arrange
+        $this->tester->setConfig(KernelConstants::PROJECT_NAMESPACES, ['Pyz']);
         $this->tester->addRoute($givenUrl, $givenUrl, function () {
         });
 

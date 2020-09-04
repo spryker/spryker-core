@@ -16,7 +16,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     protected const COL_KEY_CART_NOTE = 'cartNote';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider::COLUMN_TYPE_TEXT
+     * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
@@ -32,7 +32,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
             ->setTitle('Comment')
             ->setType(static::COLUMN_TYPE_TEXT)
             ->setSortable(false)
-            ->setHideable(false);
+            ->setHideable(true);
 
         $guiTableConfigurationTransfer->addColumn($guiTableColumnConfigurationTransfer);
 

@@ -21,6 +21,10 @@
         <property name="merchantOrderReference" type="string"/>
     </transfer>
 
+    <transfer name="Merchant">
+        <property name="merchantReference" type="string"/>
+    </transfer>
+
     <transfer name="MerchantOrder">
         <property name="idMerchantOrder" type="int"/>
         <property name="merchantOrderReference" type="string"/>

@@ -7,10 +7,9 @@
 
 namespace Spryker\Zed\GuiTable;
 
-use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToLocaleFacadeBridge;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceBridge;
+use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceBridge;
 use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeBridge;
-use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilDateTimeServiceBridge;
-use Spryker\Zed\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,30 +18,10 @@ use Spryker\Zed\Kernel\Container;
  */
 class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
 {
-    public const FACADE_LOCALE = 'FACADE_LOCALE';
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
     public const SERVICE_UTIL_ENCODING = 'SERVICE_UTIL_ENCODING';
     public const SERVICE_UTIL_DATE_TIME = 'SERVICE_UTIL_DATE_TIME';
-
-    public const PLUGINS_REQUEST_FILTER_VALUE_NORMALIZER = 'PLUGINS_REQUEST_FILTER_VALUE_NORMALIZER';
-    public const PLUGINS_RESPONSE_COLUMN_VALUE_FORMATTER = 'PLUGINS_RESPONSE_COLUMN_VALUE_FORMATTER';
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    public function provideBusinessLayerDependencies(Container $container): Container
-    {
-        $container = $this->addLocaleFacade($container);
-        $container = $this->addTranslatorFacade($container);
-        $container = $this->addUtilEncodingService($container);
-        $container = $this->addRequestFilterValueNormalizerPlugins($container);
-        $container = $this->addResponseColumnValueFormatterPlugins($container);
-
-        return $container;
-    }
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,22 +33,6 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addTranslatorFacade($container);
         $container = $this->addUtilEncodingService($container);
         $container = $this->addUtilDateTimeService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addLocaleFacade(Container $container): Container
-    {
-        $container->set(static::FACADE_LOCALE, function (Container $container) {
-            return new GuiTableToLocaleFacadeBridge(
-                $container->getLocator()->locale()->facade()
-            );
-        });
 
         return $container;
     }
@@ -120,49 +83,5 @@ class GuiTableDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addRequestFilterValueNormalizerPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_REQUEST_FILTER_VALUE_NORMALIZER, function () {
-            return $this->getRequestFilterValueNormalizerPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addResponseColumnValueFormatterPlugins(Container $container): Container
-    {
-        $container->set(static::PLUGINS_RESPONSE_COLUMN_VALUE_FORMATTER, function () {
-            return $this->getResponseColumnValueFormatterPlugins();
-        });
-
-        return $container;
-    }
-
-    /**
-     * @return \Spryker\Zed\GuiTableExtension\Dependency\Plugin\RequestFilterValueNormalizerPluginInterface[]
-     */
-    protected function getRequestFilterValueNormalizerPlugins(): array
-    {
-        return [];
-    }
-
-    /**
-     * @return \Spryker\Zed\GuiTableExtension\Dependency\Plugin\ResponseColumnValueFormatterPluginInterface[]
-     */
-    protected function getResponseColumnValueFormatterPlugins(): array
-    {
-        return [];
     }
 }

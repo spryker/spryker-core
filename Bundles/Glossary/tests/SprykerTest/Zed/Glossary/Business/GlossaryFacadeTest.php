@@ -32,7 +32,7 @@ class GlossaryFacadeTest extends Unit
     /**
      * @var array
      */
-    private $locales = [];
+    protected $locales = [];
 
     /**
      * @var \SprykerTest\Zed\Glossary\GlossaryBusinessTester

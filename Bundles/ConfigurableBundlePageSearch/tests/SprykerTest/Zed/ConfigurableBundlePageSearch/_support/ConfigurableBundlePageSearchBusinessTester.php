@@ -17,8 +17,6 @@ use Spryker\Zed\ConfigurableBundlePageSearch\Communication\Plugin\Search\Configu
 use Spryker\Zed\Search\SearchDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -62,7 +62,7 @@ class TwigCurrencyServiceProviderTest extends Unit
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable());
 
-        $this->assertEquals('€', $currentCurrency);
+        $this->assertSame('€', $currentCurrency);
     }
 
     /**
@@ -74,7 +74,7 @@ class TwigCurrencyServiceProviderTest extends Unit
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable(), 'USD');
 
-        $this->assertEquals('$', $currentCurrency);
+        $this->assertSame('$', $currentCurrency);
     }
 
     /**

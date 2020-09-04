@@ -20,7 +20,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     protected const COL_KEY_PRODUCT_OFFER_REFERENCE = 'productOfferReference';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider::COLUMN_TYPE_TEXT
+     * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
@@ -50,13 +50,13 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
                 ->setTitle('Merchant SKU')
                 ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(false)
-                ->setHideable(false))
+                ->setHideable(true))
             ->addColumn((new GuiTableColumnConfigurationTransfer())
                 ->setId(static::COL_KEY_PRODUCT_OFFER_REFERENCE)
                 ->setTitle('Offer Reference')
                 ->setType(static::COLUMN_TYPE_TEXT)
                 ->setSortable(false)
-                ->setHideable(false));
+                ->setHideable(true));
 
         return $guiTableConfigurationTransfer;
     }

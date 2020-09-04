@@ -154,7 +154,7 @@ class GetOrderInvoicesTest extends Unit
 
         // Assert
         foreach ($orderInvoiceCollectionTransfer->getOrderInvoices() as $orderInvoiceTransfer) {
-            $this->assertEquals(OrderInvoicesExpanderPluginMock::FAKE_REFERENCE_FOR_PLUGIN_CHECK, $orderInvoiceTransfer->getReference());
+            $this->assertSame(OrderInvoicesExpanderPluginMock::FAKE_REFERENCE_FOR_PLUGIN_CHECK, $orderInvoiceTransfer->getReference());
         }
     }
 

@@ -17,6 +17,7 @@
 
     <transfer name="Merchant">
         <property name="name" type="string"/>
+        <property name="merchantReference" type="string"/>
     </transfer>
 
 </transfers>

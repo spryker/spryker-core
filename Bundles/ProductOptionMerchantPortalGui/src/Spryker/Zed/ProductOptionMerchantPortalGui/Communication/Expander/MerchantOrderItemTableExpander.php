@@ -17,12 +17,12 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
     protected const COL_KEY_PRODUCT_OPTIONS = 'productOptions';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider::COLUMN_TYPE_LIST
+     * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_LIST
      */
     protected const COLUMN_TYPE_LIST = 'list';
 
     /**
-     * @uses \Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider::COLUMN_TYPE_TEXT
+     * @uses \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface::COLUMN_TYPE_TEXT
      */
     protected const COLUMN_TYPE_TEXT = 'text';
 
@@ -40,7 +40,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
             ->setTitle('Options')
             ->setType(static::COLUMN_TYPE_LIST)
             ->setSortable(false)
-            ->setHideable(false)
+            ->setHideable(true)
             ->addTypeOption('type', static::COLUMN_TYPE_TEXT)
             ->addTypeOption('limit', static::LIST_TYPE_OPTION_VALUE_LIMIT);
 

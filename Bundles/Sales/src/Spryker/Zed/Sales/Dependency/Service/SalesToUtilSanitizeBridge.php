@@ -12,7 +12,7 @@ class SalesToUtilSanitizeBridge implements SalesToUtilSanitizeInterface
     /**
      * @var \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface
      */
-    private $utilSanitizeService;
+    protected $utilSanitizeService;
 
     /**
      * @param \Spryker\Service\UtilSanitize\UtilSanitizeServiceInterface $utilSanitizeService

@@ -14,7 +14,7 @@ class InvalidForeignBundleFilter implements DependencyFilterInterface
     /**
      * @var array
      */
-    private $allowedBundles;
+    protected $allowedBundles;
 
     /**
      * @param array $allowedBundles

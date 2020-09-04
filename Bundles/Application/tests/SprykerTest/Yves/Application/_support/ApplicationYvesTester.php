@@ -14,8 +14,6 @@ use Spryker\Yves\Application\Plugin\ServiceProvider\SslServiceProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */

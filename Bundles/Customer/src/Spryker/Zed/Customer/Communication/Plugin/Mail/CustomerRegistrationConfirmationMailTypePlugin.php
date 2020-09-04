@@ -112,7 +112,7 @@ class CustomerRegistrationConfirmationMailTypePlugin extends AbstractPlugin impl
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

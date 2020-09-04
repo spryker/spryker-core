@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,17 +22,13 @@ use Generated\Shared\Transfer\QuoteTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductQuantityCommunicationTester extends Actor
 {
     use _generated\ProductQuantityCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return \Generated\Shared\Transfer\CartChangeTransfer

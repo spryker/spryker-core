@@ -34,17 +34,37 @@ class ProductCategoryStorageClientTest extends Unit
     /**
      * @return void
      */
+    public function setUp(): void
+    {
+        parent::setUp();
+
+        $this->tester->setDependency(StorageDependencyProvider::PLUGIN_STORAGE, new StorageRedisPlugin());
+    }
+
+    /**
+     * @return void
+     */
     public function testFindInvalidProductAbstractCategoryReturnsNull(): void
     {
-        // Arrange
-        $this->tester->setDependency(StorageDependencyProvider::PLUGIN_STORAGE, new StorageRedisPlugin());
-
         // Act
         $returnValue = $this->createProductCategoryStorageClient()
             ->findProductAbstractCategory(static::INVALID_ID_PRODUCT_ABSTRACT, 'de_DE');
 
         // Assert
         $this->assertNull($returnValue);
+    }
+
+    /**
+     * @return void
+     */
+    public function testFindBulkProductAbstractCategoryReturnsEmptyArray(): void
+    {
+        // Act
+        $productAbstractCategoryStorageTransfers = $this->createProductCategoryStorageClient()
+            ->findBulkProductAbstractCategory([static::INVALID_ID_PRODUCT_ABSTRACT], 'de_DE');
+
+        // Assert
+        $this->assertCount(0, $productAbstractCategoryStorageTransfers);
     }
 
     /**

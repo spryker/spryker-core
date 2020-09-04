@@ -94,7 +94,7 @@ class RestorePasswordMailTypePlugin extends AbstractPlugin implements MailTypePl
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

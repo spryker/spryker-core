@@ -25,8 +25,11 @@ class ProductOfferStockRepository extends AbstractRepository implements ProductO
      */
     public function findOne(ProductOfferStockRequestTransfer $productOfferStockRequestTransfer): ?ProductOfferStockTransfer
     {
+        $productOfferStockQuery = $this->getFactory()
+            ->getProductOfferStockPropelQuery()
+            ->joinWithSpyProductOffer();
         $productOfferStockEntity = $this->applyFilters(
-            $this->getFactory()->getProductOfferStockPropelQuery(),
+            $productOfferStockQuery,
             $productOfferStockRequestTransfer
         )->findOne();
 

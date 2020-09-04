@@ -5,7 +5,10 @@
 {% endblock %}
 
 {% block content %}
-    <web-mp-offers-list cloak table-config='{{ guiTableConfiguration(productOfferTableConfiguration) }}'>
+    <web-mp-offers-list
+        cloak
+        table-id="web-mp-offers-list"
+        table-config='{{ guiTableConfiguration(productOfferTableConfiguration) }}'>
         <span title>{{ 'Offers' | trans }}</span>
 
         <web-spy-button-link action url="/product-offer-merchant-portal-gui/create-offer" size="lg">{{ 'Add Offer' | trans }}</web-spy-button-link>

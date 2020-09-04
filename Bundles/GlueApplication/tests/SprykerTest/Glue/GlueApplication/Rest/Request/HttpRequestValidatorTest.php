@@ -39,7 +39,7 @@ class HttpRequestValidatorTest extends Unit
         $httpRequestValidator = $this->createHttpRequestValidator();
         $restErrorMessageTransfer = $httpRequestValidator->validate($request);
 
-        $this->assertEquals(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
+        $this->assertSame(Response::HTTP_UNSUPPORTED_MEDIA_TYPE, $restErrorMessageTransfer->getStatus());
     }
 
     /**

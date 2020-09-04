@@ -67,7 +67,7 @@ class CalculatorTest extends Unit
 
         $result = $calculator->calculate([], $quoteTransfer);
 
-        $this->assertEquals(0, count($result));
+        $this->assertSame(0, count($result));
     }
 
     /**

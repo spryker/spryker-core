@@ -7,24 +7,16 @@
 
 namespace Spryker\Zed\SalesMerchantPortalGui\Communication\ConfigurationProvider;
 
-use ArrayObject;
-use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableBatchActionTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableItemSelectionConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
-use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Spryker\Zed\GuiTable\Communication\ConfigurationProvider\AbstractGuiTableConfigurationProvider;
+use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
+use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface;
 
-class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableConfigurationProvider implements MerchantOrderItemGuiTableConfigurationProviderInterface
+class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderItemGuiTableConfigurationProviderInterface
 {
     public const COL_KEY_SKU = 'sku';
     public const COL_KEY_IMAGE = 'image';
@@ -49,6 +41,11 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
     protected $merchantUserFacade;
 
     /**
+     * @var \Spryker\Shared\GuiTable\GuiTableFactoryInterface
+     */
+    protected $guiTableFactory;
+
+    /**
      * @var array|\Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[]
      */
     protected $merchantOrderItemTableExpanderPlugins;
@@ -56,15 +53,18 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
     /**
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade
      * @param \Spryker\Zed\SalesMerchantPortalGui\Dependency\Facade\SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade
+     * @param \Spryker\Shared\GuiTable\GuiTableFactoryInterface $guiTableFactory
      * @param \Spryker\Zed\SalesMerchantPortalGuiExtension\Dependency\Plugin\MerchantOrderItemTableExpanderPluginInterface[] $merchantOrderItemTableExpanderPlugins
      */
     public function __construct(
         SalesMerchantPortalGuiToMerchantOmsFacadeInterface $merchantOmsFacade,
         SalesMerchantPortalGuiToMerchantUserFacadeInterface $merchantUserFacade,
+        GuiTableFactoryInterface $guiTableFactory,
         array $merchantOrderItemTableExpanderPlugins = []
     ) {
         $this->merchantOmsFacade = $merchantOmsFacade;
         $this->merchantUserFacade = $merchantUserFacade;
+        $this->guiTableFactory = $guiTableFactory;
         $this->merchantOrderItemTableExpanderPlugins = $merchantOrderItemTableExpanderPlugins;
     }
 
@@ -75,18 +75,19 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
      */
     public function getConfiguration(MerchantOrderTransfer $merchantOrderTransfer): GuiTableConfigurationTransfer
     {
-        $guiTableConfigurationTransfer = new GuiTableConfigurationTransfer();
-        $guiTableConfigurationTransfer = $this->addColumnsToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addPaginationToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addFiltersToConfiguration($guiTableConfigurationTransfer);
-        $guiTableConfigurationTransfer = $this->addRowActionsToConfiguration($guiTableConfigurationTransfer, $merchantOrderTransfer);
-        $guiTableConfigurationTransfer = $this->addBatchActionsToConfiguration($guiTableConfigurationTransfer, $merchantOrderTransfer);
-        $guiTableConfigurationTransfer->setDataSource(
-            (new GuiTableDataSourceConfigurationTransfer())->setUrl(static::DATA_URL)
-        );
-        $guiTableConfigurationTransfer->setItemSelection(
-            (new GuiTableItemSelectionConfigurationTransfer())->setIsEnabled(true)
-        );
+        $guiTableConfigurationBuilder = $this->guiTableFactory->createConfigurationBuilder();
+
+        $guiTableConfigurationBuilder = $this->addColumns($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addFilters($guiTableConfigurationBuilder);
+        $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder, $merchantOrderTransfer);
+        $guiTableConfigurationBuilder = $this->addBatchActions($guiTableConfigurationBuilder, $merchantOrderTransfer);
+
+        $guiTableConfigurationBuilder
+            ->setDataSourceUrl(static::DATA_URL)
+            ->setDefaultPageSize(10)
+            ->setIsItemSelectionEnabled(true);
+
+        $guiTableConfigurationTransfer = $guiTableConfigurationBuilder->createConfiguration();
 
         foreach ($this->merchantOrderItemTableExpanderPlugins as $merchantOrderItemTableExpanderPlugin) {
             $guiTableConfigurationTransfer = $merchantOrderItemTableExpanderPlugin->expandConfiguration($guiTableConfigurationTransfer);
@@ -96,56 +97,36 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addColumnsToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $columns = new ArrayObject([
-            $this->createColumnText(static::COL_KEY_SKU, 'SKU', true, false),
-            $this->createColumnImage(static::COL_KEY_IMAGE, 'Image', false, false),
-            $this->createColumnText(static::COL_KEY_NAME, 'Name', true, false),
-            $this->createColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, false),
-            $this->createColumnChip(static::COL_KEY_STATE, 'State', true, false, [
-                'color' => 'green',
-            ]),
-        ]);
+        $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnText(static::COL_KEY_NAME, 'Name', true, true)
+            ->addColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, true)
+            ->addColumnChip(static::COL_KEY_STATE, 'State', true, true, 'green');
 
-        $guiTableConfigurationTransfer->setColumns($columns);
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addPaginationToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
+    protected function addFilters(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
-        $guiTableConfigurationTransfer->setPagination(
-            (new GuiTablePaginationConfigurationTransfer())->setDefaultSize(10)
+        $guiTableConfigurationBuilder->addFilterSelect(
+            'orderItemStates',
+            'States',
+            true,
+            $this->getStatesOptions()
         );
 
-        return $guiTableConfigurationTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
-     *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
-     */
-    protected function addFiltersToConfiguration(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): GuiTableConfigurationTransfer
-    {
-        $filters = new ArrayObject([
-            $this->createFilterSelect('orderItemStates', 'States', true, $this->getStatesOptions()),
-        ]);
-        $guiTableConfigurationTransfer->setFilters(
-            (new GuiTableFiltersConfigurationTransfer())->setItems($filters)
-        );
-
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**
@@ -157,84 +138,65 @@ class MerchantOrderItemGuiTableConfigurationProvider extends AbstractGuiTableCon
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setIdMerchant($idMerchant);
         $stateMachineProcessTransfer = $this->merchantOmsFacade->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
 
-        return array_map('ucfirst', $stateMachineProcessTransfer->getStateNames());
+        return array_map(function (string $stateName) {
+            return mb_convert_case($stateName, MB_CASE_TITLE);
+        }, $stateMachineProcessTransfer->getStateNames());
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addRowActionsToConfiguration(
-        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
+    protected function addRowActions(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         MerchantOrderTransfer $merchantOrderTransfer
-    ): GuiTableConfigurationTransfer {
-        $guiTableRowActionTransfers = new ArrayObject();
+    ): GuiTableConfigurationBuilderInterface {
         foreach ($merchantOrderTransfer->getManualEvents() as $manualEvent) {
-            $guiTableRowActionTransfer = (new GuiTableRowActionTransfer())
-                ->setId($manualEvent)
-                ->setTitle($manualEvent)
-                ->setType('url')
-                ->addTypeOption(
-                    'url',
-                    sprintf(
-                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=[${rowId}]',
-                        $merchantOrderTransfer->getIdMerchantOrder(),
-                        $manualEvent
-                    )
-                );
-
-            $guiTableRowActionTransfers->append($guiTableRowActionTransfer);
+            $guiTableConfigurationBuilder->addRowActionUrl(
+                $manualEvent,
+                $manualEvent,
+                sprintf(
+                    '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=[${rowId}]',
+                    $merchantOrderTransfer->getIdMerchantOrder(),
+                    $manualEvent
+                )
+            );
         }
 
-        $guiTableConfigurationTransfer->setRowActions(
-            (new GuiTableRowActionsConfigurationTransfer())
-                ->setRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
-                ->setActions($guiTableRowActionTransfers)
-                ->setAvailableActionsPath(static::COL_KEY_ACTION_IDS)
-        );
+        $guiTableConfigurationBuilder->setRowActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
+            ->setAvailableRowActionsPath(static::COL_KEY_ACTION_IDS);
 
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 
     /**
-     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     * @param \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder
      * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
      *
-     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     * @return \Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface
      */
-    protected function addBatchActionsToConfiguration(
-        GuiTableConfigurationTransfer $guiTableConfigurationTransfer,
+    protected function addBatchActions(
+        GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder,
         MerchantOrderTransfer $merchantOrderTransfer
-    ): GuiTableConfigurationTransfer {
-        $guiTableBatchActionTransfers = new ArrayObject();
+    ): GuiTableConfigurationBuilderInterface {
         foreach ($merchantOrderTransfer->getManualEvents() as $manualEvent) {
-            $guiTableBatchActionTransfer = (new GuiTableBatchActionTransfer())
-                ->setId($manualEvent)
-                ->setTitle($manualEvent)
-                ->setType('url')
-                ->addTypeOption(
-                    'url',
-                    sprintf(
-                        '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=${rowIds}',
-                        $merchantOrderTransfer->getIdMerchantOrder(),
-                        $manualEvent
-                    )
-                );
-
-            $guiTableBatchActionTransfers->append($guiTableBatchActionTransfer);
+            $guiTableConfigurationBuilder->addBatchActionUrl(
+                $manualEvent,
+                $manualEvent,
+                sprintf(
+                    '/sales-merchant-portal-gui/trigger-merchant-oms/batch/?merchant-order-id=%d&event-name=%s&merchant-order-ids=${rowIds}',
+                    $merchantOrderTransfer->getIdMerchantOrder(),
+                    $manualEvent
+                )
+            );
         }
 
-        $guiTableConfigurationTransfer->setBatchActions(
-            (new GuiTableBatchActionsConfigurationTransfer())
-                ->setIsEnabled(true)
-                ->setActions($guiTableBatchActionTransfers)
-                ->setRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
-                ->setAvailableActionsPath(static::COL_KEY_ACTION_IDS)
-                ->setNoActionsMessage('There are no applicable actions for the selected items.')
-        );
+        $guiTableConfigurationBuilder->setBatchActionRowIdPath(MerchantOrderItemTransfer::ID_MERCHANT_ORDER_ITEM)
+            ->setAvailableBatchActionsPath(static::COL_KEY_ACTION_IDS)
+            ->setNoBatchActionsMessage('There are no applicable actions for the selected items.');
 
-        return $guiTableConfigurationTransfer;
+        return $guiTableConfigurationBuilder;
     }
 }
