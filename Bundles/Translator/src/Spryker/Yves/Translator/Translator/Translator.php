@@ -8,9 +8,9 @@
 namespace Spryker\Yves\Translator\Translator;
 
 use InvalidArgumentException;
+use Spryker\Shared\Translator\TranslatorInterface;
 use Spryker\Yves\Translator\Dependency\Client\TranslatorToGlossaryStorageClientInterface;
 use Spryker\Yves\Translator\Dependency\Client\TranslatorToLocaleClientInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class Translator implements TranslatorInterface
 {

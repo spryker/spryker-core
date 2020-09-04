@@ -7,8 +7,9 @@
 
 namespace Spryker\Shared\Translator;
 
+use Symfony\Contracts\Translation\LocaleAwareInterface;
 use Symfony\Contracts\Translation\TranslatorInterface as SymfonyTranslatorInterface;
 
-interface TranslatorInterface extends SymfonyTranslatorInterface
+interface TranslatorInterface extends SymfonyTranslatorInterface, LocaleAwareInterface
 {
 }

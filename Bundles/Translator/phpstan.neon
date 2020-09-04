@@ -4,3 +4,4 @@ parameters:
     - '#constructor expects Symfony\\Contracts\\Translation\\TranslatorInterface#'
     - '#Call to an undefined method .+TranslatorInterface::setLocale\(\).#'
     - '#Call to an undefined method .+TranslatorInterface::getLocale\(\).#'
+    - '#Return typehint of method .+TranslatorValidatorPlugin::getTranslator\(\) has invalid type .*LegacyTranslatorProxy.#'
