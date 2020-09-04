@@ -5,25 +5,25 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductBundlesOrdersRestApi\Processor\Mapper;
+namespace Spryker\Glue\ProductBundlesRestApi\Processor\Mapper;
 
 use ArrayObject;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
-use Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource\ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface;
+use Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRestApiToOrdersRestApiResourceInterface;
 
 class OrderMapper implements OrderMapperInterface
 {
     /**
-     * @var \Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource\ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface
+     * @var \Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRestApiToOrdersRestApiResourceInterface
      */
     protected $ordersRestApiResource;
 
     /**
-     * @param \Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource\ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface $ordersRestApiResource
+     * @param \Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRestApiToOrdersRestApiResourceInterface $ordersRestApiResource
      */
-    public function __construct(ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface $ordersRestApiResource)
+    public function __construct(ProductBundlesRestApiToOrdersRestApiResourceInterface $ordersRestApiResource)
     {
         $this->ordersRestApiResource = $ordersRestApiResource;
     }

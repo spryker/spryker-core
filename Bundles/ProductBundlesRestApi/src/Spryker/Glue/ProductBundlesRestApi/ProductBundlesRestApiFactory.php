@@ -10,8 +10,11 @@ namespace Spryker\Glue\ProductBundlesRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductBundlesRestApi\Dependency\Client\ProductBundlesRestApiToProductBundleStorageClientInterface;
 use Spryker\Glue\ProductBundlesRestApi\Dependency\Client\ProductBundlesRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRestApiToOrdersRestApiResourceInterface;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Expander\BundledProductExpander;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Expander\BundledProductExpanderInterface;
+use Spryker\Glue\ProductBundlesRestApi\Processor\Mapper\OrderMapper;
+use Spryker\Glue\ProductBundlesRestApi\Processor\Mapper\OrderMapperInterface;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Reader\BundledProductReader;
 use Spryker\Glue\ProductBundlesRestApi\Processor\Reader\BundledProductReaderInterface;
 use Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder\BundledProductRestResponseBuilder;
@@ -43,6 +46,14 @@ class ProductBundlesRestApiFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Glue\ProductBundlesRestApi\Processor\Mapper\OrderMapperInterface
+     */
+    public function createOrderMapper(): OrderMapperInterface
+    {
+        return new OrderMapper($this->getOrdersRestApiResource());
+    }
+
+    /**
      * @return \Spryker\Glue\ProductBundlesRestApi\Processor\RestResponseBuilder\BundledProductRestResponseBuilderInterface
      */
     public function createBundledProductRestResponseBuilder(): BundledProductRestResponseBuilderInterface
@@ -64,5 +75,13 @@ class ProductBundlesRestApiFactory extends AbstractFactory
     public function getProductBundleStorageClient(): ProductBundlesRestApiToProductBundleStorageClientInterface
     {
         return $this->getProvidedDependency(ProductBundlesRestApiDependencyProvider::CLIENT_PRODUCT_BUNDLE_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource\ProductBundlesRestApiToOrdersRestApiResourceInterface
+     */
+    public function getOrdersRestApiResource(): ProductBundlesRestApiToOrdersRestApiResourceInterface
+    {
+        return $this->getProvidedDependency(ProductBundlesRestApiDependencyProvider::RESOURCE_ORDERS_REST_API);
     }
 }

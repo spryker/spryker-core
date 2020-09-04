@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductBundlesOrdersRestApi\Plugin\OrdersRestApi;
+namespace Spryker\Glue\ProductBundlesRestApi\Plugin\OrdersRestApi;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
@@ -13,7 +13,7 @@ use Spryker\Glue\Kernel\AbstractPlugin;
 use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttributesMapperPluginInterface;
 
 /**
- * @method \Spryker\Glue\ProductBundlesOrdersRestApi\ProductBundlesOrdersRestApiFactory getFactory()
+ * @method \Spryker\Glue\ProductBundlesRestApi\ProductBundlesRestApiFactory getFactory()
  */
 class BundleItemRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements RestOrderDetailsAttributesMapperPluginInterface
 {

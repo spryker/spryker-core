@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ProductBundlesOrdersRestApi\Dependency\RestResource;
+namespace Spryker\Glue\ProductBundlesRestApi\Dependency\RestResource;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
 
-class ProductBundlesOrdersRestApiToOrdersRestApiResourceBridge implements ProductBundlesOrdersRestApiToOrdersRestApiResourceInterface
+class ProductBundlesRestApiToOrdersRestApiResourceBridge implements ProductBundlesRestApiToOrdersRestApiResourceInterface
 {
     /**
      * @var \Spryker\Glue\OrdersRestApi\OrdersRestApiResourceInterface

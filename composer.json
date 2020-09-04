@@ -481,7 +481,6 @@
     "spryker/product-bundle": "*",
     "spryker/product-bundle-product-list-connector": "*",
     "spryker/product-bundle-storage": "*",
-    "spryker/product-bundles-orders-rest-api": "*",
     "spryker/product-bundles-rest-api": "*",
     "spryker/product-cart-connector": "*",
     "spryker/product-category": "*",
