@@ -73,10 +73,12 @@ class ApiFacade extends AbstractFacade implements ApiFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Symfony\Component\Routing\RouterInterface
      */
-    public function getRouter(): RouterInterface
+    public function getApiRouter(): RouterInterface
     {
-        return $this->getFactory()->createRouter();
+        return $this->getFactory()->createApiRouter();
     }
 }

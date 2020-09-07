@@ -361,7 +361,7 @@ class ApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Symfony\Component\Routing\RouterInterface
      */
-    public function createRouter(): RouterInterface
+    public function createApiRouter(): RouterInterface
     {
         return new ApiRouter($this->getConfig());
     }

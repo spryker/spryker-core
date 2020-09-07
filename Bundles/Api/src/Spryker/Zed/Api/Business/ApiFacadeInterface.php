@@ -51,7 +51,9 @@ interface ApiFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Symfony\Component\Routing\RouterInterface
      */
-    public function getRouter(): RouterInterface;
+    public function getApiRouter(): RouterInterface;
 }

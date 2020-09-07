@@ -28,6 +28,6 @@ class ApiRouterPlugin extends AbstractPlugin implements RouterPluginInterface
      */
     public function getRouter(): RouterInterface
     {
-        return $this->getFacade()->getRouter();
+        return $this->getFacade()->getApiRouter();
     }
 }
