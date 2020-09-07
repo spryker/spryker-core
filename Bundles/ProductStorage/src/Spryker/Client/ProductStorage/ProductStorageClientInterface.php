@@ -110,6 +110,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Filters restricted products.
      * - Retrieves product concrete storage data by given product concrete ids.
      * - Returns an array of ProductConcreteStorageTransfers mapped from product concrete storage data.
      *
@@ -218,6 +219,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Filters restricted products.
      * - Retrieves product concrete storage data by given mapping type and identifier.
      * - Returns null if product concrete storage data was not found.
      *
@@ -385,7 +387,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
-     * - Retrieves a current Store specific ProductConcrete resources from Storage using provided product concrete ids and locale name.
+     * - Retrieves product concrete resources from storage in bulk by ids and locale name.
      *
      * @api
      *
@@ -394,7 +396,7 @@ interface ProductStorageClientInterface
      *
      * @return array
      */
-    public function getBulkProductConcreteStorageDataByIds(
+    public function getBulkProductConcreteStorageData(
         array $productConcreteIds,
         string $localeName
     ): array;

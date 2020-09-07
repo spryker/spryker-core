@@ -452,7 +452,7 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return array
      */
-    public function getBulkProductConcreteStorageDataByIds(
+    public function getBulkProductConcreteStorageData(
         array $productConcreteIds,
         string $localeName
     ): array {

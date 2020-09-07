@@ -7,7 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator;
 
-interface ConfigurableBundleRestApiTranslatorInterface
+interface ConfigurableBundleTranslatorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers

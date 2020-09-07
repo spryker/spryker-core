@@ -37,7 +37,8 @@ class ConfigurableBundleTemplateImageSetExpander implements ConfigurableBundleRe
     {
         foreach ($resources as $resource) {
             $configurableBundleTemplateStorageTransfer = $resource->getPayload();
-            if (!$configurableBundleTemplateStorageTransfer instanceof ConfigurableBundleTemplateStorageTransfer) {
+
+            if (!$configurableBundleTemplateStorageTransfer instanceof ConfigurableBundleTemplateStorageTransfer || !$resource->getId()) {
                 continue;
             }
 

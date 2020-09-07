@@ -7,14 +7,17 @@
 
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper;
 
+use ArrayObject;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\ProductImageSetStorageTransfer;
+use Generated\Shared\Transfer\ProductImageStorageTransfer;
+use Generated\Shared\Transfer\RestConfigurableBundleImagesAttributesTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplateImageSetsAttributesTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplateSlotsAttributesTransfer;
 
-interface ConfigurableBundleRestApiMapperInterface
+class ConfigurableBundleMapper implements ConfigurableBundleMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
@@ -25,7 +28,14 @@ interface ConfigurableBundleRestApiMapperInterface
     public function mapConfigurableBundleTemplateStorageTransferToRestAttributesTransfer(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer,
         RestConfigurableBundleTemplatesAttributesTransfer $restConfigurableBundleTemplatesAttributesTransfer
-    ): RestConfigurableBundleTemplatesAttributesTransfer;
+    ): RestConfigurableBundleTemplatesAttributesTransfer {
+        $restConfigurableBundleTemplatesAttributesTransfer->fromArray(
+            $configurableBundleTemplateStorageTransfer->toArray(),
+            true
+        );
+
+        return $restConfigurableBundleTemplatesAttributesTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer
@@ -36,7 +46,14 @@ interface ConfigurableBundleRestApiMapperInterface
     public function mapConfigurableBundleTemplateSlotStorageTransferToRestAttributesTransfer(
         ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer,
         RestConfigurableBundleTemplateSlotsAttributesTransfer $restConfigurableBundleTemplateSlotsAttributesTransfer
-    ): RestConfigurableBundleTemplateSlotsAttributesTransfer;
+    ): RestConfigurableBundleTemplateSlotsAttributesTransfer {
+        $restConfigurableBundleTemplateSlotsAttributesTransfer->fromArray(
+            $configurableBundleTemplateSlotStorageTransfer->toArray(),
+            true
+        );
+
+        return $restConfigurableBundleTemplateSlotsAttributesTransfer;
+    }
 
     /**
      * @param \Generated\Shared\Transfer\ProductImageSetStorageTransfer $productImageSetStorageTransfer
@@ -47,5 +64,42 @@ interface ConfigurableBundleRestApiMapperInterface
     public function mapProductImageSetStorageTransferToRestAttributesTransfer(
         ProductImageSetStorageTransfer $productImageSetStorageTransfer,
         RestConfigurableBundleTemplateImageSetsAttributesTransfer $restConfigurableBundleTemplateImageSetsAttributesTransfer
-    ): RestConfigurableBundleTemplateImageSetsAttributesTransfer;
+    ): RestConfigurableBundleTemplateImageSetsAttributesTransfer {
+        $restConfigurableBundleTemplateImageSetsAttributesTransfer->fromArray(
+            $productImageSetStorageTransfer->toArray(),
+            true
+        );
+
+        $restConfigurableBundleImagesAttributesTransfers = [];
+        foreach ($productImageSetStorageTransfer->getImages() as $productImageStorageTransfer) {
+            $restConfigurableBundleImagesAttributesTransfers[] = $this->mapProductImageStorageTransferToRestAttributesTransfer(
+                $productImageStorageTransfer,
+                new RestConfigurableBundleImagesAttributesTransfer()
+            );
+        }
+
+        $restConfigurableBundleTemplateImageSetsAttributesTransfer->setImages(
+            new ArrayObject($restConfigurableBundleImagesAttributesTransfers)
+        );
+
+        return $restConfigurableBundleTemplateImageSetsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductImageStorageTransfer $productImageStorageTransfer
+     * @param \Generated\Shared\Transfer\RestConfigurableBundleImagesAttributesTransfer $restConfigurableBundleImagesAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestConfigurableBundleImagesAttributesTransfer
+     */
+    protected function mapProductImageStorageTransferToRestAttributesTransfer(
+        ProductImageStorageTransfer $productImageStorageTransfer,
+        RestConfigurableBundleImagesAttributesTransfer $restConfigurableBundleImagesAttributesTransfer
+    ) {
+        $restConfigurableBundleImagesAttributesTransfer->fromArray(
+            $productImageStorageTransfer->toArray(),
+            true
+        );
+
+        return $restConfigurableBundleImagesAttributesTransfer;
+    }
 }

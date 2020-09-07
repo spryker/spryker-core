@@ -177,7 +177,7 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
     public function getProductConcreteCollectionByIds(array $productConcreteIds, RestRequestInterface $restRequest): array
     {
         $bulkProductConcreteStorageData = $this->productStorageClient
-            ->getBulkProductConcreteStorageDataByIds(
+            ->getBulkProductConcreteStorageData(
                 $productConcreteIds,
                 $restRequest->getMetadata()->getLocale()
             );

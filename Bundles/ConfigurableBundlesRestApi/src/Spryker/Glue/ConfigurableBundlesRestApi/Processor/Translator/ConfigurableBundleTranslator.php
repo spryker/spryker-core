@@ -9,7 +9,7 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Translator;
 
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToGlossaryStorageClientInterface;
 
-class ConfigurableBundleRestApiTranslator implements ConfigurableBundleRestApiTranslatorInterface
+class ConfigurableBundleTranslator implements ConfigurableBundleTranslatorInterface
 {
     /**
      * @var \Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToGlossaryStorageClientInterface

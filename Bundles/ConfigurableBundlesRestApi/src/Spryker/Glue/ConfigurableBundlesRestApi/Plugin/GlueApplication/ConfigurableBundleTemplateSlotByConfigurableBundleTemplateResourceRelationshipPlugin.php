@@ -24,8 +24,8 @@ class ConfigurableBundleTemplateSlotByConfigurableBundleTemplateResourceRelation
     /**
      * {@inheritDoc}
      * - Adds `configurable-bundle-template-slots` resource as relationship by configurable bundle template.
-     * - Requires `ConfigurableBundleTemplateStorageTransfer` be provided in resource payload.
-     * - Requires `ConfigurableBundleTemplateStorageTransfer::slots` be provided.
+     * - Requires `ConfigurableBundleTemplateStorageTransfer` to be provided in resource payload.
+     * - Requires `ConfigurableBundleTemplateStorageTransfer::slots` to be provided.
      *
      * @api
      *

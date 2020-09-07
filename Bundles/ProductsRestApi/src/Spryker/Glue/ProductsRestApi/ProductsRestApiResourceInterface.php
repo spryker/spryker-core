@@ -80,7 +80,8 @@ interface ProductsRestApiResourceInterface
 
     /**
      * Specification:
-     *  - Retrieves concrete product resources by given product concrete ids.
+     * - Retrieves concrete product resources by given product concrete ids.
+     * - Executes a stack of `ConcreteProductsResourceExpanderPluginInterface` plugins that expand result.
      *
      * @api
      *
