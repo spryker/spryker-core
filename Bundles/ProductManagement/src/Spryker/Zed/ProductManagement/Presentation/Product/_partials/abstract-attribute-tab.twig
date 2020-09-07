@@ -21,7 +21,7 @@
     {% endblock %}
 {% endembed %}
 
-{% for localeTransfer in localeCollection %}
+{% for localeTransfer in locale %}
     {% set formKey = 'attribute_abstract_' ~ localeTransfer.localeName %}
 
     {% if form[formKey] is defined %}

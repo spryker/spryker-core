@@ -1,3 +1,5 @@
+{# @var locale \Generated\Shared\Transfer\locale #}
+
 <div class="well">
     {% filter trans|raw %}
         <h3>{{ 'Add General Information' | trans }}</h3>
@@ -12,12 +14,12 @@
     {{ form_row(form.form_product_concrete_super_attributes) }}
 {% endif %}
 
-{% for localeTransfer in localeCollection %}
-    {% set formKey = 'general_' ~ localeTransfer.localeName %}
+{% for locale in localeCollection %}
+    {% set formKey = 'general_' ~ locale.localeName %}
 
     {% if form[formKey] is defined %}
 
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
             {% block content %}
                 {% for input in form[formKey] %}
                     <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">

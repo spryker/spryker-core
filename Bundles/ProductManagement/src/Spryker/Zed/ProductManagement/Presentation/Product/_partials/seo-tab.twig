@@ -1,3 +1,5 @@
+{# @var locale \Generated\Shared\Transfer\LocaleTransfer #}
+
 <div class="well">
     {% filter trans|raw %}
         <h3>{{ 'SEO (Meta Information)' | trans }}</h3>
@@ -6,11 +8,11 @@
     {% endfilter %}
 </div>
 
-{% for localeTransfer in localeCollection %}
-    {% set formKey = 'seo_' ~ localeTransfer.localeName %}
+{% for locale in localeCollection %}
+    {% set formKey = 'seo_' ~ locale.localeName %}
 
     {% if form[formKey] is defined %}
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': localeTransfer.localeName} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': (not loop.first), 'localeName': locale.localeName} %}
             {% block content %}
                 {% for input in form[formKey] %}
                     <div class="form-group {% if input.vars.errors|length %}has-error{% endif %}">
