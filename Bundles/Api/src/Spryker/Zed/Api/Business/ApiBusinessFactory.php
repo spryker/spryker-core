@@ -35,8 +35,8 @@ use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceIdPrePr
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourceParametersPreProcessor;
 use Spryker\Zed\Api\Business\Model\Processor\Pre\RestApiResource\ResourcePreProcessor;
 use Spryker\Zed\Api\Business\Model\ResourceHandler;
-use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
 use Spryker\Zed\Api\Business\Model\Validator\ApiValidator;
+use Spryker\Zed\Api\Business\Router\ApiRouter;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Symfony\Component\Routing\RouterInterface;
 

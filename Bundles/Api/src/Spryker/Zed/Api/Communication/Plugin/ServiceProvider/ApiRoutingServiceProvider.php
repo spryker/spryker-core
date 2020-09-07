@@ -13,8 +13,6 @@ use Spryker\Zed\Api\Business\Model\Router\ApiRouter;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
- * @deprecated Use {@link \Spryker\Zed\Api\Communication\Plugin\Router\ApiRouterPlugin} instead.
- *
  * @method \Spryker\Zed\Api\Communication\ApiCommunicationFactory getFactory()
  * @method \Spryker\Zed\Api\Business\ApiFacadeInterface getFacade()
  * @method \Spryker\Zed\Api\ApiConfig getConfig()
@@ -33,7 +31,7 @@ class ApiRoutingServiceProvider extends AbstractPlugin implements ServiceProvide
             return;
         }
 
-        $app->addRouter(new ApiRouter($this->getConfig()));
+        $app->addRouter(new ApiRouter($app));
     }
 
     /**

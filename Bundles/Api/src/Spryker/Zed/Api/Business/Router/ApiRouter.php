@@ -5,14 +5,11 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Api\Business\Model\Router;
+namespace Spryker\Zed\Api\Business\Router;
 
-use Silex\Application;
-use Spryker\Shared\Application\Communication\ControllerServiceBuilder;
 use Spryker\Zed\Api\ApiConfig;
 use Spryker\Zed\Kernel\ClassResolver\Controller\ControllerResolver;
 use Spryker\Zed\Kernel\Communication\BundleControllerAction;
-use Spryker\Zed\Kernel\Communication\Controller\RouteNameResolver;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Symfony\Component\Routing\RequestContext;
@@ -21,22 +18,26 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ApiRouter implements RouterInterface
 {
+    protected const MODULE_NAME = 'Api';
+    protected const CONTROLLER_NAME = 'Rest';
+    protected const ACTION_NAME = 'index';
+
+    /**
+     * @var \Spryker\Zed\Api\ApiConfig
+     */
+    protected $config;
+
     /**
      * @var \Symfony\Component\Routing\RequestContext
      */
     private $context;
 
     /**
-     * @var \Silex\Application
+     * @param \Spryker\Zed\Api\ApiConfig $config
      */
-    private $app;
-
-    /**
-     * @param \Silex\Application $app
-     */
-    public function __construct(Application $app)
+    public function __construct(ApiConfig $config)
     {
-        $this->app = $app;
+        $this->config = $config;
     }
 
     /**
@@ -84,34 +85,33 @@ class ApiRouter implements RouterInterface
     }
 
     /**
-     * @inheritDoc
+     * {@inheritDoc}
+     *
+     * @param string $pathinfo
+     *
+     * @return array
      */
     public function match($pathinfo)
     {
-        /** @var \Symfony\Component\HttpFoundation\Request $request */
-        $request = $this->app['request_stack']->getCurrentRequest();
+        if (!$this->config->isApiEnabled()) {
+            return [];
+        }
 
-        $path = $request->getPathInfo();
-        $this->assertValidPath($path);
+        $this->assertValidPath($pathinfo);
 
         $controllerResolver = new ControllerResolver();
-        $routeNameResolver = new RouteNameResolver($request);
         $bundleControllerAction = new BundleControllerAction(
-            $request->attributes->get('module'),
-            $request->attributes->get('controller'),
-            'index'
+            static::MODULE_NAME,
+            static::CONTROLLER_NAME,
+            static::ACTION_NAME
         );
 
-        $service = (new ControllerServiceBuilder())->createServiceForController(
-            $this->app,
-            $bundleControllerAction,
-            $controllerResolver,
-            $routeNameResolver
-        );
+        $controller = $controllerResolver->resolve($bundleControllerAction);
+        $controller->initialize();
 
         return [
-            '_controller' => $service,
-            '_route' => 'Api/Rest/index',
+            '_controller' => [$controller, static::ACTION_NAME . 'Action'],
+            '_route' => $this->getRoute(),
         ];
     }
 
@@ -122,7 +122,7 @@ class ApiRouter implements RouterInterface
      *
      * @return void
      */
-    protected function assertValidPath($path)
+    protected function assertValidPath(string $path): void
     {
         if (strpos($path, ApiConfig::ROUTE_PREFIX_API_REST) !== 0) {
             throw new ResourceNotFoundException(sprintf(
@@ -131,5 +131,13 @@ class ApiRouter implements RouterInterface
                 $path
             ));
         }
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRoute(): string
+    {
+        return sprintf('%s/%s/%s', static::MODULE_NAME, static::CONTROLLER_NAME, static::ACTION_NAME);
     }
 }
