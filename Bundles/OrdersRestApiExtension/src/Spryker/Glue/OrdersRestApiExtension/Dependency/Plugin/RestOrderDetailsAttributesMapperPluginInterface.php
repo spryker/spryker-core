@@ -10,6 +10,11 @@ namespace Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer;
 
+/**
+ * Plugin is used to map the additional information from the `OrderTransfer` to `RestOrderDetailsAttributesTransfer`.
+ *
+ * `RestOrderDetailsAttributesTransfer` represent the `/orders/:orderReference` response attributes.
+ */
 interface RestOrderDetailsAttributesMapperPluginInterface
 {
     /**

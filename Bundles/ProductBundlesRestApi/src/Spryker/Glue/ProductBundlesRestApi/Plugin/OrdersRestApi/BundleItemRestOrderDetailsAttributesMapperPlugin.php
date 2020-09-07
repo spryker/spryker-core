@@ -18,6 +18,13 @@ use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderDetailsAttrib
 class BundleItemRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin implements RestOrderDetailsAttributesMapperPluginInterface
 {
     /**
+     * {@inheritDoc}
+     * - Maps `OrderTransfer.bundleItems` to `RestOrderDetailsAttributesTransfer.bundleItems`.
+     * - Will overwrite any automatically mapped items.
+     * - Uses `OrdersRestApiResource::mapItemTransferToRestOrderItemsAttributesTransfer()` to do the mapping.
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
      * @param \Generated\Shared\Transfer\RestOrderDetailsAttributesTransfer $restOrderDetailsAttributesTransfer
      *
