@@ -28,7 +28,7 @@ interface ProductConfigurationInstanceReaderInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
-    public function findProductConfigurationInstanceByGroupKey(
+    public function findProductConfigurationInstanceInQuote(
         string $groupKey,
         string $sku,
         QuoteTransfer $quoteTransfer
