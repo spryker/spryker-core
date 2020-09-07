@@ -31,6 +31,11 @@ class BusinessHelper extends Module
     protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
     protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sSharedFactory';
 
+    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
+        'SprykerShopTest',
+        'SprykerSdkTest',
+    ];
+
     /**
      * @var array
      */
@@ -166,6 +171,12 @@ class BusinessHelper extends Module
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
 
+        $classNameCandidate = sprintf(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
+
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
         return sprintf(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
@@ -276,6 +287,12 @@ class BusinessHelper extends Module
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
+
+        $classNameCandidate = sprintf(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
+
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
 
         return sprintf(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
