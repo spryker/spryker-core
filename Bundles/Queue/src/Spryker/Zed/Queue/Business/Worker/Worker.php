@@ -10,7 +10,7 @@ namespace Spryker\Zed\Queue\Business\Worker;
 use Spryker\Client\Queue\QueueClientInterface;
 use Spryker\Shared\Queue\QueueConfig as SharedQueueConfig;
 use Spryker\Zed\Queue\Business\Process\ProcessManagerInterface;
-use Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface;
+use Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface;
 use Spryker\Zed\Queue\QueueConfig;
 
 /**
@@ -51,9 +51,9 @@ class Worker implements WorkerInterface
     protected $queueNames;
 
     /**
-     * @var \Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface
+     * @var \Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface
      */
-    protected $workerSignalHandler;
+    protected $signalDispatcher;
 
     /**
      * @param \Spryker\Zed\Queue\Business\Process\ProcessManagerInterface $processManager
@@ -61,7 +61,7 @@ class Worker implements WorkerInterface
      * @param \Spryker\Zed\Queue\Business\Worker\WorkerProgressBarInterface $workerProgressBar
      * @param \Spryker\Client\Queue\QueueClientInterface $queueClient
      * @param array $queueNames
-     * @param \Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface $workerSignalHandler
+     * @param \Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface $signalDispatcher
      */
     public function __construct(
         ProcessManagerInterface $processManager,
@@ -69,19 +69,15 @@ class Worker implements WorkerInterface
         WorkerProgressBarInterface $workerProgressBar,
         QueueClientInterface $queueClient,
         array $queueNames,
-        WorkerSignalHandlerInterface $workerSignalHandler
+        SignalDispatcherInterface $signalDispatcher
     ) {
         $this->processManager = $processManager;
         $this->workerProgressBar = $workerProgressBar;
         $this->queueConfig = $queueConfig;
         $this->queueClient = $queueClient;
         $this->queueNames = $queueNames;
-        $this->workerSignalHandler = $workerSignalHandler;
-
-        $this->workerSignalHandler->attach(
-            $this->queueConfig->getSignalsToHandle(),
-            [$this->workerSignalHandler, 'handle']
-        );
+        $this->signalDispatcher = $signalDispatcher;
+        $this->signalDispatcher->dispatch($this->queueConfig->getSignalsToHandle());
     }
 
     /**

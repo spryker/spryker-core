@@ -7,18 +7,12 @@
 
 namespace Spryker\Zed\Queue\Business\SignalHandler;
 
-interface WorkerSignalHandlerInterface
+interface SignalDispatcherInterface
 {
     /**
-     * @return void
-     */
-    public function handle(): void;
-
-    /**
      * @param int[] $signals
-     * @param callable $handler
      *
      * @return void
      */
-    public function attach(array $signals, callable $handler): void;
+    public function dispatch(array $signals): void;
 }

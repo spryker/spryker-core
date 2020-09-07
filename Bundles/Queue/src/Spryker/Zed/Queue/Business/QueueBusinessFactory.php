@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Queue\Business\Process\ProcessManager;
 use Spryker\Zed\Queue\Business\QueueDumper\QueueDumper;
 use Spryker\Zed\Queue\Business\QueueDumper\QueueDumperInterface;
-use Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandler;
-use Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface;
+use Spryker\Zed\Queue\Business\SignalHandler\QueueWorkerSignalDispatcher;
+use Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface;
 use Spryker\Zed\Queue\Business\Task\TaskManager;
 use Spryker\Zed\Queue\Business\Worker\Worker;
 use Spryker\Zed\Queue\Business\Worker\WorkerProgressBar;
@@ -56,7 +56,7 @@ class QueueBusinessFactory extends AbstractBusinessFactory
             $this->createWorkerProgressbar($output),
             $this->getQueueClient(),
             $this->getQueueNames(),
-            $this->createWorkerSignalHandler()
+            $this->createQueueWorkerSignalDispatcher()
         );
     }
 
@@ -139,11 +139,11 @@ class QueueBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Queue\Business\SignalHandler\WorkerSignalHandlerInterface
+     * @return \Spryker\Zed\Queue\Business\SignalHandler\SignalDispatcherInterface
      */
-    public function createWorkerSignalHandler(): WorkerSignalHandlerInterface
+    public function createQueueWorkerSignalDispatcher(): SignalDispatcherInterface
     {
-        return new WorkerSignalHandler(
+        return new QueueWorkerSignalDispatcher(
             $this->createProcessManager(),
             $this->getConfig(),
             $this->getQueueNames()

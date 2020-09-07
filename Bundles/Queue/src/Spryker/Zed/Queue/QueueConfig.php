@@ -178,6 +178,15 @@ class QueueConfig extends AbstractBundleConfig
      *
      * @api
      *
+     * @example
+     * [
+     *  SIGTERM,
+     *  SIGINT,
+     *  SIGQUIT,
+     *  SIGABRT,
+     *  SIGKILL,
+     * ]
+     *
      * @return int[]
      */
     public function getSignalsToHandle(): array
