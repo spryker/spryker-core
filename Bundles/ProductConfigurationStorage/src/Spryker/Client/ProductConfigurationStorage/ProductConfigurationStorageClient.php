@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -35,6 +36,26 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         return $this->getFactory()
             ->createProductConfigurationInstanceReader()
             ->findProductConfigurationInstanceBySku($sku);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param string $groupKey
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    public function findProductConfigurationInstanceInQuote(
+        string $groupKey,
+        string $sku,
+        QuoteTransfer $quoteTransfer
+    ): ?ProductConfigurationInstanceTransfer {
+        return $this->getFactory()
+            ->createProductConfigurationInstanceReader()->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
     }
 
     /**

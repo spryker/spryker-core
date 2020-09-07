@@ -597,6 +597,7 @@
     "spryker/publisher-extension": "*",
     "spryker/product-configuration-data-import":"*",
     "spryker/product-configuration":"*",
+    "spryker/product-configuration-extension":"*",
     "spryker/product-configuration-storage":"*",
     "spryker/queue": "*",
     "spryker/quick-order": "*",
