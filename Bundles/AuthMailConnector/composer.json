@@ -7,7 +7,7 @@
     "php": ">=7.2",
     "spryker/auth-mail-connector-extension": "^1.0.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/mail": "^4.0.0"
+    "spryker/mail": "^4.6.0"
   },
   "require-dev": {
     "spryker/auth": "*",

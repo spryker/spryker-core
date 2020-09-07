@@ -99,7 +99,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductTableBaseQuery(ProductTableCriteriaTransfer $productTableCriteriaTransfer): SpyProductQuery
     {
         $productConcreteQuery = $this->getFactory()->getProductConcretePropelQuery();
-        $idLocale = $productTableCriteriaTransfer->requireIdLocale()->getIdLocale();
+        $idLocale = $productTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
         $idMerchant = $productTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $productConcreteQuery = $this->addLocalizedAttributesToProductTableQuery($productConcreteQuery, $idLocale);
@@ -417,7 +417,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
     protected function buildProductOfferTableBaseQuery(
         ProductOfferTableCriteriaTransfer $productOfferTableCriteriaTransfer
     ): SpyProductOfferQuery {
-        $idLocale = $productOfferTableCriteriaTransfer->requireIdLocale()->getIdLocale();
+        $idLocale = $productOfferTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
         $idMerchant = $productOfferTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $productOfferQuery = $this->getFactory()->getProductOfferPropelQuery();
@@ -841,6 +841,7 @@ class ProductOfferMerchantPortalGuiRepository extends AbstractRepository impleme
         $currentDateTime = (new DateTime())->format('Y-m-d H:i:s');
         $expiringOffersDateTime = (new DateTime(sprintf('+%s Days', $dashboardExpiringOffersLimit)))->format('Y-m-d H:i:s');
 
+        /** @var array $merchantProductOfferCounts */
         $merchantProductOfferCounts = $this->getFactory()->getProductOfferPropelQuery()
             ->leftJoinSpyProductOfferValidity()
             ->leftJoinProductOfferStock()

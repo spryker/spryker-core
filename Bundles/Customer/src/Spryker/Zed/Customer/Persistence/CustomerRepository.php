@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerCollectionTransfer;
 use Generated\Shared\Transfer\CustomerCriteriaFilterTransfer;
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -145,7 +146,10 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         $paginationTransfer->setNextPage($paginationModel->getNextPage());
         $paginationTransfer->setPreviousPage($paginationModel->getPreviousPage());
 
-        return $paginationModel->getQuery();
+        /** @var \Orm\Zed\Customer\Persistence\SpyCustomerQuery $customerQuery */
+        $customerQuery = $paginationModel->getQuery();
+
+        return $customerQuery;
     }
 
     /**
@@ -253,6 +257,30 @@ class CustomerRepository extends AbstractRepository implements CustomerRepositor
         }
 
         return (new AddressesTransfer())->setAddresses(new ArrayObject($addressTransfers));
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerCriteriaTransfer $customerCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer|null
+     */
+    public function findCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): ?CustomerTransfer
+    {
+        $customerQuery = $this->getFactory()->createSpyCustomerQuery();
+
+        if ($customerCriteriaTransfer->getCustomerReference()) {
+            $customerQuery->filterByCustomerReference($customerCriteriaTransfer->getCustomerReference());
+        }
+
+        $customerEntity = $customerQuery->findOne();
+
+        if ($customerEntity === null) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createCustomerMapper()
+            ->mapCustomerEntityToCustomer($customerEntity->toArray());
     }
 
     /**

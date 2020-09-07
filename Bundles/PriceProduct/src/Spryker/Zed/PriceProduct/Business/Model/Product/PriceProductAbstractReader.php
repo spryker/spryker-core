@@ -220,6 +220,7 @@ class PriceProductAbstractReader implements PriceProductAbstractReaderInterface
      */
     public function findPriceProductId($sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer)
     {
+        /** @var int|null $idPriceProduct */
         $idPriceProduct = $this->priceProductQueryContainer
             ->queryPriceEntityForProductAbstract($sku, $priceProductCriteriaTransfer)
             ->select([SpyPriceProductTableMap::COL_ID_PRICE_PRODUCT])

@@ -74,7 +74,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         // Assert
-        $this->assertEquals('de_foo', $definitions['de_foo']->getIndexName());
+        $this->assertSame('de_foo', $definitions['de_foo']->getIndexName());
     }
 
     /**
@@ -205,7 +205,7 @@ class JsonIndexDefinitionLoaderTest extends Unit
         $definitions = $jsonIndexDefinitionLoader->loadIndexDefinitions();
 
         // Assert
-        $this->assertEquals(3, count($definitions));
+        $this->assertSame(3, count($definitions));
     }
 
     /**

@@ -52,8 +52,7 @@ class OauthRefreshTokenMapper implements OauthRefreshTokenMapperInterface
         $filteredUserIdentifier = $this->filterUserIdentifier($userIdentifier);
         $encodedUserIdentifier = (string)$this->utilEncodingService->encodeJson($filteredUserIdentifier);
 
-        $oauthRefreshTokenTransfer
-            ->setIdentifier($refreshTokenEntity->getIdentifier())
+        $oauthRefreshTokenTransfer->setIdentifier($refreshTokenEntity->getIdentifier())
             ->setCustomerReference($userIdentifier[static::CUSTOMER_REFERENCE] ?? null)
             ->setUserIdentifier($encodedUserIdentifier)
             ->setExpiresAt($refreshTokenEntity->getExpiryDateTime()->format('Y-m-d H:i:s'))

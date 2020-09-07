@@ -115,7 +115,7 @@ class GiftCardUsageMailTypePlugin extends AbstractPlugin implements MailTypePlug
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

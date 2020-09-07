@@ -154,6 +154,10 @@ class ProductOfferWriter implements ProductOfferWriterInterface
      */
     protected function updateProductOfferStores(ProductOfferTransfer $productOfferTransfer): ProductOfferTransfer
     {
+        if (!$productOfferTransfer->isPropertyModified(ProductOfferTransfer::STORES)) {
+            return $productOfferTransfer;
+        }
+
         $productOfferTransfer->requireIdProductOffer();
 
         $persistedProductOfferStoreTransfers = $this->indexStoreTransfersByIdStore(

@@ -12,7 +12,7 @@ class TreeFilter implements TreeFilterCompositeInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface[]
      */
-    private $filter;
+    protected $filter;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface $filter

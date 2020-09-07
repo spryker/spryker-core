@@ -20,17 +20,17 @@ class ZedNavigationBuilder
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Collector\ZedNavigationCollectorInterface
      */
-    private $navigationCollector;
+    protected $navigationCollector;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Formatter\MenuFormatterInterface
      */
-    private $menuFormatter;
+    protected $menuFormatter;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\Extractor\PathExtractorInterface
      */
-    private $pathExtractor;
+    protected $pathExtractor;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Filter\NavigationItemFilterInterface

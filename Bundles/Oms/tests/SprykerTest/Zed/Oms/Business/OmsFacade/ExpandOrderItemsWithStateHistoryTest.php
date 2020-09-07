@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemStateTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Zed\Propel\PropelConfig;
 
 /**
  * Auto-generated group annotations
@@ -151,7 +152,7 @@ class ExpandOrderItemsWithStateHistoryTest extends Unit
      */
     protected function skipIfMySql(): void
     {
-        if (Config::get(PropelConstants::ZED_DB_ENGINE) === Config::get(PropelConstants::ZED_DB_ENGINE_MYSQL)) {
+        if (Config::get(PropelConstants::ZED_DB_ENGINE) === PropelConfig::DB_ENGINE_MYSQL) {
             $this->markTestSkipped('Not MYSQL related test');
         }
     }

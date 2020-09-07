@@ -206,7 +206,7 @@ class EventFacadeTest extends Unit
 
         //Assert
         $this->assertTrue($processedMessages[0]->getAcknowledge());
-        $this->assertEquals('retry', $processedMessages[0]->getRoutingKey());
+        $this->assertSame('retry', $processedMessages[0]->getRoutingKey());
         $this->assertTrue($processedMessages[1]->getAcknowledge());
         $this->assertNull($processedMessages[1]->getRoutingKey());
     }

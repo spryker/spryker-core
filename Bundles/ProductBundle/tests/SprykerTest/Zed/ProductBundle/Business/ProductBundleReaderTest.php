@@ -37,6 +37,7 @@ use Spryker\Zed\ProductBundle\Persistence\ProductBundleRepositoryInterface;
 class ProductBundleReaderTest extends Unit
 {
     public const ID_STORE = 1;
+
     /**
      * @var array
      */
@@ -92,7 +93,7 @@ class ProductBundleReaderTest extends Unit
         $productBundleTransfer = $productConcreteTransfer->getProductBundle();
 
         $this->assertNotNull($productBundleTransfer);
-        $this->assertEquals($bundleAvailability, $productBundleTransfer->getAvailability()->toString());
+        $this->assertSame((string)$bundleAvailability, $productBundleTransfer->getAvailability()->toString());
         $this->assertCount(1, $productBundleTransfer->getBundledProducts());
     }
 

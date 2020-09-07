@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\CmsSlotBlockDataImport\Business\DataImportStep;
@@ -46,6 +46,7 @@ class CmsBlockKeyToCmsBlockIdStep implements DataImportStepInterface
             return $this->idCmsBlockBuffer[$cmsBlockKey];
         }
 
+        /** @var int|null $idCmsBlock */
         $idCmsBlock = SpyCmsBlockQuery::create()
             ->filterByKey($cmsBlockKey)
             ->select([SpyCmsBlockTableMap::COL_ID_CMS_BLOCK])

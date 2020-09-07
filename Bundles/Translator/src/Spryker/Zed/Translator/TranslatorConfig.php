@@ -10,6 +10,9 @@ namespace Spryker\Zed\Translator;
 use Spryker\Shared\Translator\TranslatorConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
+/**
+ * @method \Spryker\Shared\Translator\TranslatorConfig getSharedConfig()
+ */
 class TranslatorConfig extends AbstractBundleConfig
 {
     public const ZED_CSV_FILE_DELIMITER = ',';
@@ -55,7 +58,13 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getProjectTranslationFilePathPatterns(): array
     {
-        return $this->get(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS, []);
+        if ($this->getConfig()->hasKey(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS)) {
+            return $this->get(TranslatorConstants::TRANSLATION_ZED_FILE_PATH_PATTERNS);
+        }
+
+        return array_map(function (string $projectNamespace) {
+            return sprintf('%s/src/%s/Zed/Translator/data/*/[a-z][a-z]_[A-Z][A-Z].csv', APPLICATION_ROOT_DIR, $projectNamespace);
+        }, $this->getSharedConfig()->getProjectNamespaces());
     }
 
     /**
@@ -79,7 +88,13 @@ class TranslatorConfig extends AbstractBundleConfig
      */
     public function getTranslatorCacheDirectory(): string
     {
-        return $this->get(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY);
+        if ($this->getConfig()->hasKey(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY)) {
+            return $this->get(TranslatorConstants::TRANSLATION_ZED_CACHE_DIRECTORY);
+        }
+
+        $projectNamespaces = implode('/', $this->getSharedConfig()->getProjectNamespaces());
+
+        return sprintf('%s/src/Generated/Zed/Translator/codeBucket/%s', APPLICATION_ROOT_DIR, $projectNamespaces);
     }
 
     /**
