@@ -13,10 +13,6 @@ use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationship
 use Spryker\Glue\Kernel\AbstractPlugin;
 
 /**
- * @Glue({
- *     "resourceAttributesClassName": "\\Generated\\Shared\\Transfer\\ConcreteProductsRestAttributesTransfer"
- * })
- *
  * @method \Spryker\Glue\ConfigurableBundlesProductsResourceRelationship\ConfigurableBundlesProductsResourceRelationshipFactory getFactory()
  */
 class ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin extends AbstractPlugin implements ResourceRelationshipPluginInterface
@@ -24,8 +20,8 @@ class ProductConcreteByConfigurableBundleTemplateSlotResourceRelationshipPlugin 
     /**
      * {@inheritDoc}
      * - Adds `concrete-products` resource as relationship by configurable bundle template slot.
-     * - Requires `ConfigurableBundleTemplateSlotStorageTransfer` be provided in resource payload.
-     * - Requires `ConfigurableBundleTemplateSlotStorageTransfer::idProductList` be provided.
+     * - Requires `ConfigurableBundleTemplateSlotStorageTransfer` to be provided in resource payload.
+     * - Requires `ConfigurableBundleTemplateSlotStorageTransfer::idProductList` to be provided.
      *
      * @api
      *

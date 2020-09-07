@@ -25,10 +25,7 @@ interface ConfigurableBundleStorageReaderInterface
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getBulkConfigurableBundleTemplateStorage(
-        array $configurableBundleTemplateIds,
-        string $localeName
-    ): array;
+    public function getBulkConfigurableBundleTemplateStorage(array $configurableBundleTemplateIds, string $localeName): array;
 
     /**
      * @param string $configurableBundleTemplateUuid

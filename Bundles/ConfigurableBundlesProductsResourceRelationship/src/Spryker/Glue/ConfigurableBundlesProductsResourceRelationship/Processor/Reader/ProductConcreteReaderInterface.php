@@ -11,9 +11,8 @@ interface ProductConcreteReaderInterface
 {
     /**
      * @param int $idProductList
-     * @param int $ipp
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductListId(int $idProductList, int $ipp = 1000): array;
+    public function getProductConcreteIdsByProductListId(int $idProductList): array;
 }

@@ -41,7 +41,8 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     {
         return new ConfigurableBundleTemplateImageStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 

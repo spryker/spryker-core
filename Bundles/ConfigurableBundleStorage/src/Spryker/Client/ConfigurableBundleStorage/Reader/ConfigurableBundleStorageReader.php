@@ -75,11 +75,30 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getBulkConfigurableBundleTemplateStorage(
-        array $configurableBundleTemplateIds,
-        string $localeName
-    ): array {
-        return $this->getStorageData(array_map('strval', $configurableBundleTemplateIds), $localeName);
+    public function getBulkConfigurableBundleTemplateStorage(array $configurableBundleTemplateIds, string $localeName): array
+    {
+        $storageKeys = [];
+        $keys = array_map('strval', $configurableBundleTemplateIds);
+
+        foreach ($keys as $key) {
+            $storageKeys[] = $this->generateKey($key);
+        }
+
+        $configurableBundleTemplateStorageData = $this->storageClient->getMulti($storageKeys);
+
+        if (!$configurableBundleTemplateStorageData) {
+            return [];
+        }
+
+        $configurableBundleTemplateStorageTransfers = [];
+
+        foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
+            $configurableBundleTemplateStorageTransfers[] = $this->mapToConfigurableBundleStorage(
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true) ?? []
+            );
+        }
+
+        return $this->expandConfigurableBundleTemplatesStorage($configurableBundleTemplateStorageTransfers, $localeName);
     }
 
     /**
@@ -126,40 +145,6 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     }
 
     /**
-     * @param string[] $keys
-     * @param string $localeName
-     *
-     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
-     */
-    protected function getStorageData(array $keys, string $localeName): array
-    {
-        $storageKeys = [];
-        foreach ($keys as $key) {
-            $storageKeys[] = $this->generateKey($key);
-        }
-
-        $configurableBundleTemplateStorageData = $this->storageClient->getMulti($storageKeys);
-
-        if (!$configurableBundleTemplateStorageData) {
-            return [];
-        }
-
-        $configurableBundleTemplateStorageTransfers = [];
-
-        foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
-            $configurableBundleTemplateStorageTransfer = $this->mapToConfigurableBundleStorage(
-                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true)
-            );
-            $configurableBundleTemplateStorageTransfers[] = $this->expandConfigurableBundleTemplateStorage(
-                $configurableBundleTemplateStorageTransfer,
-                $localeName
-            );
-        }
-
-        return $configurableBundleTemplateStorageTransfers;
-    }
-
-    /**
      * @param array $configurableBundleTemplateStorageData
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer
@@ -203,5 +188,63 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         }
 
         return $configurableBundleTemplateStorageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    protected function expandConfigurableBundleTemplatesStorage(array $configurableBundleTemplateStorageTransfers, string $localeName): array
+    {
+        $configurableBundleTemplateIds = $this->getConfigurableBundleTemplateIds($configurableBundleTemplateStorageTransfers);
+        $configurableBundleTemplateImageStorageTransfers = $this->configurableBundleTemplateImageStorageReader
+            ->getBulkConfigurableBundleTemplateImageStorage($configurableBundleTemplateIds, $localeName);
+
+        $mappedConfigurableBundleTemplateImageStorageTransfers = $this->mapConfigurableBundleTemplateImageStorageTransfers($configurableBundleTemplateImageStorageTransfers);
+
+        foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
+            $configurableBundleTemplateImageStorageTransfer = $mappedConfigurableBundleTemplateImageStorageTransfers[$configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate()] ?? null;
+
+            if ($configurableBundleTemplateImageStorageTransfer) {
+                $configurableBundleTemplateStorageTransfer->setImageSets($configurableBundleTemplateImageStorageTransfer->getImageSets());
+            }
+        }
+
+        return $configurableBundleTemplateStorageTransfers;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
+     *
+     * @return int[]
+     */
+    protected function getConfigurableBundleTemplateIds(array $configurableBundleTemplateStorageTransfers): array
+    {
+        $configurableBundleTemplateIds = [];
+
+        foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
+            $configurableBundleTemplateIds[] = $configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate();
+        }
+
+        return $configurableBundleTemplateIds;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[] $configurableBundleTemplateImageStorageTransfers
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     */
+    protected function mapConfigurableBundleTemplateImageStorageTransfers(array $configurableBundleTemplateImageStorageTransfers): array
+    {
+        $mappedConfigurableBundleTemplateImageStorageTransfers = [];
+
+        foreach ($configurableBundleTemplateImageStorageTransfers as $configurableBundleTemplateImageStorageTransfer) {
+            $mappedConfigurableBundleTemplateImageStorageTransfers[$configurableBundleTemplateImageStorageTransfer->getIdConfigurableBundleTemplate()]
+                = $configurableBundleTemplateImageStorageTransfer;
+        }
+
+        return $mappedConfigurableBundleTemplateImageStorageTransfers;
     }
 }
