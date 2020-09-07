@@ -48,6 +48,7 @@
         <property name="localizedAttributes" type="LocalizedAttributes[]" singular="localizedAttributes"/>
         <property name="isActive" type="bool"/>
         <property name="fkProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
     </transfer>
 
     <transfer name="ProductConcretePageSearch">
