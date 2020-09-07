@@ -23,8 +23,6 @@ use Spryker\Zed\ProductSetStorage\Business\ProductSetStorageFacade;
 use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSetStoragePublishListener;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -34,17 +32,13 @@ use Spryker\Zed\ProductSetStorage\Communication\Plugin\Event\Listener\ProductSet
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class ProductSetStorageCommunicationTester extends Actor
 {
     use _generated\ProductSetStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const PARAM_PROJECT = 'PROJECT';
 

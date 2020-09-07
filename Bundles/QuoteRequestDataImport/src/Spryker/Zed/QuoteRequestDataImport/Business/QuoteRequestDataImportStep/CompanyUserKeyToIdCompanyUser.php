@@ -33,6 +33,7 @@ class CompanyUserKeyToIdCompanyUser implements DataImportStepInterface
         $companyUserKey = $dataSet[QuoteRequestDataSetInterface::COLUMN_COMPANY_USER_KEY];
 
         if (!isset($this->idCompanyUserCache[$companyUserKey])) {
+            /** @var int|null $idCompanyUser */
             $idCompanyUser = $this->createCompanyUserQuery()
                 ->select([SpyCompanyUserTableMap::COL_ID_COMPANY_USER])
                 ->findOneByKey($companyUserKey);

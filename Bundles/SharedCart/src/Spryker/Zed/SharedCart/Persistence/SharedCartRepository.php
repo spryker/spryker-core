@@ -293,7 +293,7 @@ class SharedCartRepository extends AbstractRepository implements SharedCartRepos
      */
     public function getCustomerIdByReference(string $customerReference): string
     {
-        return $this->getFactory()
+        return (string)$this->getFactory()
             ->createSpyCustomerQuery()
             ->filterByCustomerReference($customerReference)
             ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])

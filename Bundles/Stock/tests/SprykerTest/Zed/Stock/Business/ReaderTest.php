@@ -32,12 +32,12 @@ class ReaderTest extends Unit
     /**
      * @var \Spryker\Zed\Stock\Business\StockFacade
      */
-    private $stockFacade;
+    protected $stockFacade;
 
     /**
      * @var \Spryker\Zed\Stock\Persistence\StockQueryContainer
      */
-    private $stockQueryContainer;
+    protected $stockQueryContainer;
 
     /**
      * @return void

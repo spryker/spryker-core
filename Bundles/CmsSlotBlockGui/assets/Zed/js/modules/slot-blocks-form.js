@@ -72,15 +72,14 @@ var SlotBlocksForm = function (options) {
 
     this.save = function (event) {
         event.preventDefault();
-        if (!_self.isStateChanged) {
-            _self.activateButton();
 
-            return;
-        }
         var url = $(this).attr('action');
         var formSerialize = $(this).serialize();
 
         $.post(url, formSerialize).done(function(response) {
+            if (!_self.isStateChanged) {
+                return;
+            }
             window.sweetAlert({
                 title: 'Success',
                 html: true,

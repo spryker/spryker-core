@@ -9,31 +9,19 @@ namespace Spryker\Zed\MerchantGui\Communication\Expander;
 
 use Generated\Shared\Transfer\MerchantCriteriaTransfer;
 use Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class MerchantListDataExpander implements MerchantListDataExpanderInterface
 {
-    protected const URL_PARAM_ID_PRODUCT = 'id-merchant';
-
-    /**
-     * @var \Symfony\Component\HttpFoundation\Request
-     */
-    protected $request;
-
     /**
      * @var \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface
      */
     protected $merchantFacade;
 
     /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
      * @param \Spryker\Zed\MerchantGui\Dependency\Facade\MerchantGuiToMerchantFacadeInterface $merchantFacade
      */
-    public function __construct(
-        Request $request,
-        MerchantGuiToMerchantFacadeInterface $merchantFacade
-    ) {
-        $this->request = $request;
+    public function __construct(MerchantGuiToMerchantFacadeInterface $merchantFacade)
+    {
         $this->merchantFacade = $merchantFacade;
     }
 
@@ -48,8 +36,6 @@ class MerchantListDataExpander implements MerchantListDataExpanderInterface
      */
     public function expandData(array $viewData): array
     {
-        $viewData['idMerchant'] = $this->request->get(static::URL_PARAM_ID_PRODUCT);
-
         $viewData['merchants'] = [];
         $merchantCollectionTransfer = $this->merchantFacade
             ->get(new MerchantCriteriaTransfer());

@@ -95,7 +95,7 @@ class TriggerTest extends StateMachineMocks
 
         $affectedItems = $trigger->triggerForNewStateMachineItem($stateMachineProcessTransfer, static::ITEM_IDENTIFIER);
 
-        $this->assertEquals(1, $affectedItems);
+        $this->assertSame(1, $affectedItems);
     }
 
     /**
@@ -125,7 +125,7 @@ class TriggerTest extends StateMachineMocks
             $stateMachineItems
         );
 
-        $this->assertEquals(1, $affectedItems);
+        $this->assertSame(1, $affectedItems);
     }
 
     /**
@@ -151,7 +151,7 @@ class TriggerTest extends StateMachineMocks
 
         $affectedItems = $trigger->triggerConditionsWithoutEvent(static::TESTING_STATE_MACHINE);
 
-        $this->assertEquals(1, $affectedItems);
+        $this->assertSame(1, $affectedItems);
     }
 
     /**
@@ -177,7 +177,7 @@ class TriggerTest extends StateMachineMocks
 
         $affectedItems = $trigger->triggerForTimeoutExpiredItems(static::TESTING_STATE_MACHINE);
 
-        $this->assertEquals(1, $affectedItems);
+        $this->assertSame(1, $affectedItems);
     }
 
     /**

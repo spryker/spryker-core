@@ -80,6 +80,7 @@
 
     <transfer name="Url">
         <property name="fkResourcePage" type="int"/>
+        <property name="fkResourceRedirect" type="int"/>
         <property name="url" type="string"/>
     </transfer>
 

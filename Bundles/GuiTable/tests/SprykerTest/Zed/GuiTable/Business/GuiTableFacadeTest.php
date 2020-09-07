@@ -7,12 +7,14 @@
 
 namespace SprykerTest\Zed\GuiTable\Business;
 
+use ArrayObject;
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableDataResponseTransfer;
 use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableFilterTransfer;
+use Generated\Shared\Transfer\GuiTableRowDataResponseTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Spryker\Zed\GuiTable\Communication\Plugin\GuiTable\DateRangeRequestFilterValueNormalizerPlugin;
 use Spryker\Zed\GuiTable\Communication\Plugin\GuiTable\DateResponseColumnValueFormatterPlugin;
@@ -32,6 +34,11 @@ use Spryker\Zed\GuiTable\GuiTableDependencyProvider;
  */
 class GuiTableFacadeTest extends Unit
 {
+    /**
+     * @uses \Spryker\Zed\GuiTable\Business\ResponseFormatter\DataResponseFormatter::KEY_DATA_RESPONSE_ARRAY_DATA
+     */
+    protected const KEY_DATA_RESPONSE_ARRAY_DATA = 'data';
+
     protected const TEST_PARAM_SEARCH = 'search string';
     protected const TEST_PARAM_SORT_BY = 'column1';
     protected const TEST_PARAM_SORT_DIRECTION_ASC = 'ASC';
@@ -122,8 +129,8 @@ class GuiTableFacadeTest extends Unit
         $this->assertIsArray($guiTableDataRequestTransfer->getFilters());
         $this->assertCount(0, $guiTableDataRequestTransfer->getFilters());
         $this->assertEquals(static::TEST_PARAM_SORT_DIRECTION_ASC, $guiTableDataRequestTransfer->getOrderDirection());
-        $this->assertEquals(1, $guiTableDataRequestTransfer->getPage());
-        $this->assertEquals($guiTableConfig->getDefaultPageSize(), $guiTableDataRequestTransfer->getPageSize());
+        $this->assertSame(1, $guiTableDataRequestTransfer->getPage());
+        $this->assertSame($guiTableConfig->getDefaultPageSize(), $guiTableDataRequestTransfer->getPageSize());
     }
 
     /**
@@ -171,8 +178,16 @@ class GuiTableFacadeTest extends Unit
         );
 
         // Assert
+
+        $expected = [
+            GuiTableDataResponseTransfer::PAGE => static::TEST_PARAM_PAGE,
+            GuiTableDataResponseTransfer::TOTAL => static::TEST_PARAM_TOTAL,
+            GuiTableDataResponseTransfer::PAGE_SIZE => static::TEST_PARAM_PAGE_SIZE,
+            static::KEY_DATA_RESPONSE_ARRAY_DATA => static::TEST_TABLE_DATA,
+        ];
+
         $this->assertIsArray($formattedGuiTableDataResponse);
-        $this->assertEquals($guiTableDataResponseTransfer->toArray(true, true), $formattedGuiTableDataResponse);
+        $this->assertEquals($expected, $formattedGuiTableDataResponse);
     }
 
     /**
@@ -195,8 +210,8 @@ class GuiTableFacadeTest extends Unit
 
         // Assert
         $this->assertIsArray($formattedGuiTableDataResponse);
-        $this->assertEquals(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[GuiTableDataResponseTransfer::DATA][0][self::TEST_COLUMN_ID_1]);
-        $this->assertEquals(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[GuiTableDataResponseTransfer::DATA][1][self::TEST_COLUMN_ID_1]);
+        $this->assertEquals(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][0][self::TEST_COLUMN_ID_1]);
+        $this->assertEquals(static::TEST_VALUE_DATE_FORMATTED, $formattedGuiTableDataResponse[static::KEY_DATA_RESPONSE_ARRAY_DATA][1][self::TEST_COLUMN_ID_1]);
     }
 
     /**
@@ -253,8 +268,15 @@ class GuiTableFacadeTest extends Unit
      */
     protected function getGuiTableDataResponseTransfer(): GuiTableDataResponseTransfer
     {
+        $rows = array_map(
+            function ($data) {
+                return (new GuiTableRowDataResponseTransfer())->setResponseData($data);
+            },
+            static::TEST_TABLE_DATA
+        );
+
         return (new GuiTableDataResponseTransfer())
-            ->setData(static::TEST_TABLE_DATA)
+            ->setRows(new ArrayObject($rows))
             ->setPage(static::TEST_PARAM_PAGE)
             ->setPageSize(static::TEST_PARAM_PAGE_SIZE)
             ->setTotal(static::TEST_PARAM_TOTAL);

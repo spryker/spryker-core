@@ -97,6 +97,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         $productAbstractQuery = $this->prepareProductAbstractQuery($idProductAbstract, $localeTransfer);
         $productAbstractQuery->groupByIdProductAbstract()
             ->clearSelectColumns();
+        /** @var array $productAbstractData */
         $productAbstractData = $productAbstractQuery
             ->withColumn(SpyProductAbstractTableMap::COL_ID_PRODUCT_ABSTRACT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductAbstractTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
@@ -131,6 +132,7 @@ class ProductAlternativeRepository extends AbstractRepository implements Product
         $productConcreteQuery = $this->prepareProductQuery($idProduct, $localeTransfer);
         $productConcreteQuery->groupByIdProduct()
             ->clearSelectColumns();
+        /** @var array $productConcreteData */
         $productConcreteData = $productConcreteQuery->withColumn(SpyProductTableMap::COL_ID_PRODUCT, ProductAlternativeListItemTransfer::ID_PRODUCT)
             ->withColumn(SpyProductTableMap::COL_SKU, ProductAlternativeListItemTransfer::SKU)
             ->withColumn(SpyProductLocalizedAttributesTableMap::COL_NAME, ProductAlternativeListItemTransfer::NAME)

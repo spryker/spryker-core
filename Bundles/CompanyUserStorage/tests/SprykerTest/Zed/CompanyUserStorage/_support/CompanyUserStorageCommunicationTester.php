@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\CompanyUserTransfer;
 use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,7 +22,7 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\CompanyUserStorage\Business\CompanyUserStorageFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -32,10 +30,6 @@ use Orm\Zed\Company\Persistence\Map\SpyCompanyTableMap;
 class CompanyUserStorageCommunicationTester extends Actor
 {
     use _generated\CompanyUserStorageCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param bool $isActiveCompany

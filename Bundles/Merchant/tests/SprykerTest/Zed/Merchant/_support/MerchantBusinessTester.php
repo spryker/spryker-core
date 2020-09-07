@@ -14,8 +14,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -25,7 +23,7 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  * @method \Spryker\Zed\Merchant\Business\MerchantFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
@@ -33,10 +31,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 class MerchantBusinessTester extends Actor
 {
     use _generated\MerchantBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

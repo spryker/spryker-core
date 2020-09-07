@@ -12,7 +12,7 @@ class DependencyHydrator implements DependencyHydratorCompositeInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydratorInterface[]
      */
-    private $hydrator;
+    protected $hydrator;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyHydrator\DependencyHydratorInterface $hydrator

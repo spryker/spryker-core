@@ -32,7 +32,7 @@ class TaxCalculatorHelperTest extends Unit
 
         $netValueFromPrice = $taxCalculatorHelper->getNetValueFromPrice(100, 19);
 
-        $this->assertEquals(84, $netValueFromPrice);
+        $this->assertSame(84, $netValueFromPrice);
     }
 
     /**
@@ -44,7 +44,7 @@ class TaxCalculatorHelperTest extends Unit
 
         $netValueFromPrice = $taxCalculatorHelper->getTaxValueFromPrice(100, 19);
 
-        $this->assertEquals(16, $netValueFromPrice);
+        $this->assertSame(16, $netValueFromPrice);
     }
 
     /**
@@ -56,7 +56,7 @@ class TaxCalculatorHelperTest extends Unit
 
         $netValueFromPrice = $taxCalculatorHelper->getTaxValueFromPrice(100, 84);
 
-        $this->assertEquals(46, $netValueFromPrice);
+        $this->assertSame(46, $netValueFromPrice);
     }
 
     /**

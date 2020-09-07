@@ -170,6 +170,8 @@ class PropelConfig extends AbstractBundleConfig
     /**
      * @api
      *
+     * @deprecated Will be removed without replacement.
+     *
      * @throws \Spryker\Zed\Propel\Business\Exception\UnSupportedDatabaseEngineException
      *
      * @return string
@@ -177,7 +179,10 @@ class PropelConfig extends AbstractBundleConfig
     public function getCurrentDatabaseEngineName()
     {
         $dbEngine = $this->getCurrentDatabaseEngine();
-        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES);
+        $supportedEngines = $this->get(PropelConstants::ZED_DB_SUPPORTED_ENGINES, [
+            self::DB_ENGINE_MYSQL => 'MySql',
+            self::DB_ENGINE_PGSQL => 'PostgreSql',
+        ]);
 
         if (!array_key_exists($dbEngine, $supportedEngines)) {
             throw new UnSupportedDatabaseEngineException('Unsupported database engine: ' . $dbEngine);

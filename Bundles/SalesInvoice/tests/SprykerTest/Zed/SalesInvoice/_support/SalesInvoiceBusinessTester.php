@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Spryker\Zed\SalesInvoice\Business\SalesInvoiceFacade;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

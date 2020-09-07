@@ -328,7 +328,7 @@ class CategoryStorageListenerTest extends Unit
 
         // Assert
         $categoryStorageCount = SpyCategoryTreeStorageQuery::create()->count();
-        $this->assertEquals(0, $categoryStorageCount);
+        $this->assertSame(0, $categoryStorageCount);
     }
 
     /**
@@ -362,8 +362,8 @@ class CategoryStorageListenerTest extends Unit
         $this->assertNotNull($spyCategoryNodeStorage);
 
         $data = $spyCategoryNodeStorage->getData();
-        $this->assertEquals('Demoshop', $data['name']);
-        $this->assertEquals('Demoshop', $data['meta_title']);
+        $this->assertSame('Demoshop', $data['name']);
+        $this->assertSame('Demoshop', $data['meta_title']);
         $this->assertGreaterThanOrEqual(6, count($data['children']));
     }
 

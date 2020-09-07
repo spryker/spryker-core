@@ -165,15 +165,14 @@ class AbstractProductFormDataProvider
     }
 
     /**
-     * @param int|null $idProductAbstract
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer|null $productAbstractTransfer
      *
      * @return mixed
      */
-    public function getOptions($idProductAbstract = null)
+    public function getOptions(?ProductAbstractTransfer $productAbstractTransfer = null)
     {
         $localeCollection = $this->localeProvider->getLocaleCollection();
 
-        $productAbstractTransfer = $this->productFacade->findProductAbstractById($idProductAbstract);
         $localizedAttributeOptions = [];
         foreach ($localeCollection as $localeTransfer) {
             $localizedAttributeOptions[$localeTransfer->getLocaleName()] = $this->convertAbstractLocalizedAttributesToFormOptions($productAbstractTransfer, $localeTransfer);
@@ -794,16 +793,20 @@ class AbstractProductFormDataProvider
      */
     protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
     {
-        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            return $productAbstractTransfer->getPrices();
-        }
+        $priceProductCriteriaTransfer = null;
+        if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
 
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+            if ($priceProductDimensionTransfer->getType()) {
+                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                    ->setPriceDimension($priceProductDimensionTransfer);
+            }
+        }
 
         $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
             $productAbstractTransfer->getIdProductAbstract(),
-            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+            $priceProductCriteriaTransfer
         );
 
         return new ArrayObject($priceProducts);
@@ -821,21 +824,21 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-        if (!$formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            return $productTransfer->getPrices();
-        }
+        $priceProductCriteriaTransfer = null;
+        if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
+            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
 
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
-
-        if (!$priceProductDimensionTransfer->getType()) {
-            return $productTransfer->getPrices();
+            if ($priceProductDimensionTransfer->getType()) {
+                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+                    ->setPriceDimension($priceProductDimensionTransfer);
+            }
         }
 
         $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
             $productTransfer->getIdProductConcrete(),
             $productAbstractTransfer->getIdProductAbstract(),
-            (new PriceProductCriteriaTransfer())->setPriceDimension($priceProductDimensionTransfer)
+            $priceProductCriteriaTransfer
         );
 
         return new ArrayObject($priceProducts);

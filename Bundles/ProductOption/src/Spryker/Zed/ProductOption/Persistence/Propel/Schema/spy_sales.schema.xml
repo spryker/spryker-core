@@ -4,8 +4,8 @@
     <table name="spy_sales_order_item_option">
         <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
-        <column name="group_name" type="VARCHAR" required="true"/>
-        <column name="value" type="VARCHAR" required="true"/>
+        <column name="group_name" type="VARCHAR" size="255" required="true"/>
+        <column name="value" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
         <column name="canceled_amount" type="INTEGER" required="false" default="0"/>
         <column name="tax_rate" type="DECIMAL" size="8" scale="2" required="true"/>

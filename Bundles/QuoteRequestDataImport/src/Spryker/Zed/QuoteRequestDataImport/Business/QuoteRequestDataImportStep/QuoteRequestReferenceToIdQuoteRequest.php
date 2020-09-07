@@ -33,6 +33,7 @@ class QuoteRequestReferenceToIdQuoteRequest implements DataImportStepInterface
         $quoteRequestReference = $dataSet[QuoteRequestVersionDataSetInterface::COLUMN_QUOTE_REQUEST_REFERENCE];
 
         if (!isset($this->idQuoteRequestCache[$quoteRequestReference])) {
+            /** @var int|null $idQuoteRequest */
             $idQuoteRequest = $this->createQuoteRequestQuery()
                 ->select([SpyQuoteRequestTableMap::COL_ID_QUOTE_REQUEST])
                 ->findOneByQuoteRequestReference($quoteRequestReference);

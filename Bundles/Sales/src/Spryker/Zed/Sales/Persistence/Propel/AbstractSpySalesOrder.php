@@ -61,6 +61,7 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
             return null;
         }
 
+        /** @var int|null $idCustomer */
         $idCustomer = SpyCustomerQuery::create()
             ->select([SpyCustomerTableMap::COL_ID_CUSTOMER])
             ->filterByCustomerReference($this->getCustomerReference())

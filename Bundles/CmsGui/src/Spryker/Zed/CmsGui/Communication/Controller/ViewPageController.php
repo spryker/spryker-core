@@ -56,6 +56,7 @@ class ViewPageController extends AbstractController
             'pageCreatedDate' => $cmsLocalizedPageEntity->getCreatedAt(),
             'relatedStoreNames' => $relatedStoreNames,
             'isPageTemplateWithPlaceholders' => $this->isPageTemplateWithPlaceholders($idCmsPage),
+            'toggleActiveForm' => $this->getFactory()->createToggleActivateCmsPageForm()->createView(),
         ];
     }
 

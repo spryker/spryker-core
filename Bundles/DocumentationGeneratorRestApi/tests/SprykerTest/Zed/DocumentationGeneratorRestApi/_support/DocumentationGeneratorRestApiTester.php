@@ -16,8 +16,6 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttribut
 use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttributesWithNullablePropertyTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -27,17 +25,13 @@ use SprykerTest\Zed\DocumentationGeneratorRestApi\Business\Stub\RestTestAttribut
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class DocumentationGeneratorRestApiTester extends Actor
 {
     use _generated\DocumentationGeneratorRestApiTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     protected const METHOD_GET = 'get';
     protected const METHOD_POST = 'post';

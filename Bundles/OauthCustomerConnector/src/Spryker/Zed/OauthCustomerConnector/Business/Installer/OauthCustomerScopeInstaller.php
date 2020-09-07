@@ -40,7 +40,7 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
      */
     public function install(): void
     {
-        $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
+        $customerScopes = $this->getCustomerScopes();
 
         $oauthScopeTransfers = $this->oauthFacade->getScopesByIdentifiers($customerScopes);
         $oauthScopeTransferMap = $this->mapScopesByIdentifiers($oauthScopeTransfers);
@@ -87,5 +87,18 @@ class OauthCustomerScopeInstaller implements OauthCustomerScopeInstallerInterfac
         }
 
         return false;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCustomerScopes(): array
+    {
+        $customerScopes = $this->oauthCustomerConnectorConfig->getCustomerScopes();
+        $customerImpersonationScopes = $this->oauthCustomerConnectorConfig->getCustomerImpersonationScopes();
+
+        $scopes = array_merge($customerScopes, $customerImpersonationScopes);
+
+        return array_unique($scopes);
     }
 }

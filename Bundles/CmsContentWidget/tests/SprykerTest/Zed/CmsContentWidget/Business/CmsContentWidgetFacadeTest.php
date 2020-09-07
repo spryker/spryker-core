@@ -112,7 +112,7 @@ class CmsContentWidgetFacadeTest extends Unit
 
         $cmsContentWidgetConfigurationTransfer = $cmsContentWidgetConfigurationListTransfer->getCmsContentWidgetConfigurationList()[0];
 
-        $this->assertEquals($functionName, $cmsContentWidgetConfigurationTransfer->getFunctionName());
+        $this->assertSame($functionName, $cmsContentWidgetConfigurationTransfer->getFunctionName());
         $this->assertCount(count($availableTemplates), $cmsContentWidgetConfigurationTransfer->getTemplates());
 
         $mappedTemplates = $cmsContentWidgetConfigurationTransfer->getTemplates();
@@ -121,7 +121,7 @@ class CmsContentWidgetFacadeTest extends Unit
             $this->assertEquals($mappedTemplates[$identifier], $templatePath);
         }
 
-        $this->assertEquals($usageInformation, $cmsContentWidgetConfigurationTransfer->getUsageInformation());
+        $this->assertSame($usageInformation, $cmsContentWidgetConfigurationTransfer->getUsageInformation());
     }
 
     /**

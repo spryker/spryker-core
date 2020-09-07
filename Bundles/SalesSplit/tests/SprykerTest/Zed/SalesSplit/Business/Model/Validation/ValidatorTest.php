@@ -41,7 +41,7 @@ class ValidatorTest extends Unit
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
-        $this->assertEquals(Messages::VALIDATE_QUANTITY_MESSAGE, $validationMessages[0]);
+        $this->assertSame(Messages::VALIDATE_QUANTITY_MESSAGE, $validationMessages[0]);
     }
 
     /**
@@ -57,7 +57,7 @@ class ValidatorTest extends Unit
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
-        $this->assertEquals(Messages::VALIDATE_BUNDLE_MESSAGE, $validationMessages[0]);
+        $this->assertSame(Messages::VALIDATE_BUNDLE_MESSAGE, $validationMessages[0]);
     }
 
     /**
@@ -76,7 +76,7 @@ class ValidatorTest extends Unit
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
-        $this->assertEquals(Messages::VALIDATE_DISCOUNTED_MESSAGE, $validationMessages[0]);
+        $this->assertSame(Messages::VALIDATE_DISCOUNTED_MESSAGE, $validationMessages[0]);
     }
 
     /**
@@ -102,7 +102,7 @@ class ValidatorTest extends Unit
         $validationMessages = $validator->getMessages();
 
         $this->assertFalse($validateResponse);
-        $this->assertEquals(Messages::VALIDATE_DISCOUNTED_OPTION_MESSAGE, $validationMessages[0]);
+        $this->assertSame(Messages::VALIDATE_DISCOUNTED_OPTION_MESSAGE, $validationMessages[0]);
     }
 
     /**

@@ -16,8 +16,6 @@ use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateS
 use Orm\Zed\ConfigurableBundleStorage\Persistence\SpyConfigurableBundleTemplateStorageQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

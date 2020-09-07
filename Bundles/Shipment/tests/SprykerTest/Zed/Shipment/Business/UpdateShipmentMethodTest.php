@@ -70,7 +70,7 @@ class UpdateShipmentMethodTest extends Unit
             ->filterByFkShipmentMethod($shipmentMethodTransfer->getIdShipmentMethod())
             ->exists();
 
-        $this->assertEquals('test1', $resultShipmentMethodEntity->getName(), 'Shipment method name should match to the expected value');
+        $this->assertSame('test1', $resultShipmentMethodEntity->getName(), 'Shipment method name should match to the expected value');
         $this->assertTrue($storeRelationExist, 'Shipment method store relation should exists');
     }
 }
