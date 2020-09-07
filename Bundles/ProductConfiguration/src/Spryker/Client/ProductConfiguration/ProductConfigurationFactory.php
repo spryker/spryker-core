@@ -10,32 +10,32 @@ namespace Spryker\Client\ProductConfiguration;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
-use Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessor;
-use Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessorInterface;
-use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolver;
-use Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolverInterface;
+use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
+use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
+use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
+use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Client\ProductConfiguration\Resolver\ProductConfigurationRedirectResolverInterface
+     * @return \Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface
      */
-    public function createProductConfigurationRedirectResolver(): ProductConfigurationRedirectResolverInterface
+    public function createProductConfiguratorRedirectResolver(): ProductConfiguratorRedirectResolverInterface
     {
-        return new ProductConfigurationRedirectResolver(
-            $this->getProductConfigurationRequestPlugins(),
+        return new ProductConfiguratorRedirectResolver(
+            $this->getProductConfiguratorRequestPlugins(),
             $this->getProductConfiguratorRequestDefaultPlugin()
         );
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Processor\ProductConfigurationResponseProcessorInterface
+     * @return \Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface
      */
-    public function createProductConfigurationResponseProcessor(): ProductConfigurationResponseProcessorInterface
+    public function createProductConfiguratorResponseProcessor(): ProductConfiguratorResponseProcessorInterface
     {
-        return new ProductConfigurationResponseProcessor(
+        return new ProductConfiguratorResponseProcessor(
             $this->getProductConfiguratorResponsePlugins(),
             $this->getDefaultProductConfiguratorResponsePlugin()
         );
@@ -52,7 +52,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
      */
-    public function getProductConfigurationRequestPlugins(): array
+    public function getProductConfiguratorRequestPlugins(): array
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST);
     }
@@ -62,7 +62,7 @@ class ProductConfigurationFactory extends AbstractFactory
      */
     public function getProductConfiguratorRequestDefaultPlugin(): ProductConfiguratorRequestPluginInterface
     {
-        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT);
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST);
     }
 
     /**

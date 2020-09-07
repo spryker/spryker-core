@@ -32,7 +32,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         return $this->getFactory()
-            ->createProductConfigurationRedirectResolver()
+            ->createProductConfiguratorRedirectResolver()
             ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
     }
 
@@ -51,7 +51,7 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
         array $configuratorResponseData
     ): ProductConfiguratorResponseProcessorResponseTransfer {
         return $this->getFactory()
-            ->createProductConfigurationResponseProcessor()
+            ->createProductConfiguratorResponseProcessor()
             ->processProductConfiguratorResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
     }
 

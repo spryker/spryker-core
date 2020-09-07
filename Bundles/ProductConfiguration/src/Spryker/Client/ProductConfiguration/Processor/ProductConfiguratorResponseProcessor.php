@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransf
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
-class ProductConfigurationResponseProcessor implements ProductConfigurationResponseProcessorInterface
+class ProductConfiguratorResponseProcessor implements ProductConfiguratorResponseProcessorInterface
 {
     /**
      * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface[]

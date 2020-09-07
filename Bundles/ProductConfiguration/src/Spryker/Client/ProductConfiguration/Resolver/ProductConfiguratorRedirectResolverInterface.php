@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfiguration\Resolver;
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 
-interface ProductConfigurationRedirectResolverInterface
+interface ProductConfiguratorRedirectResolverInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer

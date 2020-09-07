@@ -9,6 +9,6 @@ namespace Spryker\Client\ProductConfiguration\Exception;
 
 use Exception;
 
-class MissingProductConfigurationRequestDefaultPluginException extends Exception
+class MissingDefaultProductConfigurationRequestPluginException extends Exception
 {
 }

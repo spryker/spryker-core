@@ -7,4 +7,10 @@
 
     <transfer name="ProductConfiguratorRedirect">
     </transfer>
+
+    <transfer name="ProductConfiguratorResponseProcessorResponse">
+    </transfer>
+
+    <transfer name="ProductConfiguratorResponse">
+    </transfer>
 </transfers>

@@ -10,7 +10,7 @@ namespace Spryker\Client\ProductConfiguration\Processor;
 use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 
-interface ProductConfigurationResponseProcessorInterface
+interface ProductConfiguratorResponseProcessorInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer

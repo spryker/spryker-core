@@ -9,6 +9,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientBridge;
@@ -23,6 +24,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     public const CLIENT_SESSION = 'CLIENT_SESSION';
     public const CLIENT_STORAGE = 'CLIENT_STORAGE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_CART = 'CLIENT_CART';
     public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE';
     public const SERVICE_SYNCHRONIZATION = 'SERVICE_SYNCHRONIZATION';
 
@@ -39,6 +41,7 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
         $container = $this->addSynchronizationService($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addProductStorageClient($container);
+        $container = $this->addCartClient($container);
 
         return $container;
     }
@@ -52,6 +55,20 @@ class ProductConfigurationStorageDependencyProvider extends AbstractDependencyPr
     {
         $container->set(static::CLIENT_SESSION, function (Container $container) {
             return new ProductConfigurationStorageToSessionClientBridge($container->getLocator()->session()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCartClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CART, function (Container $container) {
+            return new ProductConfigurationStorageToCartClientBridge($container->getLocator()->cart()->client());
         });
 
         return $container;

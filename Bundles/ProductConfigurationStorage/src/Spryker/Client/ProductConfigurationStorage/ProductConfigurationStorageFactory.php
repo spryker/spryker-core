@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilder;
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToLocaleClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
@@ -65,9 +66,8 @@ class ProductConfigurationStorageFactory extends AbstractFactory
             $this->createProductConfigurationStorageReader(),
             $this->getSessionClient(),
             $this->createProductConfigurationInstanceMapper(),
-            $this->getProductStorageClient(),
-            $this->getLocaleClient(),
-            $this->createProductConfigurationSessionKeyBuilder()
+            $this->createProductConfigurationSessionKeyBuilder(),
+            $this->getCartClient()
         );
     }
 
@@ -188,5 +188,13 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function getLocaleClient(): ProductConfigurationStorageToLocaleClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
+     */
+    public function getCartClient(): ProductConfigurationStorageToCartClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationStorageDependencyProvider::CLIENT_CART);
     }
 }

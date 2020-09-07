@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 
-class ProductConfigurationRedirectResolver implements ProductConfigurationRedirectResolverInterface
+class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirectResolverInterface
 {
     /**
      * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface[]
@@ -43,8 +43,11 @@ class ProductConfigurationRedirectResolver implements ProductConfigurationRedire
     public function resolveProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
-        foreach ($this->productConfiguratorRequestPlugins as $key => $productConfiguratorRequestPlugin) {
-            if ($key === $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getConfiguratorKey()) {
+        foreach ($this->productConfiguratorRequestPlugins as $configuratorKey => $productConfiguratorRequestPlugin) {
+            if (
+                $configuratorKey === $productConfiguratorRequestTransfer
+                    ->getProductConfiguratorRequestData()->getConfiguratorKey()
+            ) {
                 return $productConfiguratorRequestPlugin
                     ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
             }

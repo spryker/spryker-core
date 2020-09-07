@@ -9,8 +9,8 @@ namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
-use Spryker\Client\ProductConfiguration\Exception\MissingProductConfigurationRequestDefaultPluginException;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 
@@ -20,7 +20,7 @@ use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfig
 class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
 {
     public const PLUGINS_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGINS_PRODUCT_CONFIGURATOR_REQUEST';
-    public const PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT = 'PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT';
+    public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST';
 
     public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
     public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE';
@@ -34,7 +34,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container = parent::provideServiceLayerDependencies($container);
         $container = $this->addProductConfiguratorRequestPlugins($container);
-        $container = $this->addProductConfiguratorRequestDefaultPlugin($container);
+        $container = $this->addDefaultProductConfiguratorRequestPlugin($container);
         $container = $this->addProductConfiguratorResponsePlugins($container);
         $container = $this->addDefaultProductConfiguratorResponsePlugin($container);
 
@@ -90,10 +90,10 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      *
      * @return \Spryker\Client\Kernel\Container
      */
-    protected function addProductConfiguratorRequestDefaultPlugin(Container $container): Container
+    protected function addDefaultProductConfiguratorRequestPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_DEFAULT, function (): ProductConfiguratorRequestPluginInterface {
-            return $this->getProductConfiguratorRequestDefaultPlugin();
+        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST, function (): ProductConfiguratorRequestPluginInterface {
+            return $this->getDefaultProductConfiguratorRequestPlugin();
         });
 
         return $container;
@@ -114,16 +114,16 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     }
 
     /**
-     * @throws \Spryker\Client\ProductConfiguration\Exception\MissingProductConfigurationRequestDefaultPluginException
+     * @throws \Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException
      *
      * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
      */
-    protected function getProductConfiguratorRequestDefaultPlugin(): ProductConfiguratorRequestPluginInterface
+    protected function getDefaultProductConfiguratorRequestPlugin(): ProductConfiguratorRequestPluginInterface
     {
-        throw new MissingProductConfigurationRequestDefaultPluginException(
+        throw new MissingDefaultProductConfigurationRequestPluginException(
             sprintf(
                 "Missing instance of %s! You need to provide default product configurator request plugin
-                      in your own ProductConfigurationDependencyProvider::getProductConfiguratorRequestDefaultPlugin().",
+                      in your own ProductConfigurationDependencyProvider::getDefaultProductConfiguratorRequestPlugin().",
                 ProductConfiguratorRequestPluginInterface::class
             )
         );
