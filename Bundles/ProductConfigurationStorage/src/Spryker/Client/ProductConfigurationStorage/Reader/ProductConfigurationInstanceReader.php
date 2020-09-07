@@ -17,8 +17,6 @@ use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStora
 
 class ProductConfigurationInstanceReader implements ProductConfigurationInstanceReaderInterface
 {
-    protected const PRODUCT_DATA_SKU_KEY = 'sku';
-
     /**
      * @var \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface
      */

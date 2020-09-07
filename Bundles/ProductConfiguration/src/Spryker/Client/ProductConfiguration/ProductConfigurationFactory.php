@@ -26,7 +26,7 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorRedirectResolver(
             $this->getProductConfiguratorRequestPlugins(),
-            $this->getProductConfiguratorRequestDefaultPlugin()
+            $this->getDefaultProductConfiguratorRequestPlugin()
         );
     }
 
@@ -60,7 +60,7 @@ class ProductConfigurationFactory extends AbstractFactory
     /**
      * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface
      */
-    public function getProductConfiguratorRequestDefaultPlugin(): ProductConfiguratorRequestPluginInterface
+    public function getDefaultProductConfiguratorRequestPlugin(): ProductConfiguratorRequestPluginInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST);
     }

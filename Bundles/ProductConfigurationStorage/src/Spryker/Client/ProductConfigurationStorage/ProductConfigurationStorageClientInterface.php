@@ -34,7 +34,7 @@ interface ProductConfigurationStorageClientInterface
 
     /**
      * Specification:
-     * - Finds the appropriate item in the quote by groupKey.
+     * - Finds the appropriate item in the quote by groupKey and SKU.
      * - Returns the found item's ProductConfigurationInstanceTransfer when available.
      * - Returns NULL otherwise.
      *

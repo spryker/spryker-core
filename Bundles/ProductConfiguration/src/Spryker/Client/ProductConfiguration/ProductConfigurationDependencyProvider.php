@@ -33,6 +33,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     public function provideServiceLayerDependencies(Container $container): Container
     {
         $container = parent::provideServiceLayerDependencies($container);
+
         $container = $this->addProductConfiguratorRequestPlugins($container);
         $container = $this->addDefaultProductConfiguratorRequestPlugin($container);
         $container = $this->addProductConfiguratorResponsePlugins($container);
@@ -48,7 +49,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConfiguratorRequestPlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST, function (): array {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_REQUEST, function () {
             return $this->getProductConfiguratorRequestPlugins();
         });
 
@@ -62,7 +63,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addProductConfiguratorResponsePlugins(Container $container): Container
     {
-        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE, function (): array {
+        $container->set(static::PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE, function () {
             return $this->getProductConfiguratorResponsePlugins();
         });
 
@@ -92,7 +93,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDefaultProductConfiguratorRequestPlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST, function (): ProductConfiguratorRequestPluginInterface {
+        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_REQUEST, function () {
             return $this->getDefaultProductConfiguratorRequestPlugin();
         });
 
@@ -106,7 +107,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
      */
     protected function addDefaultProductConfiguratorResponsePlugin(Container $container): Container
     {
-        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function (): ProductConfiguratorResponsePluginInterface {
+        $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function () {
             return $this->getDefaultProductConfiguratorResponsePlugin();
         });
 
