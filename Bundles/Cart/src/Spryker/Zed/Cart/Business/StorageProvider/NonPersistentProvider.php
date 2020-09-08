@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
+use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -71,7 +72,10 @@ class NonPersistentProvider implements StorageProviderInterface
         $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
-            $this->increaseExistingItem($quoteTransfer->getItems(), $cartIndex[$itemIdentifier], $itemTransfer);
+            $this->increaseExistingItem(
+                $quoteTransfer->getItems()[$cartIndex[$itemIdentifier]],
+                $itemTransfer
+            );
 
             return;
         }
@@ -113,7 +117,11 @@ class NonPersistentProvider implements StorageProviderInterface
         $cartIndex = $this->createCartIndex($quoteTransfer->getItems());
         $itemIdentifier = $this->getItemIdentifier($itemTransfer);
         if (isset($cartIndex[$itemIdentifier])) {
-            $this->decreaseExistingItem($quoteTransfer->getItems(), $itemIdentifier, $itemTransfer, $cartIndex);
+            $this->decreaseExistingItem(
+                $quoteTransfer->getItems(),
+                $itemTransfer,
+                $cartIndex[$itemIdentifier]
+            );
         }
     }
 
@@ -144,53 +152,39 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param string $itemIdentifier
+     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param array $cartIndex
+     * @param int $itemIndex
      *
      * @return void
      */
-    protected function decreaseExistingItem(Traversable $existingItems, $itemIdentifier, $itemTransfer, array $cartIndex)
+    protected function decreaseExistingItem(ArrayObject $existingItems, ItemTransfer $itemTransfer, int $itemIndex): void
     {
-        $existingItemTransfer = null;
-        $itemIndex = null;
-        foreach ($existingItems as $index => $currentItemTransfer) {
-            if ($this->getItemIdentifier($currentItemTransfer) === $itemIdentifier) {
-                $existingItemTransfer = $currentItemTransfer;
-                $itemIndex = $index;
-
-                break;
-            }
-        }
-
-        if ($existingItemTransfer === null) {
-            $itemIndex = $cartIndex[$itemIdentifier];
-            $existingItemTransfer = $existingItems[$itemIndex];
-        }
-
+        $existingItemTransfer = $existingItems[$itemIndex];
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
 
         if ($changedQuantity > 0) {
+            $existingItemTransfer->fromArray($itemTransfer->toArray());
             $existingItemTransfer->setQuantity($changedQuantity);
-        } else {
-            unset($existingItems[$itemIndex]);
+
+            return;
         }
+
+        unset($existingItems[$itemIndex]);
     }
 
     /**
-     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
-     * @param int $index
+     * @param \Generated\Shared\Transfer\ItemTransfer $existingItemTransfer
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
      * @return void
      */
-    protected function increaseExistingItem(Traversable $existingItems, $index, $itemTransfer)
+    protected function increaseExistingItem(ItemTransfer $existingItemTransfer, ItemTransfer $itemTransfer)
     {
-        $existingItemTransfer = $existingItems[$index];
-        $changedQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
+        $changesQuantity = $existingItemTransfer->getQuantity() + $itemTransfer->getQuantity();
 
-        $existingItemTransfer->setQuantity($changedQuantity);
+        $existingItemTransfer->fromArray($itemTransfer->toArray());
+        $existingItemTransfer->setQuantity($changesQuantity);
     }
 
     /**
