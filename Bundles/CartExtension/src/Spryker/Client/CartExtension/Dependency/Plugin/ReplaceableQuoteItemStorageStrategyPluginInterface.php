@@ -13,7 +13,7 @@ use Generated\Shared\Transfer\QuoteResponseTransfer;
 /**
  * Use this plugin to provide cart item replace functionality.
  */
-interface CartItemOperationQuoteStorageStrategyPluginInterface
+interface ReplaceableQuoteItemStorageStrategyPluginInterface
 {
     /**
      * Specification:

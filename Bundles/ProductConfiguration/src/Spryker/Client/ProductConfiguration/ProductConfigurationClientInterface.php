@@ -25,7 +25,7 @@ interface ProductConfigurationClientInterface
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(
+    public function prepareProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer;
 

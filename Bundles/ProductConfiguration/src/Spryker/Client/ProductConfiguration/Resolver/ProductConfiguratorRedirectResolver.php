@@ -40,7 +40,7 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(
+    public function prepareProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         foreach ($this->productConfiguratorRequestPlugins as $configuratorKey => $productConfiguratorRequestPlugin) {
