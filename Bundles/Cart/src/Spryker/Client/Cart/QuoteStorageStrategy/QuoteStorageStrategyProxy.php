@@ -17,7 +17,6 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
-use Spryker\Client\CartExtension\Dependency\Plugin\CartItemOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
@@ -247,9 +246,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof CartItemOperationQuoteStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement CartItemOperationQuoteStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
+                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
             );
         }
 

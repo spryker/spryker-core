@@ -357,7 +357,7 @@ interface CartClientInterface
 
     /**
      * Specification:
-     * - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\CartItemOperationQuoteStorageStrategyPluginInterface.
+     * - Resolve quote storage strategy which implements \Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface.
      * - Default quote storage strategy \Spryker\Client\Cart\Plugin\SessionQuoteStorageStrategyPlugin.
      * - Uses quote storage strategy.
      * - Removes `ItemReplaceTransfer::itemToBeReplaced` from the cart.
