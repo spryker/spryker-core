@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -440,5 +441,21 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
         return $this->getFactory()
             ->createProductConcreteStorageReader()
             ->getProductConcreteIdsByMapping($mappingType, $identifiers, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return string
+     */
+    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
+    {
+        return $this->getFactory()
+            ->createProductConcreteStorageUrlResolver()
+            ->resolveProductConcreteUrl($productConcreteStorageTransfer);
     }
 }

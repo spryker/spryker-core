@@ -20,6 +20,8 @@ use Spryker\Client\ProductStorage\Mapper\ProductStorageDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapper;
 use Spryker\Client\ProductStorage\Mapper\ProductStorageToProductConcreteTransferDataMapperInterface;
 use Spryker\Client\ProductStorage\Mapper\ProductVariantExpander;
+use Spryker\Client\ProductStorage\Resolver\ProductConcreteStorageUrlResolver;
+use Spryker\Client\ProductStorage\Resolver\ProductConcreteStorageUrlResolverInterface;
 use Spryker\Client\ProductStorage\Storage\ProductAbstractStorageReader;
 use Spryker\Client\ProductStorage\Storage\ProductConcreteStorageReader;
 
@@ -156,6 +158,14 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductStorageToProductConcreteTransferDataMapper(): ProductStorageToProductConcreteTransferDataMapperInterface
     {
         return new ProductStorageToProductConcreteTransferDataMapper($this->getProductConcreteExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Resolver\ProductConcreteStorageUrlResolverInterface
+     */
+    public function createProductConcreteStorageUrlResolver(): ProductConcreteStorageUrlResolverInterface
+    {
+        return new ProductConcreteStorageUrlResolver();
     }
 
     /**
