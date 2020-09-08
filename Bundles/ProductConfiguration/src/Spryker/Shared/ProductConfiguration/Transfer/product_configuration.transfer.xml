@@ -84,4 +84,8 @@
     <transfer name="ProductConfiguratorRedirect">
     </transfer>
 
+    <transfer name="ProductConfiguratorRequestData">
+        <property name="configuratorKey" type="string"/>
+    </transfer>
+
 </transfers>
