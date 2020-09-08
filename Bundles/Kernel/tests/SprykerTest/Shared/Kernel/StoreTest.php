@@ -24,7 +24,7 @@ class StoreTest extends Unit
     /**
      * @var \Spryker\Shared\Kernel\Store
      */
-    private $Store;
+    protected $Store;
 
     /**
      * @return void

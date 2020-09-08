@@ -104,10 +104,10 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
-            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, false)
-            ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, false)
-            ->addColumnChip(static::COL_KEY_STATE, 'State', true, false, 'green');
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
+            ->addColumnText(static::COL_KEY_NAME, 'Name', true, true)
+            ->addColumnText(static::COL_KEY_QUANTITY, 'Quantity', false, true)
+            ->addColumnChip(static::COL_KEY_STATE, 'State', true, true, 'green');
 
         return $guiTableConfigurationBuilder;
     }
@@ -138,7 +138,9 @@ class MerchantOrderItemGuiTableConfigurationProvider implements MerchantOrderIte
         $merchantCriteriaTransfer = (new MerchantCriteriaTransfer())->setIdMerchant($idMerchant);
         $stateMachineProcessTransfer = $this->merchantOmsFacade->getMerchantOmsProcessByMerchant($merchantCriteriaTransfer);
 
-        return array_map('ucfirst', $stateMachineProcessTransfer->getStateNames());
+        return array_map(function (string $stateName) {
+            return mb_convert_case($stateName, MB_CASE_TITLE);
+        }, $stateMachineProcessTransfer->getStateNames());
     }
 
     /**

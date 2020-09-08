@@ -20,22 +20,22 @@ class DependencyViolationChecker implements DependencyViolationCheckerInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface
      */
-    private $treeReader;
+    protected $treeReader;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\ViolationFinder\ViolationFinderInterface
      */
-    private $violationFinder;
+    protected $violationFinder;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFilter\DependencyFilterInterface
      */
-    private $dependencyFilter;
+    protected $dependencyFilter;
 
     /**
      * @var array
      */
-    private $dependencyViolations = [];
+    protected $dependencyViolations = [];
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeReader\DependencyTreeReaderInterface $treeReader

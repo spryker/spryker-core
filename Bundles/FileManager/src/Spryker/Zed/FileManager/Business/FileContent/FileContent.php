@@ -24,7 +24,7 @@ class FileContent implements FileContentInterface
     /**
      * @var \Spryker\Zed\FileManager\FileManagerConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\FileManager\Dependency\Service\FileManagerToFileSystemServiceInterface $fileSystemService

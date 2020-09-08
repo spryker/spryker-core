@@ -24,12 +24,12 @@ class RestRequestValidatorCacheRemover implements RestRequestValidatorCacheRemov
     /**
      * @var \Spryker\Zed\RestRequestValidator\Dependency\External\RestRequestValidatorToFilesystemAdapterInterface
      */
-    private $filesystem;
+    protected $filesystem;
 
     /**
      * @var \Spryker\Zed\RestRequestValidator\RestRequestValidatorConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @param \Spryker\Zed\RestRequestValidator\Dependency\Store\RestRequestValidatorToStoreInterface $store

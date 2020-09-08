@@ -14,7 +14,7 @@ class EngineBundleFilter implements DependencyFilterInterface
     /**
      * @var array
      */
-    private $filterBundles = [];
+    protected $filterBundles = [];
 
     /**
      * @param string $pathToBundleConfig

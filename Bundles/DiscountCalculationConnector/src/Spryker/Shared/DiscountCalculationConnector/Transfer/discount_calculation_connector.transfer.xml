@@ -3,6 +3,25 @@
    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
 
+    <transfer name="CalculableObject">
+        <property name="store" type="Store"/>
+        <property name="currency" type="Currency"/>
+        <property name="items" type="Item[]" singular="item"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="calculatedDiscounts" type="CalculatedDiscount[]" singular="calculatedDiscount"/>
+    </transfer>
+
+    <transfer name="CalculatedDiscount">
+    </transfer>
+
+    <transfer name="Currency">
+    </transfer>
+
+    <transfer name="Store">
+    </transfer>
+
     <transfer name="Quote">
     </transfer>
 

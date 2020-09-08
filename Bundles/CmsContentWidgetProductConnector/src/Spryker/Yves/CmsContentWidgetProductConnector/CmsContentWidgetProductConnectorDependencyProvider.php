@@ -11,6 +11,9 @@ use Spryker\Yves\CmsContentWidgetProductConnector\Dependency\Client\CmsContentWi
 use Spryker\Yves\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Yves\Kernel\Container;
 
+/**
+ * @method \Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
+ */
 class CmsContentWidgetProductConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
     public const PRODUCT_CLIENT = 'PRODUCT CLIENT';

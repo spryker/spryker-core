@@ -31,6 +31,9 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
         enabled: true,
     };
+    settings = {
+        enabled: true,
+    };
 }
 
 @NgModule({
@@ -68,6 +71,10 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
             batchActions: () =>
                 import('@spryker/table/features').then(
                     m => m.TableBatchActionsFeatureModule
+                ),
+            settings: () =>
+                import('@spryker/table/features').then(
+                    m => m.TableSettingsFeatureModule,
                 ),
         }),
         TableModule.withColumnComponents({
