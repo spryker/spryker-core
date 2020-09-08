@@ -35,7 +35,7 @@ class QuoteMergerTest extends Unit
     /**
      * @var \Spryker\Zed\PersistentCart\Business\Model\QuoteMergerInterface
      */
-    private $cartMerger;
+    protected $cartMerger;
 
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester

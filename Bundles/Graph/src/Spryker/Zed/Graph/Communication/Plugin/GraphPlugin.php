@@ -20,7 +20,7 @@ class GraphPlugin extends AbstractPlugin implements GraphInterface
     /**
      * @var \Spryker\Shared\Graph\GraphInterface
      */
-    private $graph;
+    protected $graph;
 
     /**
      * {@inheritDoc}

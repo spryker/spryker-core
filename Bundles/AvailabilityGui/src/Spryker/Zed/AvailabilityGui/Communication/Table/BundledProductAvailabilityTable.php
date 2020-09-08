@@ -65,7 +65,7 @@ class BundledProductAvailabilityTable extends AbstractTable
     /**
      * @var \Spryker\Zed\AvailabilityGui\Dependency\Facade\AvailabilityToStoreFacadeInterface
      */
-    private $storeFacade;
+    protected $storeFacade;
 
     /**
      * @param \Spryker\Zed\AvailabilityGui\Communication\Helper\AvailabilityHelperInterface $availabilityHelper

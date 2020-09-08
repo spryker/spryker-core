@@ -20,7 +20,7 @@ class DependencyInjectorResolver extends AbstractClassResolver
     /**
      * @var string
      */
-    private $fromBundle;
+    protected $fromBundle;
 
     /**
      * @param object|string $callerClass

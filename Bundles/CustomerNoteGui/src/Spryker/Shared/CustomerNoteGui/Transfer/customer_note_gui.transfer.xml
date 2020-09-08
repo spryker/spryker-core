@@ -7,4 +7,8 @@
         <property name="notes" type="SpyCustomerNoteEntity[]" singular="notes"/>
     </transfer>
 
+    <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+    </transfer>
+
 </transfers>

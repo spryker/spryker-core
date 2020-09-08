@@ -34,7 +34,7 @@ class NonPersistentProviderTest extends Unit
     /**
      * @var \Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface
      */
-    private $provider;
+    protected $provider;
 
     /**
      * @return void

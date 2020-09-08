@@ -30,22 +30,22 @@ class GlossaryTest extends Unit
     /**
      * @var \Spryker\Zed\Glossary\Business\GlossaryFacade|\PHPUnit\Framework\MockObject\MockObject
      */
-    private $glossaryFacade;
+    protected $glossaryFacade;
 
     /**
      * @var \Spryker\Zed\Locale\Business\LocaleFacade
      */
-    private $localeFacade;
+    protected $localeFacade;
 
     /**
      * @var \Spryker\Zed\Glossary\Persistence\GlossaryQueryContainer
      */
-    private $glossaryQueryContainer;
+    protected $glossaryQueryContainer;
 
     /**
      * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
      */
-    private $touchQueryContainer;
+    protected $touchQueryContainer;
 
     /**
      * @return void

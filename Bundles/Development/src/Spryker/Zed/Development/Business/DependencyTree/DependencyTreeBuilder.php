@@ -15,22 +15,22 @@ class DependencyTreeBuilder implements DependencyTreeBuilderInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface
      */
-    private $finder;
+    protected $finder;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree
      */
-    private $dependencyTree;
+    protected $dependencyTree;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyTreeWriter\DependencyTreeWriterInterface
      */
-    private $writer;
+    protected $writer;
 
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyFinder\AbstractDependencyFinder[]
      */
-    private $dependencyChecker = [];
+    protected $dependencyChecker = [];
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\Finder\FinderInterface $finder

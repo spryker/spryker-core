@@ -22,7 +22,7 @@ class TooManyMethods extends AbstractRule implements ClassAware
      *
      * @var string
      */
-    private $ignoreRegexp;
+    protected $ignoreRegexp;
 
     /**
      * This method checks the number of methods with in a given class and checks

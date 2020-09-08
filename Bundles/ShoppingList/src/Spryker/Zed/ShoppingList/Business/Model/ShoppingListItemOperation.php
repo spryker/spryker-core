@@ -317,6 +317,9 @@ class ShoppingListItemOperation implements ShoppingListItemOperationInterface
         return $this->getTransactionHandler()->handleTransaction(function () use ($shoppingListItemTransfer) {
             $shoppingListItemTransfer = $this->shoppingListEntityManager->saveShoppingListItem($shoppingListItemTransfer);
             $this->pluginExecutor->executePostSavePlugins($shoppingListItemTransfer);
+            $this->pluginExecutor->executeBulkPostSavePlugins(
+                (new ShoppingListItemCollectionTransfer())->addItem($shoppingListItemTransfer)
+            );
 
             return (new ShoppingListItemResponseTransfer())
                 ->setShoppingListItem($shoppingListItemTransfer)

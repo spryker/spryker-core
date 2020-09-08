@@ -54,7 +54,7 @@
                     {% block detailTab %}
                         {% set merchantOrderItemsCount = merchantOrder.merchantOrderItems | length %}
 
-                        <web-spy-tab title="{{ 'Details' | trans }}">
+                        <web-spy-tab spy-title="{{ 'Details' | trans }}">
                             {% block overviewCard %}
                                 {% set overviewItems = [
                                     {
@@ -76,7 +76,7 @@
                                 ] %}
 
                                 {% block overviewCardComponent %}
-                                    <web-spy-card title="{{ 'Overview' | trans }}" class="{{ mainClass }}__card">
+                                    <web-spy-card spy-title="{{ 'Overview' | trans }}" class="{{ mainClass }}__card">
                                         <div class="{{ mainClass }}-grid">
                                             {% for overviewItem in overviewItems %}
                                                 <web-mp-manage-order-stats-block
@@ -90,14 +90,14 @@
                             {% endblock %}
 
                             {% block totalsCard %}
-                                <web-spy-card title="{{ 'Totals' | trans }}" class="{{ mainClass }}__card">
+                                <web-spy-card spy-title="{{ 'Totals' | trans }}" class="{{ mainClass }}__card">
                                     {% block collapsibleTotals %}
                                         {% set totalsUrl = '/sales-merchant-portal-gui/detail/total-item-list?merchant-order-id=' ~ idMerchantOrder %}
 
                                         {% block collapsibleTotalsComponent %}
                                             <web-mp-manage-order-collapsible-totals
                                                 url="{{ totalsUrl }}"
-                                                title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}"
+                                                spy-title="{{ merchantOrderItemsCount }} {{'Items' | trans | upper }}"
                                                 class="{{ mainClass }}__card-column-item">
                                             </web-mp-manage-order-collapsible-totals>
                                         {% endblock %}
@@ -185,7 +185,7 @@
                                 ] %}
 
                                 {% block customerCardComponent %}
-                                    <web-spy-card title="{{ 'Customer' | trans }}" class="{{ mainClass }}__card">
+                                    <web-spy-card spy-title="{{ 'Customer' | trans }}" class="{{ mainClass }}__card">
                                         <div class="{{ mainClass }}-grid">
                                             {% for customerItem in customerItems %}
                                                 <web-mp-manage-order-stats-block
@@ -201,7 +201,7 @@
                     {% endblock %}
 
                     {% block itemsTab %}
-                        <web-spy-tab title="{{ 'Items' | trans }}">
+                        <web-spy-tab spy-title="{{ 'Items' | trans }}">
                             {% set configuration = guiTableConfiguration(merchantOrderItemTableConfiguration, false) %}
                             {% set shipmentIds = [] %}
 
@@ -217,7 +217,7 @@
                                         {% set merchantOrderItemIds = merchantOrderItemIds | merge([merchantOrderItem.idMerchantOrderItem]) %}
                                     {% endfor %}
 
-                                    <web-spy-card title="{{ cardTitle }}" class="{{ mainClass }}__card">
+                                    <web-spy-card spy-title="{{ cardTitle }}" class="{{ mainClass }}__card">
                                         {% block addressCard %}
                                             {% set merchantOrderItem = merchantOrderItemsByShipment | first %}
                                             {% set shipment = merchantOrderItem.orderItem.shipment %}
@@ -281,7 +281,10 @@
 
                                             {% block tableComponent %}
                                                 <web-spy-card class="{{ mainClass }}__card-inner">
-                                                    <web-mp-order-items-table config='{{ configurationByShipment }}'></web-mp-order-items-table>
+                                                    <web-mp-order-items-table
+                                                        config='{{ configurationByShipment }}'
+                                                        table-id="web-mp-order-items-table-{{ merchantData.orderReference }}-{{ merchantOrder.merchantOrderReference }}-{{ loop.index }}">
+                                                    </web-mp-order-items-table>
                                                 </web-spy-card>
                                             {% endblock %}
                                         {% endblock %}

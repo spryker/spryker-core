@@ -28,12 +28,12 @@ EOD;
     /**
      * @var \Spryker\Zed\ProductManagement\ProductManagementConfig
      */
-    private $config;
+    protected $config;
 
     /**
      * @var \Spryker\Zed\ProductManagement\Dependency\Facade\ProductManagementToProductInterface
      */
-    private $productFacade;
+    protected $productFacade;
 
     /**
      * @param \Spryker\Zed\ProductManagement\ProductManagementConfig $config

@@ -16,6 +16,7 @@ use Twig\Environment;
 
 /**
  * @method \Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorFactory getFactory()
+ * @method \Spryker\Yves\CmsContentWidgetProductConnector\CmsContentWidgetProductConnectorConfig getConfig()
  */
 class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
 {
@@ -85,7 +86,10 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
             $products = $this->collectProductAbstractList($productAbstractSkuList, $skuMap);
             $numberOfCollectedProducts = count($products);
             if ($numberOfCollectedProducts > 1) {
-                return ['products' => $products];
+                return [
+                    'products' => $products,
+                    'isUnavailableProductsDisplayed' => $this->getConfig()->isUnavailableProductsDisplayed(),
+                ];
             }
             if ($numberOfCollectedProducts === 1) {
                 return ['product' => array_shift($products)];
@@ -147,8 +151,7 @@ class CmsProductContentWidgetPlugin extends AbstractPlugin implements CmsContent
             }
 
             $productStorageTransfer = $this->mapProductStorageTransfer($productData);
-
-            if (!$productStorageTransfer->getAvailable()) {
+            if (!$productStorageTransfer->getAvailable() && !$this->getConfig()->isUnavailableProductsDisplayed()) {
                 continue;
             }
 
