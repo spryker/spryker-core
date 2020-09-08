@@ -66,6 +66,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
+            ->setTableTitle('List of Products')
             ->setDataSourceUrl(static::DATA_URL)
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
 
