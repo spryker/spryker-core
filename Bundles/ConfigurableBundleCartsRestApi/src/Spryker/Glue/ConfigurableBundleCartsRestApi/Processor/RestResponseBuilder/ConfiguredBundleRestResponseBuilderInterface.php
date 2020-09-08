@@ -17,9 +17,9 @@ interface ConfiguredBundleRestResponseBuilderInterface
     public function createCartIdMissingErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessageTransfers
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[] $quoteErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $restErrorMessageTransfers): RestResponseInterface;
+    public function createFailedErrorResponse(array $quoteErrorTransfers): RestResponseInterface;
 }

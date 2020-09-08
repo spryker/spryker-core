@@ -5,17 +5,19 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder;
+namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer;
 
+use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer;
 use Spryker\Client\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiClientInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponse;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
-class ConfiguredBundleAdder implements ConfiguredBundleAdderInterface
+class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 {
     /**
      * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface
@@ -33,18 +35,26 @@ class ConfiguredBundleAdder implements ConfiguredBundleAdderInterface
     protected $cartsRestApiResource;
 
     /**
+     * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface
+     */
+    protected $configurableBundleCartMapper;
+
+    /**
      * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface $configuredBundleRestResponseBuilder
      * @param \Spryker\Client\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiClientInterface $configurableBundleCartsRestApiClient
      * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface $cartsRestApiResource
+     * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
      */
     public function __construct(
         ConfiguredBundleRestResponseBuilderInterface $configuredBundleRestResponseBuilder,
         ConfigurableBundleCartsRestApiClientInterface $configurableBundleCartsRestApiClient,
-        ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface $cartsRestApiResource
+        ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface $cartsRestApiResource,
+        ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
     ) {
         $this->configuredBundleRestResponseBuilder = $configuredBundleRestResponseBuilder;
         $this->configurableBundleCartsRestApiClient = $configurableBundleCartsRestApiClient;
         $this->cartsRestApiResource = $cartsRestApiResource;
+        $this->configurableBundleCartMapper = $configurableBundleCartMapper;
     }
 
     /**
@@ -57,18 +67,18 @@ class ConfiguredBundleAdder implements ConfiguredBundleAdderInterface
         RestRequestInterface $restRequest,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
-        if (!$this->validateCartIdentifier($restRequest)) {
-            return $this->configuredBundleRestResponseBuilder->createCartIdMissingErrorResponse();
-        }
+        // TODO: validation
 
-        $createConfiguredBundleRequestTransfer = $this->createCartItemRequestTransfer($restRequest, $restCartItemsAttributesTransfer);
-        $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient
-            ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+        $createConfiguredBundleRequestTransfer = $this->configurableBundleCartMapper
+            ->mapRestConfiguredBundlesAttributesToCreateConfiguredBundleRequest(
+                $restConfiguredBundlesAttributesTransfer,
+                new CreateConfiguredBundleRequestTransfer()
+            );
+
+        $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->addConfiguredBundle($createConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $this->mapper->map();
-
-            return $this->configuredBundleRestResponseBuilder->createFailedErrorResponse();
+            return $this->configuredBundleRestResponseBuilder->createFailedErrorResponse($quoteResponseTransfer->getErrors());
         }
 
         return $this->cartsRestApiResource->createCartRestResponse(
@@ -79,13 +89,24 @@ class ConfiguredBundleAdder implements ConfiguredBundleAdderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     * @param \Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
      *
-     * @return bool
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    protected function validateCartIdentifier(RestRequestInterface $restRequest): bool
-    {
-        $cartsResource = $restRequest->findParentResourceByType(ConfigurableBundleCartsRestApiConfig::RESOURCE_CARTS);
+    public function updateConfiguredBundleQuantity(
+        RestRequestInterface $restRequest,
+        RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
+    ): RestResponseInterface {
+        return new RestResponse();
+    }
 
-        return (bool)$cartsResource->getId();
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
+    public function deleteConfiguredBundle(RestRequestInterface $restRequest): RestResponseInterface
+    {
+        return new RestResponse();
     }
 }

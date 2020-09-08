@@ -9,6 +9,7 @@ namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuil
 
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,20 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     protected $restResourceBuilder;
 
     /**
-     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface
      */
-    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
-    {
+    protected $configurableBundleCartMapper;
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
+     * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
+     */
+    public function __construct(
+        RestResourceBuilderInterface $restResourceBuilder,
+        ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
+    ) {
         $this->restResourceBuilder = $restResourceBuilder;
+        $this->configurableBundleCartMapper = $configurableBundleCartMapper;
     }
 
     /**
@@ -44,16 +54,21 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     }
 
     /**
-     * @param \Generated\Shared\Transfer\RestErrorMessageTransfer[] $restErrorMessageTransfers
+     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[] $quoteErrorTransfers
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $restErrorMessageTransfers): RestResponseInterface
+    public function createFailedErrorResponse(array $quoteErrorTransfers): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($restErrorMessageTransfers as $restErrorMessageTransfer) {
-            $restResponse->addError($restErrorMessageTransfer);
+        foreach ($quoteErrorTransfers as $quoteErrorTransfer) {
+            $restResponse->addError(
+                $this->configurableBundleCartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                    $quoteErrorTransfer,
+                    new RestErrorMessageTransfer()
+                )
+            );
         }
 
         return $restResponse;

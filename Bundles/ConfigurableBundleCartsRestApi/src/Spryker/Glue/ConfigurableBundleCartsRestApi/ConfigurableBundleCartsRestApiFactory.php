@@ -8,12 +8,12 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder\ConfiguredBundleAdder;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder\ConfiguredBundleAdderInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Deleter\ConfiguredBundleDeleter;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Deleter\ConfiguredBundleDeleterInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Updater\ConfiguredBundleUpdater;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Updater\ConfiguredBundleUpdaterInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapper;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilder;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriter;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriterInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -23,27 +23,37 @@ use Spryker\Glue\Kernel\AbstractFactory;
 class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
 {
     /**
-     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Adder\ConfiguredBundleAdderInterface
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriterInterface
      */
-    public function createConfiguredBundleAdder(): ConfiguredBundleAdderInterface
+    public function createConfiguredBundleWriter(): ConfiguredBundleWriterInterface
     {
-        return new ConfiguredBundleAdder();
+        return new ConfiguredBundleWriter(
+            $this->createConfiguredBundleRestResponseBuilder(),
+            $this->getClient(),
+            $this->getCartsRestApiResource(),
+            $this->createConfigurableBundleCartMapper()
+        );
     }
 
     /**
-     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Updater\ConfiguredBundleUpdaterInterface
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface
      */
-    public function createConfiguredBundleUpdater(): ConfiguredBundleUpdaterInterface
+    public function createConfiguredBundleRestResponseBuilder(): ConfiguredBundleRestResponseBuilderInterface
     {
-        return new ConfiguredBundleUpdater();
+        return new ConfiguredBundleRestResponseBuilder(
+            $this->getResourceBuilder(),
+            $this->createConfigurableBundleCartMapper()
+        );
     }
 
     /**
-     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Deleter\ConfiguredBundleDeleterInterface
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface
      */
-    public function createConfiguredBundleDeleter(): ConfiguredBundleDeleterInterface
+    public function createConfigurableBundleCartMapper(): ConfigurableBundleCartMapperInterface
     {
-        return new ConfiguredBundleDeleter();
+        return new ConfigurableBundleCartMapper(
+            $this->getConfig()
+        );
     }
 
     /**

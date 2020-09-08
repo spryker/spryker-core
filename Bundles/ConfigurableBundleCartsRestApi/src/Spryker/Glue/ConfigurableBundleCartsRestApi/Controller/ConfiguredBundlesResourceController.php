@@ -47,7 +47,7 @@ class ConfiguredBundlesResourceController extends AbstractController
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createConfiguredBundleAdder()
+            ->createConfiguredBundleWriter()
             ->addConfiguredBundle($restRequest, $restConfiguredBundlesAttributesTransfer);
     }
 
@@ -81,7 +81,7 @@ class ConfiguredBundlesResourceController extends AbstractController
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
         return $this->getFactory()
-            ->createConfiguredBundleUpdater()
+            ->createConfiguredBundleWriter()
             ->updateConfiguredBundleQuantity($restRequest, $restConfiguredBundlesAttributesTransfer);
     }
 
@@ -111,7 +111,7 @@ class ConfiguredBundlesResourceController extends AbstractController
     public function deleteAction(RestRequestInterface $restRequest): RestResponseInterface
     {
         return $this->getFactory()
-            ->createConfiguredBundleDeleter()
+            ->createConfiguredBundleWriter()
             ->deleteConfiguredBundle($restRequest);
     }
 }

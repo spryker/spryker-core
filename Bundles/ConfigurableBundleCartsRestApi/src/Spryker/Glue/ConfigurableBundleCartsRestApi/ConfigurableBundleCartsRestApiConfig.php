@@ -28,4 +28,16 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+
+    public const RESPONSE_CODE_VALIDATION = '666'; // TODO: replace to correct one
+
+    /**
+     * @api
+     *
+     * @return array
+     */
+    public function getErrorIdentifierToRestErrorMapping(): array
+    {
+        return [];
+    }
 }
