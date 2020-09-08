@@ -8,9 +8,9 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
-use Elastica\Type\Mapping;
 use Generated\Shared\Transfer\SearchCollectorConfigurationTransfer;
 use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface;
 
 class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWriterInterface
 {
@@ -34,11 +34,17 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     protected $searchCollectorConfiguration;
 
     /**
+     * @var \Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface
+     */
+    protected $mappingFactory;
+
+    /**
      * @param \Elastica\Client $searchClient
      * @param string $indexName
      * @param string $type
+     * @param \Spryker\Zed\Collector\Business\Mapping\MappingFactoryInterface $mappingFactory
      */
-    public function __construct(Client $searchClient, $indexName, $type)
+    public function __construct(Client $searchClient, $indexName, $type, MappingFactoryInterface $mappingFactory)
     {
         $this->client = $searchClient;
 
@@ -46,6 +52,8 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
         $this->searchCollectorConfiguration
             ->setIndexName($indexName)
             ->setTypeName($type);
+
+        $this->mappingFactory = $mappingFactory;
     }
 
     /**
@@ -68,7 +76,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     public function __destruct()
     {
         if (!empty($this->metaData)) {
-            $mapping = new Mapping($this->getType());
+            $mapping = $this->getMapping();
             $mapping->setMeta($this->metaData)->send();
         }
     }
@@ -83,7 +91,7 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
      */
     public function delete(array $dataSet)
     {
-        $mapping = new Mapping($this->getType());
+        $mapping = $this->getMapping();
         $response = $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]
 
         return $response->isOk();
@@ -106,14 +114,6 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     }
 
     /**
-     * @return \Elastica\Type
-     */
-    protected function getType()
-    {
-        return $this->getIndex()->getType($this->searchCollectorConfiguration->getTypeName());
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\SearchCollectorConfigurationTransfer $collectorConfigurationTransfer
      *
      * @return void
@@ -129,5 +129,13 @@ class ElasticsearchMarkerWriter implements WriterInterface, ConfigurableSearchWr
     public function getSearchCollectorConfiguration()
     {
         return $this->searchCollectorConfiguration;
+    }
+
+    /**
+     * @return \Elastica\Type\Mapping|\Spryker\Zed\Collector\Business\Mapping\MappingAdapterInterface
+     */
+    protected function getMapping()
+    {
+        return $this->mappingFactory->createMapping($this->client, $this->getSearchCollectorConfiguration());
     }
 }

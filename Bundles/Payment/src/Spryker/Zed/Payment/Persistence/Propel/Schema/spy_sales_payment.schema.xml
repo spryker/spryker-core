@@ -22,8 +22,8 @@
 
     <table name="spy_sales_payment_method_type">
         <column name="id_sales_payment_method_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="payment_provider" type="VARCHAR" required="true"/>
-        <column name="payment_method" type="VARCHAR" required="true"/>
+        <column name="payment_provider" type="VARCHAR" size="255" required="true"/>
+        <column name="payment_method" type="VARCHAR" size="255" required="true"/>
 
         <index name="spy_sales_payment_method_type-type">
             <index-column name="payment_provider"/>

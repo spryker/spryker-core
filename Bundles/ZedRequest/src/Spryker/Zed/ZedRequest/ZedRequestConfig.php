@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ZedRequest;
 
-use Spryker\Shared\Kernel\Store;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 
@@ -22,20 +21,11 @@ class ZedRequestConfig extends AbstractBundleConfig
      */
     public function getPathToYvesRequestRepeatData($fileName)
     {
-        $path = $this->get(ZedRequestConstants::YVES_REQUEST_REPEAT_DATA_PATH, $this->getBcYvesRepeatDataPath());
+        $defaultPathToYvesRequestRepeatData = APPLICATION_ROOT_DIR . '/data/tmp/yves-requests';
+        $path = $this->get(ZedRequestConstants::YVES_REQUEST_REPEAT_DATA_PATH, $defaultPathToYvesRequestRepeatData);
         $pathTofFile = rtrim($path, '/\\') . DIRECTORY_SEPARATOR . $fileName;
 
         return $pathTofFile;
-    }
-
-    /**
-     * Path is used for BC. When this config option is not set, this will be used.
-     *
-     * @return string
-     */
-    private function getBcYvesRepeatDataPath()
-    {
-        return APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()->getStoreName() . '/logs/ZED/';
     }
 
     /**

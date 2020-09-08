@@ -80,4 +80,8 @@
         <property name="email" type="string"/>
     </transfer>
 
+    <transfer name="MerchantCriteria">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
 </transfers>

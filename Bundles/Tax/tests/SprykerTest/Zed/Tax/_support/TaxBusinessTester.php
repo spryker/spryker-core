@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -24,17 +22,13 @@ use Generated\Shared\Transfer\ItemTransfer;
  * @method void am($role)
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
- * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
  *
  * @SuppressWarnings(PHPMD)
  */
 class TaxBusinessTester extends Actor
 {
     use _generated\TaxBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     public const DEFAULT_QUANTITY = 1;
     protected const PRICE_MODE_NET = 'NET_MODE';

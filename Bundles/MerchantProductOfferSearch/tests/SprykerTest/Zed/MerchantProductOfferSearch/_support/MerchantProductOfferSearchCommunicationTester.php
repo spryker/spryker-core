@@ -24,8 +24,6 @@ use Spryker\Zed\ProductPageSearch\Dependency\Facade\ProductPageSearchToSearchBri
 use Spryker\Zed\ProductPageSearch\ProductPageSearchDependencyProvider;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

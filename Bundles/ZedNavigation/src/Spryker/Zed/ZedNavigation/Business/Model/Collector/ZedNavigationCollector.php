@@ -20,7 +20,7 @@ class ZedNavigationCollector implements ZedNavigationCollectorInterface
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Model\SchemaFinder\ZedNavigationSchemaFinderInterface
      */
-    private $navigationSchemaFinder;
+    protected $navigationSchemaFinder;
 
     /**
      * @var \Spryker\Zed\ZedNavigation\Business\Resolver\MergeNavigationStrategyResolverInterface

@@ -41,7 +41,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals(self::ESCAPE_URL, $response->getTargetUrl());
+        $this->assertSame(self::ESCAPE_URL, $response->getTargetUrl());
     }
 
     /**
@@ -57,7 +57,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $response = $stepEngine->process($this->getRequest());
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals(self::STEP_URL_A, $response->getTargetUrl());
+        $this->assertSame(self::STEP_URL_A, $response->getTargetUrl());
     }
 
     /**
@@ -76,7 +76,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A));
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals(self::STEP_URL_B, $response->getTargetUrl());
+        $this->assertSame(self::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**
@@ -151,7 +151,7 @@ class StepEngineTest extends AbstractStepEngineTest
         $response = $stepEngine->process($this->getRequest(self::STEP_ROUTE_A), $formCollectionHandlerMock);
 
         $this->assertInstanceOf(RedirectResponse::class, $response);
-        $this->assertEquals(self::STEP_URL_B, $response->getTargetUrl());
+        $this->assertSame(self::STEP_URL_B, $response->getTargetUrl());
     }
 
     /**

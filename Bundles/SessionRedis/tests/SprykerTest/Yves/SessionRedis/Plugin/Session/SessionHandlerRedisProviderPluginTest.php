@@ -53,7 +53,7 @@ class SessionHandlerRedisProviderPluginTest extends Unit
      */
     public function testHasCorrectSessionHandlerName(): void
     {
-        $this->assertEquals($this->getSharedConfig()->getSessionHandlerRedisName(), $this->sessionHandlerPlugin->getSessionHandlerName());
+        $this->assertSame($this->getSharedConfig()->getSessionHandlerRedisName(), $this->sessionHandlerPlugin->getSessionHandlerName());
     }
 
     /**

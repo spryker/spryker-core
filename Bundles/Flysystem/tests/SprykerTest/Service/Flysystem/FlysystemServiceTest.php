@@ -426,7 +426,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -450,7 +450,7 @@ class FlysystemServiceTest extends Unit
         );
 
         $content = stream_get_contents($stream);
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -474,7 +474,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 
@@ -500,7 +500,7 @@ class FlysystemServiceTest extends Unit
             $stream
         );
 
-        if (is_resource($stream)) {
+        if ($stream !== false) {
             fclose($stream);
         }
 

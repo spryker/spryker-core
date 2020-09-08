@@ -56,7 +56,7 @@ class SalesConfig extends AbstractBundleConfig
 
         $sequenceNumberPrefixParts = [];
         $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
-        $sequenceNumberPrefixParts[] = $this->get(SalesConstants::ENVIRONMENT_PREFIX);
+        $sequenceNumberPrefixParts[] = $this->get(SalesConstants::ENVIRONMENT_PREFIX, '');
         $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts) . $this->getUniqueIdentifierSeparator();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 

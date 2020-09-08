@@ -38,6 +38,7 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
      */
     public function findCustomerOrderIdByOrderReference(string $customerReference, string $orderReference): ?int
     {
+        /** @var int|null $idSalesOrder */
         $idSalesOrder = $this->getFactory()
             ->createSalesOrderQuery()
             ->filterByCustomerReference($customerReference)
@@ -129,7 +130,8 @@ class SalesRepository extends AbstractRepository implements SalesRepositoryInter
 
         $salesOrderQuery = $this->getFactory()
             ->createSalesOrderQuery()
-            ->groupByIdSalesOrder();
+            ->groupByIdSalesOrder()
+            ->setIgnoreCase(true);
 
         $salesOrderQuery = $this->buildSearchOrdersQuery($salesOrderQuery, $orderListTransfer);
         $salesOrderQuery = $this->preparePagination($salesOrderQuery, $orderListTransfer->getPagination());

@@ -58,7 +58,7 @@ class SessionStorageTest extends Unit
             ->with(SessionStorage::SESSION_KEY_PREFIX . $testKey)
             ->willReturn($testValue);
 
-        $this->assertEquals($testValue, $this->sessionStorage->getToken($testKey));
+        $this->assertSame($testValue, $this->sessionStorage->getToken($testKey));
     }
 
     /**

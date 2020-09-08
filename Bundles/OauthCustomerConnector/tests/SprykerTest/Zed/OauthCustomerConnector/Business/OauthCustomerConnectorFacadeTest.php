@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\OauthCustomerConnector\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\OauthScopeRequestTransfer;
+use Generated\Shared\Transfer\OauthScopeTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
-use Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface;
 
 /**
  * Auto-generated group annotations
@@ -35,13 +35,16 @@ class OauthCustomerConnectorFacadeTest extends Unit
      */
     public function testGetCustomerShouldReturnCustomerWhenCredentialsMatch(): void
     {
+        // Arrange
         $oauthUserTransfer = new OauthUserTransfer();
         $oauthUserTransfer->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change123');
 
-        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomerOauthUser($oauthUserTransfer);
+        // Act
+        $oauthUserTransfer = $this->tester->getFacade()->getCustomerOauthUser($oauthUserTransfer);
 
-        $this->assertTrue($oauthUserTransfer->getIsSuccess());
+        //Assert
+        $this->assertTrue($oauthUserTransfer->getIsSuccess(), 'Customer must be authorized by valid credentials.');
     }
 
     /**
@@ -49,13 +52,47 @@ class OauthCustomerConnectorFacadeTest extends Unit
      */
     public function testGetCustomerShouldReturnFailureCustomerWhenCredentialsNotMatch(): void
     {
+        // Arrange
         $oauthUserTransfer = new OauthUserTransfer();
         $oauthUserTransfer->setUsername('spencor.hopkin@spryker.com')
             ->setPassword('change1233');
 
-        $oauthUserTransfer = $this->getOauthCustomerConnectorFacade()->getCustomerOauthUser($oauthUserTransfer);
+        // Act
+        $oauthUserTransfer = $this->tester->getFacade()->getCustomerOauthUser($oauthUserTransfer);
 
-        $this->assertFalse($oauthUserTransfer->getIsSuccess());
+        //Assert
+        $this->assertFalse($oauthUserTransfer->getIsSuccess(), 'Customer must not be authorized by invalid credentials.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerImpersonationOauthUserShouldReturnCustomerCustomerExists(): void
+    {
+        // Arrange
+        $oauthUserTransfer = (new OauthUserTransfer())->setCustomerReference('DE--1');
+
+        // Act
+        $oauthUserTransfer = $this->tester->getFacade()->getCustomerImpersonationOauthUser($oauthUserTransfer);
+
+        //Assert
+        $this->assertTrue($oauthUserTransfer->getIsSuccess(), 'Customer must be authorized when the customer by the customer reference exists.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerImpersonationOauthUserShouldReturnFailureCustomerWhenCredentialsNotMatch(): void
+    {
+        // Arrange
+        $oauthUserTransfer = (new OauthUserTransfer())
+            ->setCustomerReference('DE--NOT_THERE');
+
+        // Act
+        $oauthUserTransfer = $this->tester->getFacade()->getCustomerImpersonationOauthUser($oauthUserTransfer);
+
+        //Assert
+        $this->assertFalse($oauthUserTransfer->getIsSuccess(), 'Customer must not be authorized when the customer is not found by the customer reference.');
     }
 
     /**
@@ -63,18 +100,46 @@ class OauthCustomerConnectorFacadeTest extends Unit
      */
     public function testGetScopesShouldReturnScopeListForRequest(): void
     {
+        // Arrange
         $oauthScopeRequestTransfer = new OauthScopeRequestTransfer();
 
-        $scopes = $this->getOauthCustomerConnectorFacade()->getScopes($oauthScopeRequestTransfer);
+        // Act
+        $scopes = $this->tester->getFacade()->getScopes($oauthScopeRequestTransfer);
 
-        $this->assertNotEmpty($scopes);
+        //Assert
+        $this->assertNotEmpty($scopes, 'Customer scopes must be returned.');
     }
 
     /**
-     * @return \Spryker\Zed\OauthCustomerConnector\Business\OauthCustomerConnectorFacadeInterface
+     * @return void
      */
-    protected function getOauthCustomerConnectorFacade(): OauthCustomerConnectorFacadeInterface
+    public function testGetCustomerImpersonationScopesShouldReturnScopeList(): void
     {
-        return $this->tester->getLocator()->oauthCustomerConnector()->facade();
+        // Arrange
+        $oauthScopeRequestTransfer = new OauthScopeRequestTransfer();
+
+        // Act
+        $scopes = $this->tester->getFacade()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
+
+        //Assert
+        $this->assertNotEmpty($scopes, 'Customer impersonation scopes must be returned.');
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetCustomerImpersonationScopesWithDefaultShouldReturnScopeList(): void
+    {
+        // Arrange
+        $defaultScopeTransfer = (new OauthScopeTransfer())->setIdentifier('test');
+        $oauthScopeRequestTransfer = (new OauthScopeRequestTransfer())
+            ->addScope($defaultScopeTransfer);
+
+        // Act
+        $scopes = $this->tester->getFacade()->getCustomerImpersonationScopes($oauthScopeRequestTransfer);
+
+        //Assert
+        $this->assertNotEmpty($scopes, 'Customer impersonation scopes must be returned.');
+        $this->assertContains($defaultScopeTransfer, $scopes, 'Customer impersonation scopes must include the default one.');
     }
 }

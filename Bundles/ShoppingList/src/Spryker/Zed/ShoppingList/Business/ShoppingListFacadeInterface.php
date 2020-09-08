@@ -29,6 +29,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Create new shopping list entity if it does not exist.
+     * - Executes ShoppingListItemBulkPostSavePlugin plugins after create.
      * - Add create shopping list success message.
      *
      * @api
@@ -42,6 +43,7 @@ interface ShoppingListFacadeInterface
     /**
      * Specification:
      * - Update shopping list entity if it exist or create new.
+     * - Executes ShoppingListItemBulkPostSavePlugin plugins after save.
      *
      * @api
      *

@@ -12,8 +12,6 @@ use Orm\Zed\Merchant\Persistence\SpyMerchantQuery;
 use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Orm\Zed\MerchantProfile\Persistence\SpyMerchantProfileAddressQuery;
 class MerchantProfileDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantProfileDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

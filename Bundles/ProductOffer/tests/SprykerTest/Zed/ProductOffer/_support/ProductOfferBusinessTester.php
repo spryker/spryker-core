@@ -13,8 +13,6 @@ use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepository;
 use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -32,10 +30,6 @@ use Spryker\Zed\ProductOffer\Persistence\ProductOfferRepositoryInterface;
 class ProductOfferBusinessTester extends Actor
 {
     use _generated\ProductOfferBusinessTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

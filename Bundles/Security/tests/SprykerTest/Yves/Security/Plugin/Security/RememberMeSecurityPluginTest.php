@@ -69,13 +69,13 @@ class RememberMeSecurityPluginTest extends Unit
 
         $httpKernelBrowser->request('post', '/login_check', ['_username' => 'user', '_password' => 'foo', '_remember_me' => 'true']);
         $httpKernelBrowser->followRedirect();
-        $this->assertEquals('AUTHENTICATED_FULLY', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('AUTHENTICATED_FULLY', $httpKernelBrowser->getResponse()->getContent());
         $this->assertTrue($this->interactiveLoginTriggered, 'The interactive login has not been triggered yet');
         $this->assertNotNull($httpKernelBrowser->getCookiejar()->get('REMEMBERME'), 'The REMEMBERME cookie is not set');
 
         $httpKernelBrowser->getCookiejar()->expire('MOCKSESSID');
         $httpKernelBrowser->request('get', '/');
-        $this->assertEquals('AUTHENTICATED_REMEMBERED', $httpKernelBrowser->getResponse()->getContent());
+        $this->assertSame('AUTHENTICATED_REMEMBERED', $httpKernelBrowser->getResponse()->getContent());
         $this->assertTrue($this->interactiveLoginTriggered, 'The interactive login has not been triggered yet');
 
         $httpKernelBrowser->request('get', '/logout');
@@ -140,8 +140,8 @@ class RememberMeSecurityPluginTest extends Unit
      */
     protected function getEventDispatcherPlugin(RememberMeSecurityPluginTest $testClass): EventDispatcherPluginInterface
     {
-        return new class ($testClass) implements EventDispatcherPluginInterface {
-
+        return new class ($testClass) implements EventDispatcherPluginInterface
+        {
             /**
              * @var \SprykerTest\Yves\Security\Plugin\Security\RememberMeSecurityPluginTest
              */

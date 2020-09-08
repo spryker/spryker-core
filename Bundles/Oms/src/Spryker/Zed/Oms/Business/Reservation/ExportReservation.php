@@ -19,6 +19,7 @@ use Spryker\Zed\Oms\Persistence\OmsQueryContainerInterface;
 class ExportReservation implements ExportReservationInterface
 {
     public const CURRENT_DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var \Spryker\Zed\Oms\Dependency\Facade\OmsToStoreFacadeInterface
      */
@@ -103,6 +104,7 @@ class ExportReservation implements ExportReservationInterface
      */
     protected function getMaxVersion()
     {
+        /** @var string|null $queryResult */
         $queryResult = $this->omsQueryContainer
             ->queryMaxReservationChangeVersion()
             ->findOne();

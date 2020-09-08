@@ -47,6 +47,7 @@ class ProductOfferStockMapper
     ): ProductOfferStockTransfer {
         $productOfferStockTransfer->fromArray($productOfferStockEntity->toArray(), true);
         $productOfferStockTransfer->setIdProductOffer($productOfferStockEntity->getFkProductOffer());
+        $productOfferStockTransfer->setProductOfferReference($productOfferStockEntity->getSpyProductOffer()->getProductOfferReference());
         $productOfferStockTransfer->setStock(
             $this->mapStockEntityToStockTransfer($productOfferStockEntity->getStock(), new StockTransfer())
         );

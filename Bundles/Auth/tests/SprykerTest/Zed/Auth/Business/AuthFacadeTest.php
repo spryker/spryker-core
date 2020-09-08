@@ -63,7 +63,7 @@ class AuthFacadeTest extends Unit
 
         $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUser($userEntity->getIdUser());
 
-        $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
+        $this->assertSame($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
         $this->assertNotEmpty($passwordEntity->getCode());
         $this->assertTrue($resetStatus);
     }
@@ -96,7 +96,7 @@ class AuthFacadeTest extends Unit
         $passwordEntity->reload();
 
         $this->assertTrue($resetStatus);
-        $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_USED);
+        $this->assertSame($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_USED);
     }
 
     /**
@@ -120,7 +120,7 @@ class AuthFacadeTest extends Unit
 
         $passwordEntity->reload();
 
-        $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_EXPIRED);
+        $this->assertSame($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_EXPIRED);
         $this->assertFalse($resetStatus);
     }
 

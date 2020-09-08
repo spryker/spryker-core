@@ -92,7 +92,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertEquals(SearchElasticsearchConfig::INDEX_CLOSE_STATE, $this->getIndexState($index));
+        $this->assertSame(SearchElasticsearchConfig::INDEX_CLOSE_STATE, $this->getIndexState($index));
     }
 
     /**
@@ -130,7 +130,7 @@ class SearchElasticsearchFacadeTest extends Unit
 
         // Assert
         $this->assertTrue($result);
-        $this->assertEquals(SearchElasticsearchConfig::INDEX_OPEN_STATE, $this->getIndexState($index));
+        $this->assertSame(SearchElasticsearchConfig::INDEX_OPEN_STATE, $this->getIndexState($index));
     }
 
     /**
@@ -286,6 +286,8 @@ class SearchElasticsearchFacadeTest extends Unit
             $this->tester->buildSearchContextTransferFromIndexName($sourceIndex->getName()),
             $this->tester->buildSearchContextTransferFromIndexName($destIndex->getName())
         );
+
+        $destIndex->refresh();
 
         // Assert
         $this->assertDocumentInIndexHasExpectedContent($destIndex, $documentId, $documentContent);

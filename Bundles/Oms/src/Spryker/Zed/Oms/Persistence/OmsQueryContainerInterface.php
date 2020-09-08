@@ -279,7 +279,7 @@ interface OmsQueryContainerInterface extends QueryContainerInterface
     /**
      * @api
      *
-     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationStoreQuery
+     * @return \Orm\Zed\Oms\Persistence\SpyOmsProductReservationChangeVersionQuery
      */
     public function queryMaxReservationChangeVersion();
 

@@ -12,8 +12,6 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferQuery;
 use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -30,10 +28,6 @@ use Orm\Zed\ProductOffer\Persistence\SpyProductOfferStoreQuery;
 class MerchantProductOfferDataImportCommunicationTester extends Actor
 {
     use _generated\MerchantProductOfferDataImportCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @return void

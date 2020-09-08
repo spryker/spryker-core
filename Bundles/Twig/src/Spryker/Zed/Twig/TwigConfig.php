@@ -18,6 +18,13 @@ use Symfony\Bridge\Twig\Extension\FormExtension;
  */
 class TwigConfig extends AbstractBundleConfig
 {
+    protected const APPLICATION_ZED = 'ZED';
+    
+    /**
+     * @uses \Spryker\Yves\Twig\TwigConfig::APPLICATION_YVES
+     */
+    protected const APPLICATION_YVES = 'YVES';
+
     /**
      * @api
      *
@@ -52,8 +59,8 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getProjectNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
-            $paths[] = APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/';
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, '/') . '/' . $namespace . '/Zed/%s' . APPLICATION_CODE_BUCKET . '/Presentation/';
+            $paths[] = rtrim(APPLICATION_SOURCE_DIR, '/') . '/' . $namespace . '/Zed/%s/Presentation/';
         }
 
         return $paths;
@@ -69,10 +76,10 @@ class TwigConfig extends AbstractBundleConfig
         $namespaces = $this->getCoreNamespaces();
 
         foreach ($namespaces as $namespace) {
-            $paths[] = APPLICATION_VENDOR_DIR . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
+            $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/*/*/src/' . $namespace . '/Zed/%s/Presentation/';
         }
 
-        $paths[] = APPLICATION_VENDOR_DIR . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
+        $paths[] = rtrim(APPLICATION_VENDOR_DIR, '/') . '/spryker/*/src/Spryker/Zed/%s/Presentation/';
 
         return $paths;
     }
@@ -104,7 +111,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePath()
     {
-        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::ZED_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache(static::APPLICATION_ZED));
     }
 
     /**
@@ -114,7 +121,7 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getCacheFilePathForYves()
     {
-        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, '');
+        return $this->get(TwigConstants::YVES_PATH_CACHE_FILE, $this->getSharedConfig()->getDefaultPathCache(static::APPLICATION_YVES));
     }
 
     /**
@@ -206,7 +213,10 @@ class TwigConfig extends AbstractBundleConfig
      */
     public function getTwigOptions(): array
     {
-        return $this->get(TwigConstants::ZED_TWIG_OPTIONS, []);
+        return array_replace(
+            $this->getSharedConfig()->getDefaultTwigOptions(),
+            $this->get(TwigConstants::ZED_TWIG_OPTIONS, [])
+        );
     }
 
     /**

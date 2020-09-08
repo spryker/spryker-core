@@ -3,9 +3,9 @@
           namespace="Orm\Zed\FileManagerStorage\Persistence"
           package="src.Orm.Zed.FileManagerStorage.Persistence">
 
-    <table name="spy_file_storage">
+    <table name="spy_file_storage" identifierQuoting="true">
         <column name="id_file_storage" type="integer" autoIncrement="true" primaryKey="true"/>
-        <column name="file_name" type="varchar"/>
+        <column name="file_name" type="varchar" size="500"/>
         <column name="fk_file" type="integer"/>
 
         <index name="spy_file_storage-fk_file">

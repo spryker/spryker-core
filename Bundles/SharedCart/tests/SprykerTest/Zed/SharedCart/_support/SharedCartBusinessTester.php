@@ -19,8 +19,6 @@ use Generated\Shared\Transfer\ResourceShareTransfer;
 use Generated\Shared\Transfer\ShareDetailTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

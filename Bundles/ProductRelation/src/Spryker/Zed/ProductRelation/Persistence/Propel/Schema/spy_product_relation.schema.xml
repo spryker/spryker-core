@@ -3,7 +3,7 @@
 
     <table name="spy_product_relation_type" idMethod="native" allowPkInsert="true" identifierQuoting="true">
         <column name="id_product_relation_type" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="key" required="true" type="VARCHAR"/>
+        <column name="key" required="true" type="VARCHAR" size="255"/>
 
         <behavior name="timestampable"/>
 

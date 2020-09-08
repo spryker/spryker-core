@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
- * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ * MIT License
+ * For full license information, please view the LICENSE file that was distributed with this source code.
  */
 
 namespace Spryker\Zed\PriceProductScheduleDataImport\Business\Model\Step;
@@ -34,6 +34,7 @@ class CurrencyToIdCurrencyStep implements DataImportStepInterface
     {
         $currencyCode = $dataSet[PriceProductScheduleDataSetInterface::KEY_CURRENCY];
         if (!isset($this->idCurrencyCache[$currencyCode])) {
+            /** @var int|null $idCurrency */
             $idCurrency = $this->createProductQuery()
                 ->select(SpyCurrencyTableMap::COL_ID_CURRENCY)
                 ->findOneByCode($currencyCode);

@@ -7,7 +7,7 @@
         <column name="id_product_management_attribute" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_product_attribute_key" type="INTEGER" required="true"/>
         <column name="allow_input" type="BOOLEAN" required="true" defaultValue="true"/>
-        <column name="input_type" type="VARCHAR" required="true"/>
+        <column name="input_type" type="VARCHAR" size="100" required="true"/>
 
         <foreign-key name="spy_pim_attribute-fk_product_attribute_key" foreignTable="spy_product_attribute_key">
             <reference local="fk_product_attribute_key" foreign="id_product_attribute_key"/>
