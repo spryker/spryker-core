@@ -14,5 +14,5 @@ interface ProductConcreteReaderInterface
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductListId(int $idProductList): array;
+    public function getMappedProductConcreteIds(int $idProductList): array;
 }

@@ -51,7 +51,7 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
      *
      * @return int[]
      */
-    public function getProductConcreteIdsByProductListId(int $idProductList): array
+    public function getMappedProductConcreteIds(int $idProductList): array
     {
         $productConcreteCriteriaFilterTransfer = (new ProductConcreteCriteriaFilterTransfer())
             ->setRequestParams([
@@ -69,9 +69,9 @@ class ProductConcreteReader implements ProductConcreteReaderInterface
         $productConcreteIds = [];
         foreach ($productConcretePageSearchTransfers as $productConcretePageSearchTransfer) {
             /** @var \Generated\Shared\Transfer\ProductConcretePageSearchTransfer $productConcretePageSearchTransfer */
-            $productConcreteIds[] = $productConcretePageSearchTransfer->getFkProduct();
+            $productConcreteIds[$productConcretePageSearchTransfer->getSku()] = $productConcretePageSearchTransfer->getFkProduct();
         }
 
-        return array_filter($productConcreteIds);
+        return $productConcreteIds;
     }
 }

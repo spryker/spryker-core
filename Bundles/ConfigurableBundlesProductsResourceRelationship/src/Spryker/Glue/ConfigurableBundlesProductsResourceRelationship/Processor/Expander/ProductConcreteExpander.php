@@ -44,15 +44,15 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
      */
     public function addResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
-        $mappedProductConcreteIds = $this->getMappedProductConcreteIdsByProductListId($resources);
-        $productConcreteIds = $this->mergeProductConcreteIds($mappedProductConcreteIds);
+        $mappedProductConcreteIdsBySku = $this->getMappedProductConcreteIdsByProductListId($resources);
+        $productConcreteIds = $this->mergeProductConcreteIds($mappedProductConcreteIdsBySku);
 
         $productConcreteRestResources = $this->productsRestApiResource
             ->getProductConcreteCollectionByIds($productConcreteIds, $restRequest);
 
         $mappedProductConcreteRestResources = $this->mapProductConcreteRestResourcesByProductId(
             $productConcreteRestResources,
-            $mappedProductConcreteIds
+            $mappedProductConcreteIdsBySku
         );
 
         $this->addProductConcreteRestResources($mappedProductConcreteRestResources, $resources);
@@ -79,7 +79,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
                 continue;
             }
 
-            $mappedProductConcreteIds[$idProductList] = $this->productConcreteReader->getProductConcreteIdsByProductListId($idProductList);
+            $mappedProductConcreteIds[$idProductList] = $this->productConcreteReader->getMappedProductConcreteIds($idProductList);
         }
 
         return $mappedProductConcreteIds;
@@ -95,7 +95,7 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
         $mergedProductConcreteIds = [];
 
         foreach ($mappedProductConcreteIds as $productConcreteIds) {
-            $mergedProductConcreteIds = array_merge($mergedProductConcreteIds, $productConcreteIds);
+            $mergedProductConcreteIds = array_merge($mergedProductConcreteIds, array_values($productConcreteIds));
         }
 
         return $mergedProductConcreteIds;
@@ -103,19 +103,21 @@ class ProductConcreteExpander implements ProductConcreteExpanderInterface
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[] $productConcreteRestResources
-     * @param int[][] $mappedProductConcreteIds
+     * @param int[][] $mappedProductConcreteIdsBySku
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface[][]
      */
     protected function mapProductConcreteRestResourcesByProductId(
         array $productConcreteRestResources,
-        array $mappedProductConcreteIds
+        array $mappedProductConcreteIdsBySku
     ): array {
         $mappedProductConcreteRestResources = [];
 
-        foreach ($mappedProductConcreteIds as $idProductList => $productConcreteIds) {
+        foreach ($mappedProductConcreteIdsBySku as $idProductList => $productConcreteIds) {
+            $skus = array_keys($productConcreteIds);
+
             foreach ($productConcreteRestResources as $productConcreteRestResource) {
-                if (in_array($productConcreteRestResource->getId(), $productConcreteIds)) {
+                if (in_array($productConcreteRestResource->getId(), $skus, true)) {
                     $mappedProductConcreteRestResources[$idProductList][] = $productConcreteRestResource;
                 }
             }
