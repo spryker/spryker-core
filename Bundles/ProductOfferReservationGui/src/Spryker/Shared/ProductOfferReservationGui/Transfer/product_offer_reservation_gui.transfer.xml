@@ -9,6 +9,7 @@
 
     <transfer name="OmsProductOfferReservationCriteria">
         <property name="productOfferReference" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="ReservationResponse">

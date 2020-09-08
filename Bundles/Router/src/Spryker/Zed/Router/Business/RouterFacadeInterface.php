@@ -22,6 +22,8 @@ interface RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     public function getRouter(): ChainRouter;
@@ -32,6 +34,8 @@ interface RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedRouter(): RouterInterface;
@@ -41,6 +45,8 @@ interface RouterFacadeInterface
      * - Returns Router which handles Zed routes.
      *
      * @api
+     *
+     * @internal
      *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */

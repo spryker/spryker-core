@@ -29,6 +29,7 @@
 
     <transfer name="RestUrlResolverAttributes">
         <property name="entityId" type="string"/>
+        <property name="entityType" type="string"/>
     </transfer>
 
     <transfer name="UrlStorage">
