@@ -77,7 +77,7 @@ class Worker implements WorkerInterface
         $this->queueClient = $queueClient;
         $this->queueNames = $queueNames;
         $this->signalDispatcher = $signalDispatcher;
-        $this->signalDispatcher->dispatch($this->queueConfig->getSignalsForWorkerGracefulShutdown());
+        $this->signalDispatcher->dispatch($this->queueConfig->getSignalsForGracefulWorkerShutdown());
     }
 
     /**

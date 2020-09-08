@@ -188,7 +188,7 @@ class QueueConfig extends AbstractBundleConfig
      *
      * @return int[]
      */
-    public function getSignalsForWorkerGracefulShutdown(): array
+    public function getSignalsForGracefulWorkerShutdown(): array
     {
         return [];
     }
