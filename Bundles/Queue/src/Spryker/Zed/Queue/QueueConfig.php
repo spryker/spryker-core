@@ -184,12 +184,11 @@ class QueueConfig extends AbstractBundleConfig
      *  SIGINT,
      *  SIGQUIT,
      *  SIGABRT,
-     *  SIGKILL,
      * ]
      *
      * @return int[]
      */
-    public function getSignalsToHandle(): array
+    public function getSignalsForWorkerGracefulShutdown(): array
     {
         return [];
     }
