@@ -30,8 +30,6 @@ class AddControllerCest
      */
     public function addTranslation(GlossaryCommunicationTester $i): void
     {
-        $i->markTestSkipped('Test fails when ran as part of functional suite.');
-
         $keyTranslationTransfer = (new KeyTranslationBuilder())->build();
         $i->amOnPage('/glossary/add');
         $i->seeResponseCodeIs(200);
