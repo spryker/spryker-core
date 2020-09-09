@@ -69,6 +69,10 @@ class ProductConfigurationInstanceCartChangeExpander implements ProductConfigura
     protected function expandItemWithProductConfigurationInstance(
         ItemTransfer $itemTransfer
     ): ItemTransfer {
+        if ($itemTransfer->getProductConfigurationInstance()) {
+            return $itemTransfer;
+        }
+
         $productConfigurationInstanceTransfer = $this->productConfigurationInstanceReader->findProductConfigurationInstanceBySku(
             $itemTransfer->getSku()
         );

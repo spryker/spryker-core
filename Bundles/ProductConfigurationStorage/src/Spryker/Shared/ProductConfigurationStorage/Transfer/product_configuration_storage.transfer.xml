@@ -85,4 +85,7 @@
     <transfer name="ProductConcrete">
         <property name="sku" type="string"/>
     </transfer>
+
+    <transfer name="Quote">
+    </transfer>
 </transfers>

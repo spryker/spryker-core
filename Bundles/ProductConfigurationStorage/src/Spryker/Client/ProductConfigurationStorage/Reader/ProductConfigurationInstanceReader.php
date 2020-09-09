@@ -8,7 +8,9 @@
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface;
+use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface;
@@ -36,21 +38,29 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
     protected $productConfigurationSessionKeyBuilder;
 
     /**
+     * @var \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface
+     */
+    protected $cartClient;
+
+    /**
      * @param \Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface $configurationStorageReader
      * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToSessionClientInterface $sessionClient
      * @param \Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper
      * @param \Spryker\Client\ProductConfigurationStorage\Builder\ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder
+     * @param \Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToCartClientInterface $cartClient
      */
     public function __construct(
         ProductConfigurationStorageReaderInterface $configurationStorageReader,
         ProductConfigurationStorageToSessionClientInterface $sessionClient,
         ProductConfigurationInstanceMapperInterface $productConfigurationStorageMapper,
-        ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder
+        ProductConfigurationSessionKeyBuilderInterface $productConfigurationSessionKeyBuilder,
+        ProductConfigurationStorageToCartClientInterface $cartClient
     ) {
         $this->configurationStorageReader = $configurationStorageReader;
         $this->sessionClient = $sessionClient;
         $this->productConfigurationStorageMapper = $productConfigurationStorageMapper;
         $this->productConfigurationSessionKeyBuilder = $productConfigurationSessionKeyBuilder;
+        $this->cartClient = $cartClient;
     }
 
     /**
@@ -68,6 +78,27 @@ class ProductConfigurationInstanceReader implements ProductConfigurationInstance
         }
 
         return $this->findProductConfigurationInstanceInStorage($sku);
+    }
+
+    /**
+     * @param string $groupKey
+     * @param string $sku
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
+     */
+    public function findProductConfigurationInstanceInQuote(
+        string $groupKey,
+        string $sku,
+        QuoteTransfer $quoteTransfer
+    ): ?ProductConfigurationInstanceTransfer {
+        $itemTransfer = $this->cartClient->findQuoteItem($quoteTransfer, $sku, $groupKey);
+
+        if (!$itemTransfer) {
+            return null;
+        }
+
+        return $itemTransfer->getProductConfigurationInstance();
     }
 
     /**

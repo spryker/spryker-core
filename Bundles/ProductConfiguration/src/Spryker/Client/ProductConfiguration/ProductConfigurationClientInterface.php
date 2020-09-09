@@ -7,10 +7,44 @@
 
 namespace Spryker\Client\ProductConfiguration;
 
+use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 interface ProductConfigurationClientInterface
 {
+    /**
+     * Specification:
+     * - Finds and executes the appropriate ProductConfigurationRequestPluginInterface based on the configuratorKey.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function resolveProductConfiguratorRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer;
+
+    /**
+     * Specification:
+     * - Finds and executes the appropriate ProductConfiguratorResponsePluginInterface based on the configuratorKey.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function processProductConfiguratorResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer;
+
     /**
      * Specification:
      * - Returns false if any item with product configuration is not fully configured, true otherwise.
