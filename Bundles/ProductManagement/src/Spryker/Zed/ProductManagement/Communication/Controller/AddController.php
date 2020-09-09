@@ -168,13 +168,7 @@ class AddController extends AbstractController
         FormInterface $form
     ) {
         if ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
-            $productConcreteTransfer = new ProductConcreteTransfer();
-            $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
-            $productConcreteTransfer->setIsActive(false);
-            foreach ($productAbstractTransfer->getPrices() as $price) {
-                $productConcreteTransfer->addPrice(clone $price);
-            }
-            $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+            $productConcreteTransfer = $this->createProductConcreteToProductAbstract($productAbstractTransfer);
 
             return [$productConcreteTransfer];
         }
@@ -194,6 +188,30 @@ class AddController extends AbstractController
             ->getProductFacade()
             ->generateVariants($productAbstractTransfer, $attributeValues);
 
+        if (empty($concreteProductCollection)) {
+            $productConcreteTransfer = $this->createProductConcreteToProductAbstract($productAbstractTransfer);
+
+            return [$productConcreteTransfer];
+        }
+
         return $concreteProductCollection;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteTransfer
+     */
+    protected function createProductConcreteToProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    {
+        $productConcreteTransfer = new ProductConcreteTransfer();
+        $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
+        $productConcreteTransfer->setIsActive(false);
+        foreach ($productAbstractTransfer->getPrices() as $price) {
+            $productConcreteTransfer->addPrice(clone $price);
+        }
+        $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
+
+        return $productConcreteTransfer;
     }
 }
