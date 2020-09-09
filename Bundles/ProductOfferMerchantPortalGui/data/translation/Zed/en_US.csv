@@ -13,6 +13,7 @@ From,From
 "Has stock","Has stock"
 Image,Image
 Inactive,Inactive
+"List of Products","List of Products"
 "Low on Stock","Low on Stock"
 "Manage Offers","Manage Offers"
 "Manage Offer","Manage Offer"
@@ -68,3 +69,4 @@ Create,Create
 select.default.placeholder,Select
 "Enter SKU","Enter SKU"
 "Enter quantity","Enter quantity"
+"To create your offer, choose a product from the list below.","To create your offer, choose a product from the list below."

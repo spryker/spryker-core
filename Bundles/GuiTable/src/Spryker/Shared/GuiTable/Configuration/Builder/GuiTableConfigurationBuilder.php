@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Shared\GuiTable\Exception\InvalidConfigurationException;
@@ -36,6 +37,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
      */
     protected $columns;
+
+    /**
+     * @var string
+     */
+    protected $title;
 
     /**
      * @var \Generated\Shared\Transfer\GuiTableFilterTransfer[]
@@ -604,6 +610,18 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTableTitle(string $title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
      * @api
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
@@ -622,6 +640,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setBatchActions($guiTableConfigurationTransfer);
+
+        if ($this->title) {
+            $guiTableConfigurationTransfer->setTitle(
+                (new GuiTableTitleConfigurationTransfer())
+                    ->setIsEnabled(true)
+                    ->setTitle($this->title)
+            );
+        }
 
         if ($this->dataSourceUrl) {
             $guiTableConfigurationTransfer->setDataSource(
