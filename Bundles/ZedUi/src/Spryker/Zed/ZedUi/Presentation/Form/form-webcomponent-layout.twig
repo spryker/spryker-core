@@ -145,7 +145,7 @@ For more information on this topic, see
     {% set translatedChoices = [] %}
     {% for group_label, choice in options %}
         {% set translatedChoices = translatedChoices | merge([{
-            'label' : choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain),
+            'title' : choice_translation_domain is same as(false) ? choice.label : choice.label|trans({}, choice_translation_domain),
             'value' : choice.value,
         }]) %}
     {% endfor %}
