@@ -44,6 +44,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper
                 - \SprykerTest\Zed\Sales\Helper\CommunicationHelper
 
     Presentation:

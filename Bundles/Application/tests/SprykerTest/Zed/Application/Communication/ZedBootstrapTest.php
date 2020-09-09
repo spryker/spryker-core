@@ -11,8 +11,6 @@ use Codeception\Test\Unit;
 use Spryker\Zed\Application\Communication\ZedBootstrap;
 
 /**
- * @deprecated Will be removed without replacement.
- *
  * Auto-generated group annotations
  *
  * @group SprykerTest

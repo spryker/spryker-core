@@ -26,13 +26,8 @@ suites:
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
-                - \SprykerTest\Zed\Testify\Helper\Communication\Table\TableHelper
-                - \SprykerTest\Zed\ZedNavigation\Helper\BreadcrumbHelper
                 - \SprykerTest\Service\Container\Helper\ContainerHelper
-                - \SprykerTest\Zed\Validator\Helper\ValidatorHelper
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
-                - \SprykerTest\Zed\Router\Helper\RouterHelper
-                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
 
     Communication:
@@ -46,3 +41,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
+                - \SprykerTest\Shared\Application\Helper\ZedHelper

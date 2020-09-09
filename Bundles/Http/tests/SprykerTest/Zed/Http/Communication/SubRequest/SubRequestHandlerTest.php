@@ -8,7 +8,7 @@
 namespace SprykerTest\Zed\Http\Communication\SubRequest;
 
 use Codeception\Test\Unit;
-use Silex\Application;
+use Spryker\Shared\Kernel\Communication\ApplicationProxy;
 use Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,11 +66,11 @@ class SubRequestHandlerTest extends Unit
     /**
      * @deprecated This can be refactored to use the ApplicationHelper which will be released together with the SecurityApplicationPlugin.
      *
-     * @return \Silex\Application
+     * @return \Spryker\Shared\Kernel\Communication\ApplicationProxy
      */
-    public function createApplication(): Application
+    public function createApplication(): ApplicationProxy
     {
-        $app = new Application();
+        $app = new ApplicationProxy();
         $app['debug'] = true;
 
         $callback = function () use ($app) {

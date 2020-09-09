@@ -16,10 +16,11 @@
     "spryker/twig-extension": "^1.0.0"
   },
   "require-dev": {
+    "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/silex": "*",
+    "spryker/router": "*",
     "spryker/testify": "*"
   },
   "suggest": {
