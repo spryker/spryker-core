@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\Cart\Business\StorageProvider;
 
-use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -152,13 +151,13 @@ class NonPersistentProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
+     * @param \Traversable|\Generated\Shared\Transfer\ItemTransfer[] $existingItems
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      * @param int $itemIndex
      *
      * @return void
      */
-    protected function decreaseExistingItem(ArrayObject $existingItems, ItemTransfer $itemTransfer, int $itemIndex): void
+    protected function decreaseExistingItem(Traversable $existingItems, ItemTransfer $itemTransfer, int $itemIndex): void
     {
         $existingItemTransfer = $existingItems[$itemIndex];
         $changedQuantity = $existingItemTransfer->getQuantity() - $itemTransfer->getQuantity();
