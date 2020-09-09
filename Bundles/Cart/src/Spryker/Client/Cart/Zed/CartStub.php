@@ -57,6 +57,8 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::replaceItemAction()
+     *
      * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
