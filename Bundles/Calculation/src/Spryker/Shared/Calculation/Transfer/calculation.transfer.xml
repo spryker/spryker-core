@@ -179,5 +179,8 @@
     <transfer name="Currency">
     </transfer>
 
+    <transfer name="Store">
+    </transfer>
+
 </transfers>
 
