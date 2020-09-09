@@ -44,12 +44,8 @@ class ProductConfiguratorRedirectResolver implements ProductConfiguratorRedirect
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         foreach ($this->productConfiguratorRequestPlugins as $configuratorKey => $productConfiguratorRequestPlugin) {
-            if (
-                $configuratorKey === $productConfiguratorRequestTransfer
-                    ->getProductConfiguratorRequestData()->getConfiguratorKey()
-            ) {
-                return $productConfiguratorRequestPlugin
-                    ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+            if ($configuratorKey === $productConfiguratorRequestTransfer->getProductConfiguratorRequestData()->getConfiguratorKey()) {
+                return $productConfiguratorRequestPlugin->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
             }
         }
 
