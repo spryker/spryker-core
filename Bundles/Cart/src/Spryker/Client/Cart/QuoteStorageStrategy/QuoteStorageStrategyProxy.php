@@ -247,9 +247,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
+                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
             );
         }
 
