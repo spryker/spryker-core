@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 
 interface ConfiguredBundleRestResponseBuilderInterface
@@ -17,9 +18,9 @@ interface ConfiguredBundleRestResponseBuilderInterface
     public function createCartIdMissingErrorResponse(): RestResponseInterface;
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[] $quoteErrorTransfers
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $quoteErrorTransfers): RestResponseInterface;
+    public function createFailedResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface;
 }

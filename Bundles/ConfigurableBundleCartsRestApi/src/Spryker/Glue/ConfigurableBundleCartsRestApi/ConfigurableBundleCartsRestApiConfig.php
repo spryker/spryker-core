@@ -7,7 +7,10 @@
 
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 
+use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\Kernel\AbstractBundleConfig;
+use Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig as ConfigurableBundleCartsRestApiSharedConfig;
+use Symfony\Component\HttpFoundation\Response;
 
 class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
 {
@@ -23,13 +26,16 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
+    public const RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION = '6665'; // TODO: replace it to correct
+    public const RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = '6666'; // TODO: replace it to correct
+    public const RESPONSE_CODE_FAILED_ADDING_CONFIGURED_BUNDLE = '6667'; // TODO: replace it to correct
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
-
-    public const RESPONSE_CODE_VALIDATION = '666'; // TODO: replace to correct one
+    public const EXCEPTION_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template not found.';
+    public const EXCEPTION_MESSAGE_FAILED_ADDING_CONFIGURED_BUNDLE = 'Configured bundle could not be added.';
 
     /**
      * @api
@@ -38,6 +44,22 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {
-        return [];
+        return [
+            ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_ID_MISSING,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_ID_MISSING,
+            ],
+            ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND,
+            ],
+            ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_FAILED_ADDING_CONFIGURED_BUNDLE,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_FAILED_ADDING_CONFIGURED_BUNDLE,
+            ],
+        ];
     }
 }

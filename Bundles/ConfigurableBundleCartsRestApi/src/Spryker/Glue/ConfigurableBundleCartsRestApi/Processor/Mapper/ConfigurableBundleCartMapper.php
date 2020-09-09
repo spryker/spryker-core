@@ -8,9 +8,7 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotTransfer;
-use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
-use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -44,14 +42,19 @@ class ConfigurableBundleCartMapper implements ConfigurableBundleCartMapperInterf
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer,
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): CreateConfiguredBundleRequestTransfer {
-        $configurableBundleTemplateTransfer = (new ConfigurableBundleTemplateTransfer())
-            ->setUuid($restConfiguredBundlesAttributesTransfer->getTemplateUuid());
+        $createConfiguredBundleRequestTransfer
+            ->requireConfiguredBundle()
+            ->getConfiguredBundle()
+                ->requireTemplate()
+                ->getTemplate()
+                    ->requireUuid()
+                    ->requireName();
 
-        $configuredBundleTransfer = (new ConfiguredBundleTransfer())
-            ->setTemplate($configurableBundleTemplateTransfer)
+        $configuredBundleTransfer = $createConfiguredBundleRequestTransfer
+            ->getConfiguredBundle()
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
-        $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())
+        $createConfiguredBundleRequestTransfer = $createConfiguredBundleRequestTransfer
             ->setConfiguredBundle($configuredBundleTransfer);
 
         foreach ($restConfiguredBundlesAttributesTransfer->getItems() as $configuredBundleItemsAttributesTransfer) {
@@ -103,7 +106,7 @@ class ConfigurableBundleCartMapper implements ConfigurableBundleCartMapperInterf
     protected function createErrorMessageTransfer(QuoteErrorTransfer $quoteErrorTransfer): RestErrorMessageTransfer
     {
         return (new RestErrorMessageTransfer())
-            ->setCode(ConfigurableBundleCartsRestApiConfig::RESPONSE_CODE_VALIDATION)
+            ->setCode(ConfigurableBundleCartsRestApiConfig::RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
             ->setDetail($quoteErrorTransfer->getMessage());
     }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder;
 
+use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
@@ -54,15 +55,15 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteErrorTransfer[] $quoteErrorTransfers
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
-    public function createFailedErrorResponse(array $quoteErrorTransfers): RestResponseInterface
+    public function createFailedResponse(QuoteResponseTransfer $quoteResponseTransfer): RestResponseInterface
     {
         $restResponse = $this->restResourceBuilder->createRestResponse();
 
-        foreach ($quoteErrorTransfers as $quoteErrorTransfer) {
+        foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $restResponse->addError(
                 $this->configurableBundleCartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,

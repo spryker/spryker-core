@@ -5,22 +5,20 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleCartsRestApi;
+namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
+use Spryker\Zed\Kernel\Business\AbstractFacade;
 
-interface ConfigurableBundleCartsRestApiClientInterface
+/**
+ * @method \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\ConfigurableBundleCartsRestApiBusinessFactory getFactory()
+ */
+class ConfigurableBundleCartsRestApiFacade extends AbstractFacade implements ConfigurableBundleCartsRestApiFacadeInterface
 {
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Adds configured bundle to the cart.
-     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
-     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
-     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
-     * - Returns `QuoteResponseTransfer`.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -30,13 +28,14 @@ interface ConfigurableBundleCartsRestApiClientInterface
      */
     public function addConfiguredBundle(
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        return $this->getFactory()
+            ->createConfiguredBundleWriter()
+            ->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+    }
 
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Removes configured bundle from cart.
-     * - Returns `QuoteResponseTransfer`.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -46,13 +45,14 @@ interface ConfigurableBundleCartsRestApiClientInterface
      */
     public function updateConfiguredBundleQuantity(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        // TODO: Implement updateConfiguredBundleQuantity() method.
+
+        return new QuoteResponseTransfer();
+    }
 
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Updates configured bundle quantity.
-     * - Returns `QuoteResponseTransfer`.
+     * {@inheritDoc}
      *
      * @api
      *
@@ -62,5 +62,9 @@ interface ConfigurableBundleCartsRestApiClientInterface
      */
     public function removeConfiguredBundle(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        // TODO: Implement removeConfiguredBundle() method.
+
+        return new QuoteResponseTransfer();
+    }
 }

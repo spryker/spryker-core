@@ -5,62 +5,48 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleCartsRestApi;
+namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
-interface ConfigurableBundleCartsRestApiClientInterface
+/**
+ * @method \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\ConfigurableBundleCartsRestApiFacadeInterface getFacade()
+ */
+class GatewayController extends AbstractGatewayController
 {
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Adds configured bundle to the cart.
-     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
-     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
-     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
-     * - Returns `QuoteResponseTransfer`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addConfiguredBundle(
+    public function addConfiguredBundleAction(
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        return $this->getFacade()->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+    }
 
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Removes configured bundle from cart.
-     * - Returns `QuoteResponseTransfer`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateConfiguredBundleQuantity(
+    public function updateConfiguredBundleQuantityAction(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        return $this->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+    }
 
     /**
-     * Specification:
-     * - Makes Zed request.
-     * - Updates configured bundle quantity.
-     * - Returns `QuoteResponseTransfer`.
-     *
-     * @api
-     *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function removeConfiguredBundle(
+    public function removeConfiguredBundleAction(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer;
+    ): QuoteResponseTransfer {
+        return $this->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
+    }
 }

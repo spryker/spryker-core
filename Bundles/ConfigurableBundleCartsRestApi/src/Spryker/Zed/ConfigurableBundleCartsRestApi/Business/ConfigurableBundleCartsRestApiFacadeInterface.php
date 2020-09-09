@@ -5,17 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleCartsRestApi;
+namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
-interface ConfigurableBundleCartsRestApiClientInterface
+interface ConfigurableBundleCartsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Makes Zed request.
      * - Adds configured bundle to the cart.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
@@ -34,7 +33,6 @@ interface ConfigurableBundleCartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
      * - Removes configured bundle from cart.
      * - Returns `QuoteResponseTransfer`.
      *
@@ -50,7 +48,6 @@ interface ConfigurableBundleCartsRestApiClientInterface
 
     /**
      * Specification:
-     * - Makes Zed request.
      * - Updates configured bundle quantity.
      * - Returns `QuoteResponseTransfer`.
      *

@@ -19,6 +19,11 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="localeName" type="string"/>
+        <property name="quoteUuid" type="string"/>
+        <property name="customer" type="Customer"/>
+    </transfer>
+
+    <transfer name="Customer">
     </transfer>
 
     <transfer name="ConfiguredBundle">

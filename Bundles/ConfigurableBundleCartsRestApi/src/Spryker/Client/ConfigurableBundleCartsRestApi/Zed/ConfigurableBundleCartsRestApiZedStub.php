@@ -28,6 +28,8 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
     }
 
     /**
+     * @uses \Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller\GatewayController::addConfiguredBundleAction()
+     *
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -44,6 +46,8 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
     }
 
     /**
+     * @uses \Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller\GatewayController::updateConfiguredBundleQuantityAction()
+     *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
@@ -60,6 +64,8 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
     }
 
     /**
+     * @uses \Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller\GatewayController::removeConfiguredBundleAction()
+     *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
