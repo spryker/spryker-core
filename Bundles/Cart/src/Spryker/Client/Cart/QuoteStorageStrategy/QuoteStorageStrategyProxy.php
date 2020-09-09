@@ -17,9 +17,9 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
-use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 
 class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
 {

@@ -7,9 +7,9 @@
 
 namespace Spryker\Client\Cart\QuoteStorageStrategy;
 
-use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
+use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
 
 interface QuoteStorageStrategyProxyInterface extends QuoteStorageStrategyPluginInterface, QuoteResetLockQuoteStorageStrategyPluginInterface, ReplaceableQuoteItemStorageStrategyPluginInterface
 {
