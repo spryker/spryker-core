@@ -10,7 +10,7 @@ namespace Spryker\Zed\Cart\Business\Writer;
 use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface CartWriterInterface
+interface CartItemOperationInterface
 {
     /**
      * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer

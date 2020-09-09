@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Zed\Cart\Business\Model\OperationInterface;
 
-class CartWriter implements CartWriterInterface
+class CartItemOperation implements CartItemOperationInterface
 {
     /**
      * @var \Spryker\Zed\Cart\Business\Model\OperationInterface
@@ -26,6 +26,11 @@ class CartWriter implements CartWriterInterface
         $this->operation = $operation;
     }
 
+    /**
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
     public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
     {
         $cartItemReplaceTransfer->requireCartChangeForAdding()->requireCartChangeForRemoval();
@@ -37,7 +42,6 @@ class CartWriter implements CartWriterInterface
         }
 
         $cartChangeTransferForAdding = $cartItemReplaceTransfer->getCartChangeForAdding();
-
         $cartChangeTransferForAdding->setQuote($quoteResponseTransfer->getQuoteTransfer());
 
         return $this->operation->addToCart($cartChangeTransferForAdding);
