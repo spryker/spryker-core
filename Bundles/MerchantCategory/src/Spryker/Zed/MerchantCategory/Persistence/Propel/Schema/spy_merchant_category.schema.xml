@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\MerchantCategory\Persistence" package="src.Orm.Zed.MerchantCategory.Persistence">
+
+    <table name="spy_merchant_category" idMethod="native">
+        <column name="id_merchant_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_merchant" required="true" type="INTEGER"/>
+        <column name="fk_category" required="true" type="INTEGER"/>
+
+
+        <foreign-key name="spy_merchant_category-fk_category" foreignTable="spy_category">
+            <reference foreign="id_category" local="fk_category"/>
+        </foreign-key>
+
+        <foreign-key name="spy_merchant_category-fk_merchant" foreignTable="spy_merchant">
+            <reference foreign="id_merchant" local="fk_merchant"/>
+        </foreign-key>
+
+        <unique name="spy_merchant_category-unique-fk_merchant">
+            <unique-column name="fk_merchant"/>
+            <unique-column name="fk_category"/>
+        </unique>
+        <id-method-parameter value="spy_merchant_category_pk_seq"/>
+    </table>
+</database>
