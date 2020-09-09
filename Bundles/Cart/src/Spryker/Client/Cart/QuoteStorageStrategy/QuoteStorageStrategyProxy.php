@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
 use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Exception\QuoteStorageStrategyPluginNotFound;
+use Spryker\Client\CartExtension\Dependency\Plugin\CartOperationQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteResetLockQuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteStorageStrategyPluginInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\ReplaceableQuoteItemStorageStrategyPluginInterface;
@@ -170,9 +171,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `addToCart` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `addToCart` functionality.'
             );
         }
 
@@ -194,9 +195,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `removeFromCart` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `removeFromCart` functionality.'
             );
         }
 
@@ -218,9 +219,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `updateQuantity` functionality.'
             );
         }
 
@@ -246,9 +247,9 @@ class QuoteStorageStrategyProxy implements QuoteStorageStrategyProxyInterface
             return $this->createNotSuccessfulQuoteResponseTransfer();
         }
 
-        if (!$this->quoteStorageStrategy instanceof ReplaceableQuoteItemStorageStrategyPluginInterface) {
+        if (!$this->quoteStorageStrategy instanceof CartOperationQuoteStorageStrategyPluginInterface) {
             throw new QuoteStorageStrategyPluginNotFound(
-                'Quote storage strategy should implement ReplaceableQuoteItemStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
+                'Quote storage strategy should implement CartOperationQuoteStorageStrategyPluginInterface in order to use `replaceItem` functionality.'
             );
         }
 
