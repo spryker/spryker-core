@@ -6,7 +6,10 @@ import { TableConfig } from '@spryker/table';
     templateUrl: './product-offer.component.html',
     styleUrls: ['./product-offer.component.less'],
     changeDetection: ChangeDetectionStrategy.OnPush,
-    encapsulation: ViewEncapsulation.None
+    encapsulation: ViewEncapsulation.None,
+    host: {
+        class: 'mp-product-offer',
+    },
 })
 export class ProductOfferComponent {
     @Input() tableConfig: TableConfig;
