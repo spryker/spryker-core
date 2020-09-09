@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -113,6 +114,20 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
     public function reloadItemsInQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createCartOperation()->reloadItemsInQuote($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartWriter()->replaceItem($cartItemReplaceTransfer);
     }
 
     /**

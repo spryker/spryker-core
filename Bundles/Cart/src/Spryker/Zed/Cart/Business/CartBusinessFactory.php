@@ -17,6 +17,8 @@ use Spryker\Zed\Cart\Business\Model\QuoteCleanerInterface;
 use Spryker\Zed\Cart\Business\Model\QuoteValidator;
 use Spryker\Zed\Cart\Business\StorageProvider\NonPersistentProvider;
 use Spryker\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
+use Spryker\Zed\Cart\Business\Writer\CartWriter;
+use Spryker\Zed\Cart\Business\Writer\CartWriterInterface;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
@@ -26,6 +28,14 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
  */
 class CartBusinessFactory extends AbstractBusinessFactory
 {
+    /**
+     * @return \Spryker\Zed\Cart\Business\Writer\CartWriterInterface
+     */
+    public function createCartWriter(): CartWriterInterface
+    {
+        return new CartWriter($this->createCartOperation());
+    }
+
     /**
      * @return \Spryker\Zed\Cart\Business\Model\OperationInterface
      */
