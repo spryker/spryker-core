@@ -325,6 +325,13 @@ interface GuiTableConfigurationBuilderInterface
     public function setIsItemSelectionEnabled(bool $isItemSelectionEnabled);
 
     /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTableTitle(string $title);
+
+    /**
      * @api
      *
      * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
