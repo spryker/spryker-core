@@ -28,6 +28,8 @@ use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorag
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReaderInterface;
+use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReader;
+use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReader;
@@ -58,6 +60,14 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReaderInterface
+     */
+    public function createProductConfigurationInstanceQuoteReader(): ProductConfigurationInstanceQuoteReaderInterface
+    {
+        return new ProductConfigurationInstanceQuoteReader($this->getCartClient());
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceReaderInterface
      */
     public function createProductConfigurationInstanceReader(): ProductConfigurationInstanceReaderInterface
@@ -66,8 +76,7 @@ class ProductConfigurationStorageFactory extends AbstractFactory
             $this->createProductConfigurationStorageReader(),
             $this->getSessionClient(),
             $this->createProductConfigurationInstanceMapper(),
-            $this->createProductConfigurationSessionKeyBuilder(),
-            $this->getCartClient()
+            $this->createProductConfigurationSessionKeyBuilder()
         );
     }
 
