@@ -387,6 +387,7 @@ interface ProductStorageClientInterface
 
     /**
      * Specification:
+     * - Filters restricted products.
      * - Retrieves product concrete resources from storage in bulk by ids and locale name.
      *
      * @api

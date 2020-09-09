@@ -10,7 +10,6 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateSlotStorageTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplateSlotsAttributesTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestLinkInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
@@ -23,20 +22,11 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface
-     */
-    protected $configurableBundleMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface $configurableBundleMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ConfigurableBundleMapperInterface $configurableBundleMapper
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->configurableBundleMapper = $configurableBundleMapper;
     }
 
     /**
@@ -49,11 +39,8 @@ class ConfigurableBundleTemplateSlotRestResourceBuilder implements ConfigurableB
         ConfigurableBundleTemplateSlotStorageTransfer $configurableBundleTemplateSlotStorageTransfer,
         string $idParentResource
     ): RestResourceInterface {
-        $restConfigurableBundleTemplateSlotsAttributesTransfer = $this->configurableBundleMapper
-            ->mapConfigurableBundleTemplateSlotStorageTransferToRestAttributesTransfer(
-                $configurableBundleTemplateSlotStorageTransfer,
-                new RestConfigurableBundleTemplateSlotsAttributesTransfer()
-            );
+        $restConfigurableBundleTemplateSlotsAttributesTransfer = (new RestConfigurableBundleTemplateSlotsAttributesTransfer())
+            ->fromArray($configurableBundleTemplateSlotStorageTransfer->toArray(), true);
 
         $configurableBundleTemplateSlotRestResource = $this->restResourceBuilder->createRestResource(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATE_SLOTS,

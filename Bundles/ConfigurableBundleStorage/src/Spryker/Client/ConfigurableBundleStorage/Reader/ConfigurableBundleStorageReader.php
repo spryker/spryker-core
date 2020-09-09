@@ -77,26 +77,14 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
      */
     public function getBulkConfigurableBundleTemplateStorage(array $configurableBundleTemplateIds, string $localeName): array
     {
-        $storageKeys = [];
-        $keys = array_map('strval', $configurableBundleTemplateIds);
-
-        foreach ($keys as $key) {
-            $storageKeys[] = $this->generateKey($key);
-        }
-
+        $storageKeys = $this->prepareStorageKeys($configurableBundleTemplateIds, $localeName);
         $configurableBundleTemplateStorageData = $this->storageClient->getMulti($storageKeys);
 
         if (!$configurableBundleTemplateStorageData) {
             return [];
         }
 
-        $configurableBundleTemplateStorageTransfers = [];
-
-        foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
-            $configurableBundleTemplateStorageTransfers[] = $this->mapToConfigurableBundleStorage(
-                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true) ?? []
-            );
-        }
+        $configurableBundleTemplateStorageTransfers = $this->mapToConfigurableBundleStorageTransfers($configurableBundleTemplateStorageData);
 
         return $this->expandConfigurableBundleTemplatesStorage($configurableBundleTemplateStorageTransfers, $localeName);
     }
@@ -191,6 +179,42 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
     }
 
     /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function prepareStorageKeys(array $configurableBundleTemplateIds, string $localeName): array
+    {
+        $storageKeys = [];
+        $keys = array_map('strval', $configurableBundleTemplateIds);
+
+        foreach ($keys as $key) {
+            $storageKeys[] = $this->generateKey($key);
+        }
+
+        return $storageKeys;
+    }
+
+    /**
+     * @param array $configurableBundleTemplateStorageData
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    protected function mapToConfigurableBundleStorageTransfers(array $configurableBundleTemplateStorageData): array
+    {
+        $configurableBundleTemplateStorageTransfers = [];
+
+        foreach ($configurableBundleTemplateStorageData as $configurableBundleTemplateStorageTransferData) {
+            $configurableBundleTemplateStorageTransfers[] = $this->mapToConfigurableBundleStorage(
+                $this->utilEncodingService->decodeJson($configurableBundleTemplateStorageTransferData, true) ?? []
+            );
+        }
+
+        return $configurableBundleTemplateStorageTransfers;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[] $configurableBundleTemplateStorageTransfers
      * @param string $localeName
      *
@@ -207,9 +231,11 @@ class ConfigurableBundleStorageReader implements ConfigurableBundleStorageReader
         foreach ($configurableBundleTemplateStorageTransfers as $configurableBundleTemplateStorageTransfer) {
             $configurableBundleTemplateImageStorageTransfer = $mappedConfigurableBundleTemplateImageStorageTransfers[$configurableBundleTemplateStorageTransfer->getIdConfigurableBundleTemplate()] ?? null;
 
-            if ($configurableBundleTemplateImageStorageTransfer) {
-                $configurableBundleTemplateStorageTransfer->setImageSets($configurableBundleTemplateImageStorageTransfer->getImageSets());
+            if (!$configurableBundleTemplateImageStorageTransfer) {
+                continue;
             }
+
+            $configurableBundleTemplateStorageTransfer->setImageSets($configurableBundleTemplateImageStorageTransfer->getImageSets());
         }
 
         return $configurableBundleTemplateStorageTransfers;

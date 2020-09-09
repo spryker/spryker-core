@@ -81,8 +81,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateRestResourceBuilder(): ConfigurableBundleTemplateRestResourceBuilderInterface
     {
         return new ConfigurableBundleTemplateRestResourceBuilder(
-            $this->getResourceBuilder(),
-            $this->createConfigurableBundleMapper()
+            $this->getResourceBuilder()
         );
     }
 
@@ -92,8 +91,7 @@ class ConfigurableBundlesRestApiFactory extends AbstractFactory
     public function createConfigurableBundleTemplateSlotRestResourceBuilder(): ConfigurableBundleTemplateSlotRestResourceBuilderInterface
     {
         return new ConfigurableBundleTemplateSlotRestResourceBuilder(
-            $this->getResourceBuilder(),
-            $this->createConfigurableBundleMapper()
+            $this->getResourceBuilder()
         );
     }
 

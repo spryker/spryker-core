@@ -75,18 +75,40 @@ class ConfigurableBundleTemplateImageStorageReader implements ConfigurableBundle
      */
     public function getBulkConfigurableBundleTemplateImageStorage(array $configurableBundleTemplateIds, string $localeName): array
     {
-        $storageKeys = [];
-
-        foreach ($configurableBundleTemplateIds as $idConfigurableBundleTemplate) {
-            $storageKeys[] = $this->generateKey($idConfigurableBundleTemplate, $localeName);
-        }
-
+        $storageKeys = $this->prepareStorageKeys($configurableBundleTemplateIds, $localeName);
         $configurableBundleTemplateImageStorageData = $this->storageClient->getMulti($storageKeys);
 
         if (!$configurableBundleTemplateImageStorageData) {
             return [];
         }
 
+        return $this->mapStorageDataToConfigurableBundleImageStorageTransfers($configurableBundleTemplateImageStorageData);
+    }
+
+    /**
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return string[]
+     */
+    protected function prepareStorageKeys(array $configurableBundleTemplateIds, string $localeName): array
+    {
+        $storageKeys = [];
+
+        foreach ($configurableBundleTemplateIds as $idConfigurableBundleTemplate) {
+            $storageKeys[] = $this->generateKey($idConfigurableBundleTemplate, $localeName);
+        }
+
+        return $storageKeys;
+    }
+
+    /**
+     * @param array $configurableBundleTemplateImageStorageData
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateImageStorageTransfer[]
+     */
+    protected function mapStorageDataToConfigurableBundleImageStorageTransfers(array $configurableBundleTemplateImageStorageData): array
+    {
         $configurableBundleTemplateImageStorageTransfers = [];
 
         foreach ($configurableBundleTemplateImageStorageData as $configurableBundleTemplateImageStorageTransferData) {

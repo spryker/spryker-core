@@ -10,7 +10,6 @@ namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResourceBuilder;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Generated\Shared\Transfer\RestConfigurableBundleTemplatesAttributesTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\ConfigurableBundlesRestApiConfig;
-use Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 
@@ -22,20 +21,11 @@ class ConfigurableBundleTemplateRestResourceBuilder implements ConfigurableBundl
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface
-     */
-    protected $configurableBundleMapper;
-
-    /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundlesRestApi\Processor\Mapper\ConfigurableBundleMapperInterface $configurableBundleMapper
      */
-    public function __construct(
-        RestResourceBuilderInterface $restResourceBuilder,
-        ConfigurableBundleMapperInterface $configurableBundleMapper
-    ) {
+    public function __construct(RestResourceBuilderInterface $restResourceBuilder)
+    {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->configurableBundleMapper = $configurableBundleMapper;
     }
 
     /**
@@ -46,11 +36,8 @@ class ConfigurableBundleTemplateRestResourceBuilder implements ConfigurableBundl
     public function buildConfigurableBundleTemplateRestResource(
         ConfigurableBundleTemplateStorageTransfer $configurableBundleTemplateStorageTransfer
     ): RestResourceInterface {
-        $restConfigurableBundleTemplatesAttributesTransfer = $this->configurableBundleMapper
-            ->mapConfigurableBundleTemplateStorageTransferToRestAttributesTransfer(
-                $configurableBundleTemplateStorageTransfer,
-                new RestConfigurableBundleTemplatesAttributesTransfer()
-            );
+        $restConfigurableBundleTemplatesAttributesTransfer = (new RestConfigurableBundleTemplatesAttributesTransfer())
+            ->fromArray($configurableBundleTemplateStorageTransfer->toArray(), true);
 
         return $this->restResourceBuilder->createRestResource(
             ConfigurableBundlesRestApiConfig::RESOURCE_CONFIGURABLE_BUNDLE_TEMPLATES,
