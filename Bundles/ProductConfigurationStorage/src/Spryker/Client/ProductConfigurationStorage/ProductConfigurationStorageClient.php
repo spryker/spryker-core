@@ -10,7 +10,6 @@ namespace Spryker\Client\ProductConfigurationStorage;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
-use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -210,21 +209,5 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         return $this->getFactory()
             ->createProductConfigurationInstanceCartChangeExpander()
             ->expandPersistentCartChangeWithProductConfigurationInstance($persistentCartChangeTransfer, $params);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param string $sku
-     *
-     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer|null
-     */
-    public function findProductConcreteStorageBySku(string $sku): ?ProductConcreteStorageTransfer
-    {
-        return $this->getFactory()
-            ->createProductConcreteStorageReader()
-            ->findProductConcreteStorageBySku($sku);
     }
 }

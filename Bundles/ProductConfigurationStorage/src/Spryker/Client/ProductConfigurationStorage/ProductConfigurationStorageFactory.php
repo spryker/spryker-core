@@ -26,8 +26,6 @@ use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstan
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
-use Spryker\Client\ProductConfigurationStorage\Reader\ProductConcreteStorageReader;
-use Spryker\Client\ProductConfigurationStorage\Reader\ProductConcreteStorageReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReader;
@@ -67,14 +65,6 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfigurationInstanceQuoteReader(): ProductConfigurationInstanceQuoteReaderInterface
     {
         return new ProductConfigurationInstanceQuoteReader($this->getCartClient());
-    }
-
-    /**
-     * @return \Spryker\Client\ProductConfigurationStorage\Reader\ProductConcreteStorageReaderInterface
-     */
-    public function createProductConcreteStorageReader(): ProductConcreteStorageReaderInterface
-    {
-        return new ProductConcreteStorageReader($this->getProductStorageClient());
     }
 
     /**
