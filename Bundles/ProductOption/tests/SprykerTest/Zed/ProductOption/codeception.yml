@@ -64,7 +64,7 @@ suites:
                           - \Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin
                           - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
                           - Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
-                - \SprykerTest\Zed\Gui\Helper\TwigPluginHelper
+                - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
 

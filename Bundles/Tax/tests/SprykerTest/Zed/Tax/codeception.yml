@@ -58,6 +58,6 @@ suites:
                           - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
                       loaderPlugins:
                           - \Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin
-                - \SprykerTest\Zed\Gui\Helper\TwigPluginHelper
+                - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
