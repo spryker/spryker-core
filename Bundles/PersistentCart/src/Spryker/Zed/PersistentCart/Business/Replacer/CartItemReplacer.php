@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Operation;
+namespace Spryker\Zed\PersistentCart\Business\Replacer;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
