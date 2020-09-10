@@ -12,6 +12,7 @@ use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigur
 
 class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterface
 {
+    /** @see /Spryker/Zed/ProductConfigurationStorage/Persistence/Propel/Schema/spy_product_configuration_storage.schema.xml */
     protected const MAPPING_TYPE_SKU = 'sku';
 
     /**
