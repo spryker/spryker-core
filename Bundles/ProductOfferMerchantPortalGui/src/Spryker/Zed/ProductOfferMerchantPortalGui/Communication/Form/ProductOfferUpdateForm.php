@@ -10,7 +10,7 @@ namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class ProductOfferUpdateForm extends ProductOfferCreateForm
+class ProductOfferUpdateForm extends ProductOfferForm
 {
     protected const FIELD_PRODUCT_OFFER_REFERENCE = 'productOfferReference';
 

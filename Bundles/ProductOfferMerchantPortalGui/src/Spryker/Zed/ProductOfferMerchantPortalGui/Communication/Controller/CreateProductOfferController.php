@@ -42,28 +42,28 @@ class CreateProductOfferController extends AbstractProductOfferController
             $productConcreteTransfer->getFkProductAbstract()
         );
         $productOfferCreateFormDataProvider = $this->getFactory()->createProductOfferCreateFormDataProvider();
-        $productOfferCreateForm = $this->getFactory()->createProductOfferCreateForm(
+        $productOfferForm = $this->getFactory()->createProductOfferForm(
             $productOfferCreateFormDataProvider->getData($productConcreteTransfer),
             $productOfferCreateFormDataProvider->getOptions($productAbstractTransfer)
         );
-        $productOfferCreateForm->handleRequest($request);
+        $productOfferForm->handleRequest($request);
 
-        if ($productOfferCreateForm->isSubmitted() && $productOfferCreateForm->isValid()) {
-            $this->getFactory()->getProductOfferFacade()->create($productOfferCreateForm->getData());
+        if ($productOfferForm->isSubmitted() && $productOfferForm->isValid()) {
+            $this->getFactory()->getProductOfferFacade()->create($productOfferForm->getData());
         }
 
-        return $this->getResponse($productOfferCreateForm, $productConcreteTransfer, $productAbstractTransfer);
+        return $this->getResponse($productOfferForm, $productConcreteTransfer, $productAbstractTransfer);
     }
 
     /**
-     * @param \Symfony\Component\Form\FormInterface $productOfferCreateForm
+     * @param \Symfony\Component\Form\FormInterface $productOfferForm
      * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
      * @param \Generated\Shared\Transfer\ProductAbstractTransfer $productAbstractTransfer
      *
      * @return \Symfony\Component\HttpFoundation\JsonResponse
      */
     protected function getResponse(
-        FormInterface $productOfferCreateForm,
+        FormInterface $productOfferForm,
         ProductConcreteTransfer $productConcreteTransfer,
         ProductAbstractTransfer $productAbstractTransfer
     ): JsonResponse {
@@ -73,18 +73,18 @@ class CreateProductOfferController extends AbstractProductOfferController
 
         $responseData = [
             'form' => $this->renderView('@ProductOfferMerchantPortalGui/Partials/offer_form.twig', [
-                'form' => $productOfferCreateForm->createView(),
+                'form' => $productOfferForm->createView(),
                 'product' => $productConcreteTransfer,
                 'productName' => $this->getFactory()->createProductNameBuilder()->buildProductConcreteName($productConcreteTransfer, $localeTransfer),
                 'productAttributes' => $this->getProductAttributes($localeTransfer, $productConcreteTransfer, $productAbstractTransfer),
             ])->getContent(),
         ];
 
-        if (!$productOfferCreateForm->isSubmitted()) {
+        if (!$productOfferForm->isSubmitted()) {
             return new JsonResponse($responseData);
         }
 
-        if ($productOfferCreateForm->isValid()) {
+        if ($productOfferForm->isValid()) {
             $responseData['postActions'] = [[
                 'type' => 'redirect',
                 'url' => '/product-offer-merchant-portal-gui/offers',
