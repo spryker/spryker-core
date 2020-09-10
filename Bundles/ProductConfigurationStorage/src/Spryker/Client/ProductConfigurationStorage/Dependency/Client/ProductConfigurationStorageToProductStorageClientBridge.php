@@ -32,4 +32,16 @@ class ProductConfigurationStorageToProductStorageClientBridge implements Product
     {
         return $this->productStorageClient->findProductConcreteStorageData($idProductConcrete, $localeName);
     }
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array
+    {
+        return $this->productStorageClient
+            ->findProductConcreteStorageDataByMappingForCurrentLocale($mappingType, $identifier);
+    }
 }

@@ -10,6 +10,7 @@ namespace Spryker\Client\ProductConfigurationStorage;
 use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -179,4 +180,17 @@ interface ProductConfigurationStorageClientInterface
         PersistentCartChangeTransfer $persistentCartChangeTransfer,
         array $params
     ): PersistentCartChangeTransfer;
+
+    /**
+     * Specification:
+     * - Retrieves current store specific product concrete storage by sku.
+     * - Returns product concrete storage if found or null otherwise.
+     *
+     * @api
+     *
+     * @param string $sku
+     *
+     * @return \Generated\Shared\Transfer\ProductConcreteStorageTransfer|null
+     */
+    public function findProductConcreteStorageBySku(string $sku): ?ProductConcreteStorageTransfer;
 }

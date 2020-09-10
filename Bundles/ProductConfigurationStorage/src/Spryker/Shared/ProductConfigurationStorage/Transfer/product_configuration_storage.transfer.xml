@@ -88,4 +88,7 @@
 
     <transfer name="Quote">
     </transfer>
+
+    <transfer name="ProductConcreteStorage">
+    </transfer>
 </transfers>

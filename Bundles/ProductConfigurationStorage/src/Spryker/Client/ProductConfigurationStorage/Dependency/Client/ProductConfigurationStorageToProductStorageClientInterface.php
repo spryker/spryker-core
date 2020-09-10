@@ -16,4 +16,12 @@ interface ProductConfigurationStorageToProductStorageClientInterface
      * @return array|null
      */
     public function findProductConcreteStorageData(int $idProductConcrete, string $localeName): ?array;
+
+    /**
+     * @param string $mappingType
+     * @param string $identifier
+     *
+     * @return array|null
+     */
+    public function findProductConcreteStorageDataByMappingForCurrentLocale(string $mappingType, string $identifier): ?array;
 }
