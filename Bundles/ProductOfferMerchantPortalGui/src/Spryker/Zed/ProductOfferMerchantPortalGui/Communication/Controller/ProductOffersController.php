@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
  */
-class CreateOfferController extends AbstractController
+class ProductOffersController extends AbstractController
 {
     /**
      * @return array
@@ -23,8 +23,8 @@ class CreateOfferController extends AbstractController
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'productTableConfiguration' => $this->getFactory()
-                ->createProductGuiTableConfigurationProvider()
+            'productOfferTableConfiguration' => $this->getFactory()
+                ->createProductOfferGuiTableConfigurationProvider()
                 ->getConfiguration(),
         ]);
     }
@@ -38,8 +38,8 @@ class CreateOfferController extends AbstractController
     {
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
-            $this->getFactory()->createProductTableDataProvider(),
-            $this->getFactory()->createProductGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createProductOfferTableDataProvider(),
+            $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration()
         );
     }
 }

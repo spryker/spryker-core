@@ -19,8 +19,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvide
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProvider;
@@ -82,7 +82,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createProductTableDataProvider(): GuiTableDataProviderInterface
     {
-        return new ProductTableDataProvider(
+        return new ProductGuiTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
@@ -96,7 +96,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createProductOfferTableDataProvider(): GuiTableDataProviderInterface
     {
-        return new ProductOfferTableDataProvider(
+        return new ProductOfferGuiTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),

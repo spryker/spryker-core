@@ -1,0 +1,24 @@
+{#
+@var productAbstractTableConfiguration \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+#}
+
+{% extends '@ZedUi/Layout/merchant-layout-main.twig' %}
+
+{% block headTitle %}
+    {{ 'Products' | trans }}
+{% endblock %}
+
+{% block content %}
+    <web-mp-product-list
+        cloak
+        table-id="web-mp-product-list"
+        table-config='{{ guiTableConfiguration(productAbstractTableConfiguration) }}'>
+        <span title>{{ 'Products' | trans }}</span>
+    </web-mp-product-list>
+{% endblock %}
+
+{% block footerJs %}
+    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es2015.js') }}" type="module"></script>
+    <script src="{{ assetsPath('js/mp/spy/product-merchant-portal-gui-es5.js') }}" nomodule defer></script>
+    {{ parent() }}
+{% endblock %}

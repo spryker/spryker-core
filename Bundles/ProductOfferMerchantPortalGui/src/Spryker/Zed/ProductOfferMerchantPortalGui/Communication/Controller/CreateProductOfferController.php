@@ -87,7 +87,7 @@ class CreateProductOfferController extends AbstractProductOfferController
         if ($productOfferCreateForm->isValid()) {
             $responseData['postActions'] = [[
                 'type' => 'redirect',
-                'url' => '/product-offer-merchant-portal-gui/offers',
+                'url' => '/product-offer-merchant-portal-gui/product-offers',
             ]];
 
             $this->addSuccessMessage('The Offer is saved.');

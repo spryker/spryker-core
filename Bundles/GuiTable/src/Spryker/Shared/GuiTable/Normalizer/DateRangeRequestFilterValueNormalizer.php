@@ -9,6 +9,7 @@ namespace Spryker\Shared\GuiTable\Normalizer;
 
 use DateTime;
 use Generated\Shared\Transfer\CriteriaRangeFilterTransfer;
+use RuntimeException;
 
 class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterValueNormalizerInterface
 {
@@ -28,14 +29,22 @@ class DateRangeRequestFilterValueNormalizer implements DateRangeRequestFilterVal
 
         $fromDate = $value['from'] ?? null;
         if ($fromDate) {
-            $fromDate = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $fromDate)
-                ->format(self::DATE_TIME_FORMAT);
+            $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $fromDate);
+            $fromDate = $date ? $date->format(self::DATE_TIME_FORMAT) :
+                new RuntimeException(sprintf(
+                    'Wrong filter value date format. Supported format is %s',
+                    static::DATE_TIME_FORMAT
+                ));
         }
 
         $toDate = $value['to'] ?? null;
         if ($toDate) {
-            $toDate = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $toDate)
-                ->format(self::DATE_TIME_FORMAT);
+            $date = DateTime::createFromFormat(static::FILTER_DATE_TIME_FORMAT, $toDate);
+            $toDate = $date ? $date->format(self::DATE_TIME_FORMAT) :
+                new RuntimeException(sprintf(
+                    'Wrong filter value date format. Supported format is %s',
+                    static::DATE_TIME_FORMAT
+                ));
         }
 
         return (new CriteriaRangeFilterTransfer())

@@ -527,6 +527,7 @@
     "spryker/product-measurement-unit-data-import": "*",
     "spryker/product-measurement-unit-storage": "*",
     "spryker/product-measurement-units-rest-api": "*",
+    "spryker/product-merchant-portal-gui": "*",
     "spryker/product-new": "*",
     "spryker/product-offer": "*",
     "spryker/product-offer-availabilities-rest-api": "*",
