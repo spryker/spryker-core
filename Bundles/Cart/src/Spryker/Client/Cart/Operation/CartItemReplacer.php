@@ -18,7 +18,7 @@ use Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface;
 use Spryker\Client\Cart\Zed\CartStubInterface;
 use Spryker\Client\CartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
-class CartItemOperation implements CartItemOperationInterface
+class CartItemReplacer implements CartItemReplacerInterface
 {
     /**
      * @var \Spryker\Client\Cart\Dependency\Client\CartToQuoteInterface

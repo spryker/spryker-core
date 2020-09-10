@@ -9,8 +9,8 @@ namespace Spryker\Client\Cart;
 
 use Spryker\Client\Cart\CartChangeRequestExpander\CartChangeRequestExpander;
 use Spryker\Client\Cart\Dependency\Client\CartToMessengerClientInterface;
-use Spryker\Client\Cart\Operation\CartItemOperation;
-use Spryker\Client\Cart\Operation\CartItemOperationInterface;
+use Spryker\Client\Cart\Operation\CartItemReplacer;
+use Spryker\Client\Cart\Operation\CartItemReplacerInterface;
 use Spryker\Client\Cart\Operation\CartOperation;
 use Spryker\Client\Cart\Operation\CartOperationInterface;
 use Spryker\Client\Cart\QuoteStorageStrategy\QuoteStorageStrategyProvider;
@@ -35,11 +35,11 @@ class CartFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\Cart\Operation\CartItemOperationInterface
+     * @return \Spryker\Client\Cart\Operation\CartItemReplacerInterface
      */
-    public function createCartItemOperation(): CartItemOperationInterface
+    public function createCartItemOperation(): CartItemReplacerInterface
     {
-        return new CartItemOperation(
+        return new CartItemReplacer(
             $this->getQuoteClient(),
             $this->createZedStub(),
             $this->createCartChangeRequestExpander(),

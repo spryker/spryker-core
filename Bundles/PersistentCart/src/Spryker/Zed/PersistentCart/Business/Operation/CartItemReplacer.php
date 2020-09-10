@@ -16,7 +16,7 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
-class CartItemOperation implements CartItemOperationInterface
+class CartItemReplacer implements CartItemReplacerInterface
 {
     /**
      * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface

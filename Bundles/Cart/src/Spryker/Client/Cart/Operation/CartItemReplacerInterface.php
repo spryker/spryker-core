@@ -10,7 +10,7 @@ namespace Spryker\Client\Cart\Operation;
 use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface CartItemOperationInterface
+interface CartItemReplacerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemReplaceTransfer $itemReplaceTransfer

@@ -10,7 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business\Operation;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface CartItemOperationInterface
+interface CartItemReplacerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
