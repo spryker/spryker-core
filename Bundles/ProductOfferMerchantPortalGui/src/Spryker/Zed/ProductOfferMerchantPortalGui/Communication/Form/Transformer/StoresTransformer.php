@@ -14,11 +14,13 @@ use Symfony\Component\Form\DataTransformerInterface;
 class StoresTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]|null $storeTransfers
+     * @phpstan-param array<\Generated\Shared\Transfer\StoreTransfer>|null $storeTransfers
+     *
+     * @param \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject|null $storeTransfers
      *
      * @return int[]|null
      */
-    public function transform($storeTransfers)
+    public function transform($storeTransfers): ?array
     {
         if ($storeTransfers === null) {
             return null;
@@ -34,11 +36,13 @@ class StoresTransformer implements DataTransformerInterface
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\StoreTransfer>|null
+     *
      * @param int[]|null $storeIds
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\StoreTransfer[]|null
+     * @return \Generated\Shared\Transfer\StoreTransfer[]|\ArrayObject|null
      */
-    public function reverseTransform($storeIds)
+    public function reverseTransform($storeIds): ?ArrayObject
     {
         if ($storeIds === null) {
             return null;

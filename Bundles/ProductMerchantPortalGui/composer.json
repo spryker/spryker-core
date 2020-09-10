@@ -15,11 +15,11 @@
     "spryker/product-category": "^4.0.0",
     "spryker/product-image": "^3.0.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0",
     "spryker/store": "^1.1.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/translator": "^1.1.0",
     "spryker/util-encoding": "^2.0.0",
-    "spryker/zed-ui": "^0.3.5"
+    "spryker/zed-ui": "^0.3.6"
   },
   "require-dev": {
     "spryker/code-sniffer": "*"
