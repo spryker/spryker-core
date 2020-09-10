@@ -66,7 +66,7 @@ class AbstractAlternativeProductReader implements AbstractAlternativeProductRead
             $concreteProductSku,
             $restRequest->getMetadata()->getLocale()
         );
-        var_dump($concreteProductSku,  $restRequest->getMetadata()->getLocale(), $restRequest);die;
+
         if (!$concreteProductStorageData) {
             return $this->alternativeProductRestResponseBuilder->createConcreteProductNotFoundError();
         }

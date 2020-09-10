@@ -41,4 +41,8 @@ class ProductStorageToStorageClientBridge implements ProductStorageToStorageClie
     {
         return $this->storageClient->getMulti($keys);
     }
+    public function getCountItems()
+    {
+        return $this->storageClient->getCountItems();
+    }
 }
