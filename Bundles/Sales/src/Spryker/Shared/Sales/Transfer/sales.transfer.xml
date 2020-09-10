@@ -401,4 +401,7 @@
         <property name="value" type="string"/>
     </transfer>
 
+    <transfer name="Store">
+    </transfer>
+
 </transfers>
