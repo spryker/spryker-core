@@ -30,8 +30,8 @@ use Spryker\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportConfig;
  */
 class MerchantCategoryDataImportPluginTest extends Unit
 {
-    protected const MERCHANT_REFERENCE = 'MERCHANT_TEST';
-    protected const CATEGORY_KEY = 'test_key';
+    protected const MERCHANT_REFERENCE = 'merchant_test_reference';
+    protected const CATEGORY_KEY = 'category_test_key   ';
 
     /**
      * @var \SprykerTest\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportCommunicationTester
@@ -45,7 +45,7 @@ class MerchantCategoryDataImportPluginTest extends Unit
     {
         parent::setUp();
 
-        $this->tester->ensureMerchantCategoryAbstractTablesIsEmpty();
+        $this->tester->ensureMerchantCategoryTablesIsEmpty();
     }
 
     /**
@@ -68,13 +68,13 @@ class MerchantCategoryDataImportPluginTest extends Unit
         $dataImportConfigurationTransfer->setReaderConfiguration($dataImporterReaderConfigurationTransfer);
 
         // Act
-        $MerchantCategoryDataImportPlugin = new MerchantCategoryDataImportPlugin();
-        $dataImporterReportTransfer = $MerchantCategoryDataImportPlugin->import($dataImportConfigurationTransfer);
+        $merchantCategoryDataImportPlugin = new MerchantCategoryDataImportPlugin();
+        $dataImporterReportTransfer = $merchantCategoryDataImportPlugin->import($dataImportConfigurationTransfer);
 
         // Assert
-        self::assertEmpty($dataImporterReportTransfer->getDataImporterReports());
-        self::assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
-        self::assertTrue(
+        $this->assertEmpty($dataImporterReportTransfer->getDataImporterReports());
+        $this->assertInstanceOf(DataImporterReportTransfer::class, $dataImporterReportTransfer);
+        $this->assertTrue(
             SpyMerchantCategoryQuery::create()->find()->count() > 0,
             'Expected at least one entry in the database table but database table is empty.'
         );
@@ -86,12 +86,12 @@ class MerchantCategoryDataImportPluginTest extends Unit
     public function testGetImportTypeReturnsTypeOfImporter(): void
     {
         // Act
-        $MerchantCategoryDataImportPlugin = new MerchantCategoryDataImportPlugin();
+        $merchantCategoryDataImportPlugin = new MerchantCategoryDataImportPlugin();
 
         // Assert
-        self::assertSame(
+        $this->assertSame(
             MerchantCategoryDataImportConfig::IMPORT_TYPE_MERCHANT_CATEGORY,
-            $MerchantCategoryDataImportPlugin->getImportType()
+            $merchantCategoryDataImportPlugin->getImportType()
         );
     }
 }

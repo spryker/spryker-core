@@ -54,7 +54,7 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
         }
 
         /** @var \Orm\Zed\Merchant\Persistence\SpyMerchantQuery $merchantQuery */
-        $merchantQuery = SpyMerchantQuery::create()
+        $merchantQuery = $this->createMerchantPropelQuery()
             ->select(SpyMerchantTableMap::COL_ID_MERCHANT);
         /** @var int $idMerchant */
         $idMerchant = $merchantQuery->findOneByMerchantReference($merchantReference);
@@ -66,5 +66,13 @@ class MerchantReferenceToIdMerchantStep implements DataImportStepInterface
         $this->idMerchantCache[$merchantReference] = $idMerchant;
 
         return $this->idMerchantCache[$merchantReference];
+    }
+
+    /**
+     * @return \Orm\Zed\Merchant\Persistence\SpyMerchantQuery
+     */
+    protected function createMerchantPropelQuery(): SpyMerchantQuery
+    {
+        return SpyMerchantQuery::create();
     }
 }

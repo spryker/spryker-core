@@ -9,7 +9,6 @@
         <column name="fk_merchant" required="true" type="INTEGER"/>
         <column name="fk_category" required="true" type="INTEGER"/>
 
-
         <foreign-key name="spy_merchant_category-fk_category" foreignTable="spy_category">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>

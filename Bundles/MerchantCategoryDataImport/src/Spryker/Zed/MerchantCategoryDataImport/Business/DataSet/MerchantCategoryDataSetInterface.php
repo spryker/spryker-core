@@ -10,8 +10,8 @@ namespace Spryker\Zed\MerchantCategoryDataImport\Business\DataSet;
 interface MerchantCategoryDataSetInterface
 {
     public const MERCHANT_REFERENCE = 'merchant_reference';
-    public const FK_MERCHANT = 'fk_merchant';
-
     public const CATEGORY_KEY = 'category_key';
-    public const FK_CATEGORY = 'id_category';
+
+    public const FK_MERCHANT = 'fk_merchant';
+    public const ID_CATEGORY = 'id_category';
 }

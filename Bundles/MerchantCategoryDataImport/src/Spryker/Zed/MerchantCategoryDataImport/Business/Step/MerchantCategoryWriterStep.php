@@ -18,7 +18,7 @@ class MerchantCategoryWriterStep extends PublishAwareStep implements DataImportS
 {
     protected const REQUIRED_DATA_SET_KEYS = [
         MerchantCategoryDataSetInterface::FK_MERCHANT,
-        MerchantCategoryDataSetInterface::FK_CATEGORY,
+        MerchantCategoryDataSetInterface::ID_CATEGORY,
     ];
 
     /**
@@ -32,7 +32,7 @@ class MerchantCategoryWriterStep extends PublishAwareStep implements DataImportS
 
         $merchantCategoryEntity = $this->createMerchantCategoryPropelQuery()
             ->filterByFkMerchant($dataSet[MerchantCategoryDataSetInterface::FK_MERCHANT])
-            ->filterByFkCategory($dataSet[MerchantCategoryDataSetInterface::FK_CATEGORY])
+            ->filterByFkCategory($dataSet[MerchantCategoryDataSetInterface::ID_CATEGORY])
             ->findOneOrCreate();
 
         $merchantCategoryEntity->fromArray($dataSet->getArrayCopy());

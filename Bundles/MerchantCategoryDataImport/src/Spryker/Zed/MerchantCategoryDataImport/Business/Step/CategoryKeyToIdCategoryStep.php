@@ -11,10 +11,11 @@ use Orm\Zed\Category\Persistence\Map\SpyCategoryTableMap;
 use Orm\Zed\Category\Persistence\SpyCategoryQuery;
 use Spryker\Zed\DataImport\Business\Exception\EntityNotFoundException;
 use Spryker\Zed\DataImport\Business\Exception\InvalidDataException;
+use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
 use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
 use Spryker\Zed\MerchantCategoryDataImport\Business\DataSet\MerchantCategoryDataSetInterface;
 
-class CategoryKeyToIdCategoryStep
+class CategoryKeyToIdCategoryStep implements DataImportStepInterface
 {
     /**
      * @var int[]
@@ -36,7 +37,7 @@ class CategoryKeyToIdCategoryStep
             throw new InvalidDataException(sprintf('"%s" is required.', MerchantCategoryDataSetInterface::CATEGORY_KEY));
         }
 
-        $dataSet[MerchantCategoryDataSetInterface::FK_CATEGORY] = $this->getIdCategory($categoryKey);
+        $dataSet[MerchantCategoryDataSetInterface::ID_CATEGORY] = $this->getIdCategory($categoryKey);
     }
 
     /**
@@ -53,7 +54,7 @@ class CategoryKeyToIdCategoryStep
         }
 
         /** @var \Orm\Zed\Category\Persistence\SpyCategoryQuery $categoryQuery */
-        $categoryQuery = SpyCategoryQuery::create()
+        $categoryQuery = $this->createCategoryPropelQuery()
             ->select(SpyCategoryTableMap::COL_ID_CATEGORY);
         /** @var int $idCategory */
         $idCategory = $categoryQuery->findOneByCategoryKey($categoryKey);
@@ -65,5 +66,13 @@ class CategoryKeyToIdCategoryStep
         $this->idCategoryCache[$categoryKey] = $idCategory;
 
         return $this->idCategoryCache[$categoryKey];
+    }
+
+    /**
+     * @return \Orm\Zed\Category\Persistence\SpyCategoryQuery
+     */
+    protected function createCategoryPropelQuery(): SpyCategoryQuery
+    {
+        return SpyCategoryQuery::create();
     }
 }

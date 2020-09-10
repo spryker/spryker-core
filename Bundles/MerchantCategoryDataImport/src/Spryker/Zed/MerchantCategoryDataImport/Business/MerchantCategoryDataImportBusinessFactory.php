@@ -10,9 +10,9 @@ namespace Spryker\Zed\MerchantCategoryDataImport\Business;
 use Spryker\Zed\DataImport\Business\DataImportBusinessFactory;
 use Spryker\Zed\DataImport\Business\Model\DataImporterInterface;
 use Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface;
+use Spryker\Zed\MerchantCategoryDataImport\Business\Step\CategoryKeyToIdCategoryStep;
 use Spryker\Zed\MerchantCategoryDataImport\Business\Step\MerchantCategoryWriterStep;
 use Spryker\Zed\MerchantCategoryDataImport\Business\Step\MerchantReferenceToIdMerchantStep;
-use Spryker\Zed\ProductListDataImport\Business\Model\Step\CategoryKeyToIdCategoryStep;
 
 /**
  * @method \Spryker\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportConfig getConfig()

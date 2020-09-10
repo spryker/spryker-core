@@ -4,10 +4,17 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/kernel": "^3.30.0"
+    "spryker/category": "^4.18.2",
+    "spryker/data-import": "^1.11.0",
+    "spryker/kernel": "^3.33.0",
+    "spryker/merchant": "^3.0.0",
+    "spryker/merchant-category": "^0.1.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
+    "spryker/category": "*",
+    "spryker/merchant": "*",
+    "spryker/merchant-category": "*",
+    "spryker/propel": "*",
     "spryker/testify": "*"
   },
   "autoload": {

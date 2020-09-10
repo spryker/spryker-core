@@ -31,15 +31,15 @@ class MerchantCategoryDataImportCommunicationTester extends Actor
     /**
      * @return void
      */
-    public function ensureMerchantCategoryAbstractTablesIsEmpty(): void
+    public function ensureMerchantCategoryTablesIsEmpty(): void
     {
-        $this->createMerchantCategoryAbstractPropelQuery()->deleteAll();
+        $this->createMerchantCategoryPropelQuery()->deleteAll();
     }
 
     /**
      * @return \Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery
      */
-    protected function createMerchantCategoryAbstractPropelQuery(): SpyMerchantCategoryQuery
+    protected function createMerchantCategoryPropelQuery(): SpyMerchantCategoryQuery
     {
         return SpyMerchantCategoryQuery::create();
     }
