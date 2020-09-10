@@ -31,7 +31,7 @@ use Spryker\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportConfig;
 class MerchantCategoryDataImportPluginTest extends Unit
 {
     protected const MERCHANT_REFERENCE = 'merchant_test_reference';
-    protected const CATEGORY_KEY = 'category_test_key   ';
+    protected const CATEGORY_KEY = 'category_test_key';
 
     /**
      * @var \SprykerTest\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportCommunicationTester
