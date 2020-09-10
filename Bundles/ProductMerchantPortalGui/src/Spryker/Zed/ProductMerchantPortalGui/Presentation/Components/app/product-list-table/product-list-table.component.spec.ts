@@ -1,21 +1,21 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { ProductOfferTableComponent } from './product-offer-table.component';
+import { ProductListTableComponent } from './product-list-table.component';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-describe('ProductOfferTableComponent', () => {
-    let component: ProductOfferTableComponent;
-    let fixture: ComponentFixture<ProductOfferTableComponent>;
+describe('ProductListTableComponent', () => {
+    let component: ProductListTableComponent;
+    let fixture: ComponentFixture<ProductListTableComponent>;
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [ProductOfferTableComponent],
+            declarations: [ProductListTableComponent],
             schemas: [NO_ERRORS_SCHEMA],
         }).compileComponents();
     }));
 
     beforeEach(() => {
-        fixture = TestBed.createComponent(ProductOfferTableComponent);
+        fixture = TestBed.createComponent(ProductListTableComponent);
         component = fixture.componentInstance;
     });
 
