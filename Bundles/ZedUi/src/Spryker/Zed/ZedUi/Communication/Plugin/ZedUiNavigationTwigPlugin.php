@@ -19,7 +19,7 @@ class ZedUiNavigationTwigPlugin extends AbstractTwigExtensionPlugin
      *
      * @api
      *
-     * @return \Spryker\Shared\Twig\TwigFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {

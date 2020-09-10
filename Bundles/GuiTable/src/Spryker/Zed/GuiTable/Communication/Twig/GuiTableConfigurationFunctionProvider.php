@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Shared\GuiTable\Twig;
+namespace Spryker\Zed\GuiTable\Communication\Twig;
 
 use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
@@ -14,12 +14,12 @@ use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
-use Spryker\Shared\Twig\TwigFunction;
 
-class GuiTableConfigurationFunction extends TwigFunction
+class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 {
     protected const CONFIG_ENABLED = 'enabled';
     protected const CONFIG_ITEMS = 'items';
@@ -49,7 +49,6 @@ class GuiTableConfigurationFunction extends TwigFunction
         ConfigurationDefaultValuesExpanderInterface $configurationDefaultValuesExpander,
         ConfigurationTranslatorInterface $configurationTranslator
     ) {
-        parent::__construct();
         $this->utilEncodingService = $utilEncodingService;
         $this->configurationDefaultValuesExpander = $configurationDefaultValuesExpander;
         $this->configurationTranslator = $configurationTranslator;
@@ -58,7 +57,7 @@ class GuiTableConfigurationFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return 'guiTableConfiguration';
     }
@@ -66,7 +65,7 @@ class GuiTableConfigurationFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (GuiTableConfigurationTransfer $guiTableConfigurationTransfer, bool $jsonEncode = true, array $overwrite = []) {
             $guiTableConfigurationTransfer = $this->configurationDefaultValuesExpander->setDefaultValues($guiTableConfigurationTransfer);

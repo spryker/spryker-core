@@ -1,3 +1,4 @@
 parameters:
     ignoreErrors:
     - '#Call to an undefined method Silex\\Application::render\(\).#'
+    - '#Comparison operation "<" between 3 and 3 is always false.#'

@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\ZedUi\Communication\Twig;
 
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface;
 use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface;
 
-class NavigationComponentConfigFunction extends TwigFunction
+class NavigationComponentConfigFunctionProvider extends TwigFunctionProvider
 {
     protected const NAVIGATION_COMPONENT_CONFIG_FUNCTION_NAME = 'render_navigation_component_config';
     protected const DEFAULT_ITEM_ICON = 'fa-angle-double-right';
@@ -34,7 +34,6 @@ class NavigationComponentConfigFunction extends TwigFunction
         ZedUiToUtilEncodingServiceInterface $utilEncodingService,
         ZedUiToTranslatorFacadeInterface $translatorFacade
     ) {
-        parent::__construct();
         $this->utilEncodingService = $utilEncodingService;
         $this->translatorFacade = $translatorFacade;
     }
@@ -42,7 +41,7 @@ class NavigationComponentConfigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName(): string
+    public function getFunctionName(): string
     {
         return static::NAVIGATION_COMPONENT_CONFIG_FUNCTION_NAME;
     }
@@ -50,7 +49,7 @@ class NavigationComponentConfigFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction(): callable
+    public function getFunction(): callable
     {
         return function (array $navigationItems = []): ?string {
             $menuTree = $this->getMenuTree($navigationItems);
