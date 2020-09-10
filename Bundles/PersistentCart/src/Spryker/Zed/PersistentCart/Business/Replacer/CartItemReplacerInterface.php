@@ -5,12 +5,12 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Operation;
+namespace Spryker\Zed\PersistentCart\Business\Replacer;
 
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 
-interface CartItemOperationInterface
+interface CartItemReplacerInterface
 {
     /**
      * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer

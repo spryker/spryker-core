@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\PersistentCart\Business\Operation;
+namespace Spryker\Zed\PersistentCart\Business\Replacer;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
@@ -16,7 +16,7 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteResolverInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToQuoteFacadeInterface;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
 
-class CartItemOperation implements CartItemOperationInterface
+class CartItemReplacer implements CartItemReplacerInterface
 {
     /**
      * @var \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface
