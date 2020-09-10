@@ -55,7 +55,8 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer {
         return $this->getFactory()
-            ->createProductConfigurationInstanceReader()->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
+            ->createProductConfigurationInstanceQuoteReader()
+            ->findProductConfigurationInstanceInQuote($groupKey, $sku, $quoteTransfer);
     }
 
     /**

@@ -28,12 +28,12 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
      *
      * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
      */
-    public function resolveProductConfiguratorRedirect(
+    public function prepareProductConfiguratorRedirect(
         ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
     ): ProductConfiguratorRedirectTransfer {
         return $this->getFactory()
             ->createProductConfiguratorRedirectResolver()
-            ->resolveProductConfiguratorRedirect($productConfiguratorRequestTransfer);
+            ->prepareProductConfiguratorRedirect($productConfiguratorRequestTransfer);
     }
 
     /**

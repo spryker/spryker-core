@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Cart\Business;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -173,6 +174,21 @@ interface CartFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function cleanUpItems(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification:
+     *  - Decreases the given quantity by the given cart change for removal in the quote.
+     *  - Adds item(s) from cart change for adding, to the quote.
+     *  - Returns QuoteResponse with updated quote.
+     *  - In case of error adds messenger error message and returns QuoteResponse with unchanged QuoteTransfer and errors.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer;
 
     /**
      * Specification:

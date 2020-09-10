@@ -9,6 +9,7 @@ namespace Spryker\Client\Cart\Operation;
 
 use ArrayObject;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemReplaceTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
@@ -98,15 +99,9 @@ class CartItemOperation implements CartItemOperationInterface
             return $quoteResponseTransfer;
         }
 
-        $quoteResponseTransfer = $this->cartStub->removeFromCart($cartChangeTransferForRemoval);
-
-        if ($quoteResponseTransfer->getIsSuccessful()) {
-            $cartChangeTransferForAdding->setQuote($quoteResponseTransfer->getQuoteTransfer());
-
-            return $this->cartStub->addToCart($cartChangeTransferForAdding);
-        }
-
-        return $quoteResponseTransfer;
+        return $this->cartStub->replaceItem((new CartItemReplaceTransfer())
+            ->setCartChangeForRemoval($cartChangeTransferForRemoval)
+            ->setCartChangeForAdding($cartChangeTransferForAdding));
     }
 
     /**

@@ -379,7 +379,7 @@ interface ProductStorageClientInterface
     /**
      * Specification:
      * - Requires ProductConcreteStorageTransfer.url, ProductConcreteStorageTransfer.attributes and ProductConcreteStorageTransfer.superAttributesDefinition properties to be set.
-     * - Resolves product concrete URL.
+     * - Builds product concrete URL.
      * - Returns resolved URL.
      *
      * @api
@@ -388,5 +388,5 @@ interface ProductStorageClientInterface
      *
      * @return string
      */
-    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
 }

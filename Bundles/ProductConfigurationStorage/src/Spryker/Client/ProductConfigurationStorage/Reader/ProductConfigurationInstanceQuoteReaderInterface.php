@@ -8,15 +8,20 @@
 namespace Spryker\Client\ProductConfigurationStorage\Reader;
 
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
-interface ProductConfigurationInstanceReaderInterface
+interface ProductConfigurationInstanceQuoteReaderInterface
 {
     /**
+     * @param string $groupKey
      * @param string $sku
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationInstanceTransfer|null
      */
-    public function findProductConfigurationInstanceBySku(
-        string $sku
+    public function findProductConfigurationInstanceInQuote(
+        string $groupKey,
+        string $sku,
+        QuoteTransfer $quoteTransfer
     ): ?ProductConfigurationInstanceTransfer;
 }

@@ -5,18 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductStorage\Resolver;
+namespace Spryker\Client\ProductStorage\Builder;
 
 use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 
-class ProductConcreteStorageUrlResolver implements ProductConcreteStorageUrlResolverInterface
+class ProductConcreteStorageUrlBuilder implements ProductConcreteStorageUrlBuilderInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
      *
      * @return string
      */
-    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
     {
         $productConcreteStorageTransfer->requireUrl();
 

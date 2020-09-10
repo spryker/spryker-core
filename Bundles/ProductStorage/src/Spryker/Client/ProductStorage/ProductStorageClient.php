@@ -452,10 +452,10 @@ class ProductStorageClient extends AbstractClient implements ProductStorageClien
      *
      * @return string
      */
-    public function resolveProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string
     {
         return $this->getFactory()
-            ->createProductConcreteStorageUrlResolver()
-            ->resolveProductConcreteUrl($productConcreteStorageTransfer);
+            ->createProductConcreteStorageUrlBuilder()
+            ->buildProductConcreteUrl($productConcreteStorageTransfer);
     }
 }
