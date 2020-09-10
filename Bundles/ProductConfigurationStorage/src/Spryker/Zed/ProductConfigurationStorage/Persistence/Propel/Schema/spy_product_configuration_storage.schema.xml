@@ -24,10 +24,4 @@
 
         <behavior name="timestampable"/>
     </table>
-
-    <table name="spy_product_concrete_storage">
-        <behavior name="synchronization">
-            <parameter name="mappings" value="sku:id_product_concrete"/>
-        </behavior>
-    </table>
 </database>
