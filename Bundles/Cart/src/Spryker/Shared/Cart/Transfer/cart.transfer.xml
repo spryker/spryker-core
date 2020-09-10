@@ -83,6 +83,7 @@
         <property name="itemToBeReplaced" type="Item"/>
         <property name="newItem" type="Item"/>
     </transfer>
+
     <transfer name="CartItemReplace">
         <property name="cartChangeForRemoval" type="CartChange"/>
         <property name="cartChangeForAdding" type="CartChange"/>
