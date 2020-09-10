@@ -46,9 +46,9 @@ class ConfigurableBundleCartsRestApiFacade extends AbstractFacade implements Con
     public function updateConfiguredBundleQuantity(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
-        // TODO: Implement updateConfiguredBundleQuantity() method.
-
-        return new QuoteResponseTransfer();
+        return $this->getFactory()
+            ->createConfiguredBundleWriter()
+            ->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
     }
 
     /**
@@ -63,8 +63,8 @@ class ConfigurableBundleCartsRestApiFacade extends AbstractFacade implements Con
     public function removeConfiguredBundle(
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
-        // TODO: Implement removeConfiguredBundle() method.
-
-        return new QuoteResponseTransfer();
+        return $this->getFactory()
+            ->createConfiguredBundleWriter()
+            ->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 }

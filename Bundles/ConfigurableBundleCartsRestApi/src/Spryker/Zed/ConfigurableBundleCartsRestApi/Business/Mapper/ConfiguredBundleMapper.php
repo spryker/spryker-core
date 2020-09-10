@@ -13,9 +13,10 @@ use Generated\Shared\Transfer\ConfigurableBundleTemplateTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
 
 class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
@@ -31,22 +32,6 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
     public function __construct(ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator)
     {
         $this->configuredBundleGroupKeyGenerator = $configuredBundleGroupKeyGenerator;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapCreateConfiguredBundleRequestToQuote(
-        CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer,
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer {
-        return $quoteTransfer
-            ->setUuid($createConfiguredBundleRequestTransfer->getQuoteUuid())
-            ->setCustomerReference($createConfiguredBundleRequestTransfer->getCustomer()->getCustomerReference())
-            ->setCustomer($createConfiguredBundleRequestTransfer->getCustomer());
     }
 
     /**
@@ -72,6 +57,44 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    public function mapUpdateConfiguredBundleRequestToPersistentCartChange(
+        UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer,
+        PersistentCartChangeTransfer $persistentCartChangeTransfer
+    ): PersistentCartChangeTransfer {
+        $persistentCartChangeTransfer->requireQuote();
+
+        $persistentCartChangeTransfer->setCustomer((new CustomerTransfer())
+            ->fromArray($persistentCartChangeTransfer->getQuote()->getCustomer()->toArray()))
+            ->setIdQuote($persistentCartChangeTransfer->getQuote()->getIdQuote());
+
+        foreach ($persistentCartChangeTransfer->getQuote()->getItems() as $itemTransfer) {
+            if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundleItem()) {
+                continue;
+            }
+
+            if ($itemTransfer->getConfiguredBundle()->getGroupKey() !== $updateConfiguredBundleRequestTransfer->getGroupKey()) {
+                continue;
+            }
+
+            $itemTransferToUpdate = (new ItemTransfer())
+                ->fromArray($itemTransfer->toArray(false));
+
+            if ($updateConfiguredBundleRequestTransfer->getQuantity() !== null) {
+                $itemTransferToUpdate->setQuantity($itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot() * $updateConfiguredBundleRequestTransfer->getQuantity());
+            }
+
+            $persistentCartChangeTransfer->addItem($itemTransferToUpdate);
+        }
+
+        return $persistentCartChangeTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
      * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
@@ -82,7 +105,8 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             ->requireQuantity()
             ->requireTemplate()
             ->getTemplate()
-                ->requireUuid();
+                ->requireUuid()
+                ->requireName();
 
         $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
 

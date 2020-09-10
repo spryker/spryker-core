@@ -9,21 +9,10 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 
 interface ConfiguredBundleMapperInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function mapCreateConfiguredBundleRequestToQuote(
-        CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer,
-        QuoteTransfer $quoteTransfer
-    ): QuoteTransfer;
-
     /**
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
@@ -32,6 +21,17 @@ interface ConfiguredBundleMapperInterface
      */
     public function mapCreateConfiguredBundleRequestToPersistentCartChange(
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer,
+        PersistentCartChangeTransfer $persistentCartChangeTransfer
+    ): PersistentCartChangeTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
+     *
+     * @return \Generated\Shared\Transfer\PersistentCartChangeTransfer
+     */
+    public function mapUpdateConfiguredBundleRequestToPersistentCartChange(
+        UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer,
         PersistentCartChangeTransfer $persistentCartChangeTransfer
     ): PersistentCartChangeTransfer;
 }

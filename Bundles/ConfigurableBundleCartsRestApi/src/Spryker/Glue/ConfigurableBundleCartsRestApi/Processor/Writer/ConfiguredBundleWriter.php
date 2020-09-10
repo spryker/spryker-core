@@ -14,14 +14,15 @@ use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer;
+use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Client\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiClientInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface;
-use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponse;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig as ConfigurableBundleCartsRestApiSharedConfig;
@@ -126,7 +127,28 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         RestRequestInterface $restRequest,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
-        return new RestResponse();
+        if (!$this->findCartIdentifier($restRequest)) {
+            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
+        }
+
+        if ($restConfiguredBundlesAttributesTransfer->getQuantity() <= 0) {
+            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY);
+        }
+
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($restRequest)
+            ->setGroupKey($restRequest->getResource()->getId())
+            ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
+
+        $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->configuredBundleRestResponseBuilder->createFailedResponse($quoteResponseTransfer);
+        }
+
+        return $this->cartsRestApiResource->createCartRestResponse(
+            $quoteResponseTransfer->getQuoteTransfer(),
+            $restRequest
+        );
     }
 
     /**
@@ -136,7 +158,20 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      */
     public function deleteConfiguredBundle(RestRequestInterface $restRequest): RestResponseInterface
     {
-        return new RestResponse();
+        if (!$this->findCartIdentifier($restRequest)) {
+            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
+        }
+
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($restRequest)
+            ->setGroupKey($restRequest->getResource()->getId());
+
+        $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $this->configuredBundleRestResponseBuilder->createFailedResponse($quoteResponseTransfer);
+        }
+
+        return $this->configuredBundleRestResponseBuilder->createRestResponse();
     }
 
     /**
@@ -155,14 +190,18 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer)
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setUuid($this->findCartIdentifier($restRequest));
+
         $configurableBundleTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
             true
         );
 
         $createConfiguredBundleRequestTransfer = (new CreateConfiguredBundleRequestTransfer())
-            ->setCustomer($customerTransfer)
-            ->setQuoteUuid($this->findCartIdentifier($restRequest))
+            ->setQuote($quoteTransfer)
             ->setConfiguredBundle((new ConfiguredBundleTransfer())->setTemplate($configurableBundleTransfer));
 
         return $this->configurableBundleCartMapper
@@ -170,6 +209,27 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
                 $restConfiguredBundlesAttributesTransfer,
                 $createConfiguredBundleRequestTransfer
             );
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer
+     */
+    public function createUpdateConfiguredBundleRequest(RestRequestInterface $restRequest): UpdateConfiguredBundleRequestTransfer
+    {
+        $customerTransfer = (new CustomerTransfer())
+            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
+
+        $quoteTransfer = (new QuoteTransfer())
+            ->setCustomer($customerTransfer)
+            ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
+            ->setUuid($this->findCartIdentifier($restRequest));
+
+        return (new UpdateConfiguredBundleRequestTransfer())
+            ->setQuote($quoteTransfer)
+            ->setGroupKey($restRequest->getResource()->getId());
     }
 
     /**

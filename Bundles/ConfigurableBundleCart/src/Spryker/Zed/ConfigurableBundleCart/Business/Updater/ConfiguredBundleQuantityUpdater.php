@@ -20,12 +20,9 @@ class ConfiguredBundleQuantityUpdater implements ConfiguredBundleQuantityUpdater
     public function updateConfiguredBundleQuantity(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isConfiguredBundleItem($itemTransfer)) {
+            if (!$this->isConfiguredBundleItem($itemTransfer) || !$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {
                 continue;
             }
-
-            $itemTransfer->getConfiguredBundleItem()
-                ->requireQuantityPerSlot();
 
             $quantity = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot());
             $itemTransfer->getConfiguredBundle()->setQuantity($quantity);
@@ -42,12 +39,9 @@ class ConfiguredBundleQuantityUpdater implements ConfiguredBundleQuantityUpdater
     public function updateConfiguredBundleQuantityPerSlot(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
         foreach ($quoteTransfer->getItems() as $itemTransfer) {
-            if (!$this->isConfiguredBundleItem($itemTransfer)) {
+            if (!$this->isConfiguredBundleItem($itemTransfer) || !$itemTransfer->getConfiguredBundleItem()->getQuantityPerSlot()) {
                 continue;
             }
-
-            $itemTransfer->getConfiguredBundle()
-                ->requireQuantity();
 
             $quantityPerSlot = (int)($itemTransfer->getQuantity() / $itemTransfer->getConfiguredBundle()->getQuantity());
             $itemTransfer->getConfiguredBundleItem()->setQuantityPerSlot($quantityPerSlot);

@@ -7,11 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade;
 
-use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\QuoteUpdateRequestTransfer;
 
 class ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge implements ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface
 {
@@ -29,33 +26,23 @@ class ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge implements Conf
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function updateQuote(QuoteUpdateRequestTransfer $quoteUpdateRequestTransfer): QuoteResponseTransfer
+    public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartFacade->updateQuote($quoteUpdateRequestTransfer);
+        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function createQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    public function updateQuantity(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
-        return $this->persistentCartFacade->createQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function deleteQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->persistentCartFacade->deleteQuote($quoteTransfer);
+        return $this->persistentCartFacade->updateQuantity($persistentCartChangeTransfer);
     }
 
     /**
@@ -66,35 +53,5 @@ class ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge implements Conf
     public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->persistentCartFacade->remove($persistentCartChangeTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function changeItemQuantity(PersistentCartChangeQuantityTransfer $persistentCartChangeQuantityTransfer): QuoteResponseTransfer
-    {
-        return $this->persistentCartFacade->changeItemQuantity($persistentCartChangeQuantityTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function validateQuote(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        return $this->persistentCartFacade->validateQuote($quoteTransfer);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\PersistentCartChangeTransfer $persistentCartChangeTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function add(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
-    {
-        return $this->persistentCartFacade->add($persistentCartChangeTransfer);
     }
 }

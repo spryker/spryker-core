@@ -42,6 +42,14 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     /**
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
      */
+    public function createRestResponse(): RestResponseInterface
+    {
+        return $this->restResourceBuilder->createRestResponse();
+    }
+
+    /**
+     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+     */
     public function createCartIdMissingErrorResponse(): RestResponseInterface
     {
         $restErrorMessageTransfer = (new RestErrorMessageTransfer())

@@ -58,12 +58,12 @@ class ConfigurableBundleCartMapper implements ConfigurableBundleCartMapperInterf
             ->setConfiguredBundle($configuredBundleTransfer);
 
         foreach ($restConfiguredBundlesAttributesTransfer->getItems() as $configuredBundleItemsAttributesTransfer) {
-            $ConfigurableBundleTemplateSlotTransfer = (new ConfigurableBundleTemplateSlotTransfer())
-                ->setUuid($configuredBundleItemsAttributesTransfer->getSlotUuid());
+            $configuredBundleItemTransfer = (new ConfiguredBundleItemTransfer())
+                ->setSlot((new ConfigurableBundleTemplateSlotTransfer())->setUuid($configuredBundleItemsAttributesTransfer->getSlotUuid()));
 
             $itemTransfer = (new ItemTransfer())
                 ->fromArray($configuredBundleItemsAttributesTransfer->toArray(), true)
-                ->setConfiguredBundleItem((new ConfiguredBundleItemTransfer())->setSlot($ConfigurableBundleTemplateSlotTransfer));
+                ->setConfiguredBundleItem($configuredBundleItemTransfer);
 
             $createConfiguredBundleRequestTransfer->addItem($itemTransfer);
         }

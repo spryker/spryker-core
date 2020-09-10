@@ -19,11 +19,25 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="localeName" type="string"/>
-        <property name="quoteUuid" type="string"/>
+        <property name="quote" type="Quote"/>
+    </transfer>
+
+    <transfer name="UpdateConfiguredBundleRequest">
+        <property name="quote" type="Quote"/>
+        <property name="groupKey" type="string"/>
+        <property name="quantity" type="int"/>
+    </transfer>
+
+    <transfer name="Quote">
+        <property name="items" type="Item[]" singular="item"/>
         <property name="customer" type="Customer"/>
+        <property name="customerReference" type="string"/>
+        <property name="uuid" type="string"/>
     </transfer>
 
     <transfer name="Customer">
+        <property name="idCustomer" type="int"/>
+        <property name="customerReference" type="string"/>
     </transfer>
 
     <transfer name="ConfiguredBundle">
