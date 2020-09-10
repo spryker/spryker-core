@@ -127,7 +127,7 @@ class CartFacade extends AbstractFacade implements CartFacadeInterface
      */
     public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
     {
-        return $this->getFactory()->createCartItemOperation()->replaceItem($cartItemReplaceTransfer);
+        return $this->getFactory()->createCartItemReplacer()->replaceItem($cartItemReplaceTransfer);
     }
 
     /**
