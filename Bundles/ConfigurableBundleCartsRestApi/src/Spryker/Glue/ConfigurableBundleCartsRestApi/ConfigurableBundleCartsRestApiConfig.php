@@ -23,6 +23,11 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
     public const RESOURCE_CARTS = 'carts';
 
     /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESOURCE_GUEST_CARTS
+     */
+    public const RESOURCE_GUEST_CARTS = 'guest-carts';
+
+    /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';

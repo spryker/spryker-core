@@ -46,10 +46,38 @@
         <property name="groupKey" type="string"/>
     </transfer>
 
+    <transfer name="ConfiguredBundleItem">
+    </transfer>
+
     <transfer name="ConfigurableBundleTemplate">
     </transfer>
 
     <transfer name="ConfigurableBundleTemplateSlot">
+    </transfer>
+
+    <transfer name="RestItemsAttributes">
+        <property name="configuredBundle" type="RestConfiguredBundle"/>
+        <property name="configuredBundleItem" type="RestConfiguredBundleItem"/>
+    </transfer>
+
+    <transfer name="RestConfiguredBundle">
+        <property name="template" type="RestConfigurableBundleTemplate"/>
+        <property name="quantity" type="int"/>
+        <property name="groupKey" type="string"/>
+    </transfer>
+
+    <transfer name="RestConfiguredBundleItem">
+        <property name="slot" type="RestConfigurableBundleTemplateSlot"/>
+        <property name="quantityPerSlot" type="int"/>
+    </transfer>
+
+    <transfer name="RestConfigurableBundleTemplate">
+        <property name="uuid" type="string"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="RestConfigurableBundleTemplateSlot">
+        <property name="uuid" type="string"/>
     </transfer>
 
 </transfers>

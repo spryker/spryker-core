@@ -8,13 +8,18 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapper;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapper;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilder;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Translator\ConfiguredBundleTranslator;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Translator\ConfiguredBundleTranslatorInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriter;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\ConfiguredBundleWriterInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\GuestConfiguredBundleWriter;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\GuestConfiguredBundleWriterInterface;
 use Spryker\Glue\Kernel\AbstractFactory;
 
 /**
@@ -33,7 +38,21 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
             $this->getClient(),
             $this->getCartsRestApiResource(),
             $this->getConfigurableBundleStorageClient(),
-            $this->createConfigurableBundleCartMapper()
+            $this->createConfiguredBundleMapper()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Writer\GuestConfiguredBundleWriterInterface
+     */
+    public function createGuestConfiguredBundleWriter(): GuestConfiguredBundleWriterInterface
+    {
+        return new GuestConfiguredBundleWriter(
+            $this->createConfiguredBundleRestResponseBuilder(),
+            $this->getClient(),
+            $this->getCartsRestApiResource(),
+            $this->getConfigurableBundleStorageClient(),
+            $this->createConfiguredBundleMapper()
         );
     }
 
@@ -44,18 +63,24 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     {
         return new ConfiguredBundleRestResponseBuilder(
             $this->getResourceBuilder(),
-            $this->createConfigurableBundleCartMapper()
+            $this->createConfiguredBundleMapper()
         );
     }
 
     /**
-     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface
      */
-    public function createConfigurableBundleCartMapper(): ConfigurableBundleCartMapperInterface
+    public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
-        return new ConfigurableBundleCartMapper(
-            $this->getConfig()
-        );
+        return new ConfiguredBundleMapper($this->getConfig());
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Translator\ConfiguredBundleTranslatorInterface
+     */
+    public function createConfiguredBundleTranslator(): ConfiguredBundleTranslatorInterface
+    {
+        return new ConfiguredBundleTranslator($this->getGlossaryStorageClient());
     }
 
     /**
@@ -72,5 +97,13 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
     public function getConfigurableBundleStorageClient(): ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::CLIENT_CONFIGURABLE_BUNDLE_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToGlossaryStorageClientInterface
+     */
+    public function getGlossaryStorageClient(): ConfigurableBundleCartsRestApiToGlossaryStorageClientInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
     }
 }

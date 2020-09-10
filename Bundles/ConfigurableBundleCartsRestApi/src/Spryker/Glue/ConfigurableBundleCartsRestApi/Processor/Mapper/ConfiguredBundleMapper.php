@@ -12,12 +12,15 @@ use Generated\Shared\Transfer\ConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
+use Generated\Shared\Transfer\RestConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer;
+use Generated\Shared\Transfer\RestConfiguredBundleTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Symfony\Component\HttpFoundation\Response;
 
-class ConfigurableBundleCartMapper implements ConfigurableBundleCartMapperInterface
+class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 {
     /**
      * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig
@@ -96,6 +99,33 @@ class ConfigurableBundleCartMapper implements ConfigurableBundleCartMapperInterf
         }
 
         return $restErrorMessageTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer
+    ): RestItemsAttributesTransfer {
+        if (!$itemTransfer->getConfiguredBundle() || !$itemTransfer->getConfiguredBundleItem()) {
+            return $restItemsAttributesTransfer;
+        }
+
+        $restConfiguredBundleTransfer = (new RestConfiguredBundleTransfer())
+            ->fromArray($itemTransfer->getConfiguredBundle()->toArray(), true);
+
+        $restConfiguredBundleItemTransfer = (new RestConfiguredBundleItemTransfer())
+            ->fromArray($itemTransfer->getConfiguredBundleItem()->toArray(), true);
+
+        $restItemsAttributesTransfer
+            ->setConfiguredBundle($restConfiguredBundleTransfer)
+            ->setConfiguredBundleItem($restConfiguredBundleItemTransfer);
+
+        return $restItemsAttributesTransfer;
     }
 
     /**

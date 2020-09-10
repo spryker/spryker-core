@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientBridge;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToGlossaryStorageClientBridge;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceBridge;
 use Spryker\Glue\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Glue\Kernel\Container;
@@ -19,6 +20,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
 {
     public const RESOURCE_CARTS_REST_API = 'RESOURCE_CARTS_REST_API';
     public const CLIENT_CONFIGURABLE_BUNDLE_STORAGE = 'CLIENT_CONFIGURABLE_BUNDLE_STORAGE';
+    public const CLIENT_GLOSSARY_STORAGE = 'CLIENT_GLOSSARY_STORAGE';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -31,6 +33,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
 
         $container = $this->addCartsRestApiResource($container);
         $container = $this->addConfigurableBundleStorageClient($container);
+        $container = $this->addGlossaryStorageClient($container);
 
         return $container;
     }
@@ -61,6 +64,22 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
         $container->set(static::CLIENT_CONFIGURABLE_BUNDLE_STORAGE, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientBridge(
                 $container->getLocator()->configurableBundleStorage()->client()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addGlossaryStorageClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GLOSSARY_STORAGE, function (Container $container) {
+            return new ConfigurableBundleCartsRestApiToGlossaryStorageClientBridge(
+                $container->getLocator()->glossaryStorage()->client()
             );
         });
 

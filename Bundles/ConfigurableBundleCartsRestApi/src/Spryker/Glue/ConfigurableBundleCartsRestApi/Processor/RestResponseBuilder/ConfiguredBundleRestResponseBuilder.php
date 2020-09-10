@@ -10,7 +10,7 @@ namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuil
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,20 +23,20 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     protected $restResourceBuilder;
 
     /**
-     * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface
+     * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface
      */
-    protected $configurableBundleCartMapper;
+    protected $configuredBundleMapper;
 
     /**
      * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface $restResourceBuilder
-     * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
+     * @param \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface $configuredBundleMapper
      */
     public function __construct(
         RestResourceBuilderInterface $restResourceBuilder,
-        ConfigurableBundleCartMapperInterface $configurableBundleCartMapper
+        ConfiguredBundleMapperInterface $configuredBundleMapper
     ) {
         $this->restResourceBuilder = $restResourceBuilder;
-        $this->configurableBundleCartMapper = $configurableBundleCartMapper;
+        $this->configuredBundleMapper = $configuredBundleMapper;
     }
 
     /**
@@ -73,7 +73,7 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
 
         foreach ($quoteResponseTransfer->getErrors() as $quoteErrorTransfer) {
             $restResponse->addError(
-                $this->configurableBundleCartMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
+                $this->configuredBundleMapper->mapQuoteErrorTransferToRestErrorMessageTransfer(
                     $quoteErrorTransfer,
                     new RestErrorMessageTransfer()
                 )

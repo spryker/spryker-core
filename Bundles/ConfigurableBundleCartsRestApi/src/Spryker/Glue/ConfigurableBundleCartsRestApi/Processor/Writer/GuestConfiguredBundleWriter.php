@@ -27,7 +27,7 @@ use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig as ConfigurableBundleCartsRestApiSharedConfig;
 
-class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
+class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterface
 {
     /**
      * @var \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuilder\ConfiguredBundleRestResponseBuilderInterface
@@ -85,7 +85,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         RestRequestInterface $restRequest,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
-        if (!$this->findCartIdentifier($restRequest)) {
+        if (!$this->findGuestCartIdentifier($restRequest)) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
@@ -127,7 +127,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         RestRequestInterface $restRequest,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
-        if (!$this->findCartIdentifier($restRequest)) {
+        if (!$this->findGuestCartIdentifier($restRequest)) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
@@ -158,7 +158,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      */
     public function deleteConfiguredBundle(RestRequestInterface $restRequest): RestResponseInterface
     {
-        if (!$this->findCartIdentifier($restRequest)) {
+        if (!$this->findGuestCartIdentifier($restRequest)) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
@@ -187,13 +187,12 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): CreateConfiguredBundleRequestTransfer {
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setUuid($this->findCartIdentifier($restRequest));
+            ->setUuid($this->findGuestCartIdentifier($restRequest));
 
         $configurableBundleTransfer = (new ConfigurableBundleTemplateTransfer())->fromArray(
             $configurableBundleTemplateStorageTransfer->toArray(),
@@ -219,13 +218,12 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
     public function createUpdateConfiguredBundleRequest(RestRequestInterface $restRequest): UpdateConfiguredBundleRequestTransfer
     {
         $customerTransfer = (new CustomerTransfer())
-            ->setIdCustomer($restRequest->getRestUser()->getSurrogateIdentifier())
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier());
 
         $quoteTransfer = (new QuoteTransfer())
             ->setCustomer($customerTransfer)
             ->setCustomerReference($restRequest->getRestUser()->getNaturalIdentifier())
-            ->setUuid($this->findCartIdentifier($restRequest));
+            ->setUuid($this->findGuestCartIdentifier($restRequest));
 
         return (new UpdateConfiguredBundleRequestTransfer())
             ->setQuote($quoteTransfer)
@@ -237,9 +235,9 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      *
      * @return string|null
      */
-    protected function findCartIdentifier(RestRequestInterface $restRequest): ?string
+    protected function findGuestCartIdentifier(RestRequestInterface $restRequest): ?string
     {
-        $cartsResource = $restRequest->findParentResourceByType(ConfigurableBundleCartsRestApiConfig::RESOURCE_CARTS);
+        $cartsResource = $restRequest->findParentResourceByType(ConfigurableBundleCartsRestApiConfig::RESOURCE_GUEST_CARTS);
 
         return $cartsResource ? $cartsResource->getId() : null;
     }
