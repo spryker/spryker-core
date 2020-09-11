@@ -22,4 +22,17 @@
         <property name="sku" type="string"/>
     </transfer>
 
+    <transfer name="Order">
+        <property name="bundleItems" type="Item[]" singular="bundleItem"/>
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+    </transfer>
+
+    <transfer name="Item">
+    </transfer>
+
+    <transfer name="RestOrderItemsAttributes">
+    </transfer>
+
 </transfers>
