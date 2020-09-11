@@ -8,7 +8,6 @@
 namespace Spryker\Zed\MerchantSalesOrder\Business\Reader;
 
 use ArrayObject;
-use Generated\Shared\Transfer\CalculatedDiscountTransfer;
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -33,17 +32,25 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected $merchantOrderExpanderPlugins;
 
     /**
+     * @var \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface[]
+     */
+    protected $merchantOrderPreExpandPlugins;
+
+    /**
      * @param \Spryker\Zed\MerchantSalesOrder\Dependency\Facade\MerchantSalesOrderToSalesFacadeInterface $salesFacade
      * @param \Spryker\Zed\MerchantSalesOrder\Persistence\MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository
+     * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderPreExpandPluginInterface[] $merchantOrderPreExpandPlugins
      * @param \Spryker\Zed\MerchantSalesOrderExtension\Dependency\Plugin\MerchantOrderExpanderPluginInterface[] $merchantOrderExpanderPlugins
      */
     public function __construct(
         MerchantSalesOrderToSalesFacadeInterface $salesFacade,
         MerchantSalesOrderRepositoryInterface $merchantSalesOrderRepository,
+        array $merchantOrderPreExpandPlugins,
         array $merchantOrderExpanderPlugins
     ) {
         $this->salesFacade = $salesFacade;
         $this->merchantSalesOrderRepository = $merchantSalesOrderRepository;
+        $this->merchantOrderPreExpandPlugins = $merchantOrderPreExpandPlugins;
         $this->merchantOrderExpanderPlugins = $merchantOrderExpanderPlugins;
     }
 
@@ -69,6 +76,8 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
                 $this->merchantSalesOrderRepository->getUniqueProductsCount($merchantOrderTransfer->getIdMerchantOrder())
             );
         }
+
+        $merchantOrderTransfer = $this->executeMerchantOrderPreExpandPlugins($merchantOrderTransfer);
 
         return $this->executeMerchantOrderExpanderPlugins($merchantOrderTransfer);
     }
@@ -104,6 +113,20 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     {
         foreach ($this->merchantOrderExpanderPlugins as $merchantOrderExpanderPlugin) {
             $merchantOrderTransfer = $merchantOrderExpanderPlugin->expand($merchantOrderTransfer);
+        }
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer
+     */
+    protected function executeMerchantOrderPreExpandPlugins(MerchantOrderTransfer $merchantOrderTransfer): MerchantOrderTransfer
+    {
+        foreach ($this->merchantOrderPreExpandPlugins as $merchantOrderPreExpandPlugin) {
+            $merchantOrderTransfer = $merchantOrderPreExpandPlugin->execute($merchantOrderTransfer);
         }
 
         return $merchantOrderTransfer;
@@ -153,24 +176,14 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
     protected function filterOrder(OrderTransfer $orderTransfer, MerchantOrderTransfer $merchantOrderTransfer): OrderTransfer
     {
         $merchantOrderItemIds = [];
-        $orderTransfers = new ArrayObject();
+        $orderItemTransfers = new ArrayObject();
+
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
             $merchantOrderItemIds[] = $merchantOrderItem->getIdOrderItem();
-            $orderTransfers->append($merchantOrderItem->getOrderItem());
+            $orderItemTransfers->append($merchantOrderItem->getOrderItem());
         }
 
-        $calculatedDiscountTransfers = array_filter(
-            $orderTransfer->getCalculatedDiscounts()->getArrayCopy(),
-            function (CalculatedDiscountTransfer $calculatedDiscountTransfer) use ($merchantOrderItemIds) {
-                return $calculatedDiscountTransfer->getFkSalesOrderItem() === null || in_array($calculatedDiscountTransfer->getFkSalesOrderItem(), $merchantOrderItemIds);
-            }
-        );
-
-        $orderTransfer->setCalculatedDiscounts(
-            new ArrayObject($calculatedDiscountTransfers)
-        );
-
-        $orderTransfer->setItems($orderTransfers);
+        $orderTransfer->setItems($orderItemTransfers);
 
         return $orderTransfer;
     }
