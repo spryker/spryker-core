@@ -38,14 +38,15 @@ class ProductOfferAvailabilityExpander implements ProductOfferAvailabilityExpand
             ->getProductOfferAvailabilityRestResources($productOfferReferences);
 
         foreach ($resources as $resource) {
+            $idResource = strtolower($resource->getId());
             if (
                 $resource->getType() !== ProductOfferAvailabilitiesRestApiConfig::RESOURCE_PRODUCT_OFFERS
-                || !isset($productOfferAvailabilityRestResources[$resource->getId()])
+                || !isset($productOfferAvailabilityRestResources[$idResource])
             ) {
                 continue;
             }
 
-            $resource->addRelationship($productOfferAvailabilityRestResources[$resource->getId()]);
+            $resource->addRelationship($productOfferAvailabilityRestResources[$idResource]);
         }
     }
 
