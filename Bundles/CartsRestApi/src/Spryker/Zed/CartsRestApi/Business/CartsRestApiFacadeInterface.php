@@ -264,4 +264,17 @@ interface CartsRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
     public function assignGuestCartToRegisteredCustomer(AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Checks if the cart item is a simple item and present in `QuoteTransfer`.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    public function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool;
 }
