@@ -144,7 +144,10 @@ class ProductAbstractGuiTableConfigurationProvider implements ProductAbstractGui
 
         $storeOptions = [];
         foreach ($storeTransfers as $storeTransfer) {
-            $storeOptions[$storeTransfer->getIdStore()] = $storeTransfer->getName();
+            if ($storeTransfer->getName() === null) {
+                continue;
+            }
+            $storeOptions[(int)$storeTransfer->getIdStore()] = $storeTransfer->getName();
         }
 
         return $storeOptions;

@@ -97,14 +97,14 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $idLocale = $merchantProductTableCriteriaTransfer->requireLocale()->getLocale()->requireIdLocale()->getIdLocale();
         $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
-        $merchantProductAbstractPropelQuery->joinProductAbstract()
+        $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
+            ->joinProductAbstract()
             ->useProductAbstractQuery()
                 ->joinSpyProductAbstractLocalizedAttributes()
                 ->useSpyProductAbstractLocalizedAttributesQuery()
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->filterByFkMerchant($idMerchant)
             ->select([
                 ProductAbstractTransfer::ID_PRODUCT_ABSTRACT,
                 ProductAbstractTransfer::SKU,
