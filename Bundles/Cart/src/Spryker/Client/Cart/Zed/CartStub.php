@@ -8,6 +8,7 @@
 namespace Spryker\Client\Cart\Zed;
 
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
@@ -51,6 +52,21 @@ class CartStub extends ZedRequestStub implements CartStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/add-to-cart', $cartChangeTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\Cart\Communication\Controller\GatewayController::replaceItemAction()
+     *
+     * @param \Generated\Shared\Transfer\CartItemReplaceTransfer $cartItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(CartItemReplaceTransfer $cartItemReplaceTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedStub->call('/cart/gateway/replace-item', $cartItemReplaceTransfer);
 
         return $quoteResponseTransfer;
     }

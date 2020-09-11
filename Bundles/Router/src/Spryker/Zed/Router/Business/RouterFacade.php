@@ -21,6 +21,8 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\ChainRouter
      */
     public function getRouter(): ChainRouter
@@ -33,6 +35,8 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      *
      * @api
      *
+     * @internal
+     *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
     public function getZedRouter(): RouterInterface
@@ -44,6 +48,8 @@ class RouterFacade extends AbstractFacade implements RouterFacadeInterface
      * {@inheritDoc}
      *
      * @api
+     *
+     * @internal
      *
      * @return \Spryker\Zed\Router\Business\Router\RouterInterface
      */
