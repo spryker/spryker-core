@@ -197,9 +197,11 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             ->requireItems()
             ->requireConfiguredBundle()
             ->getConfiguredBundle()
+                ->requireQuantity()
                 ->requireTemplate()
                 ->getTemplate()
-                    ->requireUuid();
+                    ->requireUuid()
+                    ->requireName();
     }
 
     /**

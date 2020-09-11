@@ -101,13 +101,6 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
      */
     protected function getSlimConfiguredBundleTransfer(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundleTransfer
     {
-        $configuredBundleTransfer
-            ->requireQuantity()
-            ->requireTemplate()
-            ->getTemplate()
-                ->requireUuid()
-                ->requireName();
-
         $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
 
         return (new ConfiguredBundleTransfer())

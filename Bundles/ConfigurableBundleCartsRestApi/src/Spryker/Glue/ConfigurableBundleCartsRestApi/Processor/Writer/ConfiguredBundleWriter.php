@@ -136,7 +136,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         }
 
         $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($restRequest)
-            ->setGroupKey($restRequest->getResource()->getId())
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
@@ -162,9 +161,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
-        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($restRequest)
-            ->setGroupKey($restRequest->getResource()->getId());
-
+        $updateConfiguredBundleRequestTransfer = $this->createUpdateConfiguredBundleRequest($restRequest);
         $quoteResponseTransfer = $this->configurableBundleCartsRestApiClient->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
