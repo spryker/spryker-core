@@ -80,6 +80,15 @@ class IsItemInQuoteCartsRestApiFacadeTest extends Unit
                 false,
                 'Missing item must not be findable',
             ],
+            [
+                (new CartItemRequestBuilder([CartItemRequestTransfer::GROUP_KEY => 'groupKey']))->build(),
+                (new QuoteBuilder())->withItem([
+                    ItemTransfer::GROUP_KEY => 'groupKey',
+                    ItemTransfer::RELATED_BUNDLE_ITEM_IDENTIFIER => 'rel',
+                ])->build(),
+                false,
+                'Item that is part of a bundle should not be findable',
+            ],
         ];
     }
 }

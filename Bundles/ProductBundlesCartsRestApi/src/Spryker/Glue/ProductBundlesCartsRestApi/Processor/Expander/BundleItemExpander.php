@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\RestResource\ProductBundlesCartsRestApiToCartsRestApiResourceInterface;
@@ -67,11 +68,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     public function addBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_CARTS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
+            if (!$this->isCartsResourceValid($resource)) {
                 continue;
             }
 
@@ -104,11 +101,7 @@ class BundleItemExpander implements BundleItemExpanderInterface
     public function addGuestBundleItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
         foreach ($resources as $resource) {
-            if (
-                $resource->getType() !== ProductBundlesCartsRestApiConfig::RESOURCE_GUEST_CARTS
-                || !$resource->getPayload()
-                || !$resource->getPayload() instanceof QuoteTransfer
-            ) {
+            if (!$this->isGuestCartsResourceValid($resource)) {
                 continue;
             }
 
@@ -153,5 +146,29 @@ class BundleItemExpander implements BundleItemExpanderInterface
         }
 
         return $bundleItemTransfers;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return bool
+     */
+    protected function isCartsResourceValid(RestResourceInterface $resource): bool
+    {
+        return $resource->getType() === ProductBundlesCartsRestApiConfig::RESOURCE_CARTS
+            && $resource->getPayload()
+            && $resource->getPayload() instanceof QuoteTransfer;
+    }
+
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $resource
+     *
+     * @return bool
+     */
+    protected function isGuestCartsResourceValid(RestResourceInterface $resource): bool
+    {
+        return $resource->getType() === ProductBundlesCartsRestApiConfig::RESOURCE_GUEST_CARTS
+            && $resource->getPayload()
+            && $resource->getPayload() instanceof QuoteTransfer;
     }
 }

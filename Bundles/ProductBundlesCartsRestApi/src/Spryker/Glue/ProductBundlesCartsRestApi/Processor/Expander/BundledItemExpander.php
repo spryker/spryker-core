@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductBundlesCartsRestApi\Processor\Expander;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
+use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\Client\ProductBundlesCartsRestApiToProductBundleClientInterface;
 use Spryker\Glue\ProductBundlesCartsRestApi\Dependency\RestResource\ProductBundlesCartsRestApiToCartsRestApiResourceInterface;
@@ -65,6 +66,8 @@ class BundledItemExpander implements BundledItemExpanderInterface
      */
     public function addBundledItemResourceRelationships(array $resources, RestRequestInterface $restRequest): void
     {
+        $localeName = $restRequest->getMetadata()->getLocale();
+
         foreach ($resources as $resource) {
             if (!$resource->getPayload() || !$resource->getPayload() instanceof QuoteTransfer) {
                 continue;
@@ -75,28 +78,13 @@ class BundledItemExpander implements BundledItemExpanderInterface
 
             $groupedBundledItems = $this->getGroupedBundledItems($quoteTransfer);
 
-            foreach ($groupedBundledItems as $itemGroupKey => $groupedBundledItem) {
-                if ($itemGroupKey !== $resource->getId()) {
-                    continue;
-                }
-
-                foreach ($groupedBundledItem as $bundledItemTransfer) {
-                    $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
-                        $bundledItemTransfer,
-                        (new RestItemsAttributesTransfer()),
-                        $restRequest->getMetadata()->getLocale()
-                    );
-
-                    $bundledItemRestResource = $this->bundleItemRestResponseBuilder
-                        ->createBundledItemResource($bundledItemTransfer, $restItemsAttributesTransfer);
-
-                    $resource->addRelationship($bundledItemRestResource);
-                }
-            }
+            $this->addRelationships($groupedBundledItems, $resource, $localeName);
         }
     }
 
     /**
+     * @phpstan-return array<string, array<\Generated\Shared\Transfer\ItemTransfer>>
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return \Generated\Shared\Transfer\ItemTransfer[][]
@@ -118,5 +106,36 @@ class BundledItemExpander implements BundledItemExpanderInterface
         }
 
         return $bundledItemTransfers;
+    }
+
+    /**
+     * @phpstan-param array<string, array<\Generated\Shared\Transfer\ItemTransfer>> $groupedBundledItems
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer[][] $groupedBundledItems
+     * @param \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface $restResource
+     * @param string $localeName
+     *
+     * @return void
+     */
+    protected function addRelationships(array $groupedBundledItems, RestResourceInterface $restResource, string $localeName): void
+    {
+        foreach ($groupedBundledItems as $itemGroupKey => $groupedBundledItem) {
+            if ($itemGroupKey !== $restResource->getId()) {
+                continue;
+            }
+
+            foreach ($groupedBundledItem as $bundledItemTransfer) {
+                $restItemsAttributesTransfer = $this->cartsRestApiResource->mapItemTransferToRestItemsAttributesTransfer(
+                    $bundledItemTransfer,
+                    (new RestItemsAttributesTransfer()),
+                    $localeName
+                );
+
+                $bundledItemRestResource = $this->bundleItemRestResponseBuilder
+                    ->createBundledItemResource($bundledItemTransfer, $restItemsAttributesTransfer);
+
+                $restResource->addRelationship($bundledItemRestResource);
+            }
+        }
     }
 }

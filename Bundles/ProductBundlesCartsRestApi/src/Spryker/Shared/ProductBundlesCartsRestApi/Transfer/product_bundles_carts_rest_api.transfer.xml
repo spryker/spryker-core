@@ -51,4 +51,8 @@
         <property name="groupKey" type="string"/>
     </transfer>
 
+    <transfer name="CartItemRequest">
+        <property name="groupKey" type="string"/>
+    </transfer>
+
 </transfers>
