@@ -38,4 +38,15 @@ describe('ProductListTableComponent', () => {
 
         expect(tableComponent.properties.config).toEqual(mockTableConfig);
     });
+
+    it('should bind @Input(tableId) to `tableId` of `spy-table` component', () => {
+        const mockTableId = 'mockTableId';
+
+        const tableComponent = fixture.debugElement.query(By.css('spy-table'));
+
+        component.tableId = mockTableId;
+        fixture.detectChanges();
+
+        expect(tableComponent.properties.tableId).toEqual(mockTableId);
+    });
 });

@@ -44,4 +44,15 @@ describe('ProductListComponent', () => {
 
         expect(offerTableComponent.properties.config).toEqual(mockTableConfig);
     });
+
+    it('should bind @Input(tableId) to `tableId` of `mp-product-list-table` component', () => {
+        const mockTableId = 'mockTableId';
+
+        const tableComponent = fixture.debugElement.query(By.css('mp-product-list-table'));
+
+        component.tableId = mockTableId;
+        fixture.detectChanges();
+
+        expect(tableComponent.properties.tableId).toEqual(mockTableId);
+    });
 });
