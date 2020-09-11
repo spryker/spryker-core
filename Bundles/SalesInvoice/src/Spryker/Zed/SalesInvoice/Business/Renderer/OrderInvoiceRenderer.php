@@ -7,10 +7,10 @@
 
 namespace Spryker\Zed\SalesInvoice\Business\Renderer;
 
-use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\OrderInvoiceTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 use Twig\Environment;
 
 class OrderInvoiceRenderer implements OrderInvoiceRendererInterface

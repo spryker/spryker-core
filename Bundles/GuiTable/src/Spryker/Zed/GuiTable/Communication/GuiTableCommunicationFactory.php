@@ -7,8 +7,6 @@
 
 namespace Spryker\Zed\GuiTable\Communication;
 
-use Spryker\Shared\Twig\TwigFunctionProvider;
-use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpander;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
@@ -26,7 +24,9 @@ use Spryker\Shared\GuiTable\Http\HttpJsonResponseBuilder;
 use Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface;
 use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizer;
 use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslator;
+use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider;
 use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface;
 use Spryker\Zed\GuiTable\GuiTableDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;

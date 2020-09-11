@@ -14,10 +14,10 @@ use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
-use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 
 class GuiTableConfigurationFunctionProvider extends TwigFunctionProvider
 {
