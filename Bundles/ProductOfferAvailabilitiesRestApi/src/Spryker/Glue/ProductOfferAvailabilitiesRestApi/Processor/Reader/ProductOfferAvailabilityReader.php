@@ -59,7 +59,7 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
-        $idProductOfferRestResource = strtolower($productOfferRestResource->getId());
+        $idProductOfferRestResource = mb_strtolower($productOfferRestResource->getId());
         $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$idProductOfferRestResource]);
 
         $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$idProductOfferRestResource] ?? null;
