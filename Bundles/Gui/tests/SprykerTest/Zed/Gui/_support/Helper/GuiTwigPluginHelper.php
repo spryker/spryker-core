@@ -30,7 +30,7 @@ use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeTwigPlugin;
 use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlTwigPlugin;
 use SprykerTest\Zed\Twig\Helper\TwigHelperTrait;
 
-class TwigPluginHelper extends Module
+class GuiTwigPluginHelper extends Module
 {
     use TwigHelperTrait;
 
