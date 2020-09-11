@@ -8,11 +8,9 @@
 namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
-use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundlesAttributesTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 
 interface ConfiguredBundleMapperInterface
 {
@@ -37,15 +35,4 @@ interface ConfiguredBundleMapperInterface
         QuoteErrorTransfer $quoteErrorTransfer,
         RestErrorMessageTransfer $restErrorMessageTransfer
     ): RestErrorMessageTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
-     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
-     *
-     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
-     */
-    public function mapItemTransferToRestItemsAttributesTransfer(
-        ItemTransfer $itemTransfer,
-        RestItemsAttributesTransfer $restItemsAttributesTransfer
-    ): RestItemsAttributesTransfer;
 }

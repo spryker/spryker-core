@@ -31,13 +31,13 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
-    public const RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION = '6665'; // TODO: replace it to correct
-    public const RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = '6666'; // TODO: replace it to correct
-    public const RESPONSE_CODE_CONFIGURED_BUNDLE_WRONG_QUANTITY = '6667'; // TODO: replace it to correct
-    public const RESPONSE_CODE_CONFIGURED_BUNDLE_NOT_FOUND = '6668'; // TODO: replace it to correct
-    public const RESPONSE_CODE_FAILED_ADDING_CONFIGURED_BUNDLE = '6669'; // TODO: replace it to correct
-    public const RESPONSE_CODE_FAILED_UPDATING_CONFIGURED_BUNDLE = '6650'; // TODO: replace it to correct
-    public const RESPONSE_CODE_FAILED_REMOVING_CONFIGURED_BUNDLE = '6671'; // TODO: replace it to correct
+    public const RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION = '4001';
+    public const RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = '4002';
+    public const RESPONSE_CODE_CONFIGURED_BUNDLE_WRONG_QUANTITY = '4003';
+    public const RESPONSE_CODE_CONFIGURED_BUNDLE_NOT_FOUND = '4004';
+    public const RESPONSE_CODE_FAILED_ADDING_CONFIGURED_BUNDLE = '4005';
+    public const RESPONSE_CODE_FAILED_UPDATING_CONFIGURED_BUNDLE = '4006';
+    public const RESPONSE_CODE_FAILED_REMOVING_CONFIGURED_BUNDLE = '4007';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
@@ -46,9 +46,9 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
     public const EXCEPTION_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template not found.';
     public const EXCEPTION_MESSAGE_CONFIGURED_BUNDLE_WRONG_QUANTITY = 'The quantity of the configured bundle should be more than zero.';
     public const EXCEPTION_MESSAGE_CONFIGURED_BUNDLE_NOT_FOUND = 'Configured bundle with provided group key not found in cart.';
-    public const EXCEPTION_MESSAGE_FAILED_ADDING_CONFIGURED_BUNDLE = 'Configured bundle could not be added.';
-    public const EXCEPTION_MESSAGE_FAILED_UPDATING_CONFIGURED_BUNDLE = 'Configured bundle could not be updated.';
-    public const EXCEPTION_MESSAGE_FAILED_REMOVING_CONFIGURED_BUNDLE = 'Configured bundle could not be removed.';
+    public const EXCEPTION_MESSAGE_FAILED_ADDING_CONFIGURED_BUNDLE = 'The configured bundle could not be added.';
+    public const EXCEPTION_MESSAGE_FAILED_UPDATING_CONFIGURED_BUNDLE = 'The configured bundle could not be updated.';
+    public const EXCEPTION_MESSAGE_FAILED_REMOVING_CONFIGURED_BUNDLE = 'The configured bundle could not be removed.';
 
     /**
      * @api

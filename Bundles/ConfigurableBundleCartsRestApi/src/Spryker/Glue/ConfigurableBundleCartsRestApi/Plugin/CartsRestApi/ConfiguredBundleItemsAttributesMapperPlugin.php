@@ -19,7 +19,7 @@ class ConfiguredBundleItemsAttributesMapperPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * - Maps ItemTransfer product options to RestOrderItemsAttributesTransfer configured bundle information.
+     * - Maps `item.configuredBundle` and `item.configuredBundleItem` to `restItemsAttributes`.
      *
      * @api
      *
@@ -34,12 +34,8 @@ class ConfiguredBundleItemsAttributesMapperPlugin extends AbstractPlugin impleme
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        $itemTransfer = $this->getFactory()
-            ->createConfiguredBundleTranslator()
-            ->translateItemTransfer($itemTransfer, $localeName);
-
         return $this->getFactory()
-            ->createConfiguredBundleMapper()
-            ->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $restItemsAttributesTransfer);
+            ->createItemMapper()
+            ->mapItemToRestItemsAttributes($itemTransfer, $restItemsAttributesTransfer, $localeName);
     }
 }
