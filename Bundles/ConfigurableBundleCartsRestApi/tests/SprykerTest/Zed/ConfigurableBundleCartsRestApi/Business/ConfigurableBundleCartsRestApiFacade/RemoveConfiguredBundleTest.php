@@ -27,10 +27,10 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBun
  * @group ConfigurableBundleCartsRestApi
  * @group Business
  * @group ConfigurableBundleCartsRestApiFacade
- * @group UpdateConfiguredBundleQuantityTest
+ * @group RemoveConfiguredBundleTest
  * Add your own group annotations below this line
  */
-class UpdateConfiguredBundleQuantityTest extends Unit
+class RemoveConfiguredBundleTest extends Unit
 {
     protected const FAKE_QUOTE_UUID = 'FAKE_QUOTE_UUID';
 
@@ -40,9 +40,9 @@ class UpdateConfiguredBundleQuantityTest extends Unit
     protected const ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION = 'ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION';
 
     /**
-     * @uses \Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE
+     * @uses \Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE
      */
-    protected const ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE';
+    protected const ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE = 'ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE';
 
     /**
      * @var \SprykerTest\Zed\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiBusinessTester
@@ -70,41 +70,23 @@ class UpdateConfiguredBundleQuantityTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityUpdatesConfiguredBundleQuantity(): void
+    public function testRemoveConfiguredBundleUpdatesConfiguredBundleQuantity(): void
     {
         // Arrange
-        $bundleQuantity = 2;
-        $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest($bundleQuantity);
+        $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
 
         // Act
-        $quoteResponseTransfer = $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $firstItemTransfer */
-        $firstItemTransfer = $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0);
-
-        /** @var \Generated\Shared\Transfer\ItemTransfer $secondItemTransfer */
-        $secondItemTransfer = $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1);
-
-        $this->assertSame($bundleQuantity, $firstItemTransfer->getConfiguredBundle()->getQuantity());
-        $this->assertSame($bundleQuantity, $secondItemTransfer->getConfiguredBundle()->getQuantity());
-
-        $this->assertSame(
-            $bundleQuantity * $firstItemTransfer->getConfiguredBundleItem()->getQuantityPerSlot(),
-            $firstItemTransfer->getQuantity()
-        );
-        $this->assertSame(
-            $bundleQuantity * $secondItemTransfer->getConfiguredBundleItem()->getQuantityPerSlot(),
-            $secondItemTransfer->getQuantity()
-        );
+        $this->assertEmpty($quoteResponseTransfer->getQuoteTransfer()->getItems());
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyGroupKeyField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyGroupKeyField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -114,13 +96,13 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyQuoteField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyQuoteField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -130,13 +112,13 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyQuoteUuidField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyQuoteUuidField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -146,13 +128,13 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyCustomerField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyCustomerField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -162,13 +144,13 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyQuoteCustomerReferenceField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyQuoteCustomerReferenceField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -178,13 +160,13 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityThrowsExceptionWithEmptyCustomerReferenceField(): void
+    public function testRemoveConfiguredBundleThrowsExceptionWithEmptyCustomerReferenceField(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -194,20 +176,20 @@ class UpdateConfiguredBundleQuantityTest extends Unit
         $this->expectException(RequiredTransferPropertyException::class);
 
         // Act
-        $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
     }
 
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityUpdatesConfiguredBundleQuantityInFakePersistentCart(): void
+    public function testRemoveConfiguredBundleRemovesConfiguredBundleFromFakePersistentCart(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
         $updateConfiguredBundleRequestTransfer->getQuote()->setUuid(static::FAKE_QUOTE_UUID);
 
         // Act
-        $quoteResponseTransfer = $this->tester->getFacade()->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -216,7 +198,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityUpdatesConfiguredBundleQuantityInPersistentCartWithoutWritePermissions(): void
+    public function testRemoveConfiguredBundleRemovesConfiguredBundleFromPersistentCartWithoutWritePermissions(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -232,7 +214,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
 
         // Act
         $quoteResponseTransfer = $this->tester->getFacadeMock($configurableBundleCartsRestApiBusinessFactoryMock)
-            ->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+            ->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
@@ -245,7 +227,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateConfiguredBundleQuantityUpdatesConfiguredBundleQuantityInPersistentCartWithErrorDuringPersistentFacadeCall(): void
+    public function testRemoveConfiguredBundleRemovesConfiguredBundleFromPersistentCartWithErrorDuringPersistentFacadeCall(): void
     {
         // Arrange
         $updateConfiguredBundleRequestTransfer = $this->tester->buildUpdateConfiguredBundleRequest();
@@ -261,12 +243,12 @@ class UpdateConfiguredBundleQuantityTest extends Unit
 
         // Act
         $quoteResponseTransfer = $this->tester->getFacadeMock($configurableBundleCartsRestApiBusinessFactoryMock)
-            ->updateConfiguredBundleQuantity($updateConfiguredBundleRequestTransfer);
+            ->removeConfiguredBundle($updateConfiguredBundleRequestTransfer);
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
         $this->assertEquals(
-            static::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE,
+            static::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE,
             $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
         );
     }
@@ -294,12 +276,12 @@ class UpdateConfiguredBundleQuantityTest extends Unit
     protected function getConfigurableBundleCartsRestApiToPersistentCartFacadeBridgeMock(): ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge
     {
         $configurableBundleCartsRestApiToPersistentCartFacadeBridgeMock = $this->getMockBuilder(ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge::class)
-            ->onlyMethods(['updateQuantity'])
+            ->onlyMethods(['remove'])
             ->disableOriginalConstructor()
             ->getMock();
 
         $configurableBundleCartsRestApiToPersistentCartFacadeBridgeMock
-            ->method('updateQuantity')
+            ->method('remove')
             ->willReturn((new QuoteResponseTransfer())->setIsSuccessful(false));
 
         return $configurableBundleCartsRestApiToPersistentCartFacadeBridgeMock;
