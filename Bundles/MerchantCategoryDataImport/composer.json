@@ -12,10 +12,7 @@
     "spryker/merchant-category": "^0.1.0"
   },
   "require-dev": {
-    "spryker/category": "*",
     "spryker/code-sniffer": "*",
-    "spryker/merchant": "*",
-    "spryker/merchant-category": "*",
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
