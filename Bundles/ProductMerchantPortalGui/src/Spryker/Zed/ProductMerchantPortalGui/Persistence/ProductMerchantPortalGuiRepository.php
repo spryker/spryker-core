@@ -98,6 +98,7 @@ class ProductMerchantPortalGuiRepository extends AbstractRepository implements P
         $idMerchant = $merchantProductTableCriteriaTransfer->requireIdMerchant()->getIdMerchant();
 
         $merchantProductAbstractPropelQuery->filterByFkMerchant($idMerchant)
+            ->distinct()
             ->joinProductAbstract()
             ->useProductAbstractQuery()
                 ->joinSpyProductAbstractLocalizedAttributes()

@@ -101,14 +101,14 @@ class ProductAbstractTableDataMapper
                 $productAbstractTableRowDataArray[ProductAbstractTransfer::ATTRIBUTES],
                 true
             );
-            $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES] = explode(
+            $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES] = array_filter(explode(
                 ',',
                 $productAbstractTableRowDataArray[ProductAbstractTransfer::STORE_NAMES]
-            );
-            $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES] = explode(
+            ));
+            $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES] = array_filter(explode(
                 ',',
                 $productAbstractTableRowDataArray[ProductAbstractTransfer::CATEGORY_NAMES]
-            );
+            ));
 
             $productAbstractTransfer = (new ProductAbstractTransfer())->fromArray($productAbstractTableRowDataArray, true);
             $productAbstractTransfer = $this->mapImageToProductAbstract($productAbstractTableRowDataArray, $productAbstractTransfer);
