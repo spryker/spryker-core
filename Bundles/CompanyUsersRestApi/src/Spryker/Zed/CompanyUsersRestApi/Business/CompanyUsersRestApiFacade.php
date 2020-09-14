@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -53,5 +54,21 @@ class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRe
         return $this->getFactory()
             ->createCompanyUserReader()
             ->getCompanyUserCollection($companyUserCriteriaFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteCustomerWithCompanyUser(QuoteTransfer $quoteTransfer): QuoteTransfer
+    {
+        return $this->getFactory()
+            ->createCompanyUserExpander()
+            ->expandQuoteCustomerWithCompanyUser($quoteTransfer);
     }
 }

@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CompanyUserCollectionTransfer;
 use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
 
 interface CompanyUsersRestApiFacadeInterface
 {
@@ -46,4 +47,17 @@ interface CompanyUsersRestApiFacadeInterface
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
+
+    /**
+     * Specification
+     * - Expands `QuoteTransfer.customer.companyUserTransfer`.
+     * - Works in case `QuoteTransfer.customer.companyUserTransfer.idCompanyUser` is set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteCustomerWithCompanyUser(QuoteTransfer $quoteTransfer): QuoteTransfer;
 }
