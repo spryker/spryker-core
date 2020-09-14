@@ -27,6 +27,7 @@
     </transfer>
 
     <transfer name="RestOrderDetailsAttributes">
+        <property name="bundleItems" type="RestOrderItemsAttributes[]" singular="bundleItem"/>
     </transfer>
 
     <transfer name="Item">
