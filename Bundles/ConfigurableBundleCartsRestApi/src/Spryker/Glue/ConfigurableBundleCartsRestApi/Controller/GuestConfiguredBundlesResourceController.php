@@ -30,8 +30,8 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
      *             "400": "Cart id is missing.",
+     *             "400": "Configurable bundle template not found.",
      *             "403": "Unauthorized cart action.",
-     *             "404": "Cart not found.",
      *             "422": "Errors appeared during configured bundle creation."
      *         }
      *     }
@@ -56,16 +56,17 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *     "patch": {
      *         "path": "/guest-carts/{cartId}/guest-configured-bundles/{configuredBundleId}",
      *         "summary": [
-     *             "Updates configured bundle quantity."
+     *             "Updates configured bundle quantity from the guest cart."
      *         ],
      *         "parameters": [{
      *             "ref": "acceptLanguage"
      *         }],
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
-     *             "400": "Cart id or item id is not specified.",
+     *             "400": "Cart id is missing.",
+     *             "400": "The quantity of the configured bundle should be more than zero.",
      *             "403": "Unauthorized cart action.",
-     *             "404": "Cart or item not found.",
+     *             "400": "Configured bundle with provided group key not found in cart.",
      *             "422": "Errors appeared during configured bundle update."
      *         }
      *     }
@@ -96,10 +97,10 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *             "ref": "acceptLanguage"
      *         }],
      *         "responses": {
-     *             "400": "Cart id or item id is not specified.",
+     *             "400": "Cart id is missing.",
      *             "403": "Unauthorized cart action.",
-     *             "404": "Cart or cart item not found.",
-     *             "422": "Configured bundle could not be deleted."
+     *             "400": "Configured bundle with provided group key not found in cart.",
+     *             "422": "Errors appeared during configured bundle deletion."
      *         }
      *     }
      * })

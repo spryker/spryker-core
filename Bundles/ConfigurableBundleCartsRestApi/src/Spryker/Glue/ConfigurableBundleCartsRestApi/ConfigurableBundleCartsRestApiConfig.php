@@ -31,6 +31,12 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING
      */
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION
+     */
+    public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
+
     public const RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION = '4001';
     public const RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = '4002';
     public const RESPONSE_CODE_CONFIGURED_BUNDLE_WRONG_QUANTITY = '4003';
@@ -43,6 +49,12 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
     public const EXCEPTION_MESSAGE_CART_ID_MISSING = 'Cart uuid is missing.';
+
+    /**
+     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION
+     */
+    public const EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';
+
     public const EXCEPTION_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template not found.';
     public const EXCEPTION_MESSAGE_CONFIGURED_BUNDLE_WRONG_QUANTITY = 'The quantity of the configured bundle should be more than zero.';
     public const EXCEPTION_MESSAGE_CONFIGURED_BUNDLE_NOT_FOUND = 'Configured bundle with provided group key not found in cart.';
@@ -53,7 +65,7 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
     /**
      * @api
      *
-     * @return array
+     * @return (int|string)[][]
      */
     public function getErrorIdentifierToRestErrorMapping(): array
     {
@@ -62,6 +74,11 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_ID_MISSING,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CART_ID_MISSING,
+            ],
+            ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION => [
+                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_FORBIDDEN,
+                RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION,
             ],
             ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND,
