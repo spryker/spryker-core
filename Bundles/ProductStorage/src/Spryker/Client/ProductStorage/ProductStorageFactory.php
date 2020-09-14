@@ -8,6 +8,8 @@
 namespace Spryker\Client\ProductStorage;
 
 use Spryker\Client\Kernel\AbstractFactory;
+use Spryker\Client\ProductStorage\Builder\ProductConcreteStorageUrlBuilder;
+use Spryker\Client\ProductStorage\Builder\ProductConcreteStorageUrlBuilderInterface;
 use Spryker\Client\ProductStorage\Dependency\Client\ProductStorageToStoreClientInterface;
 use Spryker\Client\ProductStorage\Dependency\Service\ProductStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ProductStorage\Filter\ProductAbstractAttributeMapRestrictionFilter;
@@ -156,6 +158,14 @@ class ProductStorageFactory extends AbstractFactory
     public function createProductStorageToProductConcreteTransferDataMapper(): ProductStorageToProductConcreteTransferDataMapperInterface
     {
         return new ProductStorageToProductConcreteTransferDataMapper($this->getProductConcreteExpanderPlugins());
+    }
+
+    /**
+     * @return \Spryker\Client\ProductStorage\Builder\ProductConcreteStorageUrlBuilderInterface
+     */
+    public function createProductConcreteStorageUrlBuilder(): ProductConcreteStorageUrlBuilderInterface
+    {
+        return new ProductConcreteStorageUrlBuilder();
     }
 
     /**
