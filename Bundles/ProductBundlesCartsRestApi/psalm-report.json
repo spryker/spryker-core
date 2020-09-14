@@ -1,0 +1,114 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 28,
+            "line_to": 28,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Dependency/Client/ProductBundlesCartsRestApiToProductBundleClientBridge.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $items",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 29,
+            "line_to": 29,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $bundleItems has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Dependency/Client/ProductBundlesCartsRestApiToProductBundleClientBridge.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $bundleItems",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 15,
+            "line_to": 15,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $items has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Dependency/Client/ProductBundlesCartsRestApiToProductBundleClientInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $items",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 16,
+            "line_to": 16,
+            "type": "MismatchingDocblockParamType",
+            "message": "Parameter $bundleItems has wrong type 'ArrayObject|array<array-key, Generated\\Shared\\Transfer\\ItemTransfer>', should be 'ArrayObject'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Dependency/Client/ProductBundlesCartsRestApiToProductBundleClientInterface.php",
+            "snippet": "     * @param \\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[] $bundleItems",
+            "selected_text": "\\ArrayObject|\\Generated\\Shared\\Transfer\\ItemTransfer[]",
+            "error_level": 4,
+            "shortcode": 141
+        },
+        {
+            "severity": "info",
+            "line_from": 55,
+            "line_to": 55,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Processor/RestResponseBuilder/BundleItemRestResponseBuilder.php",
+            "snippet": "            $quoteTransfer->getUuid(),",
+            "selected_text": "$quoteTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 57,
+            "line_to": 57,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Processor/RestResponseBuilder/BundleItemRestResponseBuilder.php",
+            "snippet": "            $itemTransfer->getGroupKey()",
+            "selected_text": "$itemTransfer->getGroupKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 85,
+            "line_to": 85,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 3 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Processor/RestResponseBuilder/BundleItemRestResponseBuilder.php",
+            "snippet": "            $quoteTransfer->getUuid(),",
+            "selected_text": "$quoteTransfer->getUuid()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 87,
+            "line_to": 87,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 5 of sprintf cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Glue/ProductBundlesCartsRestApi/Processor/RestResponseBuilder/BundleItemRestResponseBuilder.php",
+            "snippet": "            $itemTransfer->getGroupKey()",
+            "selected_text": "$itemTransfer->getGroupKey()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 25,
+            "line_to": 25,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesCartsRestApi/src/Spryker/Zed/ProductBundlesCartsRestApi/Business/Checker/BundleItemChecker.php",
+            "snippet": "        if (!$quoteTransfer->getBundleItems()->count()) {",
+            "selected_text": "count",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

@@ -59,21 +59,22 @@ class BundledProductReader implements BundledProductReaderInterface
             ProductBundlesRestApiConfig::RESOURCE_CONCRETE_PRODUCTS
         );
 
-        if (!$productConcreteResource || !$productConcreteResource->getId()) {
+        $productConcreteSku = $productConcreteResource->getId();
+        if (!$productConcreteResource || !$productConcreteSku) {
             return $this->bundledProductRestResponseBuilder->createProductConcreteSkuNotSpecifiedErrorResponse();
         }
 
         $bundledProductRestResources = $this->getBundledProductRestResourcesByProductConcreteSkus(
-            [$productConcreteResource->getId()],
+            [$productConcreteSku],
             $restRequest
         );
 
-        if (!isset($bundledProductRestResources[$productConcreteResource->getId()])) {
+        if (!isset($bundledProductRestResources[$productConcreteSku])) {
             return $this->bundledProductRestResponseBuilder->createBundledProductEmptyRestResponse();
         }
 
         return $this->bundledProductRestResponseBuilder
-            ->createBundledProductCollectionRestResponse($bundledProductRestResources[$productConcreteResource->getId()]);
+            ->createBundledProductCollectionRestResponse($bundledProductRestResources[$productConcreteSku]);
     }
 
     /**
@@ -107,6 +108,8 @@ class BundledProductReader implements BundledProductReaderInterface
     }
 
     /**
+     * @phpstan-return array<string, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
+     *
      * @param string[] $productConcreteSkus
      * @param string $localeName
      *
@@ -127,7 +130,8 @@ class BundledProductReader implements BundledProductReaderInterface
         $productBundleStorageTransfers = $this->productBundleStorageClient->getProductBundles($productConcreteIds);
         $productBundleStorageTransfersIndexedBySku = [];
         foreach ($productBundleStorageTransfers as $idProductConcrete => $productBundleStorageTransfer) {
-            $productConcreteSku = array_search($idProductConcrete, $productConcreteIds);
+            /** @var string $productConcreteSku */
+            $productConcreteSku = array_search($idProductConcrete, $productConcreteIds, true);
             $productBundleStorageTransfersIndexedBySku[$productConcreteSku] = $productBundleStorageTransfer;
         }
 
