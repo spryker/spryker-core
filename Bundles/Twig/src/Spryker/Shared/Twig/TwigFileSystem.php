@@ -159,7 +159,7 @@ class TwigFileSystem extends FilesystemLoader
      *
      * @return void
      */
-    private function validateName(string $name): void
+    protected function validateName(string $name): void
     {
         if (strpos($name, "\0") !== false) {
             throw new LoaderError('A template name cannot contain NUL bytes.');
