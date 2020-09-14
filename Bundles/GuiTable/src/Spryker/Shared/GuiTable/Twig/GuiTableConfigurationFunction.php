@@ -7,7 +7,13 @@
 
 namespace Spryker\Shared\GuiTable\Twig;
 
+use Generated\Shared\Transfer\GuiTableBatchActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableDataSourceConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableFiltersConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
 use Spryker\Shared\GuiTable\Configuration\Expander\ConfigurationDefaultValuesExpanderInterface;
 use Spryker\Shared\GuiTable\Configuration\Translator\ConfigurationTranslatorInterface;
 use Spryker\Shared\GuiTable\Dependency\Service\GuiTableToUtilEncodingServiceInterface;
@@ -15,24 +21,7 @@ use Spryker\Shared\Twig\TwigFunction;
 
 class GuiTableConfigurationFunction extends TwigFunction
 {
-    protected const CONFIG_COLUMNS = 'columns';
-    protected const CONFIG_DATA_SOURCE = 'dataSource';
-    protected const CONFIG_DATA_SOURCE_URL = 'url';
-    protected const CONFIG_DATA_SOURCE_TYPE = 'type';
-    protected const CONFIG_PAGINATION = 'pagination';
-    protected const CONFIG_FILTERS = 'filters';
-    protected const CONFIG_ROW_ACTIONS = 'rowActions';
-    protected const CONFIG_ROW_ACTIONS_CLICK = 'click';
-    protected const CONFIG_BATCH_ACTIONS = 'batchActions';
-    protected const CONFIG_BATCH_NO_ACTIONS_MESSAGE = 'noActionsMessage';
-    protected const CONFIG_AVAILABLE_ACTIONS_PATH = 'availableActionsPath';
-    protected const CONFIG_ROW_ID_PATH = 'rowIdPath';
-    protected const CONFIG_SEARCH = 'search';
-    protected const CONFIG_ITEM_SELECTION = 'itemSelection';
-    protected const CONFIG_SYNC_STATE_URL = 'syncStateUrl';
     protected const CONFIG_ENABLED = 'enabled';
-    protected const CONFIG_ACTIONS = 'actions';
-    protected const CONFIG_SIZES = 'sizes';
     protected const CONFIG_ITEMS = 'items';
 
     /**
@@ -84,15 +73,16 @@ class GuiTableConfigurationFunction extends TwigFunction
             $guiTableConfigurationTransfer = $this->configurationTranslator->translateConfiguration($guiTableConfigurationTransfer);
 
             $configuration = [
-                static::CONFIG_COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
-                static::CONFIG_DATA_SOURCE => $this->prepareDataSourceData($guiTableConfigurationTransfer),
-                static::CONFIG_PAGINATION => $this->preparePaginationData($guiTableConfigurationTransfer),
-                static::CONFIG_FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
-                static::CONFIG_ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
-                static::CONFIG_BATCH_ACTIONS => $this->prepareBatchActions($guiTableConfigurationTransfer),
-                static::CONFIG_SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
-                static::CONFIG_ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
-                static::CONFIG_SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::TITLE => $this->prepareTitle($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::COLUMNS => $this->prepareColumnsConfigurationData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::DATA_SOURCE => $this->prepareDataSourceData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::PAGINATION => $this->preparePaginationData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::FILTERS => $this->prepareFiltersConfigurationData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::ROW_ACTIONS => $this->prepareRowActions($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::BATCH_ACTIONS => $this->prepareBatchActions($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::SEARCH => $this->prepareSearchData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::ITEM_SELECTION => $this->prepareItemSelectionData($guiTableConfigurationTransfer),
+                GuiTableConfigurationTransfer::SYNC_STATE_URL => $this->prepareSyncStateUrlData($guiTableConfigurationTransfer),
             ];
 
             if (count($overwrite)) {
@@ -129,8 +119,8 @@ class GuiTableConfigurationFunction extends TwigFunction
         $guiTableDataSourceConfigurationTransfer = $guiTableConfigurationTransfer->getDataSource();
 
         return [
-            static::CONFIG_DATA_SOURCE_TYPE => $guiTableDataSourceConfigurationTransfer->getType(),
-            static::CONFIG_DATA_SOURCE_URL => $guiTableDataSourceConfigurationTransfer->getUrl(),
+            GuiTableDataSourceConfigurationTransfer::TYPE => $guiTableDataSourceConfigurationTransfer->getType(),
+            GuiTableDataSourceConfigurationTransfer::URL => $guiTableDataSourceConfigurationTransfer->getUrl(),
         ];
     }
 
@@ -145,7 +135,7 @@ class GuiTableConfigurationFunction extends TwigFunction
 
         return [
             static::CONFIG_ENABLED => $guiTablePaginationConfigurationTransfer->getIsEnabled(),
-            static::CONFIG_SIZES => $guiTablePaginationConfigurationTransfer->getSizes(),
+            GuiTablePaginationConfigurationTransfer::SIZES => $guiTablePaginationConfigurationTransfer->getSizes(),
         ];
     }
 
@@ -166,7 +156,7 @@ class GuiTableConfigurationFunction extends TwigFunction
 
         return [
             static::CONFIG_ENABLED => $guiTableFiltersConfigurationTransfer->getIsEnabled(),
-            static::CONFIG_ITEMS => $filtersItems,
+            GuiTableFiltersConfigurationTransfer::ITEMS => $filtersItems,
         ];
     }
 
@@ -187,10 +177,10 @@ class GuiTableConfigurationFunction extends TwigFunction
 
         return [
             static::CONFIG_ENABLED => $guiTableRowActionsConfigurationTransfer->getIsEnabled(),
-            static::CONFIG_ROW_ACTIONS_CLICK => $guiTableRowActionsConfigurationTransfer->getClick(),
-            static::CONFIG_AVAILABLE_ACTIONS_PATH => $guiTableRowActionsConfigurationTransfer->getAvailableActionsPath(),
-            static::CONFIG_ROW_ID_PATH => $guiTableRowActionsConfigurationTransfer->getRowIdPath(),
-            static::CONFIG_ACTIONS => $actions,
+            GuiTableRowActionsConfigurationTransfer::CLICK => $guiTableRowActionsConfigurationTransfer->getClick(),
+            GuiTableRowActionsConfigurationTransfer::AVAILABLE_ACTIONS_PATH => $guiTableRowActionsConfigurationTransfer->getAvailableActionsPath(),
+            GuiTableRowActionsConfigurationTransfer::ROW_ID_PATH => $guiTableRowActionsConfigurationTransfer->getRowIdPath(),
+            GuiTableRowActionsConfigurationTransfer::ACTIONS => $actions,
         ];
     }
 
@@ -211,10 +201,10 @@ class GuiTableConfigurationFunction extends TwigFunction
 
         return [
             static::CONFIG_ENABLED => $guiTableBatchActionsConfigurationTransfer->getIsEnabled(),
-            static::CONFIG_AVAILABLE_ACTIONS_PATH => $guiTableBatchActionsConfigurationTransfer->getAvailableActionsPath(),
-            static::CONFIG_ROW_ID_PATH => $guiTableBatchActionsConfigurationTransfer->getRowIdPath(),
-            static::CONFIG_BATCH_NO_ACTIONS_MESSAGE => $guiTableBatchActionsConfigurationTransfer->getNoActionsMessage(),
-            static::CONFIG_ACTIONS => $actions,
+            GuiTableBatchActionsConfigurationTransfer::AVAILABLE_ACTIONS_PATH => $guiTableBatchActionsConfigurationTransfer->getAvailableActionsPath(),
+            GuiTableBatchActionsConfigurationTransfer::ROW_ID_PATH => $guiTableBatchActionsConfigurationTransfer->getRowIdPath(),
+            GuiTableBatchActionsConfigurationTransfer::NO_ACTIONS_MESSAGE => $guiTableBatchActionsConfigurationTransfer->getNoActionsMessage(),
+            GuiTableBatchActionsConfigurationTransfer::ACTIONS => $actions,
         ];
     }
 
@@ -254,5 +244,29 @@ class GuiTableConfigurationFunction extends TwigFunction
         return $guiTableSearchConfigurationTransfer->getSearch() + [
                 static::CONFIG_ENABLED => $guiTableSearchConfigurationTransfer->getIsEnabled(),
             ];
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return array
+     */
+    protected function prepareTitle(GuiTableConfigurationTransfer $guiTableConfigurationTransfer): array
+    {
+        $guiTableTitleConfigurationTransfer = $guiTableConfigurationTransfer->getTitle();
+        if (
+            !$guiTableTitleConfigurationTransfer
+            || !$guiTableTitleConfigurationTransfer->getIsEnabled()
+            || !$guiTableTitleConfigurationTransfer->getTitle()
+        ) {
+            return [
+                static::CONFIG_ENABLED => false,
+            ];
+        }
+
+        return [
+            static::CONFIG_ENABLED => true,
+            GuiTableTitleConfigurationTransfer::TITLE => $guiTableTitleConfigurationTransfer->getTitle(),
+        ];
     }
 }
