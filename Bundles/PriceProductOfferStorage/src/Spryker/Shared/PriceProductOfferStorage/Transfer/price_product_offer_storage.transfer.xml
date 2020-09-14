@@ -21,6 +21,7 @@
         <property name="productOfferReference" type="string"/>
         <property name="idProductAbstract" type="int"/>
         <property name="idProduct" type="int"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="CurrentProductPrice">

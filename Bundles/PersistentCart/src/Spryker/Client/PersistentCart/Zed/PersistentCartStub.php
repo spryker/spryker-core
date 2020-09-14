@@ -9,6 +9,7 @@ namespace Spryker\Client\PersistentCart\Zed;
 
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -278,6 +279,21 @@ class PersistentCartStub implements PersistentCartStubInterface
     {
         /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
         $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/reset-quote-lock', $quoteTransfer);
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @uses \Spryker\Zed\PersistentCart\Communication\Controller\GatewayController::replaceItemAction()
+     *
+     * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call('/persistent-cart/gateway/replace-item', $persistentItemReplaceTransfer);
 
         return $quoteResponseTransfer;
     }

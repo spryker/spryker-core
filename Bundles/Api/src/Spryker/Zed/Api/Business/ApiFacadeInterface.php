@@ -9,6 +9,7 @@ namespace Spryker\Zed\Api\Business;
 
 use Generated\Shared\Transfer\ApiDataTransfer;
 use Generated\Shared\Transfer\ApiRequestTransfer;
+use Symfony\Component\Routing\RouterInterface;
 
 interface ApiFacadeInterface
 {
@@ -43,4 +44,16 @@ interface ApiFacadeInterface
      * @return \Generated\Shared\Transfer\ApiRequestTransfer
      */
     public function filterApiRequestTransfer(ApiRequestTransfer $apiRequestTransfer): ApiRequestTransfer;
+
+    /**
+     * Specification:
+     * - Returns Router which handles Zed API calls.
+     *
+     * @api
+     *
+     * @internal
+     *
+     * @return \Symfony\Component\Routing\RouterInterface
+     */
+    public function getApiRouter(): RouterInterface;
 }
