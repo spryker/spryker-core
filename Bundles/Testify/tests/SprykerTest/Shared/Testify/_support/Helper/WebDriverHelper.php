@@ -20,6 +20,7 @@ class WebDriverHelper extends Phantoman
     protected const KEY_HOST = 'host';
     protected const KEY_PORT = 'port';
     protected const KEY_BROWSER = 'browser';
+    protected const KEY_CAPABILITIES = 'capabilities';
 
     protected const DEFAULT_HOST = '0.0.0.0';
     protected const DEFAULT_PORT = 4444;
@@ -69,6 +70,7 @@ class WebDriverHelper extends Phantoman
         $webdriverConfig[static::KEY_HOST] = $this->config[static::KEY_HOST] ?? static::DEFAULT_HOST;
         $webdriverConfig[static::KEY_PORT] = $this->config[static::KEY_PORT] ?? static::DEFAULT_PORT;
         $webdriverConfig[static::KEY_BROWSER] = $this->config[static::KEY_BROWSER] ?? static::DEFAULT_BROWSER;
+        $webdriverConfig[static::KEY_CAPABILITIES] = $this->config[static::KEY_CAPABILITIES] ?? [];
 
         return $webdriverConfig;
     }
