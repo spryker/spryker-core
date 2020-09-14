@@ -4,12 +4,6 @@
             <div class="col-sm-9">
                 <h5>{{ widget_title | trans }}</h5>
             </div>
-
-            {% if merchantOrder.order.items | length > 1 %}
-                <div class="col-sm-3 text-right">
-                    CreateShipmentButton
-                </div>
-            {% endif %}
         </div>
     {% endblock %}
 
@@ -18,9 +12,6 @@
             <div class="row">
                 <div class="col-sm-9">
                     <h3>{{ 'Shipment' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
-                </div>
-                <div class="col-sm-3 text-right">
-                    EditShipmentButton
                 </div>
             </div>
 
