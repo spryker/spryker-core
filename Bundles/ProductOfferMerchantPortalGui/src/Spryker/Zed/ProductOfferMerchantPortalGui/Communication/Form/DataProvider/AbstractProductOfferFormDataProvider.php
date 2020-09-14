@@ -19,7 +19,7 @@ use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Exception\DefaultMerchantStockNotFoundException;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferCreateForm;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToCurrencyFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantStockFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToMerchantUserFacadeInterface;
@@ -82,7 +82,7 @@ abstract class AbstractProductOfferFormDataProvider
     public function getOptions(ProductAbstractTransfer $productAbstractTransfer): array
     {
         return [
-            ProductOfferCreateForm::OPTION_STORE_CHOICES => $this->getStoreChoices($productAbstractTransfer),
+            ProductOfferForm::OPTION_STORE_CHOICES => $this->getStoreChoices($productAbstractTransfer),
         ];
     }
 

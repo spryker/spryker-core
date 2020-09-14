@@ -27,8 +27,7 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\Pr
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferCreateForm;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferUpdateForm;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
@@ -119,20 +118,9 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductOfferCreateForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
+    public function createProductOfferForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(ProductOfferCreateForm::class, $data, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createProductOfferUpdateForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductOfferUpdateForm::class, $data, $options);
+        return $this->getFormFactory()->create(ProductOfferForm::class, $data, $options);
     }
 
     /**
