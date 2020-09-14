@@ -9,10 +9,10 @@ namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Event\SuiteEvent;
 use Codeception\Events;
-use Codeception\Extension\Phantoman;
+use Codeception\Extension;
 use Codeception\Module\WebDriver;
 
-class WebDriverHelper extends Phantoman
+class WebDriverHelper extends Extension
 {
     protected const MODULE_NAME_WEBDRIVER = 'WebDriver';
 
