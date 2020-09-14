@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\DataImporterReaderConfigurationTransfer;
 use Generated\Shared\Transfer\DataImporterReportTransfer;
 use Generated\Shared\Transfer\MerchantTransfer;
 use Orm\Zed\MerchantCategory\Persistence\SpyMerchantCategoryQuery;
-use Spryker\Zed\MerchantCategoryDataImport\Communication\Plugin\MerchantCategoryDataImportPlugin;
+use Spryker\Zed\MerchantCategoryDataImport\Communication\Plugin\DataImport\MerchantCategoryDataImportPlugin;
 use Spryker\Zed\MerchantCategoryDataImport\MerchantCategoryDataImportConfig;
 
 /**
