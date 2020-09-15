@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CompanyUsersRestApi\Business\Expander;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Spryker\Zed\CompanyUsersRestApi\Dependency\Facade\CompanyUsersRestApiToCompanyUserFacadeInterface;
 
@@ -32,10 +33,7 @@ class CompanyUserExpander implements CompanyUserExpanderInterface
      */
     public function expandQuoteCustomerWithCompanyUser(QuoteTransfer $quoteTransfer): QuoteTransfer
     {
-        if (
-            !$quoteTransfer->getCustomer()->getCompanyUserTransfer()
-            || !$quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser()
-        ) {
+        if (!$this->isCompanyUser($quoteTransfer->getCustomer())) {
             return $quoteTransfer;
         }
 
@@ -45,5 +43,16 @@ class CompanyUserExpander implements CompanyUserExpanderInterface
         $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);
 
         return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    protected function isCompanyUser(CustomerTransfer $customerTransfer): bool
+    {
+        return $customerTransfer->getCompanyUserTransfer()
+            && $customerTransfer->getCompanyUserTransfer()->getIdCompanyUser();
     }
 }

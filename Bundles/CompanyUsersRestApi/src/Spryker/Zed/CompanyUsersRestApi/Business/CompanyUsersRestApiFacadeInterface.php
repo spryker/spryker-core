@@ -51,7 +51,7 @@ interface CompanyUsersRestApiFacadeInterface
     /**
      * Specification
      * - Expands `QuoteTransfer.customer.companyUserTransfer`.
-     * - Works in case `QuoteTransfer.customer.companyUserTransfer.idCompanyUser` is set.
+     * - Expects `QuoteTransfer.customer.companyUserTransfer.idCompanyUser` to be set.
      *
      * @api
      *
