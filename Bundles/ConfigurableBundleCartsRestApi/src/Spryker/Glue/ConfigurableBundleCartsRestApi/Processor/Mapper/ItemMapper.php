@@ -11,6 +11,9 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundleItemTransfer;
 use Generated\Shared\Transfer\RestConfiguredBundleTransfer;
 use Generated\Shared\Transfer\RestItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestOrderItemsAttributesTransfer;
+use Generated\Shared\Transfer\RestSalesOrderConfiguredBundleItemTransfer;
+use Generated\Shared\Transfer\RestSalesOrderConfiguredBundleTransfer;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToGlossaryStorageClientInterface;
 
 class ItemMapper implements ItemMapperInterface
@@ -55,6 +58,33 @@ class ItemMapper implements ItemMapperInterface
             ->setConfiguredBundleItem($restConfiguredBundleItemTransfer);
 
         return $this->translateConfiguredBundleTemplate($restItemsAttributesTransfer, $localeName);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
+     */
+    public function mapItemToRestOrderItemsAttributes(
+        ItemTransfer $itemTransfer,
+        RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
+    ): RestOrderItemsAttributesTransfer {
+        if (!$itemTransfer->getSalesOrderConfiguredBundle() || !$itemTransfer->getSalesOrderConfiguredBundleItem()) {
+            return $restOrderItemsAttributesTransfer;
+        }
+
+        $restSalesOrderConfiguredBundleTransfer = (new RestSalesOrderConfiguredBundleTransfer())
+            ->fromArray($itemTransfer->getSalesOrderConfiguredBundle()->toArray(), true);
+
+        $restSalesOrderConfiguredBundleItemTransfer = (new RestSalesOrderConfiguredBundleItemTransfer())
+            ->fromArray($itemTransfer->getSalesOrderConfiguredBundleItem()->toArray(), true);
+
+        $restOrderItemsAttributesTransfer
+            ->setSalesOrderConfiguredBundle($restSalesOrderConfiguredBundleTransfer)
+            ->setSalesOrderConfiguredBundleItem($restSalesOrderConfiguredBundleItemTransfer);
+
+        return $restOrderItemsAttributesTransfer;
     }
 
     /**
