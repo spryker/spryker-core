@@ -21,11 +21,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
-class ProductTableDataProvider extends AbstractGuiTableDataProvider
+class ProductGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
-    public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
-    protected const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
-
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
@@ -143,8 +140,8 @@ class ProductTableDataProvider extends AbstractGuiTableDataProvider
     protected function getStatusColumnData(ProductConcreteTransfer $productConcreteTransfer): string
     {
         $isActiveColumnData = $productConcreteTransfer->getIsActive()
-            ? static::COLUMN_DATA_STATUS_ACTIVE
-            : static::COLUMN_DATA_STATUS_INACTIVE;
+            ? ProductGuiTableConfigurationProvider::COLUMN_DATA_STATUS_ACTIVE
+            : ProductGuiTableConfigurationProvider::COLUMN_DATA_STATUS_INACTIVE;
 
         return $this->translatorFacade->trans($isActiveColumnData);
     }

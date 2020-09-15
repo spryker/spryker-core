@@ -152,6 +152,7 @@
         <property name="cartRuleDiscounts" type="Discount[]" singular="cartRuleDiscount"/>
         <property name="originalOrder" type="Order"/>
         <property name="originalQuote" type="Quote"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="CalculatedDiscount">
@@ -174,9 +175,14 @@
     </transfer>
 
     <transfer name="Order">
+        <property name="store" type="string"/>
     </transfer>
 
     <transfer name="Currency">
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
     </transfer>
 
 </transfers>

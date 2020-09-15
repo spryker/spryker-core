@@ -106,6 +106,7 @@
     <transfer name="OptionSelectGuiTableFilterTypeOptions">
         <property name="value" type="string"/>
         <property name="title" type="string"/>
+        <property name="children" type="OptionSelectGuiTableFilterTypeOptions[]" singular="child"/>
     </transfer>
 
     <transfer name="GuiTableFilter">
