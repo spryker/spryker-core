@@ -13,7 +13,7 @@
     "spryker/locale": "^3.0.0",
     "spryker/product": "^5.8.0 || ^6.12.0",
     "spryker/propel-orm": "^1.0.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/touch": "^3.0.0 || ^4.0.0",
     "spryker/util-data-reader": "^1.0.0"
   },

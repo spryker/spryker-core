@@ -8,7 +8,7 @@
     "spryker/csv": "^3.0.0",
     "spryker/data-export-extension": "^0.1.0",
     "spryker/kernel": "^3.30.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.8.0",
     "spryker/util-data-reader": "^1.1.0"
   },

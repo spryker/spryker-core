@@ -25,7 +25,7 @@
     "spryker/router": "^1.1.0",
     "spryker/sales-merchant-portal-gui-extension": "^0.1.0",
     "spryker/store": "^1.1.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.18.0",
     "spryker/translator": "^1.1.0",
     "spryker/twig": "^3.0.0",

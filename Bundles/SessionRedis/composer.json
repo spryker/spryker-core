@@ -10,7 +10,7 @@
     "spryker/redis": "^2.1.0",
     "spryker/session-extension": "^1.0.0",
     "spryker/session-redis-extension": "^1.0.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0",
+    "spryker/symfony": "^3.0.0",
     "spryker/transfer": "^3.8.0"
   },
   "require-dev": {
