@@ -37,6 +37,25 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      *
      * @api
      *
+     * @param int[] $configurableBundleTemplateIds
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
+     */
+    public function getBulkConfigurableBundleTemplateStorage(
+        array $configurableBundleTemplateIds,
+        string $localeName
+    ): array {
+        return $this->getFactory()
+            ->createConfigurableBundleStorageReader()
+            ->getBulkConfigurableBundleTemplateStorage($configurableBundleTemplateIds, $localeName);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param string $configurableBundleTemplateUuid
      * @param string $localeName
      *
