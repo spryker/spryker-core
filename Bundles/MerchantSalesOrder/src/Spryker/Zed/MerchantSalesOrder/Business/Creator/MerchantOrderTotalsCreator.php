@@ -62,6 +62,8 @@ class MerchantOrderTotalsCreator implements MerchantOrderTotalsCreatorInterface
         $calculationOrderTransfer = (new OrderTransfer())
             ->setPriceMode($merchantOrderTransfer->getPriceMode())
             ->setExpenses($merchantOrderTransfer->getExpenses())
+            ->setStore($merchantOrderTransfer->getOrder()->getStore())
+            ->setCurrency($merchantOrderTransfer->getOrder()->getCurrency())
             ->setTotals(new TotalsTransfer());
 
         $calculationOrderTransfer = $this->expandOrderWithMerchantOrderItems(

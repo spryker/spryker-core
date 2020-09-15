@@ -23,11 +23,8 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerc
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface;
 
-class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
+class ProductOfferGuiTableDataProvider extends AbstractGuiTableDataProvider
 {
-    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
-    protected const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
-
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface
      */
@@ -182,10 +179,10 @@ class ProductOfferTableDataProvider extends AbstractGuiTableDataProvider
     protected function getVisibilityColumnData(ProductOfferTransfer $productOfferTransfer): string
     {
         if ($productOfferTransfer->getIsActive()) {
-            return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE);
+            return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_VISIBILITY_ONLINE);
         }
 
-        return $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_OFFLINE);
+        return $this->translatorFacade->trans(ProductOfferGuiTableConfigurationProvider::COLUMN_DATA_VISIBILITY_OFFLINE);
     }
 
     /**
