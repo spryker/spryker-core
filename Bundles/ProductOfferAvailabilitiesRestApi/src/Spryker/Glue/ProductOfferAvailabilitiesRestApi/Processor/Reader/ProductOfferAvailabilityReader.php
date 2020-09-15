@@ -59,10 +59,9 @@ class ProductOfferAvailabilityReader implements ProductOfferAvailabilityReaderIn
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferIdNotSpecifiedErrorResponse();
         }
 
-        $idProductOfferRestResource = mb_strtolower($productOfferRestResource->getId());
-        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$idProductOfferRestResource]);
+        $productOfferAvailabilityRestResources = $this->getProductOfferAvailabilityRestResources([$productOfferRestResource->getId()]);
 
-        $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$idProductOfferRestResource] ?? null;
+        $productOfferAvailabilityRestResource = $productOfferAvailabilityRestResources[$productOfferRestResource->getId()] ?? null;
         if (!isset($productOfferAvailabilityRestResource)) {
             return $this->productOfferAvailabilityRestResponseBuilder->createProductOfferAvailabilityEmptyRestResponse();
         }
