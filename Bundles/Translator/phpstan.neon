@@ -5,3 +5,4 @@ parameters:
     - '#Call to an undefined method .+TranslatorInterface::setLocale\(\).#'
     - '#Call to an undefined method .+TranslatorInterface::getLocale\(\).#'
     - '#Return typehint of method .+TranslatorValidatorPlugin::getTranslator\(\) has invalid type .*LegacyTranslatorProxy.#'
+    - '#Parameter \#1 \$translator of method Symfony\\Component\\Validator\\ValidatorBuilder::setTranslator\(\) expects Symfony\\Component\\Translation\\TranslatorInterface, Spryker\\Shared\\Translator\\TranslatorInterface|Symfony\\Component\\Validator\\Util\\LegacyTranslatorProxy given.#'
