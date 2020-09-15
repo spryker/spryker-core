@@ -77,6 +77,8 @@ class ItemMapper implements ItemMapperInterface
         $restSalesOrderConfiguredBundleTransfer = (new RestSalesOrderConfiguredBundleTransfer())
             ->fromArray($itemTransfer->getSalesOrderConfiguredBundle()->toArray(), true);
 
+        $restSalesOrderConfiguredBundleTransfer = $this->copyTranslatedTemplateName($itemTransfer, $restSalesOrderConfiguredBundleTransfer);
+
         $restSalesOrderConfiguredBundleItemTransfer = (new RestSalesOrderConfiguredBundleItemTransfer())
             ->fromArray($itemTransfer->getSalesOrderConfiguredBundleItem()->toArray(), true);
 
@@ -108,5 +110,24 @@ class ItemMapper implements ItemMapperInterface
             ->setName($translations[$templateName]);
 
         return $restItemsAttributesTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestSalesOrderConfiguredBundleTransfer $restSalesOrderConfiguredBundleTransfer
+     *
+     * @return \Generated\Shared\Transfer\RestSalesOrderConfiguredBundleTransfer
+     */
+    protected function copyTranslatedTemplateName(
+        ItemTransfer $itemTransfer,
+        RestSalesOrderConfiguredBundleTransfer $restSalesOrderConfiguredBundleTransfer
+    ): RestSalesOrderConfiguredBundleTransfer {
+        if (!$itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetExists(0)) {
+            return $restSalesOrderConfiguredBundleTransfer;
+        }
+
+        return $restSalesOrderConfiguredBundleTransfer->setName(
+            $itemTransfer->getSalesOrderConfiguredBundle()->getTranslations()->offsetGet(0)->getName()
+        );
     }
 }
