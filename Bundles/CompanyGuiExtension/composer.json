@@ -9,7 +9,7 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/gui": "^3.13.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0"
+    "spryker/symfony": "^3.0.0"
   },
   "suggest": {
     "spryker/company-gui": "If you want to provide plugins to CompanyGui module",

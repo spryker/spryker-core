@@ -9,7 +9,7 @@
     "spryker/price-extension": "^1.0.0",
     "spryker/quote": "^1.2.0 || ^2.0.0",
     "spryker/quote-extension": "^1.4.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0"
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",

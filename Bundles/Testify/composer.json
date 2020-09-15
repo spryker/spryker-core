@@ -14,7 +14,7 @@
     "spryker/error-handler": "^2.0.0",
     "spryker/kernel": "^3.49.0",
     "spryker/propel": "^3.0.4",
-    "spryker/symfony": "^3.0.0 || ^4.0.0"
+    "spryker/symfony": "^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
