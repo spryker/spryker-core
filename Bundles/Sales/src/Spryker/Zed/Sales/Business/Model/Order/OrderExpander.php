@@ -64,6 +64,7 @@ class OrderExpander implements OrderExpanderInterface
     {
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($quoteTransfer->toArray(), true);
+        $orderTransfer->setStore($quoteTransfer->getStore()->getName());
         $orderTransfer = $this->executeItemPreTransformerPlugins($orderTransfer, $quoteTransfer);
         $orderTransfer->setItems($this->transformItems($orderTransfer->getItems()));
 
