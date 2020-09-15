@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 38,
+            "line_to": 38,
+            "type": "PossiblyInvalidArgument",
+            "message": "Argument 1 of Spryker\\Zed\\ProductConfiguration\\Persistence\\Propel\\Mapper\\ProductConfigurationMapper::mapProductConfigurationEntityCollectionToProductConfigurationTransferCollection expects Propel\\Runtime\\Collection\\ObjectCollection, possibly different type Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfiguration> provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Persistence/ProductConfigurationRepository.php",
+            "snippet": "                $productConfigurationQuery->find()",
+            "selected_text": "$productConfigurationQuery->find()",
+            "error_level": 3,
+            "shortcode": 92
+        },
+        {
+            "severity": "info",
+            "line_from": 46,
+            "line_to": 46,
+            "type": "MoreSpecificReturnType",
+            "message": "The declared return type 'Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery' for Spryker\\Zed\\ProductConfiguration\\Persistence\\ProductConfigurationRepository::setProductConfigurationFilters is more specific than the inferred return type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Persistence/ProductConfigurationRepository.php",
+            "snippet": "     * @return \\Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery",
+            "selected_text": "\\Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery",
+            "error_level": 3,
+            "shortcode": 70
+        },
+        {
+            "severity": "info",
+            "line_from": 67,
+            "line_to": 67,
+            "type": "LessSpecificReturnStatement",
+            "message": "The type 'Propel\\Runtime\\ActiveQuery\\ModelCriteria' is more general than the declared return type 'Orm\\Zed\\ProductConfiguration\\Persistence\\SpyProductConfigurationQuery' for Spryker\\Zed\\ProductConfiguration\\Persistence\\ProductConfigurationRepository::setProductConfigurationFilters",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfiguration/src/Spryker/Zed/ProductConfiguration/Persistence/ProductConfigurationRepository.php",
+            "snippet": "        return $productConfigurationQuery;",
+            "selected_text": "$productConfigurationQuery",
+            "error_level": 3,
+            "shortcode": 129
+        }
+    ],
+    "deprecation": []
+}

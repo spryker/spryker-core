@@ -29,7 +29,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
  */
-class ProductOfferCreateForm extends AbstractType
+class ProductOfferForm extends AbstractType
 {
     public const OPTION_STORE_CHOICES = 'OPTION_STORE_CHOICES';
 

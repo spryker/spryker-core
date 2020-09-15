@@ -10,6 +10,7 @@ namespace Spryker\Zed\PersistentCart\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeQuantityTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteSyncRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -61,6 +62,20 @@ class PersistentCartFacade extends AbstractFacade implements PersistentCartFacad
     public function remove(PersistentCartChangeTransfer $persistentCartChangeTransfer): QuoteResponseTransfer
     {
         return $this->getFactory()->createCartOperation()->remove($persistentCartChangeTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\PersistentItemReplaceTransfer $persistentItemReplaceTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function replaceItem(PersistentItemReplaceTransfer $persistentItemReplaceTransfer): QuoteResponseTransfer
+    {
+        return $this->getFactory()->createCartItemOperation()->replaceItem($persistentItemReplaceTransfer);
     }
 
     /**
