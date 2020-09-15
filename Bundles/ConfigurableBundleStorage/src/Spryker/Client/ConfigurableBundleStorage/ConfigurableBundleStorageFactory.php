@@ -10,6 +10,7 @@ namespace Spryker\Client\ConfigurableBundleStorage;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToProductStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
+use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReader;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReaderInterface;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleTemplateImageStorageReader;
@@ -28,7 +29,8 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
         return new ConfigurableBundleStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createConfigurableBundleTemplateImageStorageReader()
+            $this->createConfigurableBundleTemplateImageStorageReader(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -39,7 +41,8 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     {
         return new ConfigurableBundleTemplateImageStorageReader(
             $this->getStorageClient(),
-            $this->getSynchronizationService()
+            $this->getSynchronizationService(),
+            $this->getUtilEncodingService()
         );
     }
 
@@ -73,5 +76,13 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
     public function getSynchronizationService(): ConfigurableBundleStorageToSynchronizationServiceInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::SERVICE_SYNCHRONIZATION);
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface
+     */
+    public function getUtilEncodingService(): ConfigurableBundleStorageToUtilEncodingServiceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleStorageDependencyProvider::SERVICE_UTIL_ENCODING);
     }
 }

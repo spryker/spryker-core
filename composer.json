@@ -215,6 +215,8 @@
     "spryker/configurable-bundle-page-search": "*",
     "spryker/configurable-bundle-page-search-extension": "*",
     "spryker/configurable-bundle-storage": "*",
+    "spryker/configurable-bundles-products-resource-relationship": "*",
+    "spryker/configurable-bundles-rest-api": "*",
     "spryker/console": "*",
     "spryker/container": "*",
     "spryker/content": "*",
