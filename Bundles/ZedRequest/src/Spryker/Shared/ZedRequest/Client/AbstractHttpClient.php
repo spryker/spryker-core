@@ -20,11 +20,13 @@ use Spryker\Client\ZedRequest\Client\Request;
 use Spryker\Client\ZedRequest\Client\Response as SprykerResponse;
 use Spryker\Service\UtilNetwork\UtilNetworkServiceInterface;
 use Spryker\Shared\Config\Config;
+use Spryker\Shared\ErrorHandler\ErrorLogger;
 use Spryker\Shared\Kernel\Transfer\TransferInterface;
 use Spryker\Shared\ZedRequest\Client\Exception\InvalidZedResponseException;
 use Spryker\Shared\ZedRequest\Client\Exception\RequestException;
 use Spryker\Shared\ZedRequest\Client\HandlerStack\HandlerStackContainer;
 use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Throwable;
 
 abstract class AbstractHttpClient implements HttpClientInterface
 {
@@ -211,11 +213,23 @@ Configured with %s %s:%s in %s. Error: Stacktrace:';
             }
             $requestException = new RequestException($message, $e->getCode(), $e);
 
+            $this->logException($requestException);
+
             throw $requestException;
         }
         $responseTransfer = $this->getTransferFromResponse($response, $request);
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param \Throwable $throwable
+     *
+     * @return void
+     */
+    protected function logException(Throwable $throwable): void
+    {
+        ErrorLogger::getInstance()->log($throwable);
     }
 
     /**

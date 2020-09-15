@@ -5,26 +5,26 @@
  * Use of this software requires acceptance of the Spryker Marketplace License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
+namespace Spryker\Zed\ProductMerchantPortalGui\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ProductOfferMerchantPortalGuiCommunicationFactory getFactory()
- * @method \Spryker\Zed\ProductOfferMerchantPortalGui\Persistence\ProductOfferMerchantPortalGuiRepositoryInterface getRepository()
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Communication\ProductMerchantPortalGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\ProductMerchantPortalGui\Persistence\ProductMerchantPortalGuiRepositoryInterface getRepository()
  */
-class OffersController extends AbstractController
+class ProductsController extends AbstractController
 {
     /**
-     * @return array
+     * @return mixed[]
      */
     public function indexAction(): array
     {
         return $this->viewResponse([
-            'productOfferTableConfiguration' => $this->getFactory()
-                ->createProductOfferGuiTableConfigurationProvider()
+            'productAbstractTableConfiguration' => $this->getFactory()
+                ->createProductAbstractGuiTableConfigurationProvider()
                 ->getConfiguration(),
         ]);
     }
@@ -38,8 +38,8 @@ class OffersController extends AbstractController
     {
         return $this->getFactory()->getGuiTableHttpDataRequestExecutor()->execute(
             $request,
-            $this->getFactory()->createProductOfferTableDataProvider(),
-            $this->getFactory()->createProductOfferGuiTableConfigurationProvider()->getConfiguration()
+            $this->getFactory()->createProductAbstractTableDataProvider(),
+            $this->getFactory()->createProductAbstractGuiTableConfigurationProvider()->getConfiguration()
         );
     }
 }
