@@ -8,8 +8,8 @@
     "spryker/application": "^3.0.0",
     "spryker/event-dispatcher-extension": "^1.0.0",
     "spryker/kernel": "^3.52.0",
-    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/router-extension": "^1.0.0",
+    "spryker/symfony": "^3.0.0 || ^4.0.0",
     "spryker/util-encoding": "^2.0.1",
     "spryker/util-text": "^1.1.1"
   },
