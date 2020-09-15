@@ -20,6 +20,7 @@ class DiscountCalculationPlugin extends AbstractPlugin implements CalculationPlu
 {
     /**
      * {@inheritDoc}
+     * - Requires CalculableObject.store transfer field to be set.
      * - Calculates discounts for provided CalculableObjectTransfer.
      *
      * @api
