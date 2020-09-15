@@ -77,7 +77,7 @@ class QueueMessageHelperTest extends Unit
         $this->assertSame(static::DUMMY_ERROR_MESSAGE, $resultBody[static::ERROR_MESSAGE_TYPE]);
         $this->assertTrue($result->getHasError());
         $this->assertTrue($result->getReject());
-        $this->assertEquals('error', $result->getRoutingKey());
+        $this->assertSame('error', $result->getRoutingKey());
     }
 
     /**

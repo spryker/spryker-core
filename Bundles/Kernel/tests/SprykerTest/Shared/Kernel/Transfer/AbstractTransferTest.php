@@ -143,9 +143,9 @@ class AbstractTransferTest extends Unit
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertEquals('level1', $transfer->getString());
-        $this->assertEquals('level2', $transfer->getTransferCollection()[0]->getString());
-        $this->assertEquals('level3', $transfer->getTransferCollection()[1]->getTransferCollection()[0]->getString());
+        $this->assertSame('level1', $transfer->getString());
+        $this->assertSame('level2', $transfer->getTransferCollection()[0]->getString());
+        $this->assertSame('level3', $transfer->getTransferCollection()[1]->getTransferCollection()[0]->getString());
     }
 
     /**
@@ -486,10 +486,10 @@ class AbstractTransferTest extends Unit
 
         $transfer->fromArray($data);
 
-        $this->assertEquals('foo', $transfer->getString());
-        $this->assertEquals('bar', $transfer->getTransfer()->getString());
-        $this->assertEquals('foo', $transfer->getTransfer()->getTransfer()->getString());
-        $this->assertEquals('bar', $transfer->getTransfer()->getTransfer()->getTransfer()->getString());
+        $this->assertSame('foo', $transfer->getString());
+        $this->assertSame('bar', $transfer->getTransfer()->getString());
+        $this->assertSame('foo', $transfer->getTransfer()->getTransfer()->getString());
+        $this->assertSame('bar', $transfer->getTransfer()->getTransfer()->getTransfer()->getString());
     }
 
     /**
@@ -520,8 +520,8 @@ class AbstractTransferTest extends Unit
         $transfer2 = new AbstractTransfer();
         $transfer2->fromArray($transfer1->toArray());
 
-        $this->assertEquals('foo', $transfer2->getString());
-        $this->assertEquals('bar', $transfer2->getTransfer()->getString());
+        $this->assertSame('foo', $transfer2->getString());
+        $this->assertSame('bar', $transfer2->getTransfer()->getString());
     }
 
     /**

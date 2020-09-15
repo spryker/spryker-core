@@ -83,7 +83,7 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_DECISION_RULE, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**
@@ -106,7 +106,7 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**
@@ -129,7 +129,7 @@ class ValidatorTest extends Unit
         $messages = $validator->validateByType(MetaProviderFactory::TYPE_COLLECTOR, 'query string');
 
         $this->assertCount(1, $messages);
-        $this->assertEquals($queryStringException, $messages[0]);
+        $this->assertSame($queryStringException, $messages[0]);
     }
 
     /**

@@ -2,4 +2,8 @@
     <ng-content select="[title]"></ng-content>
 </spy-headline>
 
-<mp-product-offer-table [config]="tableConfig"></mp-product-offer-table>
+<div class="mp-product-offer__description">
+    <ng-content select="[description]"></ng-content>
+</div>
+
+<mp-product-offer-table [tableId]="tableId" [config]="tableConfig"></mp-product-offer-table>

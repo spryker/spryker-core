@@ -20,6 +20,7 @@ use Spryker\Zed\ProductBundle\Dependency\Facade\ProductBundleToStoreFacadeInterf
 class PreCheckMocks extends Unit
 {
     public const ID_STORE = 1;
+
     /**
      * @var array
      */

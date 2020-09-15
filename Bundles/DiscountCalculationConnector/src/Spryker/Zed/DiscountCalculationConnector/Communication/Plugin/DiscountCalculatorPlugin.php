@@ -12,6 +12,8 @@ use Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
+ * @deprecated Use {@link \Spryker\Zed\DiscountCalculationConnector\Communication\Plugin\Calculation\DiscountCalculationPlugin} instead.
+ *
  * @method \Spryker\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorCommunicationFactory getFactory()
  * @method \Spryker\Zed\DiscountCalculationConnector\Business\DiscountCalculationConnectorFacadeInterface getFacade()
  * @method \Spryker\Zed\DiscountCalculationConnector\DiscountCalculationConnectorConfig getConfig()

@@ -98,6 +98,6 @@ class FileContentTest extends Unit
         );
 
         $fileContent = $fileContent->read('report.txt');
-        $this->assertEquals('this is the report', $fileContent);
+        $this->assertSame('this is the report', $fileContent);
     }
 }

@@ -42,6 +42,8 @@ class AgentStub implements AgentStubInterface
     }
 
     /**
+     * @uses \Spryker\Zed\Agent\Communication\Controller\GatewayController::findCustomersByQueryAction()
+     *
      * @param \Generated\Shared\Transfer\CustomerQueryTransfer $customerQueryTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerAutocompleteResponseTransfer

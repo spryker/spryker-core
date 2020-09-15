@@ -15,6 +15,8 @@ use Spryker\Shared\PriceProduct\PriceProductConfig;
 use Spryker\Shared\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig;
 
 /**
+ * @deprecated Will be removed without replacement. {@link \Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterMinStrategy} already implements the same logic.
+ *
  * @method \Spryker\Service\PriceProductMerchantRelationship\PriceProductMerchantRelationshipConfig getConfig()
  */
 class MerchantRelationshipPriceProductFilterPlugin extends AbstractPlugin implements PriceProductFilterPluginInterface

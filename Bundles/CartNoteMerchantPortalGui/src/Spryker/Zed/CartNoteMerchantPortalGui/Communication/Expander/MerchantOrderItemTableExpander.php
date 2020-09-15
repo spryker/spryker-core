@@ -32,7 +32,7 @@ class MerchantOrderItemTableExpander implements MerchantOrderItemTableExpanderIn
             ->setTitle('Comment')
             ->setType(static::COLUMN_TYPE_TEXT)
             ->setSortable(false)
-            ->setHideable(false);
+            ->setHideable(true);
 
         $guiTableConfigurationTransfer->addColumn($guiTableColumnConfigurationTransfer);
 

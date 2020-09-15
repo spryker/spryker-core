@@ -12,8 +12,6 @@ use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\WishlistsRestApi\Business\WishlistsRestApiFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

@@ -116,7 +116,7 @@ class OrderShippedMailTypePlugin extends AbstractPlugin implements MailTypePlugi
      */
     protected function setSender(MailBuilderInterface $mailBuilder)
     {
-        $mailBuilder->setSender('mail.sender.email', 'mail.sender.name');
+        $mailBuilder->useDefaultSender();
 
         return $this;
     }

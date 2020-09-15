@@ -15,8 +15,6 @@ use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageBusi
 use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFacade;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -34,10 +32,6 @@ use Spryker\Zed\ProductAlternativeStorage\Business\ProductAlternativeStorageFaca
 class ProductAlternativeStorageCommunicationTester extends Actor
 {
     use _generated\ProductAlternativeStorageCommunicationTesterActions;
-
-    /**
-     * Define custom actions here
-     */
 
     /**
      * @return \Spryker\Zed\ProductAlternative\Business\ProductAlternativeFacadeInterface

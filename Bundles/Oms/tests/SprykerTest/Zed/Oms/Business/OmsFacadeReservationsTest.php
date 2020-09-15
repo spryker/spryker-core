@@ -232,7 +232,7 @@ class OmsFacadeReservationsTest extends Unit
         $reserved = $this->getOmsFacade()->getOmsReservedProductQuantityForSku(static::TEST_SKU_1, $storeTransfer);
 
         //Assert
-        $this->assertEquals(
+        $this->assertSame(
             $reservationQuantity->toInt(),
             $reserved->toInt(),
             'Calculated reserved amount does not match expected value.'
@@ -257,7 +257,7 @@ class OmsFacadeReservationsTest extends Unit
         ], $storeTransfer);
 
         //Assert
-        $this->assertEquals(
+        $this->assertSame(
             $reservationQuantity1->add($reservationQuantity2)->toInt(),
             $reserved->toInt(),
             'Calculated reserved amount does not match expected value.'

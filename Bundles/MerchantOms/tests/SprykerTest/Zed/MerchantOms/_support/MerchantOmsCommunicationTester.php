@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\MerchantTransfer;
 use Generated\Shared\Transfer\SaveOrderTransfer;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)
@@ -31,10 +29,6 @@ use Generated\Shared\Transfer\SaveOrderTransfer;
 class MerchantOmsCommunicationTester extends Actor
 {
     use _generated\MerchantOmsCommunicationTesterActions;
-
-   /**
-    * Define custom actions here
-    */
 
     /**
      * @param \Generated\Shared\Transfer\MerchantTransfer $merchantTransfer

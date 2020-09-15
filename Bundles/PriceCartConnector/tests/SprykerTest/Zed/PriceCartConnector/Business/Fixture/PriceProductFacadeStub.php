@@ -20,12 +20,12 @@ class PriceProductFacadeStub extends PriceProductFacade
     /**
      * @var int[]
      */
-    private $prices = [];
+    protected $prices = [];
 
     /**
      * @var bool[]
      */
-    private $validities = [];
+    protected $validities = [];
 
     /**
      * @param string $sku

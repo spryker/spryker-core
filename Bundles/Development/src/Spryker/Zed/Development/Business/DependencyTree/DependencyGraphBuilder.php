@@ -14,12 +14,12 @@ class DependencyGraphBuilder implements DependencyGraphBuilderInterface
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface
      */
-    private $graphBuilder;
+    protected $graphBuilder;
 
     /**
      * @var array
      */
-    private $dependencyTree;
+    protected $dependencyTree;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\DependencyGraph\GraphBuilderInterface $graphBuilder
