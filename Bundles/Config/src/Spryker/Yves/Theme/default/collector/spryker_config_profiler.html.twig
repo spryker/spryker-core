@@ -6,12 +6,12 @@
         <span class="sf-toolbar-value">{{ collector.configs | length }}</span>
     {% endset %}
     {% set text %}
-        {% spaceless %}
+        {% apply spaceless %}
             <div class="sf-toolbar-info-piece">
                 <b>Spryker Config</b>
                 <span class="sf-toolbar-status">{{ collector.configs | length }}</span>
             </div>
-        {% endspaceless %}
+        {% endapply %}
     {% endset %}
     {% include '@WebProfiler/Profiler/toolbar_item.html.twig' with { 'link': profiler_url } %}
 {% endblock %}

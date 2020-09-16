@@ -19,6 +19,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
     "spryker/container": "*",
     "spryker/event-dispatcher": "*",

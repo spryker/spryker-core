@@ -23,6 +23,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",

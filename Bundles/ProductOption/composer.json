@@ -33,6 +33,7 @@
     "spryker/application": "*",
     "spryker/calculation": "*",
     "spryker/checkout": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
@@ -44,6 +45,7 @@
     "spryker/router": "*",
     "spryker/testify": "*",
     "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {

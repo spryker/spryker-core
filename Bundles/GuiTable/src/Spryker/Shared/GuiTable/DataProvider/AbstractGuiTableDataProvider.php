@@ -85,8 +85,8 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
             throw new InvalidCriteriaPropertyException($criteriaTransfer, 'page|pageSize');
         }
 
-        $criteriaTransfer->setPage($guiTableDataRequestTransfer->getPage());
-        $criteriaTransfer->setPageSize($guiTableDataRequestTransfer->getPageSize());
+        $criteriaTransfer->$pageSetter($guiTableDataRequestTransfer->getPage());
+        $criteriaTransfer->$pageSizeSetter($guiTableDataRequestTransfer->getPageSize());
 
         return $criteriaTransfer;
     }
@@ -109,8 +109,8 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
             throw new InvalidCriteriaPropertyException($criteriaTransfer, 'orderBy|orderDirection');
         }
 
-        $criteriaTransfer->setOrderBy($guiTableDataRequestTransfer->getOrderBy());
-        $criteriaTransfer->setOrderDirection(
+        $criteriaTransfer->$orderSetter($guiTableDataRequestTransfer->getOrderBy());
+        $criteriaTransfer->$orderDirectionSetter(
             $guiTableDataRequestTransfer->getOrderDirection()
                 ? strtoupper($guiTableDataRequestTransfer->getOrderDirection())
                 : null
@@ -135,7 +135,7 @@ abstract class AbstractGuiTableDataProvider implements GuiTableDataProviderInter
             return $criteriaTransfer;
         }
 
-        $criteriaTransfer->setSearchTerm($guiTableDataRequestTransfer->getSearchTerm());
+        $criteriaTransfer->$searchTermSetter($guiTableDataRequestTransfer->getSearchTerm());
 
         return $criteriaTransfer;
     }

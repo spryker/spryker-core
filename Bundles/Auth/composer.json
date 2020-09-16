@@ -17,6 +17,7 @@
   },
   "require-dev": {
     "spryker/application": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
     "spryker/container": "*",
@@ -28,7 +29,8 @@
     "spryker/silex": "*",
     "spryker/testify": "*",
     "spryker/twig": "*",
-    "spryker/validator": "*"
+    "spryker/validator": "*",
+    "spryker/zed-navigation": "*"
   },
   "suggest": {
     "spryker/config": "Add this module when you want to use the EventDispatcherPlugins.",
