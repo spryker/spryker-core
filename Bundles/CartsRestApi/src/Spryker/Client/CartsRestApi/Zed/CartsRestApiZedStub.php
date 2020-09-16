@@ -32,7 +32,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::findQuoteByUuid()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::findQuoteByUuidAction()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -47,7 +47,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::getQuoteCollection()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::getQuoteCollectionAction()
      *
      * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
      *
@@ -63,7 +63,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::updateQuote()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::updateQuoteAction()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -78,7 +78,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::createQuote()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::createQuoteAction()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -93,7 +93,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::deleteQuote()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::deleteQuoteAction()
      *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
@@ -108,7 +108,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::updateItem()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::updateItemAction()
      *
      * @deprecated Use {@link updateItemQuantity()} instead.
      *
@@ -125,7 +125,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::updateItemQuantity()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::updateItemQuantityAction()
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
@@ -140,7 +140,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::addItem()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::addItemAction()
      *
      * @deprecated Use {@link addToCart()} instead.
      *
@@ -157,7 +157,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::addToCart()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::addToCartAction()
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
@@ -172,7 +172,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::deleteItem()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::deleteItemAction()
      *
      * @deprecated Use {@link removeItem()} instead.
      *
@@ -189,7 +189,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::removeItem()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::removeItemAction()
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
@@ -204,7 +204,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::addItemToGuestCart()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::addItemToGuestCartAction()
      *
      * @param \Generated\Shared\Transfer\RestCartItemsAttributesTransfer $restCartItemsAttributesTransfer
      *
@@ -219,7 +219,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::addToGuestCart()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::addToGuestCartAction()
      *
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
      *
@@ -234,7 +234,7 @@ class CartsRestApiZedStub implements CartsRestApiZedStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacade::assignGuestCartToRegisteredCustomer()
+     * @uses \Spryker\Zed\CartsRestApi\Communication\Controller\GatewayController::assignGuestCartToRegisteredCustomerAction()
      *
      * @param \Generated\Shared\Transfer\AssignGuestQuoteRequestTransfer $assignGuestQuoteRequestTransfer
      *
