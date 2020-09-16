@@ -7,29 +7,22 @@
 
 namespace Spryker\Shared\Twig;
 
-use Twig\TwigFunction as BaseTwigFunction;
-
-abstract class TwigFunction extends BaseTwigFunction
+abstract class TwigFunctionProvider
 {
-    public function __construct()
-    {
-        parent::__construct($this->getFunctionName(), $this->getFunction(), $this->getOptions());
-    }
-
     /**
      * @return string
      */
-    abstract protected function getFunctionName();
+    abstract public function getFunctionName();
 
     /**
      * @return callable
      */
-    abstract protected function getFunction();
+    abstract public function getFunction();
 
     /**
      * @return array
      */
-    protected function getOptions()
+    public function getOptions()
     {
         return ['is_safe' => ['html']];
     }

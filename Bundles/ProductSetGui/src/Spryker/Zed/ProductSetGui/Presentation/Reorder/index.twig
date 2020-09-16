@@ -10,9 +10,9 @@
 {% block content %}
 
     <div class="alert alert-info">
-        {% filter trans|raw %}
+        {% apply trans|raw %}
             <strong>Weight</strong> defines sorting order. Product Sets with higher numbers listed first.
-        {% endfilter %}
+        {% endapply %}
     </div>
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Reorder Product Sets' } %}

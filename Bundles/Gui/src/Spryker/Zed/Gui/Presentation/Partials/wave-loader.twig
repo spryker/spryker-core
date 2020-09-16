@@ -6,9 +6,9 @@
 {% endfor %}
 
 <span class="sk-spinner sk-spinner-three-bounce wave-loader {{ cssClass }}">
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="sk-bounce1"></div>
         <div class="sk-bounce2"></div>
         <div class="sk-bounce3"></div>
-    {% endspaceless %}
+    {% endapply %}
 </span>

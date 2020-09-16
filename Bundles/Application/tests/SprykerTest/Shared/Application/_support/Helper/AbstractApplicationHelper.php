@@ -15,6 +15,7 @@ use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInter
 use SprykerTest\Service\Container\Helper\ContainerHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelperTrait;
 use Symfony\Component\BrowserKit\AbstractBrowser;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\HttpKernelBrowser;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
@@ -124,5 +125,22 @@ abstract class AbstractApplicationHelper extends Framework
         $this->application = null;
         $this->client = null;
         $this->httpKernelBrowser = null;
+    }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function _beforeSuite($settings = [])
+    {
+        $requestFactory = function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+            $request->server->set('SERVER_NAME', 'localhost');
+
+            return $request;
+        };
+
+        Request::setFactory($requestFactory);
     }
 }

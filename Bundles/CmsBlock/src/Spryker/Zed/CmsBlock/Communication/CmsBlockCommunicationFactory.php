@@ -9,8 +9,10 @@ namespace Spryker\Zed\CmsBlock\Communication;
 
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
-use Spryker\Zed\CmsBlock\Communication\Twig\RenderCmsBlockAsTwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
+use Spryker\Zed\CmsBlock\Communication\Twig\RenderCmsBlockAsTwigFunctionProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\CmsBlock\CmsBlockConfig getConfig()
@@ -21,11 +23,25 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class CmsBlockCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\CmsBlock\Communication\Twig\RenderCmsBlockAsTwigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createRenderCmsBlockAsTwigFunction(): RenderCmsBlockAsTwigFunction
+    public function createRenderCmsBlockAsTwigFunctionProvider(): TwigFunctionProvider
     {
-        return new RenderCmsBlockAsTwigFunction($this->getRepository());
+        return new RenderCmsBlockAsTwigFunctionProvider($this->getRepository());
+    }
+
+    /**
+     * @return \Twig\TwigFunction
+     */
+    public function createRenderCmsBlockAsTwigFunction(): TwigFunction
+    {
+        $functionProvider = $this->createRenderCmsBlockAsTwigFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
     }
 
     /**

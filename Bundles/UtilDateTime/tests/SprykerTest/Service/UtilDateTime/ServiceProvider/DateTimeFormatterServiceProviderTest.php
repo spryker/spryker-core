@@ -37,7 +37,7 @@ class DateTimeFormatterServiceProviderTest extends Unit
 
         $twig = $applicationMock['twig'];
 
-        $this->assertTrue($twig->hasExtension(DateTimeFormatterTwigExtension::EXTENSION_NAME));
+        $this->assertTrue($twig->hasExtension(DateTimeFormatterTwigExtension::class));
     }
 
     /**
