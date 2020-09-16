@@ -8,8 +8,6 @@
 namespace Spryker\Zed\ProductConfigurationGui\Persistence;
 
 use Generated\Shared\Transfer\ProductConfigurationAggregationTransfer;
-use Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap;
-use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -17,14 +15,20 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class ProductConfigurationGuiRepository extends AbstractRepository implements ProductConfigurationGuiRepositoryInterface
 {
-    /** @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT  */
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT
+     */
     protected const COL_ID_PRODUCT = 'spy_product.id_product';
 
-    /** @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT  */
+    /**
+     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
+     */
     protected const COL_FK_PRODUCT_ABSTRACT = 'spy_product.fk_product_abstract';
 
-    /** @uses \Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION */
-    protected  const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
+    /**
+     * @uses \Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION
+     */
+    protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
 
     /**
      * @param string $abstractProductSku
