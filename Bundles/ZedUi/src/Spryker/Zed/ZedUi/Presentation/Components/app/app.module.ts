@@ -3,12 +3,10 @@ import { Compiler, Injector, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AjaxActionModule } from '@spryker/ajax-action';
-import {
-    AjaxPostActionCloseService,
-    AjaxPostActionRedirectService,
-    AjaxPostActionRefreshTableService,
-    AjaxPostActionRefreshDrawerService,
-} from '@spryker/ajax-post-actions';
+import { AjaxPostActionCloseService } from '@spryker/ajax-action.post-action.close-overlay';
+import { AjaxPostActionRedirectService } from '@spryker/ajax-action.post-action.redirect';
+import { AjaxPostActionRefreshTableService } from '@spryker/ajax-action.post-action.refresh-table';
+import { AjaxPostActionRefreshDrawerService } from '@spryker/ajax-action.post-action.refresh-drawer';
 import { LocaleModule } from '@spryker/locale';
 import { DeLocaleModule } from '@spryker/locale/locales/de';
 import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';

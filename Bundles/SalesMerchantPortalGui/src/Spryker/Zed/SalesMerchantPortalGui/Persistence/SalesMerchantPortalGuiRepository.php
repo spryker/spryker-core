@@ -180,11 +180,11 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
         $merchantSalesOrderQuery = $this->getFactory()->getMerchantSalesOrderPropelQuery();
         $merchantSalesOrderQuery = $this->filterMerchantSalesOrderQueryByIdMerchant($merchantSalesOrderQuery, $idMerchant);
         $merchantSalesOrderQuery->joinMerchantSalesOrderItem()
+            ->joinMerchantSalesOrderTotal()
             ->leftJoinWithOrder()
             ->useMerchantSalesOrderItemQuery(null, Criteria::JOIN)
                 ->leftJoinStateMachineItemState()
             ->endUse()
-            ->joinMerchantSalesOrderTotal()
             ->addAsColumn(MerchantOrderTransfer::ID_MERCHANT_ORDER, SpyMerchantSalesOrderTableMap::COL_ID_MERCHANT_SALES_ORDER)
             ->addAsColumn(MerchantOrderTransfer::MERCHANT_ORDER_ITEM_COUNT, sprintf('COUNT(%s)', SpyMerchantSalesOrderItemTableMap::COL_ID_MERCHANT_SALES_ORDER_ITEM))
             ->addAsColumn(OrderTransfer::ORDER_REFERENCE, SpySalesOrderTableMap::COL_ORDER_REFERENCE)
@@ -197,8 +197,8 @@ class SalesMerchantPortalGuiRepository extends AbstractRepository implements Sal
             ->addAsColumn(MerchantOrderTransfer::ITEM_STATES, sprintf('GROUP_CONCAT(DISTINCT %s)', SpyStateMachineItemStateTableMap::COL_NAME))
             ->addAsColumn(TotalsTransfer::GRAND_TOTAL, SpyMerchantSalesOrderTotalsTableMap::COL_GRAND_TOTAL)
             ->addAsColumn(OrderTransfer::STORE, SpySalesOrderTableMap::COL_STORE)
-            ->addAsColumn(OrderTransfer::CURRENCY_ISO_CODE, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE)
-            ->groupByIdMerchantSalesOrder()
+            ->addAsColumn(OrderTransfer::CURRENCY_ISO_CODE, SpySalesOrderTableMap::COL_CURRENCY_ISO_CODE);
+        $merchantSalesOrderQuery->groupByIdMerchantSalesOrder()
             ->setFormatter(ModelCriteria::FORMAT_ARRAY);
 
         return $merchantSalesOrderQuery;
