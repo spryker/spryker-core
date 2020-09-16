@@ -82,7 +82,7 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
             ],
             ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
+                RestErrorMessageTransfer::STATUS => Response::HTTP_UNPROCESSABLE_ENTITY,
                 RestErrorMessageTransfer::DETAIL => static::EXCEPTION_MESSAGE_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND,
             ],
             ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY => [

@@ -85,10 +85,6 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         RestRequestInterface $restRequest,
         RestConfiguredBundlesAttributesTransfer $restConfiguredBundlesAttributesTransfer
     ): RestResponseInterface {
-        if (!$this->findGuestCartIdentifier($restRequest)) {
-            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
-        }
-
         $configurableBundleTemplateStorageTransfer = $this->configurableBundleStorageClient
             ->findConfigurableBundleTemplateStorageByUuid(
                 $restConfiguredBundlesAttributesTransfer->getTemplateUuid(),

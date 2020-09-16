@@ -164,6 +164,8 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      */
     protected function checkQuoteFromRequest(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
+        // TODO: provide default quote for guest customer if uuid was not provided
+
         $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {

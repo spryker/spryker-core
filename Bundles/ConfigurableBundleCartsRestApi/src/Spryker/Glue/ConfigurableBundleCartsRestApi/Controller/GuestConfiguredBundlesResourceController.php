@@ -20,17 +20,18 @@ class GuestConfiguredBundlesResourceController extends AbstractController
     /**
      * @Glue({
      *     "post": {
-     *         "path": "/guest-carts/{cartId}/guest-configured-bundles",
      *         "summary": [
      *             "Adds a configured bundle to the guest cart."
      *         ],
      *         "parameters": [{
-     *             "ref": "acceptLanguage"
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *         }],
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
-     *             "400": "Cart id is missing.",
-     *             "400": "Configurable bundle template not found.",
+     *             "422": "Configurable bundle template not found.",
      *             "403": "Unauthorized cart action.",
      *             "422": "Errors appeared during configured bundle creation."
      *         }
@@ -59,7 +60,10 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *             "Updates configured bundle quantity from the guest cart."
      *         ],
      *         "parameters": [{
-     *             "ref": "acceptLanguage"
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *         }],
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
@@ -94,7 +98,10 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *             "Removes configured bundle from the guest cart."
      *         ],
      *         "parameters": [{
-     *             "ref": "acceptLanguage"
+     *              "name": "X-Anonymous-Customer-Unique-Id",
+     *              "in": "header",
+     *              "required": true,
+     *              "description": "Guest customer unique ID."
      *         }],
      *         "responses": {
      *             "400": "Cart id is missing.",

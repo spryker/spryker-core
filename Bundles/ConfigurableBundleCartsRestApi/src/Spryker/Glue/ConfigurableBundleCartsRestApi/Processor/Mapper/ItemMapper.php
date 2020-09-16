@@ -71,6 +71,10 @@ class ItemMapper implements ItemMapperInterface
             ->getTemplate()
             ->getName();
 
+        if (!$templateName) {
+            return $restItemsAttributesTransfer;
+        }
+
         $translations = $this->glossaryStorageClient->translateBulk([$templateName], $localeName);
 
         $restItemsAttributesTransfer->getConfiguredBundle()
