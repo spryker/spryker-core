@@ -34,6 +34,8 @@ class DiscountCalculator implements DiscountCalculatorInterface
      */
     public function recalculate(CalculableObjectTransfer $calculableObjectTransfer): CalculableObjectTransfer
     {
+        $calculableObjectTransfer->requireStore();
+
         $this->removeCalculatedDiscountsForItems($calculableObjectTransfer);
 
         $quoteTransfer = (new QuoteTransfer())->fromArray($calculableObjectTransfer->toArray(), true);

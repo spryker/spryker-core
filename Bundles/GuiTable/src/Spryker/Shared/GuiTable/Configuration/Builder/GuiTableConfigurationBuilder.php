@@ -21,6 +21,7 @@ use Generated\Shared\Transfer\GuiTablePaginationConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionsConfigurationTransfer;
 use Generated\Shared\Transfer\GuiTableRowActionTransfer;
 use Generated\Shared\Transfer\GuiTableSearchConfigurationTransfer;
+use Generated\Shared\Transfer\GuiTableTitleConfigurationTransfer;
 use Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer;
 use Generated\Shared\Transfer\SelectGuiTableFilterTypeOptionsTransfer;
 use Spryker\Shared\GuiTable\Exception\InvalidConfigurationException;
@@ -36,6 +37,11 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @var \Generated\Shared\Transfer\GuiTableColumnConfigurationTransfer[]
      */
     protected $columns;
+
+    /**
+     * @var string
+     */
+    protected $title;
 
     /**
      * @var \Generated\Shared\Transfer\GuiTableFilterTransfer[]
@@ -197,7 +203,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      * @param bool $isSortable
      * @param bool $isHideable
      * @param string|null $color
-     * @param array|null $colorMapping
+     * @param mixed[]|null $colorMapping
      *
      * @return $this
      */
@@ -235,7 +241,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
      *
      * @return $this
      */
-    public function addColumnChips(
+    public function addColumnListChip(
         string $id,
         string $title,
         bool $isSortable,
@@ -284,10 +290,12 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     /**
      * @api
      *
+     * @phpstan-param array<int, string> $values
+     *
      * @param string $id
      * @param string $title
      * @param bool $isMultiselect
-     * @param array $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
+     * @param string[] $values select values in format of ['value1' => 'title1', 'value2' => 'title2']
      *
      * @return $this
      */
@@ -301,7 +309,7 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
 
         foreach ($values as $value => $optionTitle) {
             $optionTransfer = (new OptionSelectGuiTableFilterTypeOptionsTransfer())
-                ->setValue($value)
+                ->setValue((string)$value)
                 ->setTitle($optionTitle);
             $typeOptionTransfers->addValue($optionTransfer);
         }
@@ -310,6 +318,33 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
             ->setId($id)
             ->setTitle($title)
             ->setType(static::FILTER_TYPE_SELECT)
+            ->setTypeOptions($typeOptionTransfers);
+
+        return $this;
+    }
+
+    /**
+     * @api
+     *
+     * @param string $id
+     * @param string $title
+     * @param bool $isMultiselect
+     * @param \Generated\Shared\Transfer\OptionSelectGuiTableFilterTypeOptionsTransfer[] $options
+     *
+     * @return $this
+     */
+    public function addFilterTreeSelect(string $id, string $title, bool $isMultiselect, array $options)
+    {
+        $typeOptionTransfers = (new SelectGuiTableFilterTypeOptionsTransfer())->setMultiselect($isMultiselect);
+
+        foreach ($options as $optionTransfer) {
+            $typeOptionTransfers->addValue($optionTransfer);
+        }
+
+        $this->filters[] = (new GuiTableFilterTransfer())
+            ->setId($id)
+            ->setTitle($title)
+            ->setType(static::FILTER_TYPE_TREE_SELECT)
             ->setTypeOptions($typeOptionTransfers);
 
         return $this;
@@ -604,6 +639,18 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
     }
 
     /**
+     * @param string $title
+     *
+     * @return $this
+     */
+    public function setTableTitle(string $title)
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    /**
      * @api
      *
      * @throws \Spryker\Shared\GuiTable\Exception\InvalidConfigurationException
@@ -622,6 +669,14 @@ class GuiTableConfigurationBuilder implements GuiTableConfigurationBuilderInterf
         $guiTableConfigurationTransfer = $this->setFilters($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->setBatchActions($guiTableConfigurationTransfer);
+
+        if ($this->title) {
+            $guiTableConfigurationTransfer->setTitle(
+                (new GuiTableTitleConfigurationTransfer())
+                    ->setIsEnabled(true)
+                    ->setTitle($this->title)
+            );
+        }
 
         if ($this->dataSourceUrl) {
             $guiTableConfigurationTransfer->setDataSource(

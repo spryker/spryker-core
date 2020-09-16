@@ -9,6 +9,7 @@ namespace Spryker\Zed\Calculation\Business\Model\Executor;
 
 use Generated\Shared\Transfer\CalculableObjectTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\StoreTransfer;
 
 class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
 {
@@ -52,6 +53,7 @@ class OrderCalculatorExecutor implements OrderCalculatorExecutorInterface
     {
         $calculableObjectTransfer = new CalculableObjectTransfer();
         $calculableObjectTransfer->fromArray($orderTransfer->toArray(), true);
+        $calculableObjectTransfer->setStore((new StoreTransfer())->setName($orderTransfer->getStore()));
         $calculableObjectTransfer->setOriginalOrder($orderTransfer);
 
         return $calculableObjectTransfer;

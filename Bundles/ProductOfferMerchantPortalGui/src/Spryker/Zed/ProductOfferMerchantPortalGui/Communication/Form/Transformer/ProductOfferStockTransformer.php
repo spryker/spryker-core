@@ -8,26 +8,31 @@
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer;
 
 use ArrayObject;
+use Generated\Shared\Transfer\ProductOfferStockTransfer;
 use Symfony\Component\Form\DataTransformerInterface;
 
 class ProductOfferStockTransformer implements DataTransformerInterface
 {
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[] $productOfferStockTransfers
+     * @phpstan-param array<\Generated\Shared\Transfer\ProductOfferStockTransfer> $productOfferStockTransfers
+     *
+     * @param \Generated\Shared\Transfer\ProductOfferStockTransfer[]|\ArrayObject $productOfferStockTransfers
      *
      * @return \Generated\Shared\Transfer\ProductOfferStockTransfer
      */
-    public function transform($productOfferStockTransfers)
+    public function transform($productOfferStockTransfers): ProductOfferStockTransfer
     {
         return $productOfferStockTransfers[0];
     }
 
     /**
+     * @phpstan-return \ArrayObject<int, \Generated\Shared\Transfer\ProductOfferStockTransfer>
+     *
      * @param \Generated\Shared\Transfer\ProductOfferStockTransfer $productOfferStockTransfer
      *
-     * @return \ArrayObject|\Generated\Shared\Transfer\ProductOfferStockTransfer[]
+     * @return \Generated\Shared\Transfer\ProductOfferStockTransfer[]|\ArrayObject
      */
-    public function reverseTransform($productOfferStockTransfer)
+    public function reverseTransform($productOfferStockTransfer): ArrayObject
     {
         return (new ArrayObject([$productOfferStockTransfer]));
     }

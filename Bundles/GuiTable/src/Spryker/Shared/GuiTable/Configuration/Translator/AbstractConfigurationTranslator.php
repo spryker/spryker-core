@@ -30,6 +30,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
         $guiTableConfigurationTransfer = $this->translateRowActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateBatchActions($guiTableConfigurationTransfer);
         $guiTableConfigurationTransfer = $this->translateSearch($guiTableConfigurationTransfer);
+        $guiTableConfigurationTransfer = $this->translateTitle($guiTableConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
@@ -80,7 +81,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     ): GuiTableConfigurationTransfer {
         $guiTableFiltersConfigurationTransfer = $guiTableConfigurationTransfer->getFilters();
 
-        if (!$guiTableFiltersConfigurationTransfer->getIsEnabled()) {
+        if (!$guiTableFiltersConfigurationTransfer || !$guiTableFiltersConfigurationTransfer->getIsEnabled()) {
             return $guiTableConfigurationTransfer;
         }
 
@@ -131,7 +132,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     ): GuiTableConfigurationTransfer {
         $guiTableRowActionsConfigurationTransfer = $guiTableConfigurationTransfer->getRowActions();
 
-        if (!$guiTableRowActionsConfigurationTransfer->getIsEnabled()) {
+        if (!$guiTableRowActionsConfigurationTransfer || !$guiTableRowActionsConfigurationTransfer->getIsEnabled()) {
             return $guiTableConfigurationTransfer;
         }
 
@@ -173,7 +174,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     ): GuiTableConfigurationTransfer {
         $guiTableBatchActionsConfigurationTransfer = $guiTableConfigurationTransfer->getBatchActions();
 
-        if (!$guiTableBatchActionsConfigurationTransfer->getIsEnabled()) {
+        if (!$guiTableBatchActionsConfigurationTransfer || !$guiTableBatchActionsConfigurationTransfer->getIsEnabled()) {
             return $guiTableConfigurationTransfer;
         }
 
@@ -215,7 +216,7 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
     ): GuiTableConfigurationTransfer {
         $guiTableSearchConfigurationTransfer = $guiTableConfigurationTransfer->getSearch();
 
-        if (!$guiTableSearchConfigurationTransfer->getIsEnabled()) {
+        if (!$guiTableSearchConfigurationTransfer || !$guiTableSearchConfigurationTransfer->getIsEnabled()) {
             return $guiTableConfigurationTransfer;
         }
 
@@ -227,6 +228,32 @@ abstract class AbstractConfigurationTranslator implements ConfigurationTranslato
 
         $guiTableSearchConfigurationTransfer->setSearch($search);
         $guiTableConfigurationTransfer->setSearch($guiTableSearchConfigurationTransfer);
+
+        return $guiTableConfigurationTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+     *
+     * @return \Generated\Shared\Transfer\GuiTableConfigurationTransfer
+     */
+    protected function translateTitle(
+        GuiTableConfigurationTransfer $guiTableConfigurationTransfer
+    ): GuiTableConfigurationTransfer {
+        $guiTableTitleConfigurationTransfer = $guiTableConfigurationTransfer->getTitle();
+
+        if (
+            !$guiTableTitleConfigurationTransfer
+            || !$guiTableTitleConfigurationTransfer->getIsEnabled()
+            || !$guiTableTitleConfigurationTransfer->getTitle()
+        ) {
+            return $guiTableConfigurationTransfer;
+        }
+
+        $guiTableTitleConfigurationTransfer->setTitle($this->translate(
+            $guiTableTitleConfigurationTransfer->getTitle()
+        ));
+        $guiTableConfigurationTransfer->setTitle($guiTableTitleConfigurationTransfer);
 
         return $guiTableConfigurationTransfer;
     }
