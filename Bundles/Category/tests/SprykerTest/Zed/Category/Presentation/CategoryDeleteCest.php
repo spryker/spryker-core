@@ -32,6 +32,7 @@ class CategoryDeleteCest
         $i->amOnPage(CategoryListPage::URL);
         $i->waitForElement(CategoryListPage::getDeleteButtonSelector());
         $i->click(CategoryListPage::getDeleteButtonSelector());
+        $i->waitForElement('//spryker-breadcrumbs');
         $i->seeBreadcrumbNavigation('Catalog / Category / Delete Category');
     }
 }
