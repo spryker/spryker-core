@@ -1,11 +1,13 @@
 {% set hasAssignedPermissions = false %}
 {% set hasUnassignedPermissions = false %}
 
-{% for child in form if not hasAssignedPermissions or not hasUnassignedPermissions %}
-    {% if child.vars.data %}
-        {% set hasAssignedPermissions = true %}
-    {% else %}
-        {% set hasUnassignedPermissions = true %}
+{% for child in form %}
+    {% if not hasAssignedPermissions or not hasUnassignedPermissions %}
+        {% if child.vars.data %}
+            {% set hasAssignedPermissions = true %}
+        {% else %}
+            {% set hasUnassignedPermissions = true %}
+        {% endif %}
     {% endif %}
 {% endfor %}
 

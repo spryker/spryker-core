@@ -26,9 +26,16 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/checkout": "*",
+    "spryker/cms": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
+    "spryker/router": "*",
     "spryker/sales": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {

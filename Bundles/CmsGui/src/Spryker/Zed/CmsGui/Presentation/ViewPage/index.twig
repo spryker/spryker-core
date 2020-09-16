@@ -32,18 +32,18 @@
         <div class="alert alert-info">
             <p>
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                {% filter trans|raw -%}
+                {% apply trans|raw -%}
                     You are viewing a published page. It was published
-                {%- endfilter %}
+                {%- endapply %}
                 {% if cmsVersion.firstName is not null %}
                     {{ 'by' | trans }} <b>{{ cmsVersion.firstName }} {{ cmsVersion.lastName }}</b>
                 {% endif %}
                     {{ 'on' | trans }} <b>{{ cmsVersion.createdAt | formatDateTime }}</b>.
             </p>
             <p>
-                {% filter trans|raw -%}
+                {% apply trans|raw -%}
                     You can edit the page or placeholders to modify the current working draft. You can publish the current working draft to create a new version
-                {%- endfilter %}
+                {%- endapply %}
             </p>
         </div>
     {% endif %}

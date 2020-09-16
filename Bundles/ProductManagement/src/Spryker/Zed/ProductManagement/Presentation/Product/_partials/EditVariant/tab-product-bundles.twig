@@ -18,9 +18,9 @@
      id="assigned-product-template"
      data-value-count="{{ form.assigned_bundled_products|length  }}"
      data-prototype="
-           {% filter escape %}
+           {% apply escape %}
                {{ include ('@ProductManagement/_partials/assign-bundled-product-template.twig', { 'bundledProductForm': form.assigned_bundled_products.vars.prototype }) }}
-           {% endfilter %}">
+           {% endapply %}">
 </div>
 
 <div id="bundled-products">
