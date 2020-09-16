@@ -231,7 +231,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return void
      */
-    public function testResolveProductPriceByPriceProductCriteriaReturnsNullIfThereAreNoPricesWithRequestedType(): void
+    public function testResolveProductPriceByPriceProductCriteriaReturnsNullIfThereAreNoPricesWithRequestedMode(): void
     {
         // Arrange
         $priceProductTransferGrossFirst = (new PriceProductTransfer())
@@ -276,7 +276,7 @@ class PriceProductServiceTest extends Unit
     /**
      * @return void
      */
-    public function testResolveProductPriceByPriceProductCriteriaReturnsPriceMatchedByType(): void
+    public function testResolveProductPriceByPriceProductCriteriaReturnsPriceMatchedByCriteria(): void
     {
         // Arrange
         $priceProductTransferNet = (new PriceProductTransfer())
