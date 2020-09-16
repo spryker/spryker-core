@@ -29,6 +29,12 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBun
 class AddConfiguredBundleTest extends Unit
 {
     protected const FAKE_QUOTE_UUID = 'FAKE_QUOTE_UUID';
+    protected const FAKE_CUSTOMER_REFERENCE = 'FAKE_CUSTOMER_REFERENCE';
+
+    /**
+     * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_CART_NOT_FOUND
+     */
+    protected const ERROR_IDENTIFIER_CART_NOT_FOUND = 'ERROR_IDENTIFIER_CART_NOT_FOUND';
 
     /**
      * @uses \Spryker\Shared\CartsRestApi\CartsRestApiConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION
@@ -85,17 +91,41 @@ class AddConfiguredBundleTest extends Unit
     /**
      * @return void
      */
-    public function testAddConfiguredBundleThrowsExceptionWithEmptyQuoteUuidField(): void
+    public function testAddConfiguredBundleAddsConfiguredBundleToPersistentCartWithoutQuoteUuid(): void
     {
         // Arrange
         $createConfiguredBundleRequestTransfer = $this->tester->buildCreateConfiguredBundleRequest();
         $createConfiguredBundleRequestTransfer->getQuote()->setUuid(null);
 
+        // Act
+        $quoteResponseTransfer = $this->tester->getFacade()->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+
         // Assert
-        $this->expectException(RequiredTransferPropertyException::class);
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+    }
+
+    /**
+     * @return void
+     */
+    public function testAddConfiguredBundleAddsConfiguredBundleToPersistentCartWithoutQuoteUuidForUndefinedCustomer(): void
+    {
+        // Arrange
+        $createConfiguredBundleRequestTransfer = $this->tester->buildCreateConfiguredBundleRequest();
+        $createConfiguredBundleRequestTransfer->getQuote()
+            ->setUuid(null)
+            ->setCustomerReference(static::FAKE_CUSTOMER_REFERENCE)
+            ->getCustomer()
+            ->setCustomerReference(static::FAKE_CUSTOMER_REFERENCE);
 
         // Act
-        $this->tester->getFacade()->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+        $quoteResponseTransfer = $this->tester->getFacade()->addConfiguredBundle($createConfiguredBundleRequestTransfer);
+
+        // Assert
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
+        $this->assertEquals(
+            static::ERROR_IDENTIFIER_CART_NOT_FOUND,
+            $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
+        );
     }
 
     /**

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade;
 
+use Generated\Shared\Transfer\QuoteCollectionTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
@@ -33,5 +35,15 @@ class ConfigurableBundleCartsRestApiToCartsRestApiFacadeBridge implements Config
     public function findQuoteByUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteCollectionTransfer
+     */
+    public function getQuoteCollection(QuoteCriteriaFilterTransfer $quoteCriteriaFilterTransfer): QuoteCollectionTransfer
+    {
+        return $this->cartsRestApiFacade->getQuoteCollection($quoteCriteriaFilterTransfer);
     }
 }

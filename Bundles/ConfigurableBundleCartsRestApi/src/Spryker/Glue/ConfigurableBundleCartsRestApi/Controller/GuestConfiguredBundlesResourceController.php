@@ -20,6 +20,7 @@ class GuestConfiguredBundlesResourceController extends AbstractController
     /**
      * @Glue({
      *     "post": {
+     *         "path": "/guest-carts/{guestCartId}/guest-configured-bundles/{configuredBundleId}",
      *         "summary": [
      *             "Adds a configured bundle to the guest cart."
      *         ],
@@ -32,6 +33,7 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
      *             "422": "Configurable bundle template not found.",
+     *             "404": "Cart with given uuid not found.",
      *             "403": "Unauthorized cart action.",
      *             "422": "Errors appeared during configured bundle creation."
      *         }
@@ -55,7 +57,7 @@ class GuestConfiguredBundlesResourceController extends AbstractController
     /**
      * @Glue({
      *     "patch": {
-     *         "path": "/guest-carts/{cartId}/guest-configured-bundles/{configuredBundleId}",
+     *         "path": "/guest-carts/{guestCartId}/guest-configured-bundles/{configuredBundleId}",
      *         "summary": [
      *             "Updates configured bundle quantity from the guest cart."
      *         ],
@@ -68,7 +70,7 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
      *             "400": "Cart id is missing.",
-     *             "400": "The quantity of the configured bundle should be more than zero.",
+     *             "422": "The quantity of the configured bundle should be more than zero.",
      *             "403": "Unauthorized cart action.",
      *             "400": "Configured bundle with provided group key not found in cart.",
      *             "422": "Errors appeared during configured bundle update."
@@ -93,7 +95,7 @@ class GuestConfiguredBundlesResourceController extends AbstractController
     /**
      * @Glue({
      *     "delete": {
-     *         "path": "/guest-carts/{cartId}/guest-configured-bundles/{configuredBundleId}",
+     *         "path": "/guest-carts/{guestCartId}/guest-configured-bundles/{configuredBundleId}",
      *         "summary": [
      *             "Removes configured bundle from the guest cart."
      *         ],
