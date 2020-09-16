@@ -47,7 +47,7 @@ class PriceProductOfferEntityManager extends AbstractEntityManager implements Pr
     {
         $idPriceProductOffer = $priceProductTransfer->requirePriceDimension()
             ->getPriceDimension()
-            ->requireIdProductOffer()
+            ->requireIdPriceProductOffer()
             ->getIdPriceProductOffer();
 
         $priceProductOfferEntity = $this->getFactory()
