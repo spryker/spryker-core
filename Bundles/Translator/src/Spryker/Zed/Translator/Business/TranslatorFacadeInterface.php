@@ -74,7 +74,7 @@ interface TranslatorFacadeInterface extends TranslatorInterface
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string;
+    public function transChoice(string $id, int $number, array $parameters = [], $domain = null, $locale = null): string;
 
     /**
      * @api

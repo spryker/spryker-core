@@ -51,43 +51,6 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
 
         $this->matcher = $this->setRouterEnhancerPluginsToMatcher(parent::getMatcher());
 
-//        $compiled = is_a($this->options['matcher_class'], CompiledUrlMatcher::class, true);
-//
-//        if ($this->options['cache_dir'] === null) {
-//            $routes = $this->getRouteCollection();
-//            if ($compiled) {
-//                $routes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
-//            }
-//            $this->matcher = new $this->options['matcher_class']($routes, $this->context);
-//            $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
-//
-//            return $this->matcher;
-//        }
-//
-//        $cache = $this->getConfigCacheFactory()->cache(
-//            $this->options['cache_dir'] . '/url_matching_routes.php',
-//            function (ConfigCacheInterface $cache) {
-//                $dumper = $this->getMatcherDumperInstance();
-//
-//                $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
-//            }
-//        );
-//
-//        if ($compiled) {
-//            $this->matcher = new $this->options['matcher_class'](require $cache->getPath(), $this->context);
-//            $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
-//
-//            return $this->matcher;
-//        }
-//
-//        if (!class_exists($this->options['matcher_cache_class'], false)) {
-//            require_once $cache->getPath();
-//        }
-//
-//        $this->matcher = new $this->options['matcher_cache_class']($this->context);
-//
-//        $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
-
         return $this->matcher;
     }
 
@@ -115,33 +78,6 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
         }
 
         $this->generator = $this->setRouterEnhancerPluginsToGenerator(parent::getGenerator());
-
-//        $compiled = is_a($this->options['generator_class'], CompiledUrlGenerator::class, true);
-//
-//        if ($this->options['cache_dir'] === null) {
-//            $routes = $this->getRouteCollection();
-//            if ($compiled) {
-//                $routes = (new CompiledUrlGeneratorDumper($routes))->getCompiledRoutes();
-//            }
-//            $this->generator = new $this->options['generator_class']($routes, $this->context, $this->logger, $this->defaultLocale);
-//        } else {
-//            $cache = $this->getConfigCacheFactory()->cache(
-//                $this->options['cache_dir'] . '/url_generating_routes.php',
-//                function (ConfigCacheInterface $cache) {
-//                    $dumper = $this->getGeneratorDumperInstance();
-//
-//                    $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
-//                }
-//            );
-//
-//            $this->generator = new $this->options['generator_class'](self::getCompiledRoutes($cache->getPath()), $this->context, $this->logger, $this->defaultLocale);
-//        }
-//
-//        if ($this->generator instanceof ConfigurableRequirementsInterface) {
-//            $this->generator->setStrictRequirements($this->options['strict_requirements']);
-//        }
-//
-//        $this->generator = $this->setRouterEnhancerPluginsToGenerator($this->generator);
 
         return $this->generator;
     }

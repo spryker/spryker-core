@@ -29,7 +29,7 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string
     {
         return $this->getFacade()->trans($id, $parameters, $domain, $locale);
     }
@@ -47,9 +47,11 @@ class TranslatorPlugin extends AbstractPlugin implements TranslatorPluginInterfa
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
+    public function transChoice(string $id, int $number, array $parameters = [], $domain = null, $locale = null): string
     {
-        return $this->getFacade()->transChoice($id, $number, $parameters, $domain, $locale);
+        $parameters['%count%'] = $number;
+
+        return $this->getFacade()->trans($id, $parameters, $domain, $locale);
     }
 
     /**

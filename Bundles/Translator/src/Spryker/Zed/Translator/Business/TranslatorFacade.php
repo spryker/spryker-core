@@ -82,7 +82,7 @@ class TranslatorFacade extends AbstractFacade implements TranslatorFacadeInterfa
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], $domain = null, $locale = null): string
+    public function transChoice(string $id, int $number, array $parameters = [], $domain = null, $locale = null): string
     {
         $parameters['%count%'] = $number;
 

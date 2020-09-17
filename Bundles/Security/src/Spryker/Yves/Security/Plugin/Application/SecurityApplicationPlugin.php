@@ -1126,8 +1126,6 @@ class SecurityApplicationPlugin extends AbstractPlugin implements ApplicationPlu
                     $httpUtils = $container->get(static::SERVICE_SECURITY_HTTP_UTILS);
                     $this->getDispatcher($container)->addSubscriber(new DefaultLogoutListener($httpUtils, $targetUrl));
                     $this->getDispatcher($container)->addSubscriber(new SessionLogoutListener());
-                    // Does a RememberMeLogoutListener exist in latest version??
-//                    $this->getDispatcher($container)->addSubscriber(new RememberMeLogoutListener());
                 }
 
                 /** @var \Symfony\Contracts\EventDispatcher\EventDispatcherInterface $eventDispatcher */

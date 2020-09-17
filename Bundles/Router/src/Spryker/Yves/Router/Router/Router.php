@@ -9,15 +9,9 @@ namespace Spryker\Yves\Router\Router;
 
 use Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerAwareInterface;
 use Symfony\Component\Config\ConfigCacheFactory;
-use Symfony\Component\Config\ConfigCacheInterface;
 use Symfony\Component\Config\Loader\LoaderInterface;
 use Symfony\Component\HttpKernel\CacheWarmer\WarmableInterface;
-use Symfony\Component\Routing\Generator\CompiledUrlGenerator;
-use Symfony\Component\Routing\Generator\ConfigurableRequirementsInterface;
-use Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\Routing\Matcher\CompiledUrlMatcher;
-use Symfony\Component\Routing\Matcher\Dumper\CompiledUrlMatcherDumper;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 use Symfony\Component\Routing\Router as SymfonyRouter;
 
@@ -55,42 +49,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
             return $this->matcher;
         }
 
-        $compiled = is_a($this->options['matcher_class'], CompiledUrlMatcher::class, true);
-
-        if ($this->options['cache_dir'] === null) {
-            $routes = $this->getRouteCollection();
-            if ($compiled) {
-                $routes = (new CompiledUrlMatcherDumper($routes))->getCompiledRoutes();
-            }
-            $this->matcher = new $this->options['matcher_class']($routes, $this->context);
-            $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
-
-            return $this->matcher;
-        }
-
-        $cache = $this->getConfigCacheFactory()->cache(
-            $this->options['cache_dir'] . '/url_matching_routes.php',
-            function (ConfigCacheInterface $cache) {
-                $dumper = $this->getMatcherDumperInstance();
-
-                $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
-            }
-        );
-
-        if ($compiled) {
-            $this->matcher = new $this->options['matcher_class'](require $cache->getPath(), $this->context);
-            $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
-
-            return $this->matcher;
-        }
-
-        if (!class_exists($this->options['matcher_cache_class'], false)) {
-            require_once $cache->getPath();
-        }
-
-        $this->matcher = new $this->options['matcher_cache_class']($this->context);
-
-        $this->matcher = $this->setRouterEnhancerPluginsToMatcher($this->matcher);
+        $this->matcher = $this->setRouterEnhancerPluginsToMatcher(parent::getMatcher());
 
         return $this->matcher;
     }
@@ -118,40 +77,7 @@ class Router extends SymfonyRouter implements RouterInterface, WarmableInterface
             return $this->generator;
         }
 
-        $compiled = is_a($this->options['generator_class'], CompiledUrlGenerator::class, true);
-
-        if ($this->options['cache_dir'] === null) {
-            $routes = $this->getRouteCollection();
-            if ($compiled) {
-                $routes = (new CompiledUrlGeneratorDumper($routes))->getCompiledRoutes();
-            }
-            $this->generator = new $this->options['generator_class']($routes, $this->context, $this->logger, $this->defaultLocale);
-        } else {
-            $cache = $this->getConfigCacheFactory()->cache(
-                $this->options['cache_dir'] . '/url_generating_routes.php',
-                function (ConfigCacheInterface $cache) {
-                    $dumper = $this->getGeneratorDumperInstance();
-
-                    $cache->write($dumper->dump(), $this->getRouteCollection()->getResources());
-                }
-            );
-
-            if ($compiled) {
-                $this->generator = new $this->options['generator_class'](require $cache->getPath(), $this->context, $this->logger);
-            } else {
-                if (!class_exists($this->options['generator_cache_class'], false)) {
-                    require_once $cache->getPath();
-                }
-
-                $this->generator = new $this->options['generator_cache_class']($this->context, $this->logger, $this->defaultLocale);
-            }
-        }
-
-        if ($this->generator instanceof ConfigurableRequirementsInterface) {
-            $this->generator->setStrictRequirements($this->options['strict_requirements']);
-        }
-
-        $this->generator = $this->setRouterEnhancerPluginsToGenerator($this->generator);
+        $this->generator = $this->setRouterEnhancerPluginsToGenerator(parent::getGenerator());
 
         return $this->generator;
     }
