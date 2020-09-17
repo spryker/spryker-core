@@ -1,3 +1,8 @@
+{# @var order \Generated\Shared\Transfer\OrderTransfer #}
+{# @var comment \Generated\Shared\Transfer\CommentTransfer #}
+{# @var comment.customer \Generated\Shared\Transfer\CustomerTransfer #}
+{# @var commentTag \Generated\Shared\Transfer\CommentTagTransfer #}
+
 {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Comments to Order' | trans } %}
 
     {% block widget_content %}

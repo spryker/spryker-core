@@ -35,7 +35,6 @@ class PriceModeSwitcherServiceProvider extends AbstractPlugin implements Service
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
                 $twig->addFunction(
-                    static::$functionName,
                     $this->getPriceModeSwitcher($twig)
                 );
 

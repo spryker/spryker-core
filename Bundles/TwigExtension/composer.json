@@ -5,7 +5,7 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "twig/twig": "^1.41.0"
+    "twig/twig": "^1.41 || ^2.0.0 || ^3.0.0"
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
