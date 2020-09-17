@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthCustomerConnector\Business\Model;
 
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\OauthUserTransfer;
@@ -86,7 +87,10 @@ class CustomerProvider implements CustomerProviderInterface
             return $oauthUserTransfer;
         }
 
-        $customerResponseTransfer = $this->customerFacade->findCustomerByReference($oauthUserTransfer->getCustomerReference());
+        $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
+            ->setCustomerReference($oauthUserTransfer->getCustomerReference())
+            ->setWithExpanders(true);
+        $customerResponseTransfer = $this->customerFacade->getCustomerByCriteria($customerCriteriaTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
             return $oauthUserTransfer;
