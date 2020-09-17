@@ -20,7 +20,7 @@ class BrowserHelper extends Module
      */
     public function disableBrowserNativeValidation(string $selector): void
     {
-        /** @var \Codeception\Module\WebDriver */
+        /** @var \Codeception\Module\WebDriver $webdriver */
         $webdriver = $this->getModule('WebDriver');
         $webdriver->executeJS(
             <<<EOF
