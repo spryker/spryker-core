@@ -27,7 +27,7 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
     public function findProductConfigurationAggregation(
         string $abstractProductSku
     ): ?ProductConfigurationAggregationTransfer {
-        $productConfigurationAggregationData = $this->getFactory()->getProductConfigurationQuery()
+        $productConfigurationAggregationData = $this->getFactory()->getProductConfigurationPropelQuery()
             ->useSpyProductQuery()
                 ->useSpyProductAbstractQuery()
                     ->filterBySku($abstractProductSku)

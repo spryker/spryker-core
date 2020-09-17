@@ -18,7 +18,7 @@ class ProductConfigurationGuiPersistenceFactory extends AbstractPersistenceFacto
     /**
      * @return \Orm\Zed\ProductConfiguration\Persistence\SpyProductConfigurationQuery|\Propel\Runtime\ActiveQuery\Criteria
      */
-    public function getProductConfigurationQuery()
+    public function getProductConfigurationPropelQuery()
     {
         return $this->getProvidedDependency(ProductConfigurationGuiDependencyProvider::PROPEL_QUERY_PRODUCT_CONFIGURATION);
     }
