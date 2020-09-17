@@ -1,0 +1,13 @@
+{# @var template \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer #}
+{# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
+
+{% define data = {
+    template: _view.template | default,
+    orderItem: _view.orderItem,
+} %}
+
+{% if template is defined %}
+    {% include template.templatePath with {'data': template.data} only %}
+{% else %}
+    {{ orderItem.productConfigurationInstance.displayData }}
+{% endif %}
