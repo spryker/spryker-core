@@ -17,7 +17,6 @@ class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * Specification:
      * - Checks is product abstract has at least one product concrete with product configuration.
      * - Expands product items with configurable product type if has or do nothing otherwise.
      *

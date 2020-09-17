@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductConfigurationGui\Persistence;
 
 use Generated\Shared\Transfer\ProductConfigurationAggregationTransfer;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductConfiguration\Persistence\Map\SpyProductConfigurationTableMap;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 
 /**
@@ -16,21 +18,8 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 class ProductConfigurationGuiRepository extends AbstractRepository implements ProductConfigurationGuiRepositoryInterface
 {
     /**
-     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_ID_PRODUCT
-     */
-    protected const COL_ID_PRODUCT = 'spy_product.id_product';
-
-    /**
-     * @uses \Orm\Zed\Product\Persistence\Map\SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT
-     */
-    protected const COL_FK_PRODUCT_ABSTRACT = 'spy_product.fk_product_abstract';
-
-    /**
-     * @uses \Orm\Zed\ConfigurableBundle\Persistence\Map\SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION
-     */
-    protected const COL_ID_PRODUCT_CONFIGURATION = 'spy_product_configuration.id_product_configuration';
-
-    /**
+     * @module Product
+     *
      * @param string $abstractProductSku
      *
      * @return \Generated\Shared\Transfer\ProductConfigurationAggregationTransfer|null
@@ -38,25 +27,25 @@ class ProductConfigurationGuiRepository extends AbstractRepository implements Pr
     public function findProductConfigurationAggregation(
         string $abstractProductSku
     ): ?ProductConfigurationAggregationTransfer {
-        $productConfigurationAggregationData = $this->getFactory()->createProductConfigurationQuery()
+        $productConfigurationAggregationData = $this->getFactory()->getProductConfigurationQuery()
             ->useSpyProductQuery()
                 ->useSpyProductAbstractQuery()
                     ->filterBySku($abstractProductSku)
                 ->endUse()
             ->endUse()
             ->withColumn(
-                sprintf('COUNT(%s)', static::COL_ID_PRODUCT_CONFIGURATION),
+                sprintf('COUNT(%s)', SpyProductConfigurationTableMap::COL_ID_PRODUCT_CONFIGURATION),
                 ProductConfigurationAggregationTransfer::PRODUCT_CONFIGURATION_COUNT
             )
             ->withColumn(
-                sprintf('COUNT(%s)', static::COL_ID_PRODUCT),
+                sprintf('COUNT(%s)', SpyProductTableMap::COL_ID_PRODUCT),
                 ProductConfigurationAggregationTransfer::PRODUCT_CONCRETE_COUNT
             )
             ->select([
                 ProductConfigurationAggregationTransfer::PRODUCT_CONCRETE_COUNT,
                 ProductConfigurationAggregationTransfer::PRODUCT_CONFIGURATION_COUNT,
             ])
-            ->groupBy(static::COL_FK_PRODUCT_ABSTRACT)->findOne();
+            ->groupBy(SpyProductTableMap::COL_FK_PRODUCT_ABSTRACT)->findOne();
 
         if (empty($productConfigurationAggregationData)) {
             return null;
