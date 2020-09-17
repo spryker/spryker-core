@@ -2,21 +2,23 @@
     <h3>Totals</h3>
     <table class="table table-bordered table-striped table-sm">
         <tbody>
-        {% for orderItem in order.items if orderItem.relatedBundleItemIdentifier is empty %}
-            <tr>
-                <th>{{ orderItem.name }}</th>
-                <th></th>
-                <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
-                <th></th>
-            </tr>
-            {% for orderItemOption in orderItem.productOptions %}
+        {% for orderItem in order.items %}
+            {% if orderItem.relatedBundleItemIdentifier is empty %}
                 <tr>
-                    <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
-                    <td></td>
-                    <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode) }}</td>
-                    <td></td>
+                    <th>{{ orderItem.name }}</th>
+                    <th></th>
+                    <td class="text-right">{{ orderItem.unitPrice | money(true, order.currencyIsoCode)  }}</td>
+                    <th></th>
                 </tr>
-            {% endfor %}
+                {% for orderItemOption in orderItem.productOptions %}
+                    <tr>
+                        <td> + <span class="label">{{ 'Option' | trans }}</span> {{ orderItemOption.value }}</td>
+                        <td></td>
+                        <td class="text-right">{{ orderItemOption.unitPrice | money(true, order.currencyIsoCode) }}</td>
+                        <td></td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         {% endfor %}
 
         {% if order.bundleItems is defined %}

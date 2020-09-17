@@ -122,7 +122,9 @@ class ProductTableDataMapper
      */
     protected function prepareProductStoresTableData(array $productTableRowDataArray): array
     {
-        $stores = explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES]);
+        $stores = array_filter(
+            explode(',', $productTableRowDataArray[ProductConcreteTransfer::STORES])
+        );
 
         $storeTransfers = array_map(function (string $storeName): StoreTransfer {
             return (new StoreTransfer())->setName($storeName);

@@ -15,12 +15,14 @@
     {% endif %}
 {% endfor %}
 
-{% for item in order.items if item.salesOrderConfiguredBundle %}
-    {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
-    {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId):
-        configuredBundleItemLength['_' ~ bundleId] is defined ?
-        (configuredBundleItemLength['_' ~ bundleId] + 1) : 1
-    }) %}
+{% for item in order.items %}
+    {% if item.salesOrderConfiguredBundle %}
+        {% set bundleId = item.salesOrderConfiguredBundle.idSalesOrderConfiguredBundle %}
+        {% set configuredBundleItemLength = configuredBundleItemLength | merge({('_' ~ bundleId):
+            configuredBundleItemLength['_' ~ bundleId] is defined ?
+            (configuredBundleItemLength['_' ~ bundleId] + 1) : 1
+        }) %}
+    {% endif %}
 {% endfor %}
 
 {% for bundle in configuredBundles %}
