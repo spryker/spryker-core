@@ -8,7 +8,7 @@
 namespace Spryker\Service\UtilDateTime\Plugin\Twig;
 
 use Spryker\Service\Twig\Plugin\AbstractTwigExtensionPlugin;
-use Spryker\Shared\Twig\TwigFilter;
+use Twig\TwigFilter;
 
 /**
  * @method \Spryker\Service\UtilDateTime\UtilDateTimeService getService()
@@ -25,7 +25,7 @@ class DateTimeFormatterTwigPlugin extends AbstractTwigExtensionPlugin
     ];
 
     /**
-     * @return \Spryker\Shared\Twig\TwigFilter[]
+     * @return \Twig\TwigFilter[]
      */
     public function getFilters(): array
     {

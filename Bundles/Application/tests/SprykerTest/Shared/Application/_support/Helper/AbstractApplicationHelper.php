@@ -158,4 +158,21 @@ abstract class AbstractApplicationHelper extends Framework
         $this->client = null;
         $this->httpKernelBrowser = null;
     }
+
+    /**
+     * @param array $settings
+     *
+     * @return void
+     */
+    public function _beforeSuite($settings = [])
+    {
+        $requestFactory = function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+            $request->server->set('SERVER_NAME', 'localhost');
+
+            return $request;
+        };
+
+        Request::setFactory($requestFactory);
+    }
 }

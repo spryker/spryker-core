@@ -13,11 +13,9 @@ use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
-use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
 use Twig\Loader\ChainLoader;
-use Twig\Loader\LoaderInterface;
 
 /**
  * @method \Spryker\Yves\Twig\TwigConfig getConfig()
@@ -94,25 +92,11 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Twig\Loader\LoaderInterface
+     * @return \Twig\Loader\ChainLoader
      */
-    public function createTwigChainLoader(): LoaderInterface
+    public function createChainLoader(): ChainLoader
     {
-        return new ChainLoader($this->getLoaders(
-            $this->getTwigLoaderPlugins()
-        ));
-    }
-
-    /**
-     * @param \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[] $loaderPlugins
-     *
-     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface[]
-     */
-    protected function getLoaders(array $loaderPlugins = []): array
-    {
-        return array_map(function (TwigLoaderPluginInterface $loaderPlugin) {
-            return $loaderPlugin->getLoader();
-        }, $loaderPlugins);
+        return new ChainLoader();
     }
 
     /**

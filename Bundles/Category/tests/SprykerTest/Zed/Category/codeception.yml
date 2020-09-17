@@ -36,10 +36,10 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryHelper
                 - \SprykerTest\Zed\Category\Helper\CategoryDataHelper
-                - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
                 - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
                 - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
@@ -67,6 +67,7 @@ suites:
                         - \Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin
                         - Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
                 - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
+                - \SprykerTest\Zed\Cms\Helper\CmsRedirectHelper
                 - \SprykerTest\Zed\Router\Helper\RouterHelper
                 - \SprykerTest\Zed\Application\Helper\ApplicationHelper
 

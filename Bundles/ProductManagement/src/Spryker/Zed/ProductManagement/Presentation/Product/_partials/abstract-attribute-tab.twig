@@ -1,9 +1,9 @@
 <div class="well">
-    {% filter trans|raw %}
+    {% apply trans|raw %}
         <h3>Product Attributes</h3>
         <p>Select attributes, add corresponding values and translate them if needed for every locale (language). The attributes are then inherited by the product variants, but can be changed there on an individual level.</p>
         <p><i>Note: If you only add a translation for one language, but not for the other, that attribute-value pair will not be displayed in the language where the translation is missing.</i></p>
-    {% endfilter %}
+    {% endapply %}
 </div>
 
 {% set formKey = 'attribute_abstract_default' %}

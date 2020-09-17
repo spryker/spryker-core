@@ -57,6 +57,18 @@ class ContainerHelper extends Module
     }
 
     /**
+     * @param \Codeception\TestInterface $test
+     *
+     * @return void
+     */
+    public function _after(TestInterface $test): void
+    {
+        if ($this->container !== null) {
+            $this->resetStaticProperties();
+        }
+    }
+
+    /**
      * @return void
      */
     protected function resetStaticProperties(): void

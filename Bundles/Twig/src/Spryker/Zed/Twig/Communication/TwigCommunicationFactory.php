@@ -15,7 +15,6 @@ use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractor;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
-use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolver;
 use Spryker\Zed\Twig\Communication\RouteResolver\RouteResolverInterface;
@@ -23,7 +22,6 @@ use Spryker\Zed\Twig\Communication\Subscriber\TwigEventSubscriber;
 use Spryker\Zed\Twig\TwigDependencyProvider;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Twig\Loader\ChainLoader;
-use Twig\Loader\LoaderInterface;
 
 /**
  * @method \Spryker\Zed\Twig\TwigConfig getConfig()
@@ -52,25 +50,11 @@ class TwigCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
-     * @return \Twig\Loader\LoaderInterface
+     * @return \Twig\Loader\ChainLoader
      */
-    public function createTwigChainLoader(): LoaderInterface
+    public function createChainLoader(): ChainLoader
     {
-        return new ChainLoader($this->getLoaders(
-            $this->getTwigLoaderPlugins()
-        ));
-    }
-
-    /**
-     * @param \Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface[] $loaderPlugins
-     *
-     * @return \Spryker\Shared\Twig\Loader\FilesystemLoaderInterface[]
-     */
-    protected function getLoaders(array $loaderPlugins = []): array
-    {
-        return array_map(function (TwigLoaderPluginInterface $loaderPlugin) {
-            return $loaderPlugin->getLoader();
-        }, $loaderPlugins);
+        return new ChainLoader();
     }
 
     /**

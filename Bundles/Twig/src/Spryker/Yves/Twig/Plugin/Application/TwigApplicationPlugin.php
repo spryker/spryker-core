@@ -11,7 +11,7 @@ use Spryker\Service\Container\ContainerInterface;
 use Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Twig\Environment;
-use Twig\Loader\LoaderInterface;
+use Twig\Loader\ChainLoader;
 
 /**
  * @method \Spryker\Yves\Twig\TwigFactory getFactory()
@@ -49,7 +49,8 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     protected function addTwigService(ContainerInterface $container): ContainerInterface
     {
         $container->set(static::SERVICE_TWIG, function (ContainerInterface $container) {
-            $twigLoader = $this->getTwigChainLoader();
+            /** @var \Twig\Loader\LoaderInterface $twigLoader */
+            $twigLoader = $this->getChainLoader();
             $twigOptions = $this->getTwigOptions($container);
             $twig = new Environment($twigLoader, $twigOptions);
             $twig->addGlobal('app', $container);
@@ -63,11 +64,17 @@ class TwigApplicationPlugin extends AbstractPlugin implements ApplicationPluginI
     }
 
     /**
-     * @return \Twig\Loader\LoaderInterface
+     * @return \Twig\Loader\ChainLoader
      */
-    protected function getTwigChainLoader(): LoaderInterface
+    protected function getChainLoader(): ChainLoader
     {
-        return $this->getFactory()->createTwigChainLoader();
+        $chainLoader = $this->getFactory()->createChainLoader();
+
+        foreach ($this->getFactory()->getTwigLoaderPlugins() as $twigLoaderPlugin) {
+            $chainLoader->addLoader($twigLoaderPlugin->getLoader());
+        }
+
+        return $chainLoader;
     }
 
     /**
