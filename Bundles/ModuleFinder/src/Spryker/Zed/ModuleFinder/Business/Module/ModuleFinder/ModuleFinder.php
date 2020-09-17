@@ -341,10 +341,6 @@ class ModuleFinder implements ModuleFinderInterface
         $fileContent = file_get_contents($pathToComposerJson);
         $composerJsonAsArray = json_decode($fileContent, true);
 
-        if (!is_array($composerJsonAsArray)) {
-            $foo = '';
-        }
-
         return $composerJsonAsArray;
     }
 
