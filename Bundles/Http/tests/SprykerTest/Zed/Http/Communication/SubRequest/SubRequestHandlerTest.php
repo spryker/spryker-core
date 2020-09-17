@@ -8,11 +8,9 @@
 namespace SprykerTest\Zed\Http\Communication\SubRequest;
 
 use Codeception\Test\Unit;
-use Silex\Application;
 use Spryker\Zed\Http\Communication\SubRequest\SubRequestHandler;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Client;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Auto-generated group annotations
@@ -27,30 +25,30 @@ use Symfony\Component\HttpKernel\Client;
  */
 class SubRequestHandlerTest extends Unit
 {
-    public const GET_PARAMS = ['banana', 'mango'];
-    public const POST_PARAMS = ['apple', 'orange'];
-    public const URL_MASTER_REQUEST = '/';
-    public const URL_SUB_REQUEST = '/sales/comment/add';
+    public const GET_PARAMS = ['fruit' => 'mango'];
+    public const POST_PARAMS = ['fruit' => 'orange'];
+
+    public const URL_SUB_REQUEST = '/foo/bar/baz';
 
     /**
-     * @return void
+     * @var \SprykerTest\Zed\Http\HttpCommunicationTester
      */
-    public function setUp(): void
-    {
-        parent::setUp();
-
-        Request::setTrustedHosts([]);
-        Request::setTrustedProxies([], Request::HEADER_X_FORWARDED_ALL);
-    }
+    protected $tester;
 
     /**
      * @return void
      */
     public function testHandleSubRequestWithGetParams(): void
     {
-        $client = $this->createClient();
-        $client->request('get', static::URL_MASTER_REQUEST, self::GET_PARAMS);
-        $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
+        $this->tester->addRoute('test-route', static::URL_SUB_REQUEST, function (Request $request) {
+            return new Response(sprintf('GET: fruit=%s', $request->query->get('fruit')));
+        });
+
+        $subRequestHandler = new SubRequestHandler($this->tester->getKernel());
+        $request = new Request(static::GET_PARAMS);
+        $response = $subRequestHandler->handleSubRequest($request, static::URL_SUB_REQUEST);
+
+        $this->assertSame('GET: fruit=mango', $response->getContent());
     }
 
     /**
@@ -58,43 +56,14 @@ class SubRequestHandlerTest extends Unit
      */
     public function testHandleSubRequestWithPostParams(): void
     {
-        $client = $this->createClient();
-        $client->request('post', static::URL_MASTER_REQUEST, static::POST_PARAMS);
-        $this->assertInstanceOf(RedirectResponse::class, $client->getResponse());
-    }
-
-    /**
-     * @deprecated This can be refactored to use the ApplicationHelper which will be released together with the SecurityApplicationPlugin.
-     *
-     * @return \Silex\Application
-     */
-    public function createApplication(): Application
-    {
-        $app = new Application();
-        $app['debug'] = true;
-
-        $callback = function () use ($app) {
-            $subRequestHandler = new SubRequestHandler($app);
-
-            return $subRequestHandler->handleSubRequest(new Request(), self::URL_SUB_REQUEST);
-        };
-
-        $app['controllers']->get(static::URL_MASTER_REQUEST, $callback);
-        $app->post(static::URL_MASTER_REQUEST, $callback);
-        $app['controllers']->get(static::URL_SUB_REQUEST, function () {
-            return new RedirectResponse(static::URL_SUB_REQUEST);
+        $this->tester->addRoute('test-route', static::URL_SUB_REQUEST, function (Request $request) {
+            return new Response(sprintf('POST: fruit=%s', $request->request->get('fruit')));
         });
 
-        return $app;
-    }
+        $subRequestHandler = new SubRequestHandler($this->tester->getKernel());
+        $request = new Request([], static::POST_PARAMS);
+        $response = $subRequestHandler->handleSubRequest($request, static::URL_SUB_REQUEST);
 
-    /**
-     * @param array $server
-     *
-     * @return \Symfony\Component\HttpKernel\Client
-     */
-    protected function createClient(array $server = []): Client
-    {
-        return new Client($this->createApplication(), $server);
+        $this->assertSame('POST: fruit=orange', $response->getContent());
     }
 }
