@@ -51,7 +51,7 @@ PHP
     /**
      * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall $node
      *
-     * @return \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall
+     * @return \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall|null
      */
     public function refactor(Node $node): ?Node
     {
@@ -67,7 +67,7 @@ PHP
     /**
      * @param \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall $node
      *
-     * @return \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall
+     * @return \PhpParser\Node\Expr\New_|\PhpParser\Node\Expr\MethodCall|null
      */
     private function processArgumentPosition(Node $node): ?Node
     {
