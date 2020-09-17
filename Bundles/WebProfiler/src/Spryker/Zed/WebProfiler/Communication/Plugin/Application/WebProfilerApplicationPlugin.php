@@ -21,6 +21,7 @@ use Symfony\Bundle\WebProfilerBundle\Controller\RouterController;
 use Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener;
 use Symfony\Bundle\WebProfilerBundle\Twig\WebProfilerExtension;
 use Symfony\Cmf\Component\Routing\ChainRouter;
+use Symfony\Component\ErrorHandler\ErrorRenderer\HtmlErrorRenderer;
 use Symfony\Component\HttpKernel\Debug\FileLinkFormatter;
 use Symfony\Component\HttpKernel\Debug\TraceableEventDispatcher;
 use Symfony\Component\HttpKernel\EventListener\ProfilerListener;
@@ -220,8 +221,8 @@ class WebProfilerApplicationPlugin extends AbstractPlugin implements Application
         $exceptionController = function () use ($container) {
             if (class_exists(ExceptionPanelController::class)) {
                 return new ExceptionPanelController(
-                    $container->get(static::SERVICE_PROFILER),
-                    $container->get(static::SERVICE_TWIG)
+                    new HtmlErrorRenderer($container->get('debug')),
+                    $container->get(static::SERVICE_PROFILER)
                 );
             }
 

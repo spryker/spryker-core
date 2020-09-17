@@ -11,8 +11,10 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
+use Symfony\Component\HttpKernel\EventListener\ErrorListener;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
@@ -33,14 +35,23 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
 
         $app['dispatcher'] = $app->share(
             $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) {
-                $exceptionListener = new ExceptionListener(
-                    'controller.service.error:dispatch'
-                );
-                $dispatcher->addSubscriber($exceptionListener);
+                $dispatcher->addSubscriber($this->getListener());
 
                 return $dispatcher;
             })
         );
+    }
+
+    /**
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface
+     */
+    protected function getListener(): EventSubscriberInterface
+    {
+        if (class_exists(ErrorListener::class)) {
+            return new ErrorListener('controller.service.error:dispatch');
+        }
+
+        return new ExceptionListener('controller.service.error:dispatch');
     }
 
     /**

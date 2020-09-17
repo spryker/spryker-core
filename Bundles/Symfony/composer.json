@@ -24,9 +24,9 @@
     "symfony/property-access": "^3.4.0 || ^4.0.0 || ^5.0.0",
     "symfony/routing": "^4.3.0 || ^5.0.0",
     "symfony/security-core": "^4.0.0 || ^5.0.0",
-    "symfony/security-http": "^4.0.0 || ^5.0.0",
     "symfony/security-csrf": "^4.1.0 || ^5.0.0",
     "symfony/security-guard": "^4.0.0 || ^5.0.0",
+    "symfony/security-http": "^4.0.0 || ^5.0.0",
     "symfony/serializer": "^3.0.0 || ^4.0.0 || ^5.0.0",
     "symfony/stopwatch": "^3.0.0 || ^4.0.0 || ^5.0.0",
     "symfony/translation": "^3.4.0 || ^4.0.0 || ^5.0.0",
@@ -42,8 +42,7 @@
   },
   "autoload": {
     "psr-4": {
-      "Spryker\\": "src/Spryker/",
-      "Spryker\\Rector\\": "migration/35/rector/Spryker/Rector/"
+      "Spryker\\": "src/Spryker/"
     }
   },
   "autoload-dev": {

@@ -1,4 +1,5 @@
 parameters:
+    reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV
@@ -7,3 +8,5 @@ parameters:
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Call to an undefined method Silex\\Application::getTransferSession\(\).#'
+        - '#Instantiated class Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener not found.#'
+        - '#Method Spryker\\Yves\\Application\\Plugin\\Provider\\ExceptionServiceProvider::getListener\(\) should return Symfony\\Component\\EventDispatcher\\EventSubscriberInterface but returns Symfony\\Component\\HttpKernel\\EventListener\\ExceptionListener.#'
