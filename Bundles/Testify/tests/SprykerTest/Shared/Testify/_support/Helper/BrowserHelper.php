@@ -8,11 +8,9 @@
 namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Module;
-use PHPUnit\Framework\Assert;
 
 class BrowserHelper extends Module
 {
-
     /**
      * Disables native HTML5 client-side validation
      *
@@ -22,10 +20,10 @@ class BrowserHelper extends Module
      */
     public function disableBrowserNativeValidation(string $selector): void
     {
-        /** @var $webdriver \Codeception\Module\WebDriver */
+        /** @var \Codeception\Module\WebDriver */
         $webdriver = $this->getModule('WebDriver');
         $webdriver->executeJS(
-<<<EOF
+            <<<EOF
             document.querySelectorAll('{$selector}')
                 .forEach(
                     function(element) {
