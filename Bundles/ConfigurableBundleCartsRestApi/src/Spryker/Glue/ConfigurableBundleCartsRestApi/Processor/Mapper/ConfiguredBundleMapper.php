@@ -50,12 +50,12 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
                     ->requireUuid()
                     ->requireName();
 
-        $configuredBundleTransfer = $createConfiguredBundleRequestTransfer
+        $createConfiguredBundleRequestTransfer
             ->getConfiguredBundle()
             ->setQuantity($restConfiguredBundlesAttributesTransfer->getQuantity());
 
         $createConfiguredBundleRequestTransfer = $createConfiguredBundleRequestTransfer
-            ->setConfiguredBundle($configuredBundleTransfer);
+            ->setConfiguredBundle($createConfiguredBundleRequestTransfer->getConfiguredBundle());
 
         foreach ($restConfiguredBundlesAttributesTransfer->getItems() as $configuredBundleItemsAttributesTransfer) {
             $configuredBundleItemTransfer = (new ConfiguredBundleItemTransfer())
@@ -91,11 +91,7 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
             return $restErrorMessageTransfer;
         }
 
-        if ($quoteErrorTransfer->getMessage()) {
-            return $this->createErrorMessageTransfer($quoteErrorTransfer);
-        }
-
-        return $restErrorMessageTransfer;
+        return $this->createErrorMessageTransfer($quoteErrorTransfer);
     }
 
     /**

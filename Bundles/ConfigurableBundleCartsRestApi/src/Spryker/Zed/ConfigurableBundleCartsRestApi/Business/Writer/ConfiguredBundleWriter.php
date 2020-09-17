@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -68,7 +69,13 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
         $this->assertRequiredCreateRequestProperties($createConfiguredBundleRequestTransfer);
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($createConfiguredBundleRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->setCustomerQuoteUuid($createConfiguredBundleRequestTransfer->getQuote());
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteResponseTransfer = $this->checkQuoteFromRequest($quoteResponseTransfer->getQuoteTransfer());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -82,7 +89,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         $quoteResponseTransfer = $this->persistentCartFacade->add($persistentCartChangeTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE);
+            $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE);
         }
 
         return $quoteResponseTransfer;
@@ -111,13 +118,13 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         );
 
         if (!$persistentCartChangeTransfer->getItems()->count()) {
-            return $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
+            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->updateQuantity($persistentCartChangeTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE);
+            $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE);
         }
 
         return $quoteResponseTransfer;
@@ -132,7 +139,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
         $this->assertRequiredUpdateRequestProperties($updateConfiguredBundleRequestTransfer);
-
         $quoteResponseTransfer = $this->checkQuoteFromRequest($updateConfiguredBundleRequestTransfer->getQuote());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
@@ -145,13 +151,13 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         );
 
         if (!$persistentCartChangeTransfer->getItems()->count()) {
-            return $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
+            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
         }
 
         $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE);
+            $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE);
         }
 
         return $quoteResponseTransfer;
@@ -171,8 +177,39 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         }
 
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
-            return $this->createErrorResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
+            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
         }
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function setCustomerQuoteUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
+    {
+        $quoteResponseTransfer = (new QuoteResponseTransfer())
+            ->setQuoteTransfer($quoteTransfer)
+            ->setIsSuccessful(true);
+
+        if ($quoteTransfer->getUuid()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
+            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
+
+        $customerQuoteTransfers = $this->cartsRestApiFacade
+            ->getQuoteCollection($quoteCriteriaFilterTransfer)
+            ->getQuotes();
+
+        if (!$customerQuoteTransfers->count()) {
+            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
+        }
+
+        $quoteResponseTransfer->getQuoteTransfer()->setUuid($customerQuoteTransfers->offsetGet(0)->getUuid());
 
         return $quoteResponseTransfer;
     }
@@ -187,7 +224,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         $createConfiguredBundleRequestTransfer
             ->requireQuote()
             ->getQuote()
-                ->requireUuid()
                 ->requireCustomer()
                 ->requireCustomerReference()
                 ->getCustomer()
@@ -228,7 +264,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function createErrorResponse(QuoteResponseTransfer $quoteResponseTransfer, string $errorIdentifier): QuoteResponseTransfer
+    protected function addQuoteErrorToResponse(QuoteResponseTransfer $quoteResponseTransfer, string $errorIdentifier): QuoteResponseTransfer
     {
         return $quoteResponseTransfer
             ->setIsSuccessful(false)

@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductStorage;
 
+use Generated\Shared\Transfer\ProductConcreteStorageTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
@@ -384,6 +385,20 @@ interface ProductStorageClientInterface
         array $identifiers,
         string $localeName
     ): array;
+
+    /**
+     * Specification:
+     * - Requires ProductConcreteStorageTransfer.url, ProductConcreteStorageTransfer.attributes and ProductConcreteStorageTransfer.superAttributesDefinition properties to be set.
+     * - Builds product concrete URL.
+     * - Returns resolved URL.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConcreteStorageTransfer $productConcreteStorageTransfer
+     *
+     * @return string
+     */
+    public function buildProductConcreteUrl(ProductConcreteStorageTransfer $productConcreteStorageTransfer): string;
 
     /**
      * Specification:

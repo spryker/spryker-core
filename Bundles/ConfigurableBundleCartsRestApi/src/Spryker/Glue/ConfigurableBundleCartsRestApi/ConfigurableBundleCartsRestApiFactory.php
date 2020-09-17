@@ -10,6 +10,8 @@ namespace Spryker\Glue\ConfigurableBundleCartsRestApi;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToConfigurableBundleStorageClientInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\Client\ConfigurableBundleCartsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Dependency\RestApiResource\ConfigurableBundleCartsRestApiToCartsRestApiResourceInterface;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Creator\ConfiguredBundleRequestCreator;
+use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Creator\ConfiguredBundleRequestCreatorInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapper;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ItemMapper;
@@ -37,8 +39,7 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
             $this->createConfiguredBundleRestResponseBuilder(),
             $this->getClient(),
             $this->getCartsRestApiResource(),
-            $this->getConfigurableBundleStorageClient(),
-            $this->createConfiguredBundleMapper()
+            $this->createConfiguredBundleRequestCreator()
         );
     }
 
@@ -51,6 +52,16 @@ class ConfigurableBundleCartsRestApiFactory extends AbstractFactory
             $this->createConfiguredBundleRestResponseBuilder(),
             $this->getClient(),
             $this->getCartsRestApiResource(),
+            $this->createConfiguredBundleRequestCreator()
+        );
+    }
+
+    /**
+     * @return \Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Creator\ConfiguredBundleRequestCreatorInterface
+     */
+    public function createConfiguredBundleRequestCreator(): ConfiguredBundleRequestCreatorInterface
+    {
+        return new ConfiguredBundleRequestCreator(
             $this->getConfigurableBundleStorageClient(),
             $this->createConfiguredBundleMapper()
         );

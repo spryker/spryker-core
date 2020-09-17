@@ -18,11 +18,6 @@ interface ConfiguredBundleRestResponseBuilderInterface
     public function createRestResponse(): RestResponseInterface;
 
     /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCartIdMissingErrorResponse(): RestResponseInterface;
-
-    /**
      * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
      *
      * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface

@@ -9,11 +9,9 @@ namespace Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\RestResponseBuil
 
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\RestErrorMessageTransfer;
-use Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig;
 use Spryker\Glue\ConfigurableBundleCartsRestApi\Processor\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestResponseBuilderInterface
 {
@@ -45,21 +43,6 @@ class ConfiguredBundleRestResponseBuilder implements ConfiguredBundleRestRespons
     public function createRestResponse(): RestResponseInterface
     {
         return $this->restResourceBuilder->createRestResponse();
-    }
-
-    /**
-     * @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
-     */
-    public function createCartIdMissingErrorResponse(): RestResponseInterface
-    {
-        $restErrorMessageTransfer = (new RestErrorMessageTransfer())
-            ->setStatus(Response::HTTP_BAD_REQUEST)
-            ->setCode(ConfigurableBundleCartsRestApiConfig::RESPONSE_CODE_CART_ID_MISSING)
-            ->setDetail(ConfigurableBundleCartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING);
-
-        return $this->restResourceBuilder
-            ->createRestResponse()
-            ->addError($restErrorMessageTransfer);
     }
 
     /**

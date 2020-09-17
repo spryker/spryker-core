@@ -19,16 +19,15 @@ use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvide
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\ConfigurationProvider\ProductOfferGuiTableConfigurationProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\OffersDashboardCardProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductGuiTableDataProvider;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferGuiTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpander;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Expander\MerchantOrderItemTableExpanderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferCreateFormDataProviderInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\DataProvider\ProductOfferUpdateFormDataProviderInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferCreateForm;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferUpdateForm;
+use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\ProductOfferForm;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\ProductOfferStockTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\QuantityTransformer;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Form\Transformer\StoresTransformer;
@@ -82,7 +81,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createProductTableDataProvider(): GuiTableDataProviderInterface
     {
-        return new ProductTableDataProvider(
+        return new ProductGuiTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
@@ -96,7 +95,7 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      */
     public function createProductOfferTableDataProvider(): GuiTableDataProviderInterface
     {
-        return new ProductOfferTableDataProvider(
+        return new ProductOfferGuiTableDataProvider(
             $this->getRepository(),
             $this->getTranslatorFacade(),
             $this->createProductNameBuilder(),
@@ -119,20 +118,9 @@ class ProductOfferMerchantPortalGuiCommunicationFactory extends AbstractCommunic
      *
      * @return \Symfony\Component\Form\FormInterface
      */
-    public function createProductOfferCreateForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
+    public function createProductOfferForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
     {
-        return $this->getFormFactory()->create(ProductOfferCreateForm::class, $data, $options);
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\ProductOfferTransfer|null $data
-     * @param array $options
-     *
-     * @return \Symfony\Component\Form\FormInterface
-     */
-    public function createProductOfferUpdateForm(?ProductOfferTransfer $data = null, array $options = []): FormInterface
-    {
-        return $this->getFormFactory()->create(ProductOfferUpdateForm::class, $data, $options);
+        return $this->getFormFactory()->create(ProductOfferForm::class, $data, $options);
     }
 
     /**

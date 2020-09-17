@@ -38,7 +38,7 @@ class ItemMapper implements ItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapItemToRestItemsAttributes(
+    public function mapItemTransferToRestItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
@@ -102,6 +102,10 @@ class ItemMapper implements ItemMapperInterface
         $templateName = $restItemsAttributesTransfer->getConfiguredBundle()
             ->getTemplate()
             ->getName();
+
+        if (!$templateName) {
+            return $restItemsAttributesTransfer;
+        }
 
         $translations = $this->glossaryStorageClient->translateBulk([$templateName], $localeName);
 

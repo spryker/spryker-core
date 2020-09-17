@@ -20,7 +20,7 @@ interface ItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapItemToRestItemsAttributes(
+    public function mapItemTransferToRestItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName

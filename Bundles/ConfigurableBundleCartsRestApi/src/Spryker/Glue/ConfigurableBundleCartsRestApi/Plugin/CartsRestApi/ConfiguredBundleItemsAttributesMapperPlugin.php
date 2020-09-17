@@ -36,6 +36,6 @@ class ConfiguredBundleItemsAttributesMapperPlugin extends AbstractPlugin impleme
     ): RestItemsAttributesTransfer {
         return $this->getFactory()
             ->createItemMapper()
-            ->mapItemToRestItemsAttributes($itemTransfer, $restItemsAttributesTransfer, $localeName);
+            ->mapItemTransferToRestItemsAttributesTransfer($itemTransfer, $restItemsAttributesTransfer, $localeName);
     }
 }
