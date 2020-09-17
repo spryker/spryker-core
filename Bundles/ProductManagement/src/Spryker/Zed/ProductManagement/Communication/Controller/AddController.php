@@ -168,7 +168,7 @@ class AddController extends AbstractController
         FormInterface $form
     ) {
         if ($type === ProductManagementConfig::PRODUCT_TYPE_BUNDLE) {
-            $productConcreteTransfer = $this->createProductConcreteToProductAbstract($productAbstractTransfer);
+            $productConcreteTransfer = $this->copyProductAbstractToProductConcrete($productAbstractTransfer);
 
             return [$productConcreteTransfer];
         }
@@ -188,8 +188,8 @@ class AddController extends AbstractController
             ->getProductFacade()
             ->generateVariants($productAbstractTransfer, $attributeValues);
 
-        if (empty($concreteProductCollection)) {
-            $productConcreteTransfer = $this->createProductConcreteToProductAbstract($productAbstractTransfer);
+        if (!$concreteProductCollection) {
+            $productConcreteTransfer = $this->copyProductAbstractToProductConcrete($productAbstractTransfer);
 
             return [$productConcreteTransfer];
         }
@@ -202,15 +202,15 @@ class AddController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function createProductConcreteToProductAbstract(ProductAbstractTransfer $productAbstractTransfer)
+    protected function copyProductAbstractToProductConcrete(ProductAbstractTransfer $productAbstractTransfer)
     {
-        $productConcreteTransfer = new ProductConcreteTransfer();
-        $productConcreteTransfer->setSku($productAbstractTransfer->getSku());
-        $productConcreteTransfer->setIsActive(false);
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setSku($productAbstractTransfer->getSku())
+            ->setIsActive(false)
+            ->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
         foreach ($productAbstractTransfer->getPrices() as $price) {
             $productConcreteTransfer->addPrice(clone $price);
         }
-        $productConcreteTransfer->setLocalizedAttributes($productAbstractTransfer->getLocalizedAttributes());
 
         return $productConcreteTransfer;
     }
