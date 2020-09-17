@@ -95,9 +95,7 @@
     </transfer>
 
     <transfer name="RestSalesOrderConfiguredBundleItem">
-        <property name="idSalesOrderConfiguredBundleItem" type="int"/>
         <property name="idSalesOrderConfiguredBundle" type="int"/>
-        <property name="idSalesOrderItem" type="int"/>
         <property name="configurableBundleTemplateSlotUuid" type="string"/>
     </transfer>
 

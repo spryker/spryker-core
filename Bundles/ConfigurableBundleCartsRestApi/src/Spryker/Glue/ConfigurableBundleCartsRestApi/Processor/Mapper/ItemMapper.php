@@ -66,7 +66,7 @@ class ItemMapper implements ItemMapperInterface
      *
      * @return \Generated\Shared\Transfer\RestOrderItemsAttributesTransfer
      */
-    public function mapItemToRestOrderItemsAttributes(
+    public function mapItemTransferToRestOrderItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {

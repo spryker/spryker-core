@@ -15,7 +15,7 @@ use Spryker\Glue\OrdersRestApiExtension\Dependency\Plugin\RestOrderItemsAttribut
 /**
  * @method \Spryker\Glue\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiFactory getFactory()
  */
-class SalesConfiguredBundleOrderItemsAttributesMapperPlugin extends AbstractPlugin implements RestOrderItemsAttributesMapperPluginInterface
+class SalesConfiguredBundleRestOrderItemsAttributesMapperPlugin extends AbstractPlugin implements RestOrderItemsAttributesMapperPluginInterface
 {
     /**
      * {@inheritDoc}
@@ -34,6 +34,6 @@ class SalesConfiguredBundleOrderItemsAttributesMapperPlugin extends AbstractPlug
     ): RestOrderItemsAttributesTransfer {
         return $this->getFactory()
             ->createItemMapper()
-            ->mapItemToRestOrderItemsAttributes($itemTransfer, $restOrderItemsAttributesTransfer);
+            ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, $restOrderItemsAttributesTransfer);
     }
 }
