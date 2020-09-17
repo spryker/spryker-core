@@ -1,3 +1,5 @@
+{# @var locale \Generated\Shared\Transfer\LocaleTransfer #}
+
 <div class="well">
     {% apply trans|raw %}
         <h3>{{ 'Product Image(s)' | trans }}</h3>
@@ -17,11 +19,11 @@
     {% endblock %}
 {% endembed %}
 
-{% for localeTransfer in localeCollection %}
-    {% set formKey = 'image_set_' ~ localeTransfer.localeName %}
+{% for locale in localeCollection %}
+    {% set formKey = 'image_set_' ~ locale.localeName %}
 
     {% if form[formKey] is defined %}
-        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': localeTransfer.localeName} %}
+        {% embed '@Gui/Partials/localized-ibox.twig' with {'collapsed': true, 'localeName': locale.localeName} %}
             {% block content %}
                 {% include '@ProductManagement/Product/_partials/image-set-form.twig' %}
             {% endblock %}
