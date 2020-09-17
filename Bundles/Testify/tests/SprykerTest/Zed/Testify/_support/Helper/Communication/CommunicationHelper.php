@@ -7,6 +7,7 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Communication;
 
+use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -28,6 +29,10 @@ class CommunicationHelper extends Module
     use DependencyProviderHelperTrait;
 
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Communication\%3$sCommunicationFactory';
+
+    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
+        'SprykerSdkTest',
+    ];
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory[]
@@ -100,10 +105,29 @@ class CommunicationHelper extends Module
      */
     protected function createFactory(?string $moduleName = null): AbstractCommunicationFactory
     {
-        /** @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory $factory */
-        $factory = $this->resolveClass(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, $moduleName);
+        $moduleName = $this->getModuleName($moduleName);
+        $moduleFactoryClassName = $this->getFactoryClassName($moduleName);
 
-        return $factory;
+        return new $moduleFactoryClassName();
+    }
+
+    /**
+     * @param string $moduleName
+     *
+     * @return string
+     */
+    protected function getFactoryClassName(string $moduleName): string
+    {
+        $config = Configuration::config();
+        $namespaceParts = explode('\\', $config['namespace']);
+
+        $classNameCandidate = sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
+
+        return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**

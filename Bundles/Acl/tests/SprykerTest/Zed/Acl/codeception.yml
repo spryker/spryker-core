@@ -52,16 +52,8 @@ suites:
                 - \SprykerTest\Zed\EventDispatcher\Helper\EventDispatcherHelper
                 - \SprykerTest\Zed\Twig\Helper\TwigHelper:
                       twigPlugins:
-                          - \Spryker\Service\UtilDateTime\Plugin\Twig\DateTimeFormatterTwigPlugin
-                          - \Spryker\Zed\Application\Communication\Plugin\Twig\ApplicationTwigPlugin
-                          - \Spryker\Zed\ChartGui\Communication\Plugin\Twig\Chart\ChartGuiTwigPlugin
-                          - \Spryker\Zed\Currency\Communication\Plugin\Twig\CurrencyTwigPlugin
-                          - \Spryker\Zed\Http\Communication\Plugin\Twig\HttpKernelTwigPlugin
-                          - \Spryker\Zed\Money\Communication\Plugin\Twig\MoneyTwigPlugin
-                          - \Spryker\Zed\Scheduler\Communication\Plugin\Twig\SchedulerTwigPlugin
                           - \Spryker\Zed\Translator\Communication\Plugin\Twig\TranslatorTwigPlugin
-                          - \Spryker\Zed\Http\Communication\Plugin\Twig\RuntimeLoaderTwigPlugin
-                          - Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
+                          - \Spryker\Zed\ZedNavigation\Communication\Plugin\Twig\ZedNavigationTwigPlugin
                       loaderPlugins:
                           - \Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin
                 - \SprykerTest\Zed\Gui\Helper\GuiTwigPluginHelper
