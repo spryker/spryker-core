@@ -74,7 +74,6 @@ class PriceProductOfferWriter implements PriceProductOfferWriterInterface
     {
         $idPriceProductOffer = $priceProductTransfer->requirePriceDimension()
             ->getPriceDimension()
-            ->requireIdPriceProductOffer()
             ->getIdPriceProductOffer();
 
         if ($idPriceProductOffer) {
