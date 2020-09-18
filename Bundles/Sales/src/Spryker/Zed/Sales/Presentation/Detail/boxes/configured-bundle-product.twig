@@ -43,7 +43,7 @@
         </div>
     {% endif %}
     {% include ['@ProductPackagingUnitGui/Sales/Detail/boxes/item-packaging-unit.twig', '@Sales/Detail/boxes/item-packaging-unit.twig'] with {orderItem: orderItem} %}
-    {% include ['@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig'] with {
+    {% include '@SalesProductConfigurationGui/Sales/Partials/order-item-product-configuration.twig' ignore missing with {
         orderItem: orderItem,
     } %}
 </td>

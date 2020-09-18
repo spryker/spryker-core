@@ -18,9 +18,9 @@ class SalesController extends AbstractController
     /**
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|array
+     * @return array
      */
-    public function orderItemProductConfigurationAction(Request $request)
+    public function orderItemProductConfigurationAction(Request $request): array
     {
         /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
         $itemTransfer = $request->attributes->get('orderItem');
