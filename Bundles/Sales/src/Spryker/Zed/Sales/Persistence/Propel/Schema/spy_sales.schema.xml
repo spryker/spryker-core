@@ -204,7 +204,7 @@
         <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="username" type="VARCHAR" required="false" default="NULL"/>
+        <column name="username" type="VARCHAR" size="255" required="false" default="NULL"/>
         <column name="message" type="LONGVARCHAR" required="true"/>
 
         <behavior name="timestampable"/>
