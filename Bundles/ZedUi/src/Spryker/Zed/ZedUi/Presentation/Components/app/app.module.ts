@@ -13,6 +13,10 @@ import { EN_LOCALE, EnLocaleModule } from '@spryker/locale/locales/en';
 import { NotificationModule } from '@spryker/notification';
 import { DefaultContextSerializationModule } from '@spryker/utils';
 import { WebComponentsModule } from '@spryker/web-components';
+import { ModalModule } from '@spryker/modal';
+import { UnsavedChangesModule } from '@spryker/unsaved-changes';
+import { UnsavedChangesBrowserGuard } from '@spryker/unsaved-changes.guard.browser';
+import { UnsavedChangesDrawerGuardModule } from '@spryker/unsaved-changes.guard.drawer';
 
 import { _getNgModules, ComponentsNgModule } from './registry';
 import { TableRootModule } from './table/table-root.module';
@@ -35,6 +39,10 @@ import { TableRootModule } from './table/table-root.module';
             refresh_drawer: AjaxPostActionRefreshDrawerService,
         }),
         DefaultContextSerializationModule,
+        UnsavedChangesModule.forRoot(),
+        UnsavedChangesDrawerGuardModule.forRoot(),
+        UnsavedChangesModule.withGuard(UnsavedChangesBrowserGuard),
+        ModalModule.forRoot(),
     ],
     providers: [],
 })
