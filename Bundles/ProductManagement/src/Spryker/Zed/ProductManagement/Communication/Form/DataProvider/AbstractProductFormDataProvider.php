@@ -55,6 +55,11 @@ class AbstractProductFormDataProvider
     public const TEXT_AREA_INPUT_TYPE = 'textarea';
 
     /**
+     * @uses \Spryker\Shared\PriceProduct\PriceProductConfig::PRICE_DIMENSION_DEFAULT
+     */
+    protected const PRICE_DIMENSION_DEFAULT = 'PRICE_DIMENSION_DEFAULT';
+
+    /**
      * @var \Spryker\Zed\Category\Persistence\CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
@@ -793,14 +798,16 @@ class AbstractProductFormDataProvider
      */
     protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
     {
-        $priceProductCriteriaTransfer = null;
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(static::PRICE_DIMENSION_DEFAULT);
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceDimension($priceProductDimensionTransfer);
+
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+            $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
 
             if ($priceProductDimensionTransfer->getType()) {
-                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                    ->setPriceDimension($priceProductDimensionTransfer);
+                $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
             }
         }
 
@@ -824,14 +831,16 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-        $priceProductCriteriaTransfer = null;
+        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
+            ->setType(static::PRICE_DIMENSION_DEFAULT);
+        $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
+            ->setPriceDimension($priceProductDimensionTransfer);
+
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+            $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
 
             if ($priceProductDimensionTransfer->getType()) {
-                $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-                    ->setPriceDimension($priceProductDimensionTransfer);
+                $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
             }
         }
 
