@@ -25,7 +25,7 @@ class ConfigHelper extends Module
     use ClassResolverTrait;
 
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
-    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sConfig';
+    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
     protected const MODULE_NAME_POSITION = 2;
 
     protected const NON_STANDARD_NAMESPACE_PREFIXES = [
