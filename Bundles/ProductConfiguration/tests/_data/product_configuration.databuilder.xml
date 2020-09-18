@@ -12,4 +12,11 @@
         <property name="configuratorKey" dataBuilderRule="word"/>
         <property name="isComplete" dataBuilderRule="boolean"/>
     </transfer>
+
+    <transfer name="Item">
+        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="unitGrossPrice" dataBuilderRule="randomNumber(5)"/>
+        <property name="sumGrossPrice" dataBuilderRule="randomNumber(5)"/>
+        <property name="quantity" dataBuilderRule="=1"/>
+    </transfer>
 </transfers>
