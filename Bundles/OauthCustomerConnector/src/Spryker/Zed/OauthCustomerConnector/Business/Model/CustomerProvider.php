@@ -90,6 +90,7 @@ class CustomerProvider implements CustomerProviderInterface
         $customerCriteriaTransfer = (new CustomerCriteriaTransfer())
             ->setCustomerReference($oauthUserTransfer->getCustomerReference())
             ->setWithExpanders(true);
+
         $customerResponseTransfer = $this->customerFacade->getCustomerByCriteria($customerCriteriaTransfer);
 
         if (!$customerResponseTransfer->getIsSuccess()) {
