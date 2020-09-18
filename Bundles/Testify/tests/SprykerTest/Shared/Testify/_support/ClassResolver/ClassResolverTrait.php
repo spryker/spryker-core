@@ -31,6 +31,7 @@ trait ClassResolverTrait
     protected function resolveClass(string $classNamePattern, string $moduleName): ?object
     {
         $resolvedClassName = $this->resolveClassName($classNamePattern, $moduleName);
+
         if ($resolvedClassName === null) {
             return null;
         }
