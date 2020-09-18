@@ -29,6 +29,7 @@ class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin impleme
     public function expand(array $item): array
     {
         return $this->getFactory()
-                ->createProductConfigurationTableDataExpander()->expandProductItemWithProductConfigurationType($item);
+                ->createProductConfigurationTableDataExpander()
+                ->expandProductItemWithProductConfigurationType($item);
     }
 }
