@@ -25,9 +25,9 @@
          class="option-value-list"
          data-value-count="{{ generalForm.productOptionValues|length  }}"
          data-prototype="
-           {% filter escape %}
+           {% apply escape %}
               {{ include ('@ProductOption/_template/_product-option-template.twig', { 'productOptionForm': generalForm.productOptionValues.vars.prototype }) }}
-           {% endfilter %}">
+           {% endapply %}">
 
         {% for valueForm in generalForm.productOptionValues %}
             {{ include ('@ProductOption/_template/_product-option-template.twig', { 'productOptionForm': valueForm }) }}
@@ -49,9 +49,9 @@
        id="option-value-translations"
        data-value-count="{{ generalForm.productOptionValueTranslations|length  }}"
        data-prototype="
-           {% filter escape %}
+           {% apply escape %}
                {{ include ('@ProductOption/_template/_product-option-translation-template.twig', { 'productOptionTranslationForm': generalForm.productOptionValueTranslations.vars.prototype, 'label' : 'Option name:' }) }}
-           {% endfilter %}">
+           {% endapply %}">
 
     {% for locale in availableLocales %}
         {% set isCollapsed = not loop.first %}

@@ -16,6 +16,7 @@ interface DiscountCalculationConnectorFacadeInterface
 {
     /**
      * Specification:
+     * - Requires CalculableObject.store transfer field to be set.
      * - Removes calculated discounts from CalculableObjectTransfer.items.
      * - Converts CalculableObjectTransfer to Quote transfer.
      * - Finds all discounts with voucher within the provided Store.

@@ -31,6 +31,8 @@
         <property name="store" type="string"/>
         <property name="currencyIsoCode" type="string"/>
         <property name="isCancellable" type="bool"/>
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
+        <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
     </transfer>
 
     <transfer name="Quote">
@@ -41,6 +43,7 @@
         <property name="billingAddress" type="Address"/>
         <property name="shippingAddress" type="Address" deprecated="Use item level shipping addresses (item.shipment.shippingAddress) instead."/>
         <property name="priceMode" type="string"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Totals">
@@ -398,6 +401,16 @@
 
     <transfer name="Message">
         <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
+    </transfer>
+
+    <transfer name="ProductBundleGroup">
     </transfer>
 
 </transfers>
