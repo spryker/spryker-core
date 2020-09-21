@@ -28,6 +28,10 @@ class CommunicationHelper extends Module
 
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\Communication\%2$sCommunicationFactory';
 
+    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
+        'SprykerSdkTest',
+    ];
+
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory[]
      */
@@ -114,6 +118,12 @@ class CommunicationHelper extends Module
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
+
+        $classNameCandidate = sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
+
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
+            return $classNameCandidate;
+        }
 
         return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }

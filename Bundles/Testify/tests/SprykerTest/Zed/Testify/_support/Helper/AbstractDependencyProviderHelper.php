@@ -28,6 +28,11 @@ abstract class AbstractDependencyProviderHelper extends Module
 
     protected const DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\%2$sDependencyProvider';
 
+    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
+        'SprykerShopTest',
+        'SprykerSdkTest',
+    ];
+
     /**
      * @var \Spryker\Zed\Kernel\AbstractBundleDependencyProvider|null
      */
@@ -149,14 +154,15 @@ abstract class AbstractDependencyProviderHelper extends Module
     {
         $config = Configuration::config();
         $namespaceParts = explode('\\', $config['namespace']);
+        $namespacePrefix = $namespaceParts[0];
 
         $classNameCandidate = sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
 
-        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+        if (in_array($namespacePrefix, static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
             return $classNameCandidate;
         }
 
-        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
+        return sprintf(static::DEPENDENCY_PROVIDER_CLASS_NAME_PATTERN, rtrim($namespacePrefix, 'Test'), $moduleName);
     }
 
     /**
