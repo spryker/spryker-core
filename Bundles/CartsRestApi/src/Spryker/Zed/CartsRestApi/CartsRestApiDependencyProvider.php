@@ -242,7 +242,7 @@ class CartsRestApiDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemCheckerPluginInterface[]
+     * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
      */
     protected function getQuoteItemCheckerPlugins(): array
     {

@@ -302,21 +302,4 @@ class CartsRestApiFacade extends AbstractFacade implements CartsRestApiFacadeInt
             ->createQuoteUpdater()
             ->assignGuestCartToRegisteredCustomer($assignGuestQuoteRequestTransfer);
     }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
-    {
-        return $this->getFactory()
-            ->createQuoteItemReader()
-            ->isItemInQuote($cartItemRequestTransfer, $quoteTransfer);
-    }
 }

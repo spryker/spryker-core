@@ -19,12 +19,4 @@ interface QuoteItemReaderInterface
    * @return \Generated\Shared\Transfer\QuoteResponseTransfer
    */
     public function readItem(CartItemRequestTransfer $cartItemRequestTransfer): QuoteResponseTransfer;
-
-    /**
-     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return bool
-     */
-    public function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool;
 }

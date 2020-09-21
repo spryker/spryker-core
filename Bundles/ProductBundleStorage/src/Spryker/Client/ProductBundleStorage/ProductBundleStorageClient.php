@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductBundleStorage;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
 /**
@@ -21,14 +22,14 @@ class ProductBundleStorageClient extends AbstractClient implements ProductBundle
      *
      * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
      *
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
      */
-    public function getProductBundles(array $productConcreteIds): array
+    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array
     {
         return $this->getFactory()
             ->createProductBundleStorageReader()
-            ->getProductBundles($productConcreteIds);
+            ->getProductBundles($productBundleStorageCriteriaTransfer);
     }
 }

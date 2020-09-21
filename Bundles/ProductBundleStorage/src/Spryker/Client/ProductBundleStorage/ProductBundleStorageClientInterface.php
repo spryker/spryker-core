@@ -7,20 +7,22 @@
 
 namespace Spryker\Client\ProductBundleStorage;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
+
 interface ProductBundleStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves bundled products from storage by provided product concrete ids.
+     * - Retrieves bundled products from storage by provided bundle product concrete ids.
      * - Returns `ProductBundleStorageTransfer` collection indexed by product concrete id.
      *
      * @api
      *
      * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
      *
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
      */
-    public function getProductBundles(array $productConcreteIds): array;
+    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array;
 }

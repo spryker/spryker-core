@@ -7,12 +7,14 @@
 
 namespace Spryker\Client\ProductBundleStorage\Reader;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
+
 interface ProductBundleStorageReaderInterface
 {
     /**
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
      */
-    public function getProductBundles(array $productConcreteIds): array;
+    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array;
 }

@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ProductBundlesRestApi\Processor\Reader;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\ProductBundlesRestApi\Dependency\Client\ProductBundlesRestApiToProductBundleStorageClientInterface;
@@ -127,7 +128,9 @@ class BundledProductReader implements BundledProductReaderInterface
             return [];
         }
 
-        $productBundleStorageTransfers = $this->productBundleStorageClient->getProductBundles($productConcreteIds);
+        $productBundleStorageCriteriaTransfer = (new ProductBundleStorageCriteriaTransfer())
+            ->setProductConcreteIds($productConcreteIds);
+        $productBundleStorageTransfers = $this->productBundleStorageClient->getProductBundles($productBundleStorageCriteriaTransfer);
         $productBundleStorageTransfersIndexedBySku = [];
         foreach ($productBundleStorageTransfers as $idProductConcrete => $productBundleStorageTransfer) {
             /** @var string $productConcreteSku */

@@ -28,6 +28,10 @@
         <property name="isBundledProductActive" type="bool"/>
     </transfer>
 
+    <transfer name="ProductBundleStorageCriteria">
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+    </transfer>
+
     <transfer name="ProductBundleCollection">
         <property name="productBundles" type="ProductBundle[]" singular="productBundle"/>
     </transfer>

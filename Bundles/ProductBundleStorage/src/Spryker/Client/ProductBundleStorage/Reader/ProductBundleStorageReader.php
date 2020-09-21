@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ProductBundleStorage\Reader;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductBundleStorageTransfer;
 use Generated\Shared\Transfer\SynchronizationDataTransfer;
 use Spryker\Client\ProductBundleStorage\Dependency\Client\ProductBundleStorageToStorageClientInterface;
@@ -47,14 +48,14 @@ class ProductBundleStorageReader implements ProductBundleStorageReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
      */
-    public function getProductBundles(array $productConcreteIds): array
+    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array
     {
         $productBundleStorageData = $this->storageClient->getMulti(
-            $this->generateKeys($productConcreteIds)
+            $this->generateKeys($productBundleStorageCriteriaTransfer)
         );
 
         if (!$productBundleStorageData) {
@@ -62,9 +63,9 @@ class ProductBundleStorageReader implements ProductBundleStorageReaderInterface
         }
 
         $productBundleStorageTransfers = [];
-        foreach ($productBundleStorageData as $productBundleStorageDatum) {
+        foreach ($productBundleStorageData as $productBundleStorageDataItem) {
             $decodedProductBundleStorageData = $this->utilEncodingService
-                ->decodeJson($productBundleStorageDatum, true);
+                ->decodeJson($productBundleStorageDataItem, true);
 
             if (!is_array($decodedProductBundleStorageData)) {
                 continue;
@@ -84,14 +85,14 @@ class ProductBundleStorageReader implements ProductBundleStorageReaderInterface
     }
 
     /**
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return string[]
      */
-    protected function generateKeys(array $productConcreteIds): array
+    protected function generateKeys(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array
     {
         $productBundleStorageKeys = [];
-        foreach ($productConcreteIds as $idProductConcrete) {
+        foreach ($productBundleStorageCriteriaTransfer->getProductConcreteIds() as $idProductConcrete) {
             $productBundleStorageKeys[] = $this->generateKey($idProductConcrete);
         }
 

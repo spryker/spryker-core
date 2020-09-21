@@ -7,6 +7,8 @@
 
 namespace Spryker\Glue\ProductBundlesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer;
+
 class ProductBundlesRestApiToProductBundleStorageClientBridge implements ProductBundlesRestApiToProductBundleStorageClientInterface
 {
     /**
@@ -25,12 +27,12 @@ class ProductBundlesRestApiToProductBundleStorageClientBridge implements Product
     /**
      * @phpstan-return array<int, \Generated\Shared\Transfer\ProductBundleStorageTransfer>
      *
-     * @param int[] $productConcreteIds
+     * @param \Generated\Shared\Transfer\ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\ProductBundleStorageTransfer[]
      */
-    public function getProductBundles(array $productConcreteIds): array
+    public function getProductBundles(ProductBundleStorageCriteriaTransfer $productBundleStorageCriteriaTransfer): array
     {
-        return $this->productBundleStorageClient->getProductBundles($productConcreteIds);
+        return $this->productBundleStorageClient->getProductBundles($productBundleStorageCriteriaTransfer);
     }
 }
