@@ -140,7 +140,7 @@ class TranslatorDependencyProvider extends AbstractBundleDependencyProvider
     protected function addTranslatorPlugin(Container $container): Container
     {
         $container->set(static::PLUGIN_TRANSLATOR, function () {
-            if (class_exists(TranslatorInterface::class)) {
+            if (interface_exists(TranslatorInterface::class)) {
                 return $this->getTranslatorPlugin();
             }
 
