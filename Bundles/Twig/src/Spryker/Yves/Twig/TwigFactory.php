@@ -12,11 +12,10 @@ use Spryker\Shared\Twig\Cache\CacheLoader\FilesystemCacheLoader;
 use Spryker\Shared\Twig\Cache\CacheWriter\FilesystemCacheWriter;
 use Spryker\Shared\Twig\Loader\FilesystemLoader;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
-use Spryker\Shared\Twig\Loader\TwigChainLoader;
-use Spryker\Shared\Twig\Loader\TwigChainLoaderInterface;
 use Spryker\Shared\Twig\TwigFilesystemLoader;
 use Spryker\Yves\Kernel\AbstractFactory;
 use Spryker\Yves\Twig\Model\TemplateNameExtractor\TemplateNameExtractor;
+use Twig\Loader\ChainLoader;
 
 /**
  * @method \Spryker\Yves\Twig\TwigConfig getConfig()
@@ -93,13 +92,11 @@ class TwigFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Shared\Twig\Loader\TwigChainLoaderInterface
+     * @return \Twig\Loader\ChainLoader
      */
-    public function createTwigChainLoader(): TwigChainLoaderInterface
+    public function createChainLoader(): ChainLoader
     {
-        return new TwigChainLoader(
-            $this->getTwigLoaderPlugins()
-        );
+        return new ChainLoader();
     }
 
     /**

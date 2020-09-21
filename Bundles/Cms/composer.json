@@ -23,8 +23,14 @@
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {

@@ -1,4 +1,6 @@
 namespace: Dashboard
+include:
+    - tests/SprykerTest/Zed/Dashboard
 paths:
     tests: tests
     log: tests/_output

@@ -21,9 +21,14 @@
   "require-dev": {
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/container": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/store": "*",
     "spryker/testify": "*",
+    "spryker/validator": "*",
     "spryker/zed-navigation": "*"
   },
   "autoload": {

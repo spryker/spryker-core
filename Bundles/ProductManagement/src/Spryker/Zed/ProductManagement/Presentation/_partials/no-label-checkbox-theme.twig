@@ -1,5 +1,5 @@
 {% block checkbox_widget %}
-    {% spaceless %}
+    {% apply spaceless %}
         {% if no_label is not defined or not no_label %}
             <div class="checkbox"><label for="{{ id }}">
         {% endif %}
@@ -9,5 +9,5 @@
         {% if no_label is not defined or not no_label %}
             {{ label }}</label></div>
         {% endif %}
-    {% endspaceless %}
+    {% endapply %}
 {% endblock %}
