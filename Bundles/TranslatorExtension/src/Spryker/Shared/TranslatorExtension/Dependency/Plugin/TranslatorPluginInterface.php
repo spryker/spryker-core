@@ -7,12 +7,12 @@
 
 namespace Spryker\Shared\TranslatorExtension\Dependency\Plugin;
 
-use Symfony\Component\Translation\TranslatorInterface as LegacyTranslatorInterface;
+use Spryker\Shared\Translator\TranslatorInterface;
 
 /**
  * @deprecated Use {@link \Spryker\Shared\TranslatorExtension\Dependency\Plugin\Translator\TranslatorPluginInterface} instead.
  */
-interface TranslatorPluginInterface extends LegacyTranslatorInterface
+interface TranslatorPluginInterface extends TranslatorInterface
 {
     /**
      * Specification:
@@ -27,7 +27,7 @@ interface TranslatorPluginInterface extends LegacyTranslatorInterface
      *
      * @return string
      */
-    public function trans($id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
+    public function trans(string $id, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
@@ -43,7 +43,7 @@ interface TranslatorPluginInterface extends LegacyTranslatorInterface
      *
      * @return string
      */
-    public function transChoice($id, $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
+    public function transChoice(string $id, int $number, array $parameters = [], ?string $domain = null, ?string $locale = null): string;
 
     /**
      * Specification:
@@ -55,7 +55,7 @@ interface TranslatorPluginInterface extends LegacyTranslatorInterface
      *
      * @return void
      */
-    public function setLocale($locale): void;
+    public function setLocale(string $locale): void;
 
     /**
      * Specification:
