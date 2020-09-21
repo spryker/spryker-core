@@ -8,9 +8,9 @@
 namespace Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface;
+use Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer;
 
-class ProductConfigurationRenderStrategyPluginResolver implements ProductConfigurationRenderStrategyPluginResolverInterface
+class ProductConfigurationTemplateResolver implements ProductConfigurationTemplateResolverInterface
 {
     /**
      * @var \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface[]
@@ -28,13 +28,13 @@ class ProductConfigurationRenderStrategyPluginResolver implements ProductConfigu
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
      *
-     * @return \Spryker\Zed\SalesProductConfigurationGuiExtension\Dependency\Plugin\ProductConfigurationRenderPluginInterface|null
+     * @return \Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer|null
      */
-    public function resolveProductConfigurationRenderPlugin(ItemTransfer $itemTransfer): ?ProductConfigurationRenderPluginInterface
+    public function resolveProductConfigurationTemplate(ItemTransfer $itemTransfer): ?SalesProductConfigurationTemplateTransfer
     {
         foreach ($this->productConfigurationRenderPlugins as $productConfigurationRenderPlugin) {
             if ($productConfigurationRenderPlugin->isApplicable($itemTransfer)) {
-                return $productConfigurationRenderPlugin;
+                return $productConfigurationRenderPlugin->getTemplate($itemTransfer);
             }
         }
 

@@ -25,18 +25,12 @@ class SalesController extends AbstractController
         /** @var \Generated\Shared\Transfer\ItemTransfer|null $itemTransfer */
         $itemTransfer = $request->attributes->get('orderItem');
 
-        $salesProductConfigurationRenderPlugin = $this->getFactory()
-            ->createProductConfigurationRenderStrategyPluginResolver()
-            ->resolveProductConfigurationRenderPlugin($itemTransfer);
-
-        if (!$salesProductConfigurationRenderPlugin) {
-            return $this->viewResponse([
-                'orderItem' => $itemTransfer,
-            ]);
-        }
+        $productConfigurationTemplate = $this->getFactory()
+            ->createProductConfigurationTemplateResolver()
+            ->resolveProductConfigurationTemplate($itemTransfer);
 
         return $this->viewResponse([
-            'template' => $salesProductConfigurationRenderPlugin->getTemplate($itemTransfer),
+            'template' => $productConfigurationTemplate,
             'orderItem' => $itemTransfer,
         ]);
     }
