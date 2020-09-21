@@ -13,4 +13,15 @@
         <property name="configuratorKey" dataBuilderRule="word"/>
         <property name="isComplete" dataBuilderRule="boolean"/>
     </transfer>
+
+    <transfer name="ProductConcrete">
+        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="isActive" dataBuilderRule="=true"/>
+    </transfer>
+
+    <transfer name="Item">
+        <property name="sku" dataBuilderRule="isbn10"/>
+        <property name="groupKey" dataBuilderRule="sentence(2)"/>
+    </transfer>
+
 </transfers>
