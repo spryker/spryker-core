@@ -22,7 +22,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
- * @method \Spryker\Zed\ProductConfiguration\Business\ProductConfigurationFacadeInterface getFacade()
+ * @method \Spryker\Client\ProductConfiguration\ProductConfigurationClientInterface getClient()
  *
  * @SuppressWarnings(PHPMD)
  */
