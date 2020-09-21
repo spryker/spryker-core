@@ -805,10 +805,6 @@ class AbstractProductFormDataProvider
 
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
             $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
-
-            if ($priceProductDimensionTransfer->getType()) {
-                $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
-            }
         }
 
         $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
@@ -838,10 +834,6 @@ class AbstractProductFormDataProvider
 
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
             $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
-
-            if ($priceProductDimensionTransfer->getType()) {
-                $priceProductCriteriaTransfer->setPriceDimension($priceProductDimensionTransfer);
-            }
         }
 
         $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
