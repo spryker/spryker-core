@@ -29,6 +29,8 @@ use SprykerTest\Shared\Session\Stub\SessionHandlerStub;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

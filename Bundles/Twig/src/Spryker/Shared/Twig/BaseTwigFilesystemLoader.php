@@ -10,9 +10,7 @@ namespace Spryker\Shared\Twig;
 use Spryker\Shared\Twig\Cache\CacheInterface;
 use Spryker\Shared\Twig\Loader\FilesystemLoaderInterface;
 use Spryker\Shared\Twig\TemplateNameExtractor\TemplateNameExtractorInterface;
-use Throwable;
 use Twig\Error\LoaderError;
-use Twig\Source;
 
 abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
 {
@@ -51,36 +49,6 @@ abstract class BaseTwigFilesystemLoader implements FilesystemLoaderInterface
     public function getSource($name)
     {
         return file_get_contents($this->findTemplate($name));
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return \Twig\Source
-     */
-    public function getSourceContext(string $name): Source
-    {
-        $path = $this->findTemplate($name);
-
-        return new Source(file_get_contents($path), $name, $path);
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return bool
-     */
-    public function exists(string $name): bool
-    {
-        if ($this->cache->has($name) && $this->cache->get($name)) {
-            return true;
-        }
-
-        try {
-            return $this->findTemplate($name) !== null;
-        } catch (Throwable $throwable) {
-            return false;
-        }
     }
 
     /**

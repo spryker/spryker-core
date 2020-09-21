@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\OauthCustomerConnector\Dependency\Facade;
 
+use Generated\Shared\Transfer\CustomerCriteriaTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
@@ -46,12 +47,12 @@ class OauthCustomerConnectorToCustomerFacadeBridge implements OauthCustomerConne
     }
 
     /**
-     * @param string $customerReference
+     * @param \Generated\Shared\Transfer\CustomerCriteriaTransfer $customerCriteriaTransfer
      *
      * @return \Generated\Shared\Transfer\CustomerResponseTransfer
      */
-    public function findCustomerByReference(string $customerReference): CustomerResponseTransfer
+    public function getCustomerByCriteria(CustomerCriteriaTransfer $customerCriteriaTransfer): CustomerResponseTransfer
     {
-        return $this->customerFacade->findCustomerByReference($customerReference);
+        return $this->customerFacade->getCustomerByCriteria($customerCriteriaTransfer);
     }
 }
