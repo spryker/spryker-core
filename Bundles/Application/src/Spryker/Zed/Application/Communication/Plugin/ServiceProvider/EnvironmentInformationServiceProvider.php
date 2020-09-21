@@ -9,9 +9,10 @@ namespace Spryker\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfo;
+use Spryker\Zed\Application\Business\Model\Twig\EnvironmentInfoFunctionProvider;
 use Spryker\Zed\Kernel\Communication\AbstractPlugin;
 use Twig\Environment;
+use Twig\TwigFunction;
 
 /**
  * @deprecated Will be removed without replacement in the next major.
@@ -32,7 +33,12 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
     {
         $app['twig'] = $app->share(
             $app->extend('twig', function (Environment $twig) {
-                $twig->addFunction(new EnvironmentInfo());
+                $functionProvider = new EnvironmentInfoFunctionProvider();
+                $twig->addFunction(new TwigFunction(
+                    $functionProvider->getFunctionName(),
+                    $functionProvider->getFunctionName(),
+                    $functionProvider->getOptions()
+                ));
 
                 return $twig;
             })

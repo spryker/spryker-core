@@ -8,10 +8,10 @@
 namespace Spryker\Zed\Application\Communication\Twig;
 
 use Spryker\Service\UtilText\Model\Url\Url;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\Application\ApplicationConfig;
 
-class YvesUrlFunction extends TwigFunction
+class YvesUrlFunctionProvider extends TwigFunctionProvider
 {
     /**
      * @var \Spryker\Zed\Application\ApplicationConfig
@@ -24,14 +24,12 @@ class YvesUrlFunction extends TwigFunction
     public function __construct(ApplicationConfig $applicationConfig)
     {
         $this->applicationConfig = $applicationConfig;
-
-        parent::__construct();
     }
 
     /**
      * @return string
      */
-    protected function getFunctionName()
+    public function getFunctionName()
     {
         return 'yves_url';
     }
@@ -39,7 +37,7 @@ class YvesUrlFunction extends TwigFunction
     /**
      * @return callable
      */
-    protected function getFunction()
+    public function getFunction()
     {
         return function ($url, array $query = [], array $options = []) {
             $url = Url::generate($url, $query, $this->formatOptions($options));

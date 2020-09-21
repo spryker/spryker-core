@@ -7,22 +7,6 @@
 
 namespace Spryker\Zed\Gui;
 
-use Spryker\Zed\Gui\Communication\Plugin\Twig\AssetsPathFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\BackActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\CreateActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\EditActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\RemoveActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Action\ViewActionButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\ButtonGroupFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Form\SubmitButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\BackTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\CreateTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\EditTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\RemoveTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\Buttons\Table\ViewTableButtonFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\TabsFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlDecodeFunction;
-use Spryker\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
 use Spryker\Zed\Gui\Dependency\Service\GuiToUtilSanitizeXssServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
@@ -45,23 +29,8 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container = parent::provideCommunicationLayerDependencies($container);
-        $container = $this->addTwigFunctions($container);
         $container = $this->addTwigFilter($container);
         $container = $this->addUtilSanitizeXssService($container);
-
-        return $container;
-    }
-
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
-    protected function addTwigFunctions(Container $container)
-    {
-        $container->set(static::GUI_TWIG_FUNCTIONS, function () {
-            return $this->getTwigFunctions();
-        });
 
         return $container;
     }
@@ -78,36 +47,6 @@ class GuiDependencyProvider extends AbstractBundleDependencyProvider
         });
 
         return $container;
-    }
-
-    /**
-     * @deprecated Will be removed without replacement.
-     *
-     * @return \Twig\TwigFunction[]
-     */
-    protected function getTwigFunctions()
-    {
-        return [
-            new AssetsPathFunction(),
-            new TabsFunction(),
-            new UrlFunction(),
-            new UrlDecodeFunction(),
-            // navigation buttons
-            new ButtonGroupFunction(),
-            new BackActionButtonFunction(),
-            new CreateActionButtonFunction(),
-            new ViewActionButtonFunction(),
-            new EditActionButtonFunction(),
-            new RemoveActionButtonFunction(),
-            // table row buttons
-            new EditTableButtonFunction(),
-            new BackTableButtonFunction(),
-            new CreateTableButtonFunction(),
-            new ViewTableButtonFunction(),
-            new RemoveTableButtonFunction(),
-            // Form buttons
-            new SubmitButtonFunction(),
-        ];
     }
 
     /**

@@ -35,10 +35,15 @@
     "spryker/checkout": "*",
     "spryker/code-sniffer": "*",
     "spryker/config": "*",
+    "spryker/container": "*",
     "spryker/customer": "*",
+    "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/oms": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/testify": "*",
+    "spryker/twig": "*",
     "spryker/zed-navigation": "*"
   },
   "suggest": {

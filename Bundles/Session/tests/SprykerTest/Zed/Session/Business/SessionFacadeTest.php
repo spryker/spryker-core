@@ -8,12 +8,11 @@
 namespace SprykerTest\Zed\Session\Business;
 
 use Codeception\Test\Unit;
-use Silex\Application;
 use Spryker\Shared\Session\SessionConstants;
 use Spryker\Shared\SessionExtension\Dependency\Plugin\SessionHandlerProviderPluginInterface;
 use Spryker\Zed\Kernel\Container;
 use Spryker\Zed\Session\Business\Exception\NotALockingSessionHandlerException;
-use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
+use Spryker\Zed\Session\Communication\Plugin\Application\SessionApplicationPlugin;
 use Spryker\Zed\Session\SessionDependencyProvider;
 use Spryker\Zed\SessionExtension\Dependency\Plugin\SessionLockReleaserPluginInterface;
 
@@ -57,10 +56,7 @@ class SessionFacadeTest extends Unit
 
         $this->setupSessionPluginDependencies();
 
-        $application = new Application();
-        $application['session.test'] = false;
-        $sessionServiceProvider = new SessionServiceProvider();
-        $sessionServiceProvider->register($application);
+        $this->tester->addApplicationPlugin(new SessionApplicationPlugin());
     }
 
     /**
