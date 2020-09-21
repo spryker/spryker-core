@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 
 interface CompanyUsersRestApiFacadeInterface
 {
@@ -60,4 +61,21 @@ interface CompanyUsersRestApiFacadeInterface
      * @return \Generated\Shared\Transfer\QuoteTransfer
      */
     public function expandQuoteCustomerWithCompanyUser(QuoteTransfer $quoteTransfer): QuoteTransfer;
+
+    /**
+     * Specification
+     * - Expands `QuoteTransfer.customer.companyUserTransfer`.
+     * - Expects `RestCheckoutRequestAttributesTransfer.customer.idCompanyUser` to be set.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapCompanyUserToQuoteTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer;
 }

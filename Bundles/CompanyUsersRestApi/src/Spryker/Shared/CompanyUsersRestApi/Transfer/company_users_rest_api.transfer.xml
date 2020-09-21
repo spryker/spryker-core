@@ -97,4 +97,11 @@
         <property name="customer" type="Customer"/>
     </transfer>
 
+    <transfer name="RestCustomer">
+        <property name="idCompanyUser" type="int" restRequestParameter="no"/>
+        <property name="idCompany" type="int" restRequestParameter="no"/>
+        <property name="idCompanyBusinessUnit" type="int" restRequestParameter="no"/>
+        <property name="companyUserTransfer" type="CompanyUser" restRequestParameter="no"/>
+    </transfer>
+
 </transfers>

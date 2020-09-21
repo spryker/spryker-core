@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\CompanyUserCriteriaFilterTransfer;
 use Generated\Shared\Transfer\CustomerIdentifierTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -70,5 +71,23 @@ class CompanyUsersRestApiFacade extends AbstractFacade implements CompanyUsersRe
         return $this->getFactory()
             ->createCompanyUserExpander()
             ->expandQuoteCustomerWithCompanyUser($quoteTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function mapCompanyUserToQuoteTransfer(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        return $this->getFactory()->createCompanyUserExpander()
+            ->expandQuoteCustomerWithCompanyUserFromCheckoutRequest($restCheckoutRequestAttributesTransfer, $quoteTransfer);
     }
 }

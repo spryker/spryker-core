@@ -6,6 +6,7 @@
   "require": {
     "php": ">=7.2",
     "spryker/carts-rest-api-extension": "^1.2.0",
+    "spryker/checkout-rest-api-extension": "^1.4.0",
     "spryker/company": "^1.0.0",
     "spryker/company-business-unit": "^1.0.0 || ^2.0.0",
     "spryker/company-role": "^1.0.0",

@@ -108,7 +108,7 @@ class PlaceOrderProcessor implements PlaceOrderProcessorInterface
 
         $quoteTransfer = $this->recalculateQuote($quoteTransfer);
 
-        $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
+         $checkoutResponseTransfer = $this->executePlaceOrder($quoteTransfer);
         if (!$checkoutResponseTransfer->getIsSuccess()) {
             return $this->createPlaceOrderErrorResponse($checkoutResponseTransfer);
         }

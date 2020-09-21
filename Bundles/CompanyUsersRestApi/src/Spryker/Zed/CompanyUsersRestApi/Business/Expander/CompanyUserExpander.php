@@ -9,6 +9,7 @@ namespace Spryker\Zed\CompanyUsersRestApi\Business\Expander;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Zed\CompanyUsersRestApi\Dependency\Facade\CompanyUsersRestApiToCompanyUserFacadeInterface;
 
 class CompanyUserExpander implements CompanyUserExpanderInterface
@@ -40,6 +41,28 @@ class CompanyUserExpander implements CompanyUserExpanderInterface
         $idCompanyUser = $quoteTransfer->getCustomer()->getCompanyUserTransfer()->getIdCompanyUser();
         $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($idCompanyUser);
 
+        $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);
+
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function expandQuoteCustomerWithCompanyUserFromCheckoutRequest(
+        RestCheckoutRequestAttributesTransfer $restCheckoutRequestAttributesTransfer,
+        QuoteTransfer $quoteTransfer
+    ): QuoteTransfer {
+        $idCompanyUser = $restCheckoutRequestAttributesTransfer->getCustomer()->getIdCompanyUser();
+
+        if (!$idCompanyUser) {
+            return $quoteTransfer;
+        }
+
+        $companyUserTransfer = $this->companyUserFacade->findCompanyUserById($idCompanyUser);
         $quoteTransfer->getCustomer()->setCompanyUserTransfer($companyUserTransfer);
 
         return $quoteTransfer;
