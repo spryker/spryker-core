@@ -1,4 +1,5 @@
-namespace: SprykerTest\Zed\ProductBundleCartsRestApi paths:
+namespace: SprykerTest\Zed\ProductBundleCartsRestApi
+paths:
     tests: .
     data: ../../../_data
     support: _support

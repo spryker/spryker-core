@@ -19,7 +19,8 @@ use Generated\Shared\Transfer\QuoteTransfer;
  *
  * @group SprykerTest
  * @group Zed
- * @group ProductBundleCartsRestApi  * @group Business
+ * @group ProductBundleCartsRestApi
+ * @group Business
  * @group Facade
  * @group ProductBundleCartsRestApiFacadeTest
  *

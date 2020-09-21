@@ -1,6 +1,7 @@
 namespace: SprykerTest
 include:
-    - tests/SprykerTest/Zed/ProductBundleCartsRestApi paths:
+    - tests/SprykerTest/Zed/ProductBundleCartsRestApi
+paths:
     tests: tests/
     log: tests/_output/
     data: tests/_data/

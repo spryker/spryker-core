@@ -303,6 +303,6 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
      */
     public function getQuoteItemCheckerPlugins(): array
     {
-        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_CHECKER);
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_READ_VALIDATOR);
     }
 }
