@@ -202,7 +202,7 @@ class AddController extends AbstractController
      *
      * @return \Generated\Shared\Transfer\ProductConcreteTransfer
      */
-    protected function copyProductAbstractToProductConcrete(ProductAbstractTransfer $productAbstractTransfer)
+    protected function copyProductAbstractToProductConcrete(ProductAbstractTransfer $productAbstractTransfer): ProductConcreteTransfer
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
             ->setSku($productAbstractTransfer->getSku())
