@@ -487,7 +487,7 @@ class CompanyUserFacadeTest extends Test
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
-        $this->assertEquals($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -547,7 +547,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -568,7 +568,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
@@ -589,7 +589,7 @@ class CompanyUserFacadeTest extends Test
             ->offsetGet(0);
 
         // Assert
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $foundCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**

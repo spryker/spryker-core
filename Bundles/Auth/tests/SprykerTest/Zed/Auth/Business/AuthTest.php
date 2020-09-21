@@ -145,19 +145,19 @@ class AuthTest extends Unit
         $this->assertNotEquals($userData['password'], $userDto->getPassword());
 
         $login = $this->authFacade->login($userDto->getUsername(), rand(10000, 99999));
-        $this->assertEquals(false, $login);
+        $this->assertFalse($login);
 
         $login = $this->authFacade->login($userDto->getUsername(), $userDto->getPassword());
-        $this->assertEquals(false, $login);
+        $this->assertFalse($login);
 
         $login = $this->authFacade->login(rand(10000, 99999), $userDto->getPassword());
-        $this->assertEquals(false, $login);
+        $this->assertFalse($login);
 
         $login = $this->authFacade->login(rand(10000, 99999), $userData['password']);
-        $this->assertEquals(false, $login);
+        $this->assertFalse($login);
 
         $login = $this->authFacade->login(rand(10000, 99999), rand(10000, 99999));
-        $this->assertEquals(false, $login);
+        $this->assertFalse($login);
     }
 
     /**
@@ -206,11 +206,11 @@ class AuthTest extends Unit
 
         $currentUserDto = $this->userFacade->getCurrentUser();
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $currentUserDto);
-        $this->assertEquals($userDto->getIdUser(), $currentUserDto->getIdUser());
-        $this->assertEquals($userDto->getUsername(), $currentUserDto->getUsername());
-        $this->assertEquals($userDto->getPassword(), $currentUserDto->getPassword());
-        $this->assertEquals($userDto->getFirstName(), $currentUserDto->getFirstName());
-        $this->assertEquals($userDto->getLastName(), $currentUserDto->getLastName());
+        $this->assertSame($userDto->getIdUser(), $currentUserDto->getIdUser());
+        $this->assertSame($userDto->getUsername(), $currentUserDto->getUsername());
+        $this->assertSame($userDto->getPassword(), $currentUserDto->getPassword());
+        $this->assertSame($userDto->getFirstName(), $currentUserDto->getFirstName());
+        $this->assertSame($userDto->getLastName(), $currentUserDto->getLastName());
     }
 
     /**

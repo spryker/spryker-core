@@ -94,6 +94,6 @@ class GenerateOrderInvoiceTest extends Unit
         $orderInvoiceResponseTransfer = $this->tester->getMockedFacade()->generateOrderInvoice($orderTransfer);
 
         // Assert
-        $this->assertEquals(OrderInvoiceBeforeSavePluginMock::FAKE_REFERENCE_FOR_PLUGIN_CHECK, $orderInvoiceResponseTransfer->getOrderInvoice()->getReference());
+        $this->assertSame(OrderInvoiceBeforeSavePluginMock::FAKE_REFERENCE_FOR_PLUGIN_CHECK, $orderInvoiceResponseTransfer->getOrderInvoice()->getReference());
     }
 }

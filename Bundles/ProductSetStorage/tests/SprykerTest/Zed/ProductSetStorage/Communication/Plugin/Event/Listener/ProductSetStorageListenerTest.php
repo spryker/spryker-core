@@ -342,9 +342,9 @@ class ProductSetStorageListenerTest extends Unit
         $this->tester->deleteProductSet($productSetTransfer);
 
         // Assert
-        $this->assertEquals($productImageTransferSortedFirst->getIdProductImage(), $productSetImages[0]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedSecond->getIdProductImage(), $productSetImages[1]['id_product_image']);
-        $this->assertEquals($productImageTransferSortedThird->getIdProductImage(), $productSetImages[2]['id_product_image']);
+        $this->assertSame($productImageTransferSortedFirst->getIdProductImage(), $productSetImages[0]['id_product_image']);
+        $this->assertSame($productImageTransferSortedSecond->getIdProductImage(), $productSetImages[1]['id_product_image']);
+        $this->assertSame($productImageTransferSortedThird->getIdProductImage(), $productSetImages[2]['id_product_image']);
     }
 
     /**

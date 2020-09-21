@@ -267,7 +267,7 @@ class CreateShipmentWithNewDataTest extends Test
 
         $this->assertTrue($shipmentGroupResponseTransfer->getIsSuccessful(), 'Saving a new shipment should have been successful.');
         $this->assertNotNull($shipmentEntity->getFkSalesExpense(), 'New sales shipment should have been a new sales expense assigned.');
-        $this->assertEquals(0, $shipmentEntity->getExpense()->getPrice(), 'New shipments must have 0 price as expense.');
+        $this->assertSame(0, $shipmentEntity->getExpense()->getPrice(), 'New shipments must have 0 price as expense.');
     }
 
     /**

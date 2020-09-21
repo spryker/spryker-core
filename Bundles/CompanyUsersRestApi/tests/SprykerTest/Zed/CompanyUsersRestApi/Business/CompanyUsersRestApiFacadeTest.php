@@ -54,7 +54,7 @@ class CompanyUsersRestApiFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals($customerTransfer->getCompanyUserTransfer()->getUuid(), $expandedCustomerIdentifierTransfer->getIdCompanyUser());
+        $this->assertSame($customerTransfer->getCompanyUserTransfer()->getUuid(), $expandedCustomerIdentifierTransfer->getIdCompanyUser());
     }
 
     /**
@@ -108,10 +108,10 @@ class CompanyUsersRestApiFacadeTest extends Test
         $this->assertCount(1, $companyUserCollectionTransfer->getCompanyUsers());
         /** @var \Generated\Shared\Transfer\CompanyUserTransfer $expectedCompanyUserTransfer */
         $expectedCompanyUserTransfer = $companyUserCollectionTransfer->getCompanyUsers()->offsetGet(0);
-        $this->assertEquals($companyUserTransfer->getIdCompanyUser(), $expectedCompanyUserTransfer->getIdCompanyUser());
-        $this->assertEquals($companyUserTransfer->getFkCompany(), $expectedCompanyUserTransfer->getFkCompany());
-        $this->assertEquals($companyUserTransfer->getFkCompanyBusinessUnit(), $expectedCompanyUserTransfer->getFkCompanyBusinessUnit());
-        $this->assertEquals($companyUserTransfer->getFkCustomer(), $expectedCompanyUserTransfer->getFkCustomer());
+        $this->assertSame($companyUserTransfer->getIdCompanyUser(), $expectedCompanyUserTransfer->getIdCompanyUser());
+        $this->assertSame($companyUserTransfer->getFkCompany(), $expectedCompanyUserTransfer->getFkCompany());
+        $this->assertSame($companyUserTransfer->getFkCompanyBusinessUnit(), $expectedCompanyUserTransfer->getFkCompanyBusinessUnit());
+        $this->assertSame($companyUserTransfer->getFkCustomer(), $expectedCompanyUserTransfer->getFkCustomer());
     }
 
     /**

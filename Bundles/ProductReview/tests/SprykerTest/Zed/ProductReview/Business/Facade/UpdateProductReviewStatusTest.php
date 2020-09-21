@@ -51,7 +51,7 @@ class UpdateProductReviewStatusTest extends Unit
 
         // Assert
         $actualProductReviewTransfer = $this->tester->getFacade()->findProductReview($updatedProductReviewTransfer);
-        $this->assertEquals($productReviewTransferToUpdate->getStatus(), $actualProductReviewTransfer->getStatus(), 'Updated product review should have expected data.');
+        $this->assertSame($productReviewTransferToUpdate->getStatus(), $actualProductReviewTransfer->getStatus(), 'Updated product review should have expected data.');
     }
 
     /**

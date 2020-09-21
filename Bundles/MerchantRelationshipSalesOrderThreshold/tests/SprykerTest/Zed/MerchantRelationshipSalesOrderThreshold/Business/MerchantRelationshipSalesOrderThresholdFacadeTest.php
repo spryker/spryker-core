@@ -103,7 +103,7 @@ class MerchantRelationshipSalesOrderThresholdFacadeTest extends Test
         );
 
         // Assert
-        $this->assertEquals($hardThreshold1->getIdMerchantRelationshipSalesOrderThreshold(), $hardThreshold2->getIdMerchantRelationshipSalesOrderThreshold());
+        $this->assertSame($hardThreshold1->getIdMerchantRelationshipSalesOrderThreshold(), $hardThreshold2->getIdMerchantRelationshipSalesOrderThreshold());
         $this->assertNotEquals($hardThreshold1->getIdMerchantRelationshipSalesOrderThreshold(), $softThreshold1->getIdMerchantRelationshipSalesOrderThreshold());
         $this->assertNotEquals($softThreshold1->getIdMerchantRelationshipSalesOrderThreshold(), $softThreshold2->getIdMerchantRelationshipSalesOrderThreshold());
         $this->assertNotEquals($softThreshold1->getIdMerchantRelationshipSalesOrderThreshold(), $softThreshold3->getIdMerchantRelationshipSalesOrderThreshold());

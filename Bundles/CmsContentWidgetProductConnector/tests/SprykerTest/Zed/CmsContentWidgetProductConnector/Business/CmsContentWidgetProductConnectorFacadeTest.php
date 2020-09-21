@@ -38,9 +38,9 @@ class CmsContentWidgetProductConnectorFacadeTest extends Unit
         ]);
 
         $this->assertArrayHasKey($productAbstractTransfer1->getSku(), $map);
-        $this->assertEquals($productAbstractTransfer1->getIdProductAbstract(), $map[$productAbstractTransfer1->getSku()]);
+        $this->assertSame($productAbstractTransfer1->getIdProductAbstract(), $map[$productAbstractTransfer1->getSku()]);
 
         $this->assertArrayHasKey($productAbstractTransfer2->getSku(), $map);
-        $this->assertEquals($productAbstractTransfer2->getIdProductAbstract(), $map[$productAbstractTransfer2->getSku()]);
+        $this->assertSame($productAbstractTransfer2->getIdProductAbstract(), $map[$productAbstractTransfer2->getSku()]);
     }
 }

@@ -235,7 +235,7 @@ class ProductListFacadeTest extends Unit
 
         // Assert
         $this->assertIsArray($productConcreteIds);
-        $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
+        $this->assertSame([$productTransfer->getIdProductConcrete()], $productConcreteIds);
     }
 
     /**

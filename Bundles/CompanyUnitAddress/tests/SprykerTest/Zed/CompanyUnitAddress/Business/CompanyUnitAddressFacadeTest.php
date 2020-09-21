@@ -75,7 +75,7 @@ class CompanyUnitAddressFacadeTest extends Test
 
         // Assert
         $this->assertTrue($companyUnitAddressResponseTransfer->getIsSuccessful());
-        $this->assertEquals(static::TEST_ADDRESS, $companyUnitAddressTransferLoaded->getAddress1());
+        $this->assertSame(static::TEST_ADDRESS, $companyUnitAddressTransferLoaded->getAddress1());
     }
 
     /**
@@ -232,7 +232,7 @@ class CompanyUnitAddressFacadeTest extends Test
             );
 
         // Assert
-        $this->assertEquals(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
+        $this->assertSame(0, $companyUnitAddressCollectionTransfer->getCompanyUnitAddresses()->count());
     }
 
     /**

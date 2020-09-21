@@ -58,7 +58,7 @@ class TaxProductConnectorFacadeTest extends Unit
         $productAbstractTransfer = $this->createProductFacade()
             ->findProductAbstractById($productAbstractTransfer->getIdProductAbstract());
 
-        $this->assertEquals($taxSetTransfer->getIdTaxSet(), $productAbstractTransfer->getIdTaxSet());
+        $this->assertSame($taxSetTransfer->getIdTaxSet(), $productAbstractTransfer->getIdTaxSet());
     }
 
     /**
@@ -104,7 +104,7 @@ class TaxProductConnectorFacadeTest extends Unit
 
         $productAbstractTransfer = $taxProductConnectorFacade->mapTaxSet($productAbstractTransfer);
 
-        $this->assertEquals($productAbstractTransfer->getIdTaxSet(), $taxSetTransfer->getIdTaxSet());
+        $this->assertSame($productAbstractTransfer->getIdTaxSet(), $taxSetTransfer->getIdTaxSet());
     }
 
     /**
