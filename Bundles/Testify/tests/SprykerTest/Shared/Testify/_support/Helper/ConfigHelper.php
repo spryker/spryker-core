@@ -25,7 +25,7 @@ class ConfigHelper extends Module
     use ClassResolverTrait;
 
     protected const CONFIG_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\%3$sConfig';
-    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
+    protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sConfig';
     protected const MODULE_NAME_POSITION = 2;
 
     protected const NON_STANDARD_NAMESPACE_PREFIXES = [
@@ -233,28 +233,9 @@ class ConfigHelper extends Module
      */
     protected function createConfig(string $moduleName)
     {
-        $moduleConfigClassName = $this->getConfigClassName($moduleName);
+        $moduleConfigClassName = $this->resolveClassName(static::CONFIG_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleConfigClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getConfigClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        $classNameCandidate = sprintf(static::CONFIG_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
-
-        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
     /**
@@ -300,31 +281,13 @@ class ConfigHelper extends Module
      */
     protected function createSharedConfig(string $moduleName): ?AbstractSharedConfig
     {
-        $sharedConfigClassName = $this->getSharedConfigClassName($moduleName);
+        $sharedConfigClassName = $this->resolveClassName(static::SHARED_CONFIG_CLASS_NAME_PATTERN, $moduleName);
+
         if (!class_exists($sharedConfigClassName)) {
             return null;
         }
 
         return new $sharedConfigClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getSharedConfigClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        $classNameCandidate = sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
-
-        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
-            return $classNameCandidate;
-        }
-
-        return sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**
