@@ -798,13 +798,13 @@ class AbstractProductFormDataProvider
      */
     protected function getProductAbstractPricesByPriceDimension(ProductAbstractTransfer $productAbstractTransfer, array $formData): ArrayObject
     {
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(static::PRICE_DIMENSION_DEFAULT);
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setPriceDimension($priceProductDimensionTransfer);
+            ->setPriceDimension((new PriceProductDimensionTransfer())
+                ->setType(static::PRICE_DIMENSION_DEFAULT));
 
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+            $priceProductCriteriaTransfer->getPriceDimension()
+                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
         }
 
         $priceProducts = $this->priceProductFacade->findProductAbstractPricesWithoutPriceExtraction(
@@ -827,13 +827,13 @@ class AbstractProductFormDataProvider
         ProductAbstractTransfer $productAbstractTransfer,
         array $formData
     ): ArrayObject {
-        $priceProductDimensionTransfer = (new PriceProductDimensionTransfer())
-            ->setType(static::PRICE_DIMENSION_DEFAULT);
         $priceProductCriteriaTransfer = (new PriceProductCriteriaTransfer())
-            ->setPriceDimension($priceProductDimensionTransfer);
+            ->setPriceDimension((new PriceProductDimensionTransfer())
+                ->setType(static::PRICE_DIMENSION_DEFAULT));
 
         if ($formData[ProductFormAdd::FORM_PRICE_DIMENSION]) {
-            $priceProductDimensionTransfer->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
+            $priceProductCriteriaTransfer->getPriceDimension()
+                ->fromArray($formData[ProductFormAdd::FORM_PRICE_DIMENSION], true);
         }
 
         $priceProducts = $this->priceProductFacade->findProductConcretePricesWithoutPriceExtraction(
