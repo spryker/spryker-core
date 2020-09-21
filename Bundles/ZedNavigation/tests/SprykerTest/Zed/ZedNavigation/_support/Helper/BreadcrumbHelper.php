@@ -78,7 +78,12 @@ class BreadcrumbHelper extends Module
 
         $driver = $this->getDriver();
 
-        $driver->waitForElement('//spryker-breadcrumbs');
+        if ($this->isPresentationSuite) {
+            $driver->waitForElement('//spryker-breadcrumbs');
+        } else {
+            $driver->seeElement('//spryker-breadcrumbs');
+        }
+
         $breadcrumbAttribute = $driver->grabAttributeFrom('//spryker-breadcrumbs', 'breadcrumbs');
         $driver->assertNotNull($breadcrumbAttribute);
         $decodedBreadcrumbAttribute = json_decode($breadcrumbAttribute, true);
