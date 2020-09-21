@@ -8,10 +8,10 @@
   },
   "require-dev": {
     "spryker/code-sniffer": "*",
-    "spryker/symfony": "*"
+    "spryker/translator": "*"
   },
   "suggest": {
-    "spryker/symfony": "If you want to use TranslatorPlugin."
+    "spryker/translator": "If you want to use TranslatorPlugin."
   },
   "autoload": {
     "psr-4": {
