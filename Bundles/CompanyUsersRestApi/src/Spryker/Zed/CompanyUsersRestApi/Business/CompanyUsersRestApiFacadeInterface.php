@@ -43,7 +43,6 @@ interface CompanyUsersRestApiFacadeInterface
      *
      * @return \Generated\Shared\Transfer\CompanyUserCollectionTransfer
      */
-    
     public function getCompanyUserCollection(
         CompanyUserCriteriaFilterTransfer $companyUserCriteriaFilterTransfer
     ): CompanyUserCollectionTransfer;
