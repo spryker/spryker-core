@@ -39,6 +39,23 @@ class ConfigurableBundleCartsRestApiFacade extends AbstractFacade implements Con
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundleToGuestCart(
+        CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+    ): QuoteResponseTransfer {
+        return $this->getFactory()
+            ->createGuestConfiguredBundleWriter()
+            ->addConfiguredBundleToGuestCart($createConfiguredBundleRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer

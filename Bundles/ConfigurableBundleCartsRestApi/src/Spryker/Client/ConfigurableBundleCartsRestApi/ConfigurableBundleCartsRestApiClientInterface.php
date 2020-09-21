@@ -16,6 +16,25 @@ interface ConfigurableBundleCartsRestApiClientInterface
     /**
      * Specification:
      * - Makes Zed request.
+     * - Expects `quote.customer`, `quote.uuid` to be provided.
+     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
+     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
+     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
+     * - Adds configured bundle to the cart.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundle(
+        CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+    ): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
      * - Expects `quote.customer` to be provided.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
@@ -29,7 +48,7 @@ interface ConfigurableBundleCartsRestApiClientInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addConfiguredBundle(
+    public function addConfiguredBundleToGuestCart(
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer;
 

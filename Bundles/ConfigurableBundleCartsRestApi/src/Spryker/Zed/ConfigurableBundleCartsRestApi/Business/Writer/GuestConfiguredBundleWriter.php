@@ -13,14 +13,13 @@ use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
 use Spryker\Shared\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiConfig as ConfigurableBundleCartsRestApiSharedConfig;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Checker\QuotePermissionCheckerInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface;
 
-class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
+class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterface
 {
     /**
      * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface
@@ -65,11 +64,17 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    public function addConfiguredBundle(
+    public function addConfiguredBundleToGuestCart(
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
         $this->assertRequiredCreateRequestProperties($createConfiguredBundleRequestTransfer);
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($createConfiguredBundleRequestTransfer->getQuote());
+        $quoteResponseTransfer = $this->setCustomerQuoteUuid($createConfiguredBundleRequestTransfer->getQuote());
+
+        if (!$quoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer;
+        }
+
+        $quoteResponseTransfer = $this->checkQuoteFromRequest($quoteResponseTransfer->getQuoteTransfer());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -84,74 +89,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_ADDING_CONFIGURED_BUNDLE);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function updateConfiguredBundleQuantity(
-        UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer {
-        $this->assertRequiredUpdateRequestProperties($updateConfiguredBundleRequestTransfer);
-        $updateConfiguredBundleRequestTransfer->requireQuantity();
-
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($updateConfiguredBundleRequestTransfer->getQuote());
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        $persistentCartChangeTransfer = $this->configuredBundleMapper->mapUpdateConfiguredBundleRequestToPersistentCartChange(
-            $updateConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true))
-        );
-
-        if (!$persistentCartChangeTransfer->getItems()->count()) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
-        }
-
-        $quoteResponseTransfer = $this->persistentCartFacade->updateQuantity($persistentCartChangeTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    public function removeConfiguredBundle(
-        UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-    ): QuoteResponseTransfer {
-        $this->assertRequiredUpdateRequestProperties($updateConfiguredBundleRequestTransfer);
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($updateConfiguredBundleRequestTransfer->getQuote());
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        $persistentCartChangeTransfer = $this->configuredBundleMapper->mapUpdateConfiguredBundleRequestToPersistentCartChange(
-            $updateConfiguredBundleRequestTransfer,
-            (new PersistentCartChangeTransfer())->setQuote((new QuoteTransfer())->fromArray($quoteResponseTransfer->getQuoteTransfer()->toArray(), true))
-        );
-
-        if (!$persistentCartChangeTransfer->getItems()->count()) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_NOT_FOUND);
-        }
-
-        $quoteResponseTransfer = $this->persistentCartFacade->remove($persistentCartChangeTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            $quoteResponseTransfer = $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE);
         }
 
         return $quoteResponseTransfer;
@@ -218,7 +155,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         $createConfiguredBundleRequestTransfer
             ->requireQuote()
             ->getQuote()
-                ->requireUuid()
                 ->requireCustomer()
                 ->requireCustomerReference()
                 ->getCustomer()
@@ -233,24 +169,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
                 ->getTemplate()
                     ->requireUuid()
                     ->requireName();
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
-     *
-     * @return void
-     */
-    protected function assertRequiredUpdateRequestProperties(UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer): void
-    {
-        $updateConfiguredBundleRequestTransfer
-            ->requireGroupKey()
-            ->requireQuote()
-            ->getQuote()
-                ->requireUuid()
-                ->requireCustomer()
-                ->requireCustomerReference()
-                ->getCustomer()
-                    ->requireCustomerReference();
     }
 
     /**

@@ -15,6 +15,8 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleM
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\ConfiguredBundleWriter;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\ConfiguredBundleWriterInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\GuestConfiguredBundleWriter;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\GuestConfiguredBundleWriterInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiDependencyProvider;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface;
@@ -31,6 +33,19 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     public function createConfiguredBundleWriter(): ConfiguredBundleWriterInterface
     {
         return new ConfiguredBundleWriter(
+            $this->getPersistentCartFacade(),
+            $this->getCartsRestApiFacade(),
+            $this->createConfiguredBundleMapper(),
+            $this->createQuotePermissionChecker()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\GuestConfiguredBundleWriterInterface
+     */
+    public function createGuestConfiguredBundleWriter(): GuestConfiguredBundleWriterInterface
+    {
+        return new GuestConfiguredBundleWriter(
             $this->getPersistentCartFacade(),
             $this->getCartsRestApiFacade(),
             $this->createConfiguredBundleMapper(),
