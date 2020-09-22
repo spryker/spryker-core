@@ -50,4 +50,9 @@
         <property name="customerTransfer" type="Customer"/>
     </transfer>
 
+    <transfer name="CustomerCriteria">
+        <property name="customerReference" type="string"/>
+        <property name="withExpanders" type="bool"/>
+    </transfer>
+
 </transfers>

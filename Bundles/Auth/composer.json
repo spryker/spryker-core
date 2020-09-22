@@ -22,9 +22,13 @@
     "spryker/container": "*",
     "spryker/discount": "*",
     "spryker/event-dispatcher": "*",
+    "spryker/form": "*",
     "spryker/propel": "*",
+    "spryker/router": "*",
     "spryker/silex": "*",
-    "spryker/testify": "*"
+    "spryker/testify": "*",
+    "spryker/twig": "*",
+    "spryker/validator": "*"
   },
   "suggest": {
     "spryker/config": "Add this module when you want to use the EventDispatcherPlugins.",

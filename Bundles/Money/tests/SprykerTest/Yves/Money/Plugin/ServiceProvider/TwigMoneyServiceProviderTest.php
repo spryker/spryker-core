@@ -17,6 +17,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

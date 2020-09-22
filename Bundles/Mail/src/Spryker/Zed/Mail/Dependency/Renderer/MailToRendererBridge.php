@@ -8,6 +8,7 @@
 namespace Spryker\Zed\Mail\Dependency\Renderer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin;
 
 class MailToRendererBridge implements MailToRendererInterface
 {
@@ -52,7 +53,7 @@ class MailToRendererBridge implements MailToRendererInterface
     protected function getTranslator()
     {
         /** @var \Spryker\Zed\Glossary\Communication\Plugin\TwigTranslatorPlugin $translator */
-        $translator = $this->twigEnvironment->getExtension('translator');
+        $translator = $this->twigEnvironment->getExtension(TwigTranslatorPlugin::class);
 
         return $translator;
     }
