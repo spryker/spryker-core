@@ -1,20 +1,15 @@
 {
-  "name": "spryker/twig-extension",
+  "name": "spryker/merchant-category",
   "type": "library",
-  "description": "TwigExtension module",
+  "description": "MerchantCategory module",
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "twig/twig": "^1.41 || ^2.9.0 || ^3.0.0"
+    "spryker/category": "^4.0.0",
+    "spryker/merchant": "^3.0.0"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*",
-    "spryker/container": "*",
-    "spryker/twig": "*"
-  },
-  "suggest": {
-    "spryker/container": "If you want to use the TwigPluginInterface",
-    "spryker/twig": "If you want to use the TwigLoaderPluginInterface"
+    "spryker/code-sniffer": "*"
   },
   "autoload": {
     "psr-4": {
