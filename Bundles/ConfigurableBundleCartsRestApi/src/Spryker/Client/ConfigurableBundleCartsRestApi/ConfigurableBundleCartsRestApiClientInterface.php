@@ -40,6 +40,7 @@ interface ConfigurableBundleCartsRestApiClientInterface
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
      * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
      * - If `quote.uuid` is not provided, retrieves all customer's quotes and picks first one.
+     * - If customer's quote collection is empty - new quote will be created.
      * - Adds configured bundle to the cart.
      *
      * @api
@@ -56,8 +57,8 @@ interface ConfigurableBundleCartsRestApiClientInterface
      * Specification:
      * - Makes Zed request.
      * - Expects `quote.customer` and `quote.uuid` to be provided.
-     * - Requires `configuredBundle.groupKey` property to find all items related to configured bundle.
-     * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
+     * - Requires `groupKey` property to find all items related to configured bundle.
+     * - Requires `quantity` property to control amount of configured bundles put to cart.
      * - Updates configured bundle quantity.
      *
      * @api
@@ -73,7 +74,8 @@ interface ConfigurableBundleCartsRestApiClientInterface
     /**
      * Specification:
      * - Makes Zed request.
-     * - Requires `configuredBundle.groupKey` property to find all items related to configured bundle.
+     * - Expects `quote.customer` and `quote.uuid` to be provided.
+     * - Requires `groupKey` property to find all items related to configured bundle.
      * - Removes configured bundle from cart.
      *
      * @api

@@ -218,7 +218,7 @@ class RemoveConfiguredBundleTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION,
             $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
         );
@@ -247,7 +247,7 @@ class RemoveConfiguredBundleTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_IDENTIFIER_FAILED_REMOVING_CONFIGURED_BUNDLE,
             $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
         );

@@ -9,7 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -173,37 +172,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
             return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
         }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function setCustomerQuoteUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setQuoteTransfer($quoteTransfer)
-            ->setIsSuccessful(true);
-
-        if ($quoteTransfer->getUuid()) {
-            return $quoteResponseTransfer;
-        }
-
-        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-
-        $customerQuoteTransfers = $this->cartsRestApiFacade
-            ->getQuoteCollection($quoteCriteriaFilterTransfer)
-            ->getQuotes();
-
-        if (!$customerQuoteTransfers->count()) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
-        }
-
-        $quoteResponseTransfer->getQuoteTransfer()->setUuid($customerQuoteTransfers->offsetGet(0)->getUuid());
 
         return $quoteResponseTransfer;
     }

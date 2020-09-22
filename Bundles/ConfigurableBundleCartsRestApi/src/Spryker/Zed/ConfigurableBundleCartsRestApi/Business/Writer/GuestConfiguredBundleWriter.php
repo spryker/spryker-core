@@ -8,6 +8,7 @@
 namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
+use Generated\Shared\Transfer\CurrencyTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
@@ -18,6 +19,7 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Checker\QuotePermissionC
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeInterface;
 
 class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterface
 {
@@ -42,21 +44,29 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
     protected $quotePermissionChecker;
 
     /**
+     * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeInterface
+     */
+    protected $storeFacade;
+
+    /**
      * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface $persistentCartFacade
      * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade
      * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapperInterface $configuredBundleMapper
      * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Checker\QuotePermissionCheckerInterface $quotePermissionChecker
+     * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeInterface $storeFacade
      */
     public function __construct(
         ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface $persistentCartFacade,
         ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface $cartsRestApiFacade,
         ConfiguredBundleMapperInterface $configuredBundleMapper,
-        QuotePermissionCheckerInterface $quotePermissionChecker
+        QuotePermissionCheckerInterface $quotePermissionChecker,
+        ConfigurableBundleCartsRestApiToStoreFacadeInterface $storeFacade
     ) {
         $this->persistentCartFacade = $persistentCartFacade;
         $this->cartsRestApiFacade = $cartsRestApiFacade;
         $this->configuredBundleMapper = $configuredBundleMapper;
         $this->quotePermissionChecker = $quotePermissionChecker;
+        $this->storeFacade = $storeFacade;
     }
 
     /**
@@ -74,10 +84,8 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             return $quoteResponseTransfer;
         }
 
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($quoteResponseTransfer->getQuoteTransfer());
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
+        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
+            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
         }
 
         $persistentCartChangeTransfer = $this->configuredBundleMapper->mapCreateConfiguredBundleRequestToPersistentCartChange(
@@ -99,26 +107,6 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
      *
      * @return \Generated\Shared\Transfer\QuoteResponseTransfer
      */
-    protected function checkQuoteFromRequest(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        if (!$this->quotePermissionChecker->checkQuoteWritePermission($quoteResponseTransfer->getQuoteTransfer())) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION);
-        }
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
     protected function setCustomerQuoteUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
     {
         $quoteResponseTransfer = (new QuoteResponseTransfer())
@@ -126,7 +114,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             ->setIsSuccessful(true);
 
         if ($quoteTransfer->getUuid()) {
-            return $quoteResponseTransfer;
+            return $this->cartsRestApiFacade->findQuoteByUuid($quoteTransfer);
         }
 
         $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
@@ -137,10 +125,42 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             ->getQuotes();
 
         if (!$customerQuoteTransfers->count()) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
+            return $this->createGuestQuote($quoteResponseTransfer);
         }
 
-        $quoteResponseTransfer->getQuoteTransfer()->setUuid($customerQuoteTransfers->offsetGet(0)->getUuid());
+        /** @var \Generated\Shared\Transfer\QuoteTransfer $customerQuoteTransfer */
+        $customerQuoteTransfer = $customerQuoteTransfers->offsetGet(0);
+
+        $quoteResponseTransfer->getQuoteTransfer()
+            ->setUuid($customerQuoteTransfer->getUuid())
+            ->setIdQuote($customerQuoteTransfer->getIdQuote());
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    protected function createGuestQuote(QuoteResponseTransfer $quoteResponseTransfer): QuoteResponseTransfer
+    {
+        $currentStore = $this->storeFacade->getCurrentStore();
+
+        $quoteTransfer = $quoteResponseTransfer->getQuoteTransfer()
+            ->setStore($currentStore)
+            ->setCurrency((new CurrencyTransfer())->setCode($currentStore->getDefaultCurrencyIsoCode()));
+
+        $guestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
+
+        if (!$guestQuoteResponseTransfer->getIsSuccessful()) {
+            return $quoteResponseTransfer
+                ->setErrors($guestQuoteResponseTransfer->getErrors())
+                ->setIsSuccessful(false);
+        }
+
+        $quoteResponseTransfer->getQuoteTransfer()
+            ->setUuid($guestQuoteResponseTransfer->getQuoteTransfer()->getUuid());
 
         return $quoteResponseTransfer;
     }

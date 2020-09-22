@@ -34,6 +34,7 @@
         <property name="customerReference" type="string"/>
         <property name="uuid" type="string"/>
         <property name="idQuote" type="int"/>
+        <property name="store" type="Store"/>
     </transfer>
 
     <transfer name="Customer">
@@ -96,6 +97,7 @@
     <transfer name="Item">
         <property name="configuredBundle" type="ConfiguredBundle"/>
         <property name="configuredBundleItem" type="ConfiguredBundleItem"/>
+        <property name="quantity" type="int"/>
     </transfer>
 
     <transfer name="QuoteError">
@@ -121,6 +123,27 @@
         <property name="items" type="Item[]" singular="item"/>
         <property name="quote" type="Quote"/>
         <property name="customer" type="Customer"/>
+        <property name="idQuote" type="int"/>
+    </transfer>
+
+    <transfer name="CompanyUser">
+        <property name="idCompanyUser" type="int"/>
+    </transfer>
+
+    <transfer name="QuoteCriteriaFilter">
+        <property name="customerReference" type="string"/>
+    </transfer>
+
+    <transfer name="QuoteCollection">
+        <property name="quotes" type="Quote[]" singular="quote"/>
+    </transfer>
+
+    <transfer name="Currency">
+        <property name="code" type="string"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="defaultCurrencyIsoCode" type="string"/>
     </transfer>
 
 </transfers>

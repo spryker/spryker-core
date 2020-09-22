@@ -33,7 +33,6 @@ class GuestConfiguredBundlesResourceController extends AbstractController
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
      *             "422": "Configurable bundle template not found.",
-     *             "404": "Cart with given uuid not found.",
      *             "403": "Unauthorized cart action.",
      *             "422": "Errors appeared during configured bundle creation."
      *         }
