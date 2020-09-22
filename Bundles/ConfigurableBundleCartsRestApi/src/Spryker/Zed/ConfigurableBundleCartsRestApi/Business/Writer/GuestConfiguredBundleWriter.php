@@ -151,18 +151,7 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
             ->setStore($currentStore)
             ->setCurrency((new CurrencyTransfer())->setCode($currentStore->getDefaultCurrencyIsoCode()));
 
-        $guestQuoteResponseTransfer = $this->cartsRestApiFacade->createQuote($quoteTransfer);
-
-        if (!$guestQuoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer
-                ->setErrors($guestQuoteResponseTransfer->getErrors())
-                ->setIsSuccessful(false);
-        }
-
-        $quoteResponseTransfer->getQuoteTransfer()
-            ->setUuid($guestQuoteResponseTransfer->getQuoteTransfer()->getUuid());
-
-        return $quoteResponseTransfer;
+        return $this->cartsRestApiFacade->createQuote($quoteTransfer);
     }
 
     /**
