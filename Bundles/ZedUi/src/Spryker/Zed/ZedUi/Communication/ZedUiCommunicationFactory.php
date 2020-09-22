@@ -7,22 +7,38 @@
 
 namespace Spryker\Zed\ZedUi\Communication;
 
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\ZedUi\Communication\Twig\NavigationComponentConfigFunction;
+use Spryker\Zed\ZedUi\Communication\Twig\NavigationComponentConfigFunctionProvider;
 use Spryker\Zed\ZedUi\Dependency\Facade\ZedUiToTranslatorFacadeInterface;
 use Spryker\Zed\ZedUi\Dependency\Service\ZedUiToUtilEncodingServiceInterface;
 use Spryker\Zed\ZedUi\ZedUiDependencyProvider;
+use Twig\TwigFunction;
 
 class ZedUiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\ZedUi\Communication\Twig\NavigationComponentConfigFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createNavigationComponentConfigFunction(): NavigationComponentConfigFunction
+    public function createNavigationComponentConfigFunctionProvider(): TwigFunctionProvider
     {
-        return new NavigationComponentConfigFunction(
+        return new NavigationComponentConfigFunctionProvider(
             $this->getUtilEncoding(),
             $this->getTranslatorFacade()
+        );
+    }
+
+    /**
+     * @return \Twig\TwigFunction
+     */
+    public function createNavigationComponentConfigFunction(): TwigFunction
+    {
+        $functionProvider = $this->createNavigationComponentConfigFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
         );
     }
 

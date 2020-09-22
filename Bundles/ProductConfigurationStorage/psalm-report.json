@@ -1,0 +1,42 @@
+{
+    "error": [],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductConfigurationTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Communication/Plugin/Publisher/ProductConfigurationPublisherTriggerPlugin.php",
+            "snippet": "            ->getProductConfigurations()->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 26,
+            "line_to": 26,
+            "type": "PossiblyNullArgument",
+            "message": "Argument 1 of Orm\\Zed\\ProductConfigurationStorage\\Persistence\\SpyProductConfigurationStorage::setFkProduct cannot be null, possibly null value provided",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/Persistence/Propel/Mapper/ProductConfigurationStorageMapper.php",
+            "snippet": "        $productConfigurationStorageEntity->setFkProduct($productConfigurationStorageTransfer->getFkProduct());",
+            "selected_text": "$productConfigurationStorageTransfer->getFkProduct()",
+            "error_level": 3,
+            "shortcode": 78
+        },
+        {
+            "severity": "info",
+            "line_from": 47,
+            "line_to": 47,
+            "type": "PossiblyUndefinedMethod",
+            "message": "Method Generated\\Zed\\Ide\\AutoCompletion::productConfiguration does not exist",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductConfigurationStorage/src/Spryker/Zed/ProductConfigurationStorage/ProductConfigurationStorageDependencyProvider.php",
+            "snippet": "                $container->getLocator()->productConfiguration()->facade()",
+            "selected_text": "productConfiguration",
+            "error_level": 3,
+            "shortcode": 108
+        }
+    ],
+    "deprecation": []
+}

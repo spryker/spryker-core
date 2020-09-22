@@ -25,6 +25,11 @@ class ConfigHelper extends Module
     protected const SHARED_CONFIG_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sConfig';
     protected const MODULE_NAME_POSITION = 2;
 
+    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
+        'SprykerShopTest',
+        'SprykerSdkTest',
+    ];
+
     /**
      * @var array
      */
@@ -242,7 +247,7 @@ class ConfigHelper extends Module
 
         $classNameCandidate = sprintf(static::CONFIG_CLASS_NAME_PATTERN, 'Spryker', $namespaceParts[1], $moduleName);
 
-        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
             return $classNameCandidate;
         }
 
@@ -312,7 +317,7 @@ class ConfigHelper extends Module
 
         $classNameCandidate = sprintf(static::SHARED_CONFIG_CLASS_NAME_PATTERN, 'Spryker', $moduleName);
 
-        if ($namespaceParts[0] === 'SprykerShopTest' && class_exists($classNameCandidate)) {
+        if (in_array($namespaceParts[0], static::NON_STANDARD_NAMESPACE_PREFIXES, true) && class_exists($classNameCandidate)) {
             return $classNameCandidate;
         }
 
