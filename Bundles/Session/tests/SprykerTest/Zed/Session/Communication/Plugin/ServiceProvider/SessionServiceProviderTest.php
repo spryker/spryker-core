@@ -25,9 +25,12 @@ use Spryker\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvi
 use Spryker\Zed\Session\Communication\SessionCommunicationFactory;
 use Spryker\Zed\Session\SessionConfig as ZedSessionConfig;
 use Spryker\Zed\Session\SessionDependencyProvider;
+use SprykerTest\Shared\Session\Stub\SessionHandlerStub;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -187,9 +190,7 @@ class SessionServiceProviderTest extends Unit
     {
         $sessionHandlerProviderPluginMock = $this->createMock(SessionHandlerProviderPluginInterface::class);
         $sessionHandlerProviderPluginMock->method('getSessionHandlerName')->willReturn(static::DUMMY_SESSION_HANDLER_NAME);
-        $sessionHandlerProviderPluginMock->method('getSessionHandler')->willReturn(
-            $this->createMock(SessionHandlerInterface::class)
-        );
+        $sessionHandlerProviderPluginMock->method('getSessionHandler')->willReturn(new SessionHandlerStub());
 
         $this->tester->setDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER, function (Container $container) use ($sessionHandlerProviderPluginMock) {
             return [

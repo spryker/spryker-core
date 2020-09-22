@@ -15,12 +15,11 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 {
     /**
      * Specification:
-     * - Adds configured bundle to the cart.
-     * - Expects `quote.customer` to be provided.
+     * - Expects `quote.customer`, `quote.uuid` to be provided.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
      * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
      * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
-     * - Returns `QuoteResponseTransfer`.
+     * - Adds configured bundle to the cart.
      *
      * @api
      *
@@ -34,11 +33,30 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 
     /**
      * Specification:
-     * - Updates configured bundle quantity.
-     * - Expects `quote.customer` and `quote.uuid` to be provided.
-     * - Requires `configuredBundle.groupKey` property to find all items related to configured bundle.
+     * - Expects `quote.customer` to be provided.
      * - Requires `configuredBundle.quantity` property to control amount of configured bundles put to cart.
-     * - Returns `QuoteResponseTransfer`.
+     * - Requires `configuredBundle.template.uuid` property to populate configurable bundle template related data.
+     * - Requires `items` property with `sku`, `quantity` and `configuredBundleItem.slot.uuid` properties to define how many items were added in total to a specific slot.
+     * - If `quote.uuid` is not provided, retrieves all customer's quotes and picks first one.
+     * - If customer's quote collection is empty - new quote will be created.
+     * - Adds configured bundle to the cart.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundleToGuestCart(
+        CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+    ): QuoteResponseTransfer;
+
+    /**
+     * Specification:
+     * - Expects `quote.customer` and `quote.uuid` to be provided.
+     * - Requires `groupKey` property to find all items related to configured bundle.
+     * - Requires `quantity` property to control amount of configured bundles put to cart.
+     * - Updates configured bundle quantity.
      *
      * @api
      *
@@ -52,9 +70,9 @@ interface ConfigurableBundleCartsRestApiFacadeInterface
 
     /**
      * Specification:
+     * - Expects `quote.customer` and `quote.uuid` to be provided.
+     * - Requires `groupKey` property to find all items related to configured bundle.
      * - Removes configured bundle from cart.
-     * - Requires `configuredBundle.groupKey` property to find all items related to configured bundle.
-     * - Returns `QuoteResponseTransfer`.
      *
      * @api
      *

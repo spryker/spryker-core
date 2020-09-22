@@ -9,7 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer;
 
 use Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
-use Generated\Shared\Transfer\QuoteCriteriaFilterTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -69,13 +68,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
     ): QuoteResponseTransfer {
         $this->assertRequiredCreateRequestProperties($createConfiguredBundleRequestTransfer);
-        $quoteResponseTransfer = $this->setCustomerQuoteUuid($createConfiguredBundleRequestTransfer->getQuote());
-
-        if (!$quoteResponseTransfer->getIsSuccessful()) {
-            return $quoteResponseTransfer;
-        }
-
-        $quoteResponseTransfer = $this->checkQuoteFromRequest($quoteResponseTransfer->getQuoteTransfer());
+        $quoteResponseTransfer = $this->checkQuoteFromRequest($createConfiguredBundleRequestTransfer->getQuote());
 
         if (!$quoteResponseTransfer->getIsSuccessful()) {
             return $quoteResponseTransfer;
@@ -184,37 +177,6 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
     }
 
     /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
-     */
-    protected function setCustomerQuoteUuid(QuoteTransfer $quoteTransfer): QuoteResponseTransfer
-    {
-        $quoteResponseTransfer = (new QuoteResponseTransfer())
-            ->setQuoteTransfer($quoteTransfer)
-            ->setIsSuccessful(true);
-
-        if ($quoteTransfer->getUuid()) {
-            return $quoteResponseTransfer;
-        }
-
-        $quoteCriteriaFilterTransfer = (new QuoteCriteriaFilterTransfer())
-            ->setCustomerReference($quoteTransfer->getCustomer()->getCustomerReference());
-
-        $customerQuoteTransfers = $this->cartsRestApiFacade
-            ->getQuoteCollection($quoteCriteriaFilterTransfer)
-            ->getQuotes();
-
-        if (!$customerQuoteTransfers->count()) {
-            return $this->addQuoteErrorToResponse($quoteResponseTransfer, ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND);
-        }
-
-        $quoteResponseTransfer->getQuoteTransfer()->setUuid($customerQuoteTransfers->offsetGet(0)->getUuid());
-
-        return $quoteResponseTransfer;
-    }
-
-    /**
      * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
      *
      * @return void
@@ -224,6 +186,7 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
         $createConfiguredBundleRequestTransfer
             ->requireQuote()
             ->getQuote()
+                ->requireUuid()
                 ->requireCustomer()
                 ->requireCustomerReference()
                 ->getCustomer()

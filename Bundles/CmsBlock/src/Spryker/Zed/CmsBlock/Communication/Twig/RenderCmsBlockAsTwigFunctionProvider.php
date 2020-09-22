@@ -8,12 +8,12 @@
 namespace Spryker\Zed\CmsBlock\Communication\Twig;
 
 use Generated\Shared\Transfer\CmsBlockGlossaryTransfer;
-use Spryker\Shared\Twig\TwigFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\CmsBlock\Communication\Exception\MissingCmsBlockException;
 use Spryker\Zed\CmsBlock\Persistence\CmsBlockRepositoryInterface;
 use Twig\Environment;
 
-class RenderCmsBlockAsTwigFunction extends TwigFunction
+class RenderCmsBlockAsTwigFunctionProvider extends TwigFunctionProvider
 {
     protected const FUNCTION_NAME = 'renderCmsBlockAsTwig';
 
@@ -28,8 +28,6 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
     public function __construct(CmsBlockRepositoryInterface $cmsBlockRepository)
     {
         $this->cmsBlockRepository = $cmsBlockRepository;
-
-        parent::__construct();
     }
 
     /**
@@ -109,7 +107,7 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
     /**
      * @return string
      */
-    protected function getFunctionName()
+    public function getFunctionName()
     {
         return static::FUNCTION_NAME;
     }
@@ -117,7 +115,7 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
     /**
      * @return array|callable
      */
-    protected function getFunction()
+    public function getFunction()
     {
         return [$this, 'getCmsBlockTwig'];
     }
@@ -125,7 +123,7 @@ class RenderCmsBlockAsTwigFunction extends TwigFunction
     /**
      * @return mixed[]
      */
-    protected function getOptions()
+    public function getOptions()
     {
         $options = parent::getOptions();
         $options['needs_environment'] = true;

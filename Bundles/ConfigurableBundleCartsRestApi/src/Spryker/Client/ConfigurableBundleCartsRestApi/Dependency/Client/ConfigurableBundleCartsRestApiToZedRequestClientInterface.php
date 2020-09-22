@@ -18,5 +18,5 @@ interface ConfigurableBundleCartsRestApiToZedRequestClientInterface
      *
      * @return \Spryker\Shared\Kernel\Transfer\TransferInterface
      */
-    public function call(string $url, TransferInterface $object, $requestOptions = null);
+    public function call($url, TransferInterface $object, $requestOptions = null);
 }

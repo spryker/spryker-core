@@ -14,6 +14,8 @@ use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\DoubleSubmitPro
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest

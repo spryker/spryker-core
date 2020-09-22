@@ -33,11 +33,6 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
     public const RESPONSE_CODE_CART_ID_MISSING = '104';
 
     /**
-     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_CART_NOT_FOUND
-     */
-    public const RESPONSE_CODE_CART_NOT_FOUND = '101';
-
-    /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION
      */
     public const RESPONSE_CODE_UNAUTHORIZED_CART_ACTION = '115';
@@ -54,11 +49,6 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_ID_MISSING
      */
     public const RESPONSE_DETAILS_CART_ID_MISSING = 'Cart uuid is missing.';
-
-    /**
-     * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_CART_WITH_ID_NOT_FOUND
-     */
-    public const RESPONSE_DETAILS_CART_WITH_ID_NOT_FOUND = 'Cart with given uuid not found.';
 
     /**
      * @uses \Spryker\Glue\CartsRestApi\CartsRestApiConfig::EXCEPTION_MESSAGE_UNAUTHORIZED_CART_ACTION
@@ -84,11 +74,6 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_ID_MISSING,
                 RestErrorMessageTransfer::STATUS => Response::HTTP_BAD_REQUEST,
                 RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CART_ID_MISSING,
-            ],
-            ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CART_NOT_FOUND => [
-                RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_CART_NOT_FOUND,
-                RestErrorMessageTransfer::STATUS => Response::HTTP_NOT_FOUND,
-                RestErrorMessageTransfer::DETAIL => static::RESPONSE_DETAILS_CART_WITH_ID_NOT_FOUND,
             ],
             ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION => [
                 RestErrorMessageTransfer::CODE => static::RESPONSE_CODE_UNAUTHORIZED_CART_ACTION,

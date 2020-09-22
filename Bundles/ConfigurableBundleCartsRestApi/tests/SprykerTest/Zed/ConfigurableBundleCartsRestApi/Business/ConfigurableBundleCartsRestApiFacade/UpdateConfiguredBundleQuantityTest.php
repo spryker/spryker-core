@@ -236,7 +236,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_IDENTIFIER_UNAUTHORIZED_CART_ACTION,
             $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
         );
@@ -265,7 +265,7 @@ class UpdateConfiguredBundleQuantityTest extends Unit
 
         // Assert
         $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
-        $this->assertEquals(
+        $this->assertSame(
             static::ERROR_IDENTIFIER_FAILED_UPDATING_CONFIGURED_BUNDLE,
             $quoteResponseTransfer->getErrors()[0]->getErrorIdentifier()
         );

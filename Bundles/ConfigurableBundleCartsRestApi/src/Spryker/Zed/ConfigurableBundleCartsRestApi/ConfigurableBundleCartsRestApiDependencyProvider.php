@@ -9,6 +9,7 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi;
 
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeBridge;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -19,6 +20,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
 {
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
+    public const FACADE_STORE = 'FACADE_STORE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -31,6 +33,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
 
         $container = $this->addPersistentCartFacade($container);
         $container = $this->addCartsRestApiFacade($container);
+        $container = $this->addStoreFacade($container);
 
         return $container;
     }
@@ -58,6 +61,20 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_CARTS_REST_API, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToCartsRestApiFacadeBridge($container->getLocator()->cartsRestApi()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addStoreFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_STORE, function (Container $container) {
+            return new ConfigurableBundleCartsRestApiToStoreFacadeBridge($container->getLocator()->store()->facade());
         });
 
         return $container;

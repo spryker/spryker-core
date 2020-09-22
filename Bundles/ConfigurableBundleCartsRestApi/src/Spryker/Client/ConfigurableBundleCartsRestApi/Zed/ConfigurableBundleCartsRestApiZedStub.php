@@ -46,6 +46,24 @@ class ConfigurableBundleCartsRestApiZedStub implements ConfigurableBundleCartsRe
     }
 
     /**
+     * @uses \Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller\GatewayController::addConfiguredBundleToGuestCartAction()
+     *
+     * @param \Generated\Shared\Transfer\CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteResponseTransfer
+     */
+    public function addConfiguredBundleToGuestCart(CreateConfiguredBundleRequestTransfer $createConfiguredBundleRequestTransfer): QuoteResponseTransfer
+    {
+        /** @var \Generated\Shared\Transfer\QuoteResponseTransfer $quoteResponseTransfer */
+        $quoteResponseTransfer = $this->zedRequestClient->call(
+            '/configurable-bundle-carts-rest-api/gateway/add-configured-bundle-to-guest-cart',
+            $createConfiguredBundleRequestTransfer
+        );
+
+        return $quoteResponseTransfer;
+    }
+
+    /**
      * @uses \Spryker\Zed\ConfigurableBundleCartsRestApi\Communication\Controller\GatewayController::updateConfiguredBundleQuantityAction()
      *
      * @param \Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer $updateConfiguredBundleRequestTransfer
