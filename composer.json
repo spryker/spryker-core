@@ -208,6 +208,7 @@
     "spryker/config": "*",
     "spryker/configurable-bundle": "*",
     "spryker/configurable-bundle-cart": "*",
+    "spryker/configurable-bundle-carts-rest-api": "*",
     "spryker/configurable-bundle-data-import": "*",
     "spryker/configurable-bundle-gui": "*",
     "spryker/configurable-bundle-gui-extension": "*",
