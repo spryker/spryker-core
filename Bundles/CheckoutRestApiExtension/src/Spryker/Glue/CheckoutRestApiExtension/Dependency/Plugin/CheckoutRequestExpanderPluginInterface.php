@@ -10,6 +10,11 @@ namespace Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin;
 use Generated\Shared\Transfer\RestCheckoutRequestAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 
+/**
+ * Plugin interface is used to expand the `RestCheckoutRequestAttributesTransfer` with additional information.
+ *
+ * Executes before sending the checkout-data or checkout Zed requests.
+ */
 interface CheckoutRequestExpanderPluginInterface
 {
     /**

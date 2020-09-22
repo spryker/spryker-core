@@ -22,6 +22,7 @@ class CompanyUserQuoteMapperPlugin extends AbstractPlugin implements QuoteMapper
     /**
      * {@inheritDoc}
      * - Maps the company account information from `RestCheckoutRequestAttributesTransfer` to `QuoteTransfer`.
+     * - Expects `RestCheckoutRequestAttributesTransfer.customer.idCompanyUser` to be set.
      *
      * @api
      *
