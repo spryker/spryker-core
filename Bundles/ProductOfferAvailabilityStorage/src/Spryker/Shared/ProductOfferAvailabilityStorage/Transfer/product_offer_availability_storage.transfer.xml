@@ -17,6 +17,7 @@
     </transfer>
 
     <transfer name="ProductOfferAvailabilityStorage">
+        <property name="productOfferReference" type="string"/>
         <property name="availability" type="decimal"/>
         <property name="isNeverOutOfStock" type="bool"/>
         <property name="isAvailable" type="bool"/>

@@ -7,7 +7,6 @@
 
 namespace Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller;
 
-use ArrayObject;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\ProductAbstractTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
@@ -33,11 +32,11 @@ class AbstractProductOfferController extends AbstractController
         ProductAbstractTransfer $productAbstractTransfer
     ): array {
         $productAbstractLocalizedAttributes = $this->getLocalizedAttributesByLocale(
-            $productAbstractTransfer->getLocalizedAttributes(),
+            $productAbstractTransfer->getLocalizedAttributes()->getArrayCopy(),
             $localeTransfer
         );
         $productConcreteLocalizedAttributes = $this->getLocalizedAttributesByLocale(
-            $productConcreteTransfer->getLocalizedAttributes(),
+            $productConcreteTransfer->getLocalizedAttributes()->getArrayCopy(),
             $localeTransfer
         );
         $rawProductAttributesTransfer = (new RawProductAttributesTransfer())
@@ -50,12 +49,14 @@ class AbstractProductOfferController extends AbstractController
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
+     * @phpstan-param array<\Generated\Shared\Transfer\LocalizedAttributesTransfer> $localizedAttributes
+     *
+     * @param \Generated\Shared\Transfer\LocalizedAttributesTransfer[] $localizedAttributes
      * @param \Generated\Shared\Transfer\LocaleTransfer $localeTransfer
      *
      * @return string[]
      */
-    protected function getLocalizedAttributesByLocale(ArrayObject $localizedAttributes, LocaleTransfer $localeTransfer): array
+    protected function getLocalizedAttributesByLocale(array $localizedAttributes, LocaleTransfer $localeTransfer): array
     {
         foreach ($localizedAttributes as $localizedAttributesTransfer) {
             if ($localizedAttributesTransfer->getLocale()->getIdLocale() === $localeTransfer->getIdLocale()) {

@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductOfferTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductOfferTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
@@ -30,10 +29,13 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
     public const COL_KEY_CREATED_AT = 'createdAt';
     public const COL_KEY_UPDATED_AT = 'updatedAt';
 
+    public const COLUMN_DATA_VISIBILITY_ONLINE = 'Online';
+    public const COLUMN_DATA_VISIBILITY_OFFLINE = 'Offline';
+
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\OffersController::tableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductOffersController::tableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/offers/table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/product-offers/table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToStoreFacadeInterface
@@ -95,10 +97,10 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
             ->addColumnText(static::COL_KEY_CONCRETE_SKU, 'SKU', true, true)
             ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_PRODUCT_NAME, 'Name', true, true)
-            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
+            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
             ->addColumnChip(static::COL_KEY_STOCK, 'Stock', true, true, 'green', [0 => 'red'])
             ->addColumnChip(static::COL_KEY_VISIBILITY, 'Visibility', true, true, 'grey', [
-                $this->translatorFacade->trans(ProductOfferTableDataProvider::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
+                $this->translatorFacade->trans(static::COLUMN_DATA_VISIBILITY_ONLINE) => 'green',
             ])
             ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
             ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true)
@@ -120,8 +122,8 @@ class ProductOfferGuiTableConfigurationProvider implements GuiTableConfiguration
                 '0' => 'Out of stock',
             ])
             ->addFilterSelect('isActive', 'Visibility', false, [
-                '1' => 'Online',
-                '0' => 'Offline',
+                '1' => static::COLUMN_DATA_VISIBILITY_ONLINE,
+                '0' => static::COLUMN_DATA_VISIBILITY_OFFLINE,
             ])
             ->addFilterSelect('inStores', 'Stores', true, $this->getStoreOptions())
             ->addFilterDateRange('createdAt', 'Created')

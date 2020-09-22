@@ -20,10 +20,12 @@
             {% set bundleSumSubtotalAggregation = 0 %}
             {% set bundleSumPriceToPayAggregation = 0 %}
 
-            {% for item in bundle.salesOrderConfiguredBundleItems if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
-                {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
-                {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
-                {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+            {% for item in bundle.salesOrderConfiguredBundleItems %}
+                {% if mappedItems['_' ~ item.IdSalesOrderItem] is defined %}
+                    {% set product = mappedItems['_' ~ item.IdSalesOrderItem] %}
+                    {% set bundleSumSubtotalAggregation = bundleSumSubtotalAggregation + product.sumSubtotalAggregation %}
+                    {% set bundleSumPriceToPayAggregation = bundleSumPriceToPayAggregation + product.sumPriceToPayAggregation %}
+                {% endif %}
             {% endfor %}
 
             {% embed '@Sales/Detail/boxes/discounted-price.twig' with {subtotal: bundleSumSubtotalAggregation, priceToPay: bundleSumPriceToPayAggregation} %} {% endembed %}</td>

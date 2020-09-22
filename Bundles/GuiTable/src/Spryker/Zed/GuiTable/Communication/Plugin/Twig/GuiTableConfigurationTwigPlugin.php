@@ -8,6 +8,7 @@
 namespace Spryker\Zed\GuiTable\Communication\Plugin\Twig;
 
 use Spryker\Zed\Twig\Communication\Plugin\AbstractTwigExtensionPlugin;
+use Twig\TwigFunction;
 
 /**
  * @method \Spryker\Zed\GuiTable\Communication\GuiTableCommunicationFactory getFactory()
@@ -19,12 +20,26 @@ class GuiTableConfigurationTwigPlugin extends AbstractTwigExtensionPlugin
      *
      * @api
      *
-     * @return \Spryker\Shared\Twig\TwigFunction[]
+     * @return \Twig\TwigFunction[]
      */
     public function getFunctions(): array
     {
         return [
-            $this->getFactory()->createGuiTableConfigurationFunction(),
+            $this->createFunction(),
         ];
+    }
+
+    /**
+     * @return \Twig\TwigFunction
+     */
+    protected function createFunction(): TwigFunction
+    {
+        $functionProvider = $this->getFactory()->createGuiTableConfigurationFunctionProvider();
+
+        return new TwigFunction(
+            $functionProvider->getFunctionName(),
+            $functionProvider->getFunction(),
+            $functionProvider->getOptions()
+        );
     }
 }

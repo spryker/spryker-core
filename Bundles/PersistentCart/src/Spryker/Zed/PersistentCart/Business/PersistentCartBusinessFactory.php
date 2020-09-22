@@ -28,6 +28,8 @@ use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizer;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteStorageSynchronizerInterface;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriter;
 use Spryker\Zed\PersistentCart\Business\Model\QuoteWriterInterface;
+use Spryker\Zed\PersistentCart\Business\Replacer\CartItemReplacer;
+use Spryker\Zed\PersistentCart\Business\Replacer\CartItemReplacerInterface;
 use Spryker\Zed\PersistentCart\Dependency\Facade\PersistentCartToStoreFacadeInterface;
 use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider;
 use Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteItemFinderPluginInterface;
@@ -45,6 +47,19 @@ class PersistentCartBusinessFactory extends AbstractBusinessFactory
         return new CartOperation(
             $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResponseExpander(),
+            $this->createQuoteResolver(),
+            $this->createQuoteItemOperation(),
+            $this->getQuoteFacade()
+        );
+    }
+
+    /**
+     * @return \Spryker\Zed\PersistentCart\Business\Replacer\CartItemReplacerInterface
+     */
+    public function createCartItemOperation(): CartItemReplacerInterface
+    {
+        return new CartItemReplacer(
+            $this->getQuoteItemFinderPlugin(),
             $this->createQuoteResolver(),
             $this->createQuoteItemOperation(),
             $this->getQuoteFacade()
