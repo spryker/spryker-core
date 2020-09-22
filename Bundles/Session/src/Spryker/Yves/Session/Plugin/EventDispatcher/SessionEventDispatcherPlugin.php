@@ -120,7 +120,9 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             if ($session->isStarted()) {
                 $session->save();
 
-                $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
+                if (!$this->isAlreadySetSessionCookie($session)) {
+                    $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
+                }
             }
         }, static::EVENT_PRIORITY_KERNEL_RESPONSE);
 
@@ -171,5 +173,21 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
     protected function isSessionTestEnabled(ContainerInterface $container): bool
     {
         return $container->has(static::FLAG_SESSION_TEST) && $container->get(static::FLAG_SESSION_TEST);
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Session\SessionInterface $session
+     *
+     * @return bool
+     */
+    protected function isAlreadySetSessionCookie(SessionInterface $session): bool
+    {
+        foreach (headers_list() as $headerString) {
+            if (strpos($headerString, $session->getName() . '=' . $session->getId())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
