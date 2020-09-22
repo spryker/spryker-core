@@ -174,7 +174,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
         return new QuoteItemReader(
             $this->createQuoteReader(),
             $this->createQuoteItemMapper(),
-            $this->getQuoteItemCheckerPlugins()
+            $this->getQuoteItemReadValidatorPlugins()
         );
     }
 
@@ -301,7 +301,7 @@ class CartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
      */
-    public function getQuoteItemCheckerPlugins(): array
+    public function getQuoteItemReadValidatorPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_QUOTE_ITEM_READ_VALIDATOR);
     }
