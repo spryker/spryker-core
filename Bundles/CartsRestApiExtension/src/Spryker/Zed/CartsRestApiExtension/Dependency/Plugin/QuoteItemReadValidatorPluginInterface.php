@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CartItemRequestTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 
 /**
- * Plugin interface is used to check if cart item is found in Quote.
+ * Plugin interface is used to check if cart item a valida item in the Quote.
  *
  * Runs before any cart item operation such as update or delete.
  */
@@ -19,7 +19,7 @@ interface QuoteItemReadValidatorPluginInterface
 {
     /**
      * Specification:
-     * - Used to check if the item is found in `QuoteTransfer` before performing cart item operation.
+     * - Used to check if the item is a valid item in `QuoteTransfer` before performing cart item operation.
      *
      * @api
      *

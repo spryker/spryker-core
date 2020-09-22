@@ -19,7 +19,7 @@ class ProductBundleCartsRestApiBusinessFactory extends AbstractBusinessFactory
     /**
      * @return \Spryker\Zed\ProductBundleCartsRestApi\Business\Validator\BundleItemValidatorInterface
      */
-    public function createBundleItemChecker(): BundleItemValidatorInterface
+    public function createBundleItemValidator(): BundleItemValidatorInterface
     {
         return new BundleItemValidator();
     }

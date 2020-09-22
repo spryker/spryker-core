@@ -78,8 +78,8 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
         }
 
         foreach ($resources as $resource) {
-            $productAbstractSku = $this->findProductSkuInAttributes($resource);
-            if (!isset($abstractProductsResources[$productAbstractSku])) {
+            $productAbstractSku = $this->findProductAbstractSkuInAttributes($resource);
+            if (!$productAbstractSku || !isset($abstractProductsResources[$productAbstractSku])) {
                 continue;
             }
 
@@ -131,7 +131,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
     {
         $productAbstractSkuList = [];
         foreach ($resources as $resource) {
-            $productAbstractSkuList[] = $this->findProductSkuInAttributes($resource);
+            $productAbstractSkuList[] = $this->findProductAbstractSkuInAttributes($resource);
         }
 
         return array_filter($productAbstractSkuList);
@@ -142,7 +142,7 @@ class ProductAbstractRelationshipExpander implements ProductAbstractRelationship
      *
      * @return string|null
      */
-    protected function findProductSkuInAttributes(RestResourceInterface $resource): ?string
+    protected function findProductAbstractSkuInAttributes(RestResourceInterface $resource): ?string
     {
         $attributes = $resource->getAttributes();
         if ($attributes && $attributes->offsetExists(ConcreteProductsRestAttributesTransfer::PRODUCT_ABSTRACT_SKU)) {

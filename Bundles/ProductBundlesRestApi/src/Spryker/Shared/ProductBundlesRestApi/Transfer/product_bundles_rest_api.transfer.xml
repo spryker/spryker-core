@@ -87,4 +87,8 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="ProductBundleStorageCriteria">
+        <property name="productConcreteIds" type="int[]" singular="idProductConcrete"/>
+    </transfer>
+
 </transfers>

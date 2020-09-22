@@ -621,7 +621,7 @@ class CartsRestApiFacadeTest extends Unit
                 'getQuoteCollectionExpanderPlugins',
                 'getQuoteExpanderPlugins',
                 'getCartItemMapperPlugins',
-                'getQuoteItemCheckerPlugins',
+                'getQuoteItemReadValidatorPlugins',
             ]
         );
 

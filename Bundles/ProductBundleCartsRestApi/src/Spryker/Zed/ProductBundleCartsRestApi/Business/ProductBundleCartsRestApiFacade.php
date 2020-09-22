@@ -29,7 +29,7 @@ class ProductBundleCartsRestApiFacade extends AbstractFacade implements ProductB
     public function validateBundleItem(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
     {
         return $this->getFactory()
-            ->createBundleItemChecker()
+            ->createBundleItemValidator()
             ->validateBundleItem($cartItemRequestTransfer, $quoteTransfer);
     }
 }

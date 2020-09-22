@@ -20,7 +20,7 @@ class BundleItemRestOrderDetailsAttributesMapperPlugin extends AbstractPlugin im
     /**
      * {@inheritDoc}
      * - Maps `OrderTransfer.bundleItems` to `RestOrderDetailsAttributesTransfer.bundleItems`.
-     * - Will overwrite any automatically mapped items.
+     * - Will overwrite any automatically mapped bundle items.
      * - Uses `OrdersRestApiResource::mapItemTransferToRestOrderItemsAttributesTransfer()` to do the mapping.
      *
      * @api

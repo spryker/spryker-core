@@ -124,8 +124,8 @@
     "warning": [
         {
             "severity": "info",
-            "line_from": 80,
-            "line_to": 80,
+            "line_from": 81,
+            "line_to": 81,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $productBundleStorageTransfers[int|null] using possibly null offset int|null",
             "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Client/ProductBundleStorage/Reader/ProductBundleStorageReader.php",

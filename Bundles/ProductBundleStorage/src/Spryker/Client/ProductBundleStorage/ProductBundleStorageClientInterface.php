@@ -13,8 +13,8 @@ interface ProductBundleStorageClientInterface
 {
     /**
      * Specification:
-     * - Retrieves bundled products from storage by provided bundle product concrete ids.
-     * - Returns `ProductBundleStorageTransfer` collection indexed by product concrete id.
+     * - Retrieves bundled products from storage by provided criteria.
+     * - Returns `ProductBundleStorageTransfer` collection indexed by bundle product concrete id.
      *
      * @api
      *

@@ -2,8 +2,8 @@
     "error": [
         {
             "severity": "error",
-            "line_from": 58,
-            "line_to": 58,
+            "line_from": 62,
+            "line_to": 62,
             "type": "InvalidReturnType",
             "message": "The declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Expander\\BundledProductExpander::getProductConcreteSkus is incorrect, got 'list<null|string>'",
             "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
@@ -14,8 +14,8 @@
         },
         {
             "severity": "error",
-            "line_from": 71,
-            "line_to": 71,
+            "line_from": 75,
+            "line_to": 75,
             "type": "InvalidReturnStatement",
             "message": "The inferred type 'list<null|string>' does not match the declared return type 'array<array-key, string>' for Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Expander\\BundledProductExpander::getProductConcreteSkus",
             "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
@@ -23,25 +23,13 @@
             "selected_text": "$productConcreteSkus",
             "error_level": 6,
             "shortcode": 128
-        },
-        {
-            "severity": "error",
-            "line_from": 67,
-            "line_to": 67,
-            "type": "InvalidArgument",
-            "message": "Argument 1 of Spryker\\Glue\\ProductBundlesRestApi\\Processor\\Reader\\BundledProductReader::getBundledProductRestResourcesByProductConcreteSkus expects array<array-key, string>, array{null|string} provided",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
-            "snippet": "            [$productConcreteResource->getId()],",
-            "selected_text": "[$productConcreteResource->getId()]",
-            "error_level": 6,
-            "shortcode": 4
         }
     ],
     "warning": [
         {
             "severity": "info",
-            "line_from": 49,
-            "line_to": 49,
+            "line_from": 53,
+            "line_to": 53,
             "type": "PossiblyNullArrayOffset",
             "message": "Cannot access value on variable $bundledProductRestResources using possibly null offset null|string",
             "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Expander/BundledProductExpander.php",
@@ -52,15 +40,39 @@
         },
         {
             "severity": "info",
-            "line_from": 76,
-            "line_to": 76,
-            "type": "PossiblyNullArrayOffset",
-            "message": "Cannot access value on variable $bundledProductRestResources using possibly null offset null|string",
-            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
-            "snippet": "            ->createBundledProductCollectionRestResponse($bundledProductRestResources[$productConcreteResource->getId()]);",
-            "selected_text": "$bundledProductRestResources",
+            "line_from": 41,
+            "line_to": 41,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ItemTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Mapper/OrderMapper.php",
+            "snippet": "        if (!$orderTransfer->getBundleItems()->count()) {",
+            "selected_text": "count",
             "error_level": 3,
-            "shortcode": 125
+            "shortcode": 113
+        },
+        {
+            "severity": "info",
+            "line_from": 63,
+            "line_to": 63,
+            "type": "PossiblyNullReference",
+            "message": "Cannot call method getId on possibly null value",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
+            "snippet": "        $productConcreteSku = $productConcreteResource->getId();",
+            "selected_text": "getId",
+            "error_level": 3,
+            "shortcode": 83
+        },
+        {
+            "severity": "info",
+            "line_from": 64,
+            "line_to": 64,
+            "type": "RedundantCondition",
+            "message": "Found a redundant condition when evaluating $productConcreteResource and trying to reconcile type 'Spryker\\Glue\\GlueApplication\\Rest\\JsonApi\\RestResourceInterface' to !falsy",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundlesRestApi/src/Spryker/Glue/ProductBundlesRestApi/Processor/Reader/BundledProductReader.php",
+            "snippet": "        if (!$productConcreteResource || !$productConcreteSku) {",
+            "selected_text": "!$productConcreteResource || !$productConcreteSku",
+            "error_level": 4,
+            "shortcode": 122
         }
     ],
     "deprecation": []
