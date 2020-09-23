@@ -18,7 +18,7 @@ class ModuleHelper extends Module
      *
      * @return \Codeception\RealInstanceType|object|\PHPUnit\Framework\MockObject\MockObject
      */
-    public function createHelperMock(string $className, array $methods)
+    public function createHelperStub(string $className, array $methods)
     {
         return Stub::construct($className, ['moduleContainer' => $this->moduleContainer], $methods);
     }
