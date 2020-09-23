@@ -36,6 +36,7 @@
 
     <transfer name="RestUser">
         <property name="idCompanyUser" type="int"/>
+        <property name="idCompanyBusinessUnit" type="int"/>
         <property name="idCompany" type="int"/>
         <property name="naturalIdentifier" type="string"/>
     </transfer>
@@ -102,6 +103,10 @@
         <property name="idCompany" type="int" restRequestParameter="no"/>
         <property name="idCompanyBusinessUnit" type="int" restRequestParameter="no"/>
         <property name="companyUserTransfer" type="CompanyUser" restRequestParameter="no"/>
+    </transfer>
+
+    <transfer name="RestCheckoutRequestAttributes">
+        <property name="customer" type="RestCustomer" restRequestParameter="yes"/>
     </transfer>
 
 </transfers>
