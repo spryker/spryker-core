@@ -4,7 +4,6 @@
   "license": "proprietary",
   "require": {
     "php": ">=7.2",
-    "spryker/configurable-bundle": "^0.1.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.0.0",
     "spryker/product-configuration": "^0.1.0",
@@ -28,5 +27,8 @@
   },
   "config": {
     "sort-packages": true
+  },
+  "require-dev": {
+    "spryker/code-sniffer": "*"
   }
 }

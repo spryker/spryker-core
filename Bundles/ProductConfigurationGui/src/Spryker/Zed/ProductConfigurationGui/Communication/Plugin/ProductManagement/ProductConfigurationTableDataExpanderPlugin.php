@@ -17,7 +17,6 @@ class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin impleme
 {
     /**
      * {@inheritDoc}
-     * Specification:
      * - Checks is product abstract has at least one product concrete with product configuration.
      * - Expands product items with configurable product type if has or do nothing otherwise.
      *
@@ -30,6 +29,7 @@ class ProductConfigurationTableDataExpanderPlugin extends AbstractPlugin impleme
     public function expand(array $item): array
     {
         return $this->getFactory()
-                ->createProductConfigurationTableDataExpander()->expandProductItemWithProductConfigurationType($item);
+                ->createProductConfigurationTableDataExpander()
+                ->expandProductItemWithProductConfigurationType($item);
     }
 }

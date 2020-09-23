@@ -182,7 +182,7 @@ class ProductTable extends AbstractProductTable
             static::COL_ACTIONS => implode(' ', $this->createActionColumn($productAbstractEntity)),
         ];
 
-        return $this->expandItemData($item);
+        return $this->executeItemDataExpanderPlugins($item);
     }
 
     /**
@@ -190,7 +190,7 @@ class ProductTable extends AbstractProductTable
      *
      * @return array
      */
-    protected function expandItemData(array $item): array
+    protected function executeItemDataExpanderPlugins(array $item): array
     {
         foreach ($this->productTableDataExpanderPlugins as $productTableDataExpanderPlugin) {
             $item = $productTableDataExpanderPlugin->expand($item);

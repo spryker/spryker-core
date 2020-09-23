@@ -8,8 +8,8 @@
 namespace Spryker\Zed\SalesProductConfigurationGui\Communication;
 
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
-use Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationRenderStrategyPluginResolver;
-use Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationRenderStrategyPluginResolverInterface;
+use Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationTemplateResolver;
+use Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationTemplateResolverInterface;
 use Spryker\Zed\SalesProductConfigurationGui\SalesProductConfigurationGuiDependencyProvider;
 
 /**
@@ -18,11 +18,11 @@ use Spryker\Zed\SalesProductConfigurationGui\SalesProductConfigurationGuiDepende
 class SalesProductConfigurationGuiCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationRenderStrategyPluginResolverInterface
+     * @return \Spryker\Zed\SalesProductConfigurationGui\Communication\Resolver\ProductConfigurationTemplateResolverInterface
      */
-    public function createProductConfigurationRenderStrategyPluginResolver(): ProductConfigurationRenderStrategyPluginResolverInterface
+    public function createProductConfigurationTemplateResolver(): ProductConfigurationTemplateResolverInterface
     {
-        return new ProductConfigurationRenderStrategyPluginResolver($this->getProductConfigurationRenderStrategyPlugins());
+        return new ProductConfigurationTemplateResolver($this->getProductConfigurationRenderStrategyPlugins());
     }
 
     /**

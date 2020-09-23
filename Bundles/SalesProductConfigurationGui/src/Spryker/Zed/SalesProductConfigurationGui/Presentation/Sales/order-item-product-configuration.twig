@@ -1,4 +1,4 @@
-{# @var template \Generated\Shared\Transfer\ProductLabelDictionaryItemTransfer #}
+{# @var template \Generated\Shared\Transfer\SalesProductConfigurationTemplateTransfer #}
 {# @var orderItem \Generated\Shared\Transfer\ItemTransfer #}
 
 {% define data = {
@@ -9,5 +9,5 @@
 {% if template is defined %}
     {% include template.templatePath with {'data': template.data} only %}
 {% else %}
-    {{ orderItem.productConfigurationInstance.displayData }}
+    {{ orderItem.salesOrderItemConfiguration.displayData }}
 {% endif %}

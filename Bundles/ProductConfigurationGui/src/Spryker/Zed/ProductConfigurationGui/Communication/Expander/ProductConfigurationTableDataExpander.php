@@ -43,16 +43,20 @@ class ProductConfigurationTableDataExpander implements ProductConfigurationTable
      */
     public function expandProductItemWithProductConfigurationType(array $item): array
     {
-        $productConfigurationAggregation = $this->productConfigurationGuiRepository
+        if (empty($item[static::COL_SKU])) {
+            return $item;
+        }
+
+        $productConfigurationAggregationTransfer = $this->productConfigurationGuiRepository
             ->findProductConfigurationAggregation($item[static::COL_SKU]);
 
-        if (!$productConfigurationAggregation) {
+        if (!$productConfigurationAggregationTransfer) {
             return $item;
         }
 
         if (
-            $productConfigurationAggregation->getProductConcreteCount()
-             === $productConfigurationAggregation->getProductConfigurationCount()
+            $productConfigurationAggregationTransfer->getProductConcreteCount()
+             === $productConfigurationAggregationTransfer->getProductConfigurationCount()
         ) {
             $item[static::COL_PRODUCT_TYPES] = static::CONFIGURABLE_PRODUCT_TYPE;
 
