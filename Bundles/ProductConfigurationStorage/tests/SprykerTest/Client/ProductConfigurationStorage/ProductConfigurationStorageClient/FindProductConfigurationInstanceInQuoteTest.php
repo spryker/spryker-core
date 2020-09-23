@@ -72,13 +72,9 @@ class FindProductConfigurationInstanceInQuoteTest extends Unit
         // Arrange
         $itemTransfer = (new ItemBuilder())->build();
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
-        $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
-            ->getMock();
-
         // Act
         $productConfigurationInstanceTransfer = $this->tester
-            ->getClientMock($productConfigurationStorageFactoryMock)
+            ->getClient()
             ->findProductConfigurationInstanceInQuote(
                 $itemTransfer->getGroupKey(),
                 $itemTransfer->getSku(),

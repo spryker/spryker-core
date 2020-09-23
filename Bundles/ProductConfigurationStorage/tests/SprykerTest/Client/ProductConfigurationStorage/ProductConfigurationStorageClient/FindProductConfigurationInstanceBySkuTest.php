@@ -95,13 +95,9 @@ class FindProductConfigurationInstanceBySkuTest extends Unit
         // Arrange
         $productConcreteTransfer = (new ProductConcreteBuilder())->build();
 
-        /** @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory $productConfigurationStorageFactoryMock */
-        $productConfigurationStorageFactoryMock = $this->getMockBuilder(ProductConfigurationStorageFactory::class)
-            ->getMock();
-
         // Act
         $productConfigurationInstanceTransfer = $this->tester
-            ->getClientMock($productConfigurationStorageFactoryMock)
+            ->getClient()
             ->findProductConfigurationInstanceBySku($productConcreteTransfer->getSku());
 
         // Assert
