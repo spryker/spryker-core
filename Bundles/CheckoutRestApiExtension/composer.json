@@ -10,6 +10,9 @@
     "spryker/code-sniffer": "*",
     "spryker/glue-application": "*"
   },
+  "suggest": {
+    "spryker/glue-application": "Required if you want to use \\Spryker\\Glue\\CheckoutRestApiExtension\\Dependency\\Plugin\\CheckoutRequestExpanderPluginInterface."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"
@@ -17,9 +20,6 @@
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
-  "suggest": {
-    "spryker/glue-application": "Required if you want to use \\Spryker\\Glue\\CheckoutRestApiExtension\\Dependency\\Plugin\\CheckoutRequestExpanderPluginInterface."
-  },
   "scripts": {
     "cs-check": "phpcs -p -s --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/",
     "cs-fix": "phpcbf -p --standard=vendor/spryker/code-sniffer/Spryker/ruleset.xml src/"
