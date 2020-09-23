@@ -68,6 +68,9 @@
         <property name="idSalesOrder" type="int"/>
         <property name="customer" type="Customer"/>
         <property name="itemGroups" type="ProductBundleGroup[]" singular="itemGroup"/>
+        <property name="expenses" type="Expense[]" singular="expense"/>
+        <property name="currencyIsoCode" type="string"/>
+        <property name="salesOrderConfiguredBundles" type="SalesOrderConfiguredBundle[]" singular="salesOrderConfiguredBundle" deprecated="Use item level SalesOrderConfiguredBundle (item.salesOrderConfiguredBundle) instead."/>
     </transfer>
 
     <transfer name="Address">
@@ -146,5 +149,14 @@
     </transfer>
 
     <transfer name="MoneyValue">
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string"/>
+        <property name="shipment" type="Shipment"/>
+        <property name="sumPrice" type="int"/>
+    </transfer>
+
+    <transfer name="SalesOrderConfiguredBundle">
     </transfer>
 </transfers>

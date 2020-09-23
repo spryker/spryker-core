@@ -48,6 +48,26 @@ abstract class AbstractApplicationHelper extends Framework
     protected $httpKernelBrowser;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request|null
+     */
+    protected $request;
+
+    /**
+     * @return void
+     */
+    public function _initialize(): void
+    {
+        $requestFactory = function (array $query = [], array $request = [], array $attributes = [], array $cookies = [], array $files = [], array $server = [], $content = null) {
+            $request = new Request($query, $request, $attributes, $cookies, $files, $server, $content);
+            $request->server->set('SERVER_NAME', 'localhost');
+
+            return $request;
+        };
+
+        Request::setFactory($requestFactory);
+    }
+
+    /**
      * @param \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface $applicationPlugin
      *
      * @return $this
@@ -91,6 +111,18 @@ abstract class AbstractApplicationHelper extends Framework
         $this->getApplication()->boot();
 
         return $this->getContainer()->get(static::SERVICE_KERNEL);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\Request
+     */
+    public function getRequest(): Request
+    {
+        if (!$this->request) {
+            $this->request = Request::createFromGlobals();
+        }
+
+        return $this->request;
     }
 
     /**
