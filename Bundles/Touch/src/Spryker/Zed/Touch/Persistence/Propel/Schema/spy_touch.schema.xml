@@ -34,7 +34,7 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
-        <column name="key" type="VARCHAR" size="2048" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_touch_storage-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
@@ -62,7 +62,7 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_store" type="INTEGER" required="false"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
-        <column name="key" type="VARCHAR" size="2048" required="true"/>
+        <column name="key" type="VARCHAR" size="255" required="true"/>
         <unique name="spy_touch_search-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
