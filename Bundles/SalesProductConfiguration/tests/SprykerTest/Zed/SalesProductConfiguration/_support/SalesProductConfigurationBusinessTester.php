@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Zed\ProductConfiguration;
+namespace SprykerTest\Zed\SalesProductConfiguration;
 
 use Codeception\Actor;
 
@@ -26,9 +26,9 @@ use Codeception\Actor;
  *
  * @SuppressWarnings(PHPMD)
  */
-class ProductConfigurationBusinessTester extends Actor
+class SalesProductConfigurationBusinessTester extends Actor
 {
-    use _generated\ProductConfigurationBusinessTesterActions;
+    use _generated\SalesProductConfigurationBusinessTesterActions;
 
    /**
     * Define custom actions here

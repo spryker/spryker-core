@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Cart\CartDependencyProvider;
@@ -178,6 +179,28 @@ class PersistentCartFacadeTest extends Unit
         $this->assertSame(5, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity());
         $this->assertSame(5, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity());
     }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItem(): void
+    {
+        // Arrange
+        $originalQuoteTransfer = $this->createCustomerQuote();
+
+        // Act
+        $persistentItemReplaceTransfer = (new PersistentItemReplaceTransfer())
+            ->setCustomer($originalQuoteTransfer->getCustomer())
+            ->setIdQuote($originalQuoteTransfer->getIdQuote())
+            ->setNewItem((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_3))
+            ->setItemToBeReplaced((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_1));
+
+        $quoteResponseTransfer = $this->tester->getFacade()->replaceItem($persistentItemReplaceTransfer);
+
+        // Assert
+        $this->assertCount(2, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+   }
 
     /**
      * @return void

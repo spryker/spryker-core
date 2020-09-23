@@ -9,6 +9,7 @@ namespace SprykerTest\Zed\Cart\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -326,6 +327,49 @@ class CartFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+
+    /**
+     * @return void
+     */
+    public function testReplaceItem()
+    {
+        // Arrange
+        $itemForRemove = new ItemTransfer();
+        $itemForRemove->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $itemForRemove->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $itemForRemove->setQuantity(1);
+        $itemForRemove->setUnitGrossPrice(1);
+
+        $itemForAdd = new ItemTransfer();
+        $itemForAdd->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $itemForAdd->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $itemForAdd->setQuantity(1);
+        $itemForAdd->setUnitGrossPrice(1);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemForRemove);
+
+        $cartChangeForRemoval = new CartChangeTransfer();
+        $cartChangeForRemoval->setQuote($quoteTransfer);
+        $cartChangeForRemoval->addItem($itemForRemove);
+
+        $cartChangeForAdd = new CartChangeTransfer();
+        $cartChangeForAdd->setQuote($quoteTransfer);
+        $cartChangeForAdd->addItem($itemForAdd);
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForRemoval($cartChangeForRemoval);
+        $cartItemReplaceTransfer->setCartChangeForAdding($cartChangeForAdd);
+
+        // Act
+        $quoteResponseTransfer = $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+
     }
 
     /**
