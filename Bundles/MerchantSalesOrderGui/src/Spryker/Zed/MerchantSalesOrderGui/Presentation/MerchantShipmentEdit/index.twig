@@ -1,0 +1,18 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/merchant-sales-order-merchant-user-gui/detail?id-merchant-sales-order=' ~ idMerchantSalesOrder, 'Back to Order' | trans) }}
+{% endblock %}
+
+{% block section_title %}
+    {{ 'New Shipment for Order: %idMerchantSalesOrder%' | trans({'%idMerchantSalesOrder%': idMerchantSalesOrder}) }}
+{% endblock %}
+
+{% block content %}
+    {% include '@MerchantSalesOrderGui/MerchantShipmentCreate/_partials/shipment-form-block.twig' %}
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="{{ assetsPath('js/spryker-zed-merchant-sales-order-gui-main.entry.js') }}"></script>
+{% endblock %}

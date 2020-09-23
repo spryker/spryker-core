@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantSalesOrderGui\Business;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface MerchantSalesOrderGuiFacadeInterface
 {

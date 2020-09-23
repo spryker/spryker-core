@@ -9,6 +9,7 @@ namespace Spryker\Zed\MerchantSalesOrderGui;
 
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToCustomerFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToShipmentFacadeBridge;
@@ -18,17 +19,26 @@ use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToS
  */
 class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyProvider
 {
+    public const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
     public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
 
-    public function provideCommunicationLayerDependencies(Container $container)
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
         $container = $this->addMerchantSalesOrderFacade($container);
-        $container = $this->addMerchantUserFacades($container);
+        $container = $this->addMerchantUserFacade($container);
         $container = $this->addShipmentFacade($container);
+        $container = $this->addCustomerFacade($container);
+
+        return $container;
     }
 
     /**
@@ -73,6 +83,22 @@ class MerchantSalesOrderGuiDependencyProvider extends AbstractBundleDependencyPr
         $container->set(static::FACADE_SHIPMENT, function (Container $container) {
             return new MerchantSalesOrderGuiToShipmentFacadeBridge(
                 $container->getLocator()->shipment()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addCustomerFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_CUSTOMER, function (Container $container) {
+            return new MerchantSalesOrderGuiToCustomerFacadeBridge(
+                $container->getLocator()->customer()->facade()
             );
         });
 

@@ -10,8 +10,6 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Business;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\MerchantSalesOrderGui\Business\Reader\MerchantSalesOrderReader;
 use Spryker\Zed\MerchantSalesOrderGui\Business\Reader\MerchantSalesOrderReaderInterface;
-use Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade\MerchantSalesOrderGuiToMerchantSalesOrderFacadeInterface;
-use Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiDependencyProvider;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderGui\MerchantSalesOrderGuiConfig getConfig()

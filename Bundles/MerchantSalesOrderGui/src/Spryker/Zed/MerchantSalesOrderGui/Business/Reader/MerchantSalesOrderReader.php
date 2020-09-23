@@ -8,7 +8,7 @@
 namespace Spryker\Zed\MerchantSalesOrderGui\Business\Reader;
 
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Spryker\Zed\MerchantSalesOrder\Business\Reader\MerchantSalesOrderReaderInterface;
+use Generated\Shared\Transfer\ShipmentTransfer;
 
 class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
 {

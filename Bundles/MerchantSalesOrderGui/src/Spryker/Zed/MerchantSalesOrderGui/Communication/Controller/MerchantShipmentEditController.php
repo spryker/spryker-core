@@ -9,7 +9,6 @@ namespace Spryker\Zed\MerchantSalesOrderGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
-use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantSalesOrderGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
@@ -22,15 +21,17 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  * @method \Spryker\Zed\MerchantSalesOrderGui\Communication\MerchantSalesOrderGuiCommunicationFactory getFactory()
  * @method \Spryker\Zed\MerchantSalesOrderGui\Business\MerchantSalesOrderGuiFacadeInterface getFacade()
  */
-class MerchantShipmentCreateController extends AbstractController
+class MerchantShipmentEditController extends AbstractController
 {
     protected const PARAM_ID_MERCHANT_SALES_ORDER = 'id-merchant-sales-order';
+    protected const PARAM_ID_SHIPMENT = 'id-shipment';
 
     protected const REDIRECT_URL_DEFAULT = '/merchant-sales-order-merchant-user-gui/detail';
 
-    protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
-    protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
-    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Meerchant sales order #%d not found.';
+    protected const MESSAGE_SHIPMENT_UPDATE_SUCCESS = 'Shipment has been successfully updated.';
+    protected const MESSAGE_SHIPMENT_UPDATE_FAIL = 'Shipment has not been updated.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
+    protected const MESSAGE_SHIPMENT_NOT_FOUND_ERROR = 'Shipment #%d not found.';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -44,6 +45,7 @@ class MerchantShipmentCreateController extends AbstractController
     public function indexAction(Request $request)
     {
         $idMerchantSalesOrder = $request->query->getInt(static::PARAM_ID_MERCHANT_SALES_ORDER);
+        $idShipment = $request->query->getInt(static::PARAM_ID_SHIPMENT);
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
 
         $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
@@ -66,10 +68,23 @@ class MerchantShipmentCreateController extends AbstractController
             throw new AccessDeniedHttpException('Access denied');
         }
 
+        $shipmentTransfer = $this->getFactory()->getShipmentFacade()->findShipmentById($idShipment);
+
+        if (!$shipmentTransfer) {
+            $this->addErrorMessage(static::MESSAGE_SHIPMENT_NOT_FOUND_ERROR, ['%d' => $idShipment]);
+            $redirectUrl = Url::generate(static::REDIRECT_URL_DEFAULT)->build();
+
+            return $this->redirectResponse($redirectUrl);
+        }
+
+        if (!$this->getFacade()->isMerchantOrderShipment($merchantOrderTransfer, $shipmentTransfer)) {
+            throw new AccessDeniedHttpException('Access denied');
+        }
+
         $dataProvider = $this->getFactory()->createMerchantShipmentGroupFormDataProvider();
         $form = $this->getFactory()
             ->createMerchantShipmentGroupForm(
-                $dataProvider->getData($merchantOrderTransfer, $this->createDefaultShipmentTransfer()),
+                $dataProvider->getData($merchantOrderTransfer, $shipmentTransfer),
                 $dataProvider->getOptions($merchantOrderTransfer)
             )
             ->handleRequest($request);
@@ -107,14 +122,6 @@ class MerchantShipmentCreateController extends AbstractController
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
-     */
-    protected function createDefaultShipmentTransfer(): ShipmentTransfer
-    {
-        return new ShipmentTransfer();
-    }
-
-    /**
      * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $form
      *
      * @param \Symfony\Component\Form\FormInterface $form
@@ -146,11 +153,11 @@ class MerchantShipmentCreateController extends AbstractController
     protected function addStatusMessage(ShipmentGroupResponseTransfer $responseTransfer): void
     {
         if ($responseTransfer->getIsSuccessful()) {
-            $this->addSuccessMessage(static::MESSAGE_SHIPMENT_CREATE_SUCCESS);
+            $this->addSuccessMessage(static::MESSAGE_SHIPMENT_UPDATE_SUCCESS);
 
             return;
         }
 
-        $this->addErrorMessage(static::MESSAGE_SHIPMENT_CREATE_FAIL);
+        $this->addErrorMessage(static::MESSAGE_SHIPMENT_UPDATE_FAIL);
     }
 }

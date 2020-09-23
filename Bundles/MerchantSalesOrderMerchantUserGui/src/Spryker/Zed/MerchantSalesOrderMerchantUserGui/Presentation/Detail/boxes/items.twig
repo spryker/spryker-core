@@ -40,8 +40,10 @@
                     </p>
                     <p>
                         <b>{{ 'Shipping Costs' | trans }}:</b>
-                        {% for expense in merchantOrder.order.expenses if expense.type == 'SHIPMENT_EXPENSE_TYPE' and shipmentOrderItems.shipment.idSalesShipment == expense.shipment.idSalesShipment %}
-                            {{ expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode) }}
+                        {% for expense in merchantOrder.order.expenses %}
+                            {% if expense.type == 'SHIPMENT_EXPENSE_TYPE' and shipmentOrderItems.shipment.idSalesShipment == expense.shipment.idSalesShipment %}
+                                {{ expense.sumPrice | money(true, merchantOrder.order.currencyIsoCode) }}
+                            {% endif %}
                         {% endfor %}
                     </p>
                     <p>

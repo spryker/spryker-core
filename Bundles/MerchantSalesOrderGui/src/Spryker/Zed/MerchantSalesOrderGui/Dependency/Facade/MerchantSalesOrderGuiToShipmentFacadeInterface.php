@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrderGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 interface MerchantSalesOrderGuiToShipmentFacadeInterface
@@ -17,4 +20,30 @@ interface MerchantSalesOrderGuiToShipmentFacadeInterface
      * @return \Generated\Shared\Transfer\ShipmentTransfer|null
      */
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
+
+    /**
+     * @api
+     *
+     * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
+     */
+    public function getMethods();
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param bool[] $itemListUpdatedStatus
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupTransfer
+     */
+    public function createShipmentGroupTransferWithListedItems(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $itemListUpdatedStatus
+    ): ShipmentGroupTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param \Generated\Shared\Transfer\OrderTransfer $orderTransfer
+     *
+     * @return \Generated\Shared\Transfer\ShipmentGroupResponseTransfer
+     */
+    public function saveShipment(ShipmentGroupTransfer $shipmentGroupTransfer, OrderTransfer $orderTransfer): ShipmentGroupResponseTransfer;
 }
