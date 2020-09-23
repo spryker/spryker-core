@@ -23,6 +23,7 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\ConfigHelper
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Testify\Helper\BusinessHelper
     Communication:
         path: Communication
         class_name: QueueCommunicationTester
@@ -34,8 +35,4 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\LocatorHelper
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
-                - \SprykerTest\Shared\Application\Helper\ZedHelper:
-                - \SprykerTest\Shared\Testify\Helper\ZedControllerTable:
-                    depends: \SprykerTest\Shared\Testify\Helper\ZedBootstrap
-                - \SprykerTest\Shared\Testify\Helper\ZedBootstrap:
-                    depends: \SprykerTest\Shared\Testify\Helper\BundleConfig
+                - \SprykerTest\Shared\Application\Helper\ZedHelper

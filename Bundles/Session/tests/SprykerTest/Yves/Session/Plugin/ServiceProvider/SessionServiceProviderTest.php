@@ -23,11 +23,14 @@ use Spryker\Yves\Session\Plugin\ServiceProvider\SessionServiceProvider;
 use Spryker\Yves\Session\SessionConfig as SessionConfigYves;
 use Spryker\Yves\Session\SessionDependencyProvider;
 use Spryker\Yves\Session\SessionFactory;
+use SprykerTest\Shared\Session\Stub\SessionHandlerStub;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -189,9 +192,7 @@ class SessionServiceProviderTest extends Unit
     {
         $sessionHandlerProviderPluginMock = $this->createMock(SessionHandlerProviderPluginInterface::class);
         $sessionHandlerProviderPluginMock->method('getSessionHandlerName')->willReturn(static::DUMMY_SESSION_HANDLER_NAME);
-        $sessionHandlerProviderPluginMock->method('getSessionHandler')->willReturn(
-            $this->createMock(SessionHandlerInterface::class)
-        );
+        $sessionHandlerProviderPluginMock->method('getSessionHandler')->willReturn(new SessionHandlerStub());
 
         $this->tester->setDependency(SessionDependencyProvider::PLUGINS_SESSION_HANDLER, function (Container $container) use ($sessionHandlerProviderPluginMock) {
             return [

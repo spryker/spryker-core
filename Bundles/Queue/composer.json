@@ -19,6 +19,9 @@
     "spryker/propel": "*",
     "spryker/testify": "*"
   },
+  "suggest": {
+    "ext-pcntl": "If you want gracefully shutdown worker when signal is received."
+  },
   "autoload": {
     "psr-4": {
       "Spryker\\": "src/Spryker/"

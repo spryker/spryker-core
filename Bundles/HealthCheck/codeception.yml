@@ -1,4 +1,6 @@
 namespace: HealthCheck
+include:
+    - tests/SprykerTest/HealthCheck/Zed
 paths:
     tests: tests
     log: tests/_output
