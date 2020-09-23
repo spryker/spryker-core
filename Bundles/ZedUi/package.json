@@ -72,6 +72,7 @@
         "@webcomponents/webcomponentsjs": "^2.4.1",
         "classlist.js": "^1.1.20150312",
         "css-vars-ponyfill": "^2.2.1",
+        "events-polyfill": "^2.1.2",
         "rxjs": "^6.5.4",
         "tslib": "^1.10.0",
         "url-search-params-polyfill": "^8.0.0",
