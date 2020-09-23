@@ -118,14 +118,14 @@ class CommunicationHelper extends Module
      */
     protected function injectConfig($moduleFactory, string $moduleName): AbstractCommunicationFactory
     {
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $config = $this->getConfig($moduleName);
+        if (!$this->hasModule('\\' . ConfigHelper::class)) {
+            return $moduleFactory;
+        }
 
-            if ($config === null) {
-                return $moduleFactory;
-            }
+        $config = $this->getConfig($moduleName);
 
-            $moduleFactory->setConfig($this->getConfig($moduleName));
+        if ($config !== null) {
+            $moduleFactory->setConfig($config);
         }
 
         return $moduleFactory;

@@ -22,6 +22,7 @@ use SprykerTest\Shared\Testify\ClassResolver\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper;
+use Throwable;
 
 class BusinessHelper extends Module
 {
@@ -32,11 +33,6 @@ class BusinessHelper extends Module
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
     protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
     protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sSharedFactory';
-
-    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
-        'SprykerShopTest',
-        'SprykerSdkTest',
-    ];
 
     /**
      * @var array
@@ -269,8 +265,14 @@ class BusinessHelper extends Module
      */
     protected function injectConfig(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
     {
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $businessFactory->setConfig($this->getConfig($moduleName));
+        if (!$this->hasModule('\\' . ConfigHelper::class)) {
+            return $businessFactory;
+        }
+
+        $config = $this->getConfig($moduleName);
+
+        if ($config !== null) {
+            $businessFactory->setConfig($config);
         }
 
         return $businessFactory;
@@ -279,14 +281,18 @@ class BusinessHelper extends Module
     /**
      * @param string $moduleName
      *
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|null
      */
-    protected function getConfig(string $moduleName): AbstractBundleConfig
+    protected function getConfig(string $moduleName): ?AbstractBundleConfig
     {
-        /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $config */
-        $config = $this->getConfigHelper()->getModuleConfig($moduleName);
+        try {
+            /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $moduleConfig */
+            $moduleConfig = $this->getConfigHelper()->getModuleConfig($moduleName);
 
-        return $config;
+            return $moduleConfig;
+        } catch (Throwable $throwable) {
+            return null;
+        }
     }
 
     /**

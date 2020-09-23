@@ -29,12 +29,13 @@ class AbstractSchedulerConsole extends Console
      * @param \Generated\Shared\Transfer\SchedulerResponseCollectionTransfer $responseCollectionTransfer
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
-     * @return void
+     * @return int
      */
-    protected function outputCommandResponse(
+    protected function outputCommandResponseStatus(
         SchedulerResponseCollectionTransfer $responseCollectionTransfer,
         OutputInterface $output
-    ): void {
+    ): int {
+        $isSuccess = true;
         foreach ($responseCollectionTransfer->getResponses() as $responseTransfer) {
             $status = $responseTransfer->getStatus();
             $outputColor = $status ? static::OUTPUT_SUCCESS_COLOR : static::OUTPUT_ERROR_COLOR;
@@ -51,8 +52,11 @@ class AbstractSchedulerConsole extends Console
             }
             if ($status === false) {
                 $output->writeln($responseTransfer->getMessage());
+                $isSuccess = $status;
             }
         }
+
+        return $isSuccess ? static::CODE_SUCCESS : static::CODE_ERROR;
     }
 
     /**
