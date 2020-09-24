@@ -1,3 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Negated boolean expression is always false.#'
+        - '#Negated boolean expression is always false.#'

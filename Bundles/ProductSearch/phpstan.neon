@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Method .+AttributeReader::suggestUnusedKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'
-    - '#Method .+AttributeReader::suggestKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'
+        - '#Method .+AttributeReader::suggestUnusedKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'
+        - '#Method .+AttributeReader::suggestKeys\(\) should return array but returns iterable<.+SpyProductAttributeKey>&.+ObjectCollection#'
