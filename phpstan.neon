@@ -6,3 +6,5 @@ includes:
 
 parameters:
     bootstrap: '%rootDir%/../../../phpstan-bootstrap.php'
+    parallel:
+        processTimeout: 300.0
