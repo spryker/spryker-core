@@ -87,8 +87,8 @@ class QuoteItemReader implements QuoteItemReaderInterface
      */
     protected function isCartItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        foreach ($this->quoteItemReadValidatorPlugins as $quoteItemCheckerPlugin) {
-            if ($quoteItemCheckerPlugin->validate($cartItemRequestTransfer, $quoteTransfer)) {
+        foreach ($this->quoteItemReadValidatorPlugins as $quoteItemReadValidatorPlugin) {
+            if ($quoteItemReadValidatorPlugin->validate($cartItemRequestTransfer, $quoteTransfer)) {
                 return true;
             }
         }
