@@ -14,7 +14,7 @@ use Exception;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
-use SprykerTest\Shared\Testify\ClassResolver\ClassResolverTrait;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
@@ -28,10 +28,6 @@ class CommunicationHelper extends Module
     use DependencyProviderHelperTrait;
 
     protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Communication\%3$sCommunicationFactory';
-
-    protected const NON_STANDARD_NAMESPACE_PREFIXES = [
-        'SprykerSdkTest',
-    ];
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory[]
