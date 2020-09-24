@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+SpyPriceProductQuery::joinWithPriceProductDefault\(\)#'
         - '#Parameter \#1 \$idPriceProductDefault of method .+SpyPriceProductDefaultEntityTransfer::setIdPriceProductDefault\(\) expects string\|null, int\|null given#'

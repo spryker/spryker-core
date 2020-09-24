@@ -1,3 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Parameter \#1 \$carrierDiscountDecisionRule of method .+ShipmentDiscountCollector::__construct\(\) expects .+Model\\ShipmentDiscountDecisionRuleInterface, .+DecisionRule\\ShipmentDiscountDecisionRuleInterface given.#'
+        - '#Parameter \#1 \$carrierDiscountDecisionRule of method .+ShipmentDiscountCollector::__construct\(\) expects .+Model\\ShipmentDiscountDecisionRuleInterface, .+DecisionRule\\ShipmentDiscountDecisionRuleInterface given.#'
