@@ -8,7 +8,7 @@ paths:
 coverage:
     enabled: true
     remote: false
-    whitelist: { include: ['../../../../src/*', '../../../../tests/_data/GeneratedTest/*' ] }
+    whitelist: { include: ['../../../../src/*'] }
 
 suites:
     Business:
@@ -22,4 +22,3 @@ suites:
                 - \SprykerTest\Shared\Testify\Helper\DependencyHelper
                 - \SprykerTest\Shared\Testify\Helper\VirtualFilesystemHelper
                 - \SprykerTest\Zed\Testify\Helper\BusinessHelper
-                - \SprykerTest\Shared\Propel\Helper\TransactionHelper

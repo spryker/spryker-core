@@ -1,9 +1,9 @@
 {% if type == "bundle" %}
 
     <div class="well">
-        {% filter trans|raw %}
+        {% apply trans|raw %}
             <p>{{ 'Product bundle does not have variants!' | trans }}</p>
-        {% endfilter %}
+        {% endapply %}
     </div>
 
     {% do form.attribute_super.setRendered %}
@@ -11,11 +11,11 @@
 {% else %}
 
     <div class="well">
-        {% filter trans|raw %}
+        {% apply trans|raw %}
             <h3>Manage product variants</h3>
             <p>For the creation of product variants, start by selecting attributes and values that define the difference between your variations. Below only those attributes are listed that are marked as being super attributes.</p>
             <p><i>Note: The super attributes that are assigned to a product variant when its created cannot be changed afterwards anymore.</i></p>
-        {% endfilter %}
+        {% endapply %}
     </div>
 
     {% for inputGroup in form.attribute_super %}

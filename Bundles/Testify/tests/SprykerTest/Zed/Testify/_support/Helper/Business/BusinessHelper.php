@@ -18,18 +18,21 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Shared\Testify\ClassResolver\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper;
+use Throwable;
 
 class BusinessHelper extends Module
 {
     use ConfigHelperTrait;
+    use ClassResolverTrait;
     use DependencyProviderHelperTrait;
 
     protected const BUSINESS_FACTORY_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sBusinessFactory';
     protected const BUSINESS_FACADE_CLASS_NAME_PATTERN = '\%1$s\%2$s\%3$s\Business\%3$sFacade';
-    protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%2$s\%2$sSharedFactory';
+    protected const SHARED_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Shared\%3$s\%3$sSharedFactory';
 
     /**
      * @var array
@@ -78,7 +81,7 @@ class BusinessHelper extends Module
     public function mockFacadeMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getFacadeClassName($moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -151,22 +154,9 @@ class BusinessHelper extends Module
      */
     protected function createFacade(string $moduleName): AbstractFacade
     {
-        $className = $this->getFacadeClassName($moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, $moduleName);
 
         return new $className();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getFacadeClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return sprintf(static::BUSINESS_FACADE_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
     /**
@@ -181,7 +171,7 @@ class BusinessHelper extends Module
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getFactoryClassName($moduleName);
+        $className = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -211,7 +201,7 @@ class BusinessHelper extends Module
     public function mockSharedFactoryMethod(string $methodName, $return, ?string $moduleName = null)
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getSharedFactoryClassName($moduleName);
+        $className = $this->resolveClassName(static::SHARED_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -262,22 +252,9 @@ class BusinessHelper extends Module
      */
     protected function createFactory(string $moduleName): AbstractBusinessFactory
     {
-        $moduleFactoryClassName = $this->getFactoryClassName($moduleName);
+        $moduleFactoryClassName = $this->resolveClassName(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleFactoryClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getFactoryClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return sprintf(static::BUSINESS_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $namespaceParts[1], $moduleName);
     }
 
     /**
@@ -288,8 +265,14 @@ class BusinessHelper extends Module
      */
     protected function injectConfig(AbstractBusinessFactory $businessFactory, string $moduleName): AbstractBusinessFactory
     {
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $businessFactory->setConfig($this->getConfig($moduleName));
+        if (!$this->hasModule('\\' . ConfigHelper::class)) {
+            return $businessFactory;
+        }
+
+        $config = $this->getConfig($moduleName);
+
+        if ($config !== null) {
+            $businessFactory->setConfig($config);
         }
 
         return $businessFactory;
@@ -298,14 +281,18 @@ class BusinessHelper extends Module
     /**
      * @param string $moduleName
      *
-     * @return \Spryker\Zed\Kernel\AbstractBundleConfig
+     * @return \Spryker\Zed\Kernel\AbstractBundleConfig|null
      */
-    protected function getConfig(string $moduleName): AbstractBundleConfig
+    protected function getConfig(string $moduleName): ?AbstractBundleConfig
     {
-        /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $config */
-        $config = $this->getConfigHelper()->getModuleConfig($moduleName);
+        try {
+            /** @var \Spryker\Zed\Kernel\AbstractBundleConfig $moduleConfig */
+            $moduleConfig = $this->getConfigHelper()->getModuleConfig($moduleName);
 
-        return $config;
+            return $moduleConfig;
+        } catch (Throwable $throwable) {
+            return null;
+        }
     }
 
     /**
@@ -371,26 +358,10 @@ class BusinessHelper extends Module
      */
     protected function createSharedFactory(string $moduleName): ?AbstractSharedFactory
     {
-        $moduleFactoryClassName = $this->getSharedFactoryClassName($moduleName);
+        /** @var \Spryker\Shared\Kernel\AbstractSharedFactory $sharedFactory */
+        $sharedFactory = $this->resolveClass(static::SHARED_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
-        if (!class_exists($moduleFactoryClassName)) {
-            return null;
-        }
-
-        return new $moduleFactoryClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getSharedFactoryClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return sprintf(static::SHARED_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
+        return $sharedFactory;
     }
 
     /**
@@ -417,11 +388,11 @@ class BusinessHelper extends Module
     /**
      * @param string $moduleName
      *
-     * @return \Spryker\Shared\Kernel\AbstractBundleConfig|null
+     * @return \Spryker\Shared\Kernel\AbstractSharedConfig|null
      */
     protected function getSharedModuleConfig(string $moduleName): ?AbstractSharedConfig
     {
-        /** @var \Spryker\Shared\Kernel\AbstractBundleConfig $sharedModuleConfig */
+        /** @var \Spryker\Shared\Kernel\AbstractSharedConfig $sharedModuleConfig */
         $sharedModuleConfig = $this->getConfigHelper()->getSharedModuleConfig($moduleName);
 
         return $sharedModuleConfig;

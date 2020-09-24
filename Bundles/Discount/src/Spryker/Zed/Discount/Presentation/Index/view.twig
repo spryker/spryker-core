@@ -27,7 +27,7 @@
                <tr>
                    <td style="width: 220px;">{{ 'Discount Type:' | trans }}</td>
                    <td>
-                       {{ discountConfigurator.discountGeneral.discountType|replace('_', ' ')|trans  }}
+                       {{ discountConfigurator.discountGeneral.discountType|replace({'_': ' '})|trans  }}
                    </td>
                </tr>
                <tr>
