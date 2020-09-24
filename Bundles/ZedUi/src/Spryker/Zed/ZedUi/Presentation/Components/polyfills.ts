@@ -77,4 +77,5 @@ cssVars({
     watch: true,
 });
 
+import '@webcomponents/webcomponents-platform/webcomponents-platform';
 import '@webcomponents/webcomponentsjs/bundles/webcomponents-ce';
