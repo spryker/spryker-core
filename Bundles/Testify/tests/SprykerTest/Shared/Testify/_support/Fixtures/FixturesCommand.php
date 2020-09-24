@@ -22,6 +22,8 @@ class FixturesCommand extends Run implements CustomCommandInterface
 {
     use CommandConfig;
 
+    public const CODE_SUCCESS = 0;
+
     /**
      * @return string
      */
@@ -95,9 +97,9 @@ class FixturesCommand extends Run implements CustomCommandInterface
      *
      * @throws \Codeception\Exception\TestRuntimeException
      *
-     * @return void
+     * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output): void
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->options = $input->getOptions();
         $this->output = $output;
@@ -149,5 +151,7 @@ class FixturesCommand extends Run implements CustomCommandInterface
         if (!$input->getOption('no-exit') && !$this->codecept->getResult()->wasSuccessful()) {
             exit(1);
         }
+
+        return static::CODE_SUCCESS;
     }
 }
