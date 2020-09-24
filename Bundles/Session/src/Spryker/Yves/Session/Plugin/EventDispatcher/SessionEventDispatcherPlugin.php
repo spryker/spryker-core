@@ -120,7 +120,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
             if ($session->isStarted()) {
                 $session->save();
 
-                if (!$this->isSetSessionCookie($session)) {
+                if (!$this->isSessionCookieSet($session)) {
                     $event->getResponse()->headers->setCookie($this->createSessionCookie($session->getName(), $session->getId(), session_get_cookie_params()));
                 }
             }
@@ -180,7 +180,7 @@ class SessionEventDispatcherPlugin extends AbstractPlugin implements EventDispat
      *
      * @return bool
      */
-    protected function isSetSessionCookie(SessionInterface $session): bool
+    protected function isSessionCookieSet(SessionInterface $session): bool
     {
         $cookiePattern = $session->getName() . '=' . $session->getId();
 
