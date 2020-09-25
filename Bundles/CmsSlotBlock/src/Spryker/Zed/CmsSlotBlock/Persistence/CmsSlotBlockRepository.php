@@ -145,9 +145,9 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     ): array {
         $cmsBlockQuery = $this->getFactory()->getCmsBlockQuery();
 
-        $cmsBlockName = mb_strtoupper(trim($cmsSlotBlockCriteriaTransfer->getCmsBlockName()));
+        $cmsBlockName = trim($cmsSlotBlockCriteriaTransfer->getCmsBlockName());
         if ($cmsBlockName !== '') {
-            $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', "%$cmsBlockName%");
+            $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', '%' . mb_strtoupper($cmsBlockName) . '%');
         }
 
         $pagination = $this->getPaginationFromQuery($cmsBlockQuery, $paginationTransfer);
@@ -171,8 +171,8 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
         SpyCmsBlockQuery $cmsBlockQuery,
         PaginationTransfer $paginationTransfer
     ): PropelModelPager {
-        $page = $paginationTransfer->getPage();
-        $maxPerPage = $paginationTransfer->getMaxPerPage();
+        $page = $paginationTransfer->requirePage()->getPage();
+        $maxPerPage = $paginationTransfer->requireMaxPerPage()->getMaxPerPage();
 
         return $cmsBlockQuery->paginate($page, $maxPerPage);
     }

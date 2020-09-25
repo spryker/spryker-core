@@ -85,6 +85,7 @@ interface CmsSlotBlockFacadeInterface
      * - Searches CMS Blocks suggestions based on CMS Block name.
      * - Paginates search results according to pagination.
      * - Returns a collection of suggested CMS block transfers with CMS Slot relations and pagination.
+     * - PaginationTransfer.Page and PaginationTransfer.MaxPerPage must be set.
      *
      * @api
      *

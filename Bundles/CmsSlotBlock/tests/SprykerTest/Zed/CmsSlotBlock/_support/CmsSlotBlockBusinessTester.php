@@ -39,18 +39,25 @@ class CmsSlotBlockBusinessTester extends Actor
 
     /**
      * @param int $blocksNumber
+     * @param string $blockNamePattern
      *
      * @return \Generated\Shared\Transfer\CmsBlockTransfer[]
      */
-    public function createCmsBlocksInDb(int $blocksNumber = 1): array
+    public function createCmsBlocksInDb(int $blocksNumber = 1, string $blockNamePattern = ''): array
     {
         $storeTransfer = $this->haveStore();
         $cmsBlockTransfers = [];
 
+        $cmsBlockData = [
+            CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
+        ];
+
         for ($i = 0; $i < $blocksNumber; $i++) {
-            $cmsBlockTransfers[] = $this->haveCmsBlock([
-                CmsBlockTransfer::STORE_RELATION => [StoreRelationTransfer::ID_STORES => [$storeTransfer->getIdStore()]],
-            ]);
+            if ($blockNamePattern !== '') {
+                $cmsBlockData[CmsBlockTransfer::NAME] = $blockNamePattern . $i;
+            }
+
+            $cmsBlockTransfers[] = $this->haveCmsBlock($cmsBlockData);
         }
 
         return $cmsBlockTransfers;
