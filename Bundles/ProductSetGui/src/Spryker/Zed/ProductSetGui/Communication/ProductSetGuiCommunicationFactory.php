@@ -281,7 +281,7 @@ class ProductSetGuiCommunicationFactory extends AbstractCommunicationFactory
      */
     public function createDeleteProductSetForm(): FormInterface
     {
-        return $this->getFormFactory()->create(DeleteProductSetForm::class);
+        return $this->getFormFactory()->create(DeleteProductSetForm::class, null, ['fields' => []]);
     }
 
     /**
