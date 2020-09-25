@@ -1,5 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    -
-        message: '#Negated boolean expression is always false.#'
-        path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php'
+        - { message: '#Negated boolean expression is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/SearchElasticsearchGui/src/Spryker/Zed/SearchElasticsearchGui/Communication/Plugin/Query/DocumentListQuery.php' }

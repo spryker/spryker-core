@@ -1,4 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Parameter \#1 \$value of method .+ClauseTransfer::setValue\(\) expects string\|null, int given.#'
         - '#Parameter \#1 \$grossAmount of method .+MoneyValueTransfer::setGrossAmount\(\) expects int\|null, string given.#'

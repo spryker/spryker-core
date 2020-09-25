@@ -1,3 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Cannot access offset .+collector_.+ on .+SpyTouch#'
+        - '#Cannot access offset .+collector_.+ on .+SpyTouch#'
