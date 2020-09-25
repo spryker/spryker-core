@@ -42,7 +42,6 @@ var BlocksChoice = function (options) {
                     return {
                         ...data,
                         results: $.map(data.results, function (item) {
-                            console.log(_self.blocksTable.isBlockModified(item.id), item.id);
                             return {
                                 ...item,
                                 disabled: (item.disabled !== _self.blocksTable.isBlockModified(item.id))

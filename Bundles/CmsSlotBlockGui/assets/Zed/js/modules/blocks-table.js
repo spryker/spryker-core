@@ -47,6 +47,7 @@ var BlocksTable = function (options) {
         $(document).on('savedBlocksForm', function () {
             _self.setInitTableState();
             _self.tableRowSelect();
+            _self.resetModifiedBlocks();
         });
         _self.isFirstInit = false;
         _self.setInitOptionsState();
