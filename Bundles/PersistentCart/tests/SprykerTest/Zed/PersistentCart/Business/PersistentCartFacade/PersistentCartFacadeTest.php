@@ -183,7 +183,7 @@ class PersistentCartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReplaceItem(): void
+    public function testReplaceItemShouldReplaceItem(): void
     {
         // Arrange
         $originalQuoteTransfer = $this->createCustomerQuote();

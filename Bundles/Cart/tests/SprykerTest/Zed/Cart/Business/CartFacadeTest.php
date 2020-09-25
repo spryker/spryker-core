@@ -336,7 +336,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReplaceItemSuccessFlow(): void
+    public function testReplaceItemShouldReplaceItem(): void
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
