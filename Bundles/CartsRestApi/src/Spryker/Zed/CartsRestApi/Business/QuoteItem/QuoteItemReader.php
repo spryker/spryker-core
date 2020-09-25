@@ -28,15 +28,23 @@ class QuoteItemReader implements QuoteItemReaderInterface
     protected $quoteItemMapper;
 
     /**
+     * @var \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[]
+     */
+    protected $quoteItemReadValidatorPlugins;
+
+    /**
      * @param \Spryker\Zed\CartsRestApi\Business\Quote\QuoteReaderInterface $quoteReader
      * @param \Spryker\Zed\CartsRestApi\Business\QuoteItem\Mapper\QuoteItemMapperInterface $quoteItemMapper
+     * @param \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteItemReadValidatorPluginInterface[] $quoteItemReadValidatorPlugins
      */
     public function __construct(
         QuoteReaderInterface $quoteReader,
-        QuoteItemMapperInterface $quoteItemMapper
+        QuoteItemMapperInterface $quoteItemMapper,
+        array $quoteItemReadValidatorPlugins
     ) {
         $this->quoteReader = $quoteReader;
         $this->quoteItemMapper = $quoteItemMapper;
+        $this->quoteItemReadValidatorPlugins = $quoteItemReadValidatorPlugins;
     }
 
     /**
@@ -56,9 +64,9 @@ class QuoteItemReader implements QuoteItemReaderInterface
             return $quoteResponseTransfer;
         }
 
-        $isRequestedItemInQuote = $this->checkRequestedItemIsInQuote(
+        $isRequestedItemInQuote = $this->isCartItemInQuote(
             $cartItemRequestTransfer,
-            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getArrayCopy()
+            $quoteResponseTransfer->getQuoteTransfer()
         );
 
         if (!$isRequestedItemInQuote) {
@@ -73,18 +81,35 @@ class QuoteItemReader implements QuoteItemReaderInterface
 
     /**
      * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
-     * @param \Generated\Shared\Transfer\ItemTransfer[] $itemTransfers
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      *
      * @return bool
      */
-    protected function checkRequestedItemIsInQuote(CartItemRequestTransfer $cartItemRequestTransfer, array $itemTransfers): bool
+    protected function isCartItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
     {
-        if (count($itemTransfers) === 0) {
+        foreach ($this->quoteItemReadValidatorPlugins as $quoteItemReadValidatorPlugin) {
+            if ($quoteItemReadValidatorPlugin->validate($cartItemRequestTransfer, $quoteTransfer)) {
+                return true;
+            }
+        }
+
+        return $this->isItemInQuote($cartItemRequestTransfer, $quoteTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CartItemRequestTransfer $cartItemRequestTransfer
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return bool
+     */
+    protected function isItemInQuote(CartItemRequestTransfer $cartItemRequestTransfer, QuoteTransfer $quoteTransfer): bool
+    {
+        if (!$quoteTransfer->getItems()->count()) {
             return false;
         }
 
         $itemFound = false;
-        foreach ($itemTransfers as $itemTransfer) {
+        foreach ($quoteTransfer->getItems() as $itemTransfer) {
             if ($cartItemRequestTransfer->getGroupKey()) {
                 $itemFound = $itemTransfer->getGroupKey() === $cartItemRequestTransfer->getGroupKey();
             }
@@ -93,7 +118,7 @@ class QuoteItemReader implements QuoteItemReaderInterface
                 $itemFound = true;
             }
 
-            if ($itemFound) {
+            if ($itemFound && !$itemTransfer->getRelatedBundleItemIdentifier()) {
                 return true;
             }
         }

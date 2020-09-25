@@ -37,6 +37,7 @@ use Generated\Shared\Transfer\RestCartItemsAttributesTransfer;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\CartsRestApi\Business\CartsRestApiFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
