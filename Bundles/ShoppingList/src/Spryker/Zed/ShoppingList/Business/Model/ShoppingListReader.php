@@ -165,7 +165,6 @@ class ShoppingListReader implements ShoppingListReaderInterface
         $customerTransfer->setCompanyUserTransfer($requestCompanyUserTransfer);
 
         $shoppingListOverviewResponseTransfer->setShoppingList($shoppingListTransfer);
-        $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
         $shoppingListOverviewResponseTransfer->setIsSuccess(true);
 
         return $shoppingListOverviewResponseTransfer;
