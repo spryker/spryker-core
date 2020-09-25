@@ -27,7 +27,7 @@
         <property name="filter" type="Filter"/>
         <property name="idCmsSlotTemplate" type="int"/>
         <property name="idCmsSlot" type="int"/>
-        <property name="cmsBlockName" type="string" />
+        <property name="cmsBlockName" type="string"/>
     </transfer>
 
     <transfer name="CmsSlotTemplateConfiguration">
