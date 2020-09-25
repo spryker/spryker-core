@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 
 class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
 {
@@ -75,5 +77,19 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     public function getTemplateConditionsByPath(string $twigPath): array
     {
         return $this->cmsSlotBlockFacade->getTemplateConditionsByPath($twigPath);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     */
+    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
+        PaginationTransfer $paginationTransfer
+    ): CmsBlockSuggestionCollectionTransfer {
+        return $this->cmsSlotBlockFacade
+            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
     }
 }

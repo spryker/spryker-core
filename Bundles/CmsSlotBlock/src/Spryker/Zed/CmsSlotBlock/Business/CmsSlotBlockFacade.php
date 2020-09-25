@@ -7,9 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
+use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -96,5 +98,24 @@ class CmsSlotBlockFacade extends AbstractFacade implements CmsSlotBlockFacadeInt
         return $this->getFactory()
             ->createCmsSlotTemplateConditionReader()
             ->getTemplateConditionsByPath($twigPath);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     */
+    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
+        PaginationTransfer $paginationTransfer
+    ): CmsBlockSuggestionCollectionTransfer {
+        return $this
+            ->getRepository()
+            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
     }
 }

@@ -7,6 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence\Propel\Mapper;
 
+use ArrayObject;
+use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockConditionTransfer;
@@ -89,6 +91,20 @@ class CmsSlotBlockMapper implements CmsSlotBlockMapperInterface
         }
 
         return $cmsBlockTransfers;
+    }
+
+    /**
+     * @param \Propel\Runtime\Collection\Collection $cmsBlockEntities
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     */
+    public function mapCmsBlockEntitiesToCmsBlockSuggestionCollectionTransfer(Collection $cmsBlockEntities): CmsBlockSuggestionCollectionTransfer
+    {
+        $cmsBlockTransfers = $this->mapCmsBlockEntitiesToTransfers($cmsBlockEntities);
+        $cmsBlockTransfers = new ArrayObject($cmsBlockTransfers);
+
+        return (new CmsBlockSuggestionCollectionTransfer())
+            ->setCmsBlocks($cmsBlockTransfers);
     }
 
     /**

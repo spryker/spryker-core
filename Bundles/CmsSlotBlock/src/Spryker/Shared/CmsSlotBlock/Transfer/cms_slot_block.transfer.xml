@@ -27,6 +27,7 @@
         <property name="filter" type="Filter"/>
         <property name="idCmsSlotTemplate" type="int"/>
         <property name="idCmsSlot" type="int"/>
+        <property name="cmsBlockName" type="string" />
     </transfer>
 
     <transfer name="CmsSlotTemplateConfiguration">
@@ -59,6 +60,11 @@
     </transfer>
 
     <transfer name="CmsSlotParams">
+    </transfer>
+
+    <transfer name="CmsBlockSuggestionCollection">
+        <property name="cmsBlocks" type="CmsBlock[]" singular="cmsBlocks"/>
+        <property name="pagination" type="Pagination"/>
     </transfer>
 
 </transfers>

@@ -15,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\CmsSlotBlockGui\Business\CmsSlotBlockGuiFacadeInterface getFacade()
  */
 class SlotBlockController extends AbstractController
 {
@@ -31,7 +32,7 @@ class SlotBlockController extends AbstractController
         $idCmsSlotTemplate = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));
         $idCmsSlot = $this->castId($request->query->get(static::PARAM_ID_CMS_SLOT));
 
-        $cmsBlockChoiceForm = $this->getFactory()->createCmsBlockChoiceForm($idCmsSlotTemplate, $idCmsSlot);
+        $cmsBlockChoiceForm = $this->getFactory()->createCmsBlockChoiceWithSuggestionsForm();
         $cmsSlotBlockCollectionForm = $this->getSlotBlockCollectionForm($request, $idCmsSlotTemplate, $idCmsSlot);
 
         return $this->viewResponse([

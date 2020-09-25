@@ -49,6 +49,20 @@ class CmsSlotBlockGuiDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return \Spryker\Zed\Kernel\Container
      */
+    public function provideBusinessLayerDependencies(Container $container): Container
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container = $this->addCmsSlotBlockFacade($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
     protected function addCmsSlotBlockFacade(Container $container): Container
     {
         $container->set(static::FACADE_CMS_SLOT_BLOCK, function (Container $container) {

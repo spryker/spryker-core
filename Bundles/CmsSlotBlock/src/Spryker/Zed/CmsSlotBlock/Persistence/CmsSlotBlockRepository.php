@@ -7,14 +7,18 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
+use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
+use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\CmsSlotBlock\Persistence\Map\SpyCmsSlotBlockTableMap;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Formatter\SimpleArrayFormatter;
+use Propel\Runtime\Util\PropelModelPager;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
 use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
 
@@ -73,7 +77,52 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
             return [];
         }
 
-        $cmsBlockEntities = $this->getFactory()
+        $cmsBlockEntities = $this
+            ->buildCmsBlockWithSlotRelationQuery($cmsBlockIds)
+            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())
+            ->find();
+
+        return $this->getFactory()
+            ->createCmsSlotBlockMapper()
+            ->mapCmsBlockEntitiesToTransfers($cmsBlockEntities);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     */
+    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
+        PaginationTransfer $paginationTransfer
+    ): CmsBlockSuggestionCollectionTransfer {
+        $cmsBlockSuggestionCollectionTransfer = new CmsBlockSuggestionCollectionTransfer();
+
+        $cmsBlockIds = $this->getCmsBlockSuggestedIds($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+        if (!$cmsBlockIds) {
+            return $cmsBlockSuggestionCollectionTransfer;
+        }
+
+        $cmsBlockEntities = $this
+            ->buildCmsBlockWithSlotRelationQuery($cmsBlockIds)
+            ->addAscendingOrderByColumn(SpyCmsBlockTableMap::COL_NAME)
+            ->find();
+
+        return $this->getFactory()
+            ->createCmsSlotBlockMapper()
+            ->mapCmsBlockEntitiesToCmsBlockSuggestionCollectionTransfer($cmsBlockEntities)
+            ->setPagination($paginationTransfer);
+    }
+
+    /**
+     * @param array $cmsBlockIds
+     *
+     * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
+     */
+    protected function buildCmsBlockWithSlotRelationQuery(array $cmsBlockIds): SpyCmsBlockQuery
+    {
+        return $this->getFactory()
             ->getCmsBlockQuery()
             ->filterByIdCmsBlock_In($cmsBlockIds)
             ->groupByIdCmsBlock()
@@ -81,13 +130,51 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
             ->useSpyCmsBlockStoreQuery(null, Criteria::LEFT_JOIN)
                 ->leftJoinSpyStore('stores')
                 ->withColumn('GROUP_CONCAT(stores.name)', CmsBlockTransfer::STORE_NAMES)
-            ->endUse()
-            ->orderBy($filterTransfer->getOrderBy(), $filterTransfer->getOrderDirection())
-            ->find();
+            ->endUse();
+    }
 
-        return $this->getFactory()
-            ->createCmsSlotBlockMapper()
-            ->mapCmsBlockEntitiesToTransfers($cmsBlockEntities);
+    /**
+     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return array
+     */
+    protected function getCmsBlockSuggestedIds(
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
+        PaginationTransfer $paginationTransfer
+    ): array {
+        $cmsBlockQuery = $this->getFactory()->getCmsBlockQuery();
+
+        $cmsBlockName = mb_strtoupper(trim($cmsSlotBlockCriteriaTransfer->getCmsBlockName()));
+        if ($cmsBlockName !== '') {
+            $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', "%$cmsBlockName%");
+        }
+
+        $pagination = $this->getPaginationFromQuery($cmsBlockQuery, $paginationTransfer);
+        $paginationTransfer->setLastPage($pagination->getLastPage());
+
+        return $pagination->getQuery()
+            ->select(SpyCmsBlockTableMap::COL_ID_CMS_BLOCK)
+            ->addAscendingOrderByColumn(SpyCmsBlockTableMap::COL_NAME)
+            ->setFormatter(SimpleArrayFormatter::class)
+            ->find()
+            ->toArray();
+    }
+
+    /**
+     * @param \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery $cmsBlockQuery
+     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     *
+     * @return \Propel\Runtime\Util\PropelModelPager
+     */
+    protected function getPaginationFromQuery(
+        SpyCmsBlockQuery $cmsBlockQuery,
+        PaginationTransfer $paginationTransfer
+    ): PropelModelPager {
+        $page = $paginationTransfer->getPage();
+        $maxPerPage = $paginationTransfer->getMaxPerPage();
+
+        return $cmsBlockQuery->paginate($page, $maxPerPage);
     }
 
     /**

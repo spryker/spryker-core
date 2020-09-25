@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotBlockGui\Communication;
 use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiDependencyProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block\CmsBlockChoiceForm;
+use Spryker\Zed\CmsSlotBlockGui\Communication\Form\Block\CmsBlockChoiceWithSuggestionsForm;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProvider;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsBlockChoiceFormDataProviderInterface;
 use Spryker\Zed\CmsSlotBlockGui\Communication\Form\DataProvider\CmsSlotBlockCollectionFormDataProvider;
@@ -26,6 +27,7 @@ use Symfony\Component\Form\FormInterface;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\CmsSlotBlockGuiConfig getConfig()
+ * @method \Spryker\Zed\CmsSlotBlockGui\Business\CmsSlotBlockGuiFacadeInterface getFacade()
  */
 class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -64,6 +66,8 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
     }
 
     /**
+     * @deprecated Use {@link \Spryker\Zed\CmsSlotBlockGui\Communication\CmsSlotBlockGuiCommunicationFactory::createCmsBlockChoiceWithSuggestionsForm} instead.
+     *
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
@@ -80,6 +84,14 @@ class CmsSlotBlockGuiCommunicationFactory extends AbstractCommunicationFactory
             null,
             $cmsBlockChoiceFormDataProvider->getOptions($idCmsSlotTemplate, $idCmsSlot)
         );
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createCmsBlockChoiceWithSuggestionsForm(): FormInterface
+    {
+        return $this->getFormFactory()->create(CmsBlockChoiceWithSuggestionsForm::class);
     }
 
     /**
