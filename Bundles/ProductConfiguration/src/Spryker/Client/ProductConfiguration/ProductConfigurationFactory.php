@@ -10,12 +10,16 @@ namespace Spryker\Client\ProductConfiguration;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
+use SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
@@ -26,7 +30,11 @@ class ProductConfigurationFactory extends AbstractFactory
     {
         return new ProductConfiguratorRedirectResolver(
             $this->getProductConfiguratorRequestPlugins(),
-            $this->getDefaultProductConfiguratorRequestPlugin()
+            $this->getDefaultProductConfiguratorRequestPlugin(),
+            $this->getCustomerClient(),
+            $this->getStoreClient(),
+            $this->getLocaleClient(),
+            $this->getPriceClient()
         );
     }
 
@@ -79,5 +87,37 @@ class ProductConfigurationFactory extends AbstractFactory
     public function getDefaultProductConfiguratorResponsePlugin(): ProductConfiguratorResponsePluginInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE);
+    }
+
+    /**
+     * @return \SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface
+     */
+    public function getCustomerClient(): ProductConfigurationToCustomerClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_CUSTOMER);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface
+     */
+    public function getStoreClient(): ProductConfigurationToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_STORE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface
+     */
+    public function getLocaleClient(): ProductConfigurationToLocaleInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_LOCALE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientInterface
+     */
+    public function getPriceClient(): ProductConfigurationToPriceClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_PRICE);
     }
 }

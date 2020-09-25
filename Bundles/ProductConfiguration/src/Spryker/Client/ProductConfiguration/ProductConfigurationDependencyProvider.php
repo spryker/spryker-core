@@ -9,10 +9,14 @@ namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleBridge;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
+use Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
+use SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientBridge;
 
 /**
  * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
@@ -24,6 +28,11 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
 
     public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
     public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE';
+
+    public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
+    public const CLIENT_STORE = 'CLIENT_STORE';
+    public const CLIENT_LOCALE = 'CLIENT_LOCALE';
+    public const CLIENT_PRICE = 'CLIENT_PRICE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -38,6 +47,68 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addDefaultProductConfiguratorRequestPlugin($container);
         $container = $this->addProductConfiguratorResponsePlugins($container);
         $container = $this->addDefaultProductConfiguratorResponsePlugin($container);
+        $container = $this->addCustomerClient($container);
+        $container = $this->addStoreClient($container);
+        $container = $this->addLocaleClient($container);
+        $container = $this->addPriceClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addPriceClient(Container $container)
+    {
+        $container->set(static::CLIENT_PRICE, function (Container $container) {
+            return new ProductConfigurationToPriceClientBridge($container->getLocator()->price()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addLocaleClient(Container $container)
+    {
+        $container->set(static::CLIENT_LOCALE, function (Container $container) {
+            return new ProductConfigurationToLocaleBridge($container->getLocator()->locale()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCustomerClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_CUSTOMER, function (Container $container) {
+            return new ProductConfigurationToCustomerClientBridge($container->getLocator()->customer()->client());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addStoreClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_STORE, function (Container $container) {
+            return new ProductConfigurationToStoreClientBridge(
+                $container->getLocator()->store()->client()
+            );
+        });
 
         return $container;
     }
@@ -112,6 +183,14 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         });
 
         return $container;
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface []
+     */
+    protected function getProductConfigurationRequestExpanderPlugins(): array
+    {
+        return [];
     }
 
     /**
