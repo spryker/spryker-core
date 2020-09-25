@@ -8,6 +8,7 @@
 namespace SprykerTest\Zed\ProductConfigurationStorage;
 
 use Codeception\Actor;
+use Orm\Zed\ProductConfigurationStorage\Persistence\SpyProductConfigurationStorageQuery;
 
 /**
  * Inherited Methods
@@ -30,7 +31,11 @@ class ProductConfigurationStorageBusinessTester extends Actor
 {
     use _generated\ProductConfigurationStorageBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @return int
+     */
+    public function countProductConfigurationStorageEntities(): int
+    {
+        return SpyProductConfigurationStorageQuery::create()->count();
+    }
 }
