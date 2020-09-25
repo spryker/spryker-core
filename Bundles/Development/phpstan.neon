@@ -1,5 +1,7 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Constant T_SEMICOLON not found.#'
         - '#Constant T_OPEN_PARENTHESIS not found.#'

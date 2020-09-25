@@ -17,6 +17,8 @@ use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyU
 use Spryker\Glue\CompanyUsersRestApi\Processor\CompanyUser\Relationship\CompanyUserResourceRelationshipExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpander;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Customer\CustomerExpanderInterface;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpander;
+use Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpanderInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapper;
 use Spryker\Glue\CompanyUsersRestApi\Processor\Mapper\CompanyUserMapperInterface;
 use Spryker\Glue\CompanyUsersRestApi\Processor\RestResponseBuilder\CompanyUserRestResponseBuilder;
@@ -88,6 +90,14 @@ class CompanyUsersRestApiFactory extends AbstractFactory
         return new CompanyUserValidator(
             $this->getConfig()
         );
+    }
+
+    /**
+     * @return \Spryker\Glue\CompanyUsersRestApi\Processor\Expander\CheckoutRequestExpanderInterface
+     */
+    public function createCheckoutRequestExpander(): CheckoutRequestExpanderInterface
+    {
+        return new CheckoutRequestExpander();
     }
 
     /**

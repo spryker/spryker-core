@@ -5,10 +5,9 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerTest\Shared\Testify\ClassResolver;
+namespace SprykerTest\Shared\Testify\Helper;
 
 use Codeception\Configuration;
-use SprykerTest\Shared\Testify\Helper\LocatorHelperTrait;
 
 trait ClassResolverTrait
 {

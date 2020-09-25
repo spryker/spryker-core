@@ -1,4 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Call to an undefined method .+ActiveRecordInterface::toArray\(\).#'
         - '#Cannot access offset .+ on DOMNamedNodeMap\.#'

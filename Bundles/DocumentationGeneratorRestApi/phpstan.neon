@@ -1,5 +1,7 @@
 parameters:
     reportUnmatchedIgnoredErrors: false
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     dynamicConstantNames:
         - APPLICATION
         - APPLICATION_ENV

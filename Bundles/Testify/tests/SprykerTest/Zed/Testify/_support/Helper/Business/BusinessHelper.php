@@ -18,7 +18,7 @@ use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 use Spryker\Zed\Kernel\Container;
-use SprykerTest\Shared\Testify\ClassResolver\ClassResolverTrait;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper;

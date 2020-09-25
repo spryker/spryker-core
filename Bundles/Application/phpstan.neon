@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     dynamicConstantNames:
         - APPLICATION

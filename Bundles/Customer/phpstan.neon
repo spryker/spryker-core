@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Instantiated class .+NativePasswordEncoder not found.#'

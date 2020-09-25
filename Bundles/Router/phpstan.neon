@@ -1,5 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Method .+RouteCollection::add\(\) invoked with 3 parameters, 2 required.#'
-

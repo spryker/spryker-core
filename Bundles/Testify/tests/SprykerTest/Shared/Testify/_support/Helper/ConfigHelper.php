@@ -18,7 +18,6 @@ use ReflectionProperty;
 use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\AbstractBundleConfig;
 use Spryker\Shared\Kernel\AbstractSharedConfig;
-use SprykerTest\Shared\Testify\ClassResolver\ClassResolverTrait;
 
 class ConfigHelper extends Module
 {
