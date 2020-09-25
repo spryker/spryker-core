@@ -285,7 +285,7 @@ class CmsSlotBlockFacadeTest extends Unit
         $this->tester->createCmsBlocksInDb(1);
         $cmsBlockCountAfter = $cmsBlockCountBefore + 1;
 
-        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer());
+        $cmsSlotBlockCriteriaTransfer = new CmsSlotBlockCriteriaTransfer();
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage($cmsBlockCountAfter)
             ->setPage(1);
