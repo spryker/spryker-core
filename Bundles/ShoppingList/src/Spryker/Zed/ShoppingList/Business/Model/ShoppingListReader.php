@@ -171,6 +171,23 @@ class ShoppingListReader implements ShoppingListReaderInterface
     }
 
     /**
+     * @param \Generated\Shared\Transfer\ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer
+     * @param bool $isShoppingListOverviewWithShoppingLists
+     *
+     * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
+     */
+    public function getShoppingListOverviewByConfig(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer, bool  $isShoppingListOverviewWithShoppingLists = true): ShoppingListOverviewResponseTransfer
+    {
+        $shoppingListOverviewResponseTransfer = $this->getShoppingListOverview($shoppingListOverviewRequestTransfer);
+
+        if ($isShoppingListOverviewWithShoppingLists) {
+            $shoppingListOverviewResponseTransfer->setShoppingLists($this->getCustomerShoppingListCollection($customerTransfer));
+        }
+
+        return $shoppingListOverviewResponseTransfer;
+    }
+
+    /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
      *
      * @return \Generated\Shared\Transfer\ShoppingListCollectionTransfer
