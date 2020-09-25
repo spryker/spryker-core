@@ -23,7 +23,6 @@ use Generated\Shared\Transfer\ShoppingListResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListShareRequestTransfer;
 use Generated\Shared\Transfer\ShoppingListShareResponseTransfer;
 use Generated\Shared\Transfer\ShoppingListTransfer;
-use Spryker\Shared\ShoppingList\ShoppingListConstants;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -210,7 +209,7 @@ class ShoppingListFacade extends AbstractFacade implements ShoppingListFacadeInt
     {
         return $this->getFactory()
             ->createShoppingListReader()
-            ->getShoppingListOverviewByConfig($shoppingListOverviewRequestTransfer, $this->getFactory()->getConfig()->getShoppingListOverviewWithShoppingLists());
+            ->getShoppingListOverviewByConfig($shoppingListOverviewRequestTransfer, $this->getFactory()->getConfig()->isShoppingListOverviewWithShoppingLists());
     }
 
     /**

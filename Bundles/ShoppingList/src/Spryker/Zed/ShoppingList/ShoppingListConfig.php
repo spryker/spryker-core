@@ -47,7 +47,7 @@ class ShoppingListConfig extends AbstractBundleConfig
      *
      * @return bool
      */
-    public function isShoppingListOverviewWithShoppingLists() : bool
+    public function isShoppingListOverviewWithShoppingLists(): bool
     {
         return $this->get(ShoppingListConstants::SHOPPING_LIST_OVERVIEW_WITH_SHOPPING_LISTS, true);
     }
@@ -70,7 +70,6 @@ class ShoppingListConfig extends AbstractBundleConfig
      */
     protected function getFullAccessPermissionGroup(): ShoppingListPermissionGroupTransfer
     {
-        $this->getConfig()->
         $fullAccessQuotePermissionGroupTransfer = new ShoppingListPermissionGroupTransfer();
         $fullAccessQuotePermissionGroupTransfer
             ->setName(SharedConfig::PERMISSION_GROUP_FULL_ACCESS)

@@ -39,7 +39,10 @@ interface ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewByConfig(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer, bool  $isShoppingListOverviewWithShoppingLists = true): ShoppingListOverviewResponseTransfer;
+    public function getShoppingListOverviewByConfig(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer,
+        bool $isShoppingListOverviewWithShoppingLists = true
+    ): ShoppingListOverviewResponseTransfer;
 
     /**
      * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer

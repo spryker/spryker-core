@@ -176,8 +176,10 @@ class ShoppingListReader implements ShoppingListReaderInterface
      *
      * @return \Generated\Shared\Transfer\ShoppingListOverviewResponseTransfer
      */
-    public function getShoppingListOverviewByConfig(ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer, bool  $isShoppingListOverviewWithShoppingLists = true): ShoppingListOverviewResponseTransfer
-    {
+    public function getShoppingListOverviewByConfig(
+        ShoppingListOverviewRequestTransfer $shoppingListOverviewRequestTransfer,
+        bool $isShoppingListOverviewWithShoppingLists = true
+    ): ShoppingListOverviewResponseTransfer {
         $shoppingListOverviewResponseTransfer = $this->getShoppingListOverview($shoppingListOverviewRequestTransfer);
 
         if ($isShoppingListOverviewWithShoppingLists) {
