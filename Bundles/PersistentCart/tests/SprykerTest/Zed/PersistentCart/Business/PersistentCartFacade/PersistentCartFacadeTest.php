@@ -200,7 +200,7 @@ class PersistentCartFacadeTest extends Unit
         // Assert
         $this->assertCount(2, $quoteResponseTransfer->getQuoteTransfer()->getItems());
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
-   }
+    }
 
     /**
      * @return void

@@ -329,7 +329,6 @@ class CartFacadeTest extends Unit
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
     }
 
-
     /**
      * @return void
      */
@@ -369,7 +368,6 @@ class CartFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
-
     }
 
     /**

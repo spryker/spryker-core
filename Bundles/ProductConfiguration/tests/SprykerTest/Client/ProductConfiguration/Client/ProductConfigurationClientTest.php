@@ -25,8 +25,9 @@ use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfig
  * Auto-generated group annotations
  *
  * @group SprykerTest
- * @group Client
+ * @group Zed
  * @group ProductConfiguration
+ * @group Business
  * @group ProductConfigurationClientTest
  * Add your own group annotations below this line
  */
@@ -73,7 +74,7 @@ class ProductConfigurationClientTest extends Unit
             ->setMethodsExcept([
                 'createProductConfiguratorRedirectResolver',
                 'createProductConfiguratorResponseProcessor',
-                'createQuoteProductConfigurationChecker'
+                'createQuoteProductConfigurationChecker',
             ])
             ->getMock();
 
@@ -89,14 +90,14 @@ class ProductConfigurationClientTest extends Unit
 
         $this->productConfiguratorRequestPluginMock->method('resolveProductConfiguratorRedirect')
             ->willReturn(
-                (new ProductConfiguratorRedirectTransfer)
+                (new ProductConfiguratorRedirectTransfer())
                     ->setConfiguratorRedirectUrl(static::TEST_CONFIGURATOR_REDIRECT_URL)
                     ->setIsSuccessful(true)
             );
 
         $this->productConfiguratorResponsePluginMock->method('processProductConfiguratorResponse')
             ->willReturn(
-                (new ProductConfiguratorResponseProcessorResponseTransfer)
+                (new ProductConfiguratorResponseProcessorResponseTransfer())
                     ->setIsSuccessful(true)
             );
     }
@@ -108,7 +109,7 @@ class ProductConfigurationClientTest extends Unit
     {
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([
-            static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $this->productConfiguratorRequestPluginMock
+            static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $this->productConfiguratorRequestPluginMock,
         ]);
 
         $productConfigurationRequestTransfer = (new ProductConfiguratorRequestTransfer())
@@ -133,7 +134,7 @@ class ProductConfigurationClientTest extends Unit
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([]);
         $this->configurationFactoryMock->method('getDefaultProductConfiguratorRequestPlugin')
-            ->willReturn( $this->productConfiguratorRequestPluginMock);
+            ->willReturn($this->productConfiguratorRequestPluginMock);
 
         $productConfigurationRequestTransfer = (new ProductConfiguratorRequestTransfer())
             ->setProductConfiguratorRequestData(
@@ -156,7 +157,7 @@ class ProductConfigurationClientTest extends Unit
     {
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([
-            static::TEST_PRODUCT_CONFIGURATOR_RESPONSE_KEY => $this->productConfiguratorResponsePluginMock
+            static::TEST_PRODUCT_CONFIGURATOR_RESPONSE_KEY => $this->productConfiguratorResponsePluginMock,
         ]);
 
         $productConfigurationResponseTransfer = (new ProductConfiguratorResponseTransfer())

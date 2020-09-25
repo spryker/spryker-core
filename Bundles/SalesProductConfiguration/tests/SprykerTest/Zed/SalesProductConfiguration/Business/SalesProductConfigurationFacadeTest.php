@@ -77,7 +77,7 @@ class SalesProductConfigurationFacadeTest extends Unit
         $salesOrderItem = $this->tester->createSalesOrderItemForOrder($orderId);
 
         $itemTransfer = (new ItemBuilder([
-            ItemTransfer::ID_SALES_ORDER_ITEM => $salesOrderItem->getIdSalesOrderItem()
+            ItemTransfer::ID_SALES_ORDER_ITEM => $salesOrderItem->getIdSalesOrderItem(),
         ]))->build();
 
         (new SpySalesOrderItemConfiguration())
