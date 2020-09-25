@@ -313,6 +313,7 @@ class CartClientTest extends Unit
             'resetQuoteLock',
             'addToCart',
             'removeFromCart',
+            'replaceItem',
         ])->getMock();
     }
 }

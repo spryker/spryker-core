@@ -1,12 +1,12 @@
 {% block form_row -%}
-    {% spaceless %}
+    {% apply spaceless %}
         <div class="form-group{% if (not compound or force_error|default(false)) and not valid %} has-error{% endif %}">
             <div{% if block('form_group_class') is defined %} class="{{ block('form_group_class') }}"{% endif %}>
                 {{ form_widget(form) }}
                 {{ form_errors(form) }}
             </div>
         </div>
-    {% endspaceless %}
+    {% endapply %}
 {%- endblock form_row %}
 
 {% block email_widget %}

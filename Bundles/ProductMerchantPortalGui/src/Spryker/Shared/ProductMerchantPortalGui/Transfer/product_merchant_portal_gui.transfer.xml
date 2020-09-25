@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<transfers xmlns="spryker:transfer-01"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd">
+
+    <transfer name="GuiTableConfiguration">
+    </transfer>
+
+    <transfer name="GuiTableDataRequest">
+    </transfer>
+
+    <transfer name="GuiTableDataResponse">
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="total" type="int"/>
+        <property name="rows" type="GuiTableRowDataResponse[]" singular="row"/>
+    </transfer>
+
+    <transfer name="GuiTableRowDataResponse">
+        <property name="responseData" type="array" singular="responseData"/>
+    </transfer>
+
+    <transfer name="OptionSelectGuiTableFilterTypeOptions">
+        <property name="value" type="string"/>
+        <property name="title" type="string"/>
+        <property name="children" type="OptionSelectGuiTableFilterTypeOptions[]" singular="child"/>
+    </transfer>
+
+    <transfer name="MerchantProductTableCriteria">
+        <property name="locale" type="Locale"/>
+        <property name="idMerchant" type="int"/>
+        <property name="searchTerm" type="string"/>
+        <property name="page" type="int"/>
+        <property name="pageSize" type="int"/>
+        <property name="orderBy" type="string"/>
+        <property name="orderDirection" type="string"/>
+        <property name="filterIsVisible" type="bool"/>
+        <property name="filterInStores" type="int[]" singular="inStore"/>
+        <property name="filterInCategories" type="int[]" singular="inCategory"/>
+    </transfer>
+
+    <transfer name="MerchantUser">
+        <property name="idMerchant" type="int"/>
+    </transfer>
+
+    <transfer name="Locale">
+        <property name="idLocale" type="int"/>
+    </transfer>
+
+    <transfer name="ProductAbstractCollection">
+        <property name="productAbstracts" type="ProductAbstract[]" singular="productAbstract"/>
+        <property name="pagination" type="Pagination"/>
+    </transfer>
+
+    <transfer name="ProductAbstract">
+        <property name="idProductAbstract" type="int"/>
+        <property name="sku" type="string"/>
+        <property name="name" type="string"/>
+        <property name="concreteProductCount" type="int"/>
+        <property name="isActive" type="bool"/>
+        <property name="categoryNames" type="string[]" singular="categoryName"/>
+        <property name="storeNames" type="string[]" singular="storeName"/>
+        <property name="attributes" type="array" singular="attribute"/>
+        <property name="imageSets" type="ProductImageSet[]" singular="imageSet"/>
+    </transfer>
+
+    <transfer name="Pagination">
+        <property name="page" type="int"/>
+        <property name="maxPerPage" type="int"/>
+        <property name="nbResults" type="int"/>
+        <property name="previousPage" type="int"/>
+        <property name="nextPage" type="int"/>
+        <property name="firstIndex" type="int"/>
+        <property name="lastIndex" type="int"/>
+        <property name="firstPage" type="int"/>
+        <property name="lastPage" type="int"/>
+    </transfer>
+
+    <transfer name="ProductImage">
+        <property name="externalUrlSmall" type="string"/>
+    </transfer>
+
+    <transfer name="ProductImageSet">
+        <property name="productImages" type="ProductImage[]" singular="productImage"/>
+    </transfer>
+
+    <transfer name="Store">
+        <property name="idStore" type="int"/>
+        <property name="name" type="string"/>
+    </transfer>
+
+</transfers>

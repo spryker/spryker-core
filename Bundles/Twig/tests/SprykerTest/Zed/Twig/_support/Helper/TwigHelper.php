@@ -10,11 +10,16 @@ namespace SprykerTest\Zed\Twig\Helper;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
+use Spryker\Shared\Twig\Plugin\DebugTwigPlugin;
+use Spryker\Shared\Twig\Plugin\FormTwigPlugin;
+use Spryker\Shared\Twig\Plugin\RoutingTwigPlugin;
+use Spryker\Shared\Twig\Plugin\SecurityTwigPlugin;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigLoaderPluginInterface;
 use Spryker\Shared\TwigExtension\Dependency\Plugin\TwigPluginInterface;
 use Spryker\Zed\Twig\Communication\Plugin\Application\TwigApplicationPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\EventDispatcher\TwigEventDispatcherPlugin;
 use Spryker\Zed\Twig\Communication\Plugin\FilesystemTwigLoaderPlugin;
+use Spryker\Zed\Twig\Communication\Plugin\FormFilesystemTwigLoaderPlugin;
 use Spryker\Zed\Twig\Communication\TwigCommunicationFactory;
 use Spryker\Zed\Twig\TwigConfig;
 use Spryker\Zed\Twig\TwigDependencyProvider;
@@ -59,8 +64,19 @@ class TwigHelper extends Module
     /**
      * @var string[]
      */
+    protected $defaultTwigPlugins = [
+        DebugTwigPlugin::class,
+        FormTwigPlugin::class,
+        RoutingTwigPlugin::class,
+        SecurityTwigPlugin::class,
+    ];
+
+    /**
+     * @var string[]
+     */
     protected $defaultLoaderPlugins = [
         FilesystemTwigLoaderPlugin::class,
+        FormFilesystemTwigLoaderPlugin::class,
     ];
 
     /**
@@ -74,6 +90,10 @@ class TwigHelper extends Module
 
         foreach ($this->config[static::CONFIG_KEY_LOADER_PLUGINS] as $loaderPlugin) {
             $this->loaderPlugins[$loaderPlugin] = new $loaderPlugin();
+        }
+
+        foreach ($this->defaultTwigPlugins as $twigPlugin) {
+            $this->twigPlugins[$twigPlugin] = new $twigPlugin();
         }
 
         foreach ($this->defaultLoaderPlugins as $defaultLoaderPlugin) {
@@ -170,7 +190,7 @@ class TwigHelper extends Module
      */
     public function addTwigPlugin(TwigPluginInterface $twigPlugin)
     {
-        $this->twigPlugins[] = $twigPlugin;
+        $this->twigPlugins[get_class($twigPlugin)] = $twigPlugin;
 
         $this->addDependencies();
 
@@ -184,7 +204,7 @@ class TwigHelper extends Module
      */
     public function addLoaderPlugin(TwigLoaderPluginInterface $loaderPlugin)
     {
-        $this->loaderPlugins[] = $loaderPlugin;
+        $this->loaderPlugins[get_class($loaderPlugin)] = $loaderPlugin;
 
         $this->addDependencies();
 

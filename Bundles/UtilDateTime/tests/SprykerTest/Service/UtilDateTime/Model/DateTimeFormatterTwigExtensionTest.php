@@ -10,7 +10,7 @@ namespace SprykerTest\Service\UtilDateTime\Model;
 use Codeception\Test\Unit;
 use Spryker\Service\UtilDateTime\Model\DateTimeFormatterTwigExtension;
 use Spryker\Service\UtilDateTime\UtilDateTimeServiceInterface;
-use Spryker\Shared\Twig\TwigFilter;
+use Twig\TwigFilter;
 
 /**
  * Auto-generated group annotations

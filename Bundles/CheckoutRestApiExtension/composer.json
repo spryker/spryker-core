@@ -7,7 +7,11 @@
     "php": ">=7.2"
   },
   "require-dev": {
-    "spryker/code-sniffer": "*"
+    "spryker/code-sniffer": "*",
+    "spryker/glue-application": "*"
+  },
+  "suggest": {
+    "spryker/glue-application": "Required if you want to use \\Spryker\\Glue\\CheckoutRestApiExtension\\Dependency\\Plugin\\CheckoutRequestExpanderPluginInterface."
   },
   "autoload": {
     "psr-4": {

@@ -20,6 +20,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
     public const PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR = 'PLUGINS_CHECKOUT_REQUEST_ATTRIBUTES_VALIDATOR';
     public const PLUGINS_CHECKOUT_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_RESPONSE_MAPPER';
     public const PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER = 'PLUGINS_CHECKOUT_DATA_RESPONSE_MAPPER';
+    public const PLUGINS_CHECKOUT_REQUEST_EXPANDER = 'PLUGINS_CHECKOUT_REQUEST_EXPANDER';
 
     /**
      * @param \Spryker\Glue\Kernel\Container $container
@@ -33,6 +34,7 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
         $container = $this->addCheckoutRequestAttributesValidatorPlugins($container);
         $container = $this->addCheckoutResponseMapperPlugins($container);
         $container = $this->addCheckoutDataResponseMapperPlugins($container);
+        $container = $this->addCheckoutRequestExpanderPlugins($container);
 
         return $container;
     }
@@ -113,6 +115,28 @@ class CheckoutRestApiDependencyProvider extends AbstractBundleDependencyProvider
      * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutDataResponseMapperPluginInterface[]
      */
     protected function getCheckoutDataResponseMapperPlugins(): array
+    {
+        return [];
+    }
+
+    /**
+     * @param \Spryker\Glue\Kernel\Container $container
+     *
+     * @return \Spryker\Glue\Kernel\Container
+     */
+    protected function addCheckoutRequestExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGINS_CHECKOUT_REQUEST_EXPANDER, function () {
+            return $this->getCheckoutRequestExpanderPlugins();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @return \Spryker\Glue\CheckoutRestApiExtension\Dependency\Plugin\CheckoutRequestExpanderPluginInterface[]
+     */
+    protected function getCheckoutRequestExpanderPlugins(): array
     {
         return [];
     }
