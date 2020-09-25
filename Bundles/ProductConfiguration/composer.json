@@ -7,6 +7,7 @@
     "php": ">=7.2",
     "spryker/cart-extension": "^4.2.0",
     "spryker/checkout-extension": "^1.2.0",
+    "spryker/guzzle": "^2.2.0",
     "spryker/kernel": "^3.30.0",
     "spryker/product": "^6.0.0",
     "spryker/product-configuration-extension": "^0.1.0",

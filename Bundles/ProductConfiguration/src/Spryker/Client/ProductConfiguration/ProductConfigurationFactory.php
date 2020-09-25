@@ -10,16 +10,17 @@ namespace Spryker\Client\ProductConfiguration;
 use Spryker\Client\Kernel\AbstractFactory;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationChecker;
 use Spryker\Client\ProductConfiguration\Checker\QuoteProductConfigurationCheckerInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
-use Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
-use SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
@@ -34,7 +35,8 @@ class ProductConfigurationFactory extends AbstractFactory
             $this->getCustomerClient(),
             $this->getStoreClient(),
             $this->getLocaleClient(),
-            $this->getPriceClient()
+            $this->getPriceClient(),
+            $this->getCurrencyClient()
         );
     }
 
@@ -90,7 +92,7 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface
      */
     public function getCustomerClient(): ProductConfigurationToCustomerClientInterface
     {
@@ -114,10 +116,18 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
-     * @return \Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientInterface
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface
      */
     public function getPriceClient(): ProductConfigurationToPriceClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_PRICE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientInterface
+     */
+    public function getCurrencyClient(): ProductConfigurationToCurrencyClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_CURRENCY);
     }
 }

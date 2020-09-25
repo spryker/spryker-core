@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ProductConfiguration\Dependency;
+namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 
 class ProductConfigurationToPriceClientBridge implements ProductConfigurationToPriceClientInterface
 {

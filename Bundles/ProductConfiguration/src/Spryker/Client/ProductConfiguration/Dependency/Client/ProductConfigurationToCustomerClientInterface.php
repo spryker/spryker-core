@@ -5,7 +5,7 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace SprykerShop\Client\ProductConfiguration\Dependency\Client;
+namespace Spryker\Client\ProductConfiguration\Dependency\Client;
 
 interface ProductConfigurationToCustomerClientInterface
 {

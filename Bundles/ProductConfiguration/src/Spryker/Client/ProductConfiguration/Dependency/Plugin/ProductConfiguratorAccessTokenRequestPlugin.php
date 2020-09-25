@@ -8,7 +8,6 @@
 namespace Spryker\Client\ProductConfiguration\Dependency\Plugin;
 
 use Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer;
-use Generated\Shared\Transfer\ProductConfiguratorRequestDataTransfer;
 use Generated\Shared\Transfer\ProductConfiguratorRequestTransfer;
 use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
@@ -25,7 +24,7 @@ class ProductConfiguratorAccessTokenRequestPlugin extends AbstractPlugin impleme
     protected $productConfiguratorRequestExpanderPlugins;
 
     /**
-     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface [] $productConfiguratorRequestExpanderPlugins
+     * @param \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[] $productConfiguratorRequestExpanderPlugins
      */
     public function __construct(array $productConfiguratorRequestExpanderPlugins)
     {
@@ -46,9 +45,7 @@ class ProductConfiguratorAccessTokenRequestPlugin extends AbstractPlugin impleme
 
         $productConfiguratorRequestTransfer->requireAccessTokenRequestUrl();
 
-        return (new ProductConfiguratorRedirectTransfer())
-            ->setIsSuccessful(true)
-            ->setConfiguratorRedirectUrl('url');
+        return $this->sendAccessTokenRequest($productConfiguratorRequestTransfer);
     }
 
     /**
@@ -64,5 +61,18 @@ class ProductConfiguratorAccessTokenRequestPlugin extends AbstractPlugin impleme
         }
 
         return $productConfiguratorRequestTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    protected function sendAccessTokenRequest(ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer {
+
+        return (new ProductConfiguratorRedirectTransfer())
+            ->setIsSuccessful(true)
+            ->setConfiguratorRedirectUrl('url');
     }
 }

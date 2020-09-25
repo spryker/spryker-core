@@ -9,14 +9,16 @@ namespace Spryker\Client\ProductConfiguration;
 
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCurrencyClientBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleBridge;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientBridge;
-use Spryker\Client\ProductConfiguration\Dependency\ProductConfigurationToPriceClientBridge;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientBridge;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfigurationRequestPluginException;
 use Spryker\Client\ProductConfiguration\Exception\MissingDefaultProductConfiguratorResponsePluginException;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
-use SprykerShop\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientBridge;
+use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientBridge;
+use GuzzleHttp\Client as GuzzleHttpClient;
 
 /**
  * @method \Spryker\Client\ProductConfiguration\ProductConfigurationConfig getConfig()
@@ -33,6 +35,9 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
     public const CLIENT_PRICE = 'CLIENT_PRICE';
+    public const CLIENT_CURRENCY = 'CLIENT_CURRENCY';
+
+    public const CLIENT_GUZZLE = 'CLIENT_GUZZLE';
 
     /**
      * @param \Spryker\Client\Kernel\Container $container
@@ -51,6 +56,36 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addStoreClient($container);
         $container = $this->addLocaleClient($container);
         $container = $this->addPriceClient($container);
+        $container = $this->addCurrencyClient($container);
+        $container = $this->addGuzzleClient($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addGuzzleClient(Container $container): Container
+    {
+        $container->set(static::CLIENT_GUZZLE, function () {
+            return new GuzzleHttpClient();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addCurrencyClient(Container $container)
+    {
+        $container->set(static::CLIENT_CURRENCY, function (Container $container) {
+            return new ProductConfigurationToCurrencyClientBridge($container->getLocator()->currency()->client());
+        });
 
         return $container;
     }
