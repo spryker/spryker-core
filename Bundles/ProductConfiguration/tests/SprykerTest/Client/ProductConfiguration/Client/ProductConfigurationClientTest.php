@@ -123,13 +123,13 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertEquals(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
     }
 
     /**
      * @return void
      */
-    public function testPrepareProductConfiguratorRedirectDefaultPlugin()
+    public function testPrepareProductConfiguratorRedirectDefaultPlugin(): void
     {
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([]);
@@ -147,13 +147,13 @@ class ProductConfigurationClientTest extends Unit
             ->prepareProductConfiguratorRedirect($productConfigurationRequestTransfer);
 
         //Assert
-        $this->assertEquals(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
+        $this->assertSame(static::TEST_CONFIGURATOR_REDIRECT_URL, $productConfiguratorRedirect->getConfiguratorRedirectUrl());
     }
 
     /**
      * @return void
      */
-    public function testProcessProductConfiguratorResponseWithSuccessFlow()
+    public function testProcessProductConfiguratorResponseWithSuccessFlow(): void
     {
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([
@@ -177,7 +177,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testProcessProductConfiguratorResponseDefaultPlugin()
+    public function testProcessProductConfiguratorResponseDefaultPlugin(): void
     {
         //Arrange
         $this->configurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([]);
@@ -201,7 +201,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteProductConfigurationValidWithSuccessFlow()
+    public function testIsQuoteProductConfigurationValidWithSuccessFlow(): void
     {
         //Arrange
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceTransfer())
@@ -223,7 +223,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteProductConfigurationValidFalseWithNotCompletedProductConfiguration()
+    public function testIsQuoteProductConfigurationValidFalseWithNotCompletedProductConfiguration(): void
     {
         //Arrange
         $productConfigurationInstanceTransfer = (new ProductConfigurationInstanceTransfer())
@@ -245,7 +245,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteProductConfigurationValidEmptyQuoteDoNothing()
+    public function testIsQuoteProductConfigurationValidEmptyQuoteDoNothing(): void
     {
         //Act
         $isQuoteProductConfigurationValid = $this->productConfigurationClient->isQuoteProductConfigurationValid(
@@ -259,7 +259,7 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testIsQuoteProductConfigurationValidItemsWithoutConfiguration()
+    public function testIsQuoteProductConfigurationValidItemsWithoutConfiguration(): void
     {
         $itemTransfer = (new ItemBuilder())->build();
 

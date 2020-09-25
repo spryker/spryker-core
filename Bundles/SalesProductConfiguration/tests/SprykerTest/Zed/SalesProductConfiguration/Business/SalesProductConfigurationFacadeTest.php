@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfiguration;
 use Orm\Zed\SalesProductConfiguration\Persistence\SpySalesOrderItemConfigurationQuery;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * Auto-generated group annotations
@@ -63,8 +64,49 @@ class SalesProductConfigurationFacadeTest extends Unit
             ->findOne();
 
         //Assert
+        $this->assertSame($itemTransfer->getIdSalesOrderItem(), $productConfigurationEntity->getFkSalesOrderItem());
+    }
 
-        $this->assertEquals($itemTransfer->getIdSalesOrderItem(), $productConfigurationEntity->getFkSalesOrderItem());
+    /**
+     * @return void
+     */
+    public function testSaveSalesOrderItemConfigurationsFromQuoteFailSalesOrderIdRequired(): void
+    {
+        //Arrange
+        $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setConfiguratorKey(
+            static::PRODUCT_CONFIGURATION_TEST_KEY
+        );
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
+        ]))->build();
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        //Act
+        $this->tester->getFacade()->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testSaveSalesOrderItemConfigurationsFromQuoteFailProductConfigurationKeyRequired(): void
+    {
+        //Arrange
+        $productConfigurationInstance = new ProductConfigurationInstanceTransfer();
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::PRODUCT_CONFIGURATION_INSTANCE => $productConfigurationInstance,
+        ]))->build();
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        //Act
+        $this->tester->getFacade()->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
     }
 
     /**
@@ -92,6 +134,6 @@ class SalesProductConfigurationFacadeTest extends Unit
             ->getConfiguratorKey();
 
         //Assert
-        $this->assertEquals(static::PRODUCT_CONFIGURATION_TEST_KEY, $salesProductConfigurationKey);
+        $this->assertSame(static::PRODUCT_CONFIGURATION_TEST_KEY, $salesProductConfigurationKey);
     }
 }

@@ -66,7 +66,7 @@ class ProductConfigurationFacadeTest extends Unit
 
         //Assert
         $this->assertNotEmpty($productConfigurationCollectionTransfer->getProductConfigurations());
-        $this->assertEquals($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
+        $this->assertSame($productTransfer->getIdProductConcrete(), $createdProductConfigurationTransfer->getFkProduct());
     }
 
     /**
@@ -119,7 +119,7 @@ class ProductConfigurationFacadeTest extends Unit
         $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
 
         //Assert
-        $this->assertEquals($itemProductConfigurationGroupKey, $expandedItemTransfer->getGroupKey());
+        $this->assertSame($itemProductConfigurationGroupKey, $expandedItemTransfer->getGroupKey());
     }
 
     /**
@@ -142,7 +142,7 @@ class ProductConfigurationFacadeTest extends Unit
         $expandedItemTransfer = $expandedCartChangeTransfer->getItems()->getIterator()->current();
 
         //Assert
-        $this->assertEquals(static::TEST_GROUP_KEY, $expandedItemTransfer->getGroupKey());
+        $this->assertSame(static::TEST_GROUP_KEY, $expandedItemTransfer->getGroupKey());
     }
 
     /**

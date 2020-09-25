@@ -18,6 +18,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
@@ -332,7 +333,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReplaceItem()
+    public function testReplaceItemSuccessFlow(): void
     {
         // Arrange
         $itemForRemove = new ItemTransfer();
@@ -368,6 +369,62 @@ class CartFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemFailCartChangeForAddingRequired(): void
+    {
+        // Arrange
+        $itemForRemove = new ItemTransfer();
+        $itemForRemove->setId(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $itemForRemove->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT);
+        $itemForRemove->setQuantity(1);
+        $itemForRemove->setUnitGrossPrice(1);
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemForRemove);
+
+        $cartChangeForRemoval = new CartChangeTransfer();
+        $cartChangeForRemoval->setQuote($quoteTransfer);
+        $cartChangeForRemoval->addItem($itemForRemove);
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForRemoval($cartChangeForRemoval);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemFailCartChangeForRemoveRequired(): void
+    {
+        $itemForAdd = new ItemTransfer();
+        $itemForAdd->setId(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $itemForAdd->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT);
+        $itemForAdd->setQuantity(1);
+        $itemForAdd->setUnitGrossPrice(1);
+
+        $quoteTransfer = new QuoteTransfer();
+
+        $cartChangeForAdd = new CartChangeTransfer();
+        $cartChangeForAdd->setQuote($quoteTransfer);
+        $cartChangeForAdd->addItem($itemForAdd);
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForAdding($cartChangeForAdd);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
     }
 
     /**
