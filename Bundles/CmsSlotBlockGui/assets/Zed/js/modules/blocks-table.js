@@ -121,7 +121,7 @@ var BlocksTable = function (options) {
     }
 
     this.toggleIsModified = function (id) {
-        const blockIndex = _self.modifiedBlocks.indexOf(id);
+        var blockIndex = _self.modifiedBlocks.indexOf(id);
         if (blockIndex > -1) {
             _self.modifiedBlocks.splice(blockIndex, 1);
         } else {
@@ -130,7 +130,7 @@ var BlocksTable = function (options) {
     }
 
     this.addRow = function (rowData = {}) {
-        const blockId = Number(rowData.blockId);
+        var blockId = Number(rowData.blockId);
         rowData = [
             blockId,
             rowData.blockName,

@@ -30,7 +30,7 @@ var BlocksChoice = function (options) {
                 url: _self.baseUrl,
                 dataType: 'json',
                 data: function (params) {
-                    const paramsCollection = {};
+                    var paramsCollection = {};
                     paramsCollection[_self.paramTerm] = params.term;
                     paramsCollection[_self.paramPage] = params.page || 1;
                     paramsCollection[_self.paramIdCmsSlotTemplate] = _self.blocksTable.idCmsSlotTemplate;
@@ -40,13 +40,11 @@ var BlocksChoice = function (options) {
                 },
                 processResults: function (data) {
                     return {
-                        ...data,
                         results: $.map(data.results, function (item) {
-                            return {
-                                ...item,
-                                disabled: (item.disabled !== _self.blocksTable.isBlockModified(item.id))
-                            }
+                            item.disabled = (item.disabled !== _self.blocksTable.isBlockModified(item.id));
+                            return item;
                         }),
+                        pagination: data.pagination
                     };
                 },
                 delay: 250,
