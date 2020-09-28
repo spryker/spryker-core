@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Dependency\Facade;
 
-use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 
 class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
 {
@@ -80,16 +80,12 @@ class CmsSlotBlockGuiToCmsSlotBlockFacadeBridge implements CmsSlotBlockGuiToCmsS
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
-    ): CmsBlockSuggestionCollectionTransfer {
-        return $this->cmsSlotBlockFacade
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    {
+        return $this->cmsSlotBlockFacade->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
     }
 }

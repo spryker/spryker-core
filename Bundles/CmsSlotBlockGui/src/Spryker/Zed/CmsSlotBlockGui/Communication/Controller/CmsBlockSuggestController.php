@@ -7,6 +7,7 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -32,36 +33,43 @@ class CmsBlockSuggestController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $requestQuery = $request->query;
+        $searchTerm = (string)$request->query->get(static::PARAM_SEARCH_TEXT);
+        $page = $request->query->getInt(static::PARAM_PAGE, static::DEFAULT_PAGE);
+        $idCmsSlotTemplate = $request->query->getInt(static::PARAM_ID_CMS_SLOT_TEMPLATE);
+        $idCmsSlot = $request->query->getInt(static::PARAM_ID_CMS_SLOT);
 
-        $searchTerm = (string)$requestQuery->get(static::PARAM_SEARCH_TEXT);
-        $page = (int)$requestQuery->get(static::PARAM_PAGE, static::DEFAULT_PAGE);
-        $idCmsSlotTemplate = (int)$requestQuery->get(static::PARAM_ID_CMS_SLOT_TEMPLATE);
-        $idCmsSlot = (int)$requestQuery->get(static::PARAM_ID_CMS_SLOT);
-
-        $cmsSlotBlockCriteriaTransfer = $this->buildCmsSlotBlockCriteriaTransfer($searchTerm, $idCmsSlotTemplate, $idCmsSlot);
-        $paginationTransfer = $this->buildPaginationTransfer($page);
+        $cmsBlockCriteriaTransfer = $this->buildCmsBlockCriteriaTransfer($searchTerm, $page);
+        $cmsSlotBlockCriteriaTransfer = $this->buildCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate, $idCmsSlot);
 
         return $this->jsonResponse(
-            $this->getFacade()
-                ->getCmsBlockSuggestions($cmsSlotBlockCriteriaTransfer, $paginationTransfer)
+            $this->getFacade()->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
         );
     }
 
     /**
      * @param string $searchTerm
+     * @param int $page
+     *
+     * @return \Generated\Shared\Transfer\CmsBlockCriteriaTransfer
+     */
+    protected function buildCmsBlockCriteriaTransfer(string $searchTerm, int $page): CmsBlockCriteriaTransfer
+    {
+        $paginationTransfer = $this->buildPaginationTransfer($page);
+
+        return (new CmsBlockCriteriaTransfer())
+            ->setName($searchTerm)
+            ->setPagination($paginationTransfer);
+    }
+
+    /**
      * @param int $idCmsSlotTemplate
      * @param int $idCmsSlot
      *
      * @return \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer
      */
-    protected function buildCmsSlotBlockCriteriaTransfer(
-        string $searchTerm,
-        int $idCmsSlotTemplate,
-        int $idCmsSlot
-    ): CmsSlotBlockCriteriaTransfer {
+    protected function buildCmsSlotBlockCriteriaTransfer(int $idCmsSlotTemplate, int $idCmsSlot): CmsSlotBlockCriteriaTransfer
+    {
         return (new CmsSlotBlockCriteriaTransfer())
-            ->setCmsBlockName($searchTerm)
             ->setIdCmsSlotTemplate($idCmsSlotTemplate)
             ->setIdCmsSlot($idCmsSlot);
     }

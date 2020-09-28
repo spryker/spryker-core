@@ -7,19 +7,19 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Business\Finder;
 
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 
 interface CmsBlockSuggestionFinderInterface
 {
     /**
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array
      */
     public function getCmsBlockSuggestions(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
+        CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array;
 }

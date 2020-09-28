@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Business;
 
-use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 
 interface CmsSlotBlockFacadeInterface
 {
@@ -82,20 +82,16 @@ interface CmsSlotBlockFacadeInterface
 
     /**
      * Specification:
-     * - Searches CMS Blocks suggestions based on CMS Block name.
-     * - Paginates search results according to pagination.
-     * - Returns a collection of suggested CMS block transfers with CMS Slot relations and pagination.
-     * - PaginationTransfer.Page and PaginationTransfer.MaxPerPage must be set.
+     * - Searches for CMS Blocks based on criteria.
+     * - Paginates search results according to pagination transfer.
+     * - Returns a collection of CMS block transfers with CMS Slot relations and pagination.
+     * - CmsBlockCriteriaTransfer.Pagination, PaginationTransfer.Page, and PaginationTransfer.MaxPerPage must be set.
      *
      * @api
      *
-     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
-    ): CmsBlockSuggestionCollectionTransfer;
+    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
 }

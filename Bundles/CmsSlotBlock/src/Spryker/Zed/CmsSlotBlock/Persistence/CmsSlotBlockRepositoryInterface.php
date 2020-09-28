@@ -7,11 +7,11 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
-use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 
 interface CmsSlotBlockRepositoryInterface
 {
@@ -32,13 +32,9 @@ interface CmsSlotBlockRepositoryInterface
     public function getCmsBlocksWithSlotRelations(FilterTransfer $filterTransfer): array;
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
-    ): CmsBlockSuggestionCollectionTransfer;
+    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer;
 }

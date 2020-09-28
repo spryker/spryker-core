@@ -8,11 +8,10 @@
 namespace SprykerTest\Zed\CmsSlotBlock\Business;
 
 use Codeception\Test\Unit;
-use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
 use Orm\Zed\CmsBlock\Persistence\Map\SpyCmsBlockTableMap;
-use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockBusinessFactory;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
@@ -210,7 +209,7 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectLimit(): void
     {
         // Arrange
-        $cmsBlockCountBefore = SpyCmsBlockQuery::create()->count();
+        $cmsBlockCountBefore = $this->tester->getCmsBlockCount();
         $this->tester->createCmsBlocksInDb(1);
         $filterTransfer = (new FilterTransfer())->setLimit($cmsBlockCountBefore + 1);
 
@@ -227,7 +226,7 @@ class CmsSlotBlockFacadeTest extends Unit
     public function testGetCmsBlocksWithSlotRelationsReturnsDataWithCorrectOffset(): void
     {
         // Arrange
-        $cmsBlockCountBefore = SpyCmsBlockQuery::create()->count();
+        $cmsBlockCountBefore = $this->tester->getCmsBlockCount();
         $this->tester->createCmsBlocksInDb(1);
         $filterTransfer = (new FilterTransfer())->setOffset($cmsBlockCountBefore);
 
@@ -278,97 +277,105 @@ class CmsSlotBlockFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetCmsBlockPaginatedSuggestionsWithSlotRelationReturnsDataWithEmptySearchName(): void
+    public function testGetPaginatedCmsBlockReturnsDataWithEmptySearchName(): void
     {
         // Arrange
-        $cmsBlockCountBefore = SpyCmsBlockQuery::create()->count();
+        $cmsBlockCountBefore = $this->tester->getCmsBlockCount();
         $this->tester->createCmsBlocksInDb(1);
         $cmsBlockCountAfter = $cmsBlockCountBefore + 1;
 
-        $cmsSlotBlockCriteriaTransfer = new CmsSlotBlockCriteriaTransfer();
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage($cmsBlockCountAfter)
             ->setPage(1);
+        $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())->setPagination($paginationTransfer);
 
         // Act
-        $cmsBlockSuggestionCollectionTransfer = $this->tester
+        $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
 
         // Assert
-        $this->assertCount($cmsBlockCountAfter, $cmsBlockSuggestionCollectionTransfer->getCmsBlocks());
+        $this->assertCount($cmsBlockCountAfter, $cmsBlockCollectionTransfer->getCmsBlocks());
     }
 
     /**
      * @return void
      */
-    public function testGetCmsBlockPaginatedSuggestionsWithSlotRelationReturnsSuggestedData(): void
+    public function testGetPaginatedCmsBlockReturnsCmsBlockBasedOnSearchData(): void
     {
         // Arrange
         $blockNamePattern = 'block-';
         $cmsBlockWithNamesCount = 3;
         $this->tester->createCmsBlocksInDb($cmsBlockWithNamesCount, $blockNamePattern);
         $this->tester->createCmsBlocksInDb(2);
-        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())->setCmsBlockName($blockNamePattern);
+
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage($cmsBlockWithNamesCount)
             ->setPage(1);
+        $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
+            ->setName($blockNamePattern)
+            ->setPagination($paginationTransfer);
 
         // Act
-        $cmsBlockSuggestionCollectionTransfer = $this->tester
+        $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
 
         // Assert
-        $this->assertCount($cmsBlockWithNamesCount, $cmsBlockSuggestionCollectionTransfer->getCmsBlocks());
+        $this->assertCount($cmsBlockWithNamesCount, $cmsBlockCollectionTransfer->getCmsBlocks());
     }
 
     /**
      * @return void
      */
-    public function testGetCmsBlockPaginatedSuggestionsWithSlotRelationReturnsSuggestedPaginatedData(): void
+    public function testGetPaginatedCmsBlockReturnsPaginatedData(): void
     {
         // Arrange
         $blockNamePattern = 'block-';
         $cmsBlocksCount = 10;
         $cmsBlocksMaxPerPage = $cmsBlocksCount / 2;
         $this->tester->createCmsBlocksInDb($cmsBlocksCount, $blockNamePattern);
-        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())->setCmsBlockName($blockNamePattern);
+
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage($cmsBlocksMaxPerPage)
             ->setPage(1);
+        $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
+            ->setName($blockNamePattern)
+            ->setPagination($paginationTransfer);
 
         // Act
-        $cmsBlockSuggestionCollectionTransfer = $this->tester
+        $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
 
         // Assert
-        $this->assertCount($cmsBlocksMaxPerPage, $cmsBlockSuggestionCollectionTransfer->getCmsBlocks());
-        $this->assertEquals(2, $cmsBlockSuggestionCollectionTransfer->getPagination()->getLastPage());
+        $this->assertCount($cmsBlocksMaxPerPage, $cmsBlockCollectionTransfer->getCmsBlocks());
+        $this->assertEquals(2, $cmsBlockCollectionTransfer->getPagination()->getLastPage());
     }
 
     /**
      * @return void
      */
-    public function testGetCmsBlockPaginatedSuggestionsWithSlotRelationWithNoSuggestions()
+    public function testGetPaginatedCmsBlockReturnsEmptyData()
     {
         // Arrange
         $blockNamePattern = 'block-';
         $this->tester->createCmsBlocksInDb(5, $blockNamePattern);
 
-        $cmsSlotBlockCriteriaTransfer = (new CmsSlotBlockCriteriaTransfer())->setCmsBlockName('block-name');
         $paginationTransfer = (new PaginationTransfer())
             ->setMaxPerPage(5)
             ->setPage(1);
+        $cmsBlockCriteriaTransfer = (new CmsBlockCriteriaTransfer())
+            ->setName('block-name')
+            ->setPagination($paginationTransfer);
 
         // Act
-        $cmsBlockSuggestionCollectionTransfer = $this->tester
+        $cmsBlockCollectionTransfer = $this->tester
             ->createCmsSlotBlockFacade()
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
 
         // Assert
-        $this->assertEmpty($cmsBlockSuggestionCollectionTransfer->getCmsBlocks());
+        $this->assertEmpty($cmsBlockCollectionTransfer->getCmsBlocks());
     }
 
     /**

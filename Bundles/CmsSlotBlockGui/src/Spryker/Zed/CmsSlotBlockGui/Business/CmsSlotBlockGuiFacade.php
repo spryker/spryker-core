@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Business;
 
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -21,17 +21,17 @@ class CmsSlotBlockGuiFacade extends AbstractFacade implements CmsSlotBlockGuiFac
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array
      */
-    public function getCmsBlockSuggestions(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
+    public function getPaginatedCmsBlocks(
+        CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array {
         return $this->getFactory()
             ->createCmsBlockSuggestionFinder()
-            ->getCmsBlockSuggestions($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer);
     }
 }

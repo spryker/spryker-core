@@ -7,7 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlock\Persistence;
 
-use Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCollectionTransfer;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCollectionTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
@@ -88,20 +89,20 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      *
-     * @return \Generated\Shared\Transfer\CmsBlockSuggestionCollectionTransfer
+     * @return \Generated\Shared\Transfer\CmsBlockCollectionTransfer
      */
-    public function getCmsBlockPaginatedSuggestionsWithSlotRelation(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
-    ): CmsBlockSuggestionCollectionTransfer {
-        $cmsBlockSuggestionCollectionTransfer = new CmsBlockSuggestionCollectionTransfer();
+    public function getPaginatedCmsBlocks(CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer): CmsBlockCollectionTransfer
+    {
+        $cmsBlockCollectionTransfer = new CmsBlockCollectionTransfer();
+        $paginationTransfer = $cmsBlockCriteriaTransfer
+            ->requirePagination()
+            ->getPagination();
 
-        $cmsBlockIds = $this->getCmsBlockSuggestedIds($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+        $cmsBlockIds = $this->getPaginatedCmsBlockIds($cmsBlockCriteriaTransfer, $paginationTransfer);
         if (!$cmsBlockIds) {
-            return $cmsBlockSuggestionCollectionTransfer;
+            return $cmsBlockCollectionTransfer;
         }
 
         $cmsBlockEntities = $this
@@ -111,12 +112,12 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
 
         return $this->getFactory()
             ->createCmsSlotBlockMapper()
-            ->mapCmsBlockEntitiesToCmsBlockSuggestionCollectionTransfer($cmsBlockEntities)
+            ->mapCmsBlockEntitiesToCmsBlockCollectionTransfer($cmsBlockEntities, $cmsBlockCollectionTransfer)
             ->setPagination($paginationTransfer);
     }
 
     /**
-     * @param array $cmsBlockIds
+     * @param int[] $cmsBlockIds
      *
      * @return \Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery
      */
@@ -134,20 +135,21 @@ class CmsSlotBlockRepository extends AbstractRepository implements CmsSlotBlockR
     }
 
     /**
-     * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
-     * @return array
+     * @return int[]
      */
-    protected function getCmsBlockSuggestedIds(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
+    protected function getPaginatedCmsBlockIds(
+        CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
         PaginationTransfer $paginationTransfer
     ): array {
         $cmsBlockQuery = $this->getFactory()->getCmsBlockQuery();
 
-        $cmsBlockName = trim($cmsSlotBlockCriteriaTransfer->getCmsBlockName());
+        $cmsBlockName = trim($cmsBlockCriteriaTransfer->getName() ?? '');
         if ($cmsBlockName !== '') {
-            $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', '%' . mb_strtoupper($cmsBlockName) . '%');
+            $nameTerm = '%' . mb_strtoupper($cmsBlockName) . '%';
+            $cmsBlockQuery->where('UPPER(' . SpyCmsBlockTableMap::COL_NAME . ') LIKE ?', $nameTerm);
         }
 
         $pagination = $this->getPaginationFromQuery($cmsBlockQuery, $paginationTransfer);

@@ -7,8 +7,8 @@
 
 namespace Spryker\Zed\CmsSlotBlockGui\Business;
 
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
-use Generated\Shared\Transfer\PaginationTransfer;
 
 /**
  * @method \Spryker\Zed\CmsSlotBlockGui\Business\CmsSlotBlockGuiBusinessFactory getFactory()
@@ -17,18 +17,18 @@ interface CmsSlotBlockGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Searches CMS Blocks suggestions based on CMS Block name and pagination.
-     * - Transform CMS Blocks transfers collection to suggestion data.
+     * - Searches for CMS Blocks based on criteria and pagination.
+     * - Transform CMS Blocks transfer collection to suggestion data.
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array
      */
-    public function getCmsBlockSuggestions(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
+    public function getPaginatedCmsBlocks(
+        CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array;
 }

@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CmsSlotBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotTemplateTransfer;
 use Generated\Shared\Transfer\CmsSlotTransfer;
 use Generated\Shared\Transfer\StoreRelationTransfer;
+use Orm\Zed\CmsBlock\Persistence\SpyCmsBlockQuery;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacade;
 use Spryker\Zed\CmsSlotBlock\Business\CmsSlotBlockFacadeInterface;
 
@@ -162,5 +163,13 @@ class CmsSlotBlockBusinessTester extends Actor
     public function createCmsSlotBlockFacade(): CmsSlotBlockFacadeInterface
     {
         return new CmsSlotBlockFacade();
+    }
+
+    /**
+     * @return int
+     */
+    public function getCmsBlockCount(): int
+    {
+        return SpyCmsBlockQuery::create()->count();
     }
 }

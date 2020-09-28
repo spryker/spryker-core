@@ -31,8 +31,6 @@ class CmsSlotBlockGuiBusinessFactory extends AbstractBusinessFactory
      */
     public function createCmsBlockSuggestionFinder(): CmsBlockSuggestionFinderInterface
     {
-        return new CmsBlockSuggestionFinder(
-            $this->getCmsSlotBlockFacade()
-        );
+        return new CmsBlockSuggestionFinder($this->getCmsSlotBlockFacade());
     }
 }

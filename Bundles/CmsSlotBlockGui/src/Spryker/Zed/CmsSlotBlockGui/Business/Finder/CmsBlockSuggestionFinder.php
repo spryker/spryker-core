@@ -8,6 +8,7 @@
 namespace Spryker\Zed\CmsSlotBlockGui\Business\Finder;
 
 use ArrayObject;
+use Generated\Shared\Transfer\CmsBlockCriteriaTransfer;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer;
 use Generated\Shared\Transfer\PaginationTransfer;
@@ -22,29 +23,29 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
     /**
      * @var \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface
      */
-    protected $slotBlockFacade;
+    protected $cmsSlotBlockFacade;
 
     /**
-     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $slotBlockFacade
+     * @param \Spryker\Zed\CmsSlotBlockGui\Dependency\Facade\CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade
      */
-    public function __construct(CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $slotBlockFacade)
+    public function __construct(CmsSlotBlockGuiToCmsSlotBlockFacadeInterface $cmsSlotBlockFacade)
     {
-        $this->slotBlockFacade = $slotBlockFacade;
+        $this->cmsSlotBlockFacade = $cmsSlotBlockFacade;
     }
 
     /**
+     * @param \Generated\Shared\Transfer\CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
-     * @param \Generated\Shared\Transfer\PaginationTransfer $paginationTransfer
      *
      * @return array
      */
     public function getCmsBlockSuggestions(
-        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer,
-        PaginationTransfer $paginationTransfer
+        CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
+        CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array {
         $cmsBlockSuggestionCollectionTransfer = $this
-            ->slotBlockFacade
-            ->getCmsBlockPaginatedSuggestionsWithSlotRelation($cmsSlotBlockCriteriaTransfer, $paginationTransfer);
+            ->cmsSlotBlockFacade
+            ->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer);
 
         return [
             static::RESPONSE_KEY_RESULTS => $this->transformCmsBlocksToSuggestionData(
@@ -58,7 +59,7 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
     }
 
     /**
-     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockTransfer[] $cmsBlockTransfers
+     * @param \ArrayObject|\Generated\Shared\Transfer\CmsBlockTransfer[]> $cmsBlockTransfers
      * @param \Generated\Shared\Transfer\CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
      *
      * @return array
@@ -98,9 +99,9 @@ class CmsBlockSuggestionFinder implements CmsBlockSuggestionFinderInterface
         int $idCmsSlotTemplate,
         int $idCmsSlot
     ): bool {
-        $cmsSlotBlocks = $cmsBlockTransfer->getCmsSlotBlockCollection()->getCmsSlotBlocks();
-        foreach ($cmsSlotBlocks as $cmsSlotBlock) {
-            if ($cmsSlotBlock->getIdSlotTemplate() === $idCmsSlotTemplate && $cmsSlotBlock->getIdSlot() === $idCmsSlot) {
+        $cmsBlockTransfers = $cmsBlockTransfer->getCmsSlotBlockCollection()->getCmsSlotBlocks();
+        foreach ($cmsBlockTransfers as $cmsBlockTransfer) {
+            if ($cmsBlockTransfer->getIdSlotTemplate() === $idCmsSlotTemplate && $cmsBlockTransfer->getIdSlot() === $idCmsSlot) {
                 return true;
             }
         }
