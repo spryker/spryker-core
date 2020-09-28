@@ -126,7 +126,7 @@ class DetailController extends AbstractController
             $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = $eventsForGroup;
         }
 
-        return array_unique($events);
+        return $events;
     }
 
     /**
