@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute;
 use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValue;
+use Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttributeValueTranslation;
 use Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Facade\ProductAttributeToProductInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
@@ -32,6 +33,7 @@ use Spryker\Zed\ProductAttribute\ProductAttributeConfig;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = null)
+ * @method \Spryker\Zed\ProductAttribute\Business\ProductAttributeFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -154,14 +156,16 @@ class ProductAttributeBusinessTester extends Actor
     {
         $productManagementAttributeEntity = $this->haveProductManagementAttributeEntity();
 
-        if (!empty($values)) {
-            foreach ($values as $value) {
-                $productManagementAttributeValueEntity = new SpyProductManagementAttributeValue();
-                $productManagementAttributeValueEntity
-                    ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
-                    ->setValue($value);
-                $productManagementAttributeValueEntity->save();
-            }
+        if (!$values) {
+            return $productManagementAttributeEntity;
+        }
+
+        foreach ($values as $value) {
+            $productManagementAttributeValueEntity = (new SpyProductManagementAttributeValue())
+                ->setFkProductManagementAttribute($productManagementAttributeEntity->getIdProductManagementAttribute())
+                ->setValue($value);
+
+            $productManagementAttributeValueEntity->save();
         }
 
         return $productManagementAttributeEntity;
@@ -268,9 +272,7 @@ class ProductAttributeBusinessTester extends Actor
             ->setKey($key)
             ->setInputType('text');
 
-        $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
-
-        return $productManagementAttributeTransfer;
+        return $this->productAttributeFacade->createProductManagementAttribute($productManagementAttributeTransfer);
     }
 
     /**
@@ -285,5 +287,29 @@ class ProductAttributeBusinessTester extends Actor
         $data[self::SUPER_ATTRIBUTE_KEY] = self::SUPER_ATTRIBUTE_VALUE;
 
         return $data;
+    }
+
+    /**
+     * @param \Orm\Zed\ProductAttribute\Persistence\SpyProductManagementAttribute $productManagementAttributeEntity
+     *
+     * @return void
+     */
+    public function addAttributeValueTranslations(SpyProductManagementAttribute $productManagementAttributeEntity): void
+    {
+        foreach ($productManagementAttributeEntity->getSpyProductManagementAttributeValues() as $productManagementAttributeValueEntity) {
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale('aa_AA')->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to a language')
+                ->save();
+
+            $attributeValueTranslationEntity = new SpyProductManagementAttributeValueTranslation();
+            $attributeValueTranslationEntity
+                ->setFkProductManagementAttributeValue($productManagementAttributeValueEntity->getIdProductManagementAttributeValue())
+                ->setFkLocale($this->getLocale('bb_BB')->getIdLocale())
+                ->setTranslation($productManagementAttributeValueEntity->getValue() . ' translated to another language')
+                ->save();
+        }
     }
 }

@@ -22,6 +22,8 @@ use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttribute;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeReader;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductAttributeWriter;
 use Spryker\Zed\ProductAttribute\Business\Model\Product\ProductReader;
+use Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReader;
+use Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReaderInterface;
 use Spryker\Zed\ProductAttribute\Dependency\Service\ProductAttributeToUtilSanitizeXssServiceInterface;
 use Spryker\Zed\ProductAttribute\ProductAttributeDependencyProvider;
 
@@ -146,6 +148,20 @@ class ProductAttributeBusinessFactory extends AbstractBusinessFactory
     public function createSuperAttributeReader(): SuperAttributeReaderInterface
     {
         return new SuperAttributeReader($this->getRepository());
+    }
+
+    /**
+     * @return \Spryker\Zed\ProductAttribute\Business\Reader\ProductManagementAttributeReaderInterface
+     */
+    public function createProductManagementAttributeReader(): ProductManagementAttributeReaderInterface
+    {
+        return new ProductManagementAttributeReader(
+            $this->getRepository(),
+            $this->getLocaleFacade(),
+            $this->getGlossaryFacade(),
+            $this->createAttributeGlossaryKeyBuilder(),
+            $this->createProductAttributeTransferGenerator()
+        );
     }
 
     /**

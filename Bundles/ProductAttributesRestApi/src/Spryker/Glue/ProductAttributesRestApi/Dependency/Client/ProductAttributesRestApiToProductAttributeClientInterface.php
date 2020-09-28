@@ -5,20 +5,13 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\ProductAttribute\Persistence;
+namespace Spryker\Glue\ProductAttributesRestApi\Dependency\Client;
 
 use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 
-interface ProductAttributeRepositoryInterface
+interface ProductAttributesRestApiToProductAttributeClientInterface
 {
-    /**
-     * @param array $attributes
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
-     */
-    public function findSuperAttributesFromAttributesList(array $attributes): array;
-
     /**
      * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
      *
@@ -27,11 +20,4 @@ interface ProductAttributeRepositoryInterface
     public function getProductManagementAttributes(
         ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
     ): ProductManagementAttributeCollectionTransfer;
-
-    /**
-     * @param int[] $productManagementAttributeIds
-     *
-     * @return \Generated\Shared\Transfer\ProductManagementAttributeValueTransfer[]
-     */
-    public function getProductManagementAttributeValuesByProductManagementAttributeIds(array $productManagementAttributeIds): array;
 }

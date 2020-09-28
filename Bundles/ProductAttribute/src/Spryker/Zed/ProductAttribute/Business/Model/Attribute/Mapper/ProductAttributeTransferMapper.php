@@ -104,7 +104,7 @@ class ProductAttributeTransferMapper implements ProductAttributeTransferMapperIn
      *
      * @return string[][]
      */
-    protected function indexTranslationsByKeyNameAndLocaleName(
+    public function indexTranslationsByKeyNameAndLocaleName(
         array $translationTransfers,
         array $localeTransfers,
         array $glossaryKeyTransfers

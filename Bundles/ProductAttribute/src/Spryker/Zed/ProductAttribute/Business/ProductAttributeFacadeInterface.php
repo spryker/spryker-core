@@ -8,6 +8,8 @@
 namespace Spryker\Zed\ProductAttribute\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer;
+use Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer;
 use Generated\Shared\Transfer\ProductManagementAttributeTransfer;
 
 /**
@@ -320,4 +322,18 @@ interface ProductAttributeFacadeInterface
      * @return \Generated\Shared\Transfer\ProductManagementAttributeTransfer[]
      */
     public function getUniqueSuperAttributesFromConcreteProducts(array $productConcreteTransfers): array;
+
+    /**
+     * Specification:
+     * - Retrieves product management attributes from Persistence that match the given criteria.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductManagementAttributeCollectionTransfer
+     */
+    public function getProductManagementAttributes(
+        ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
+    ): ProductManagementAttributeCollectionTransfer;
 }
