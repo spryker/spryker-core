@@ -69,8 +69,6 @@ class SchedulerSetupConsole extends AbstractSchedulerConsole
         $schedulerFilterTransfer = $this->createSchedulerFilterTransfer($roles, $schedulers);
         $responseCollectionTransfer = $this->getFacade()->setup($schedulerFilterTransfer);
 
-        $this->outputCommandResponse($responseCollectionTransfer, $output);
-
-        return static::CODE_SUCCESS;
+        return $this->outputCommandResponseStatus($responseCollectionTransfer, $output);
     }
 }

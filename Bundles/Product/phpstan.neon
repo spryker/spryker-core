@@ -1,3 +1,5 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#Else branch is unreachable because ternary operator condition is always true.#'

@@ -1,6 +1,7 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Method .+CategoryQueryContainerInterface::queryCategory\(\) invoked with 2 parameters, 1 required.#'
-    - '#Method .+CategoryTreeReader::getPath\(\) should return array but returns iterable<.+SpyCategoryNode>&.+ObjectCollection#'
-    - '#Method .+CategoryTreeReader::getPathChildren\(\) should return array but returns iterable<.+SpyCategoryClosureTable>&.+ObjectCollection#'
-    - '#Method .+CategoryTreeReader::getPathParents\(\) should return array but returns iterable<.+SpyCategoryClosureTable>&.+ObjectCollection#'
+        - '#Method .+CategoryQueryContainerInterface::queryCategory\(\) invoked with 2 parameters, 1 required.#'
+        - '#Method .+CategoryTreeReader::getPath\(\) should return array but returns iterable<.+SpyCategoryNode>&.+ObjectCollection#'
+        - '#Method .+CategoryTreeReader::getPathChildren\(\) should return array but returns iterable<.+SpyCategoryClosureTable>&.+ObjectCollection#'
+        - '#Method .+CategoryTreeReader::getPathParents\(\) should return array but returns iterable<.+SpyCategoryClosureTable>&.+ObjectCollection#'

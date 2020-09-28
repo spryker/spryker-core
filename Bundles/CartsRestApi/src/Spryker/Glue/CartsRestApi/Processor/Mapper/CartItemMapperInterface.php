@@ -14,9 +14,14 @@ interface CartItemMapperInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
-    public function mapItemTransferToRestItemsAttributesTransfer(ItemTransfer $itemTransfer, string $localeName): RestItemsAttributesTransfer;
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        string $localeName
+    ): RestItemsAttributesTransfer;
 }

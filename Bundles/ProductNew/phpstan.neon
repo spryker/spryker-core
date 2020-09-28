@@ -1,3 +1,4 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Parameter \#2 \$value of method Elastica\\Query\\Term::setTerm\(\) expects array\|string, int given.#'
+        - '#Parameter \#2 \$value of method Elastica\\Query\\Term::setTerm\(\) expects array\|string, int given.#'

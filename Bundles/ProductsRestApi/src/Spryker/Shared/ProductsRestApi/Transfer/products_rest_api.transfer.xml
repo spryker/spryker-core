@@ -20,6 +20,7 @@
 
     <transfer name="ConcreteProductsRestAttributes">
         <property name="sku" type="string"/>
+        <property name="productAbstractSku" type="string"/>
         <property name="name" type="string"/>
         <property name="description" type="string"/>
         <property name="attributes" type="array" singular="attributes"/>
@@ -59,4 +60,7 @@
         <property name="quantity" type="int"/>
     </transfer>
 
+    <transfer name="Store">
+        <property name="name" type="string"/>
+    </transfer>
 </transfers>

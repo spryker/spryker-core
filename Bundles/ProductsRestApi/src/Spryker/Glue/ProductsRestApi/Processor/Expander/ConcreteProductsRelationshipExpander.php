@@ -38,16 +38,26 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
      */
     public function addResourceRelationshipsBySku(array $resources, RestRequestInterface $restRequest): array
     {
+        $productConcreteSkus = [];
         foreach ($resources as $resource) {
-            $skuProductConcrete = $this->findSku($resource->getAttributes());
-            if (!$skuProductConcrete) {
+            $productConcreteSku = $this->findSku($resource->getAttributes());
+            if (!$productConcreteSku) {
                 continue;
             }
 
-            $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
-            if ($concreteProductsResource) {
-                $resource->addRelationship($concreteProductsResource);
+            $productConcreteSkus[] = $productConcreteSku;
+        }
+
+        $concreteProductRestResources = $this->concreteProductsReader
+            ->getProductConcretesBySkus($productConcreteSkus, $restRequest);
+
+        foreach ($resources as $resource) {
+            $productConcreteSku = $this->findSku($resource->getAttributes());
+            if (!$productConcreteSku || !isset($concreteProductRestResources[$productConcreteSku])) {
+                continue;
             }
+
+            $resource->addRelationship($concreteProductRestResources[$productConcreteSku]);
         }
 
         return $resources;
@@ -66,11 +76,12 @@ class ConcreteProductsRelationshipExpander implements ConcreteProductsRelationsh
             if (!$productConcreteSkus) {
                 continue;
             }
-            foreach ($productConcreteSkus as $skuProductConcrete) {
-                $concreteProductsResource = $this->concreteProductsReader->findProductConcreteBySku($skuProductConcrete, $restRequest);
-                if ($concreteProductsResource) {
-                    $resource->addRelationship($concreteProductsResource);
-                }
+
+            $concreteProductRestResources = $this->concreteProductsReader
+                ->getProductConcretesBySkus($productConcreteSkus, $restRequest);
+
+            foreach ($concreteProductRestResources as $concreteProductRestResource) {
+                $resource->addRelationship($concreteProductRestResource);
             }
         }
 
