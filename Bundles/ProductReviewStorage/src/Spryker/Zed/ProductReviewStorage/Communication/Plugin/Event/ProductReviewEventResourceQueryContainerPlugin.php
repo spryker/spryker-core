@@ -51,7 +51,7 @@ class ProductReviewEventResourceQueryContainerPlugin extends AbstractPlugin impl
             $query->clear();
         }
 
-        return $query->orderBy($this->getIdColumnName());
+        return $query->distinct()->orderBy($this->getIdColumnName());
     }
 
     /**

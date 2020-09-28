@@ -53,7 +53,7 @@ class ProductAbstractImageEventResourceQueryContainerPlugin extends AbstractPlug
             $query->innerJoinSpyProductImageSet();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**

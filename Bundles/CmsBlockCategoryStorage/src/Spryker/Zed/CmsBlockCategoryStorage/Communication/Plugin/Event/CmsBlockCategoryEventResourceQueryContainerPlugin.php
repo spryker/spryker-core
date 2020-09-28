@@ -51,7 +51,7 @@ class CmsBlockCategoryEventResourceQueryContainerPlugin extends AbstractPlugin i
             $query->clear();
         }
 
-        return $query;
+        return $query->distinct();
     }
 
     /**
