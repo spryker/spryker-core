@@ -339,7 +339,6 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-                ItemTransfer::ID => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
                 ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
                 ItemTransfer::QUANTITY => 1,
         ]))->build();
@@ -376,7 +375,6 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-            ItemTransfer::ID => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
             ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
             ItemTransfer::QUANTITY => 1,
         ]))->build();
