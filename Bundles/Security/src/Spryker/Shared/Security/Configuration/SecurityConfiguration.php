@@ -206,8 +206,7 @@ class SecurityConfiguration implements SecurityBuilderInterface, SecurityConfigu
     }
 
     /**
-     * @deprecated Use {@link \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface::extend()} instead. Since symfony/security-core 5.1 you
-     * need to add an event listener or subscriber instead.
+     * @deprecated Use {@link \Spryker\Shared\EventDispatcherExtension\Dependency\Plugin\EventDispatcherPluginInterface::extend()} instead. Since symfony/security-core 5.1 an event listener or subscriber instead.
      *
      * @param string $firewallName
      * @param callable $logoutHandler
