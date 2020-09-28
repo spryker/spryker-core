@@ -42,7 +42,7 @@ class CmsBlockSuggestController extends AbstractController
         $cmsSlotBlockCriteriaTransfer = $this->buildCmsSlotBlockCriteriaTransfer($idCmsSlotTemplate, $idCmsSlot);
 
         return $this->jsonResponse(
-            $this->getFacade()->getPaginatedCmsBlocks($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
+            $this->getFacade()->getCmsBlockSuggestions($cmsBlockCriteriaTransfer, $cmsSlotBlockCriteriaTransfer)
         );
     }
 
