@@ -22,6 +22,4 @@ interface ProductStorageToStorageClientInterface
      * @return array
      */
     public function getMulti(array $keys);
-
-    public function getCountItems();
 }

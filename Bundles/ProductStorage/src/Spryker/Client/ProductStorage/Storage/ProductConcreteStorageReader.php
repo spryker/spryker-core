@@ -317,7 +317,7 @@ class ProductConcreteStorageReader implements ProductConcreteStorageReaderInterf
         $reference = $mappingType . ':' . $identifier;
         $mappingKey = $this->getStorageKey($reference, $localeName);
         $mappingData = $this->storageClient->get($mappingKey);
-        var_dump($this->storageClient->getCountItems());die;
+
         if (!$mappingData) {
             return null;
         }
