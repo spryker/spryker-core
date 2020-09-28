@@ -123,7 +123,7 @@ class DetailController extends AbstractController
                 $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
-            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = $eventsForGroup;
+            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = array_unique($eventsForGroup);
         }
 
         return $events;
