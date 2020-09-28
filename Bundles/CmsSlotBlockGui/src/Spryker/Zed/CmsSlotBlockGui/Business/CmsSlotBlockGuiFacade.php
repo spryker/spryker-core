@@ -26,7 +26,7 @@ class CmsSlotBlockGuiFacade extends AbstractFacade implements CmsSlotBlockGuiFac
      *
      * @return array
      */
-    public function getPaginatedCmsBlocks(
+    public function getCmsBlockSuggestions(
         CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
         CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array {

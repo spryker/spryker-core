@@ -17,7 +17,7 @@ interface CmsSlotBlockGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Searches for CMS Blocks based on criteria and pagination.
+     * - Searches for CMS Blocks suggestions based on criteria and pagination.
      * - Transform CMS Blocks transfer collection to suggestion data.
      *
      * @api
@@ -27,7 +27,7 @@ interface CmsSlotBlockGuiFacadeInterface
      *
      * @return array
      */
-    public function getPaginatedCmsBlocks(
+    public function getCmsBlockSuggestions(
         CmsBlockCriteriaTransfer $cmsBlockCriteriaTransfer,
         CmsSlotBlockCriteriaTransfer $cmsSlotBlockCriteriaTransfer
     ): array;
