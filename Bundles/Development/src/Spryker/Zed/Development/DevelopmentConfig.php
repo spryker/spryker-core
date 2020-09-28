@@ -557,13 +557,15 @@ class DevelopmentConfig extends AbstractBundleConfig
     /**
      * Gets PHPStan default level. The higher, the better.
      *
+     * Recommended level is 8 (include nullable safety).
+     *
      * @api
      *
      * @return int
      */
     public function getPhpstanLevel()
     {
-        return 3;
+        return 7;
     }
 
     /**

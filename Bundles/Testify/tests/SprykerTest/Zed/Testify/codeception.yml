@@ -10,7 +10,23 @@ coverage:
     whitelist:
         include:
             - '../../../../src/*'
+            - '_support/*'
 suites:
+    Helper:
+        path: Helper
+        class_name: TestifyHelperTester
+        modules:
+            enabled:
+                - \SprykerTest\Shared\Testify\Helper\Environment
+                - \SprykerTest\Shared\Testify\Helper\ConfigHelper
+                - \SprykerTest\Shared\Testify\Helper\LocatorHelper
+                - \SprykerTest\Shared\Testify\Helper\DependencyHelper
+                - \SprykerTest\Zed\Testify\Helper\Testify\ModuleHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\BusinessHelper
+                - \SprykerTest\Zed\Testify\Helper\Business\DependencyProviderHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\CommunicationHelper
+                - \SprykerTest\Zed\Testify\Helper\Communication\DependencyProviderHelper
+
     Communication:
         path: Communication
         class_name: TestifyCommunicationTester

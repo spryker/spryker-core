@@ -32,7 +32,7 @@ class DeleteController extends AbstractController
         if (!$deleteForm->isSubmitted() || !$deleteForm->isValid()) {
             $this->addErrorMessage('CSRF token is not valid');
 
-            $this->redirectResponse(Url::generate('/product-set-gui')->build());
+            return $this->redirectResponse(Url::generate('/product-set-gui')->build());
         }
         $idProductSet = $this->castId($request->query->get(static::PARAM_ID));
 

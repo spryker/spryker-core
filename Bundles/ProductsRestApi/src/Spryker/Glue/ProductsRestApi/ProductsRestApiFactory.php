@@ -10,6 +10,7 @@ namespace Spryker\Glue\ProductsRestApi;
 use Spryker\Glue\Kernel\AbstractFactory;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToGlossaryStorageClientInterface;
 use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToProductStorageClientInterface;
+use Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReader;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\AbstractProductsReaderInterface;
 use Spryker\Glue\ProductsRestApi\Processor\AbstractProducts\Storage\ProductAbstractRestUrlResolverAttributesReader;
@@ -83,6 +84,7 @@ class ProductsRestApiFactory extends AbstractFactory
     {
         return new ConcreteProductsReader(
             $this->getProductStorageClient(),
+            $this->getStoreClient(),
             $this->getResourceBuilder(),
             $this->createConcreteProductsResourceMapper(),
             $this->createConcreteProductAttributeTranslationExpander(),
@@ -132,6 +134,14 @@ class ProductsRestApiFactory extends AbstractFactory
     public function getGlossaryStorageClient(): ProductsRestApiToGlossaryStorageClientInterface
     {
         return $this->getProvidedDependency(ProductsRestApiDependencyProvider::CLIENT_GLOSSARY_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Glue\ProductsRestApi\Dependency\Client\ProductsRestApiToStoreClientInterface
+     */
+    public function getStoreClient(): ProductsRestApiToStoreClientInterface
+    {
+        return $this->getProvidedDependency(ProductsRestApiDependencyProvider::CLIENT_STORE);
     }
 
     /**

@@ -1,4 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - '#Call to an undefined method .+Criteria::.+\(\).#'
-    - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given#'
+        - '#Call to an undefined method .+Criteria::.+\(\).#'
+        - '#Parameter \#1 \$reference of method .+SynchronizationDataTransfer::setReference\(\) expects string\|null, int given#'
