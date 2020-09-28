@@ -12,4 +12,10 @@
     <transfer name="Item">
     </transfer>
 
+    <transfer name="Order">
+    </transfer>
+
+    <transfer name="RestOrderDetailsAttributes">
+    </transfer>
+
 </transfers>
