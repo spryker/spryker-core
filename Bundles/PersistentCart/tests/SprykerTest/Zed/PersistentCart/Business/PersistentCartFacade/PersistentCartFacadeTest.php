@@ -36,6 +36,7 @@ class PersistentCartFacadeTest extends Unit
     protected const FAKE_SKU_2 = 'fake_sku_2';
     protected const FAKE_SKU_3 = 'fake_sku_3';
     protected const FAKE_SKU_4 = 'fake_sku_4';
+    protected const FAKE_SKU_5 = 'fake_sku_5';
 
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
@@ -59,6 +60,28 @@ class PersistentCartFacadeTest extends Unit
             static::FAKE_SKU_2,
             static::FAKE_SKU_3,
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemWhenItemToBeReplacedNotExistInQuoteWillSetSuccessFalse(): void
+    {
+        // Arrange
+        $originalQuoteTransfer = $this->createCustomerQuote();
+
+        // Act
+        $persistentItemReplaceTransfer = (new PersistentItemReplaceTransfer())
+            ->setCustomer($originalQuoteTransfer->getCustomer())
+            ->setIdQuote($originalQuoteTransfer->getIdQuote())
+            ->setNewItem((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_4))
+            ->setItemToBeReplaced((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_5));
+
+        $quoteResponseTransfer = $this->tester->getFacade()->replaceItem($persistentItemReplaceTransfer);
+
+        // Assert
+        $this->assertCount(3, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
     }
 
     /**

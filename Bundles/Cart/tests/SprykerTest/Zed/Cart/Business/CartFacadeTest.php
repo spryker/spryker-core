@@ -339,8 +339,8 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-                ItemTransfer::ID => self::DUMMY_2_SKU_CONCRETE_PRODUCT,
-                ItemTransfer::SKU => self::DUMMY_2_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::ID => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
                 ItemTransfer::QUANTITY => 1,
         ]))->build();
 
@@ -353,8 +353,7 @@ class CartFacadeTest extends Unit
 
         $cartChangeForAdd = (new CartChangeBuilder())
             ->withItem([
-                ItemTransfer::ID => self::DUMMY_1_SKU_CONCRETE_PRODUCT,
-                ItemTransfer::SKU => self::DUMMY_1_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::SKU => static::DUMMY_1_SKU_CONCRETE_PRODUCT,
                 ItemTransfer::QUANTITY => 1,
             ])->build()->setQuote($quoteTransfer);
 
@@ -377,8 +376,8 @@ class CartFacadeTest extends Unit
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
-            ItemTransfer::ID => self::DUMMY_2_SKU_CONCRETE_PRODUCT,
-            ItemTransfer::SKU => self::DUMMY_2_SKU_CONCRETE_PRODUCT,
+            ItemTransfer::ID => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+            ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
             ItemTransfer::QUANTITY => 1,
         ]))->build();
 
@@ -407,8 +406,7 @@ class CartFacadeTest extends Unit
         $cartChangeForAdd = (new CartChangeBuilder())
             ->withQuote()
             ->withItem([
-                ItemTransfer::ID => self::DUMMY_1_SKU_CONCRETE_PRODUCT,
-                ItemTransfer::SKU => self::DUMMY_1_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::SKU => static::DUMMY_1_SKU_CONCRETE_PRODUCT,
                 ItemTransfer::QUANTITY => 1,
             ])->build();
 
