@@ -505,7 +505,7 @@ class CmsFacadePageTest extends Unit
     protected function createCmsPageTransferFixtures(): array
     {
         $fixtures = [
-            CmsPageTransfer::IS_ACTIVE => 1,
+            CmsPageTransfer::IS_ACTIVE => true,
             CmsPageTransfer::FK_TEMPLATE => 1,
             CmsPageTransfer::IS_SEARCHABLE => 1,
             CmsPageTransfer::PAGE_ATTRIBUTES => [

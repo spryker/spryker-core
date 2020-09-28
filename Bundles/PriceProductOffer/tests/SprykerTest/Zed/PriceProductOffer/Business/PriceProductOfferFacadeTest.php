@@ -109,7 +109,7 @@ class PriceProductOfferFacadeTest extends Unit
 
         // Assert
         $this->assertSame($priceProductDimensionTransfer->getIdProductOffer(), $priceProductOfferTransfer->getFkProductOffer());
-        $this->assertSame($priceProductTransfer->getMoneyValue()->getIdEntity(), $priceProductOfferTransfer->getFkPriceProductStore());
+        $this->assertSame((string)$priceProductTransfer->getMoneyValue()->getIdEntity(), $priceProductOfferTransfer->getFkPriceProductStore());
     }
 
     /**
@@ -133,7 +133,7 @@ class PriceProductOfferFacadeTest extends Unit
         $priceProductOfferTransfer = $this->tester->getPriceProductOfferByIdProductOffer($priceProductOfferTransfer->getFkProductOffer());
 
         // Assert
-        $this->assertSame($priceProductOfferTransfer->getFkPriceProductStore(), $priceProductTransfer2->getMoneyValue()->getIdEntity());
+        $this->assertSame((string)$priceProductOfferTransfer->getFkPriceProductStore(), $priceProductTransfer2->getMoneyValue()->getIdEntity());
     }
 
     /**
