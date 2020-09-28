@@ -27,7 +27,7 @@ class ProductAttributeStub implements ProductAttributeStubInterface
     }
 
     /**
-     * @uses \Spryker\Zed\ProductAttribute\Communication\Controller\GatewayController::getProductAttributeCollectionAction()
+     * @uses \Spryker\Zed\ProductAttribute\Communication\Controller\GatewayController::getProductManagementAttributesAction()
      *
      * @param \Generated\Shared\Transfer\ProductManagementAttributeFilterTransfer $productManagementAttributeFilterTransfer
      *
