@@ -31,6 +31,22 @@ interface ProductConfigurationClientInterface
 
     /**
      * Specification:
+     * - Expands product configurator request with additional data.
+     * - Sends access token request to configurator.
+     * - Build product configuration redirect from configurator response.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function resolveProductConfiguratorAccessTokenRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer;
+
+    /**
+     * Specification:
      * - Finds and executes the appropriate ProductConfiguratorResponsePluginInterface based on the configuratorKey.
      *
      * @api

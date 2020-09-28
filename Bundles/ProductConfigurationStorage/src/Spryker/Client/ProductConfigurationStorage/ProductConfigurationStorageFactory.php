@@ -26,6 +26,8 @@ use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstan
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationInstanceMapperInterface;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapper;
 use Spryker\Client\ProductConfigurationStorage\Mapper\ProductConfigurationStorageMapperInterface;
+use Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessor;
+use Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessorInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReader;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationAvailabilityReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationInstanceQuoteReader;
@@ -36,9 +38,16 @@ use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceR
 use Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReaderInterface;
 use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReader;
 use Spryker\Client\ProductConfigurationStorage\Storage\ProductConfigurationStorageReaderInterface;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorCheckSumResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorItemGroupKeyResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorMandatoryFieldsResponseValidator;
+use Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorTimestampResponseValidator;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriter;
 use Spryker\Client\ProductConfigurationStorage\Writer\ProductConfigurationInstanceWriterInterface;
 
+/**
+ * @method \Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageConfig getConfig()()
+ */
 class ProductConfigurationStorageFactory extends AbstractFactory
 {
     /**
@@ -130,6 +139,18 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Processor\ProductConfiguratorCheckSumResponseProcessorInterface
+     */
+    public function createProductConfiguratorCheckSumResponseProcessor(): ProductConfiguratorCheckSumResponseProcessorInterface
+    {
+        return new ProductConfiguratorCheckSumResponseProcessor(
+            $this->createProductConfigurationInstanceWriter(),
+            $this->getCartClient(),
+            $this->createProductConfiguratorCheckSumResponseValidators()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfigurationStorage\Reader\ProductConfigurationPriceReaderInterface
      */
     public function createProductConfigurationPriceReader(): ProductConfigurationPriceReaderInterface
@@ -157,6 +178,19 @@ class ProductConfigurationStorageFactory extends AbstractFactory
     public function createProductConfigurationSessionKeyBuilder(): ProductConfigurationSessionKeyBuilderInterface
     {
         return new ProductConfigurationSessionKeyBuilder();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationStorage\Validator\ProductConfiguratorResponseValidatorInterface[]
+     */
+    public function createProductConfiguratorCheckSumResponseValidators(): array
+    {
+        return [
+            new ProductConfiguratorMandatoryFieldsResponseValidator(),
+            new ProductConfiguratorItemGroupKeyResponseValidator(),
+            new ProductConfiguratorTimestampResponseValidator($this->getConfig()),
+            new ProductConfiguratorCheckSumResponseValidator($this->getConfig()),
+        ];
     }
 
     /**

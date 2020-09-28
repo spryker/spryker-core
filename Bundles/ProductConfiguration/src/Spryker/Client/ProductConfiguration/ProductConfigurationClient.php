@@ -41,6 +41,23 @@ class ProductConfigurationClient extends AbstractClient implements ProductConfig
      *
      * @api
      *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorRedirectTransfer
+     */
+    public function resolveProductConfiguratorAccessTokenRedirect(
+        ProductConfiguratorRequestTransfer $productConfiguratorRequestTransfer
+    ): ProductConfiguratorRedirectTransfer {
+        return $this->getFactory()
+                ->createProductConfigurationAccessTokenRedirectResolver()
+                ->prepareProductConfiguratorAccessTokenRedirect($productConfiguratorRequestTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
      * @param array $configuratorResponseData
      *

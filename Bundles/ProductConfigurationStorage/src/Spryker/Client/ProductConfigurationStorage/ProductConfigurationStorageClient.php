@@ -11,6 +11,8 @@ use Generated\Shared\Transfer\CartChangeTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\PriceProductFilterTransfer;
 use Generated\Shared\Transfer\ProductConfigurationInstanceTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer;
+use Generated\Shared\Transfer\ProductConfiguratorResponseTransfer;
 use Generated\Shared\Transfer\ProductStorageCriteriaTransfer;
 use Generated\Shared\Transfer\ProductViewTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -209,5 +211,24 @@ class ProductConfigurationStorageClient extends AbstractClient implements Produc
         return $this->getFactory()
             ->createProductConfigurationInstanceCartChangeExpander()
             ->expandPersistentCartChangeWithProductConfigurationInstance($persistentCartChangeTransfer, $params);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer
+     * @param array $configuratorResponseData
+     *
+     * @return \Generated\Shared\Transfer\ProductConfiguratorResponseProcessorResponseTransfer
+     */
+    public function processProductConfiguratorCheckSumResponse(
+        ProductConfiguratorResponseTransfer $productConfiguratorResponseTransfer,
+        array $configuratorResponseData
+    ): ProductConfiguratorResponseProcessorResponseTransfer {
+        $this->getFactory()
+            ->createProductConfiguratorCheckSumResponseProcessor()
+            ->processProductConfiguratorCheckSumResponse($productConfiguratorResponseTransfer, $configuratorResponseData);
     }
 }

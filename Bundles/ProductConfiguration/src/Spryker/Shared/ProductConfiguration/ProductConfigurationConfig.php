@@ -34,4 +34,12 @@ class ProductConfigurationConfig extends AbstractBundleConfig
      * @api
      */
     public const SOURCE_TYPE_CART = 'SOURCE_TYPE_CART';
+
+    /**
+     * Specification:
+     * - Holds configurator key.
+     *
+     * @api
+     */
+    public const ENCRYPTION_KEY = 'ENCRYPTION_KEY';
 }

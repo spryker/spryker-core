@@ -14,13 +14,19 @@ use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationTo
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToLocaleInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToStoreClientInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToPriceClientInterface;
+use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClient;
+use Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClientInterface;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessor;
 use Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface;
+use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolver;
+use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolverInterface;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolver;
 use Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorRedirectResolverInterface;
+use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface;
 use Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface;
 use Spryker\Client\ProductConfiguration\Dependency\Client\ProductConfigurationToCustomerClientInterface;
+use GuzzleHttp\ClientInterface;
 
 class ProductConfigurationFactory extends AbstractFactory
 {
@@ -41,6 +47,17 @@ class ProductConfigurationFactory extends AbstractFactory
     }
 
     /**
+     * @return \Spryker\Client\ProductConfiguration\Resolver\ProductConfiguratorAccessTokenRedirectResolverInterface
+     */
+    public function createProductConfigurationAccessTokenRedirectResolver(): ProductConfiguratorAccessTokenRedirectResolverInterface
+    {
+        return new ProductConfiguratorAccessTokenRedirectResolver(
+           $this->getProductConfiguratorRequestExpanderPlugin(),
+            $this->createProductConfigurationGuzzleHttpClient()
+        );
+    }
+
+    /**
      * @return \Spryker\Client\ProductConfiguration\Processor\ProductConfiguratorResponseProcessorInterface
      */
     public function createProductConfiguratorResponseProcessor(): ProductConfiguratorResponseProcessorInterface
@@ -57,6 +74,14 @@ class ProductConfigurationFactory extends AbstractFactory
     public function createQuoteProductConfigurationChecker(): QuoteProductConfigurationCheckerInterface
     {
         return new QuoteProductConfigurationChecker();
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfiguration\Http\ProductConfigurationGuzzleHttpClientInterface
+     */
+    public function createProductConfigurationGuzzleHttpClient(): ProductConfigurationGuzzleHttpClientInterface
+    {
+        return new ProductConfigurationGuzzleHttpClient($this->getGuzzleClient());
     }
 
     /**
@@ -129,5 +154,21 @@ class ProductConfigurationFactory extends AbstractFactory
     public function getCurrencyClient(): ProductConfigurationToCurrencyClientInterface
     {
         return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_CURRENCY);
+    }
+
+    /**
+     * @return \GuzzleHttp\ClientInterface
+     */
+    public function getGuzzleClient(): ClientInterface
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::CLIENT_GUZZLE);
+    }
+
+    /**
+     * @return \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestExpanderInterface[]
+     */
+    public function getProductConfiguratorRequestExpanderPlugin(): array
+    {
+        return $this->getProvidedDependency(ProductConfigurationDependencyProvider::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER);
     }
 }

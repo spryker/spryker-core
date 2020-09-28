@@ -31,6 +31,8 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     public const PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGINS_PRODUCT_CONFIGURATOR_RESPONSE';
     public const PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE = 'PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE';
 
+    public const PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER = 'PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER';
+
     public const CLIENT_CUSTOMER = 'CLIENT_CUSTOMER';
     public const CLIENT_STORE = 'CLIENT_STORE';
     public const CLIENT_LOCALE = 'CLIENT_LOCALE';
@@ -57,6 +59,7 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
         $container = $this->addLocaleClient($container);
         $container = $this->addPriceClient($container);
         $container = $this->addCurrencyClient($container);
+        $container = $this->addProductConfigurationRequestExpanderPlugins($container);
         $container = $this->addGuzzleClient($container);
 
         return $container;
@@ -215,6 +218,20 @@ class ProductConfigurationDependencyProvider extends AbstractDependencyProvider
     {
         $container->set(static::PLUGIN_DEFAULT_PRODUCT_CONFIGURATOR_RESPONSE, function () {
             return $this->getDefaultProductConfiguratorResponsePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Kernel\Container
+     */
+    protected function addProductConfigurationRequestExpanderPlugins(Container $container): Container
+    {
+        $container->set(static::PLUGIN_PRODUCT_CONFIGURATOR_REQUEST_EXPANDER, function () {
+            return $this->getProductConfigurationRequestExpanderPlugins();
         });
 
         return $container;
