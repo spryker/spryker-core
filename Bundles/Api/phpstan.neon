@@ -1,4 +1,5 @@
 parameters:
+    checkMissingIterableValueType: false
     ignoreErrors:
-    - "#Strict comparison using === between '' and 'development' will always evaluate to false.#"
-    - '#Parameter \#1 \$resourceId of method .+ApiRequestTransfer::setResourceId\(\) expects int\|null, string\|null given.#'
+        - '#Strict comparison using === between '''' and ''development'' will always evaluate to false.#'
+        - '#Parameter \#1 \$resourceId of method .+ApiRequestTransfer::setResourceId\(\) expects int\|null, string\|null given.#'

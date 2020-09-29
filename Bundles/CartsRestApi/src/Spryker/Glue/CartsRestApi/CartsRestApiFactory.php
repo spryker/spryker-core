@@ -220,7 +220,8 @@ class CartsRestApiFactory extends AbstractFactory
             $this->getResourceBuilder(),
             $this->createCartMapper(),
             $this->createItemResponseBuilder(),
-            $this->getConfig()
+            $this->getConfig(),
+            $this->getCartItemFilterPlugins()
         );
     }
 
@@ -232,7 +233,9 @@ class CartsRestApiFactory extends AbstractFactory
         return new GuestCartRestResponseBuilder(
             $this->getResourceBuilder(),
             $this->createCartMapper(),
-            $this->createItemResponseBuilder()
+            $this->createItemResponseBuilder(),
+            $this->getConfig(),
+            $this->getCartItemFilterPlugins()
         );
     }
 
@@ -297,6 +300,7 @@ class CartsRestApiFactory extends AbstractFactory
     {
         return new CartItemByQuoteResourceRelationshipExpander(
             $this->createCartReader(),
+            $this->getCartItemFilterPlugins(),
             $this->createItemResponseBuilder()
         );
     }
@@ -342,5 +346,13 @@ class CartsRestApiFactory extends AbstractFactory
     public function getCartItemExpanderPlugins(): array
     {
         return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_EXPANDER);
+    }
+
+    /**
+     * @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\CartItemFilterPluginInterface[]
+     */
+    public function getCartItemFilterPlugins(): array
+    {
+        return $this->getProvidedDependency(CartsRestApiDependencyProvider::PLUGINS_CART_ITEM_FILTER);
     }
 }
