@@ -1,0 +1,10 @@
+<form
+    [method]="method"
+    [action]="action"
+    [name]="name"
+    [spyApplyAttrs]="attrs"
+    [spyUnsavedChangesFormMonitor]="withMonitor"
+    (submit)="sumbitHandler()"
+>
+    <ng-content></ng-content>
+</form>
