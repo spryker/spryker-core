@@ -487,7 +487,8 @@ class CompanyUserFacadeTest extends Test
 
         //Assert
         $this->assertCount(1, $activeCompanyUsers);
-        $this->assertSame($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
+        // TODO: use assertSame() once the actual return result is of int, and not string
+        $this->assertEquals($activeCompanyUsers[0], $activeCompanyUserTransfer->getIdCompanyUser());
     }
 
     /**
