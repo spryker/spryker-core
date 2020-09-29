@@ -24,19 +24,17 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MerchantShipmentGroupFormType extends AbstractType
 {
-    public const FIELD_ID_SALES_SHIPMENT = ShipmentFormType::FIELD_ID_SALES_SHIPMENT;
-    public const FIELD_ID_SALES_ORDER = 'id_sales_order';
-    public const FIELD_ID_CUSTOMER_ADDRESS = 'id_customer_address';
-    public const FIELD_SHIPMENT_SELECTED_ITEMS = ItemFormType::FIELD_SHIPMENT_SELECTED_ITEMS;
-    public const OPTION_SHIPMENT_ADDRESS_CHOICES = ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES;
-    public const FIELD_ID_SHIPMENT_METHOD = ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD;
-    public const OPTION_ORDER_ITEMS_CHOICES = ItemFormType::OPTION_ORDER_ITEMS_CHOICES;
+    protected const FIELD_SHIPMENT_FORM = 'shipment';
+    public const FIELD_ID_SHIPMENT_METHOD = 'idShipmentMethod';
 
-    public const FIELD_SHIPMENT_FORM = 'shipment';
+    public const OPTION_SHIPMENT_METHOD_CHOICES = 'method_choices';
+    public const OPTION_SALUTATION_CHOICES = 'salutation_choices';
+    public const OPTION_SHIPMENT_ADDRESS_CHOICES = 'address_choices';
+    public const OPTION_ORDER_ITEMS_CHOICES = 'items_choices';
+
     public const FIELD_SALES_ORDER_ITEMS_FORM = 'items';
-
-    public const OPTION_SHIPMENT_METHOD_CHOICES = ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES;
-    public const OPTION_SALUTATION_CHOICES = AddressFormType::OPTION_SALUTATION_CHOICES;
+    public const FIELD_ID_SALES_SHIPMENT = 'idSalesShipment';
+    public const FIELD_SHIPMENT_SELECTED_ITEMS = 'selected_items';
 
     /**
      * @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
@@ -67,10 +65,10 @@ class MerchantShipmentGroupFormType extends AbstractType
      *
      * @return void
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this
-            ->addOrderItemsForm($builder, $options)
+            ->addOrderItemsFormType($builder, $options)
             ->addShipmentFormType($builder, $options);
     }
 
@@ -105,7 +103,7 @@ class MerchantShipmentGroupFormType extends AbstractType
      *
      * @return $this
      */
-    protected function addOrderItemsForm(FormBuilderInterface $builder, array $options = [])
+    protected function addOrderItemsFormType(FormBuilderInterface $builder, array $options = [])
     {
         $builder->add(static::FIELD_SALES_ORDER_ITEMS_FORM, CollectionType::class, [
             'entry_type' => ItemFormType::class,

@@ -9,8 +9,8 @@ namespace SprykerTest\Zed\MerchantSalesOrderMerchantUserGui\Business;
 
 use Codeception\Test\Unit;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\MerchantOrderItemTransfer;
 use Generated\Shared\Transfer\MerchantOrderTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 
 /**
@@ -36,27 +36,16 @@ class MerchantSalesOrderMerchantUserGuiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsMerchantOrderShipmentReturnsTrue(): void
+    public function testIsMerchantOrderShipmentReturnsTrueWithCorrectItemShipment(): void
     {
         //Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
         $shipmentTransfer = (new ShipmentTransfer())->setIdSalesShipment(1);
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE]);
 
-        $saveOrderTransfer = $this->tester->haveOrder([
-            ItemTransfer::SHIPMENT => $shipmentTransfer,
-            ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-            ItemTransfer::UNIT_PRICE => 100,
-            ItemTransfer::SUM_PRICE => 100,
-        ], static::TEST_STATE_MACHINE);
-
-        $orderTransfer = (new OrderTransfer())->fromArray($saveOrderTransfer->toArray(), true)
-            ->setItems($saveOrderTransfer->getOrderItems());
-
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
-            MerchantOrderTransfer::ID_ORDER => $orderTransfer->getIdSalesOrder(),
-            MerchantOrderTransfer::ORDER => $orderTransfer,
-        ]);
+        $merchantOrderTransfer = (new MerchantOrderTransfer())->addMerchantOrderItem(
+            (new MerchantOrderItemTransfer())->setOrderItem(
+                (new ItemTransfer())->setShipment($shipmentTransfer)
+            )
+        );
 
         // Act
         $isMerchantOrderShipment = $this->tester->getFacade()->isMerchantOrderShipment($merchantOrderTransfer, $shipmentTransfer);
@@ -68,28 +57,17 @@ class MerchantSalesOrderMerchantUserGuiFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testIsMerchantOrderShipmentReturnsFalse(): void
+    public function testIsMerchantOrderShipmentReturnsFalseWithWrongItemShipment(): void
     {
         // Arrange
-        $merchantTransfer = $this->tester->haveMerchant();
         $shipmentTransfer = (new ShipmentTransfer())->setIdSalesShipment(1);
         $shipmentTransferFake = (new ShipmentTransfer())->setIdSalesShipment(2);
-        $this->tester->configureTestStateMachine([static::TEST_STATE_MACHINE]);
 
-        $saveOrderTransfer = $this->tester->haveOrder([
-            ItemTransfer::SHIPMENT => $shipmentTransfer,
-            ItemTransfer::MERCHANT_REFERENCE => $merchantTransfer->getMerchantReference(),
-            ItemTransfer::UNIT_PRICE => 100,
-            ItemTransfer::SUM_PRICE => 100,
-        ], static::TEST_STATE_MACHINE);
-
-        $orderTransfer = (new OrderTransfer())->fromArray($saveOrderTransfer->toArray(), true)
-            ->setItems($saveOrderTransfer->getOrderItems());
-
-        $merchantOrderTransfer = $this->tester->haveMerchantOrder([
-            MerchantOrderTransfer::ID_ORDER => $orderTransfer->getIdSalesOrder(),
-            MerchantOrderTransfer::ORDER => $orderTransfer,
-        ]);
+        $merchantOrderTransfer = (new MerchantOrderTransfer())->addMerchantOrderItem(
+            (new MerchantOrderItemTransfer())->setOrderItem(
+                (new ItemTransfer())->setShipment($shipmentTransfer)
+            )
+        );
 
         // Act
         $isMerchantOrderShipment = $this->tester->getFacade()->isMerchantOrderShipment($merchantOrderTransfer, $shipmentTransferFake);

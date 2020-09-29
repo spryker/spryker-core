@@ -22,8 +22,6 @@ interface MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface
     public function findShipmentById(int $idSalesShipment): ?ShipmentTransfer;
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function getMethods();

@@ -14,7 +14,7 @@ interface MerchantSalesOrderMerchantUserGuiFacadeInterface
 {
     /**
      * Specification:
-     * - Return false if MerchantOrder.order.items.shipment.IdSalesShipment not equal Shipment.IdSalesShipment
+     * - Return false if at least one MerchantOrder.order.items.shipment.idSalesShipment not equal Shipment.idSalesShipment
      *
      * @api
      *

@@ -8,6 +8,7 @@
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Controller;
 
 use Generated\Shared\Transfer\MerchantOrderCriteriaTransfer;
+use Generated\Shared\Transfer\MerchantOrderTransfer;
 use Generated\Shared\Transfer\ShipmentGroupResponseTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Service\UtilText\Model\Url\Url;
@@ -15,6 +16,7 @@ use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
 use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -30,7 +32,7 @@ class MerchantShipmentCreateController extends AbstractController
 
     protected const MESSAGE_SHIPMENT_CREATE_SUCCESS = 'Shipment has been successfully created.';
     protected const MESSAGE_SHIPMENT_CREATE_FAIL = 'Shipment has not been created.';
-    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Meerchant sales order #%d not found.';
+    protected const MESSAGE_ORDER_NOT_FOUND_ERROR = 'Merchant sales order #%d not found.';
 
     /**
      * @phpstan-return array<mixed>|\Symfony\Component\HttpFoundation\RedirectResponse
@@ -43,17 +45,9 @@ class MerchantShipmentCreateController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idMerchantSalesOrder = $request->query->getInt(static::PARAM_ID_MERCHANT_SALES_ORDER);
+        $idMerchantSalesOrder = $this->castId($request->query->get(static::PARAM_ID_MERCHANT_SALES_ORDER));
         $merchantUserTransfer = $this->getFactory()->getMerchantUserFacade()->getCurrentMerchantUser();
-
-        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
-            ->setIdMerchantOrder($idMerchantSalesOrder)
-            ->setWithItems(true)
-            ->setWithOrder(true);
-
-        $merchantOrderTransfer = $this->getFactory()
-            ->getMerchantSalesOrderFacade()
-            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+        $merchantOrderTransfer = $this->findMerchantSalesOrder($idMerchantSalesOrder);
 
         if (!$merchantOrderTransfer) {
             $this->addErrorMessage(static::MESSAGE_ORDER_NOT_FOUND_ERROR, ['%d' => $idMerchantSalesOrder]);
@@ -73,49 +67,73 @@ class MerchantShipmentCreateController extends AbstractController
         $dataProvider = $this->getFactory()->createMerchantShipmentGroupFormDataProvider();
         $form = $this->getFactory()
             ->createMerchantShipmentGroupForm(
-                $dataProvider->getData($merchantOrderTransfer, $this->createDefaultShipmentTransfer()),
+                $dataProvider->getData($merchantOrderTransfer, new ShipmentTransfer()),
                 $dataProvider->getOptions($merchantOrderTransfer)
             )
             ->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $shipmentGroupTransfer = $this->getFactory()
-                ->getShipmentFacade()
-                ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
-
-            $responseTransfer = $this->getFactory()
-                ->getShipmentFacade()
-                ->saveShipment($shipmentGroupTransfer, $merchantOrderTransfer->getOrder());
-
-            $this->addStatusMessage($responseTransfer);
-
-            $redirectUrl = Url::generate(
-                static::REDIRECT_URL_DEFAULT,
-                [static::PARAM_ID_MERCHANT_SALES_ORDER => $idMerchantSalesOrder]
-            )->build();
-
-            return $this->redirectResponse($redirectUrl);
+            return $this->saveMerchantOrderShipment($merchantOrderTransfer, $form);
         }
 
-        $merchantOrderItemsWithOrderItemIdKey = [];
+        $groupedMerchantOrderItems = [];
         foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItem) {
-            $merchantOrderItemsWithOrderItemIdKey[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
+            $groupedMerchantOrderItems[$merchantOrderItem->getOrderItem()->getIdSalesOrderItem()] = $merchantOrderItem;
         }
 
         return $this->viewResponse([
             'idMerchantSalesOrder' => $idMerchantSalesOrder,
             'merchantOrder' => $merchantOrderTransfer,
-            'merchantOrderItemsWithOrderItemIdKey' => $merchantOrderItemsWithOrderItemIdKey,
+            'groupedMerchantOrderItems' => $groupedMerchantOrderItems,
             'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @return \Generated\Shared\Transfer\ShipmentTransfer
+     * @param int $idMerchantSalesOrder
+     *
+     * @return \Generated\Shared\Transfer\MerchantOrderTransfer|null
      */
-    protected function createDefaultShipmentTransfer(): ShipmentTransfer
+    protected function findMerchantSalesOrder(int $idMerchantSalesOrder): ?MerchantOrderTransfer
     {
-        return new ShipmentTransfer();
+        $merchantOrderCriteriaTransfer = (new MerchantOrderCriteriaTransfer())
+            ->setIdMerchantOrder($idMerchantSalesOrder)
+            ->setWithItems(true)
+            ->setWithOrder(true);
+
+        $merchantOrderTransfer = $this->getFactory()
+            ->getMerchantSalesOrderFacade()
+            ->findMerchantOrder($merchantOrderCriteriaTransfer);
+
+        return $merchantOrderTransfer;
+    }
+
+    /**
+     * @phpstan-param \Symfony\Component\Form\FormInterface<mixed> $form
+     *
+     * @param \Generated\Shared\Transfer\MerchantOrderTransfer $merchantOrderTransfer
+     * @param \Symfony\Component\Form\FormInterface $form
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    protected function saveMerchantOrderShipment(MerchantOrderTransfer $merchantOrderTransfer, FormInterface $form): RedirectResponse
+    {
+        $shipmentGroupTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->createShipmentGroupTransferWithListedItems($form->getData(), $this->getItemListUpdatedStatus($form));
+
+        $responseTransfer = $this->getFactory()
+            ->getShipmentFacade()
+            ->saveShipment($shipmentGroupTransfer, $merchantOrderTransfer->getOrder());
+
+        $this->addStatusMessage($responseTransfer);
+
+        $redirectUrl = Url::generate(
+            static::REDIRECT_URL_DEFAULT,
+            [static::PARAM_ID_MERCHANT_SALES_ORDER => $merchantOrderTransfer->getIdMerchantOrder()]
+        )->build();
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**

@@ -38,8 +38,6 @@ class MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge implements Merchan
     }
 
     /**
-     * @api
-     *
      * @return \Generated\Shared\Transfer\ShipmentMethodTransfer[]
      */
     public function getMethods()

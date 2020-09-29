@@ -22,12 +22,16 @@ class MerchantSalesOrderReader implements MerchantSalesOrderReaderInterface
         MerchantOrderTransfer $merchantOrderTransfer,
         ShipmentTransfer $shipmentTransfer
     ): bool {
-        foreach ($merchantOrderTransfer->getOrder()->getItems() as $itemTransfer) {
-            if ($itemTransfer->getShipment()->getIdSalesShipment() !== $shipmentTransfer->getIdSalesShipment()) {
-                return false;
+        $isMerchantOrderShipment = false;
+
+        foreach ($merchantOrderTransfer->getMerchantOrderItems() as $merchantOrderItemTransfer) {
+            if ($merchantOrderItemTransfer->getOrderItem()->getShipment()->getIdSalesShipment() !== $shipmentTransfer->getIdSalesShipment()) {
+                continue;
             }
+
+            $isMerchantOrderShipment = true;
         }
 
-        return true;
+        return $isMerchantOrderShipment;
     }
 }

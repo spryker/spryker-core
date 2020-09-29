@@ -56,8 +56,6 @@ class MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge implements Merchan
     }
 
     /**
-     * @api
-     *
      * @phpstan-return array<mixed>
      *
      * @return array

@@ -14,16 +14,15 @@ use Generated\Shared\Transfer\ShipmentTransfer;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface;
-use Spryker\Zed\ShipmentGui\Communication\Form\Address\AddressFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Item\ItemFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentFormType;
-use Spryker\Zed\ShipmentGui\Communication\Form\Shipment\ShipmentMethodFormType;
 
 class MerchantShipmentGroupFormDataProvider
 {
     protected const ADDRESS_LABEL_PATTERN = '%s %s %s, %s %s, %s %s';
     protected const SHIPMENT_METHODS_OPTIONS_NAMES_PATTERN = '%s - %s';
     protected const SANITIZED_CUSTOMER_ADDRESS_LABEL_PATTERN = '%s - %s';
+
+    protected const VALUE_ADD_NEW_ADDRESS = '';
+    protected const ADDRESS_CHOICE_NEW_ADDRESS_LABEL = 'New address';
 
     /**
      * @var \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
@@ -122,11 +121,11 @@ class MerchantShipmentGroupFormDataProvider
     public function getOptions(MerchantOrderTransfer $merchantOrderTransfer, ?ShipmentTransfer $shipmentTransfer = null): array
     {
         $options = [
-            ShipmentFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($merchantOrderTransfer),
-            ShipmentMethodFormType::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
-            AddressFormType::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
-            ItemFormType::OPTION_ORDER_ITEMS_CHOICES => [],
-            ShipmentMethodFormType::FIELD_ID_SHIPMENT_METHOD => null,
+            MerchantShipmentGroupFormType::OPTION_SHIPMENT_ADDRESS_CHOICES => $this->getShippingAddressesOptions($merchantOrderTransfer),
+            MerchantShipmentGroupFormType::OPTION_SHIPMENT_METHOD_CHOICES => $this->getShippingMethodsOptions(),
+            MerchantShipmentGroupFormType::OPTION_SALUTATION_CHOICES => $this->getSalutationOptions(),
+            MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES => [],
+            MerchantShipmentGroupFormType::FIELD_ID_SHIPMENT_METHOD => null,
             MerchantShipmentGroupFormType::FIELD_ID_SALES_SHIPMENT => null,
         ];
 
@@ -136,7 +135,7 @@ class MerchantShipmentGroupFormDataProvider
         }
 
         $options[MerchantShipmentGroupFormType::FIELD_SHIPMENT_SELECTED_ITEMS] = $shipmentSelectedItemsIds;
-        $options[ItemFormType::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
+        $options[MerchantShipmentGroupFormType::OPTION_ORDER_ITEMS_CHOICES] = $merchantOrderTransfer->getOrder()->getItems();
 
         return $options;
     }
@@ -151,20 +150,16 @@ class MerchantShipmentGroupFormDataProvider
      */
     public function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
     {
-        $salesItems = $merchantOrderTransfer->getOrder()->getItems();
-
-        if ($salesItems->count() === 0) {
-            return [];
-        }
+        $salesOrderItemTransfers = $merchantOrderTransfer->getOrder()->getItems();
 
         $itemsIds = [];
-        foreach ($salesItems as $item) {
-            $idSalesOrderItem = $item->getIdSalesOrderItem();
-            if ($idSalesOrderItem === null) {
+        foreach ($salesOrderItemTransfers as $salesOrderItemTransfer) {
+            $idSalesOrderItem = $salesOrderItemTransfer->getIdSalesOrderItem();
+            if (!$idSalesOrderItem) {
                 continue;
             }
 
-            $itemsIds[] = $item->getIdSalesOrderItem();
+            $itemsIds[] = $salesOrderItemTransfer->getIdSalesOrderItem();
         }
 
         return $itemsIds;
@@ -177,7 +172,7 @@ class MerchantShipmentGroupFormDataProvider
      */
     protected function getShippingAddressesOptions(MerchantOrderTransfer $merchantOrderTransfer): array
     {
-        $newAddressChoice = [AddressFormType::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => AddressFormType::VALUE_ADD_NEW_ADDRESS];
+        $newAddressChoice = [static::ADDRESS_CHOICE_NEW_ADDRESS_LABEL => static::VALUE_ADD_NEW_ADDRESS];
 
         $customerTransfer = $merchantOrderTransfer->getOrder()->getCustomer();
         if ($customerTransfer === null) {
@@ -249,9 +244,12 @@ class MerchantShipmentGroupFormDataProvider
         foreach ($choices as $idAddress => $addressLabel) {
             if (isset($sanitizedChoices[$addressLabel])) {
                 $originAddressLabel = $addressLabel;
-                if (!isset($choicesCounts[$originAddressLabel])) {
-                    $choicesCounts[$originAddressLabel] = 1;
+
+                if (isset($choicesCounts[$originAddressLabel])) {
+                    continue;
                 }
+
+                $choicesCounts[$originAddressLabel] = 1;
 
                 $addressLabel = $this->getSanitizedCustomerAddressChoices($addressLabel, $choicesCounts[$originAddressLabel]);
                 $choicesCounts[$originAddressLabel]++;
@@ -305,7 +303,7 @@ class MerchantShipmentGroupFormDataProvider
     protected function getSalutationOptions(): array
     {
         $salutation = $this->customerFacade->getAllSalutations();
-        if (!is_array($salutation) || empty($salutation)) {
+        if (!is_array($salutation) || !$salutation) {
             return [];
         }
 

@@ -34,8 +34,6 @@ interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
     public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
-     * @api
-     *
      * @phpstan-return array<mixed>
      *
      * @return array

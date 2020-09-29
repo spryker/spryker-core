@@ -62,7 +62,7 @@
                                 x {{ itemData.quantity }}
                             </td>
                             <td class="state-history">
-                                {% set merchantOrderItem = merchantOrderItemsWithOrderItemIdKey[itemData.IdSalesOrderItem] %}
+                                {% set merchantOrderItem = groupedMerchantOrderItems[itemData.IdSalesOrderItem] %}
                                 <div>
                                         <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
                                 </div>

@@ -7,7 +7,7 @@
                 <h5>{{ widget_title | trans }}</h5>
             </div>
 
-            {% if groupedMerchantOrderItemsByShipment | length > 1 %}
+            {% if merchantOrder.order.items | length > 1 %}
                 <div class="col-sm-3 text-right">
                     {% include '@MerchantSalesOrderMerchantUserGui/MerchantShipmentCreate/_partials/create-shipment-link.twig' %}
                 </div>
@@ -21,8 +21,6 @@
                 <div class="col-sm-9">
                     <h3>{{ 'Shipment' | trans }} {{ loop.index }} {{ 'of' | trans }} {{ loop.length }}</h3>
                 </div>
-
-                {% set idShipment = shipmentOrderItems.shipment.idSalesShipment %}
 
                 <div class="col-sm-3 text-right">
                     {% block edit_shipment_link %}{% include '@MerchantSalesOrderMerchantUserGui/MerchantShipmentEdit/_partials/edit-shipment-link.twig' %}{% endblock %}
