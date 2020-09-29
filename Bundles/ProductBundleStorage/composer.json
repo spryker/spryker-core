@@ -10,9 +10,11 @@
     "spryker/product-bundle": "^7.0.0",
     "spryker/product-storage": "^1.20.0",
     "spryker/publisher-extension": "^1.0.0",
+    "spryker/storage": "^3.0.0",
     "spryker/synchronization": "^1.0.0",
     "spryker/synchronization-behavior": "^1.0.0",
-    "spryker/synchronization-extension": "^1.0.0"
+    "spryker/synchronization-extension": "^1.0.0",
+    "spryker/util-encoding": "^2.0.0"
   },
   "require-dev": {
     "spryker/availability": "*",
