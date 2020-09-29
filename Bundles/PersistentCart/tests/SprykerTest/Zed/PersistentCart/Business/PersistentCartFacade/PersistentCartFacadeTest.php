@@ -11,6 +11,7 @@ use Codeception\Test\Unit;
 use Generated\Shared\Transfer\CartPreCheckResponseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
+use Generated\Shared\Transfer\PersistentItemReplaceTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
 use Generated\Shared\Transfer\StoreTransfer;
 use Spryker\Zed\Cart\CartDependencyProvider;
@@ -34,6 +35,8 @@ class PersistentCartFacadeTest extends Unit
     protected const FAKE_SKU_1 = 'fake_sku_1';
     protected const FAKE_SKU_2 = 'fake_sku_2';
     protected const FAKE_SKU_3 = 'fake_sku_3';
+    protected const FAKE_SKU_4 = 'fake_sku_4';
+    protected const FAKE_SKU_5 = 'fake_sku_5';
 
     /**
      * @var \SprykerTest\Zed\PersistentCart\PersistentCartBusinessTester
@@ -57,6 +60,28 @@ class PersistentCartFacadeTest extends Unit
             static::FAKE_SKU_2,
             static::FAKE_SKU_3,
         ]);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemWillSetSuccessFalseWhenItemToBeReplacedDoesNotExistInQuote(): void
+    {
+        // Arrange
+        $originalQuoteTransfer = $this->createCustomerQuote();
+
+        // Act
+        $persistentItemReplaceTransfer = (new PersistentItemReplaceTransfer())
+            ->setCustomer($originalQuoteTransfer->getCustomer())
+            ->setIdQuote($originalQuoteTransfer->getIdQuote())
+            ->setNewItem((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_4))
+            ->setItemToBeReplaced((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_5));
+
+        $quoteResponseTransfer = $this->tester->getFacade()->replaceItem($persistentItemReplaceTransfer);
+
+        // Assert
+        $this->assertCount(3, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertFalse($quoteResponseTransfer->getIsSuccessful());
     }
 
     /**
@@ -177,6 +202,28 @@ class PersistentCartFacadeTest extends Unit
         $this->assertSame(5, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(0)->getQuantity());
         $this->assertSame(5, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(1)->getQuantity());
         $this->assertSame(5, $quoteResponseTransfer->getQuoteTransfer()->getItems()->offsetGet(2)->getQuantity());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemShouldReplaceItem(): void
+    {
+        // Arrange
+        $originalQuoteTransfer = $this->createCustomerQuote();
+
+        // Act
+        $persistentItemReplaceTransfer = (new PersistentItemReplaceTransfer())
+            ->setCustomer($originalQuoteTransfer->getCustomer())
+            ->setIdQuote($originalQuoteTransfer->getIdQuote())
+            ->setNewItem((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_4))
+            ->setItemToBeReplaced((new ItemTransfer())->setQuantity(5)->setSku(static::FAKE_SKU_1));
+
+        $quoteResponseTransfer = $this->tester->getFacade()->replaceItem($persistentItemReplaceTransfer);
+
+        // Assert
+        $this->assertCount(3, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
     }
 
     /**

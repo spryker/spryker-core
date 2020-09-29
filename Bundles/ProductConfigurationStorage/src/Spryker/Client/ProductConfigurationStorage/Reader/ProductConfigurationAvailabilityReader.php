@@ -33,9 +33,8 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
      *
      * @return bool
      */
-    public function isProductHasProductConfigurationInstance(
-        ProductViewTransfer $productViewTransfer
-    ): bool {
+    public function isProductHasProductConfigurationInstance(ProductViewTransfer $productViewTransfer): bool
+    {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
         return $productConfigurationInstance !== null;
@@ -46,13 +45,12 @@ class ProductConfigurationAvailabilityReader implements ProductConfigurationAvai
      *
      * @return bool
      */
-    public function isProductConcreteAvailable(
-        ProductViewTransfer $productViewTransfer
-    ): bool {
+    public function isProductConcreteAvailable(ProductViewTransfer $productViewTransfer): bool
+    {
         $productConfigurationInstance = $this->findProductConfigurationInstance($productViewTransfer);
 
-        if (!$productConfigurationInstance || !$productConfigurationInstance->getAvailableQuantity()) {
-            return $productViewTransfer->getAvailable();
+        if (!$productConfigurationInstance || $productConfigurationInstance->getAvailableQuantity() === null) {
+            return (bool)$productViewTransfer->getAvailable();
         }
 
         return $productConfigurationInstance->getAvailableQuantity() > static::MINIMUM_AVAILABLE_QUANTITY;

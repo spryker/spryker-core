@@ -1,4 +1,4 @@
-namespace: SprykerTest\Zed\ProductConfigurationStorage
+namespace: SprykerTest\Zed\SalesProductConfiguration
 
 paths:
     tests: .
@@ -14,7 +14,7 @@ coverage:
 suites:
     Business:
         path: Business
-        class_name: ProductConfigurationStorageBusinessTester
+        class_name: SalesProductConfigurationBusinessTester
         modules:
             enabled:
                 - Asserts
@@ -25,5 +25,6 @@ suites:
                 - \SprykerTest\Shared\Propel\Helper\TransactionHelper
                 - \SprykerTest\Shared\Testify\Helper\DataCleanupHelper
                 - \SprykerTest\Shared\Product\Helper\ProductDataHelper
+                - \SprykerTest\Shared\Sales\Helper\SalesHelper
                 - \SprykerTest\Shared\ProductConfiguration\Helper\ProductConfigurationHelper
-                - \SprykerTest\Zed\ProductConfigurationStorage\Helper\ProductConfigurationStorageHelper
+

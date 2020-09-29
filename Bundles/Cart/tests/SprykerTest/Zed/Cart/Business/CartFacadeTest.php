@@ -8,7 +8,10 @@
 namespace SprykerTest\Zed\Cart\Business;
 
 use Codeception\Test\Unit;
+use Generated\Shared\DataBuilder\CartChangeBuilder;
+use Generated\Shared\DataBuilder\ItemBuilder;
 use Generated\Shared\Transfer\CartChangeTransfer;
+use Generated\Shared\Transfer\CartItemReplaceTransfer;
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -17,6 +20,7 @@ use Orm\Zed\PriceProduct\Persistence\SpyPriceProductQuery;
 use Orm\Zed\PriceProduct\Persistence\SpyPriceTypeQuery;
 use Orm\Zed\Product\Persistence\SpyProductAbstractQuery;
 use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 use Spryker\Zed\Cart\CartDependencyProvider;
 use Spryker\Zed\Cart\Dependency\Facade\CartToMessengerInterface;
 use Spryker\Zed\Cart\Dependency\Facade\CartToQuoteFacadeInterface;
@@ -326,6 +330,96 @@ class CartFacadeTest extends Unit
 
         // Assert
         $this->assertNotNull($quoteTransfer->getItems()[0]->getGroupKeyPrefix());
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemShouldReplaceItem(): void
+    {
+        // Arrange
+        $itemForRemove = (new ItemBuilder([
+                ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::QUANTITY => 1,
+        ]))->build();
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemForRemove);
+
+        $cartChangeForRemoval = (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem($itemForRemove);
+
+        $cartChangeForAdd = (new CartChangeBuilder())
+            ->withItem([
+                ItemTransfer::SKU => static::DUMMY_1_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::QUANTITY => 1,
+            ])->build()->setQuote($quoteTransfer);
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForRemoval($cartChangeForRemoval);
+        $cartItemReplaceTransfer->setCartChangeForAdding($cartChangeForAdd);
+
+        // Act
+        $quoteResponseTransfer = $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
+
+        // Assert
+        $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
+        $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertSame(
+            static::DUMMY_1_SKU_CONCRETE_PRODUCT,
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getIterator()->current()->getSku()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemWillFailWhenCartChangeForAddingIsMissing(): void
+    {
+        // Arrange
+        $itemForRemove = (new ItemBuilder([
+            ItemTransfer::SKU => static::DUMMY_2_SKU_CONCRETE_PRODUCT,
+            ItemTransfer::QUANTITY => 1,
+        ]))->build();
+
+        $quoteTransfer = new QuoteTransfer();
+        $quoteTransfer->addItem($itemForRemove);
+
+        $cartChangeForRemoval = (new CartChangeTransfer())
+            ->setQuote($quoteTransfer)
+            ->addItem($itemForRemove);
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForRemoval($cartChangeForRemoval);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
+    }
+
+    /**
+     * @return void
+     */
+    public function testReplaceItemWillFailWhenCartChangeForRemoveIsMissing(): void
+    {
+        $cartChangeForAdd = (new CartChangeBuilder())
+            ->withQuote()
+            ->withItem([
+                ItemTransfer::SKU => static::DUMMY_1_SKU_CONCRETE_PRODUCT,
+                ItemTransfer::QUANTITY => 1,
+            ])->build();
+
+        $cartItemReplaceTransfer = new CartItemReplaceTransfer();
+        $cartItemReplaceTransfer->setCartChangeForAdding($cartChangeForAdd);
+
+        // Assert
+        $this->expectException(RequiredTransferPropertyException::class);
+
+        // Act
+        $this->getCartFacade()->replaceItem($cartItemReplaceTransfer);
     }
 
     /**

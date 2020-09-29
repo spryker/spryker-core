@@ -1,5 +1,6 @@
 namespace: ProductConfigurationStorage
 include:
+    - tests/SprykerTest/Client/ProductConfigurationStorage
     - tests/SprykerTest/Zed/ProductConfigurationStorage
 paths:
     tests: tests
