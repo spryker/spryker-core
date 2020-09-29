@@ -104,6 +104,6 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
         return (new RestErrorMessageTransfer())
             ->setCode(ConfigurableBundleCartsRestApiConfig::RESPONSE_CODE_CONFIGURED_BUNDLE_VALIDATION)
             ->setStatus(Response::HTTP_UNPROCESSABLE_ENTITY)
-            ->setDetail($quoteErrorTransfer->getMessage());
+            ->setDetail($quoteErrorTransfer->getMessage() ?? ConfigurableBundleCartsRestApiConfig::RESPONSE_DETAILS_CONFIGURED_BUNDLE_VALIDATION);
     }
 }

@@ -55,6 +55,7 @@ class ConfigurableBundleCartsRestApiConfig extends AbstractBundleConfig
      */
     public const RESPONSE_DETAILS_UNAUTHORIZED_CART_ACTION = 'Unauthorized cart action.';
 
+    public const RESPONSE_DETAILS_CONFIGURED_BUNDLE_VALIDATION = 'There was a problem adding or updating the configured bundle.';
     public const RESPONSE_DETAILS_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND = 'Configurable bundle template not found.';
     public const RESPONSE_DETAILS_CONFIGURED_BUNDLE_WRONG_QUANTITY = 'The quantity of the configured bundle should be more than zero.';
     public const RESPONSE_DETAILS_CONFIGURED_BUNDLE_NOT_FOUND = 'Configured bundle with provided group key not found in cart.';
