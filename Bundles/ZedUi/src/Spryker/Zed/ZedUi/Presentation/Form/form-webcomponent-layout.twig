@@ -28,7 +28,6 @@ For more information on this topic, see
     {%- do form.setMethodRendered() -%}
     {% set additionalAttributes = attr %}
     {% set method = method|upper %}
-    {% set withMonitor = false %}
 
     {%- if method in ["GET", "POST"] -%}
         {% set form_method = method %}
@@ -71,7 +70,7 @@ For more information on this topic, see
         {%- if not render_rest is defined or render_rest -%}
             {{ form_rest(form) }}
         {%- endif -%}
-    {% if attr.excludeForm is not defined %}
+    {% if attr.excludeForm is not defined or not attr.excludeForm %}
         </web-mp-form>
     {% endif %}
 {%- endblock form_end -%}
