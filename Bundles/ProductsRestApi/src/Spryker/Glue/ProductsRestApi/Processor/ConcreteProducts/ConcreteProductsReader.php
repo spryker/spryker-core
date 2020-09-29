@@ -181,15 +181,10 @@ class ConcreteProductsReader implements ConcreteProductsReaderInterface
                 $restRequest->getMetadata()->getLocale()
             );
 
-        $productConcreteRestResources = [];
-        foreach ($bulkProductConcreteStorageData as $productConcreteStorageData) {
-            $productConcreteRestResources[] = $this->createRestResourceFromConcreteProductStorageData(
-                $productConcreteStorageData,
-                $restRequest
-            );
-        }
-
-        return $productConcreteRestResources;
+        return $this->createRestResourcesFromConcreteProductStorageData(
+            $bulkProductConcreteStorageData,
+            $restRequest
+        );
     }
 
     /**
