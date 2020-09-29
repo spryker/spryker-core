@@ -70,6 +70,28 @@ class SalesProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
+    public function testSaveSalesOrderItemConfigurationsFromQuoteWillSkipProductConfigurationSaveWhenNoProductConfiguration(): void
+    {
+        //Arrange
+        $orderId = $this->tester->createOrder();
+        $salesOrderItem = $this->tester->createSalesOrderItemForOrder($orderId);
+
+        $itemTransfer = (new ItemBuilder([
+            ItemTransfer::ID_SALES_ORDER_ITEM => $salesOrderItem->getIdSalesOrderItem(),
+        ]))->build();
+
+        $quoteTransfer = (new QuoteTransfer())->addItem($itemTransfer);
+
+        //Act
+        $result = $this->tester->getFacade()->saveSalesOrderItemConfigurationsFromQuote($quoteTransfer);
+
+        //Assert
+        $this->assertNull($result);
+    }
+
+    /**
+     * @return void
+     */
     public function testSaveSalesOrderItemConfigurationsFromQuoteFailSalesOrderIdRequired(): void
     {
         //Arrange

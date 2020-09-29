@@ -30,31 +30,6 @@ use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
 class FindProductConcretePricesByIdProductConcreteTest extends Unit
 {
     /**
-     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PROTOCOL
-     */
-    protected const REDIS_PROTOCOL = 'STORAGE_REDIS:STORAGE_REDIS_PROTOCOL';
-
-    /**
-     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_HOST
-     */
-    protected const REDIS_HOST = 'STORAGE_REDIS:STORAGE_REDIS_HOST';
-
-    /**
-     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PORT
-     */
-    protected const REDIS_PORT = 'STORAGE_REDIS:STORAGE_REDIS_PORT';
-
-    /**
-     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_DATABASE
-     */
-    protected const REDIS_DATABASE = 'STORAGE_REDIS:STORAGE_REDIS_DATABASE';
-
-    /**
-     * @uses \Spryker\Shared\StorageRedis\StorageRedisConstants::STORAGE_REDIS_PASSWORD
-     */
-    protected const REDIS_PASSWORD = 'STORAGE_REDIS:STORAGE_REDIS_PASSWORD';
-
-    /**
      * @var \SprykerTest\Client\ProductConfigurationStorage\ProductConfigurationStorageClientTester
      */
     protected $tester;
