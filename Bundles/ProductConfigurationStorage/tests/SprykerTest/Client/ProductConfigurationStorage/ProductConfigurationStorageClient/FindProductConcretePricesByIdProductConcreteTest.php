@@ -15,9 +15,7 @@ use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientBridge;
 use Spryker\Client\ProductConfigurationStorage\Dependency\Client\ProductConfigurationStorageToProductStorageClientInterface;
 use Spryker\Client\ProductConfigurationStorage\ProductConfigurationStorageFactory;
-use Spryker\Shared\Config\Config;
 use Spryker\Shared\Kernel\Transfer\Exception\RequiredTransferPropertyException;
-use Spryker\Shared\Storage\StorageConstants;
 
 /**
  * Auto-generated group annotations
