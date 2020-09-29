@@ -194,6 +194,7 @@ class MerchantOrderCreator implements MerchantOrderCreatorInterface
         $merchantOrderTransfer = (new MerchantOrderTransfer())
             ->setMerchantReference($merchantReference)
             ->setIdOrder($orderTransfer->getIdSalesOrder())
+            ->setOrder($orderTransfer)
             ->setMerchantOrderReference(
                 sprintf('%s--%s', $orderTransfer->getOrderReference(), $merchantReference)
             );

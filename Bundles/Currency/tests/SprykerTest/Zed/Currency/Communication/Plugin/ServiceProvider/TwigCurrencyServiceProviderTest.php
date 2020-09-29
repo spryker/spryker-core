@@ -15,6 +15,8 @@ use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
 /**
+ * @deprecated Will be removed without replacement.
+ *
  * Auto-generated group annotations
  *
  * @group SprykerTest
@@ -62,7 +64,7 @@ class TwigCurrencyServiceProviderTest extends Unit
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable());
 
-        $this->assertEquals('€', $currentCurrency);
+        $this->assertSame('€', $currentCurrency);
     }
 
     /**
@@ -74,7 +76,7 @@ class TwigCurrencyServiceProviderTest extends Unit
 
         $currentCurrency = call_user_func($currencyCurrencyFunction->getCallable(), 'USD');
 
-        $this->assertEquals('$', $currentCurrency);
+        $this->assertSame('$', $currentCurrency);
     }
 
     /**

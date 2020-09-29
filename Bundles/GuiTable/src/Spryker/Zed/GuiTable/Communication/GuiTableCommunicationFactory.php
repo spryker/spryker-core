@@ -24,8 +24,9 @@ use Spryker\Shared\GuiTable\Http\HttpJsonResponseBuilder;
 use Spryker\Shared\GuiTable\Http\HttpResponseBuilderInterface;
 use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizer;
 use Spryker\Shared\GuiTable\Normalizer\DateRangeRequestFilterValueNormalizerInterface;
-use Spryker\Shared\GuiTable\Twig\GuiTableConfigurationFunction;
+use Spryker\Shared\Twig\TwigFunctionProvider;
 use Spryker\Zed\GuiTable\Communication\Translator\ConfigurationTranslator;
+use Spryker\Zed\GuiTable\Communication\Twig\GuiTableConfigurationFunctionProvider;
 use Spryker\Zed\GuiTable\Dependency\Facade\GuiTableToTranslatorFacadeInterface;
 use Spryker\Zed\GuiTable\GuiTableDependencyProvider;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
@@ -36,11 +37,11 @@ use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 class GuiTableCommunicationFactory extends AbstractCommunicationFactory
 {
     /**
-     * @return \Spryker\Shared\GuiTable\Twig\GuiTableConfigurationFunction
+     * @return \Spryker\Shared\Twig\TwigFunctionProvider
      */
-    public function createGuiTableConfigurationFunction(): GuiTableConfigurationFunction
+    public function createGuiTableConfigurationFunctionProvider(): TwigFunctionProvider
     {
-        return new GuiTableConfigurationFunction(
+        return new GuiTableConfigurationFunctionProvider(
             $this->getUtilEncodingService(),
             $this->createConfigurationDefaultValuesExpander(),
             $this->createConfigurationTranslator()

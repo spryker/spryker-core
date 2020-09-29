@@ -67,6 +67,7 @@
         <property name="position" type="int"/>
         <property name="storeRelation" type="StoreRelation"/>
         <property name="localizedAttributesCollection" type="ProductLabelLocalizedAttributes[]" singular="localizedAttributes"/>
+        <property name="idProductLabel" type="int"/>
     </transfer>
 
     <transfer name="ProductLabelCriteria">
@@ -84,6 +85,7 @@
 
     <transfer name="Store">
         <property name="name" type="string"/>
+        <property name="availableLocaleIsoCodes" type="array" singular="availableLocaleCode"/>
     </transfer>
 
     <transfer name="StoreRelation">

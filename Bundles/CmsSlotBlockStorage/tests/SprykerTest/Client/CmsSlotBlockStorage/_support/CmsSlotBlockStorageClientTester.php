@@ -11,8 +11,6 @@ use Codeception\Actor;
 use Spryker\Client\CmsSlotBlockStorage\CmsSlotBlockStorageClientInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

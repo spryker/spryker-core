@@ -7,7 +7,6 @@
 
 namespace SprykerTest\Zed\Testify\Helper\Communication;
 
-use Codeception\Configuration;
 use Codeception\Module;
 use Codeception\Stub;
 use Codeception\TestInterface;
@@ -15,6 +14,7 @@ use Exception;
 use Spryker\Zed\Kernel\AbstractBundleConfig;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
 use Spryker\Zed\Kernel\Container;
+use SprykerTest\Shared\Testify\Helper\ClassResolverTrait;
 use SprykerTest\Shared\Testify\Helper\ConfigHelper;
 use SprykerTest\Shared\Testify\Helper\ConfigHelperTrait;
 use SprykerTest\Shared\Testify\Helper\ModuleNameTrait;
@@ -22,11 +22,12 @@ use Throwable;
 
 class CommunicationHelper extends Module
 {
+    use ClassResolverTrait;
     use ModuleNameTrait;
     use ConfigHelperTrait;
     use DependencyProviderHelperTrait;
 
-    protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%2$s\Communication\%2$sCommunicationFactory';
+    protected const COMMUNICATION_FACTORY_CLASS_NAME_PATTERN = '\%1$s\Zed\%3$s\Communication\%3$sCommunicationFactory';
 
     /**
      * @var \Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory[]
@@ -50,7 +51,7 @@ class CommunicationHelper extends Module
     public function mockFactoryMethod(string $methodName, $return, ?string $moduleName = null): AbstractCommunicationFactory
     {
         $moduleName = $this->getModuleName($moduleName);
-        $className = $this->getFactoryClassName($moduleName);
+        $className = $this->resolveClassName(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         if (!method_exists($className, $methodName)) {
             throw new Exception(sprintf('You tried to mock a not existing method "%s". Available methods are "%s"', $methodName, implode(', ', get_class_methods($className))));
@@ -100,22 +101,9 @@ class CommunicationHelper extends Module
     protected function createFactory(?string $moduleName = null): AbstractCommunicationFactory
     {
         $moduleName = $this->getModuleName($moduleName);
-        $moduleFactoryClassName = $this->getFactoryClassName($moduleName);
+        $moduleFactoryClassName = $this->resolveClassName(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, $moduleName);
 
         return new $moduleFactoryClassName();
-    }
-
-    /**
-     * @param string $moduleName
-     *
-     * @return string
-     */
-    protected function getFactoryClassName(string $moduleName): string
-    {
-        $config = Configuration::config();
-        $namespaceParts = explode('\\', $config['namespace']);
-
-        return sprintf(static::COMMUNICATION_FACTORY_CLASS_NAME_PATTERN, rtrim($namespaceParts[0], 'Test'), $moduleName);
     }
 
     /**
@@ -126,14 +114,14 @@ class CommunicationHelper extends Module
      */
     protected function injectConfig($moduleFactory, string $moduleName): AbstractCommunicationFactory
     {
-        if ($this->hasModule('\\' . ConfigHelper::class)) {
-            $config = $this->getConfig($moduleName);
+        if (!$this->hasModule('\\' . ConfigHelper::class)) {
+            return $moduleFactory;
+        }
 
-            if ($config === null) {
-                return $moduleFactory;
-            }
+        $config = $this->getConfig($moduleName);
 
-            $moduleFactory->setConfig($this->getConfig($moduleName));
+        if ($config !== null) {
+            $moduleFactory->setConfig($config);
         }
 
         return $moduleFactory;

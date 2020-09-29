@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\GuiTableConfigurationTransfer;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Spryker\Shared\GuiTable\Configuration\Builder\GuiTableConfigurationBuilderInterface;
 use Spryker\Shared\GuiTable\GuiTableFactoryInterface;
-use Spryker\Zed\ProductOfferMerchantPortalGui\Communication\DataProvider\ProductTableDataProvider;
 use Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface;
 
 class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProviderInterface
@@ -25,12 +24,15 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
     public const COL_KEY_VALID_FROM = 'validFrom';
     public const COL_KEY_VALID_TO = 'validTo';
 
+    public const COLUMN_DATA_STATUS_ACTIVE = 'Online';
+    public const COLUMN_DATA_STATUS_INACTIVE = 'Offline';
+
     protected const SEARCH_PLACEHOLDER = 'Search by SKU, Name';
 
     /**
-     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\CreateOfferController::tableDataAction()
+     * @uses \Spryker\Zed\ProductOfferMerchantPortalGui\Communication\Controller\ProductListController::tableDataAction()
      */
-    protected const DATA_URL = '/product-offer-merchant-portal-gui/create-offer/table-data';
+    protected const DATA_URL = '/product-offer-merchant-portal-gui/product-list/table-data';
 
     /**
      * @var \Spryker\Zed\ProductOfferMerchantPortalGui\Dependency\Facade\ProductOfferMerchantPortalGuiToTranslatorFacadeInterface
@@ -66,6 +68,7 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
         $guiTableConfigurationBuilder = $this->addRowActions($guiTableConfigurationBuilder);
 
         $guiTableConfigurationBuilder
+            ->setTableTitle('List of Products')
             ->setDataSourceUrl(static::DATA_URL)
             ->setSearchPlaceholder(static::SEARCH_PLACEHOLDER);
 
@@ -80,15 +83,15 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
     protected function addColumns(GuiTableConfigurationBuilderInterface $guiTableConfigurationBuilder): GuiTableConfigurationBuilderInterface
     {
         $guiTableConfigurationBuilder->addColumnText(static::COL_KEY_SKU, 'SKU', true, false)
-            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, false)
+            ->addColumnImage(static::COL_KEY_IMAGE, 'Image', false, true)
             ->addColumnText(static::COL_KEY_NAME, 'Name', true, false)
-            ->addColumnChips(static::COL_KEY_STORES, 'Stores', false, true, 3, 'grey')
-            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, false, 'grey', [
-                $this->translatorFacade->trans(ProductTableDataProvider::COLUMN_DATA_STATUS_ACTIVE) => 'green',
+            ->addColumnListChip(static::COL_KEY_STORES, 'Stores', false, true, 2, 'grey')
+            ->addColumnChip(static::COL_KEY_STATUS, 'Status', true, true, 'grey', [
+                $this->translatorFacade->trans(static::COLUMN_DATA_STATUS_ACTIVE) => 'green',
             ])
-            ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, false)
-            ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, false)
-            ->addColumnText(static::COL_KEY_OFFERS, 'Offers', true, false);
+            ->addColumnDate(static::COL_KEY_VALID_FROM, 'Valid From', true, true)
+            ->addColumnDate(static::COL_KEY_VALID_TO, 'Valid To', true, true)
+            ->addColumnText(static::COL_KEY_OFFERS, 'Offers', true, true);
 
         return $guiTableConfigurationBuilder;
     }
@@ -105,8 +108,8 @@ class ProductGuiTableConfigurationProvider implements GuiTableConfigurationProvi
                 '0' => 'Without Offers',
             ])
             ->addFilterSelect('isActive', 'Status', false, [
-                '1' => 'Active',
-                '0' => 'Inactive',
+                '1' => static::COLUMN_DATA_STATUS_ACTIVE,
+                '0' => static::COLUMN_DATA_STATUS_INACTIVE,
             ]);
 
         return $guiTableConfigurationBuilder;

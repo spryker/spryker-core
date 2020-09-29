@@ -1,51 +1,22 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
-        - "#Parameter \\#2 \\$callback of function array_filter expects callable\\(mixed, mixed\\): bool, 'strlen' given.#"
-        -
-            message: '#Call to an undefined method .+QueryInterface::.+\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php'
-        -
-            message: '#If condition is always false.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php'
-        -
-            message: '#If condition is always false.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php'
-        -
-            message: '#Class Elastica\\Query\\Terms constructor invoked with 0 parameters, 1-2 required.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php'
-        -
-            message: '#Method Elastica\\Query\\Terms::setTerms\(\) invoked with 2 parameters, 1 required.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php'
-        -
-            message: '#Parameter \#1 \$terms of method Elastica\\Query\\Terms::setTerms\(\) expects array, string given.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php'
-        -
-            message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Reader/Reader.php'
-        -
-            message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Writer/Writer.php'
-        -
-            message: '#Call to an undefined method Elastica\\Document::setType\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Writer/Writer.php'
-        -
-            message: '#Call to method send\(\) on an unknown class Elastica\\Type\\Mapping.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Call to method toArray\(\) on an unknown class Elastica\\Type\\Mapping.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Return typehint of method Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\IndexInstaller::createMappingByName\(\) has invalid type Elastica\\Type\\Mapping.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Instantiated class Elastica\\Type\\Mapping not found.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Call to method setParam\(\) on an unknown class Elastica\\Type\\Mapping.#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php'
-        -
-            message: '#Call to an undefined method Elastica\\Index::getType\(\).#'
-            path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/SearchIndexManager.php'
+        - '#Parameter \#2 \$callback of function array_filter expects callable\(mixed, mixed\): bool, ''strlen'' given.#'
+        - { message: '#Call to an undefined method .+QueryInterface::.+\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Delegator/SearchDelegator.php' }
+        - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/QueryInterface.php' }
+        - { message: '#If condition is always false.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Dependency/Plugin/ResultFormatterPluginInterface.php' }
+        - { message: '#Class Elastica\\Query\\Terms constructor invoked with 0 parameters, 1-2 required.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php' }
+        - { message: '#Method Elastica\\Query\\Terms::setTerms\(\) invoked with 2 parameters, 1 required.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php' }
+        - { message: '#Parameter \#1 \$terms of method Elastica\\Query\\Terms::setTerms\(\) expects array, string given.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Query/QueryBuilder.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Reader/Reader.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Writer/Writer.php' }
+        - { message: '#Call to an undefined method Elastica\\Document::setType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Client/Search/Model/Elasticsearch/Writer/Writer.php' }
+        - { message: '#Call to method send\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Call to method toArray\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Return typehint of method Spryker\\Zed\\Search\\Business\\Model\\Elasticsearch\\IndexInstaller::createMappingByName\(\) has invalid type Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Instantiated class Elastica\\Type\\Mapping not found.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Call to method setParam\(\) on an unknown class Elastica\\Type\\Mapping.#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/IndexInstaller.php' }
+        - { message: '#Call to an undefined method Elastica\\Index::getType\(\).#', path: '%rootDir%/../../../vendor/spryker/spryker/Bundles/Search/src/Spryker/Zed/Search/Business/Model/Elasticsearch/SearchIndexManager.php' }
+    reportUnmatchedIgnoredErrors: false

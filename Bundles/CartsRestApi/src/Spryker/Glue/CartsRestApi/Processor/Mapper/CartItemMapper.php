@@ -28,31 +28,54 @@ class CartItemMapper implements CartItemMapperInterface
 
     /**
      * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
      * @param string $localeName
      *
      * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
      */
     public function mapItemTransferToRestItemsAttributesTransfer(
         ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
         string $localeName
     ): RestItemsAttributesTransfer {
-        $itemData = $itemTransfer->toArray();
+        $restItemsAttributesTransfer->fromArray($itemTransfer->toArray(), true);
 
-        $restCartItemsAttributesResponseTransfer = (new RestItemsAttributesTransfer())
-            ->fromArray($itemData, true);
+        $restCartItemCalculationsTransfer = $restItemsAttributesTransfer->getCalculations();
+        if (!$restCartItemCalculationsTransfer) {
+            $restCartItemCalculationsTransfer = new RestCartItemCalculationsTransfer();
+        }
+        $restItemsAttributesTransfer->setCalculations(
+            $restCartItemCalculationsTransfer->fromArray($itemTransfer->toArray(), true)
+        );
 
-        $calculationsTransfer = (new RestCartItemCalculationsTransfer())->fromArray($itemData, true);
-        $restCartItemsAttributesResponseTransfer->setCalculations($calculationsTransfer);
+        return $this->executeRestCartItemsAttributesMapperPlugins(
+            $itemTransfer,
+            $restItemsAttributesTransfer,
+            $localeName
+        );
+    }
 
+    /**
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    protected function executeRestCartItemsAttributesMapperPlugins(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        string $localeName
+    ): RestItemsAttributesTransfer {
         foreach ($this->restCartItemsAttributesMapperPlugins as $restOrderItemsAttributesMapperPlugin) {
-            $restCartItemsAttributesResponseTransfer =
+            $restItemsAttributesTransfer =
                 $restOrderItemsAttributesMapperPlugin->mapItemTransferToRestItemsAttributesTransfer(
                     $itemTransfer,
-                    $restCartItemsAttributesResponseTransfer,
+                    $restItemsAttributesTransfer,
                     $localeName
                 );
         }
 
-        return $restCartItemsAttributesResponseTransfer;
+        return $restItemsAttributesTransfer;
     }
 }

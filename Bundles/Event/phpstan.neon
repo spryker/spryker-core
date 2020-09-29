@@ -1,4 +1,6 @@
 parameters:
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingIterableValueType: false
     ignoreErrors:
         - '#PHPDoc tag \@param for parameter \$transfer with type array<.+EventEntityTransfer> is incompatible with native type .+TransferInterface#'
         - '#Method .+EventDispatcher::extractEventListeners\(\) should return iterable<.+EventListenerContextInterface>\&SplPriorityQueue but returns array#'

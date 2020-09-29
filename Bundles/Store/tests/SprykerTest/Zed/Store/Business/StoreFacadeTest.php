@@ -100,7 +100,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -117,7 +117,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -134,7 +134,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertFalse($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(1, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(1, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**
@@ -151,7 +151,7 @@ class StoreFacadeTest extends Unit
 
         //Assert
         $this->assertTrue($quoteValidationTransfer->getIsSuccessful());
-        $this->assertEquals(0, $quoteValidationTransfer->getErrors()->count());
+        $this->assertSame(0, $quoteValidationTransfer->getErrors()->count());
     }
 
     /**

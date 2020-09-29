@@ -3,32 +3,30 @@ import { TableModule, TableConfig, TableDefaultConfig } from '@spryker/table';
 import {
     TableFormOverlayActionHandlerModule,
     TableFormOverlayActionHandlerService,
+} from '@spryker/table.action-handler.form-overlay';
+import {
     TableHtmlOverlayActionHandlerService,
     TableHtmlOverlayActionHandlerModule,
+} from '@spryker/table.action-handler.html-overlay';
+import {
     TableUrlActionHandlerModule,
     TableUrlActionHandlerService,
-} from '@spryker/table/action-handlers';
-import {
-    TableColumnChipComponent,
-    TableColumnChipModule,
-    TableColumnDateComponent,
-    TableColumnDateModule,
-    TableColumnImageComponent,
-    TableColumnImageModule,
-    TableColumnTextComponent,
-    TableColumnTextModule,
-} from '@spryker/table/columns';
-import { TableDatasourceHttpService } from '@spryker/table/datasources';
-import { TableFiltersFeatureModule } from '@spryker/table/features';
-import {
-    TableFilterDateRangeComponent,
-    TableFilterDateRangeModule,
-    TableFilterSelectComponent,
-    TableFilterSelectModule,
-} from '@spryker/table/filters';
+} from '@spryker/table.action-handler.url';
+import { TableColumnChipComponent, TableColumnChipModule } from '@spryker/table.column.chip';
+import { TableColumnDateComponent, TableColumnDateModule } from '@spryker/table.column.date';
+import { TableColumnImageComponent, TableColumnImageModule } from '@spryker/table.column.image';
+import { TableColumnTextComponent, TableColumnTextModule } from '@spryker/table.column.text';
+import { TableDatasourceHttpService } from '@spryker/table.datasource.http';
+import { TableFiltersFeatureModule } from '@spryker/table.feature.filters';
+import { TableFilterDateRangeComponent, TableFilterDateRangeModule } from '@spryker/table.filter.date-range';
+import { TableFilterSelectComponent, TableFilterSelectModule } from '@spryker/table.filter.select';
+import { TableFilterTreeSelectComponent, TableFilterTreeSelectModule } from '@spryker/table.filter.tree-select';
 
 export class TableDefaultConfigData implements Partial<TableConfig> {
     total = {
+        enabled: true,
+    };
+    settings = {
         enabled: true,
     };
 }
@@ -38,36 +36,44 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableModule.forRoot(),
         TableModule.withFeatures({
             filters: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.filters').then(
                     (m) => m.TableFiltersFeatureModule
                 ),
             pagination: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.pagination').then(
                     (m) => m.TablePaginationFeatureModule
                 ),
             rowActions: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.row-actions').then(
                     (m) => m.TableRowActionsFeatureModule
                 ),
             search: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.search').then(
                     (m) => m.TableSearchFeatureModule
                 ),
             syncStateUrl: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.sync-state').then(
                     (m) => m.TableSyncStateFeatureModule
                 ),
             total: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.total').then(
                     (m) => m.TableTotalFeatureModule
                 ),
             itemSelection: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.selectable').then(
                     (m) => m.TableSelectableFeatureModule
                 ),
             batchActions: () =>
-                import('@spryker/table/features').then(
+                import('@spryker/table.feature.batch-actions').then(
                     m => m.TableBatchActionsFeatureModule
+                ),
+            settings: () =>
+                import('@spryker/table.feature.settings').then(
+                    m => m.TableSettingsFeatureModule,
+                ),
+            title: () =>
+                import('@spryker/table.feature.title').then(
+                    m => m.TableTitleFeatureModule
                 ),
         }),
         TableModule.withColumnComponents({
@@ -79,6 +85,7 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableFiltersFeatureModule.withFilterComponents({
             select: TableFilterSelectComponent,
             'date-range': TableFilterDateRangeComponent,
+            'tree-select': TableFilterTreeSelectComponent,
         } as any),
         TableModule.withDatasourceTypes({
             http: TableDatasourceHttpService,
@@ -96,6 +103,7 @@ export class TableDefaultConfigData implements Partial<TableConfig> {
         TableColumnDateModule,
         TableFilterSelectModule,
         TableFilterDateRangeModule,
+        TableFilterTreeSelectModule,
 
         // Table Action Handler Modules
         TableFormOverlayActionHandlerModule,

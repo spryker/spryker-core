@@ -13,13 +13,12 @@
     "spryker/twig-extension": "^1.0.0",
     "spryker/util-text": "^1.0.0",
     "spryker/zend": "^2.0.0",
-    "twig/twig": "^1.20.0"
+    "twig/twig": "^1.41 || ^2.9.0 || ^3.0.0"
   },
   "require-dev": {
     "spryker/application": "*",
     "spryker/code-sniffer": "*",
     "spryker/event-dispatcher": "*",
-    "spryker/gui": "*",
     "spryker/propel": "*",
     "spryker/silex": "*",
     "spryker/testify": "*"

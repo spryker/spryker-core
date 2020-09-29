@@ -44,6 +44,7 @@ class ProductRelationStorageListenerTest extends Unit
     protected const STORE_DE = 'DE';
 
     protected const STORE_AT = 'AT';
+
     /**
      * @var \SprykerTest\Zed\ProductRelationStorage\ProductRelationStorageCommunicationTester
      */

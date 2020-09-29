@@ -21,7 +21,7 @@ abstract class AbstractDependencyFinder
     /**
      * @var \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree
      */
-    private $dependencyTree;
+    protected $dependencyTree;
 
     /**
      * @param \Spryker\Zed\Development\Business\DependencyTree\AbstractDependencyTree $dependencyTree

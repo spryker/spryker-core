@@ -50,4 +50,20 @@ interface MailConstants
      * @api
      */
     public const SMTP_PASSWORD = 'MAIL:SMTP_PASSWORD';
+
+    /**
+     * Specification:
+     * - Defines `sender name`.
+     *
+     * @api
+     */
+    public const SENDER_NAME = 'MAIL:SENDER_NAME';
+
+    /**
+     * Specification:
+     * - Defines `sender email`.
+     *
+     * @api
+     */
+    public const SENDER_EMAIL = 'MAIL:SENDER_EMAIL';
 }

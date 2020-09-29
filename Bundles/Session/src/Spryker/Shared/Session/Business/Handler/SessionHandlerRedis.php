@@ -48,7 +48,7 @@ class SessionHandlerRedis implements SessionHandlerInterface
     /**
      * @var array
      */
-    private $connectionOptions;
+    protected $connectionOptions;
 
     /**
      * @param array|string $connectionParameters

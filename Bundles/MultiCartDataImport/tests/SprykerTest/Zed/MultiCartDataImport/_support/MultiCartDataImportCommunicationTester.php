@@ -13,8 +13,6 @@ use Orm\Zed\Quote\Persistence\SpyQuoteQuery;
 use Spryker\Zed\Customer\Business\CustomerFacadeInterface;
 
 /**
- * Inherited Methods
- *
  * @method void wantToTest($text)
  * @method void wantTo($text)
  * @method void execute($callable)

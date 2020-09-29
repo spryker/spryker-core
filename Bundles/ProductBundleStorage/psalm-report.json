@@ -1,0 +1,151 @@
+{
+    "error": [
+        {
+            "severity": "error",
+            "line_from": 142,
+            "line_to": 142,
+            "type": "InvalidReturnType",
+            "message": "The declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductBundleStorage\\Business\\Writer\\ProductBundleStorageWriter::getProductConcreteBundleIds is incorrect, got 'list<int|mixed|null>'",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Business/Writer/ProductBundleStorageWriter.php",
+            "snippet": "     * @return int[]",
+            "selected_text": "int[]",
+            "error_level": 6,
+            "shortcode": 11
+        },
+        {
+            "severity": "error",
+            "line_from": 156,
+            "line_to": 156,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'list<int|mixed|null>' does not match the declared return type 'array<array-key, int>' for Spryker\\Zed\\ProductBundleStorage\\Business\\Writer\\ProductBundleStorageWriter::getProductConcreteBundleIds",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Business/Writer/ProductBundleStorageWriter.php",
+            "snippet": "        return $productConcreteBundleIds;",
+            "selected_text": "$productConcreteBundleIds",
+            "error_level": 6,
+            "shortcode": 128
+        },
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductBundleStorage\\Communication\\Plugin\\Publisher\\ProductBundle\\ProductBundlePublishWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Communication/Plugin/Publisher/ProductBundle/ProductBundlePublishWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductBundleStorage\\Communication\\Plugin\\Publisher\\ProductBundle\\ProductBundleWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Communication/Plugin/Publisher/ProductBundle/ProductBundleWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 32,
+            "line_to": 32,
+            "type": "ParamNameMismatch",
+            "message": "Argument 1 of Spryker\\Zed\\ProductBundleStorage\\Communication\\Plugin\\Publisher\\ProductConcrete\\ProductBundleWritePublisherPlugin::handleBulk has wrong name $eventTransfers, expecting $transfers as defined by Spryker\\Zed\\Event\\Dependency\\Plugin\\EventBulkHandlerInterface::handleBulk",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Communication/Plugin/Publisher/ProductConcrete/ProductBundleWritePublisherPlugin.php",
+            "snippet": "    public function handleBulk(array $eventTransfers, $eventName): void",
+            "selected_text": "$eventTransfers",
+            "error_level": 7,
+            "shortcode": 230
+        },
+        {
+            "severity": "error",
+            "line_from": 25,
+            "line_to": 27,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Persistence/ProductBundleStorageEntityManager.php",
+            "snippet": "        $productBundleStorageEntity = $this->getFactory()\n            ->getProductBundleStoragePropelQuery()\n            ->filterByFkProduct($productBundleStorageTransfer->getIdProductConcreteBundle())",
+            "selected_text": "$this->getFactory()\n            ->getProductBundleStoragePropelQuery()\n            ->filterByFkProduct($productBundleStorageTransfer->getIdProductConcreteBundle())",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 42,
+            "line_to": 44,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Persistence/ProductBundleStorageEntityManager.php",
+            "snippet": "        $productBundleStorageEntities = $this->getFactory()\n            ->getProductBundleStoragePropelQuery()\n            ->filterByFkProduct_In($productConcreteIds)",
+            "selected_text": "$this->getFactory()\n            ->getProductBundleStoragePropelQuery()\n            ->filterByFkProduct_In($productConcreteIds)",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 21,
+            "line_to": 21,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Persistence/ProductBundleStoragePersistenceFactory.php",
+            "snippet": "     * @phpstan-return \\Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed>",
+            "selected_text": "\\Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed>",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 31,
+            "line_to": 31,
+            "type": "TooManyTemplateParams",
+            "message": "Orm\\Zed\\ProductBundleStorage\\Persistence\\SpyProductBundleStorageQuery<mixed> has too many template params, expecting 0",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Persistence/ProductBundleStorageRepository.php",
+            "snippet": "            $productBundleStoragePropelQuery->filterByFkProduct_In($productConcreteIds);",
+            "selected_text": "$productBundleStoragePropelQuery->filterByFkProduct_In($productConcreteIds)",
+            "error_level": 6,
+            "shortcode": 184
+        },
+        {
+            "severity": "error",
+            "line_from": 34,
+            "line_to": 36,
+            "type": "InvalidReturnStatement",
+            "message": "The inferred type 'Propel\\Runtime\\Collection\\ObjectCollection|array<array-key, Propel\\Runtime\\ActiveRecord\\ActiveRecordInterface>|mixed' does not match the declared return type 'array<array-key, Generated\\Shared\\Transfer\\SynchronizationDataTransfer>' for Spryker\\Zed\\ProductBundleStorage\\Persistence\\ProductBundleStorageRepository::getPaginatedProductBundleStorageDataTransfers",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Persistence/ProductBundleStorageRepository.php",
+            "snippet": "        return $this->buildQueryFromCriteria($productBundleStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find();",
+            "selected_text": "$this->buildQueryFromCriteria($productBundleStoragePropelQuery, $filterTransfer)\n            ->setFormatter(SynchronizationDataTransferObjectFormatter::class)\n            ->find()",
+            "error_level": 6,
+            "shortcode": 128
+        }
+    ],
+    "warning": [
+        {
+            "severity": "info",
+            "line_from": 81,
+            "line_to": 81,
+            "type": "PossiblyNullArrayOffset",
+            "message": "Cannot access value on variable $productBundleStorageTransfers[int|null] using possibly null offset int|null",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Client/ProductBundleStorage/Reader/ProductBundleStorageReader.php",
+            "snippet": "            $productBundleStorageTransfers[$productBundleStorageTransfer->getIdProductConcreteBundle()] = $productBundleStorageTransfer;",
+            "selected_text": "$productBundleStorageTransfers",
+            "error_level": 3,
+            "shortcode": 125
+        },
+        {
+            "severity": "info",
+            "line_from": 61,
+            "line_to": 61,
+            "type": "PossiblyInvalidMethodCall",
+            "message": "Cannot call method on possible array<array-key, Generated\\Shared\\Transfer\\ProductBundleTransfer> variable ",
+            "file_name": "vendor/spryker/spryker/Bundles/ProductBundleStorage/src/Spryker/Zed/ProductBundleStorage/Communication/Plugin/Publisher/ProductBundlePublisherTriggerPlugin.php",
+            "snippet": "            ->getArrayCopy();",
+            "selected_text": "getArrayCopy",
+            "error_level": 3,
+            "shortcode": 113
+        }
+    ],
+    "deprecation": []
+}

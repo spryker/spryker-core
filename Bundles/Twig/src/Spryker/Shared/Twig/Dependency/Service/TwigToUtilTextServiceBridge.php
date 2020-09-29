@@ -24,21 +24,24 @@ class TwigToUtilTextServiceBridge implements TwigToUtilTextServiceInterface
 
     /**
      * @param string $string
+     * @param string $separator
      *
      * @return string
      */
-    public function camelCaseToDash($string)
+    public function camelCaseToDash($string, $separator = '-')
     {
-        return $this->utilTextService->camelCaseToSeparator($string);
+        return $this->utilTextService->camelCaseToSeparator($string, $separator);
     }
 
     /**
      * @param string $string
+     * @param string $separator
+     * @param bool $upperCaseFirst
      *
      * @return string
      */
-    public function dashToCamelCase($string)
+    public function dashToCamelCase($string, $separator = '-', $upperCaseFirst = false)
     {
-        return $this->utilTextService->separatorToCamelCase($string);
+        return $this->utilTextService->separatorToCamelCase($string, $separator, $upperCaseFirst);
     }
 }

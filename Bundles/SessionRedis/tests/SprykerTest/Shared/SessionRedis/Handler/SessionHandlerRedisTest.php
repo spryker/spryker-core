@@ -95,7 +95,7 @@ class SessionHandlerRedisTest extends Unit
             ->method('get')
             ->willReturn(null);
 
-        $this->assertEquals('', $this->sessionHandler->read('save id'));
+        $this->assertSame('', $this->sessionHandler->read('save id'));
     }
 
     /**
@@ -108,7 +108,7 @@ class SessionHandlerRedisTest extends Unit
             ->method('get')
             ->willReturn('"data"');
 
-        $this->assertEquals('data', $this->sessionHandler->read('save id'));
+        $this->assertSame('data', $this->sessionHandler->read('save id'));
     }
 
     /**

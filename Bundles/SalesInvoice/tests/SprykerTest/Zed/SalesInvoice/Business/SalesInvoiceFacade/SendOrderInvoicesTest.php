@@ -60,7 +60,7 @@ class SendOrderInvoicesTest extends Unit
             ->sendOrderInvoices($orderInvoiceSendRequestTransfer);
 
         // Assert
-        $this->assertEquals(1, $orderInvoiceSendResponseTransfer->getCount());
+        $this->assertSame(1, $orderInvoiceSendResponseTransfer->getCount());
     }
 
     /**
@@ -81,7 +81,7 @@ class SendOrderInvoicesTest extends Unit
             ->sendOrderInvoices($orderInvoiceSendRequestTransfer);
 
         // Assert
-        $this->assertEquals(0, $orderInvoiceSendResponseTransfer->getCount());
+        $this->assertSame(0, $orderInvoiceSendResponseTransfer->getCount());
     }
 
     /**
@@ -104,7 +104,7 @@ class SendOrderInvoicesTest extends Unit
             ->sendOrderInvoices($orderInvoiceSendRequestTransfer);
 
         // Assert
-        $this->assertEquals(1, $orderInvoiceSendResponseTransfer->getCount());
+        $this->assertSame(1, $orderInvoiceSendResponseTransfer->getCount());
     }
 
     /**
@@ -127,7 +127,7 @@ class SendOrderInvoicesTest extends Unit
             ->sendOrderInvoices($orderInvoiceSendRequestTransfer);
 
         // Assert
-        $this->assertEquals(1, $orderInvoiceSendResponseTransfer->getCount());
+        $this->assertSame(1, $orderInvoiceSendResponseTransfer->getCount());
     }
 
     /**
@@ -150,7 +150,7 @@ class SendOrderInvoicesTest extends Unit
             ->disableOriginalConstructor()
             ->getMock();
         $twigEnvironmentMock->method('getExtension')
-            ->with('translator')
+            ->with(TwigTranslatorPlugin::class)
             ->willReturn(new TwigTranslatorPlugin());
         $twigEnvironmentMock->method('render')
             ->willReturn('Rendered page');
