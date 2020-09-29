@@ -507,7 +507,7 @@ class CmsFacadePageTest extends Unit
         $fixtures = [
             CmsPageTransfer::IS_ACTIVE => true,
             CmsPageTransfer::FK_TEMPLATE => 1,
-            CmsPageTransfer::IS_SEARCHABLE => 1,
+            CmsPageTransfer::IS_SEARCHABLE => true,
             CmsPageTransfer::PAGE_ATTRIBUTES => [
                 [
                     CmsPageAttributesTransfer::URL => '/en/function-test',
