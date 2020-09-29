@@ -38,12 +38,12 @@ class ProductConfigurationClientTest extends Unit
     protected const TEST_CONFIGURATOR_REDIRECT_URL = 'testUrl';
 
     /**
-     * @var \PHPUnit\Framework\MockObject\Builder\InvocationMocker
+     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorRequestPluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
-    public $productConfiguratorRequestPluginMock;
+    protected $productConfiguratorRequestPluginMock;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject
+     * @var \Spryker\Client\ProductConfigurationExtension\Dependency\Plugin\ProductConfiguratorResponsePluginInterface|\PHPUnit\Framework\MockObject\MockObject
      */
     protected $productConfiguratorResponsePluginMock;
 
@@ -53,9 +53,9 @@ class ProductConfigurationClientTest extends Unit
     protected $productConfigurationClient;
 
     /**
-     * @var \PHPUnit\Framework\MockObject\MockObject|\Spryker\Client\ProductConfiguration\ProductConfigurationFactory
+     * @var \Spryker\Client\ProductConfiguration\ProductConfigurationFactory|\PHPUnit\Framework\MockObject\MockObject
      */
-    protected $configurationFactoryMock;
+    protected $productConfigurationFactoryMock;
 
     /**
      * @var \SprykerTest\Client\ProductConfiguration\ProductConfigurationClientTester
@@ -69,7 +69,7 @@ class ProductConfigurationClientTest extends Unit
     {
         parent::setUp();
 
-        $this->configurationFactoryMock = $this->getMockBuilder(ProductConfigurationFactory::class)
+        $this->productConfigurationFactoryMock = $this->getMockBuilder(ProductConfigurationFactory::class)
             ->disableOriginalConstructor()
             ->setMethodsExcept([
                 'createProductConfiguratorRedirectResolver',
@@ -78,7 +78,7 @@ class ProductConfigurationClientTest extends Unit
             ])
             ->getMock();
 
-        $this->productConfigurationClient = $this->tester->getClient()->setFactory($this->configurationFactoryMock);
+        $this->productConfigurationClient = $this->tester->getClient()->setFactory($this->productConfigurationFactoryMock);
 
         $this->productConfiguratorRequestPluginMock = $this->getMockBuilder(
             ProductConfiguratorRequestPluginInterface::class
@@ -108,7 +108,7 @@ class ProductConfigurationClientTest extends Unit
     public function testPrepareProductConfiguratorRedirectWithSuccessFlow(): void
     {
         //Arrange
-        $this->configurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([
             static::TEST_PRODUCT_CONFIGURATOR_REQUEST_KEY => $this->productConfiguratorRequestPluginMock,
         ]);
 
@@ -129,11 +129,11 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testPrepareProductConfiguratorRedirectDefaultPlugin(): void
+    public function testPrepareProductConfiguratorRedirectWillUseDefaultPlugin(): void
     {
         //Arrange
-        $this->configurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([]);
-        $this->configurationFactoryMock->method('getDefaultProductConfiguratorRequestPlugin')
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorRequestPlugins')->willReturn([]);
+        $this->productConfigurationFactoryMock->method('getDefaultProductConfiguratorRequestPlugin')
             ->willReturn($this->productConfiguratorRequestPluginMock);
 
         $productConfigurationRequestTransfer = (new ProductConfiguratorRequestTransfer())
@@ -156,7 +156,7 @@ class ProductConfigurationClientTest extends Unit
     public function testProcessProductConfiguratorResponseWithSuccessFlow(): void
     {
         //Arrange
-        $this->configurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([
             static::TEST_PRODUCT_CONFIGURATOR_RESPONSE_KEY => $this->productConfiguratorResponsePluginMock,
         ]);
 
@@ -177,11 +177,11 @@ class ProductConfigurationClientTest extends Unit
     /**
      * @return void
      */
-    public function testProcessProductConfiguratorResponseDefaultPlugin(): void
+    public function testProcessProductConfiguratorResponseWillUseDefaultPlugin(): void
     {
         //Arrange
-        $this->configurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([]);
-        $this->configurationFactoryMock->method('getDefaultProductConfiguratorResponsePlugin')
+        $this->productConfigurationFactoryMock->method('getProductConfiguratorResponsePlugins')->willReturn([]);
+        $this->productConfigurationFactoryMock->method('getDefaultProductConfiguratorResponsePlugin')
             ->willReturn($this->productConfiguratorResponsePluginMock);
 
         $productConfigurationResponseTransfer = (new ProductConfiguratorResponseTransfer())

@@ -65,7 +65,7 @@ class PersistentCartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReplaceItemWhenItemToBeReplacedNotExistInQuoteWillSetSuccessFalse(): void
+    public function testReplaceItemWillSetSuccessFalseWhenItemToBeReplacedDoesNotExistInQuote(): void
     {
         // Arrange
         $originalQuoteTransfer = $this->createCustomerQuote();

@@ -51,7 +51,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteCollectionShouldRemoveProductConfigurationStorageShouldRemoveProductConfigurationStorage(): void
+    public function testDeleteCollectionByProductConfigurationEventsShouldRemoveProductConfigurationStorage(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -77,7 +77,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteCollectionShouldRemoveProductConfigurationStorageShouldRemoveProductConfigurationStorageWithoutIds(): void
+    public function testDeleteCollectionShouldRemoveProductConfigurationStorageWithoutIds(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();
@@ -105,7 +105,7 @@ class DeleteCollectionByProductConfigurationEventsTest extends Unit
     /**
      * @return void
      */
-    public function testDeleteCollectionShouldRemoveProductConfigurationStorageShouldRemoveProductConfigurationStorageWithFakeId(): void
+    public function testDeleteCollectionShouldRemoveProductConfigurationStorageWithFakeId(): void
     {
         // Arrange
         $productConcreteTransfer = $this->tester->haveProduct();

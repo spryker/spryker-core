@@ -68,7 +68,7 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
     {
         parent::setUp();
 
-        $this->setupConfig();
+        $this->tester->setupStorageRedisConfig();
     }
 
     /**
@@ -219,17 +219,5 @@ class FindProductConcretePricesByIdProductConcreteTest extends Unit
             ->willReturn($productConcreteTransfer->toArray());
 
         return $productConfigurationStorageToProductStorageClientBridgeMock;
-    }
-
-    /**
-     * @return void
-     */
-    protected function setupConfig(): void
-    {
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PROTOCOL, Config::get(static::REDIS_PROTOCOL));
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PORT, Config::get(static::REDIS_PORT));
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_HOST, Config::get(static::REDIS_HOST));
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_DATABASE, Config::get(static::REDIS_DATABASE));
-        $this->tester->setConfig(StorageConstants::STORAGE_REDIS_PASSWORD, Config::get(static::REDIS_PASSWORD));
     }
 }

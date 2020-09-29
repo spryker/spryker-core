@@ -366,12 +366,16 @@ class CartFacadeTest extends Unit
         // Assert
         $this->assertTrue($quoteResponseTransfer->getIsSuccessful());
         $this->assertCount(1, $quoteResponseTransfer->getQuoteTransfer()->getItems());
+        $this->assertSame(
+            static::DUMMY_1_SKU_CONCRETE_PRODUCT,
+            $quoteResponseTransfer->getQuoteTransfer()->getItems()->getIterator()->current()->getSku()
+        );
     }
 
     /**
      * @return void
      */
-    public function testReplaceItemFailCartChangeForAddingRequired(): void
+    public function testReplaceItemWillFailWhenCartChangeForAddingIsMissing(): void
     {
         // Arrange
         $itemForRemove = (new ItemBuilder([
@@ -399,7 +403,7 @@ class CartFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testReplaceItemFailCartChangeForRemoveRequired(): void
+    public function testReplaceItemWillFailWhenCartChangeForRemoveIsMissing(): void
     {
         $cartChangeForAdd = (new CartChangeBuilder())
             ->withQuote()

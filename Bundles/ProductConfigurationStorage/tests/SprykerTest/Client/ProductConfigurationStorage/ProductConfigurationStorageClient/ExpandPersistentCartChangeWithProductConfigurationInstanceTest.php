@@ -57,7 +57,7 @@ class ExpandPersistentCartChangeWithProductConfigurationInstanceTest extends Uni
         $itemTransfer = $persistentCartChangeTransfer->getItems()->offsetGet(0);
 
         $this->assertNotNull($itemTransfer->getProductConfigurationInstance());
-        $this->assertEquals($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
+        $this->assertSame($productConfigurationInstanceTransfer, $itemTransfer->getProductConfigurationInstance());
     }
 
     /**

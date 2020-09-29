@@ -89,7 +89,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testExpandProductConfigurationItemsWithGroupKey(): void
+    public function testExpandProductConfigurationItemsWithGroupKeyWillAddProductConfigurationHash(): void
     {
         //Arrange
         $productConfigurationInstanceMock = $this->getMockBuilder(ProductConfigurationInstanceTransfer::class)
@@ -148,7 +148,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testisQuoteProductConfigurationValidWithValidProductConfiguration(): void
+    public function testIsQuoteProductConfigurationValidWithValidProductConfiguration(): void
     {
         //Arrange
         $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setIsComplete(true);
@@ -171,7 +171,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testisQuoteProductConfigurationValidWithNotValidProductConfiguration(): void
+    public function testIsQuoteProductConfigurationValidWithNotValidProductConfiguration(): void
     {
         //Arrange
         $productConfigurationInstance = (new ProductConfigurationInstanceTransfer())->setIsComplete(false);
@@ -194,7 +194,7 @@ class ProductConfigurationFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testisQuoteProductConfigurationValidWithoutProductConfigurationInstance(): void
+    public function testIsQuoteProductConfigurationValidWithoutProductConfigurationInstance(): void
     {
         //Arrange
         $itemTransfer = (new ItemBuilder([
