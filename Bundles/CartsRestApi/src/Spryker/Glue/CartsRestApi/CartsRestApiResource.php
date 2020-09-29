@@ -7,7 +7,9 @@
 
 namespace Spryker\Glue\CartsRestApi;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
+use Generated\Shared\Transfer\RestItemsAttributesTransfer;
 use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
 use Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface;
 use Spryker\Glue\Kernel\AbstractRestResource;
@@ -18,6 +20,10 @@ use Spryker\Glue\Kernel\AbstractRestResource;
 class CartsRestApiResource extends AbstractRestResource implements CartsRestApiResourceInterface
 {
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -31,6 +37,10 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
      * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
      *
@@ -41,5 +51,28 @@ class CartsRestApiResource extends AbstractRestResource implements CartsRestApiR
         return $this->getFactory()
             ->createGuestCartRestResponseBuilder()
             ->createGuestCartRestResponse($quoteTransfer, $restRequest->getMetadata()->getLocale());
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\RestItemsAttributesTransfer $restItemsAttributesTransfer
+     * @param string $localeName
+     *
+     * @return \Generated\Shared\Transfer\RestItemsAttributesTransfer
+     */
+    public function mapItemTransferToRestItemsAttributesTransfer(
+        ItemTransfer $itemTransfer,
+        RestItemsAttributesTransfer $restItemsAttributesTransfer,
+        string $localeName
+    ): RestItemsAttributesTransfer {
+        return $this->getFactory()->createCartItemMapper()->mapItemTransferToRestItemsAttributesTransfer(
+            $itemTransfer,
+            $restItemsAttributesTransfer,
+            $localeName
+        );
     }
 }

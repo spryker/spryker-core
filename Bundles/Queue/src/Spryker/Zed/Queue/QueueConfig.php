@@ -18,6 +18,26 @@ class QueueConfig extends AbstractBundleConfig
     public const DEFAULT_THRESHOLD = 59;
 
     /**
+     * @uses \SIGINT
+     */
+    protected const SIGINT = 2;
+
+    /**
+     * @uses \SIGQUIT
+     */
+    protected const SIGQUIT = 3;
+
+    /**
+     * @uses \SIGABRT
+     */
+    protected const SIGABRT = 6;
+
+    /**
+     * @uses \SIGTERM
+     */
+    protected const SIGTERM = 15;
+
+    /**
      * @api
      *
      * @return array|null
@@ -174,16 +194,16 @@ class QueueConfig extends AbstractBundleConfig
 
     /**
      * Specification:
-     * - Defines the list of signals that will be handled for the graceful worker shutdown.
+     * - Defines the list of signals that will be handled for the graceful worker shutdown on Unix platforms.
      *
      * @api
      *
      * @example
      * [
-     *  SIGTERM,
-     *  SIGINT,
-     *  SIGQUIT,
-     *  SIGABRT,
+     *  static::SIGINT,
+     *  static::SIGQUIT,
+     *  static::SIGABRT,
+     *  static::SIGTERM,
      * ]
      *
      * @return int[]
