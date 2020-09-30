@@ -68,7 +68,7 @@ describe('FormComponent', () => {
         expect(formComponent.properties.spyApplyAttrs).toEqual(mockAttrs);
     });
 
-    it('should bind @Input(attrs) to `spyApplyAttrs` of `form` component', () => {
+    it('should bind @Input(withMonitor) to `spyUnsavedChangesFormMonitor` of `form` component', () => {
         const mockMonitor = true;
         const formComponent = fixture.debugElement.query(By.css('form'));
 

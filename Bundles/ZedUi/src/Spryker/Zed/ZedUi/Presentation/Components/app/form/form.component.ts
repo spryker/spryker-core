@@ -20,10 +20,6 @@ export class FormComponent {
     @Input() @ToBoolean() withMonitor = false;
 
     sumbitHandler() {
-        if (!this.withMonitor) {
-            return;
-        }
-
         this.unsavedChangesFormMonitorDirective?.reset();
     }
 }

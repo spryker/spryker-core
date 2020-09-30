@@ -57,7 +57,7 @@ For more information on this topic, see
             attrs="{{ additionalAttributes | json_encode }}"
             {% if name != '' %} name="{{ name }}"{% endif %}
             {% if action != '' %} action="{{ action }}"{% endif %}
-            {% if attr.withMonitor is defined %} with-monitor="{{ attr.withMonitor | json_encode }}"{% endif %}
+            {% if attr.withMonitor is defined and attr.withMonitor %} with-monitor="true"{% endif %}
         >
     {% endif %}
 
@@ -70,6 +70,7 @@ For more information on this topic, see
         {%- if not render_rest is defined or render_rest -%}
             {{ form_rest(form) }}
         {%- endif -%}
+
     {% if attr.excludeForm is not defined or not attr.excludeForm %}
         </web-mp-form>
     {% endif %}

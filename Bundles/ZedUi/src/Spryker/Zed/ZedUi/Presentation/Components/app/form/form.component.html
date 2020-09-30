@@ -6,5 +6,8 @@
     [spyUnsavedChangesFormMonitor]="withMonitor"
     (submit)="sumbitHandler()"
 >
-    <ng-content></ng-content>
+    <span spyCustomElementBoundary>
+        <ng-content></ng-content>
+    </span>
 </form>
+
