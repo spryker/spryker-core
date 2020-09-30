@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+
 class MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge implements MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
 {
     /**
@@ -30,5 +33,35 @@ class MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge implements Merchan
     public function findByReference($customerReference)
     {
         return $this->customerFacade->findByReference($customerReference);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer
+    {
+        return $this->customerFacade->findCustomerAddressByAddressData($addressTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressesTransfer
+     */
+    public function getAddresses(CustomerTransfer $customerTransfer)
+    {
+        return $this->customerFacade->getAddresses($customerTransfer);
+    }
+
+    /**
+     * @phpstan-return array<mixed>
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array
+    {
+        return $this->customerFacade->getAllSalutations();
     }
 }

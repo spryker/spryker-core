@@ -48,3 +48,10 @@ State,State
 "Show history","Show history"
 "Hide history","Hide history"
 Sku,SKU
+Shipment has been successfully created.,Shipment has been successfully created.
+Shipment has not been created.,Shipment has not been created.
+Merchant sales order #%d not found.,Merchant sales order #%d not found.
+Shipment has been successfully updated.,Shipment has been successfully updated.
+Shipment has not been updated.,Shipment has not been updated.
+Shipment #%d not found.,Shipment #%d not found.
+New Shipment for Order: %idMerchantSalesOrder%,New Shipment for Order: %idMerchantSalesOrder%

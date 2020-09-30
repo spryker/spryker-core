@@ -7,18 +7,23 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication;
 
+use Generated\Shared\Transfer\ShipmentGroupTransfer;
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\DataProvider\EventItemTriggerFormDataProvider;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\DataProvider\EventTriggerFormDataProvider;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\DataProvider\MerchantShipmentGroupFormDataProvider;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventItemTriggerForm;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\EventTriggerForm;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\Shipment\MerchantShipmentGroupFormType;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Table\MyOrderTable;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeInterface;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToShipmentServiceInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceInterface;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeInterface;
@@ -28,6 +33,7 @@ use Symfony\Component\Form\FormInterface;
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Persistence\MerchantSalesOrderMerchantUserGuiQueryContainerInterface getQueryContainer()
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig getConfig()
+ * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractCommunicationFactory
 {
@@ -98,6 +104,34 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     public function getMerchantSalesOrderDetailExternalBlocksUrls(): array
     {
         return $this->getConfig()->getMerchantSalesOrderDetailExternalBlocksUrls();
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Form\DataProvider\MerchantShipmentGroupFormDataProvider
+     */
+    public function createMerchantShipmentGroupFormDataProvider(): MerchantShipmentGroupFormDataProvider
+    {
+        return new MerchantShipmentGroupFormDataProvider(
+            $this->getCustomerFacade(),
+            $this->getShipmentFacade()
+        );
+    }
+
+    /**
+     * @phpstan-param array<mixed> $formOptions
+     *
+     * @phpstan-return \Symfony\Component\Form\FormInterface<mixed>
+     *
+     * @param \Generated\Shared\Transfer\ShipmentGroupTransfer $shipmentGroupTransfer
+     * @param array $formOptions
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function createMerchantShipmentGroupForm(
+        ShipmentGroupTransfer $shipmentGroupTransfer,
+        array $formOptions = []
+    ): FormInterface {
+        return $this->getFormFactory()->create(MerchantShipmentGroupFormType::class, $shipmentGroupTransfer, $formOptions);
     }
 
     /**
@@ -172,5 +206,29 @@ class MerchantSalesOrderMerchantUserGuiCommunicationFactory extends AbstractComm
     public function getMerchantOmsFacade(): MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeInterface
     {
         return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::FACADE_MERCHANT_OMS);
+    }
+
+    /**
+     * @return \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface
+     */
+    public function getShipmentFacade(): MerchantSalesOrderMerchantUserGuiToShipmentFacadeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::FACADE_SHIPMENT);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getShipmentFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::PLUGIN_SHIPMENT_FORM_TYPE);
+    }
+
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    public function getItemFormTypePlugin(): FormTypeInterface
+    {
+        return $this->getProvidedDependency(MerchantSalesOrderMerchantUserGuiDependencyProvider::PLUGIN_ITEM_FORM_TYPE);
     }
 }

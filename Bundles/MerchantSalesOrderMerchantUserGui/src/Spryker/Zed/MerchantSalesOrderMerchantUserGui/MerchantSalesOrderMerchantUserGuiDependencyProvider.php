@@ -9,12 +9,16 @@ namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui;
 
 use Orm\Zed\MerchantSalesOrder\Persistence\SpyMerchantSalesOrderQuery;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Communication\Form\FormTypeInterface;
 use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingItemFormTypePluginException;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingShipmentFormTypePluginException;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToCustomerFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantOmsFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantSalesOrderFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMerchantUserFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToMoneyFacadeBridge;
+use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade\MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToShipmentServiceBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilDateTimeServiceBridge;
 use Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Service\MerchantSalesOrderMerchantUserGuiToUtilSanitizeBridge;
@@ -31,10 +35,14 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
     public const FACADE_MERCHANT_USER = 'FACADE_MERCHANT_USER';
     public const FACADE_MERCHANT_SALES_ORDER = 'FACADE_MERCHANT_SALES_ORDER';
     public const FACADE_MERCHANT_OMS = 'FACADE_MERCHANT_OMS';
+    public const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     public const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
     public const SERVICE_DATE_TIME = 'SERVICE_DATE_TIME';
     public const SERVICE_SHIPMENT = 'SERVICE_SHIPMENT';
+
+    public const PLUGIN_SHIPMENT_FORM_TYPE = 'PLUGIN_SHIPMENT_FORM_TYPE';
+    public const PLUGIN_ITEM_FORM_TYPE = 'PLUGIN_ITEM_FORM_TYPE';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -54,6 +62,9 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
         $container = $this->addMerchantSalesOrderFacade($container);
         $container = $this->addMerchantOmsFacade($container);
         $container = $this->addShipmentService($container);
+        $container = $this->addShipmentFacade($container);
+        $container = $this->addShipmentFormTypePlugin($container);
+        $container = $this->addItemFormTypePlugin($container);
 
         return $container;
     }
@@ -184,5 +195,83 @@ class MerchantSalesOrderMerchantUserGuiDependencyProvider extends AbstractBundle
         });
 
         return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentFacade(Container $container): Container
+    {
+        $container->set(static::FACADE_SHIPMENT, function (Container $container) {
+            return new MerchantSalesOrderMerchantUserGuiToShipmentFacadeBridge(
+                $container->getLocator()->shipment()->facade()
+            );
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addShipmentFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_SHIPMENT_FORM_TYPE, function () {
+            return $this->getShipmentFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingShipmentFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getShipmentFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingShipmentFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure ShipmentFormType ' .
+                'in your own MerchantSalesOrderMerchantUserGuiDependencyProvider::getShipmentFormTypePlugin() ' .
+                'to be able to manage merchant order shipments.',
+                FormTypeInterface::class
+            )
+        );
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addItemFormTypePlugin(Container $container): Container
+    {
+        $container->set(static::PLUGIN_ITEM_FORM_TYPE, function () {
+            return $this->getItemFormTypePlugin();
+        });
+
+        return $container;
+    }
+
+    /**
+     * @throws \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\Exception\MissingItemFormTypePluginException
+     *
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function getItemFormTypePlugin(): FormTypeInterface
+    {
+        throw new MissingItemFormTypePluginException(
+            sprintf(
+                'Missing instance of %s! You need to configure ItemFormType ' .
+                'in your own MerchantSalesOrderMerchantUserGuiDependencyProvider::getItemFormTypePlugin() ' .
+                'to be able to manage merchant order shipments.',
+                FormTypeInterface::class
+            )
+        );
     }
 }

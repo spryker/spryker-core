@@ -7,6 +7,9 @@
 
 namespace Spryker\Zed\MerchantSalesOrderMerchantUserGui\Dependency\Facade;
 
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+
 interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
 {
     /**
@@ -15,4 +18,25 @@ interface MerchantSalesOrderMerchantUserGuiToCustomerFacadeInterface
      * @return \Generated\Shared\Transfer\CustomerTransfer|null
      */
     public function findByReference($customerReference);
+
+    /**
+     * @param \Generated\Shared\Transfer\AddressTransfer $addressTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressTransfer|null
+     */
+    public function findCustomerAddressByAddressData(AddressTransfer $addressTransfer): ?AddressTransfer;
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customerTransfer
+     *
+     * @return \Generated\Shared\Transfer\AddressesTransfer
+     */
+    public function getAddresses(CustomerTransfer $customerTransfer);
+
+    /**
+     * @phpstan-return array<mixed>
+     *
+     * @return array
+     */
+    public function getAllSalutations(): array;
 }

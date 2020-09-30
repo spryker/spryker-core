@@ -1,0 +1,2 @@
+{% set idShipment = shipmentOrderItems.shipment.idSalesShipment %}
+<a class="btn btn-default" href="{{ url('/merchant-sales-order-merchant-user-gui/merchant-shipment-edit', {'id-merchant-sales-order': idMerchantSalesOrder, 'id-shipment': idShipment}) }}">{{ 'Edit Shipment' | trans }}</a>
