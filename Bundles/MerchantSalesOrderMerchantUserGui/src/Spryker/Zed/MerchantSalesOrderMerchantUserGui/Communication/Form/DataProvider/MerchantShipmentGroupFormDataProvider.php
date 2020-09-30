@@ -182,7 +182,7 @@ class MerchantShipmentGroupFormDataProvider
      *
      * @return array
      */
-    public function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
+    protected function getShipmentSelectedItemsIds(MerchantOrderTransfer $merchantOrderTransfer, ShipmentTransfer $shipmentTransfer): array
     {
         $salesOrderItemTransfers = $merchantOrderTransfer->getOrder()->getItems();
 

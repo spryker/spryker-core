@@ -19,12 +19,13 @@ class ShipmentFormTypePlugin extends AbstractPlugin implements FormTypeInterface
 {
     /**
      * {@inheritDoc}
+     * - Returns ItemFormType class name resolution.
      *
      * @api
      *
      * @return string
      */
-    public function getType()
+    public function getType(): string
     {
         return ShipmentFormType::class;
     }
