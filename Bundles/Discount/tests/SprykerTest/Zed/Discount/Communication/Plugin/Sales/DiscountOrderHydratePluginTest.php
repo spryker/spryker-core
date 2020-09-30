@@ -252,9 +252,9 @@ class DiscountOrderHydratePluginTest extends Unit
         //Assert
         foreach ($orderTransfer->getItems() as $itemTransfer) {
             foreach ($itemTransfer->getCalculatedDiscounts() as $calculatedDiscountTransfer) {
-                $this->assertEquals($itemDiscountQuantities[$itemTransfer->getSku()], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
-                $this->assertEquals($discountAmounts[$itemTransfer->getSku()][0], $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
-                $this->assertEquals($discountAmounts[$itemTransfer->getSku()][1], $calculatedDiscountTransfer->getUnitAmount(), 'Discount unit amount does not match expected value');
+                $this->assertSame($itemDiscountQuantities[$itemTransfer->getSku()], $calculatedDiscountTransfer->getQuantity(), 'Discount quantity does not match expected value');
+                $this->assertSame($discountAmounts[$itemTransfer->getSku()][0], $calculatedDiscountTransfer->getSumAmount(), 'Discount sum amount does not match expected value');
+                $this->assertSame($discountAmounts[$itemTransfer->getSku()][1], $calculatedDiscountTransfer->getUnitAmount(), 'Discount unit amount does not match expected value');
             }
         }
     }

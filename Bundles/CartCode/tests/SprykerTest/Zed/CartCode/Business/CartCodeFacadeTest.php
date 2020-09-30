@@ -65,7 +65,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
         $this->assertEquals(
             static::CODE,
             $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->getIterator()->current()->getVoucherCode()
@@ -88,7 +88,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
+        $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
         $this->assertEquals(
             static::CODE,
             $cartCodeResponseTransfer->getQuote()->getGiftCards()->getIterator()->current()->getCode()
@@ -134,7 +134,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -153,7 +153,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -172,7 +172,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
+        $this->assertSame(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
     }
 
     /**
@@ -214,7 +214,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -231,7 +231,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(0, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**
@@ -248,7 +248,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
+        $this->assertSame(0, $cartCodeResponseTransfer->getQuote()->getGiftCards()->count());
     }
 
     /**
@@ -265,7 +265,7 @@ class CartCodeFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
+        $this->assertSame(1, $cartCodeResponseTransfer->getQuote()->getVoucherDiscounts()->count());
     }
 
     /**

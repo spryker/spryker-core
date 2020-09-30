@@ -171,14 +171,14 @@ class FileManagerFacadeTest extends Unit
     public function testReadsLatestVersionOfFile(): void
     {
         $fileManagerDataTransfer = $this->facade->findFileByIdFile($this->tester->getIdFile());
-        $this->assertEquals('second version of the file', $fileManagerDataTransfer->getContent());
-        $this->assertEquals('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
-        $this->assertEquals($this->tester->getIdFile(), $fileManagerDataTransfer->getFile()->getIdFile());
-        $this->assertEquals('customer_v2.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('2', $fileManagerDataTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v. 2', $fileManagerDataTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
+        $this->assertSame('second version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertSame('customer.txt', $fileManagerDataTransfer->getFile()->getFileName());
+        $this->assertSame($this->tester->getIdFile(), $fileManagerDataTransfer->getFile()->getIdFile());
+        $this->assertSame('customer_v2.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertSame('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertSame(2, $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertSame('v. 2', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertSame(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 
     /**
@@ -233,12 +233,12 @@ class FileManagerFacadeTest extends Unit
     {
         $this->facade->rollbackFile($this->tester->getIdFirstFileInfo());
         $fileManagerDataTransfer = $this->facade->readLatestFileVersion($this->tester->getIdFile());
-        $this->assertEquals('first version of the file', $fileManagerDataTransfer->getContent());
-        $this->assertEquals('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
-        $this->assertEquals('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
-        $this->assertEquals('3', $fileManagerDataTransfer->getFileInfo()->getVersion());
-        $this->assertEquals('v.3', $fileManagerDataTransfer->getFileInfo()->getVersionName());
-        $this->assertEquals(10, $fileManagerDataTransfer->getFileInfo()->getSize());
+        $this->assertSame('first version of the file', $fileManagerDataTransfer->getContent());
+        $this->assertSame('customer_v1.txt', $fileManagerDataTransfer->getFileInfo()->getStorageFileName());
+        $this->assertSame('txt', $fileManagerDataTransfer->getFileInfo()->getExtension());
+        $this->assertSame(3, $fileManagerDataTransfer->getFileInfo()->getVersion());
+        $this->assertSame('v.3', $fileManagerDataTransfer->getFileInfo()->getVersionName());
+        $this->assertSame(10, $fileManagerDataTransfer->getFileInfo()->getSize());
     }
 
     /**
@@ -304,13 +304,13 @@ class FileManagerFacadeTest extends Unit
         $secondNode = $firstNode->getChildren()->getArrayCopy()[0];
         $thirdNode = $tree->getNodes()->getArrayCopy()[1];
 
-        $this->assertEquals(2, $tree->getNodes()->count());
-        $this->assertEquals(1, $firstNode->getChildren()->count());
-        $this->assertEquals(0, $secondNode->getChildren()->count());
-        $this->assertEquals(0, $thirdNode->getChildren()->count());
-        $this->assertEquals($this->tester->getIdFirstFileDirectory(), $firstNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals($this->tester->getIdSubFileDirectory(), $secondNode->getFileDirectory()->getIdFileDirectory());
-        $this->assertEquals($this->tester->getIdSecondFileDirectory(), $thirdNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertSame(2, $tree->getNodes()->count());
+        $this->assertSame(1, $firstNode->getChildren()->count());
+        $this->assertSame(0, $secondNode->getChildren()->count());
+        $this->assertSame(0, $thirdNode->getChildren()->count());
+        $this->assertSame($this->tester->getIdFirstFileDirectory(), $firstNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertSame($this->tester->getIdSubFileDirectory(), $secondNode->getFileDirectory()->getIdFileDirectory());
+        $this->assertSame($this->tester->getIdSecondFileDirectory(), $thirdNode->getFileDirectory()->getIdFileDirectory());
 
         $firstNode = $tree->getNodes()->getArrayCopy()[0];
         $subNode = $tree->getNodes()->getArrayCopy()[0]->getChildren()[0];
@@ -327,10 +327,10 @@ class FileManagerFacadeTest extends Unit
         $secondNode = $firstNode->getChildren()->getArrayCopy()[0];
         $thirdNode = $secondNode->getChildren()->getArrayCopy()[0];
 
-        $this->assertEquals(1, $tree->getNodes()->count());
-        $this->assertEquals(1, $firstNode->getChildren()->count());
-        $this->assertEquals(1, $secondNode->getChildren()->count());
-        $this->assertEquals(0, $thirdNode->getChildren()->count());
+        $this->assertSame(1, $tree->getNodes()->count());
+        $this->assertSame(1, $firstNode->getChildren()->count());
+        $this->assertSame(1, $secondNode->getChildren()->count());
+        $this->assertSame(0, $thirdNode->getChildren()->count());
         $this->assertEquals($this->tester->getIdFirstFileDirectory(), $firstNode->getFileDirectory()->getIdFileDirectory());
         $this->assertEquals($this->tester->getIdSubFileDirectory(), $secondNode->getFileDirectory()->getIdFileDirectory());
         $this->assertEquals($this->tester->getIdSecondFileDirectory(), $thirdNode->getFileDirectory()->getIdFileDirectory());

@@ -235,6 +235,7 @@ class ProductListFacadeTest extends Unit
 
         // Assert
         $this->assertIsArray($productConcreteIds);
+        // TODO: use assertSame() once the actual return result is of int[], and not string[]
         $this->assertEquals([$productTransfer->getIdProductConcrete()], $productConcreteIds);
     }
 

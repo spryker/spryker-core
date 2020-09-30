@@ -63,7 +63,7 @@ class ShipmentPersistenceWithItemsTest extends Test
 
         $this->assertCount($quoteTransfer->getItems()->count(), $salesOrderItemsEntities, 'Order shipment has no any related addresses been saved.');
         foreach ($salesOrderItemsEntities as $i => $salesOrderItemEntity) {
-            $this->assertEquals($salesOrderItemEntity->getFkSalesShipment(), $salesShipmentEntity->getIdSalesShipment(), sprintf('Order shipment is not related with order item (iteration #%d).', $i));
+            $this->assertSame($salesOrderItemEntity->getFkSalesShipment(), $salesShipmentEntity->getIdSalesShipment(), sprintf('Order shipment is not related with order item (iteration #%d).', $i));
         }
     }
 

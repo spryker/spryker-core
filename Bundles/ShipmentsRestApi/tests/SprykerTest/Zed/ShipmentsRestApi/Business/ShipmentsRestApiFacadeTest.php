@@ -66,13 +66,13 @@ class ShipmentsRestApiFacadeTest extends Unit
         $this->assertNotNull($actualQuote->getShipment());
         $this->assertGreaterThan(0, $actualQuote->getExpenses()->count());
         $actualShipmentMethodTransfer = $actualQuote->getShipment()->getMethod();
-        $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-        $this->assertEquals(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-        $this->assertEquals(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-        $this->assertEquals(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-        $this->assertEquals(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-        $this->assertEquals(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-        $this->assertEquals(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+        $this->assertSame(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
+        $this->assertSame(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
+        $this->assertSame(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
+        $this->assertSame(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
+        $this->assertSame(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
+        $this->assertSame(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
+        $this->assertSame(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
     }
 
     /**
@@ -93,13 +93,13 @@ class ShipmentsRestApiFacadeTest extends Unit
         foreach ($actualQuote->getItems() as $itemTransfer) {
             $this->assertNotNull($itemTransfer->getShipment());
             $actualShipmentMethodTransfer = $itemTransfer->getShipment()->getMethod();
-            $this->assertEquals(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
-            $this->assertEquals(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
-            $this->assertEquals(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
-            $this->assertEquals(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
-            $this->assertEquals(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
-            $this->assertEquals(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
-            $this->assertEquals(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
+            $this->assertSame(static::SHIPMENT_METHOD['idShipmentMethod'], $actualShipmentMethodTransfer->getIdShipmentMethod());
+            $this->assertSame(static::SHIPMENT_METHOD['storeCurrencyPrice'], $actualShipmentMethodTransfer->getStoreCurrencyPrice());
+            $this->assertSame(static::SHIPMENT_METHOD['currencyIsoCode'], $actualShipmentMethodTransfer->getCurrencyIsoCode());
+            $this->assertSame(static::SHIPMENT_METHOD['name'], $actualShipmentMethodTransfer->getName());
+            $this->assertSame(static::SHIPMENT_METHOD['carrierName'], $actualShipmentMethodTransfer->getCarrierName());
+            $this->assertSame(static::SHIPMENT_METHOD['taxRate'], $actualShipmentMethodTransfer->getTaxRate());
+            $this->assertSame(static::SHIPMENT_METHOD['isActive'], $actualShipmentMethodTransfer->getIsActive());
         }
     }
 
@@ -194,7 +194,7 @@ class ShipmentsRestApiFacadeTest extends Unit
         $checkoutResponseTransfer = $shipmentRestApiFacade->validateShipmentMethodCheckoutData($checkoutDataTransfer);
 
         $this->assertTrue($checkoutResponseTransfer->getIsSuccess());
-        $this->assertEquals(0, $checkoutResponseTransfer->getErrors()->count());
+        $this->assertSame(0, $checkoutResponseTransfer->getErrors()->count());
     }
 
     /**

@@ -54,7 +54,7 @@ class DiscountConfiguratorHydrateTest extends Unit
 
         $hydratedDiscountConfiguration = $discountConfiguratorHydrate->getByIdDiscount(1);
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getDecisionRuleQueryString(),
             $hydratedDiscountConfiguration->getDiscountCondition()->getDecisionRuleQueryString()
         );
@@ -64,12 +64,12 @@ class DiscountConfiguratorHydrateTest extends Unit
             $hydratedDiscountConfiguration->getDiscountCalculator()->getAmount()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getCollectorQueryString(),
             $hydratedDiscountConfiguration->getDiscountCalculator()->getCollectorQueryString()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getCalculatorPlugin(),
             $hydratedDiscountConfiguration->getDiscountCalculator()->getCalculatorPlugin()
         );
@@ -79,7 +79,7 @@ class DiscountConfiguratorHydrateTest extends Unit
             $hydratedDiscountConfiguration->getDiscountGeneral()->getDisplayName()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getDescription(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getDescription()
         );
@@ -94,27 +94,27 @@ class DiscountConfiguratorHydrateTest extends Unit
             $hydratedDiscountConfiguration->getDiscountGeneral()->getValidTo()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getIsActive(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getIsActive()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getIsExclusive(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getIsExclusive()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getFkDiscountVoucherPool(),
             $hydratedDiscountConfiguration->getDiscountVoucher()->getFkDiscountVoucherPool()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getSpyDiscountStores()->getFirst()->getSpyStore()->getIdStore(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getIdStore()
         );
 
-        $this->assertEquals(
+        $this->assertSame(
             $discountEntity->getSpyDiscountStores()->getFirst()->getSpyStore()->getName(),
             $hydratedDiscountConfiguration->getDiscountGeneral()->getStoreRelation()->getStores()[0]->getName()
         );

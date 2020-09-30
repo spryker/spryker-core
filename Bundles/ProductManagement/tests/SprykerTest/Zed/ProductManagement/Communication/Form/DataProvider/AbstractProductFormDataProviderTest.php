@@ -49,7 +49,7 @@ class AbstractProductFormDataProviderTest extends Unit
 
         foreach ($testData as $expectedUrl => $originalUrl) {
             $url = $reflectionMethod->invoke($productFormDataProviderMock, $originalUrl);
-            $this->assertEquals($expectedUrl, $url);
+            $this->assertSame($expectedUrl, $url);
         }
     }
 

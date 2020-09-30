@@ -78,7 +78,7 @@ class StorageRedisWrapperTest extends Unit
 
         $result = $this->storageRedisWrapper->get(static::PLAIN_TEXT_KEY);
 
-        $this->assertEquals(static::PLAIN_TEXT_DATA, $result);
+        $this->assertSame(static::PLAIN_TEXT_DATA, $result);
     }
 
     /**
@@ -145,7 +145,7 @@ class StorageRedisWrapperTest extends Unit
         $prefixedKey = $this->addPrefixToKey(static::PLAIN_TEXT_KEY);
         $this->assertIsArray($result);
         $this->assertArrayHasKey($prefixedKey, $result);
-        $this->assertEquals(static::PLAIN_TEXT_DATA, $result[$prefixedKey]);
+        $this->assertSame(static::PLAIN_TEXT_DATA, $result[$prefixedKey]);
     }
 
     /**

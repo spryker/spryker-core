@@ -468,7 +468,7 @@ class ProductAttributeFacadeTest extends Test
             $secondProductConcreteTransfer,
         ]);
 
-        $this->assertEquals(2, count($uniqueSuperAttributes));
+        $this->assertSame(2, count($uniqueSuperAttributes));
     }
 
     /**
