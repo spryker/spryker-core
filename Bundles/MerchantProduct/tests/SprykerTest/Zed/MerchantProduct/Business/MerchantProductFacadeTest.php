@@ -50,8 +50,8 @@ class MerchantProductFacadeTest extends Unit
         );
 
         // Assert
-        $this->assertEquals($expectedMerchantTransfer->getIdMerchant(), $merchantTransfer->getIdMerchant());
-        $this->assertEquals($expectedMerchantTransfer->getName(), $merchantTransfer->getName());
+        $this->assertSame($expectedMerchantTransfer->getIdMerchant(), $merchantTransfer->getIdMerchant());
+        $this->assertSame($expectedMerchantTransfer->getName(), $merchantTransfer->getName());
     }
 
     /**

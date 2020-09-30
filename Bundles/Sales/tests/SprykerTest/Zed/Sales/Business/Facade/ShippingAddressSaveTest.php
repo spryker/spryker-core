@@ -69,7 +69,7 @@ class ShippingAddressSaveTest extends Test
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
+        $this->assertSame(2, $salesOrderAddressQuery->count(), 'Shipping address and billing address should have been saved');
         $this->assertNotNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should have been assigned on sales order level.');
     }
 
@@ -91,7 +91,7 @@ class ShippingAddressSaveTest extends Test
         $this->getSalesFacadeWithMockedConfig()->saveSalesOrder($quoteTransfer, $saveOrderTransfer);
 
         // Assert
-        $this->assertEquals(1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
+        $this->assertSame(1, $salesOrderAddressQuery->count(), 'Only billing address should have been saved.');
         $this->assertNull($salesOrderQuery->findOne()->getShippingAddress(), 'Shipping address should not have been assigned on sales order level.');
     }
 

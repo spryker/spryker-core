@@ -78,14 +78,14 @@ class GlueAnnotationAnalyzerTest extends Unit
         $this->assertEmpty($parameters->getDelete());
         $this->assertEquals([static::SUMMARY], $parameters->getGetResourceById()->getSummary());
         $this->assertNotEmpty($parameters->getGetResourceById()->getParameters());
-        $this->assertEquals(static::HEADER_ACCEPT_LANGUAGE_REF, $parameters->getGetResourceById()->getParameters()[0]->getRef());
+        $this->assertSame(static::HEADER_ACCEPT_LANGUAGE_REF, $parameters->getGetResourceById()->getParameters()[0]->getRef());
         $this->assertNotEmpty($parameters->getGetResourceById()->getResponses());
         $this->assertArrayHasKey(static::KEY_RESPONSE_BAD_REQUEST, $parameters->getGetResourceById()->getResponses());
         $this->assertArrayHasKey(static::KEY_RESPONSE_NOT_FOUND, $parameters->getGetResourceById()->getResponses());
         $this->assertSame(static::VALUE_RESPONSE_BAD_REQUEST, $parameters->getGetResourceById()->getResponses()[static::KEY_RESPONSE_BAD_REQUEST]);
         $this->assertSame(static::VALUE_RESPONSE_NOT_FOUND, $parameters->getGetResourceById()->getResponses()[static::KEY_RESPONSE_NOT_FOUND]);
         $this->assertNotEmpty($parameters->getPost()->getResponseAttributesClassName());
-        $this->assertEquals(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseAttributesClassName());
+        $this->assertSame(static::ALTERNATIVE_RESPONSE_CLASS, $parameters->getPost()->getResponseAttributesClassName());
         $this->assertArrayHasKey(static::KEY_RESPONSE_BAD_REQUEST, $parameters->getPost()->getResponses());
         $this->assertSame(static::VALUE_RESPONSE_BAD_REQUEST, $parameters->getPost()->getResponses()[static::KEY_RESPONSE_BAD_REQUEST]);
     }

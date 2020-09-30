@@ -37,7 +37,7 @@ class PropelFilterCriteriaTest extends Unit
         $this->assertInstanceOf(Criteria::class, $propelCriteria);
         $this->assertSame(-1, $propelCriteria->getLimit());
         $this->assertSame(0, $propelCriteria->getOffset());
-        $this->assertEquals([], $propelCriteria->getOrderByColumns());
+        $this->assertSame([], $propelCriteria->getOrderByColumns());
     }
 
     /**

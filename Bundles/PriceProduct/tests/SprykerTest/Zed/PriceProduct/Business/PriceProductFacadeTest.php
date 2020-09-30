@@ -605,7 +605,7 @@ class PriceProductFacadeTest extends Unit
         $priceProductCriteriaTransfer = $this->getPriceProductFacade()
             ->buildCriteriaFromFilter($priceProductFilterTransfer);
 
-        $this->assertEquals($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
+        $this->assertSame($priceProductFilterTransfer->getQuantity(), $priceProductCriteriaTransfer->getQuantity());
     }
 
     /**
@@ -862,7 +862,7 @@ class PriceProductFacadeTest extends Unit
 
         $findedPriceTypeTransfer = $this->getPriceProductFacade()->findPriceTypeByName($priceTypeTransfer->getName());
 
-        $this->assertEquals($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
+        $this->assertSame($priceTypeTransfer->getIdPriceType(), $findedPriceTypeTransfer->getIdPriceType());
     }
 
     /**
@@ -959,7 +959,7 @@ class PriceProductFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
         $resultPriceProductTransfer = $resultPriceProductTransfers[0];
 
-        $this->assertEquals($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
+        $this->assertSame($priceProductTransfer->getIdProductAbstract(), $resultPriceProductTransfer->getIdProductAbstract());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
             $resultPriceProductTransfer->getMoneyValue()->getNetAmount()
@@ -996,7 +996,7 @@ class PriceProductFacadeTest extends Unit
         /** @var \Generated\Shared\Transfer\PriceProductTransfer $resultPriceProductTransfer */
         $resultPriceProductTransfer = $resultPriceProductTransfers[0];
 
-        $this->assertEquals($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
+        $this->assertSame($priceProductTransfer->getIdProduct(), $resultPriceProductTransfer->getIdProduct());
         $this->assertSame(
             $priceProductTransfer->getMoneyValue()->getNetAmount(),
             $resultPriceProductTransfer->getMoneyValue()->getNetAmount()

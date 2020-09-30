@@ -389,7 +389,7 @@ class ProductQuantityFacadeTest extends Unit
 
         $actualResult = $this->productQuantityFacade->hasCartChangeTransferNormalizableItems($cartChangeTransfer, [$normalizableField]);
 
-        $this->assertEquals(true, $actualResult);
+        $this->assertTrue($actualResult);
     }
 
     /**
@@ -404,6 +404,6 @@ class ProductQuantityFacadeTest extends Unit
 
         $actualResult = $this->productQuantityFacade->hasCartChangeTransferNormalizableItems($cartChangeTransfer, [$normalizableField]);
 
-        $this->assertEquals(false, $actualResult);
+        $this->assertFalse($actualResult);
     }
 }

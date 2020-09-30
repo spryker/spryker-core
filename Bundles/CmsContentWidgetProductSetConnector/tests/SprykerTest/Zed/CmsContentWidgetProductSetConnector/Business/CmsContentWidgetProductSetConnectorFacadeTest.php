@@ -44,6 +44,7 @@ class CmsContentWidgetProductSetConnectorFacadeTest extends Unit
 
         $this->assertCount(1, $mappedProductSets);
         $this->assertArrayHasKey($productSetTransfer->getProductSetKey(), $mappedProductSets);
+        // TODO: use assertSame() once the actual return result is of int, and not string
         $this->assertEquals(
             $productSetTransfer->getIdProductSet(),
             $mappedProductSets[$productSetTransfer->getProductSetKey()]
