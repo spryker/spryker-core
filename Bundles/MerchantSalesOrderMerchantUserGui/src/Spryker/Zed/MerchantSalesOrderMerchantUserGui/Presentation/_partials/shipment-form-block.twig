@@ -67,7 +67,7 @@
                                         <a href="{{ url('/state-machine/graph/draw', {'process': merchantOrder.process, 'highlight-state': (merchantOrderItem.stateHistory | first).stateName, 'state-machine': 'Merchant'}) }}" target="_blank">{{ (merchantOrderItem.stateHistory | first).stateName }}</a> ({{ merchantOrder.process }})
                                 </div>
                                 {% if merchantOrderItem.stateHistory | length > 1 %}
-                                    <div id="history_details_{{ orderItem.idSalesOrderItem }}" class="hidden">
+                                    <div id="history_details_{{ merchantOrderItem.idSalesOrderItem }}" class="hidden">
                                         {% for stateHistory in merchantOrderItem.stateHistory | slice(1) %}
                                             <div>{{ stateHistory.stateName }} ({{ stateHistory.createdAt | formatDateTime }})</div>
                                         {% endfor %}

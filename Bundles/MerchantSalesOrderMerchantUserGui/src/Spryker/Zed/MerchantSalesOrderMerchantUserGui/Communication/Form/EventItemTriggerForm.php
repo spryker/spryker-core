@@ -16,6 +16,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\MerchantSalesOrderMerchantUserGuiConfig getConfig()
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class EventItemTriggerForm extends AbstractType
 {
@@ -31,7 +32,7 @@ class EventItemTriggerForm extends AbstractType
     protected const ACTION_ROUTE = '/merchant-sales-order-merchant-user-gui/oms-trigger/submit-trigger-event-for-merchant-order-item';
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -47,7 +48,7 @@ class EventItemTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
@@ -73,7 +74,7 @@ class EventItemTriggerForm extends AbstractType
     }
 
     /**
-     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface $builder
+     * @phpstan-param \Symfony\Component\Form\FormBuilderInterface<mixed> $builder
      * @phpstan-param array<string, mixed> $options
      *
      * @param \Symfony\Component\Form\FormBuilderInterface $builder
