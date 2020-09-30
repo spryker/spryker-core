@@ -7,6 +7,7 @@
 
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 
 interface ConfigurableBundlesRestApiToConfigurableBundleStorageClientInterface
@@ -23,13 +24,11 @@ interface ConfigurableBundlesRestApiToConfigurableBundleStorageClientInterface
     ): ?ConfigurableBundleTemplateStorageTransfer;
 
     /**
-     * @param int[] $configurableBundleTemplateIds
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getBulkConfigurableBundleTemplateStorage(
-        array $configurableBundleTemplateIds,
-        string $localeName
+    public function getConfigurableBundleTemplateStorageCollection(
+        ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
     ): array;
 }

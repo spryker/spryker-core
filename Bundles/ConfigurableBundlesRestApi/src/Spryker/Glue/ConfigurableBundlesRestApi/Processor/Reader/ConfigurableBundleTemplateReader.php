@@ -8,6 +8,7 @@
 namespace Spryker\Glue\ConfigurableBundlesRestApi\Processor\Reader;
 
 use Generated\Shared\Transfer\ConfigurableBundleTemplatePageSearchRequestTransfer;
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundlePageSearchClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Dependency\Client\ConfigurableBundlesRestApiToConfigurableBundleStorageClientInterface;
 use Spryker\Glue\ConfigurableBundlesRestApi\Processor\RestResponseBuilder\ConfigurableBundleTemplateRestResponseBuilderInterface;
@@ -87,11 +88,12 @@ class ConfigurableBundleTemplateReader implements ConfigurableBundleTemplateRead
             return $this->configurableBundleTemplateRestResponseBuilder->createRestResponse();
         }
 
+        $configurableBundleTemplateStorageFilterTransfer = (new ConfigurableBundleTemplateStorageFilterTransfer())
+            ->setConfigurableBundleTemplateIds($configurableBundleTemplateIds)
+            ->setLocaleName($restRequest->getMetadata()->getLocale());
+
         $configurableBundleTemplateStorageTransfers = $this->configurableBundleStorageClient
-            ->getBulkConfigurableBundleTemplateStorage(
-                $configurableBundleTemplateIds,
-                $restRequest->getMetadata()->getLocale()
-            );
+            ->getConfigurableBundleTemplateStorageCollection($configurableBundleTemplateStorageFilterTransfer);
 
         return $this->configurableBundleTemplateRestResponseBuilder
             ->buildConfigurableBundleTemplateCollectionRestResponse(

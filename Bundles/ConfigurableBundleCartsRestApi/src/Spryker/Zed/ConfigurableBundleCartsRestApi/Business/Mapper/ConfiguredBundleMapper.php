@@ -17,21 +17,21 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PersistentCartChangeTransfer;
 use Generated\Shared\Transfer\UpdateConfiguredBundleRequestTransfer;
-use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface;
 
 class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
 {
     /**
-     * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface
+     * @var \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
      */
-    protected $configuredBundleGroupKeyGenerator;
+    protected $configurableBundleCartService;
 
     /**
-     * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
+     * @param \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface $configurableBundleCartService
      */
-    public function __construct(ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator)
+    public function __construct(ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface $configurableBundleCartService)
     {
-        $this->configuredBundleGroupKeyGenerator = $configuredBundleGroupKeyGenerator;
+        $this->configurableBundleCartService = $configurableBundleCartService;
     }
 
     /**
@@ -101,10 +101,10 @@ class ConfiguredBundleMapper implements ConfiguredBundleMapperInterface
      */
     protected function getSlimConfiguredBundleTransfer(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundleTransfer
     {
-        $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
+        $configuredBundleTransfer = $this->configurableBundleCartService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
 
         return (new ConfiguredBundleTransfer())
-            ->setGroupKey($configuredBundleGroupKey)
+            ->setGroupKey($configuredBundleTransfer->getGroupKey())
             ->setQuantity($configuredBundleTransfer->getQuantity())
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())

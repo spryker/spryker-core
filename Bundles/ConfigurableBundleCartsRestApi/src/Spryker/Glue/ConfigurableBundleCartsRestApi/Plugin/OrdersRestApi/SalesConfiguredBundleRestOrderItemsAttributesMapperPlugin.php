@@ -33,7 +33,7 @@ class SalesConfiguredBundleRestOrderItemsAttributesMapperPlugin extends Abstract
         RestOrderItemsAttributesTransfer $restOrderItemsAttributesTransfer
     ): RestOrderItemsAttributesTransfer {
         return $this->getFactory()
-            ->createItemMapper()
+            ->createOrderItemMapper()
             ->mapItemTransferToRestOrderItemsAttributesTransfer($itemTransfer, $restOrderItemsAttributesTransfer);
     }
 }

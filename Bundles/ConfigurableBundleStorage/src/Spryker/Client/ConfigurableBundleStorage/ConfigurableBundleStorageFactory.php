@@ -11,6 +11,8 @@ use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundl
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Client\ConfigurableBundleStorageToStorageClientInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToSynchronizationServiceInterface;
 use Spryker\Client\ConfigurableBundleStorage\Dependency\Service\ConfigurableBundleStorageToUtilEncodingServiceInterface;
+use Spryker\Client\ConfigurableBundleStorage\Expander\ConfigurableBundleTemplateImageStorageExpander;
+use Spryker\Client\ConfigurableBundleStorage\Expander\ConfigurableBundleTemplateImageStorageExpanderInterface;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReader;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleStorageReaderInterface;
 use Spryker\Client\ConfigurableBundleStorage\Reader\ConfigurableBundleTemplateImageStorageReader;
@@ -29,7 +31,7 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
         return new ConfigurableBundleStorageReader(
             $this->getStorageClient(),
             $this->getSynchronizationService(),
-            $this->createConfigurableBundleTemplateImageStorageReader(),
+            $this->createConfigurableBundleTemplateImageStorageExpander(),
             $this->getUtilEncodingService()
         );
     }
@@ -43,6 +45,16 @@ class ConfigurableBundleStorageFactory extends AbstractFactory
             $this->getStorageClient(),
             $this->getSynchronizationService(),
             $this->getUtilEncodingService()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\ConfigurableBundleStorage\Expander\ConfigurableBundleTemplateImageStorageExpanderInterface
+     */
+    public function createConfigurableBundleTemplateImageStorageExpander(): ConfigurableBundleTemplateImageStorageExpanderInterface
+    {
+        return new ConfigurableBundleTemplateImageStorageExpander(
+            $this->createConfigurableBundleTemplateImageStorageReader()
         );
     }
 

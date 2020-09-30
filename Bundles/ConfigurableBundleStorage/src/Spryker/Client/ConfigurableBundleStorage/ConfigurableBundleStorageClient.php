@@ -7,6 +7,7 @@
 
 namespace Spryker\Client\ConfigurableBundleStorage;
 
+use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer;
 use Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer;
 use Spryker\Client\Kernel\AbstractClient;
 
@@ -37,18 +38,16 @@ class ConfigurableBundleStorageClient extends AbstractClient implements Configur
      *
      * @api
      *
-     * @param int[] $configurableBundleTemplateIds
-     * @param string $localeName
+     * @param \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
      *
      * @return \Generated\Shared\Transfer\ConfigurableBundleTemplateStorageTransfer[]
      */
-    public function getBulkConfigurableBundleTemplateStorage(
-        array $configurableBundleTemplateIds,
-        string $localeName
+    public function getConfigurableBundleTemplateStorageCollection(
+        ConfigurableBundleTemplateStorageFilterTransfer $configurableBundleTemplateStorageFilterTransfer
     ): array {
         return $this->getFactory()
             ->createConfigurableBundleStorageReader()
-            ->getBulkConfigurableBundleTemplateStorage($configurableBundleTemplateIds, $localeName);
+            ->getConfigurableBundleTemplateStorageCollection($configurableBundleTemplateStorageFilterTransfer);
     }
 
     /**

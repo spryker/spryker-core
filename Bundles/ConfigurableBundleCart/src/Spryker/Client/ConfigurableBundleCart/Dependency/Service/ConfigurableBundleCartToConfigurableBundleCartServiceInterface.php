@@ -5,16 +5,16 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Client\ConfigurableBundleCart\Generator;
+namespace Spryker\Client\ConfigurableBundleCart\Dependency\Service;
 
 use Generated\Shared\Transfer\ConfiguredBundleTransfer;
 
-interface ConfiguredBundleGroupKeyGeneratorInterface
+interface ConfigurableBundleCartToConfigurableBundleCartServiceInterface
 {
     /**
      * @param \Generated\Shared\Transfer\ConfiguredBundleTransfer $configuredBundleTransfer
      *
-     * @return string
+     * @return \Generated\Shared\Transfer\ConfiguredBundleTransfer
      */
-    public function generateConfiguredBundleGroupKeyByUuid(ConfiguredBundleTransfer $configuredBundleTransfer): string;
+    public function expandConfiguredBundleWithGroupKey(ConfiguredBundleTransfer $configuredBundleTransfer): ConfiguredBundleTransfer;
 }

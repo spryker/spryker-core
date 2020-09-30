@@ -17,7 +17,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\QuoteErrorTransfer;
 use Generated\Shared\Transfer\QuoteResponseTransfer;
 use Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface;
-use Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
+use Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface;
 
 class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
 {
@@ -27,20 +27,20 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
     protected $cartClient;
 
     /**
-     * @var \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface
+     * @var \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface
      */
-    protected $configuredBundleGroupKeyGenerator;
+    protected $configurableBundleCartService;
 
     /**
      * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Client\ConfigurableBundleCartToCartClientInterface $cartClient
-     * @param \Spryker\Client\ConfigurableBundleCart\Generator\ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
+     * @param \Spryker\Client\ConfigurableBundleCart\Dependency\Service\ConfigurableBundleCartToConfigurableBundleCartServiceInterface $configurableBundleCartService
      */
     public function __construct(
         ConfigurableBundleCartToCartClientInterface $cartClient,
-        ConfiguredBundleGroupKeyGeneratorInterface $configuredBundleGroupKeyGenerator
+        ConfigurableBundleCartToConfigurableBundleCartServiceInterface $configurableBundleCartService
     ) {
         $this->cartClient = $cartClient;
-        $this->configuredBundleGroupKeyGenerator = $configuredBundleGroupKeyGenerator;
+        $this->configurableBundleCartService = $configurableBundleCartService;
     }
 
     /**
@@ -98,10 +98,10 @@ class ConfiguredBundleCartAdder implements ConfiguredBundleCartAdderInterface
             ->getTemplate()
                 ->requireUuid();
 
-        $configuredBundleGroupKey = $this->configuredBundleGroupKeyGenerator->generateConfiguredBundleGroupKeyByUuid($configuredBundleTransfer);
+        $configuredBundleTransfer = $this->configurableBundleCartService->expandConfiguredBundleWithGroupKey($configuredBundleTransfer);
 
         return (new ConfiguredBundleTransfer())
-            ->setGroupKey($configuredBundleGroupKey)
+            ->setGroupKey($configuredBundleTransfer->getGroupKey())
             ->setQuantity($configuredBundleTransfer->getQuantity())
             ->setTemplate(
                 (new ConfigurableBundleTemplateTransfer())

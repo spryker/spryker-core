@@ -10,6 +10,7 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeBridge;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeBridge;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeBridge;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceBridge;
 use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
 use Spryker\Zed\Kernel\Container;
 
@@ -21,6 +22,8 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     public const FACADE_PERSISTENT_CART = 'FACADE_PERSISTENT_CART';
     public const FACADE_CARTS_REST_API = 'FACADE_CARTS_REST_API';
     public const FACADE_STORE = 'FACADE_STORE';
+
+    public const SERVICE_CONFIGURABLE_BUNDLE_CART = 'SERVICE_CONFIGURABLE_BUNDLE_CART';
 
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -34,6 +37,7 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
         $container = $this->addPersistentCartFacade($container);
         $container = $this->addCartsRestApiFacade($container);
         $container = $this->addStoreFacade($container);
+        $container = $this->addConfigurableBundleCartService($container);
 
         return $container;
     }
@@ -75,6 +79,20 @@ class ConfigurableBundleCartsRestApiDependencyProvider extends AbstractBundleDep
     {
         $container->set(static::FACADE_STORE, function (Container $container) {
             return new ConfigurableBundleCartsRestApiToStoreFacadeBridge($container->getLocator()->store()->facade());
+        });
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function addConfigurableBundleCartService(Container $container): Container
+    {
+        $container->set(static::SERVICE_CONFIGURABLE_BUNDLE_CART, function (Container $container) {
+            return new ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceBridge($container->getLocator()->configurableBundleCart()->service());
         });
 
         return $container;

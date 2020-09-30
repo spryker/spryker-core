@@ -9,8 +9,6 @@ namespace Spryker\Zed\ConfigurableBundleCartsRestApi\Business;
 
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Checker\QuotePermissionChecker;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Checker\QuotePermissionCheckerInterface;
-use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGenerator;
-use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapper;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Mapper\ConfiguredBundleMapperInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Writer\ConfiguredBundleWriter;
@@ -21,6 +19,7 @@ use Spryker\Zed\ConfigurableBundleCartsRestApi\ConfigurableBundleCartsRestApiDep
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToCartsRestApiFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToPersistentCartFacadeInterface;
 use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Facade\ConfigurableBundleCartsRestApiToStoreFacadeInterface;
+use Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface;
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
@@ -61,16 +60,8 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     public function createConfiguredBundleMapper(): ConfiguredBundleMapperInterface
     {
         return new ConfiguredBundleMapper(
-            $this->createConfiguredBundleGroupKeyGenerator()
+            $this->getConfigurableBundleCartService()
         );
-    }
-
-    /**
-     * @return \Spryker\Zed\ConfigurableBundleCartsRestApi\Business\Generator\ConfiguredBundleGroupKeyGeneratorInterface
-     */
-    public function createConfiguredBundleGroupKeyGenerator(): ConfiguredBundleGroupKeyGeneratorInterface
-    {
-        return new ConfiguredBundleGroupKeyGenerator();
     }
 
     /**
@@ -103,5 +94,13 @@ class ConfigurableBundleCartsRestApiBusinessFactory extends AbstractBusinessFact
     public function getStoreFacade(): ConfigurableBundleCartsRestApiToStoreFacadeInterface
     {
         return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::FACADE_STORE);
+    }
+
+    /**
+     * @return \Spryker\Zed\ConfigurableBundleCartsRestApi\Dependency\Service\ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
+     */
+    public function getConfigurableBundleCartService(): ConfigurableBundleCartsRestApiToConfigurableBundleCartServiceInterface
+    {
+        return $this->getProvidedDependency(ConfigurableBundleCartsRestApiDependencyProvider::SERVICE_CONFIGURABLE_BUNDLE_CART);
     }
 }
