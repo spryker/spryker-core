@@ -103,7 +103,7 @@ class MerchantShipmentGroupFormType extends AbstractType
     protected function addOrderItemsFormType(FormBuilderInterface $builder, array $options = [])
     {
         /** @var \Spryker\Zed\ShipmentGui\Communication\Plugin\Form\ItemFormTypePlugin $itemFormTypePlugin */
-        $itemFormTypePlugin = $this->getFactory()->getItemFormTypePlugin()->getType();
+        $itemFormTypePlugin = $this->getFactory()->getItemFormTypePlugin();
         $builder->add(static::FIELD_SALES_ORDER_ITEMS_FORM, CollectionType::class, [
             'entry_type' => $itemFormTypePlugin->getType(),
             'entry_options' => [
