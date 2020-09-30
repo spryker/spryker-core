@@ -73,6 +73,10 @@ class GuestConfiguredBundleWriter implements GuestConfiguredBundleWriterInterfac
         $createConfiguredBundleRequestTransfer = $this->configuredBundleRequestCreator
             ->createCreateConfiguredBundleRequest($restRequest, $restConfiguredBundlesAttributesTransfer);
 
+        if ($restConfiguredBundlesAttributesTransfer->getQuantity() <= 0) {
+            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY);
+        }
+
         if (!$createConfiguredBundleRequestTransfer) {
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURABLE_BUNDLE_TEMPLATE_NOT_FOUND);
         }

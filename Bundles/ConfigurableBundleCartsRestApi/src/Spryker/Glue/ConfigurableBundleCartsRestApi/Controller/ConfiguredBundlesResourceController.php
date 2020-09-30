@@ -30,6 +30,7 @@ class ConfiguredBundlesResourceController extends AbstractController
      *         "responseAttributesClassName": "Generated\\Shared\\Transfer\\RestCartsAttributesTransfer",
      *         "responses": {
      *             "400": "Cart id is missing.",
+     *             "422": "The quantity of the configured bundle should be more than zero.",
      *             "422": "Configurable bundle template not found.",
      *             "403": "Unauthorized cart action.",
      *             "422": "Errors appeared during configured bundle creation."

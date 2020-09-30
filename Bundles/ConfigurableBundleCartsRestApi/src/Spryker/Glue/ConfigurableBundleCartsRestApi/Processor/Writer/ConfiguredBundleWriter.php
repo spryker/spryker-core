@@ -76,6 +76,10 @@ class ConfiguredBundleWriter implements ConfiguredBundleWriterInterface
             return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_FAILED_CART_ID_MISSING);
         }
 
+        if ($restConfiguredBundlesAttributesTransfer->getQuantity() <= 0) {
+            return $this->createFailedResponse(ConfigurableBundleCartsRestApiSharedConfig::ERROR_IDENTIFIER_CONFIGURED_BUNDLE_WRONG_QUANTITY);
+        }
+
         $createConfiguredBundleRequestTransfer = $this->configuredBundleRequestCreator
             ->createCreateConfiguredBundleRequest($restRequest, $restConfiguredBundlesAttributesTransfer);
 
