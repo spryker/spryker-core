@@ -20,6 +20,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Communication\MerchantSalesOrderMerchantUserGuiCommunicationFactory getFactory()
+ * @method \Spryker\Zed\MerchantSalesOrderMerchantUserGui\Business\MerchantSalesOrderMerchantUserGuiFacadeInterface getFacade()
  */
 class DetailController extends AbstractController
 {
@@ -123,10 +124,10 @@ class DetailController extends AbstractController
                 $merchantOrderItemTransfer = $merchantOrderItemsWithOrderItemIdKey[$itemTransfer->getIdSalesOrderItem()];
                 $eventsForGroup = array_merge($eventsForGroup, $merchantOrderItemTransfer->getManualEvents());
             }
-            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = $eventsForGroup;
+            $events[$shipmentGroupTransfer->getShipment()->getIdSalesShipment()] = array_unique($eventsForGroup);
         }
 
-        return array_unique($events);
+        return $events;
     }
 
     /**
